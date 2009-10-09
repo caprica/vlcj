@@ -1,13 +1,20 @@
 VLCJ provides a Java binding, using JNA, to the VideoLAN native media player.
 
-It was inspired by, and in part derived from, the JVLC bindings which seem to be no longer available.
+It was inspired by, and is in part derived from, the JVLC bindings which seem 
+to be no longer available, or least not actively maintained.
 
-Along with the native bindings, a basic media player class is included in the distribution as is a simple test harness to launch it.
+Along with the native bindings, a basic media player class is included in the
+distribution as is a simple test harness to launch it.
 
-There are a very small number of relevant files in the distribution so it should be very easy to work out what is happening.
+There are a very small number of relevant files in the distribution so it 
+should be very easy to work out what is happening.
 
-Make sure you read and understand the README.LICENSE file.
+Make sure you read and understand the README.LICENSE file. VLCJ, JVLC and VLC
+itself all use open source licenses. You must respect the terms of the GPL 3
+license.
 
 I'd be happy to hear about any interesting uses you may put this to!
 
 See http://forum.videolan.org/viewtopic.php?f=32&t=56939
+
+email: eduardosherington <at> hotmail.com
