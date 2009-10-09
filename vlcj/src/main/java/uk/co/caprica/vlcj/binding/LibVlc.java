@@ -287,4 +287,22 @@ public interface LibVlc extends Library {
    * @param exception
    */
   void libvlc_event_detach(LibVlcEventManager eventManager, int eventType, LibVlcCallback callback, Pointer userData, libvlc_exception_t exception);
+  
+  /**
+   * 
+   * 
+   * @param mediaInstance
+   * @param exception
+   * @return
+   */
+  int libvlc_video_get_width(LibVlcMediaInstance mediaInstance, libvlc_exception_t exception);
+  
+  /**
+   * 
+   * 
+   * @param mediaInstance
+   * @param exception
+   * @return
+   */
+  int libvlc_video_get_height(LibVlcMediaInstance mediaInstance, libvlc_exception_t exception);
 }
