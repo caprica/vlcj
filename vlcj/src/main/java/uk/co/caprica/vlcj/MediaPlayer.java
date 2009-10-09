@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj;
 
 import java.awt.Canvas;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -44,12 +45,16 @@ import com.sun.jna.Pointer;
  */
 public class MediaPlayer {
 
+  private static final int VOUT_WAIT_PERIOD = 1000;
+  
   private List<MediaPlayerEventListener> eventListenerList = new ArrayList<MediaPlayerEventListener>();
 
   private final LibVlc libvlc = LibVlc.SYNC_INSTANCE;
 
   private final ExecutorService listenersService = Executors.newSingleThreadExecutor();
 
+  private final ExecutorService metaService = Executors.newSingleThreadExecutor();
+  
   private final String[] args;
 
   private LibVlcInstance instance;
@@ -139,6 +144,8 @@ public class MediaPlayer {
     checkException(exception);
 
     registerEventListener();
+    
+    eventListenerList.add(new MetaDataEventHandler());
   }
 
   /**
@@ -147,6 +154,8 @@ public class MediaPlayer {
   private void destroyInstance() {
     deregisterEventListener();
 
+    eventListenerList.clear();
+    
     if(mediaPlayerEventManager != null) {
       mediaPlayerEventManager = null;
     }
@@ -209,6 +218,27 @@ public class MediaPlayer {
     libvlc.libvlc_media_release(mediaDescriptor);
   }
 
+  private Dimension getVideoDimension() {
+    libvlc_exception_t exception = new libvlc_exception_t();
+
+    int width = libvlc.libvlc_video_get_width(mediaPlayerInstance, exception);
+    checkException(exception);
+
+    int height = libvlc.libvlc_video_get_height(mediaPlayerInstance, exception);
+    checkException(exception);
+    
+    return new Dimension(width, height);
+  }
+  
+  private boolean hasVideoOut() {
+    libvlc_exception_t exception = new libvlc_exception_t();
+    
+    int hasVideoOut = libvlc.libvlc_media_player_has_vout(mediaPlayerInstance, exception);
+    checkException(exception);
+    
+    return hasVideoOut != 0;
+  }
+  
   private void checkException(libvlc_exception_t exception) {
     int raised = exception.raised;
 
@@ -233,7 +263,7 @@ public class MediaPlayer {
 
   private void notifyListeners(libvlc_event_t event) {
     if(!eventListenerList.isEmpty()) {
-      for (int i = eventListenerList.size() - 1; i >= 0; i--) {
+      for(int i = eventListenerList.size() - 1; i >= 0; i--) {
         MediaPlayerEventListener listener = eventListenerList.get(i);
         int eventType = event.type;
         if(eventType == LibVlcEventType.libvlc_MediaPlayerPlaying.ordinal()) {
@@ -245,6 +275,15 @@ public class MediaPlayer {
         } else if(eventType == LibVlcEventType.libvlc_MediaPlayerEndReached.ordinal()) {
           listener.finished(this);
         }
+      }
+    }
+  }
+
+  private void notifyListeners(VideoMetaData videoMetaData) {
+    if(!eventListenerList.isEmpty()) {
+      for(int i = eventListenerList.size() - 1; i >= 0; i--) {
+        MediaPlayerEventListener listener = eventListenerList.get(i);
+        listener.metaDataAvailable(this, videoMetaData);
       }
     }
   }
@@ -269,8 +308,40 @@ public class MediaPlayer {
       this.event = event;
     }
 
+    @Override
     public void run() {
       notifyListeners(event);
+    }
+  }
+  
+  private final class NotifyMetaRunnable implements Runnable {
+
+    @Override
+    public void run() {
+      for(;;) {
+        try {
+          Thread.sleep(VOUT_WAIT_PERIOD);
+
+          if(hasVideoOut()) {
+            VideoMetaData videoMetaData = new VideoMetaData();
+            videoMetaData.setVideoDimension(getVideoDimension());
+            
+            notifyListeners(videoMetaData);
+            
+            break;
+          }
+        }
+        catch(InterruptedException e) {
+        }
+      }
+    }
+  }
+
+  private final class MetaDataEventHandler extends MediaPlayerEventAdapter {
+
+    @Override
+    public void playing(MediaPlayer mediaPlayer) {
+      metaService.submit(new NotifyMetaRunnable());
     }
   }
 }

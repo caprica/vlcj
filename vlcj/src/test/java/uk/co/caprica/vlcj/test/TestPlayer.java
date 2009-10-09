@@ -28,6 +28,7 @@ import java.awt.event.WindowEvent;
 
 import uk.co.caprica.vlcj.MediaPlayer;
 import uk.co.caprica.vlcj.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.VideoMetaData;
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
@@ -35,6 +36,12 @@ import uk.co.caprica.vlcj.MediaPlayerEventListener;
 public class TestPlayer {
 
   private static final String[] ARGS = {};
+  
+  /**
+   * If you must use a broken operating system, you will need to do something
+   * like this instead of the above.
+   */
+  // private static final String[] ARGS = {"--plugin-path=C:\\Program Files\\VideoLAN\\VLC\\plugins"};
   
   public static void main(String[] args) throws Exception {
 	Canvas videoSurface = new Canvas();
@@ -71,10 +78,16 @@ public class TestPlayer {
       public void stopped(MediaPlayer mediaPlayer) {
         System.out.println("Stopped");
       }
+
+      @Override
+      public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
+        System.out.println("Meta Data Available");
+        System.out.println(videoMetaData);
+      }
 	});
 	mediaPlayer.setVideoSurface(videoSurface);
-	mediaPlayer.playMedia("someMovie.iso");
-	
+	mediaPlayer.playMedia("/path/to/some/video/here.mp4");
+
 	Thread.currentThread().join();
   }
 }

@@ -19,15 +19,30 @@
 
 package uk.co.caprica.vlcj;
 
-public interface MediaPlayerEventListener {
+/**
+ * Default implementation of the media player event listener.
+ * <p>
+ * Simply override the methods you're interested in.
+ */
+public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
 
-  void playing(MediaPlayer mediaPlayer);
+  @Override
+  public void playing(MediaPlayer mediaPlayer) {
+  }
 
-  void paused(MediaPlayer mediaPlayer);
+  @Override
+  public void paused(MediaPlayer mediaPlayer) {
+  }
 
-  void stopped(MediaPlayer mediaPlayer);
+  @Override
+  public void stopped(MediaPlayer mediaPlayer) {
+  }
 
-  void finished(MediaPlayer mediaPlayer);
-  
-  void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData);
+  @Override
+  public void finished(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
+  }
 }
