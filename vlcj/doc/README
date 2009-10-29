@@ -1,7 +1,7 @@
 VLCJ provides a Java binding, using JNA, to the VideoLAN native media player.
 
 It was inspired by, and is in part derived from, the JVLC bindings which seem 
-to be no longer available, or least not actively maintained.
+to be no longer available, or at least not actively maintained.
 
 Along with the native bindings, a basic media player class is included in the
 distribution as is a simple test harness to launch it.
