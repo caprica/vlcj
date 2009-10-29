@@ -23,8 +23,18 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 import uk.co.caprica.vlcj.MediaPlayer;
 import uk.co.caprica.vlcj.MediaPlayerEventListener;
@@ -32,6 +42,9 @@ import uk.co.caprica.vlcj.VideoMetaData;
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
+ * <p>
+ * This is <strong>very</strong> basic but should give you an idea of how to build
+ * a media player.
  */
 public class TestPlayer {
 
@@ -44,13 +57,18 @@ public class TestPlayer {
   // private static final String[] ARGS = {"--plugin-path=C:\\Program Files\\VideoLAN\\VLC\\plugins"};
   
   public static void main(String[] args) throws Exception {
+    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    
 	Canvas videoSurface = new Canvas();
 	videoSurface.setBackground(Color.black);
+
+	MediaPlayer mediaPlayer = new MediaPlayer(ARGS);
 	  
-	Frame f = new Frame("VLCJ Test Player");
+	final Frame f = new Frame("VLCJ Test Player");
 	f.setLayout(new BorderLayout());
 	f.setBackground(Color.black);
 	f.add(videoSurface, BorderLayout.CENTER);
+	f.add(new ControlsPanel(mediaPlayer), BorderLayout.SOUTH);
 	f.setBounds(100, 100, 600, 400);
 	f.addWindowListener(new WindowAdapter() {
 	  public void windowClosing(WindowEvent evt) {
@@ -59,7 +77,6 @@ public class TestPlayer {
 	});
     f.setVisible(true);
 	
-	MediaPlayer mediaPlayer = new MediaPlayer(ARGS);
 	mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventListener() {
 
       public void finished(MediaPlayer mediaPlayer) {
@@ -83,11 +100,52 @@ public class TestPlayer {
       public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
         System.out.println("Meta Data Available");
         System.out.println(videoMetaData);
+        
+        f.setSize(videoMetaData.getVideoDimension());
       }
 	});
 	mediaPlayer.setVideoSurface(videoSurface);
 	mediaPlayer.playMedia("/path/to/some/video/here.mp4");
 
 	Thread.currentThread().join();
+  }
+  
+  private static class ControlsPanel extends JPanel {
+    
+    private ControlsPanel(final MediaPlayer mediaPlayer) {
+      setBackground(Color.black);
+      setBorder(new EmptyBorder(8, 8, 8, 8));
+      setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+      
+      add(Box.createHorizontalGlue());
+      
+      Action pauseAction = new AbstractAction("Pause") {
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          mediaPlayer.pause();
+        }
+      };
+      
+      JButton stopButton = new JButton(pauseAction);
+      add(stopButton);
+
+      add(Box.createHorizontalStrut(8));
+      
+      Action playAction = new AbstractAction("Play") {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          mediaPlayer.play();
+        }
+        
+      };
+      
+      JButton playButton = new JButton(playAction);
+      add(playButton);
+
+      add(Box.createHorizontalGlue());
+    }
+    
   }
 }
