@@ -42,6 +42,9 @@ import com.sun.jna.Pointer;
 
 /**
  * Simple media player implementation.
+ * <p>
+ * A more useful implementation will implement chapter and volume controls and 
+ * so on.
  */
 public class MediaPlayer {
 
@@ -314,6 +317,19 @@ public class MediaPlayer {
     }
   }
   
+  /**
+   * With vlc, the meta data is not available until after the video output has
+   * started.
+   * <p>
+   * Note that simply using the listener and handling the playing event will
+   * <strong>not</strong> work.
+   * <p>
+   * This implementation loops, sleeping and checking, until libvlc reports that
+   * video output is available.
+   * <p>
+   * This seems to be quite reliable but <strong>not</strong> 100% - on some
+   * occasions the event seems not to fire. 
+   */
   private final class NotifyMetaRunnable implements Runnable {
 
     @Override
@@ -337,10 +353,15 @@ public class MediaPlayer {
     }
   }
 
+  /**
+   * Event listener implementation that waits for video "playing" events.
+   */
   private final class MetaDataEventHandler extends MediaPlayerEventAdapter {
 
     @Override
     public void playing(MediaPlayer mediaPlayer) {
+      // Kick off an asynchronous task to obtain the video meta data (when
+      // available)
       metaService.submit(new NotifyMetaRunnable());
     }
   }
