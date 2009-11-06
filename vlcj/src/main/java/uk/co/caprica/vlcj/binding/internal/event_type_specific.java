@@ -69,6 +69,21 @@ public class event_type_specific extends Union {
   /**
    * 
    */
+  public media_player_title_changed media_player_title_changed;
+  
+  /**
+   * 
+   */
+  public media_player_seekable_changed media_player_seekable_changed;
+  
+  /**
+   * 
+   */
+  public media_player_pausable_changed media_player_pausable_changed; 
+  
+  /**
+   * 
+   */
   public media_list_item_added media_list_item_added;
 
   /**
@@ -105,4 +120,9 @@ public class event_type_specific extends Union {
    * 
    */
   public media_list_view_will_delete_item media_list_view_will_delete_item;
+  
+  /**
+   * 
+   */
+  public media_player_snapshot_taken media_player_snapshot_taken;
 }
