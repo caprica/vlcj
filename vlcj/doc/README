@@ -9,6 +9,10 @@ distribution as is a simple test harness to launch it.
 There are a very small number of relevant files in the distribution so it 
 should be very easy to work out what is happening.
 
+Make sure you understand how to setup your environment to use JNA. In 
+particular you may need to set the "jna.library.path" environment variable to
+point to the directory containing the "libvlc" native shared library file.
+
 Make sure you read and understand the README.LICENSE file. VLCJ, JVLC and VLC
 itself all use open source licenses. You must respect the terms of the GPL 3
 license.
