@@ -39,6 +39,7 @@ import javax.swing.border.EmptyBorder;
 import uk.co.caprica.vlcj.MediaPlayer;
 import uk.co.caprica.vlcj.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.VideoMetaData;
+import uk.co.caprica.vlcj.check.EnvironmentChecker;
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
@@ -57,6 +58,8 @@ public class TestPlayer {
   // private static final String[] ARGS = {"--plugin-path=C:\\Program Files\\VideoLAN\\VLC\\plugins"};
   
   public static void main(String[] args) throws Exception {
+    new EnvironmentChecker().checkEnvironment();
+    
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     
 	Canvas videoSurface = new Canvas();
