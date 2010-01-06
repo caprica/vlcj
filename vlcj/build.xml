@@ -1,0 +1,71 @@
+<!--
+/*
+ * This file is part of VLCJ.
+ *
+ * VLCJ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * VLCJ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Copyright 2009, 2010 Caprica Software Limited.
+ */
+-->
+
+<project name="vlcj" default="all">
+  
+  <property name="project.version" value="SNAPSHOT"/>
+  
+  <path id="project.classes">
+    <pathelement location="lib/jna-3.0.9.jar"/>
+  </path>
+  
+  <target name="prepare">
+    <mkdir dir="build"/>
+  </target>
+  
+  <target name="compile" depends="prepare">
+    <mkdir dir="build/classes"/>
+    <javac srcdir="src/main/java:src/main/resources" destdir="build/classes" classpathref="project.classes" target="1.5" source="1.5" debug="on"/> 
+  </target>
+  
+  <target name="jar" depends="compile">
+    <jar jarfile="build/${ant.project.name}-${project.version}.jar" basedir="build/classes">
+      <fileset dir="build/classes"/>
+      <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
+    </jar>
+  </target>
+  
+  <target name="srcjar" depends="prepare">
+    <jar jarfile="build/${ant.project.name}-${project.version}-sources.jar" basedir="src/main/java"/>
+  </target>
+  
+  <target name="javadoc" depends="prepare">
+    <javadoc sourcepath="src/main/java" destdir="build/javadoc" classpathref="project.classes" access="protected" author="yes" windowtitle="VLCJ Documentation" footer="(C)2010 Caprica Software Limited"/>
+  </target>
+  
+  <target name="docjar" depends="javadoc">
+    <jar jarfile="build/${ant.project.name}-${project.version}-javadoc.jar" basedir="build/javadoc"/>
+  </target>
+  
+  <target name="clean">
+    <delete dir="build"/>
+  </target>
+  
+  <target name="dist" depends="jar, srcjar, docjar">
+    <copy todir="dist">
+      <fileset dir="build" includes="*.jar"/>
+      <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
+    </copy>
+  </target>
+  
+  <target name="all" depends="clean, dist" description="Perform a full clean build and produce distribution jar files"/>
+  
+</project>
