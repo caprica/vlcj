@@ -40,47 +40,52 @@ public class EnvironmentChecker {
     
     System.out.println();
 
-    String nativeFileName = Platform.isWindows() ? "libvlc.dll" : "libvlc.so";
-
-    File firstMatchingFile = null;
-    
-    // Check jna.library.path first...
-    String jnaLibraryPath = System.getProperty("jna.library.path");
-    if(jnaLibraryPath != null) {
-      File searchDirectory = new File(jnaLibraryPath);
-      File searchFile = new File(searchDirectory, nativeFileName);
-      boolean exists = searchFile.exists();
-      System.out.println("-Djna.library.path=" + jnaLibraryPath + " -> " + searchFile.getAbsolutePath() + " -> " + (exists ? "FOUND" : "NOT FOUND"));
-      if(exists) {
-        firstMatchingFile = searchFile;
-      }
-    }
-    else {
-      System.out.println("-Djna.library.path=<path> not set");
-    }
-
-    System.out.println();
-    
-    // Check operating system search paths...
-    List<String> searchLocations = Platform.isWindows() ? getWindowsSearchPaths() : getLinuxSearchPaths();
-    for(String searchLocation : searchLocations) {
-      File searchDirectory = new File(searchLocation);
-      File searchFile = new File(searchDirectory, nativeFileName);
-      boolean exists = searchFile.exists();
-      System.out.println(searchFile.getAbsolutePath() + " -> " + (exists ? "FOUND" : "NOT FOUND"));
+    if(Platform.isWindows() || Platform.isLinux()) {
+      String nativeFileName = Platform.isWindows() ? "libvlc.dll" : "libvlc.so";
+  
+      File firstMatchingFile = null;
       
-      if(firstMatchingFile == null && exists) {
-        firstMatchingFile = searchFile;
+      // Check jna.library.path first...
+      String jnaLibraryPath = System.getProperty("jna.library.path");
+      if(jnaLibraryPath != null) {
+        File searchDirectory = new File(jnaLibraryPath);
+        File searchFile = new File(searchDirectory, nativeFileName);
+        boolean exists = searchFile.exists();
+        System.out.println("-Djna.library.path=" + jnaLibraryPath + " -> " + searchFile.getAbsolutePath() + " -> " + (exists ? "FOUND" : "NOT FOUND"));
+        if(exists) {
+          firstMatchingFile = searchFile;
+        }
+      }
+      else {
+        System.out.println("-Djna.library.path=<path> not set");
+      }
+  
+      System.out.println();
+      
+      // Check operating system search paths...
+      List<String> searchLocations = Platform.isWindows() ? getWindowsSearchPaths() : getLinuxSearchPaths();
+      for(String searchLocation : searchLocations) {
+        File searchDirectory = new File(searchLocation);
+        File searchFile = new File(searchDirectory, nativeFileName);
+        boolean exists = searchFile.exists();
+        System.out.println(searchFile.getAbsolutePath() + " -> " + (exists ? "FOUND" : "NOT FOUND"));
+        
+        if(firstMatchingFile == null && exists) {
+          firstMatchingFile = searchFile;
+        }
+      }
+  
+      System.out.println();
+      
+      if(firstMatchingFile != null) {
+        System.out.println("Found libvlc at '" + firstMatchingFile.getAbsolutePath() + "'");
+      }
+      else {
+        System.out.println("WARNING: Could not find libvlc shared library in any of the usual places");
       }
     }
-
-    System.out.println();
-    
-    if(firstMatchingFile != null) {
-      System.out.println("Found libvlc at '" + firstMatchingFile.getAbsolutePath() + "'");
-    }
     else {
-      System.out.println("WARNING: Could not find libvlc shared library in any of the usual places");
+      System.out.println("Checking the environment not supported on your platform");
     }
 
     System.out.println();
