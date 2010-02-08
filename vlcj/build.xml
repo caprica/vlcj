@@ -20,9 +20,19 @@
 -->
 
 <project name="vlcj" default="all">
-  
-  <property name="project.version" value="SNAPSHOT"/>
-  
+
+	<property name="build.version" value="1.0"/>
+
+	<buildnumber/>
+
+	<tstamp>
+		<format property="build.timestamp" pattern="yyyy-MM-dd HH:mm:ss"/>
+	</tstamp>
+	
+	<property name="source.version" value="1.5"/>
+	<property name="target.version" value="1.5"/>
+  <property name="compile.debug" value="on"/>
+	
   <path id="project.classes">
     <pathelement location="lib/jna-3.0.9.jar"/>
   </path>
@@ -33,18 +43,38 @@
   
   <target name="compile" depends="prepare">
     <mkdir dir="build/classes"/>
-    <javac srcdir="src/main/java:src/main/resources" destdir="build/classes" classpathref="project.classes" target="1.5" source="1.5" debug="on"/> 
+    <javac srcdir="src/main/java:src/main/resources" destdir="build/classes" classpathref="project.classes" target="${target.version}" source="${source.version}" debug="${compile.debug}"/> 
+  </target>
+  
+  <target name="compile.test" depends="compile">
+    <mkdir dir="build/test-classes"/>
+    <javac srcdir="src/test/java:src/test/resources" destdir="build/test-classes" classpathref="project.classes" target="${target.version}" source="${source.version}" debug="${compile.debug}">
+    	<classpath path="build/classes"/> 
+  	</javac>
   </target>
   
   <target name="jar" depends="compile">
-    <jar jarfile="build/${ant.project.name}-${project.version}.jar" basedir="build/classes">
+    <jar jarfile="build/${ant.project.name}-${build.version}.jar" basedir="build/classes">
       <fileset dir="build/classes"/>
+      <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
+    	<manifest>
+    		<attribute name="Implementation-Title" value="${project.name}"/>
+        <attribute name="Implementation-Vendor" value="Caprica Software Limited"/>
+        <attribute name="Implementation-URL" value="http://code.google.com/vlcj/"/>
+        <attribute name="Implementation-Version" value="${build.version}.${build.number} (${build.timestamp})"/>
+    	</manifest>
+    </jar>
+  </target>
+  
+  <target name="jar.test" depends="compile.test">
+    <jar jarfile="build/${ant.project.name}-${build.version}-test.jar" basedir="build/test-classes">
+      <fileset dir="build/test-classes"/>
       <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
     </jar>
   </target>
   
   <target name="srcjar" depends="prepare">
-    <jar jarfile="build/${ant.project.name}-${project.version}-sources.jar" basedir="src/main/java"/>
+    <jar jarfile="build/${ant.project.name}-${build.version}-sources.jar" basedir="src/main/java"/>
   </target>
   
   <target name="javadoc" depends="prepare">
@@ -52,20 +82,23 @@
   </target>
   
   <target name="docjar" depends="javadoc">
-    <jar jarfile="build/${ant.project.name}-${project.version}-javadoc.jar" basedir="build/javadoc"/>
+    <jar jarfile="build/${ant.project.name}-${build.version}-javadoc.jar" basedir="build/javadoc"/>
   </target>
   
-  <target name="clean">
+  <target name="clean" description="Clean transient build artefacts - this does NOT delete the contents of the 'dist' folder">
     <delete dir="build"/>
   </target>
   
   <target name="dist" depends="jar, srcjar, docjar">
+  	<delete dir="dist"/>
     <copy todir="dist">
       <fileset dir="build" includes="*.jar"/>
       <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
     </copy>
   </target>
   
+	<target name="rebuild" depends="clean, jar" description="Perform a clean build to produce a new jar file"/>
+	
   <target name="all" depends="clean, dist" description="Perform a full clean build and produce distribution jar files"/>
   
 </project>
