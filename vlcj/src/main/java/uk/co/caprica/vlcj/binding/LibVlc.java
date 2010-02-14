@@ -128,6 +128,51 @@ public interface LibVlc extends Library {
   /**
    * 
    * 
+   * @param mediaInstance
+   * @param time
+   * @param exception
+   */
+  void libvlc_media_player_set_time(LibVlcMediaInstance mediaInstance, long time, libvlc_exception_t exception);
+  
+  /**
+   * 
+   * 
+   * @param mediaInstance
+   * @param exception
+   * @return
+   */
+  long libvlc_media_player_get_time(LibVlcMediaInstance mediaInstance, libvlc_exception_t exception);
+
+  /**
+   * 
+   * 
+   * @param mediaInstance
+   * @param exception
+   * @return
+   */
+  long libvlc_media_player_get_length(LibVlcMediaInstance mediaInstance, libvlc_exception_t exception);
+  
+  /**
+   * 
+   * 
+   * @param mediaInstance
+   * @param exception
+   * @return
+   */
+  float libvlc_media_player_get_position(LibVlcMediaInstance mediaInstance, libvlc_exception_t exception);
+  
+  /**
+   * 
+   * 
+   * @param mediaInstance
+   * @param position
+   * @param exception
+   */
+  void libvlc_media_player_set_position(LibVlcMediaInstance mediaInstance, float position, libvlc_exception_t exception);
+  
+  /**
+   * 
+   * 
    * @param instance
    * @param exception
    */
