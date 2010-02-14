@@ -50,7 +50,7 @@ public class MediaPlayer {
 
   private static final int VOUT_WAIT_PERIOD = 1000;
   
-  private List<MediaPlayerEventListener> eventListenerList = new ArrayList<MediaPlayerEventListener>();
+  private final List<MediaPlayerEventListener> eventListenerList = new ArrayList<MediaPlayerEventListener>();
 
   private final LibVlc libvlc = LibVlc.SYNC_INSTANCE;
 
@@ -172,6 +172,10 @@ public class MediaPlayer {
       libvlc.libvlc_release(instance);
       instance = null;
     }
+    
+    listenersService.shutdown();
+    
+    metaService.shutdown();
   }
 
   private void registerEventListener() {
