@@ -67,7 +67,7 @@
   </target>
   
   <target name="jar.test" depends="compile.test">
-    <jar jarfile="build/${ant.project.name}-${build.version}-test.jar" basedir="build/test-classes">
+    <jar jarfile="build/${ant.project.name}-${build.version}-test.jar" basedir="build/test-classes" manifest="etc/test-manifest.txt">
       <fileset dir="build/test-classes"/>
     	<fileset dir="src/test/resources"/>
       <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
@@ -96,6 +96,7 @@
   	-->
     <copy todir="dist">
       <fileset dir="build" includes="*.jar"/>
+    	<fileset dir="lib" includes="*.jar"/>
       <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
     </copy>
   </target>
