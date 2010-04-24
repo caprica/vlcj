@@ -29,9 +29,6 @@ import java.awt.event.WindowEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.check.EnvironmentChecker;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -46,8 +43,6 @@ import uk.co.caprica.vlcj.player.linux.LinuxMediaPlayer;
  * a media player.
  */
 public class TestPlayer {
-
-  private static final Logger LOG = Logger.getLogger(TestPlayer.class);
   
   private static final String[] ARGS = {};
   
@@ -62,13 +57,11 @@ public class TestPlayer {
   // private static final String[] ARGS = {"--plugin-path=C:\\Program Files\\VideoLAN\\VLC\\plugins"};
   
   public static void main(String[] args) throws Exception {
-    BasicConfigurator.configure();
-    
     new EnvironmentChecker().checkEnvironment();
     
-    LOG.debug("  version: " + LibVlc.INSTANCE.libvlc_get_version());
-    LOG.debug(" compiler: " + LibVlc.INSTANCE.libvlc_get_compiler());
-    LOG.debug("changeset: " + LibVlc.INSTANCE.libvlc_get_changeset());
+    System.out.println("  version: " + LibVlc.INSTANCE.libvlc_get_version());
+    System.out.println(" compiler: " + LibVlc.INSTANCE.libvlc_get_compiler());
+    System.out.println("changeset: " + LibVlc.INSTANCE.libvlc_get_changeset());
     
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
@@ -106,29 +99,36 @@ public class TestPlayer {
   
   private final class TestPlayerMediaPlayerEventListener extends MediaPlayerEventAdapter {
     public void finished(MediaPlayer mediaPlayer) {
-      LOG.debug("Finished");
+      System.out.println("Finished");
       System.exit(0);
     }
 
     public void paused(MediaPlayer mediaPlayer) {
-      LOG.debug("Paused");
+      System.out.println("Paused");
     }
 
     public void playing(MediaPlayer mediaPlayer) {
-      LOG.debug("Playing");
+      System.out.println("Playing");
     }
 
     public void stopped(MediaPlayer mediaPlayer) {
-      LOG.debug("Stopped");
+      System.out.println("Stopped");
     }
 
     @Override
     public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
-      LOG.debug("Meta Data Available");
-      LOG.debug(videoMetaData);
+      System.out.println("Meta Data Available");
+      System.out.println(videoMetaData);
       
       videoSurface.setSize(videoMetaData.getVideoDimension());
       mainFrame.pack();
+      
+      // Auto-set the first sub-title just for purposes of demonstration
+      if(videoMetaData.getSpuCount() > 0) {
+        mediaPlayer.setSpu(1);
+      }
+      
+//      System.out.println("SPU SPU SPU: " + mediaPlayer.getSpuCount());
     }
   }
 }

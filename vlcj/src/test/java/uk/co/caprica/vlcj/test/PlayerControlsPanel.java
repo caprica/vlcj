@@ -42,6 +42,8 @@ public class PlayerControlsPanel extends JPanel {
   private JButton toggleMuteButton;
   private JSlider volumeSlider;
   
+  private JButton captureButton;
+  
   public PlayerControlsPanel(MediaPlayer mediaPlayer) {
     this.mediaPlayer = mediaPlayer;
     
@@ -94,6 +96,9 @@ public class PlayerControlsPanel extends JPanel {
     volumeSlider.setMinimum(0);
     volumeSlider.setMaximum(100);
     volumeSlider.setPreferredSize(new Dimension(100, 40));
+    
+    captureButton = new JButton();
+    captureButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/camera.png")));
   }
   
   private void layoutControls() {
@@ -120,6 +125,8 @@ public class PlayerControlsPanel extends JPanel {
     
     bottomPanel.add(volumeSlider);
     bottomPanel.add(toggleMuteButton);
+    
+    bottomPanel.add(captureButton);
     
     add(bottomPanel, BorderLayout.SOUTH);
   }
@@ -175,13 +182,19 @@ public class PlayerControlsPanel extends JPanel {
     });
     
     volumeSlider.addChangeListener(new ChangeListener() {
-
       @Override
       public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider)e.getSource();
         if (!source.getValueIsAdjusting()) {
           mediaPlayer.setVolume(source.getValue());
         }
+      }
+    });
+    
+    captureButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        mediaPlayer.saveSnapshot();
       }
     });
   }
