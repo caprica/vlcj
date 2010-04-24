@@ -1,6 +1,7 @@
 package uk.co.caprica.vlcj.test;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.Executors;
@@ -12,9 +13,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JSlider;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 
 public class PlayerControlsPanel extends JPanel {
 
@@ -35,6 +40,7 @@ public class PlayerControlsPanel extends JPanel {
   private JButton nextChapterButton;
   
   private JButton toggleMuteButton;
+  private JSlider volumeSlider;
   
   public PlayerControlsPanel(MediaPlayer mediaPlayer) {
     this.mediaPlayer = mediaPlayer;
@@ -82,6 +88,12 @@ public class PlayerControlsPanel extends JPanel {
     
     toggleMuteButton = new JButton();
     toggleMuteButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/sound_mute.png")));
+    
+    volumeSlider = new JSlider();
+    volumeSlider.setOrientation(JSlider.HORIZONTAL);
+    volumeSlider.setMinimum(0);
+    volumeSlider.setMaximum(100);
+    volumeSlider.setPreferredSize(new Dimension(100, 40));
   }
   
   private void layoutControls() {
@@ -106,12 +118,20 @@ public class PlayerControlsPanel extends JPanel {
     bottomPanel.add(fastForwardButton);
     bottomPanel.add(nextChapterButton);
     
+    bottomPanel.add(volumeSlider);
     bottomPanel.add(toggleMuteButton);
     
     add(bottomPanel, BorderLayout.SOUTH);
   }
   
   private void registerListeners() {
+    mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+      @Override
+      public void playing(MediaPlayer mediaPlayer) {
+        updateVolume(mediaPlayer.getVolume());
+      }
+    });
+    
     previousChapterButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -153,6 +173,17 @@ public class PlayerControlsPanel extends JPanel {
         mediaPlayer.mute();
       }
     });
+    
+    volumeSlider.addChangeListener(new ChangeListener() {
+
+      @Override
+      public void stateChanged(ChangeEvent e) {
+        JSlider source = (JSlider)e.getSource();
+        if (!source.getValueIsAdjusting()) {
+          mediaPlayer.setVolume(source.getValue());
+        }
+      }
+    });
   }
   
   private final class UpdateRunnable implements Runnable {
@@ -192,8 +223,12 @@ public class PlayerControlsPanel extends JPanel {
     positionProgressBar.setValue(value);
   }
   
-  public void updateChapter(int chapter, int chapterCount) {
+  private void updateChapter(int chapter, int chapterCount) {
     String s = chapter + "/" + chapterCount;
     chapterLabel.setText(s);
+  }
+  
+  private void updateVolume(int value) {
+    volumeSlider.setValue(value);
   }
 }

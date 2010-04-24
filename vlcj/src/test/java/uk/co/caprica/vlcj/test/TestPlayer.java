@@ -51,6 +51,10 @@ public class TestPlayer {
   
   private static final String[] ARGS = {};
   
+  private Frame mainFrame;
+  
+  private Canvas videoSurface;
+  
   /**
    * If you must use a broken operating system, you will need to do something
    * like this instead of the above.
@@ -77,23 +81,23 @@ public class TestPlayer {
   }
    
   public TestPlayer() {
-	Canvas videoSurface = new Canvas();
+	videoSurface = new Canvas();
 	videoSurface.setBackground(Color.black);
 
 	MediaPlayer mediaPlayer = new LinuxMediaPlayer(ARGS);
 	  
-	final Frame f = new Frame("VLCJ Test Player for VLC 1.1.x");
-	f.setLayout(new BorderLayout());
-	f.setBackground(Color.black);
-	f.add(videoSurface, BorderLayout.CENTER);
-	f.add(new PlayerControlsPanel(mediaPlayer), BorderLayout.SOUTH);
-	f.setBounds(100, 100, 600, 400);
-	f.addWindowListener(new WindowAdapter() {
+	mainFrame = new Frame("VLCJ Test Player for VLC 1.1.x");
+	mainFrame.setLayout(new BorderLayout());
+	mainFrame.setBackground(Color.black);
+	mainFrame.add(videoSurface, BorderLayout.CENTER);
+	mainFrame.add(new PlayerControlsPanel(mediaPlayer), BorderLayout.SOUTH);
+	mainFrame.setBounds(100, 100, 600, 400);
+	mainFrame.addWindowListener(new WindowAdapter() {
 	  public void windowClosing(WindowEvent evt) {
 		System.exit(0);
 	  }
 	});
-    f.setVisible(true);
+    mainFrame.setVisible(true);
 	
 	mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
 	mediaPlayer.setVideoSurface(videoSurface);
@@ -123,7 +127,8 @@ public class TestPlayer {
       LOG.debug("Meta Data Available");
       LOG.debug(videoMetaData);
       
-//      f.setSize(videoMetaData.getVideoDimension());
+      videoSurface.setSize(videoMetaData.getVideoDimension());
+      mainFrame.pack();
     }
   }
 }
