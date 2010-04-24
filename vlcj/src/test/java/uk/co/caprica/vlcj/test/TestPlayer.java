@@ -28,6 +28,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.check.EnvironmentChecker;
@@ -63,14 +64,28 @@ public class TestPlayer {
     System.out.println(" compiler: " + LibVlc.INSTANCE.libvlc_get_compiler());
     System.out.println("changeset: " + LibVlc.INSTANCE.libvlc_get_changeset());
     
-    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
+    setLookAndFeel();
+    
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
         new TestPlayer();
       }
     });
+  }
+  
+  private static void setLookAndFeel() throws Exception {
+    String lookAndFeelClassName = null;
+    LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
+    for(LookAndFeelInfo lookAndFeel : lookAndFeelInfos) {
+      if("Nimbus".equals(lookAndFeel.getName())) {
+        lookAndFeelClassName = lookAndFeel.getClassName();
+      }
+    }
+    if(lookAndFeelClassName == null) {
+      lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
+    }
+    UIManager.setLookAndFeel(lookAndFeelClassName);
   }
    
   public TestPlayer() {
@@ -84,7 +99,7 @@ public class TestPlayer {
 	mainFrame.setBackground(Color.black);
 	mainFrame.add(videoSurface, BorderLayout.CENTER);
 	mainFrame.add(new PlayerControlsPanel(mediaPlayer), BorderLayout.SOUTH);
-	mainFrame.setBounds(100, 100, 600, 400);
+	mainFrame.setBounds(100, 100, 800, 600);
 	mainFrame.addWindowListener(new WindowAdapter() {
 	  public void windowClosing(WindowEvent evt) {
 		System.exit(0);
@@ -94,23 +109,25 @@ public class TestPlayer {
 	
 	mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
 	mediaPlayer.setVideoSurface(videoSurface);
-    mediaPlayer.playMedia("/some/movie/here.avi");
   }
   
   private final class TestPlayerMediaPlayerEventListener extends MediaPlayerEventAdapter {
+    @Override
     public void finished(MediaPlayer mediaPlayer) {
       System.out.println("Finished");
-      System.exit(0);
     }
 
+    @Override
     public void paused(MediaPlayer mediaPlayer) {
       System.out.println("Paused");
     }
 
+    @Override
     public void playing(MediaPlayer mediaPlayer) {
       System.out.println("Playing");
     }
 
+    @Override
     public void stopped(MediaPlayer mediaPlayer) {
       System.out.println("Stopped");
     }
@@ -127,8 +144,6 @@ public class TestPlayer {
       if(videoMetaData.getSpuCount() > 0) {
         mediaPlayer.setSpu(1);
       }
-      
-//      System.out.println("SPU SPU SPU: " + mediaPlayer.getSpuCount());
     }
   }
 }

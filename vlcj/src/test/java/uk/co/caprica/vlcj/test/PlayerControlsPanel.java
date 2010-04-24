@@ -4,12 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -44,6 +47,10 @@ public class PlayerControlsPanel extends JPanel {
   
   private JButton captureButton;
   
+  private JButton ejectButton;
+  
+  private JFileChooser fileChooser;
+  
   public PlayerControlsPanel(MediaPlayer mediaPlayer) {
     this.mediaPlayer = mediaPlayer;
     
@@ -66,6 +73,16 @@ public class PlayerControlsPanel extends JPanel {
     positionProgressBar.setMaximum(100);
     
     chapterLabel = new JLabel("00/00");
+    
+    try {
+      Enumeration e = getClass().getClassLoader().getResources("");
+      while(e.hasMoreElements()) {
+        System.out.println("RES: " + e.nextElement());
+      }
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     
     previousChapterButton = new JButton();
     previousChapterButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_start_blue.png")));
@@ -99,6 +116,12 @@ public class PlayerControlsPanel extends JPanel {
     
     captureButton = new JButton();
     captureButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/camera.png")));
+    
+    ejectButton = new JButton();
+    ejectButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_eject_blue.png")));
+    
+    fileChooser = new JFileChooser();
+    fileChooser.setApproveButtonText("Play");
   }
   
   private void layoutControls() {
@@ -127,6 +150,8 @@ public class PlayerControlsPanel extends JPanel {
     bottomPanel.add(toggleMuteButton);
     
     bottomPanel.add(captureButton);
+    
+    bottomPanel.add(ejectButton);
     
     add(bottomPanel, BorderLayout.SOUTH);
   }
@@ -197,6 +222,15 @@ public class PlayerControlsPanel extends JPanel {
         mediaPlayer.saveSnapshot();
       }
     });
+    
+    ejectButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if(JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(PlayerControlsPanel.this)) {
+          mediaPlayer.playMedia(fileChooser.getSelectedFile().getAbsolutePath());
+        }
+      }
+    });
   }
   
   private final class UpdateRunnable implements Runnable {
@@ -212,7 +246,7 @@ public class PlayerControlsPanel extends JPanel {
       long time = mediaPlayer.getTime();
       
       long duration = mediaPlayer.getLength();
-      int position = (int)Math.round(100.0 * (double)time / (double)duration);
+      int position = duration > 0 ? (int)Math.round(100.0 * (double)time / (double)duration) : 0;
 
       int chapter = mediaPlayer.getChapter();
       int chapterCount = mediaPlayer.getChapterCount();
