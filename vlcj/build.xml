@@ -69,6 +69,7 @@
   <target name="jar.test" depends="compile.test">
     <jar jarfile="build/${ant.project.name}-${build.version}-test.jar" basedir="build/test-classes">
       <fileset dir="build/test-classes"/>
+    	<fileset dir="src/test/resources"/>
       <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
     </jar>
   </target>
@@ -89,7 +90,7 @@
     <delete dir="build"/>
   </target>
   
-  <target name="dist" depends="jar, srcjar, docjar">
+  <target name="dist" depends="jar, srcjar, docjar, jar.test">
 <!--
   	<delete dir="dist"/>
   	-->
