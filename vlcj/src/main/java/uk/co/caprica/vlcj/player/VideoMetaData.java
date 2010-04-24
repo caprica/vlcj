@@ -31,6 +31,11 @@ public class VideoMetaData {
    */
   private Dimension videoDimension;
   
+  /**
+   * Number of sub-picture/sub-titles.
+   */
+  private int spuCount;
+  
   public Dimension getVideoDimension() {
     return videoDimension;
   }
@@ -39,9 +44,18 @@ public class VideoMetaData {
     this.videoDimension = videoDimension;
   }
   
+  public int getSpuCount() {
+    return spuCount;
+  }
+
+  public void setSpuCount(int spuCount) {
+    this.spuCount = spuCount;
+  }
+
   public String toString() {
     StringBuilder sb = new StringBuilder(20);
-    sb.append("videoDimension=").append(videoDimension);
+    sb.append("videoDimension=").append(videoDimension).append(',');
+    sb.append("spuCount=").append(spuCount);
     return sb.toString();
   }
 }
