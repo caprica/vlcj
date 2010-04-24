@@ -17,13 +17,23 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.player;
 
-import com.sun.jna.PointerType;
+public interface MediaPlayerEventListener {
 
-/**
- *
- */
-public class LibVlcEventManager extends PointerType {
+  void playing(MediaPlayer mediaPlayer);
 
+  void paused(MediaPlayer mediaPlayer);
+
+  void stopped(MediaPlayer mediaPlayer);
+
+  void finished(MediaPlayer mediaPlayer);
+  
+  void positionChanged(MediaPlayer mediaPlayer, float newPosition);
+  
+  void timeChanged(MediaPlayer mediaPlayer, long newTime);
+  
+  void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData);
+
+  void lengthChanged(MediaPlayer mediaPlayer, long newLength);
 }

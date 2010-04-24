@@ -19,20 +19,15 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 /**
  *
  */
-public class media_list_view_item_deleted extends Structure {
+public class libvlc_track_description_t extends Structure {
 
-  /**
-   * 
-   */
-  public LibVlcMediaDescriptor item;
-
-  /**
-   * 
-   */
-  public int index;
+  int i_id;
+  String psz_name;
+  Pointer p_next;
 }

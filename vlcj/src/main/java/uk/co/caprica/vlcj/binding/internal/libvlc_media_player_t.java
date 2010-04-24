@@ -19,19 +19,11 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import com.sun.jna.Callback;
-import com.sun.jna.Pointer;
+import com.sun.jna.PointerType;
 
 /**
  *
  */
-public interface LibVlcCallback extends Callback {
+public class libvlc_media_player_t extends PointerType {
 
-  /**
-   * 
-   * 
-   * @param event
-   * @param userData
-   */
-  void callback(libvlc_event_t event, Pointer userData);
 }

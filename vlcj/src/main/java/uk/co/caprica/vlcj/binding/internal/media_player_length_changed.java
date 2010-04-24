@@ -19,11 +19,12 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import com.sun.jna.PointerType;
+import com.sun.jna.Structure;
 
 /**
  *
  */
-public class LibVlcMediaInstance extends PointerType {
+public class media_player_length_changed extends Structure {
 
+  public long new_length;
 }

@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Structure;
 
 /**
@@ -27,8 +26,5 @@ import com.sun.jna.Structure;
  */
 public class media_duration_changed extends Structure {
 
-  /**
-   *
-   */
-  public NativeLong new_duration;
+  public long new_duration;
 }

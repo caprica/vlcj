@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 /**
@@ -26,13 +27,6 @@ import com.sun.jna.Structure;
  */
 public class media_list_item_added extends Structure {
 
-  /**
-   * 
-   */
-  public LibVlcMediaDescriptor item;
-
-  /**
-   * 
-   */
+  public Pointer item;
   public int index;
 }

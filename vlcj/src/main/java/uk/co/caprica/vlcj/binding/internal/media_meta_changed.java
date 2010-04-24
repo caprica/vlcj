@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 /**
@@ -28,7 +27,7 @@ import com.sun.jna.Structure;
 public class media_meta_changed extends Structure {
 
   /**
-   * 
+   * @see libvlc_meta_t
    */
-  public Pointer meta_type;
+  public int meta_type;
 }

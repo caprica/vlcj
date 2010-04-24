@@ -23,23 +23,21 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Frame;
-import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
 
-import uk.co.caprica.vlcj.MediaPlayer;
-import uk.co.caprica.vlcj.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.VideoMetaData;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.check.EnvironmentChecker;
+import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.VideoMetaData;
+import uk.co.caprica.vlcj.player.linux.LinuxMediaPlayer;
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
@@ -49,6 +47,8 @@ import uk.co.caprica.vlcj.check.EnvironmentChecker;
  */
 public class TestPlayer {
 
+  private static final Logger LOG = Logger.getLogger(TestPlayer.class);
+  
   private static final String[] ARGS = {};
   
   /**
@@ -58,20 +58,35 @@ public class TestPlayer {
   // private static final String[] ARGS = {"--plugin-path=C:\\Program Files\\VideoLAN\\VLC\\plugins"};
   
   public static void main(String[] args) throws Exception {
+    BasicConfigurator.configure();
+    
     new EnvironmentChecker().checkEnvironment();
     
-    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    LOG.debug("  version: " + LibVlc.INSTANCE.libvlc_get_version());
+    LOG.debug(" compiler: " + LibVlc.INSTANCE.libvlc_get_compiler());
+    LOG.debug("changeset: " + LibVlc.INSTANCE.libvlc_get_changeset());
     
+    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        new TestPlayer();
+      }
+    });
+  }
+   
+  public TestPlayer() {
 	Canvas videoSurface = new Canvas();
 	videoSurface.setBackground(Color.black);
 
-	MediaPlayer mediaPlayer = new MediaPlayer(ARGS);
+	MediaPlayer mediaPlayer = new LinuxMediaPlayer(ARGS);
 	  
-	final Frame f = new Frame("VLCJ Test Player");
+	final Frame f = new Frame("VLCJ Test Player for VLC 1.1.x");
 	f.setLayout(new BorderLayout());
 	f.setBackground(Color.black);
 	f.add(videoSurface, BorderLayout.CENTER);
-	f.add(new ControlsPanel(mediaPlayer), BorderLayout.SOUTH);
+	f.add(new PlayerControlsPanel(mediaPlayer), BorderLayout.SOUTH);
 	f.setBounds(100, 100, 600, 400);
 	f.addWindowListener(new WindowAdapter() {
 	  public void windowClosing(WindowEvent evt) {
@@ -80,75 +95,35 @@ public class TestPlayer {
 	});
     f.setVisible(true);
 	
-	mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventListener() {
-
-      public void finished(MediaPlayer mediaPlayer) {
-        System.out.println("Finished");
-        System.exit(0);
-      }
-  
-      public void paused(MediaPlayer mediaPlayer) {
-        System.out.println("Paused");
-      }
-  
-      public void playing(MediaPlayer mediaPlayer) {
-        System.out.println("Playing");
-      }
-  
-      public void stopped(MediaPlayer mediaPlayer) {
-        System.out.println("Stopped");
-      }
-
-      @Override
-      public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
-        System.out.println("Meta Data Available");
-        System.out.println(videoMetaData);
-        
-        f.setSize(videoMetaData.getVideoDimension());
-      }
-	});
+	mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
 	mediaPlayer.setVideoSurface(videoSurface);
-	mediaPlayer.playMedia("/path/to/some/video/here.mp4");
-
-	Thread.currentThread().join();
+    mediaPlayer.playMedia("/some/movie/here.avi");
   }
   
-  private static class ControlsPanel extends JPanel {
-    
-    private ControlsPanel(final MediaPlayer mediaPlayer) {
-      setBackground(Color.black);
-      setBorder(new EmptyBorder(8, 8, 8, 8));
-      setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-      
-      add(Box.createHorizontalGlue());
-      
-      Action pauseAction = new AbstractAction("Pause") {
-        
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          mediaPlayer.pause();
-        }
-      };
-      
-      JButton stopButton = new JButton(pauseAction);
-      add(stopButton);
-
-      add(Box.createHorizontalStrut(8));
-      
-      Action playAction = new AbstractAction("Play") {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          mediaPlayer.play();
-        }
-        
-      };
-      
-      JButton playButton = new JButton(playAction);
-      add(playButton);
-
-      add(Box.createHorizontalGlue());
+  private final class TestPlayerMediaPlayerEventListener extends MediaPlayerEventAdapter {
+    public void finished(MediaPlayer mediaPlayer) {
+      LOG.debug("Finished");
+      System.exit(0);
     }
-    
+
+    public void paused(MediaPlayer mediaPlayer) {
+      LOG.debug("Paused");
+    }
+
+    public void playing(MediaPlayer mediaPlayer) {
+      LOG.debug("Playing");
+    }
+
+    public void stopped(MediaPlayer mediaPlayer) {
+      LOG.debug("Stopped");
+    }
+
+    @Override
+    public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
+      LOG.debug("Meta Data Available");
+      LOG.debug(videoMetaData);
+      
+//      f.setSize(videoMetaData.getVideoDimension());
+    }
   }
 }

@@ -19,11 +19,13 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import com.sun.jna.PointerType;
+import com.sun.jna.Structure;
 
 /**
  *
  */
-public class LibVlcMediaDescriptor extends PointerType {
+public class vlm_media_event extends Structure {
 
+  public String psz_media_name;
+  public String psz_instance_name;
 }

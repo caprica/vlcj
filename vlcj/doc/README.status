@@ -1,0 +1,28 @@
+These bindings are for version 1.1.x of libvlc.
+
+Bindings exist for the core player functionality, the media player, and events.
+
+Some of the bindings, particularly with regard to structures, may not (yet) be
+complete. There may well be bugs in the JNA mappings. My intention is to keep
+improving this but it's a big job to get 100% complete and correct bindings!
+
+There should be enough here to get a good media player working, have a look at
+the TestPlayer class to help you get started.
+
+I am happy to hear feed-back if there's something critical that the bindings
+are not providing for you.
+
+One significant difference is that there are now multiple methods available to
+set the video surface - and this depends on the OS you are running under.
+
+For this reason, you will need to determine which OS you are running on at
+run-time and instantiate an appropriate player instance.
+
+The only version I provide (at the moment) out of the box is for Linux.
+
+I can not test these bindings on a Windows or Mac environment, so either send
+me patches if you get it working on those environments, or just roll your own 
+solution.
+
+You will need to agree to assign me the copyright to your patch if you want it
+included in the codebase.

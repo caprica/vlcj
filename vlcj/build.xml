@@ -21,7 +21,7 @@
 
 <project name="vlcj" default="all">
 
-	<property name="build.version" value="1.0"/>
+	<property name="build.version" value="1.1a"/>
 
 	<buildnumber/>
 
@@ -90,7 +90,9 @@
   </target>
   
   <target name="dist" depends="jar, srcjar, docjar">
+<!--
   	<delete dir="dist"/>
+  	-->
     <copy todir="dist">
       <fileset dir="build" includes="*.jar"/>
       <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>

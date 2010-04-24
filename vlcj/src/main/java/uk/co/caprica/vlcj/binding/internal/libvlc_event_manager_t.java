@@ -19,25 +19,11 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import com.sun.jna.Structure;
+import com.sun.jna.PointerType;
 
 /**
  *
  */
-public class libvlc_exception_t extends Structure {
+public class libvlc_event_manager_t extends PointerType {
 
-  /**
-   * 
-   */
-  public int raised;
-
-  /**
-   * 
-   */
-  public int code;
-
-  /**
-   * 
-   */
-  public String message;
 }

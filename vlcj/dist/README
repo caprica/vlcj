@@ -17,6 +17,20 @@ Make sure you read and understand the README.LICENSE file. VLCJ, JVLC and VLC
 itself all use open source licenses. You must respect the terms of the GPL 3
 license.
 
+!!! IMPORTANT !!!
+
+Note that the current versions of these bindings require VLC 1.1.x, they will
+not work with VLC 1.0.x.
+
+You may well need to make changes in your own code to make use of the new
+bindings - this is unavoidable because the new version of libvlc has changed a 
+lot.
+
+!!! IMPORTANT !!!
+
+Versions of the bindings that do work with 1.0.x are available in the project
+Downloads section.
+
 I'd be happy to hear about any interesting uses you may put this to!
 
 See http://forum.videolan.org/viewtopic.php?f=32&t=56939

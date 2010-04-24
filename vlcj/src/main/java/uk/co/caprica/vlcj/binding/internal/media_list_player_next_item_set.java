@@ -23,12 +23,12 @@ import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 /**
- * 
+ *
  */
-public class media_media_discoverer_ended extends Structure {
+public class media_list_player_next_item_set extends Structure {
 
   /**
    * 
    */
-  public Pointer unused;
+  public Pointer item;
 }

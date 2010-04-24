@@ -28,7 +28,7 @@ import com.sun.jna.Structure;
 public class libvlc_event_t extends Structure {
 
   /**
-   * 
+   * @see libvlc_event_e
    */
   public int type;
 
@@ -40,5 +40,5 @@ public class libvlc_event_t extends Structure {
   /**
    * 
    */
-  public event_type_specific event_type_specific;
+  public libvlc_event_u u;
 }

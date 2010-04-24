@@ -26,8 +26,5 @@ import com.sun.jna.Structure;
  */
 public class media_player_time_changed extends Structure {
 
-  /**
-   * 
-   */
   public long new_time;
 }

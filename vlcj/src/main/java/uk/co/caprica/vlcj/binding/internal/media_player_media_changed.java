@@ -17,32 +17,17 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj;
+package uk.co.caprica.vlcj.binding.internal;
+
+import com.sun.jna.Structure;
 
 /**
- * Default implementation of the media player event listener.
- * <p>
- * Simply override the methods you're interested in.
+ *
  */
-public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
+public class media_player_media_changed extends Structure {
 
-  @Override
-  public void playing(MediaPlayer mediaPlayer) {
-  }
-
-  @Override
-  public void paused(MediaPlayer mediaPlayer) {
-  }
-
-  @Override
-  public void stopped(MediaPlayer mediaPlayer) {
-  }
-
-  @Override
-  public void finished(MediaPlayer mediaPlayer) {
-  }
-
-  @Override
-  public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
-  }
+  /**
+   * 
+   */
+  public libvlc_media_t md;
 }

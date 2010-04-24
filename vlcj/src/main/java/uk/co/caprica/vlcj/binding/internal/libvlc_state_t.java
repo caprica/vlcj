@@ -19,20 +19,28 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import com.sun.jna.Structure;
 
 /**
  *
  */
-public class media_list_view_item_added extends Structure {
+public enum libvlc_state_t {
 
-  /**
-   * 
-   */
-  public LibVlcMediaDescriptor item;
+  libvlc_NothingSpecial(0),
+  libvlc_Opening       (1),
+  libvlc_Buffering     (2),
+  libvlc_Playing       (3),
+  libvlc_Paused        (4),
+  libvlc_Stopped       (5),
+  libvlc_Ended         (6),
+  libvlc_Error         (7);
 
-  /**
-   * 
-   */
-  public int index;
+  private final int intValue;
+  
+  private libvlc_state_t(int intValue) {
+    this.intValue = intValue;
+  }
+
+  public int intValue() {
+    return intValue;
+  }
 }

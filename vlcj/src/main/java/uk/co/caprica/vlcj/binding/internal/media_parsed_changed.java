@@ -24,15 +24,7 @@ import com.sun.jna.Structure;
 /**
  *
  */
-public class media_list_view_will_add_item extends Structure {
+public class media_parsed_changed extends Structure {
 
-  /**
-   * 
-   */
-  public LibVlcMediaDescriptor item;
-
-  /**
-   * 
-   */
-  public int index;
+  public int new_status;
 }
