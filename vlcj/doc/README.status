@@ -1,3 +1,6 @@
+
+                             === VLCJ Status ===
+
 These bindings are for version 1.1.x of libvlc.
 
 Bindings exist for the core player functionality, the media player, and events.
@@ -25,4 +28,4 @@ me patches if you get it working on those environments, or just roll your own
 solution.
 
 You will need to agree to assign me the copyright to your patch if you want it
-included in the codebase.
+included in the code-base.
