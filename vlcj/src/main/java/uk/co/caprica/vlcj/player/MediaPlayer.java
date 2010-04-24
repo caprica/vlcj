@@ -101,7 +101,7 @@ public abstract class MediaPlayer {
 
     // It is now OS-dependant as to how the video surface should be set
     nativeSetVideoSurface(mediaPlayerInstance, videoSurface);
-    
+
     setMedia(media);
 
     play();
@@ -167,7 +167,7 @@ public abstract class MediaPlayer {
     }
   }
   
-  //=== Chapter Controls =====================================================
+  // === Chapter Controls =====================================================
 
   public int getChapterCount() {
     int result = libvlc.libvlc_media_player_get_chapter_count(mediaPlayerInstance);
@@ -189,6 +189,26 @@ public abstract class MediaPlayer {
   
   public void previousChapter() {
     libvlc.libvlc_media_player_previous_chapter(mediaPlayerInstance);
+  }
+  
+  // === Sub-Picture/Sub-Title Controls =======================================
+  
+  public int getSpuCount() {
+    int result = libvlc.libvlc_video_get_spu_count(mediaPlayerInstance);
+    return result;
+  }
+  
+  public int getSpu() {
+    int result = libvlc.libvlc_video_get_spu(mediaPlayerInstance);
+    if(result != -1) {
+    }
+    return result;
+  }
+  
+  public void setSpu(int spu) {
+    int result = libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
+    if(result != -1) {
+    }
   }
   
   /**
@@ -406,6 +426,7 @@ public abstract class MediaPlayer {
           if(hasVideoOut()) {
             VideoMetaData videoMetaData = new VideoMetaData();
             videoMetaData.setVideoDimension(getVideoDimension());
+            videoMetaData.setSpuCount(getSpuCount());
             
             notifyListeners(videoMetaData);
             
