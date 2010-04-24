@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -207,7 +208,18 @@ public abstract class MediaPlayer {
   
   public void setSpu(int spu) {
     int result = libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
-    if(result != -1) {
+    if(result != 0) {
+    }
+  }
+  
+  // === Snapshot Controls ====================================================
+  
+  public void saveSnapshot() {
+    File snapshotDirectory = new File(System.getProperty("user.home"));
+    File snapshotFile = new File(snapshotDirectory, "vlcj-snapshot-" + System.currentTimeMillis() + ".png");
+    int result = libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, snapshotFile.getAbsolutePath(), 0, 0);
+    if(result != 0) {
+      
     }
   }
   
