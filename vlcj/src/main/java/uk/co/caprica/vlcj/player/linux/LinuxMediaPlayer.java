@@ -11,7 +11,6 @@ public class LinuxMediaPlayer extends MediaPlayer {
 
   public LinuxMediaPlayer(String[] args) {
     super(args);
-    // TODO Auto-generated constructor stub
   }
 
   @Override
