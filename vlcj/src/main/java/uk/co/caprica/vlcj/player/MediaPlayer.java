@@ -35,7 +35,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_meta_t;
 import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_position_changed;
@@ -49,6 +48,34 @@ import com.sun.jna.ptr.IntByReference;
  * <p>
  * A more useful implementation will implement chapter and volume controls and 
  * so on.
+ * <p>
+ * The basic life-cycle is:
+ * <pre>
+ *   // Create a new media player instance for a particular platform
+ *   MediaPlayer mediaPlayer = new LinuxMediaPlayer();
+ *   
+ *   // Set standard options to be applied to all subsequently played media items
+ *   String[] standardOptions = {"video-filter=logo", "logo-file=vlcj-logo.png", "logo-opacity=25"}; 
+ *   mediaPlayer.setStandardMediaOptions(standardOptions);
+ *
+ *   // Add a component to be notified of player events
+ *   mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {});
+ *   
+ *   // Create and set a new component to display the rendered video
+ *   Canvas videoSurface = new Canvas();
+ *   mediaPlayer.setVideoSurface(videoSurface);
+ *
+ *   // Play a particular item, with options if necessary
+ *   String mediaPath = "/path/to/some/movie.mpg";
+ *   String[] mediaOptions = {};
+ *   mediaPlayer.playMedia(mediaPath, options);
+ *   
+ *   // Do some interesting things in the application
+ *   ...
+ *   
+ *   // Cleanly dispose of the media player instance and any associated native resources
+ *   mediaPlayer.release();
+ * </pre>
  */
 public abstract class MediaPlayer {
 
@@ -69,8 +96,10 @@ public abstract class MediaPlayer {
   private libvlc_event_manager_t mediaPlayerEventManager;
   private libvlc_callback_t callback;
 
-  private Canvas videoSurface;
+  private String[] standardMediaOptions;
 
+  private Canvas videoSurface;
+  
   private volatile boolean released;
 
   /**
@@ -83,27 +112,70 @@ public abstract class MediaPlayer {
     createInstance();
   }
 
+  /**
+   * Add a component to be notified of media player events.
+   * 
+   * @param listener component to notify
+   */
   public void addMediaPlayerEventListener(MediaPlayerEventListener listener) {
     eventListenerList.add(listener);
   }
 
+  /**
+   * Remove a component that was previously interested in notifications of
+   * media player events.
+   * 
+   * @param listener component to stop notifying
+   */
   public void removeMediaPlayerEventListener(MediaPlayerEventListener listener) {
     eventListenerList.remove(listener);
   }
 
+  /**
+   * Set standard media options for all media items subsequently played.
+   * <p>
+   * This will <strong>not</strong> affect any currently playing media item.
+   * 
+   * @param options options to apply to all subsequently played media items
+   */
+  public void setStandardMediaOptions(String... options) {
+    this.standardMediaOptions = options;
+  }
+
+  /**
+   * Set the component used to display the rendered video.
+   * 
+   * @param videoSurface component
+   */
   public void setVideoSurface(Canvas videoSurface) {
     this.videoSurface = videoSurface;
   }
 
+  /**
+   * Play a new media item.
+   * 
+   * @param media media item
+   */
   public void playMedia(String media) {
+    playMedia(media, (String)null);
+  }
+  
+  /**
+   * Play a new media item, with options.
+   * 
+   * @param media media item
+   * @param mediaOptions media item options
+   */
+  public void playMedia(String media, String... mediaOptions) {
     if(videoSurface == null) {
       throw new IllegalStateException("Must set a video surface");
     }
 
-    // It is now OS-dependant as to how the video surface should be set
+    // Delegate to the template method in the OS-specific implementation class
+    // to actually set the video surface
     nativeSetVideoSurface(mediaPlayerInstance, videoSurface);
 
-    setMedia(media);
+    setMedia(media, mediaOptions);
 
     play();
   }
@@ -124,8 +196,14 @@ public abstract class MediaPlayer {
     return result;
   }
   
-  // === Playback Controls ====================================================
+  // === Basic Playback Controls ==============================================
   
+  /**
+   * Begin play-back.
+   * <p>
+   * If called when the play-back is paused, the play-back will resume from the
+   * current position.
+   */
   public void play() {
     int result = libvlc.libvlc_media_player_play(mediaPlayerInstance);
     if(result != 0) {
@@ -133,34 +211,67 @@ public abstract class MediaPlayer {
     }
   }
 
+  /**
+   * Stop play-back.
+   * <p>
+   * A subsequent play will play-back from the start.
+   */
   public void stop() {
     libvlc.libvlc_media_player_stop(mediaPlayerInstance);
   }
 
+  /**
+   * Pause play-back.
+   * <p>
+   * If the play-back is currently paused it will begin playing.
+   */
   public void pause() {
     libvlc.libvlc_media_player_pause(mediaPlayerInstance);
   }
 
   // === Audio Controls =======================================================
 
+  /**
+   * Toggle volume mute.
+   */
   public void mute() {
     libvlc.libvlc_audio_toggle_mute(mediaPlayerInstance);
   }
   
+  /**
+   * Mute or un-mute the volume.
+   * 
+   * @param mute <code>true</code> to mute the volume, <code>false</code> to un-mute it
+   */
   public void mute(boolean mute) {
     libvlc.libvlc_audio_set_mute(mediaPlayerInstance, mute ? 1 : 0);
   }
   
+  /**
+   * Test whether or not the volume is current muted.
+   * 
+   * @return mute <code>true</code> if the volume is muted, <code>false</code> if the volume is not muted
+   */
   public boolean isMute() {
     int result = libvlc.libvlc_audio_get_mute(mediaPlayerInstance);
     return result != 0;
   }
   
+  /**
+   * Get the current volume.
+   * 
+   * @return volume, in the range 0 to 100 where 100 is full volume
+   */
   public int getVolume() {
     int result = libvlc.libvlc_audio_get_volume(mediaPlayerInstance);
     return result;
   }
   
+  /**
+   * Set the volume.
+   * 
+   * @param volume volume, in the range 0 to 100 where 100 is full volume 
+   */
   public void setVolume(int volume) {
     int result = libvlc.libvlc_audio_set_volume(mediaPlayerInstance, volume);
     if(result != 0) {
@@ -223,6 +334,12 @@ public abstract class MediaPlayer {
     }
   }
   
+  // === User Interface =======================================================
+  
+  public void toggleFullScreen() {
+    libvlc.libvlc_toggle_fullscreen(mediaPlayerInstance);
+  }
+  
   /**
    * Create and prepare the native media player resources.
    */
@@ -269,10 +386,12 @@ public abstract class MediaPlayer {
     callback = new VlcVideoPlayerCallback();
 
     for(libvlc_event_e event : libvlc_event_e.values()) {
-      int result = libvlc.libvlc_event_attach(mediaPlayerEventManager, event.intValue(), callback, null);
-      if(result == 0) {
-      }
-      else {
+      if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() < libvlc_event_e.libvlc_MediaListItemAdded.intValue()) {
+        int result = libvlc.libvlc_event_attach(mediaPlayerEventManager, event.intValue(), callback, null);
+        if(result == 0) {
+        }
+        else {
+        }
       }
     }
   }
@@ -280,25 +399,43 @@ public abstract class MediaPlayer {
   private void deregisterEventListener() {
     if(callback != null) {
       for(libvlc_event_e event : libvlc_event_e.values()) {
-        libvlc.libvlc_event_detach(mediaPlayerEventManager, event.intValue(), callback, null);
+        if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() < libvlc_event_e.libvlc_MediaListItemAdded.intValue()) {
+          libvlc.libvlc_event_detach(mediaPlayerEventManager, event.intValue(), callback, null);
+        }
       }
 
       callback = null;
     }
   }
 
-  private void setMedia(String media) {
+  /**
+   * 
+   * 
+   * @param media
+   * @param mediaOptions
+   */
+  private void setMedia(String media, String... mediaOptions) {
     libvlc_media_t mediaDescriptor = libvlc.libvlc_media_new_path(instance, media);
-    libvlc.libvlc_media_parse(mediaDescriptor);
     
-    libvlc_meta_t[] metas = libvlc_meta_t.values();
-    
-    for(libvlc_meta_t meta : metas) {
-      System.out.println("meta=" + libvlc.libvlc_media_get_meta(mediaDescriptor, meta.intValue()));
+    if(standardMediaOptions != null) {
+      for(String standardOption : standardMediaOptions) {
+        libvlc.libvlc_media_add_option(mediaDescriptor, standardOption);
+      }
     }
     
-    long duration = libvlc.libvlc_media_get_duration(mediaDescriptor);
-    System.out.println("duration=" + duration);
+    if(mediaOptions != null) {
+      for(String mediaOption : mediaOptions) {
+        libvlc.libvlc_media_add_option(mediaDescriptor, mediaOption);
+      }
+    }
+    
+    libvlc.libvlc_media_parse(mediaDescriptor);
+    
+//    libvlc_meta_t[] metas = libvlc_meta_t.values();
+//    
+//    for(libvlc_meta_t meta : metas) {
+//      System.out.println("meta=" + libvlc.libvlc_media_get_meta(mediaDescriptor, meta.intValue()));
+//    }
     
     libvlc.libvlc_media_player_set_media(mediaPlayerInstance, mediaDescriptor);
     libvlc.libvlc_media_release(mediaDescriptor);
@@ -426,6 +563,8 @@ public abstract class MediaPlayer {
    * <p>
    * This seems to be quite reliable but <strong>not</strong> 100% - on some
    * occasions the event seems not to fire. 
+   * 
+   * TODO is this still required with libvlc 1.1?
    */
   private final class NotifyMetaRunnable implements Runnable {
 
@@ -465,7 +604,10 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * Template method.
+   * Template method for setting the video surface natively.
+   * <p>
+   * Implementing classes should override this method to invoke the appropriate
+   * libvlc method to set the video surface.
    * 
    * @param instance media player instance
    * @param videoSurface video surface component
