@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.runtime;
 
 /**
  * Crude heuristics to determine the current Operating System.
+ * <p>
+ * The com.sun.jna.Platform class provides similar functionality.
  */
 public class RuntimeUtil {
 
