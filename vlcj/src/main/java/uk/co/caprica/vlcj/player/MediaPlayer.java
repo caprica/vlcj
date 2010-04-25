@@ -44,10 +44,11 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
 /**
- * Simple media player implementation.
+ * Media player implementation.
  * <p>
  * This implementation provides the following functions:
  * <ul>
+ *   <li>Status controls - e.g. length, time</li> 
  *   <li>Basic play-back controls - play, pause, stop</li>
  *   <li>Volume controls - volume level, mute</li>
  *   <li>Chapter controls - next/previous/set chapter, chapter count</li>
@@ -186,6 +187,28 @@ public abstract class MediaPlayer {
     play();
   }
 
+  // === Status Controls ======================================================
+
+  public boolean isPlayable() {
+    int result = libvlc.libvlc_media_player_will_play(mediaPlayerInstance);
+    return result == 1;
+  }
+  
+  public boolean isPlaying() {
+    int result = libvlc.libvlc_media_player_is_playing(mediaPlayerInstance);
+    return result == 1;
+  }
+  
+  public boolean isSeekable() {
+    int result = libvlc.libvlc_media_player_is_seekable(mediaPlayerInstance);
+    return result == 1;
+  }
+  
+  public boolean canPause() {
+    int result = libvlc.libvlc_media_player_can_pause(mediaPlayerInstance);
+    return result == 1;
+  }
+  
   public long getLength() {
     long result = libvlc.libvlc_media_player_get_length(mediaPlayerInstance);
     if(result != -1) {
@@ -199,6 +222,16 @@ public abstract class MediaPlayer {
     if(result != -1) {
       
     }
+    return result;
+  }
+  
+  public float getFps() {
+    float result = libvlc.libvlc_media_player_get_fps(mediaPlayerInstance);
+    return result;
+  }
+  
+  public float getRate() {
+    float result = libvlc.libvlc_media_player_get_rate(mediaPlayerInstance);
     return result;
   }
   
@@ -234,7 +267,7 @@ public abstract class MediaPlayer {
   public void pause() {
     libvlc.libvlc_media_player_pause(mediaPlayerInstance);
   }
-
+  
   // === Audio Controls =======================================================
 
   /**
@@ -376,14 +409,18 @@ public abstract class MediaPlayer {
    * @param filename name of the file to contain the snapshot
    */
   public void saveSnapshot(File file) {
-    if(file.getParentFile().mkdirs()) {
+    File snapshotDirectory = file.getParentFile();
+    if(!snapshotDirectory.exists()) {
+      snapshotDirectory.mkdirs();
+    }
+    if(snapshotDirectory.exists()) {
       int result = libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), 0, 0);
       if(result != 0) {
         
       }
     }
     else {
-      throw new RuntimeException("Failed to create parent directories for '" + file.getAbsolutePath() + "'");
+      throw new RuntimeException("Directory does not exist and could not be created for '" + file.getAbsolutePath() + "'");
     }
   }
   
@@ -471,8 +508,8 @@ public abstract class MediaPlayer {
     libvlc_media_t mediaDescriptor = libvlc.libvlc_media_new_path(instance, media);
     
     if(standardMediaOptions != null) {
-      for(String standardOption : standardMediaOptions) {
-        libvlc.libvlc_media_add_option(mediaDescriptor, standardOption);
+      for(String standardMediaOption : standardMediaOptions) {
+        libvlc.libvlc_media_add_option(mediaDescriptor, standardMediaOption);
       }
     }
     
