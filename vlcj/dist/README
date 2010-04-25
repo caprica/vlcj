@@ -71,6 +71,9 @@ line prompt):
 
 $java -jar vlc-1.1a-test.jar
 
+For the test player you can specify a logo file name on the command-line.
+
+$java -jar vlc-1.1a-test.jar /some/directory/vlcj-logo.png
 
 == Known Issues ==
 
@@ -87,12 +90,15 @@ operating-system dependant.
 This means at run-time you need to detect which operating system you are 
 running on and call the appropriate method.
 
-At the moment the only implementation provided out-of-the-box by VLCJ is for
-Linux.
+At the moment the implementations provided out-of-the-box by VLCJ are for
+Linux and Windows. There is no Mac version yet.
 
 It should be simple to add the missing implementation for the other operating
 systems but I can not do this myself due to lack of suitable testing 
 environments.
+
+The test video player attempts to work out the runtime operating system and
+create the appropriate video player instance.
 
 
 == Feedback and Contact Details ==
