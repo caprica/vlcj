@@ -71,6 +71,9 @@ line prompt):
 
 $java -jar vlc-1.1a-test.jar
 
+For the test player you can specify a logo file name on the command-line.
+
+$java -jar vlc-1.1a-test.jar /some/directory/vlcj-logo.png
 
 == Known Issues ==
 
