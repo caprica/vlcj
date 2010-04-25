@@ -3,7 +3,8 @@
 
 These bindings are for version 1.1.x of libvlc.
 
-Bindings exist for the core player functionality, the media player, and events.
+Bindings exist for the core player functionality, the media player, events,
+logos and marquees.
 
 Some of the bindings, particularly with regard to structures, may not (yet) be
 complete. There may well be bugs in the JNA mappings. My intention is to keep
