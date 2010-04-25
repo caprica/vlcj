@@ -118,8 +118,7 @@ public class TestPlayer {
 	if(args.length > 0) {
 	  String logoFile = args[0];
 	  
-      // I don't yet know how to use libvlc methods directly to set logo, but this works...
-	  String[] standardOptions = {"video-filter=logo", "logo-file=" + logoFile, "logo-opacity=25"}; 
+	  String[] standardOptions = {"video-filter=logo", "logo-file=" + logoFile, "logo-opacity=25"};
 	  mediaPlayer.setStandardMediaOptions(standardOptions);
 	}
 	
@@ -173,6 +172,12 @@ public class TestPlayer {
       if(videoMetaData.getSpuCount() > 0) {
         mediaPlayer.setSpu(1);
       }
+      
+      // You can set a logo like this if you like...
+//      mediaPlayer.setLogoFile("./etc/vlcj-logo.png");
+//      mediaPlayer.setLogoOpacity(50);
+//      mediaPlayer.setLogoLocation(10, 10);
+//      mediaPlayer.enableLogo(true);
     }
   }
 }
