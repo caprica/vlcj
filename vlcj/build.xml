@@ -21,7 +21,7 @@
 
 <project name="vlcj" default="all">
 
-	<property name="build.version" value="1.1a"/>
+	<property name="build.version" value="1.1b"/>
 
 	<buildnumber/>
 
@@ -101,7 +101,7 @@
     </copy>
   </target>
   
-	<target name="rebuild" depends="clean, jar" description="Perform a clean build to produce a new jar file"/>
+  <target name="rebuild" depends="clean, jar" description="Perform a clean build to produce a new jar file"/>
 	
   <target name="all" depends="clean, dist" description="Perform a full clean build and produce distribution jar files"/>
   
