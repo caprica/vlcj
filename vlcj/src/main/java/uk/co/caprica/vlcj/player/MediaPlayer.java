@@ -71,7 +71,7 @@ import com.sun.jna.ptr.IntByReference;
  *   mediaPlayer.setStandardMediaOptions(standardMediaOptions);
  *
  *   // Add a component to be notified of player events
- *   mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {});
+ *   mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {...add implementation here...});
  *   
  *   // Create and set a new component to display the rendered video
  *   Canvas videoSurface = new Canvas();
