@@ -48,19 +48,20 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  */
 public class TestPlayer {
   
-  private static final String[] ARGS = {};
-  
-  private Frame mainFrame;
-  
-  private Canvas videoSurface;
-  
   /**
    * If you must use a broken operating system, you will need to do something
    * like this instead of the above.
    */
   // private static final String[] ARGS = {"--plugin-path=C:\\Program Files\\VideoLAN\\VLC\\plugins"};
+
+  private static final String[] ARGS = {
+  };
   
-  public static void main(String[] args) throws Exception {
+  private Frame mainFrame;
+  
+  private Canvas videoSurface;
+  
+  public static void main(final String[] args) throws Exception {
     new EnvironmentChecker().checkEnvironment();
     
     System.out.println("  version: " + LibVlc.INSTANCE.libvlc_get_version());
@@ -72,7 +73,7 @@ public class TestPlayer {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
-        new TestPlayer();
+        new TestPlayer(args);
       }
     });
   }
@@ -91,7 +92,7 @@ public class TestPlayer {
     UIManager.setLookAndFeel(lookAndFeelClassName);
   }
    
-  public TestPlayer() {
+  public TestPlayer(String[] args) {
 	videoSurface = new Canvas();
 	videoSurface.setBackground(Color.black);
 
@@ -112,7 +113,16 @@ public class TestPlayer {
 	else {
 	  throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
 	}
+
+	// Use any first command-line argument to set a logo
+	if(args.length > 0) {
+	  String logoFile = args[0];
 	  
+      // I don't yet know how to use libvlc methods directly to set logo, but this works...
+	  String[] standardOptions = {"video-filter=logo", "logo-file=" + logoFile, "logo-opacity=25"}; 
+	  mediaPlayer.setStandardMediaOptions(standardOptions);
+	}
+	
 	mainFrame = new Frame("VLCJ Test Player for VLC 1.1.x");
 	mainFrame.setLayout(new BorderLayout());
 	mainFrame.setBackground(Color.black);
