@@ -35,6 +35,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
 import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_position_changed;
@@ -54,6 +55,7 @@ import com.sun.jna.ptr.IntByReference;
  *   <li>Chapter controls - next/previous/set chapter, chapter count</li>
  *   <li>Sub-picture/sub-title controls - get/set, count</li>
  *   <li>Snapshot controls</li>
+ *   <li>Logo controls - enable/disable, set opacity, file</li>
  * </ul>
  * <p>
  * The basic life-cycle is:
@@ -62,8 +64,8 @@ import com.sun.jna.ptr.IntByReference;
  *   MediaPlayer mediaPlayer = new LinuxMediaPlayer();
  *   
  *   // Set standard options as needed to be applied to all subsequently played media items
- *   String[] standardOptions = {"video-filter=logo", "logo-file=vlcj-logo.png", "logo-opacity=25"}; 
- *   mediaPlayer.setStandardMediaOptions(standardOptions);
+ *   String[] standardMediaOptions = {"video-filter=logo", "logo-file=vlcj-logo.png", "logo-opacity=25"}; 
+ *   mediaPlayer.setStandardMediaOptions(standardMediaOptions);
  *
  *   // Add a component to be notified of player events
  *   mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {});
@@ -75,7 +77,7 @@ import com.sun.jna.ptr.IntByReference;
  *   // Play a particular item, with options if necessary
  *   String mediaPath = "/path/to/some/movie.mpg";
  *   String[] mediaOptions = {};
- *   mediaPlayer.playMedia(mediaPath, options);
+ *   mediaPlayer.playMedia(mediaPath, mediaOptions);
  *   
  *   // Do some interesting things in the application
  *   ...
@@ -83,6 +85,31 @@ import com.sun.jna.ptr.IntByReference;
  *   // Cleanly dispose of the media player instance and any associated native resources
  *   mediaPlayer.release();
  * </pre>
+ * With regard to overlaying logos there are three approaches.
+ * <p>
+ * The first way is to specify standard options for the media player - this will
+ * set the logo for any subsequently played media item, for example:
+ * <pre>
+ *   String[] standardMediaOptions = {"video-filter=logo", "logo-file=vlcj-logo.png", "logo-opacity=25"};
+ *   mediaPlayer.setStandardMediaOptions(standardMediaOptions);
+ * </pre>
+ * The second way is to specify options when playing the media item, for 
+ * example:
+ * <pre>
+ *   String[] mediaOptions = {"video-filter=logo", "logo-file=vlcj-logo.png", "logo-opacity=25"};
+ *   mediaPlayer.playMedia(mediaPath, mediaOptions);
+ * </pre>
+ * The final way is to use the methods of this class to set various logo 
+ * properties, for example:
+ * <pre>
+ *   mediaPlayer.setLogoFile("vlcj-logo.png");
+ *   mediaPlayer.setLogoOpacity(25);
+ *   mediaPlayer.setLogoLocation(10, 10);
+ *   mediaPlayer.enableLogo(true);
+ * </pre>
+ * For this latter method, it is not possible to enable the logo until after
+ * the video has started playing. There is also a noticeable stutter in video
+ * play-back when enabling the logo filter in this way.
  */
 public abstract class MediaPlayer {
 
@@ -422,6 +449,48 @@ public abstract class MediaPlayer {
     else {
       throw new RuntimeException("Directory does not exist and could not be created for '" + file.getAbsolutePath() + "'");
     }
+  }
+
+  // === Logo Controls ========================================================
+
+  /**
+   * Enable/disable the logo.
+   * <p>
+   * The logo will not be enabled if there is currently no video being played.
+   * 
+   * @param enable <code>true</code> to show the logo, <code>false</code> to hide it
+   */
+  public void enableLogo(boolean enable) {
+    libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_enable.intValue(), enable ? 1 : 0);
+  }
+
+  /**
+   * Set the logo opacity.
+   * 
+   * @param opacity opacity in the range 0 to 100 where 100 is fully opaque
+   */
+  public void setLogoOpacity(int opacity) {
+    libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_opacity.intValue(), opacity);
+  }
+
+  /**
+   * Set the logo location
+   * 
+   * @param x x co-ordinate for the top left of the logo
+   * @param y y co-ordinate for the top left of the logo
+   */
+  public void setLogoLocation(int x, int y) {
+    libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_x.intValue(), x);
+    libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_y.intValue(), y);
+  }
+
+  /**
+   * Set the logo file.
+   * 
+   * @param logoFile logo file name
+   */
+  public void setLogoFile(String logoFile) {
+    libvlc.libvlc_video_set_logo_string(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_file.intValue(), logoFile);
   }
   
   // === User Interface =======================================================
