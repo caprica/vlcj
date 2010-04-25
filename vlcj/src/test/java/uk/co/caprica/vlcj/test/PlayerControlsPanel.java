@@ -259,7 +259,7 @@ public class PlayerControlsPanel extends JPanel {
   }
   
   private void updateChapter(int chapter, int chapterCount) {
-    String s = chapterCount != -1 ? chapter + "/" + chapterCount : "-";
+    String s = chapterCount != -1 ? (chapter+1) + "/" + chapterCount : "-";
     chapterLabel.setText(s);
     chapterLabel.invalidate();
     validate();
