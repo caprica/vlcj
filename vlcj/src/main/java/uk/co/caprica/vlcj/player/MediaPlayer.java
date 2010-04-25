@@ -740,7 +740,6 @@ public abstract class MediaPlayer {
             break;
         
           case libvlc_MediaPlayerPaused:
-            System.out.println("video dimension: " + getVideoDimension()); 
             listener.paused(this);
             break;
         
