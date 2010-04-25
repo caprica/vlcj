@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
 import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_position_changed;
@@ -56,6 +58,7 @@ import com.sun.jna.ptr.IntByReference;
  *   <li>Sub-picture/sub-title controls - get/set, count</li>
  *   <li>Snapshot controls</li>
  *   <li>Logo controls - enable/disable, set opacity, file</li>
+ *   <li>Marquee controls - enable/disable, set colour, size, opacity, timeout</li>
  * </ul>
  * <p>
  * The basic life-cycle is:
@@ -110,6 +113,21 @@ import com.sun.jna.ptr.IntByReference;
  * For this latter method, it is not possible to enable the logo until after
  * the video has started playing. There is also a noticeable stutter in video
  * play-back when enabling the logo filter in this way.
+ * <p>
+ * With regard to overlaying marquee's, again there are three approaches (similar
+ * to those for logos).
+ * <p>
+ * In this instance only the final way showing the usage of the API is used, for
+ * example:
+ * <pre>
+ *   mediaPlayer.setMarqueeText("VLCJ is quite good");
+ *   mediaPlayer.setMarqueeSize(60);
+ *   mediaPlayer.setMarqueeOpacity(70);
+ *   mediaPlayer.setMarqueeColour(Color.green);
+ *   mediaPlayer.setMarqueeTimeout(3000);
+ *   mediaPlayer.setMarqueeLocation(300, 400);
+ *   mediaPlayer.enableMarquee(true);
+ * </pre>
  */
 public abstract class MediaPlayer {
 
@@ -491,6 +509,84 @@ public abstract class MediaPlayer {
    */
   public void setLogoFile(String logoFile) {
     libvlc.libvlc_video_set_logo_string(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_file.intValue(), logoFile);
+  }
+  
+  // === Marquee Controls =====================================================
+
+  /**
+   * Enable/disable the marquee.
+   * <p>
+   * The marquee will not be enabled if there is currently no video being played.
+   * 
+   * @param enable <code>true</code> to show the marquee, <code>false</code> to hide it
+   */
+  public void enableMarquee(boolean enable) {
+    libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Enable.intValue(), enable ? 1 : 0);
+  }
+
+  /**
+   * Set the marquee text.
+   * 
+   * @param text text
+   */
+  public void setMarqueeText(String text) {
+    libvlc.libvlc_video_set_marquee_string(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Text.intValue(), text);
+  }
+
+  /**
+   * Set the marquee colour.
+   * 
+   * @param colour colour, any alpha component will be masked off
+   */
+  public void setMarqueeColour(Color colour) {
+    setMarqueeColour(colour.getRGB() & 0x00ffffff);
+  }
+
+  /**
+   * Set the marquee colour.
+   * 
+   * @param colour RGB colour value
+   */
+  public void setMarqueeColour(int colour) {
+    libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Color.intValue(), colour);
+  }
+  
+  /**
+   * Set the marquee opacity.
+   * 
+   * @param opacity opacity in the range 0 to 100 where 100 is fully opaque
+   */
+  public void setMarqueeOpacity(int opacity) {
+    libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Opacity.intValue(), opacity);
+  }
+
+  /**
+   * Set the marquee size.
+   * 
+   * @param size size, height of the marquee text in pixels
+   */
+  public void setMarqueeSize(int size) {
+    libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Size.intValue(), size);
+  }
+  
+  /**
+   * Set the marquee timeout. 
+   * 
+   * @param timeout timeout, in milliseconds
+   */
+  public void setMarqueeTimeout(int timeout) {
+    libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Timeout.intValue(), timeout);
+  }
+  
+  /**
+   * Set the marquee location.
+   * 
+   * @param x x co-ordinate for the top left of the marquee
+   * @param y y co-ordinate for the top left of the marquee
+   */
+  public void setMarqueeLocation(int x, int y) {
+    libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_X.intValue(), x);
+    libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Y.intValue(), y);
   }
   
   // === User Interface =======================================================
