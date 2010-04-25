@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.Enumeration;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -73,16 +71,6 @@ public class PlayerControlsPanel extends JPanel {
     positionProgressBar.setMaximum(100);
     
     chapterLabel = new JLabel("00/00");
-    
-    try {
-      Enumeration e = getClass().getClassLoader().getResources("");
-      while(e.hasMoreElements()) {
-        System.out.println("RES: " + e.nextElement());
-      }
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
     
     previousChapterButton = new JButton();
     previousChapterButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_start_blue.png")));
