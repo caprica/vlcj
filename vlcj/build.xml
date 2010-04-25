@@ -34,7 +34,7 @@
   <property name="compile.debug" value="on"/>
 	
   <path id="project.classes">
-    <pathelement location="lib/jna-3.0.9.jar"/>
+    <pathelement location="lib/jna.jar"/>
   </path>
   
   <target name="prepare">
