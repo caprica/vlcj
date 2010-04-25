@@ -46,15 +46,21 @@ import com.sun.jna.ptr.IntByReference;
 /**
  * Simple media player implementation.
  * <p>
- * A more useful implementation will implement chapter and volume controls and 
- * so on.
+ * This implementation provides the following functions:
+ * <ul>
+ *   <li>Basic play-back controls - play, pause, stop</li>
+ *   <li>Volume controls - volume level, mute</li>
+ *   <li>Chapter controls - next/previous/set chapter, chapter count</li>
+ *   <li>Sub-picture/sub-title controls - get/set, count</li>
+ *   <li>Snapshot controls</li>
+ * </ul>
  * <p>
  * The basic life-cycle is:
  * <pre>
  *   // Create a new media player instance for a particular platform
  *   MediaPlayer mediaPlayer = new LinuxMediaPlayer();
  *   
- *   // Set standard options to be applied to all subsequently played media items
+ *   // Set standard options as needed to be applied to all subsequently played media items
  *   String[] standardOptions = {"video-filter=logo", "logo-file=vlcj-logo.png", "logo-opacity=25"}; 
  *   mediaPlayer.setStandardMediaOptions(standardOptions);
  *
@@ -281,24 +287,49 @@ public abstract class MediaPlayer {
   
   // === Chapter Controls =====================================================
 
+  /**
+   * Get the chapter count.
+   * 
+   * @return number of chapters, or -1 if no chapters
+   */
   public int getChapterCount() {
     int result = libvlc.libvlc_media_player_get_chapter_count(mediaPlayerInstance);
     return result;
   }
   
+  /**
+   * Get the current chapter.
+   * 
+   * @return chapter number, or -1 if no media
+   */
   public int getChapter() {
     int result = libvlc.libvlc_media_player_get_chapter(mediaPlayerInstance);
     return result;
   }
   
+  /**
+   * Get the chapter.
+   * 
+   * @param chapterNumber chapter number
+   */
   public void setChapter(int chapterNumber) {
     libvlc.libvlc_media_player_set_chapter(mediaPlayerInstance, chapterNumber);
   }
   
+  /**
+   * Jump to the next chapter.
+   * <p>
+   * If the play-back is already at the last chapter, this will have no effect.
+   */
   public void nextChapter() {
     libvlc.libvlc_media_player_next_chapter(mediaPlayerInstance);
   }
   
+  /**
+   * Jump to the previous chapter.
+   * <p>
+   * If the play-back is already at the first chapter, this will have no effect.
+   */
   public void previousChapter() {
     libvlc.libvlc_media_player_previous_chapter(mediaPlayerInstance);
   }
@@ -324,13 +355,35 @@ public abstract class MediaPlayer {
   }
   
   // === Snapshot Controls ====================================================
-  
+
+  /**
+   * Save a snapshot of the currently playing video.
+   * <p>
+   * The snapshot will be created in the user's home directory and be assigned
+   * a filename based on the current time.
+   */
   public void saveSnapshot() {
     File snapshotDirectory = new File(System.getProperty("user.home"));
     File snapshotFile = new File(snapshotDirectory, "vlcj-snapshot-" + System.currentTimeMillis() + ".png");
-    int result = libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, snapshotFile.getAbsolutePath(), 0, 0);
-    if(result != 0) {
-      
+    saveSnapshot(snapshotFile);
+  }
+  
+  /**
+   * Save a snapshot of the currently playing video.
+   * <p>
+   * Any missing directory path will be created if it does not exist.
+   * 
+   * @param filename name of the file to contain the snapshot
+   */
+  public void saveSnapshot(File file) {
+    if(file.getParentFile().mkdirs()) {
+      int result = libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), 0, 0);
+      if(result != 0) {
+        
+      }
+    }
+    else {
+      throw new RuntimeException("Failed to create parent directories for '" + file.getAbsolutePath() + "'");
     }
   }
   
