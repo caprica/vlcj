@@ -378,7 +378,7 @@ public abstract class MediaPlayer {
   /**
    * Get the current chapter.
    * 
-   * @return chapter number, or -1 if no media
+   * @return chapter number, where zero is the first chatper, or -1 if no media
    */
   public int getChapter() {
     int result = libvlc.libvlc_media_player_get_chapter(mediaPlayerInstance);
@@ -386,9 +386,9 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * Get the chapter.
+   * Set the chapter.
    * 
-   * @param chapterNumber chapter number
+   * @param chapterNumber chapter number, where zero is the first chapter
    */
   public void setChapter(int chapterNumber) {
     libvlc.libvlc_media_player_set_chapter(mediaPlayerInstance, chapterNumber);
