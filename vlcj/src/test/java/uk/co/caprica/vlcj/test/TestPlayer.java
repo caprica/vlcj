@@ -178,6 +178,15 @@ public class TestPlayer {
 //      mediaPlayer.setLogoOpacity(50);
 //      mediaPlayer.setLogoLocation(10, 10);
 //      mediaPlayer.enableLogo(true);
+
+      // Demo the marquee      
+      mediaPlayer.setMarqueeText("Thank you for using VLCJ");
+      mediaPlayer.setMarqueeSize(30);
+      mediaPlayer.setMarqueeOpacity(95);
+      mediaPlayer.setMarqueeColour(new Color(0xf0a0c0));
+      mediaPlayer.setMarqueeTimeout(5000);
+      mediaPlayer.setMarqueeLocation(50, 100);
+      mediaPlayer.enableMarquee(true);
     }
   }
 }
