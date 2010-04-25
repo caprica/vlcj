@@ -54,6 +54,14 @@ The main artefacts are:
   vlcj-<version>-javadoc.jar   - generated javadoc API documentation
 
 
+== Usage ==
+
+The main class is the MediaPlayer class.
+
+I encourage you to read the javadoc for that class, or consult the TestPlayer
+implementation (see below).
+
+
 == The Example Video Player Application ==
 
 In addition, there is a test video player application available:
@@ -74,6 +82,7 @@ $java -jar vlc-1.1a-test.jar
 For the test player you can specify a logo file name on the command-line.
 
 $java -jar vlc-1.1a-test.jar /some/directory/vlcj-logo.png
+
 
 == Known Issues ==
 
