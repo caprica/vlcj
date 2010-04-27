@@ -57,7 +57,7 @@
   <target name="jar" depends="compile">
     <jar jarfile="build/${ant.project.name}-${build.version}.jar" basedir="build/classes">
       <fileset dir="build/classes"/>
-      <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
+      <fileset dir="doc" includes="gpl.txt,README.LICENSE,README,README.icons,README.status,README.windows"/>
     	<manifest>
     		<attribute name="Implementation-Title" value="${project.name}"/>
         <attribute name="Implementation-Vendor" value="Caprica Software Limited"/>
