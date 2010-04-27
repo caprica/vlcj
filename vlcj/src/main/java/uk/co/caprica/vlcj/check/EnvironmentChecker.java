@@ -83,6 +83,10 @@ public class EnvironmentChecker {
       else {
         System.out.println("WARNING: Could not find libvlc shared library in any of the usual places");
       }
+      
+      if(Platform.isWindows()) {
+        System.out.println("You seem to be running on Windows, if libvlc fails to start you may need to pass extra options to set the plug-in path (see README.windows)");
+      }
     }
     else {
       System.out.println("Checking the environment not supported on your platform");
