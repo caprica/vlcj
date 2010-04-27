@@ -25,17 +25,21 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.check.EnvironmentChecker;
+import uk.co.caprica.vlcj.check.EnvironmentCheckerFactory;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.VideoMetaData;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
@@ -45,21 +49,12 @@ import uk.co.caprica.vlcj.player.VideoMetaData;
  */
 public class TestPlayer {
   
-  /**
-   * If you must use a broken operating system, you will need to do something
-   * like this instead of the above.
-   */
-  // private static final String[] ARGS = {"--plugin-path=C:\\Program Files\\VideoLAN\\VLC\\plugins"};
-
-  private static final String[] ARGS = {
-  };
-  
   private Frame mainFrame;
   
   private Canvas videoSurface;
   
   public static void main(final String[] args) throws Exception {
-    new EnvironmentChecker().checkEnvironment();
+    new EnvironmentCheckerFactory().newEnvironmentChecker().checkEnvironment();
     
     System.out.println("  version: " + LibVlc.INSTANCE.libvlc_get_version());
     System.out.println(" compiler: " + LibVlc.INSTANCE.libvlc_get_compiler());
@@ -95,7 +90,16 @@ public class TestPlayer {
 
 	MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
 	
-	MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(ARGS);
+	List<String> vlcArgs = new ArrayList<String>();
+
+	// Add some other arguments here, or take them from the command-line
+	
+	// Special case to help out users on Windows...
+	if(RuntimeUtil.isWindows()) {
+	  vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
+	}
+	  
+	MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(vlcArgs.toArray(new String[vlcArgs.size()]));
 
 	// Use any first command-line argument to set a logo
 	if(args.length > 0) {
