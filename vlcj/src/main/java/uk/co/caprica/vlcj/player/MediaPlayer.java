@@ -683,8 +683,9 @@ public abstract class MediaPlayer {
         libvlc.libvlc_media_add_option(mediaDescriptor, mediaOption);
       }
     }
-    
-    libvlc.libvlc_media_parse(mediaDescriptor);
+  
+    // FIXME parsing causes problems e.g. when playing HTTP URLs
+//    libvlc.libvlc_media_parse(mediaDescriptor);
     
 //    libvlc_meta_t[] metas = libvlc_meta_t.values();
 //    
