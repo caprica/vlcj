@@ -34,11 +34,8 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.check.EnvironmentChecker;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.VideoMetaData;
-import uk.co.caprica.vlcj.player.linux.LinuxMediaPlayer;
-import uk.co.caprica.vlcj.player.mac.MacMediaPlayer;
-import uk.co.caprica.vlcj.player.windows.WindowsMediaPlayer;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
@@ -96,23 +93,9 @@ public class TestPlayer {
 	videoSurface = new Canvas();
 	videoSurface.setBackground(Color.black);
 
-	MediaPlayer mediaPlayer;
+	MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
 	
-	if(RuntimeUtil.isNix()) {
-	  System.out.println("Creating a media player for *nix");
-	  mediaPlayer = new LinuxMediaPlayer(ARGS);
-	}
-	else if(RuntimeUtil.isWindows()) {
-      System.out.println("Creating a media player for Windows");
-      mediaPlayer = new WindowsMediaPlayer(ARGS);
-	}
-	else if(RuntimeUtil.isMac()) {
-      System.out.println("Creating a media player for Mac");
-      mediaPlayer = new MacMediaPlayer(ARGS);
-	}
-	else {
-	  throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
-	}
+	MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(ARGS);
 
 	// Use any first command-line argument to set a logo
 	if(args.length > 0) {
