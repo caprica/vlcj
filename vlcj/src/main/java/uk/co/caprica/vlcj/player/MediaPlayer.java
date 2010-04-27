@@ -591,10 +591,33 @@ public abstract class MediaPlayer {
   
   // === User Interface =======================================================
   
+  /**
+   * 
+   */
   public void toggleFullScreen() {
     libvlc.libvlc_toggle_fullscreen(mediaPlayerInstance);
   }
+
+  /**
+   * 
+   * 
+   * @param fullScreen
+   */
+  public void setFullScreen(boolean fullScreen) {
+    libvlc.libvlc_set_fullscreen(mediaPlayerInstance, fullScreen ? 1 : 0);
+  }
   
+  /**
+   * 
+   * 
+   * @return
+   */
+  public boolean isFullScreen() {
+    return libvlc.libvlc_get_fullscreen(mediaPlayerInstance) == 1;
+  }
+  
+  // === Implementation =======================================================
+
   /**
    * Create and prepare the native media player resources.
    */
