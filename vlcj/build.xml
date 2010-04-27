@@ -35,6 +35,7 @@
 	
   <path id="project.classes">
     <pathelement location="lib/jna.jar"/>
+    <pathelement location="lib/platform.jar"/>
   </path>
   
   <target name="prepare">
@@ -78,6 +79,10 @@
     <jar jarfile="build/${ant.project.name}-${build.version}-sources.jar" basedir="src/main/java"/>
   </target>
   
+	<target name="srcjar.test" depends="prepare">
+    <jar jarfile="build/${ant.project.name}-${build.version}-test-sources.jar" basedir="src/test/java"/>
+	</target>
+	
   <target name="javadoc" depends="prepare">
     <javadoc sourcepath="src/main/java" destdir="build/javadoc" classpathref="project.classes" access="protected" author="yes" windowtitle="VLCJ Documentation" footer="(C)2010 Caprica Software Limited"/>
   </target>
@@ -90,7 +95,7 @@
     <delete dir="build"/>
   </target>
   
-  <target name="dist" depends="jar, srcjar, docjar, jar.test">
+  <target name="dist" depends="jar, srcjar, docjar, jar.test, srcjar.test">
 <!--
   	<delete dir="dist"/>
   	-->
