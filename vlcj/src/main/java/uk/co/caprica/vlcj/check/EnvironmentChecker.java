@@ -23,12 +23,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.jna.Platform;
-
 /**
  * A heuristic to try and find the libvlc shared object file, to aid debugging.
  */
-public class EnvironmentChecker {
+public abstract class EnvironmentChecker {
 
   /**
    * Check for the existence of the libvlc shared object file.
@@ -39,106 +37,109 @@ public class EnvironmentChecker {
     System.out.println("============================================================");
     
     System.out.println();
+    
+    File jnaLibraryPathResult = checkJnaLibraryPath();
+    File currentDirectoryResult = checkCurrentDirectory();
+    List<File> searchPathResults = checkSearchPaths();
 
-    if(Platform.isWindows() || Platform.isLinux()) {
-      String nativeFileName = Platform.isWindows() ? "libvlc.dll" : "libvlc.so";
-  
-      File firstMatchingFile = null;
-      
-      // Check jna.library.path first...
-      String jnaLibraryPath = System.getProperty("jna.library.path");
-      if(jnaLibraryPath != null) {
-        File searchDirectory = new File(jnaLibraryPath);
-        File searchFile = new File(searchDirectory, nativeFileName);
-        boolean exists = searchFile.exists();
-        System.out.println("-Djna.library.path=" + jnaLibraryPath + " -> " + searchFile.getAbsolutePath() + " -> " + (exists ? "FOUND" : "NOT FOUND"));
-        if(exists) {
-          firstMatchingFile = searchFile;
-        }
-      }
-      else {
-        System.out.println("-Djna.library.path=<path> not set");
-      }
-  
-      System.out.println();
-      
-      // Check operating system search paths...
-      List<String> searchLocations = Platform.isWindows() ? getWindowsSearchPaths() : getLinuxSearchPaths();
-      for(String searchLocation : searchLocations) {
-        File searchDirectory = new File(searchLocation);
-        File searchFile = new File(searchDirectory, nativeFileName);
-        boolean exists = searchFile.exists();
-        System.out.println(searchFile.getAbsolutePath() + " -> " + (exists ? "FOUND" : "NOT FOUND"));
-        
-        if(firstMatchingFile == null && exists) {
-          firstMatchingFile = searchFile;
-        }
-      }
-  
-      System.out.println();
-      
-      if(firstMatchingFile != null) {
-        System.out.println("Found libvlc at '" + firstMatchingFile.getAbsolutePath() + "'");
-      }
-      else {
-        System.out.println("WARNING: Could not find libvlc shared library in any of the usual places");
-      }
-      
-      if(Platform.isWindows()) {
-        System.out.println("You seem to be running on Windows, if libvlc fails to start you may need to pass extra options to set the plug-in path (see README.windows)");
-      }
+    List<File> allResults = new ArrayList<File>();
+    if(jnaLibraryPathResult != null) {
+      allResults.add(jnaLibraryPathResult);
     }
-    else {
-      System.out.println("Checking the environment not supported on your platform");
+    allResults.add(currentDirectoryResult);
+    allResults.addAll(searchPathResults);
+    int longest = 0;
+    for(File file : allResults) {
+      longest = Math.max(longest, file.getAbsolutePath().length());
+    }
+    
+    String jnaLibraryPath = System.getProperty("jna.library.path");
+    System.out.println("-Djna.library.path=" + (jnaLibraryPath != null ? jnaLibraryPath : "<not-specified>"));
+    if(jnaLibraryPathResult != null) {
+      checkExists(jnaLibraryPathResult, longest);
     }
 
     System.out.println();
     
-    System.out.println("======================================================================");
+    System.out.println("Current Directory...");
+    checkExists(currentDirectoryResult, longest);
+    
+    System.out.println();
+    
+    System.out.println("Search Paths...");
+    
+    for(File searchPathResult : searchPathResults) {
+      checkExists(searchPathResult, longest);
+    }
+    
+    System.out.println();
+    
+    checkNativeEnvironment();
+    
+    System.out.println();
+
+    System.out.println("============================================================");
+    System.out.println();
+  }
+
+  /**
+   * 
+   */
+  private File checkJnaLibraryPath() {
+    File result = null;
+    String jnaLibraryPath = System.getProperty("jna.library.path");
+    if(jnaLibraryPath != null) {
+      result = new File(new File(jnaLibraryPath), getSharedLibraryName());
+    }
+    return result;
+  }
+  
+  /**
+   * 
+   * 
+   * @return
+   */
+  private File checkCurrentDirectory() {
+    return new File(getSharedLibraryName());
+  }
+  
+  /**
+   * 
+   */
+  private List<File> checkSearchPaths() {
+    List<File> result = new ArrayList<File>();
+    for(String path : getSharedLibraryPaths()) {
+      result.add(new File(new File(path), getSharedLibraryName()));
+    }
+    return result;
+  }
+
+  /**
+   * 
+   * 
+   * @param file
+   */
+  private void checkExists(File file, int size) {
+    System.out.printf(" %" + size + "s -> %s", file.getAbsolutePath(), file.exists() ? "FOUND" : "NOT FOUND");
     System.out.println();
   }
   
   /**
-   * Get the list of potential shared library search paths on Linux.
    * 
-   * @return list of search paths
-   */
-  private List<String> getLinuxSearchPaths() {
-    List<String> paths = new ArrayList<String>();
-    
-    paths.add("/usr/lib");
-    paths.add("/usr/local/lib");
-    paths.add("/lib");
-
-    String ldLibraryPath = System.getenv("LD_LIBRARY_PATH");
-    addPaths(paths, ldLibraryPath.split(":"));
-    
-    return paths;
-  }
-  
-  /**
-   * Get the list of potential shared library search paths on Windows.
    * 
-   * @return list of search paths
+   * @return
    */
-  private List<String> getWindowsSearchPaths() {
-    List<String> paths = new ArrayList<String>();
-
-    String path = System.getenv("PATH");
-    addPaths(paths, path.split(";"));
-    
-    return paths;
-  }
+  protected abstract String getSharedLibraryName();
 
   /**
-   * Add a set of paths.
    * 
-   * @param paths collection of paths
-   * @param parts paths to add
+   * 
+   * @return
    */
-  private void addPaths(List<String> paths, String[] parts) {
-    for(String part : parts) {
-      paths.add(part);
-    }
-  }
+  protected abstract List<String> getSharedLibraryPaths();
+
+  /**
+   * 
+   */
+  protected abstract void checkNativeEnvironment();
 }
