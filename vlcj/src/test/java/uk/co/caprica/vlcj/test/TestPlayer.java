@@ -23,8 +23,12 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,6 +133,9 @@ public class TestPlayer {
 	
 	mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
 	mediaPlayer.setVideoSurface(videoSurface);
+    
+	// This might be useful
+//	enableMousePointer(false);
   }
   
   private final class TestPlayerMediaPlayerEventListener extends MediaPlayerEventAdapter {
@@ -179,6 +186,21 @@ public class TestPlayer {
       mediaPlayer.setMarqueeTimeout(5000);
       mediaPlayer.setMarqueeLocation(50, 100);
       mediaPlayer.enableMarquee(true);
+    }
+  }
+  
+  /**
+   * 
+   * 
+   * @param enable
+   */
+  private void enableMousePointer(boolean enable) {
+    if(enable) {
+      videoSurface.setCursor(null);
+    }
+    else {
+      Image blankImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+      videoSurface.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(0, 0), ""));
     }
   }
 }
