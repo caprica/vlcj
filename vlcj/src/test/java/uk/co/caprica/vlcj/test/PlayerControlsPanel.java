@@ -47,6 +47,8 @@ public class PlayerControlsPanel extends JPanel {
   
   private JButton ejectButton;
   
+  private JButton fullScreenButton;
+  
   private JFileChooser fileChooser;
   
   public PlayerControlsPanel(MediaPlayer mediaPlayer) {
@@ -74,42 +76,57 @@ public class PlayerControlsPanel extends JPanel {
     
     previousChapterButton = new JButton();
     previousChapterButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_start_blue.png")));
+    previousChapterButton.setToolTipText("Go to previous chapter");
 
     rewindButton = new JButton();
     rewindButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_rewind_blue.png")));
+    rewindButton.setToolTipText("Skip back");
     
     stopButton = new JButton();
     stopButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_stop_blue.png")));
+    stopButton.setToolTipText("Stop");
     
     pauseButton = new JButton();
     pauseButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_pause_blue.png")));
+    pauseButton.setToolTipText("Play/pause");
     
     playButton = new JButton();
     playButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_play_blue.png")));
+    playButton.setToolTipText("Play");
     
     fastForwardButton = new JButton();
     fastForwardButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_fastforward_blue.png")));
+    fastForwardButton.setToolTipText("Skip forward");
 
     nextChapterButton = new JButton();
     nextChapterButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_end_blue.png")));
+    nextChapterButton.setToolTipText("Go to next chapter");
     
     toggleMuteButton = new JButton();
     toggleMuteButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/sound_mute.png")));
+    toggleMuteButton.setToolTipText("Toggle Mute");
     
     volumeSlider = new JSlider();
     volumeSlider.setOrientation(JSlider.HORIZONTAL);
     volumeSlider.setMinimum(0);
     volumeSlider.setMaximum(100);
     volumeSlider.setPreferredSize(new Dimension(100, 40));
+    volumeSlider.setToolTipText("Change volume");
     
     captureButton = new JButton();
     captureButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/camera.png")));
+    captureButton.setToolTipText("Take picture");
     
     ejectButton = new JButton();
     ejectButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_eject_blue.png")));
+    ejectButton.setToolTipText("Load/eject media");
     
     fileChooser = new JFileChooser();
     fileChooser.setApproveButtonText("Play");
+
+    fullScreenButton = new JButton();
+    fullScreenButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/image.png")));
+    fullScreenButton.setToolTipText("Toggle full-screen");
   }
   
   private void layoutControls() {
@@ -140,6 +157,8 @@ public class PlayerControlsPanel extends JPanel {
     bottomPanel.add(captureButton);
     
     bottomPanel.add(ejectButton);
+
+    bottomPanel.add(fullScreenButton);
     
     add(bottomPanel, BorderLayout.SOUTH);
   }
@@ -217,6 +236,13 @@ public class PlayerControlsPanel extends JPanel {
         if(JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(PlayerControlsPanel.this)) {
           mediaPlayer.playMedia(fileChooser.getSelectedFile().getAbsolutePath());
         }
+      }
+    });
+
+    fullScreenButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        mediaPlayer.toggleFullScreen();
       }
     });
   }

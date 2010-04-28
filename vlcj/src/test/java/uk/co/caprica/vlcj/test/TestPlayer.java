@@ -119,7 +119,7 @@ public class TestPlayer {
     mainFrame.setBackground(Color.black);
     mainFrame.add(videoSurface, BorderLayout.CENTER);
     mainFrame.add(new PlayerControlsPanel(mediaPlayer), BorderLayout.SOUTH);
-    mainFrame.setBounds(100, 100, 800, 600);
+    mainFrame.setBounds(100, 100, 900, 600);
     mainFrame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent evt) {
         System.exit(0);
