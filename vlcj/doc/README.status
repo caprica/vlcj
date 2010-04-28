@@ -10,6 +10,9 @@ Some of the bindings, particularly with regard to structures, may not (yet) be
 complete. There may well be bugs in the JNA mappings. My intention is to keep
 improving this but it's a big job to get 100% complete and correct bindings!
 
+Full-screen support is now sort-of working - the libvlc full screen functions
+are not used, instead it relies on graphicsDevice.setFullScreenWindow(w).
+
 There should be enough here to get a good media player working, have a look at
 the TestPlayer class to help you get started.
 
@@ -22,10 +25,10 @@ set the video surface - and this depends on the OS you are running under.
 For this reason, you will need to determine which OS you are running on at
 run-time and instantiate an appropriate player instance.
 
-The only version I provide (at the moment) out of the box is for Linux.
+Out of the box this works for Linux and Windows.
 
 I can not test these bindings on a Windows or Mac environment, so either send
-me patches if you get it working on those environments, or just roll your own 
+me patches if you get it working other environments, or just roll your own 
 solution.
 
 You will need to agree to assign me the copyright to your patch if you want it
