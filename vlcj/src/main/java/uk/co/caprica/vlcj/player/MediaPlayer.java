@@ -624,13 +624,18 @@ public abstract class MediaPlayer {
   private void createInstance() {
     instance = libvlc.libvlc_new(args.length, args);
 
-    mediaPlayerInstance = libvlc.libvlc_media_player_new(instance);
-
-    mediaPlayerEventManager = libvlc.libvlc_media_player_event_manager(mediaPlayerInstance);
-
-    registerEventListener();
-    
-    eventListenerList.add(new MetaDataEventHandler());
+    if(instance != null) {
+      mediaPlayerInstance = libvlc.libvlc_media_player_new(instance);
+  
+      mediaPlayerEventManager = libvlc.libvlc_media_player_event_manager(mediaPlayerInstance);
+  
+      registerEventListener();
+      
+      eventListenerList.add(new MetaDataEventHandler());
+    }
+    else {
+      throw new IllegalStateException("Unable to initialise libvlc, check your libvlc options and/or check the console for error messages");
+    }
   }
 
   /**
