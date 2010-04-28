@@ -143,6 +143,8 @@ public abstract class MediaPlayer {
   
   private final String[] args;
 
+  private final FullScreenStrategy fullScreenStrategy;
+  
   private libvlc_instance_t instance;
   private libvlc_media_player_t mediaPlayerInstance;
   private libvlc_event_manager_t mediaPlayerEventManager;
@@ -158,12 +160,14 @@ public abstract class MediaPlayer {
    * Create a new media player.
    * 
    * @param args arguments to pass to the native player
+   * @param fullScreenStrategy
    */
-  public MediaPlayer(String[] args) {
+  public MediaPlayer(String[] args, FullScreenStrategy fullScreenStrategy) {
     this.args = args;
+    this.fullScreenStrategy = fullScreenStrategy;
     createInstance();
   }
-
+  
   /**
    * Add a component to be notified of media player events.
    * 
@@ -320,6 +324,7 @@ public abstract class MediaPlayer {
    */
   public void mute() {
     libvlc.libvlc_audio_toggle_mute(mediaPlayerInstance);
+    toggleFullScreen();
   }
   
   /**
@@ -595,7 +600,9 @@ public abstract class MediaPlayer {
    * 
    */
   public void toggleFullScreen() {
-    libvlc.libvlc_toggle_fullscreen(mediaPlayerInstance);
+    if(fullScreenStrategy != null) {
+      setFullScreen(!fullScreenStrategy.isFullScreenMode());
+    }
   }
 
   /**
@@ -604,7 +611,14 @@ public abstract class MediaPlayer {
    * @param fullScreen
    */
   public void setFullScreen(boolean fullScreen) {
-    libvlc.libvlc_set_fullscreen(mediaPlayerInstance, fullScreen ? 1 : 0);
+    if(fullScreenStrategy != null) {
+      if(fullScreen) {
+        fullScreenStrategy.enterFullScreenMode();
+      }
+      else {
+        fullScreenStrategy.exitFullScreenMode();
+      }
+    }
   }
   
   /**
@@ -613,7 +627,12 @@ public abstract class MediaPlayer {
    * @return
    */
   public boolean isFullScreen() {
-    return libvlc.libvlc_get_fullscreen(mediaPlayerInstance) == 1;
+    if(fullScreenStrategy != null) {
+      return fullScreenStrategy.isFullScreenMode();
+    }
+    else {
+      return false;
+    }
   }
   
   // === Implementation =======================================================

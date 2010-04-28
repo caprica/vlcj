@@ -34,6 +34,8 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.check.EnvironmentCheckerFactory;
+import uk.co.caprica.vlcj.player.DefaultFullScreenStrategy;
+import uk.co.caprica.vlcj.player.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -99,7 +101,11 @@ public class TestPlayer {
 	  vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
 	}
 	  
-	MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(vlcArgs.toArray(new String[vlcArgs.size()]));
+    mainFrame = new Frame("VLCJ Test Player for VLC 1.1.x");
+
+    FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
+	
+	MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(vlcArgs.toArray(new String[vlcArgs.size()]), fullScreenStrategy);
 
 	// Use any first command-line argument to set a logo
 	if(args.length > 0) {
@@ -109,17 +115,16 @@ public class TestPlayer {
 	  mediaPlayer.setStandardMediaOptions(standardOptions);
 	}
 	
-	mainFrame = new Frame("VLCJ Test Player for VLC 1.1.x");
-	mainFrame.setLayout(new BorderLayout());
-	mainFrame.setBackground(Color.black);
-	mainFrame.add(videoSurface, BorderLayout.CENTER);
-	mainFrame.add(new PlayerControlsPanel(mediaPlayer), BorderLayout.SOUTH);
-	mainFrame.setBounds(100, 100, 800, 600);
-	mainFrame.addWindowListener(new WindowAdapter() {
-	  public void windowClosing(WindowEvent evt) {
-		System.exit(0);
-	  }
-	});
+    mainFrame.setLayout(new BorderLayout());
+    mainFrame.setBackground(Color.black);
+    mainFrame.add(videoSurface, BorderLayout.CENTER);
+    mainFrame.add(new PlayerControlsPanel(mediaPlayer), BorderLayout.SOUTH);
+    mainFrame.setBounds(100, 100, 800, 600);
+    mainFrame.addWindowListener(new WindowAdapter() {
+      public void windowClosing(WindowEvent evt) {
+        System.exit(0);
+      }
+    });
     mainFrame.setVisible(true);
 	
 	mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());

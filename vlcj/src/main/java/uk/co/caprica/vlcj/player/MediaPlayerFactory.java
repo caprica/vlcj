@@ -46,25 +46,25 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * @return media player instance
  */
 public class MediaPlayerFactory {
-
+    
   /**
    * Create a new media player.
    * 
    * @param args arguments to pass to libvlc
    * @return media player instance
    */
-  public MediaPlayer newMediaPlayer(String[] args) {
+  public MediaPlayer newMediaPlayer(String[] args, FullScreenStrategy fullScreenStrategy) {
     MediaPlayer mediaPlayer;
     
     if(RuntimeUtil.isNix()) {
-      mediaPlayer = new LinuxMediaPlayer(args);
+      mediaPlayer = new LinuxMediaPlayer(args, fullScreenStrategy);
     }
     else if(RuntimeUtil.isWindows()) {
-      mediaPlayer = new WindowsMediaPlayer(args);
+      mediaPlayer = new WindowsMediaPlayer(args, fullScreenStrategy);
     }
     else if(RuntimeUtil.isMac()) {
       // Mac is not yet supported
-      mediaPlayer = new MacMediaPlayer(args);
+      mediaPlayer = new MacMediaPlayer(args, fullScreenStrategy);
     }
     else {
       throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");

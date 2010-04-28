@@ -17,25 +17,27 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.linux;
+package uk.co.caprica.vlcj.player;
 
-import java.awt.Canvas;
+/**
+ * Specification for a full-screen strategy implementation.
+ */
+public interface FullScreenStrategy {
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
-import uk.co.caprica.vlcj.player.FullScreenStrategy;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+  /**
+   * 
+   */
+  void enterFullScreenMode();
+  
+  /**
+   * 
+   */
+  void exitFullScreenMode();
 
-import com.sun.jna.Native;
-
-public class LinuxMediaPlayer extends MediaPlayer {
-
-  public LinuxMediaPlayer(String[] args, FullScreenStrategy fullScreenStrategy) {
-    super(args, fullScreenStrategy);
-  }
-
-  @Override
-  protected void nativeSetVideoSurface(libvlc_media_player_t mediaPlayerInstance, Canvas videoSurface) {
-    long drawable = Native.getComponentID(videoSurface);
-    libvlc.libvlc_media_player_set_xwindow(mediaPlayerInstance, drawable);
-  }
+  /**
+   * 
+   * 
+   * @return
+   */
+  boolean isFullScreenMode();
 }
