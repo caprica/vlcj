@@ -63,8 +63,11 @@ import com.sun.jna.ptr.IntByReference;
  * <p>
  * The basic life-cycle is:
  * <pre>
+ *   // Set some options for libvlc
+ *   String[] libvlcArgs = {};
+ * 
  *   // Create a new media player instance for a particular platform
- *   MediaPlayer mediaPlayer = new LinuxMediaPlayer();
+ *   MediaPlayer mediaPlayer = new MediaPlayerFactory().newMediaPlayer(libvlcArgs);
  *   
  *   // Set standard options as needed to be applied to all subsequently played media items
  *   String[] standardMediaOptions = {"video-filter=logo", "logo-file=vlcj-logo.png", "logo-opacity=25"}; 
@@ -259,29 +262,23 @@ public abstract class MediaPlayer {
   }
   
   public long getLength() {
-    long result = libvlc.libvlc_media_player_get_length(mediaPlayerInstance);
-    if(result != -1) {
-      
-    }
-    return result;
+    return libvlc.libvlc_media_player_get_length(mediaPlayerInstance);
   }
   
   public long getTime() {
-    long result = libvlc.libvlc_media_player_get_time(mediaPlayerInstance);
-    if(result != -1) {
-      
-    }
-    return result;
+    return libvlc.libvlc_media_player_get_time(mediaPlayerInstance);
+  }
+
+  public float getPosition() {
+    return libvlc.libvlc_media_player_get_position(mediaPlayerInstance);
   }
   
   public float getFps() {
-    float result = libvlc.libvlc_media_player_get_fps(mediaPlayerInstance);
-    return result;
+    return libvlc.libvlc_media_player_get_fps(mediaPlayerInstance);
   }
   
   public float getRate() {
-    float result = libvlc.libvlc_media_player_get_rate(mediaPlayerInstance);
-    return result;
+    return libvlc.libvlc_media_player_get_rate(mediaPlayerInstance);
   }
   
   // === Basic Playback Controls ==============================================
@@ -293,10 +290,7 @@ public abstract class MediaPlayer {
    * current position.
    */
   public void play() {
-    int result = libvlc.libvlc_media_player_play(mediaPlayerInstance);
-    if(result != 0) {
-      
-    }
+    libvlc.libvlc_media_player_play(mediaPlayerInstance);
   }
 
   /**
@@ -315,6 +309,48 @@ public abstract class MediaPlayer {
    */
   public void pause() {
     libvlc.libvlc_media_player_pause(mediaPlayerInstance);
+  }
+
+  /**
+   * Skip forward or backward by a period of time.
+   * 
+   * @param delta time period, in milliseconds
+   */
+  public void skip(long delta) {
+    long current = libvlc.libvlc_media_player_get_time(mediaPlayerInstance);
+    if(current != -1) {
+      libvlc.libvlc_media_player_set_time(mediaPlayerInstance, current + delta);
+    }
+  }
+  
+  /**
+   * Skip forward or backward by a change in position.
+   * 
+   * @param delta
+   */
+  public void skip(float delta) {
+    float current = libvlc.libvlc_media_player_get_position(mediaPlayerInstance);
+    if(current != -1) {
+      libvlc.libvlc_media_player_set_position(mediaPlayerInstance, current + delta);
+    }
+  }
+  
+  /**
+   * Jump to a specific moment.
+   * 
+   * @param time time since the beginning, in milliseconds
+   */
+  public void setTime(long time) {
+    libvlc.libvlc_media_player_set_time(mediaPlayerInstance, time);
+  }
+  
+  /**
+   *  Jump to a specific position.
+   * 
+   * @param position
+   */
+  public void setPosition(float position) {
+    libvlc.libvlc_media_player_set_position(mediaPlayerInstance, position);
   }
   
   // === Audio Controls =======================================================
@@ -342,8 +378,7 @@ public abstract class MediaPlayer {
    * @return mute <code>true</code> if the volume is muted, <code>false</code> if the volume is not muted
    */
   public boolean isMute() {
-    int result = libvlc.libvlc_audio_get_mute(mediaPlayerInstance);
-    return result != 0;
+    return libvlc.libvlc_audio_get_mute(mediaPlayerInstance) != 0;
   }
   
   /**
@@ -352,8 +387,7 @@ public abstract class MediaPlayer {
    * @return volume, in the range 0 to 100 where 100 is full volume
    */
   public int getVolume() {
-    int result = libvlc.libvlc_audio_get_volume(mediaPlayerInstance);
-    return result;
+    return libvlc.libvlc_audio_get_volume(mediaPlayerInstance);
   }
   
   /**
@@ -362,10 +396,7 @@ public abstract class MediaPlayer {
    * @param volume volume, in the range 0 to 100 where 100 is full volume 
    */
   public void setVolume(int volume) {
-    int result = libvlc.libvlc_audio_set_volume(mediaPlayerInstance, volume);
-    if(result != 0) {
-      
-    }
+    libvlc.libvlc_audio_set_volume(mediaPlayerInstance, volume);
   }
   
   // === Chapter Controls =====================================================
@@ -376,8 +407,7 @@ public abstract class MediaPlayer {
    * @return number of chapters, or -1 if no chapters
    */
   public int getChapterCount() {
-    int result = libvlc.libvlc_media_player_get_chapter_count(mediaPlayerInstance);
-    return result;
+    return libvlc.libvlc_media_player_get_chapter_count(mediaPlayerInstance);
   }
   
   /**
@@ -386,8 +416,7 @@ public abstract class MediaPlayer {
    * @return chapter number, where zero is the first chatper, or -1 if no media
    */
   public int getChapter() {
-    int result = libvlc.libvlc_media_player_get_chapter(mediaPlayerInstance);
-    return result;
+    return libvlc.libvlc_media_player_get_chapter(mediaPlayerInstance);
   }
   
   /**
@@ -420,21 +449,15 @@ public abstract class MediaPlayer {
   // === Sub-Picture/Sub-Title Controls =======================================
   
   public int getSpuCount() {
-    int result = libvlc.libvlc_video_get_spu_count(mediaPlayerInstance);
-    return result;
+    return libvlc.libvlc_video_get_spu_count(mediaPlayerInstance);
   }
   
   public int getSpu() {
-    int result = libvlc.libvlc_video_get_spu(mediaPlayerInstance);
-    if(result != -1) {
-    }
-    return result;
+    return libvlc.libvlc_video_get_spu(mediaPlayerInstance);
   }
   
   public void setSpu(int spu) {
-    int result = libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
-    if(result != 0) {
-    }
+    libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
   }
   
   // === Snapshot Controls ====================================================
@@ -464,10 +487,7 @@ public abstract class MediaPlayer {
       snapshotDirectory.mkdirs();
     }
     if(snapshotDirectory.exists()) {
-      int result = libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), 0, 0);
-      if(result != 0) {
-        
-      }
+      libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), 0, 0);
     }
     else {
       throw new RuntimeException("Directory does not exist and could not be created for '" + file.getAbsolutePath() + "'");
