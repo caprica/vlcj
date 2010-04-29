@@ -24,6 +24,8 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 
 public class PlayerControlsPanel extends JPanel {
 
+  private static final int SKIP_TIME_MS = 10 * 1000;
+  
   private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
   private final MediaPlayer mediaPlayer;
@@ -178,6 +180,13 @@ public class PlayerControlsPanel extends JPanel {
       }
     });
 
+    rewindButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        mediaPlayer.skip(-SKIP_TIME_MS);
+      }
+    });
+
     stopButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -196,6 +205,13 @@ public class PlayerControlsPanel extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         mediaPlayer.play();
+      }
+    });
+    
+    fastForwardButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        mediaPlayer.skip(SKIP_TIME_MS);
       }
     });
     
