@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
@@ -48,6 +49,7 @@ public class PlayerControlsPanel extends JPanel {
   private JButton captureButton;
   
   private JButton ejectButton;
+  private JButton connectButton;
   
   private JButton fullScreenButton;
   
@@ -123,6 +125,10 @@ public class PlayerControlsPanel extends JPanel {
     ejectButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_eject_blue.png")));
     ejectButton.setToolTipText("Load/eject media");
     
+    connectButton = new JButton();
+    connectButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/connect.png")));
+    connectButton.setToolTipText("Connect to media");
+    
     fileChooser = new JFileChooser();
     fileChooser.setApproveButtonText("Play");
 
@@ -159,6 +165,7 @@ public class PlayerControlsPanel extends JPanel {
     bottomPanel.add(captureButton);
     
     bottomPanel.add(ejectButton);
+    bottomPanel.add(connectButton);
 
     bottomPanel.add(fullScreenButton);
     
@@ -251,6 +258,16 @@ public class PlayerControlsPanel extends JPanel {
       public void actionPerformed(ActionEvent e) {
         if(JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(PlayerControlsPanel.this)) {
           mediaPlayer.playMedia(fileChooser.getSelectedFile().getAbsolutePath());
+        }
+      }
+    });
+
+    connectButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        String mediaUrl = (String)JOptionPane.showInputDialog(PlayerControlsPanel.this, "Enter a media URL", "Connect to media", JOptionPane.QUESTION_MESSAGE); 
+        if(mediaUrl != null && mediaUrl.length() > 0) {
+          mediaPlayer.playMedia(mediaUrl);
         }
       }
     });
