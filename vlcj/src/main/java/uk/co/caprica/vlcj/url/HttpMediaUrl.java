@@ -5,18 +5,18 @@ package uk.co.caprica.vlcj.url;
  * <p>
  * This class provides a fluent API for initialising the URL, e.g.
  * <pre>
- * String url = new HttpWebMediaUrl().host("www.myhost.com")
+ * String url = new HttpMediaUrl().host("www.myhost.com")
  *                                   .port("8080")
  *                                   .path("/media/example.mp4")
  *                                   .value();
  * </pre>
  * This will generate <code>"http://www.myhost.com:8080/media/example.mp4"</code>.
  */
-public class HttpWebMediaUrl extends WebMediaUrl {
+public class HttpMediaUrl extends WebMediaUrl {
 
   private static final String HTTP_TYPE = "http";
   
-  public HttpWebMediaUrl() {
+  public HttpMediaUrl() {
     type(HTTP_TYPE);
   }
 }

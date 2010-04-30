@@ -5,18 +5,18 @@ package uk.co.caprica.vlcj.url;
  * <p>
  * This class provides a fluent API for initialising the URL, e.g.
  * <pre>
- * String url = new MmsWebMediaUrl().host("www.myhost.com")
+ * String url = new MmsMediaUrl().host("www.myhost.com")
  *                                  .port("8000")
  *                                  .path("/mediainfo")
  *                                  .value();
  * </pre>
  * This will generate <code>"mms://www.myhost.com:8000/mediainfo"</code>.
  */
-public class MmsWebMediaUrl extends WebMediaUrl {
+public class MmsMediaUrl extends WebMediaUrl {
 
   private static final String MMS_TYPE = "mms";
   
-  public MmsWebMediaUrl() {
+  public MmsMediaUrl() {
     type(MMS_TYPE);
   }
 }
