@@ -65,13 +65,16 @@ import com.sun.jna.ptr.IntByReference;
  * The basic life-cycle is:
  * <pre>
  *   // Set some options for libvlc
- *   String[] libvlcArgs = {};
+ *   String[] libvlcArgs = {...add options here...};
  * 
  *   // Create a factory
  *   MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(libvlcArgs);
  * 
- *   // Create a new media player instance for a particular platform
- *   MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer();
+ *   // Create a full-screen strategy
+ *   FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
+ *   
+ *   // Create a media player instance for the run-time operating system
+ *   MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
  *   
  *   // Set standard options as needed to be applied to all subsequently played media items
  *   String[] standardMediaOptions = {"video-filter=logo", "logo-file=vlcj-logo.png", "logo-opacity=25"}; 

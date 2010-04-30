@@ -29,7 +29,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 /**
  * Factory for media player instances.
  * <p>
- * The factory initialise a single libvlc instance for the entire application.
+ * The factory initialises a single libvlc instance for the entire application.
  * <p>
  * If required, you can create multiple factory instances each with their own
  * libvlc options.
@@ -43,13 +43,16 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * Usage:
  * <pre>
  *   // Set some options for libvlc
- *   String[] libvlcArgs = {};
+ *   String[] libvlcArgs = {...add options here...};
  * 
  *   // Create a factory instance (once), you can keep a reference to this
  *   MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(libvlcArgs);
  *   
+ *   // Create a full-screen strategy
+ *   FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
+ *   
  *   // Create a media player instance for the run-time operating system
- *   MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer();
+ *   MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
  * 
  *   // Do some interesting things with the media player
  *   
