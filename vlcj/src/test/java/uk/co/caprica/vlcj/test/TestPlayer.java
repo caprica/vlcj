@@ -47,6 +47,8 @@ import uk.co.caprica.vlcj.player.VideoMetaData;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 
+// FIXME add shutdown hook to explicitly release the factory and player
+
 /**
  * Simple test harness creates an AWT Window and plays a video.
  * <p>
@@ -94,8 +96,6 @@ public class TestPlayer {
 	videoSurface = new Canvas();
 	videoSurface.setBackground(Color.black);
 
-	MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
-	
 	List<String> vlcArgs = new ArrayList<String>();
 
 	// Add some other arguments here, or take them from the command-line
@@ -104,12 +104,14 @@ public class TestPlayer {
 	if(RuntimeUtil.isWindows()) {
 	  vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
 	}
-	  
+
     mainFrame = new Frame("VLCJ Test Player for VLC 1.1.x");
 
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
 	
-	MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(vlcArgs.toArray(new String[vlcArgs.size()]), fullScreenStrategy);
+    MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));
+    
+	MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
 
 	// Use any first command-line argument to set a logo
 	if(args.length > 0) {
