@@ -59,6 +59,7 @@ import com.sun.jna.ptr.IntByReference;
  *   <li>Snapshot controls</li>
  *   <li>Logo controls - enable/disable, set opacity, file</li>
  *   <li>Marquee controls - enable/disable, set colour, size, opacity, timeout</li>
+ *   <li>Full-screen controls</li>
  * </ul>
  * <p>
  * The basic life-cycle is:
@@ -66,8 +67,11 @@ import com.sun.jna.ptr.IntByReference;
  *   // Set some options for libvlc
  *   String[] libvlcArgs = {};
  * 
+ *   // Create a factory
+ *   MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(libvlcArgs);
+ * 
  *   // Create a new media player instance for a particular platform
- *   MediaPlayer mediaPlayer = new MediaPlayerFactory().newMediaPlayer(libvlcArgs);
+ *   MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer();
  *   
  *   // Set standard options as needed to be applied to all subsequently played media items
  *   String[] standardMediaOptions = {"video-filter=logo", "logo-file=vlcj-logo.png", "logo-opacity=25"}; 
@@ -90,6 +94,9 @@ import com.sun.jna.ptr.IntByReference;
  *   
  *   // Cleanly dispose of the media player instance and any associated native resources
  *   mediaPlayer.release();
+ *   
+ *   // Cleanly dispose of the media player factory and any associated native resources
+ *   mediaPlayerFactory.release();
  * </pre>
  * With regard to overlaying logos there are three approaches.
  * <p>
@@ -144,10 +151,8 @@ public abstract class MediaPlayer {
 
   private final ExecutorService metaService = Executors.newSingleThreadExecutor();
   
-  private final String[] args;
-
   private final FullScreenStrategy fullScreenStrategy;
-  
+
   private libvlc_instance_t instance;
   private libvlc_media_player_t mediaPlayerInstance;
   private libvlc_event_manager_t mediaPlayerEventManager;
@@ -162,12 +167,12 @@ public abstract class MediaPlayer {
   /**
    * Create a new media player.
    * 
-   * @param args arguments to pass to the native player
    * @param fullScreenStrategy
+   * @param instance
    */
-  public MediaPlayer(String[] args, FullScreenStrategy fullScreenStrategy) {
-    this.args = args;
+  public MediaPlayer(FullScreenStrategy fullScreenStrategy, libvlc_instance_t instance) {
     this.fullScreenStrategy = fullScreenStrategy;
+    this.instance = instance;
     createInstance();
   }
   
@@ -661,20 +666,13 @@ public abstract class MediaPlayer {
    * Create and prepare the native media player resources.
    */
   private void createInstance() {
-    instance = libvlc.libvlc_new(args.length, args);
-
-    if(instance != null) {
-      mediaPlayerInstance = libvlc.libvlc_media_player_new(instance);
+    mediaPlayerInstance = libvlc.libvlc_media_player_new(instance);
   
-      mediaPlayerEventManager = libvlc.libvlc_media_player_event_manager(mediaPlayerInstance);
+    mediaPlayerEventManager = libvlc.libvlc_media_player_event_manager(mediaPlayerInstance);
   
-      registerEventListener();
+    registerEventListener();
       
-      eventListenerList.add(new MetaDataEventHandler());
-    }
-    else {
-      throw new IllegalStateException("Unable to initialise libvlc, check your libvlc options and/or check the console for error messages");
-    }
+    eventListenerList.add(new MetaDataEventHandler());
   }
 
   /**
@@ -694,11 +692,6 @@ public abstract class MediaPlayer {
       mediaPlayerInstance = null;
     }
 
-    if(instance != null) {
-      libvlc.libvlc_release(instance);
-      instance = null;
-    }
-    
     listenersService.shutdown();
     
     metaService.shutdown();

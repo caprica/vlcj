@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player.linux;
 
 import java.awt.Canvas;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.player.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -29,8 +30,8 @@ import com.sun.jna.Native;
 
 public class LinuxMediaPlayer extends MediaPlayer {
 
-  public LinuxMediaPlayer(String[] args, FullScreenStrategy fullScreenStrategy) {
-    super(args, fullScreenStrategy);
+  public LinuxMediaPlayer(FullScreenStrategy fullScreenStrategy, libvlc_instance_t instance) {
+    super(fullScreenStrategy, instance);
   }
 
   @Override

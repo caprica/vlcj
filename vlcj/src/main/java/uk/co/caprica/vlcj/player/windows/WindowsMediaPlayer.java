@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player.windows;
 
 import java.awt.Canvas;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.player.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -30,8 +31,8 @@ import com.sun.jna.Pointer;
 
 public class WindowsMediaPlayer extends MediaPlayer {
 
-  public WindowsMediaPlayer(String[] args, FullScreenStrategy fullScreenStrategy) {
-    super(args, fullScreenStrategy);
+  public WindowsMediaPlayer(FullScreenStrategy fullScreenStrategy, libvlc_instance_t instance) {
+    super(fullScreenStrategy, instance);
   }
 
   @Override

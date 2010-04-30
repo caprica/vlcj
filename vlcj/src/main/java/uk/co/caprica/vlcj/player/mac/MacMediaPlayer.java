@@ -21,14 +21,15 @@ package uk.co.caprica.vlcj.player.mac;
 
 import java.awt.Canvas;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.player.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 public class MacMediaPlayer extends MediaPlayer {
 
-  public MacMediaPlayer(String[] args, FullScreenStrategy fullScreenStrategy) {
-    super(args, fullScreenStrategy);
+  public MacMediaPlayer(FullScreenStrategy fullScreenStrategy, libvlc_instance_t instance) {
+    super(fullScreenStrategy, instance);
   }
 
   @Override
