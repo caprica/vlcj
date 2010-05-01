@@ -240,7 +240,7 @@ public class PlayerControlsPanel extends JPanel {
       @Override
       public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider)e.getSource();
-        if (!source.getValueIsAdjusting()) {
+        if(!source.getValueIsAdjusting()) {
           mediaPlayer.setVolume(source.getValue());
         }
       }
