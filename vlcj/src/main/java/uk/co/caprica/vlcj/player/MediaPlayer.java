@@ -368,7 +368,6 @@ public abstract class MediaPlayer {
    */
   public void mute() {
     libvlc.libvlc_audio_toggle_mute(mediaPlayerInstance);
-    toggleFullScreen();
   }
   
   /**
@@ -764,7 +763,7 @@ public abstract class MediaPlayer {
     IntByReference px = new IntByReference();
     IntByReference py = new IntByReference();
     int result = libvlc.libvlc_video_get_size(mediaPlayerInstance, 0, px, py);
-    // TODO I think libvlc has this backwards!!! so i'll swap
+    // FIXME I think libvlc has this backwards!!! so I'll swap
     return new Dimension(py.getValue(), px.getValue());
   }
   
@@ -774,15 +773,15 @@ public abstract class MediaPlayer {
   }
   
   public void release() {
-    destroyInstance();
-    released = true;
+    if(!released) {
+      destroyInstance();
+      released = true;
+    }
   }
 
   @Override
   protected synchronized void finalize() throws Throwable {
-    if(!released) {
-      release();
-    }
+    release();
   }
 
   private void notifyListeners(libvlc_event_t event) {

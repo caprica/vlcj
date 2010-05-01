@@ -47,8 +47,6 @@ import uk.co.caprica.vlcj.player.VideoMetaData;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 
-// FIXME add shutdown hook to explicitly release the factory and player
-
 /**
  * Simple test harness creates an AWT Window and plays a video.
  * <p>
@@ -60,6 +58,10 @@ public class TestPlayer {
   private Frame mainFrame;
   
   private Canvas videoSurface;
+
+  private MediaPlayerFactory mediaPlayerFactory;
+
+  private MediaPlayer mediaPlayer;
   
   public static void main(final String[] args) throws Exception {
     new EnvironmentCheckerFactory().newEnvironmentChecker().checkEnvironment();
@@ -93,6 +95,8 @@ public class TestPlayer {
   }
    
   public TestPlayer(String[] args) {
+    Runtime.getRuntime().addShutdownHook(new TestPlayerShutdownHook());
+
 	videoSurface = new Canvas();
 	videoSurface.setBackground(Color.black);
 
@@ -109,9 +113,9 @@ public class TestPlayer {
 
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
 	
-    MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));
+    mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));
     
-	MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
+	mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
 
 	// Use any first command-line argument to set a logo
 	if(args.length > 0) {
@@ -203,6 +207,15 @@ public class TestPlayer {
     else {
       Image blankImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
       videoSurface.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(0, 0), ""));
+    }
+  }
+  
+  private final class TestPlayerShutdownHook extends Thread {
+    @Override
+    public void run() {
+      if(mediaPlayerFactory != null) {
+        mediaPlayerFactory.release();
+      }
     }
   }
 }

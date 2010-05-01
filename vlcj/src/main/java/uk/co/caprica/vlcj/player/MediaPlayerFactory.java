@@ -82,6 +82,11 @@ public class MediaPlayerFactory {
   
   /**
    * 
+   */
+  private boolean released;
+  
+  /**
+   * 
    * 
    * @param libvlcArgs
    */
@@ -97,9 +102,12 @@ public class MediaPlayerFactory {
    * Release the native resources associated with this factory.
    */
   public void release() {
-    if(instance != null) {
-      libvlc.libvlc_release(instance);
-      instance = null;
+    if(!released) {
+      if(instance != null) {
+        libvlc.libvlc_release(instance);
+        instance = null;
+      }
+      released = true;
     }
   }
   
@@ -127,5 +135,10 @@ public class MediaPlayerFactory {
     }
     
     return mediaPlayer;
+  }
+  
+  @Override
+  protected synchronized void finalize() throws Throwable {
+    release();
   }
 }
