@@ -250,33 +250,44 @@ public abstract class MediaPlayer {
   // === Status Controls ======================================================
 
   public boolean isPlayable() {
-    int result = libvlc.libvlc_media_player_will_play(mediaPlayerInstance);
-    return result == 1;
+    return libvlc.libvlc_media_player_will_play(mediaPlayerInstance) == 1;
   }
   
   public boolean isPlaying() {
-    int result = libvlc.libvlc_media_player_is_playing(mediaPlayerInstance);
-    return result == 1;
+    return libvlc.libvlc_media_player_is_playing(mediaPlayerInstance) == 1;
   }
   
   public boolean isSeekable() {
-    int result = libvlc.libvlc_media_player_is_seekable(mediaPlayerInstance);
-    return result == 1;
+    return libvlc.libvlc_media_player_is_seekable(mediaPlayerInstance) == 1;
   }
   
   public boolean canPause() {
-    int result = libvlc.libvlc_media_player_can_pause(mediaPlayerInstance);
-    return result == 1;
+    return libvlc.libvlc_media_player_can_pause(mediaPlayerInstance) == 1;
   }
   
+  /**
+   * Get the length of the current media item.
+   * 
+   * @return length, in milliseconds
+   */
   public long getLength() {
     return libvlc.libvlc_media_player_get_length(mediaPlayerInstance);
   }
-  
+
+  /**
+   * Get the current play-back time.
+   * 
+   * @return current time, expressed as a number of milliseconds
+   */
   public long getTime() {
     return libvlc.libvlc_media_player_get_time(mediaPlayerInstance);
   }
 
+  /**
+   * Get the current play-back position.
+   * 
+   * @return current position, expressed as a percentage (e.g. 0.15 is returned for 15% complete)
+   */
   public float getPosition() {
     return libvlc.libvlc_media_player_get_position(mediaPlayerInstance);
   }
@@ -355,7 +366,7 @@ public abstract class MediaPlayer {
   /**
    *  Jump to a specific position.
    * 
-   * @param position
+   * @param position, a percentage (e.g. 0.15 is 15%)
    */
   public void setPosition(float position) {
     libvlc.libvlc_media_player_set_position(mediaPlayerInstance, position);
