@@ -103,6 +103,7 @@ public class TestPlayer {
 
 	videoSurface = new Canvas();
 	videoSurface.setBackground(Color.black);
+	videoSurface.setSize(800, 600); // Only for initial layout
 
 	List<String> vlcArgs = new ArrayList<String>();
 
@@ -135,7 +136,7 @@ public class TestPlayer {
     mainFrame.setBackground(Color.black);
     mainFrame.add(videoSurface, BorderLayout.CENTER);
     mainFrame.add(controlsPanel, BorderLayout.SOUTH);
-    mainFrame.setBounds(100, 100, 900, 600);
+    mainFrame.pack();
     mainFrame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent evt) {
         System.exit(0);
@@ -197,11 +198,6 @@ public class TestPlayer {
       
       videoSurface.setSize(videoMetaData.getVideoDimension());
       mainFrame.pack();
-      
-      // Auto-set the first sub-title just for purposes of demonstration
-      if(videoMetaData.getSpuCount() > 0) {
-        mediaPlayer.setSpu(1);
-      }
       
       // You can set a logo like this if you like...
 //      mediaPlayer.setLogoFile("./etc/vlcj-logo.png");

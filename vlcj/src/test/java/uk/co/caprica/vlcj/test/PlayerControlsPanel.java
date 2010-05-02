@@ -2,6 +2,7 @@ package uk.co.caprica.vlcj.test;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,6 +56,8 @@ public class PlayerControlsPanel extends JPanel {
   private JButton connectButton;
   
   private JButton fullScreenButton;
+  
+  private JButton subTitlesButton;
   
   private JFileChooser fileChooser;
   
@@ -150,6 +153,10 @@ public class PlayerControlsPanel extends JPanel {
     fullScreenButton = new JButton();
     fullScreenButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/image.png")));
     fullScreenButton.setToolTipText("Toggle full-screen");
+
+    subTitlesButton = new JButton();
+    subTitlesButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/comment.png")));
+    subTitlesButton.setToolTipText("Cycle sub-titles");
   }
   
   private void layoutControls() {
@@ -173,6 +180,8 @@ public class PlayerControlsPanel extends JPanel {
     
     JPanel bottomPanel = new JPanel();
     
+    bottomPanel.setLayout(new FlowLayout());
+    
     bottomPanel.add(previousChapterButton);
     bottomPanel.add(rewindButton);
     bottomPanel.add(stopButton);
@@ -190,6 +199,8 @@ public class PlayerControlsPanel extends JPanel {
     bottomPanel.add(connectButton);
 
     bottomPanel.add(fullScreenButton);
+    
+    bottomPanel.add(subTitlesButton);
     
     add(bottomPanel, BorderLayout.SOUTH);
   }
@@ -308,6 +319,23 @@ public class PlayerControlsPanel extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         mediaPlayer.toggleFullScreen();
+      }
+    });
+
+    subTitlesButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        int spu = mediaPlayer.getSpu();
+        if(spu > -1) {
+          spu++;
+          if(spu > mediaPlayer.getSpuCount()) {
+            spu = -1;
+          }
+        }
+        else {
+          spu = 0;
+        }
+        mediaPlayer.setSpu(spu);
       }
     });
   }
