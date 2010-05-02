@@ -1,18 +1,18 @@
 package uk.co.caprica.vlcj.mrl;
 
 /**
- * Implementation of a media URL for Video CDs.
+ * Implementation of a media resource locator for Video CDs.
  * <p>
- * This class provides a fluent API for initialising the URL, e.g.
+ * This class provides a fluent API for initialising the MRL, e.g.
  * <pre>
- * String url = new VcdMediaUrl().device("/media/dvd")
- *                               .startingPosition("S")
- *                               .number(1)
- *                               .value();
+ * String mrl = new VcdMrl().device("/media/dvd")
+ *                          .startingPosition("S")
+ *                          .number(1)
+ *                          .value();
  * </pre>
  * This will generate <code>"vcd:///media/vcd/@S1"</code>.
  */
-public class VcdMediaUrl implements MediaUrl {
+public class VcdMrl implements Mrl {
 
   private static final String VCD_TYPE = "vcd";
   
@@ -23,17 +23,17 @@ public class VcdMediaUrl implements MediaUrl {
   private String value;
   
   
-  public VcdMediaUrl device(String device) {
+  public VcdMrl device(String device) {
     this.device = device;
     return this;
   }
 
-  public VcdMediaUrl startingPosition(String startingPosition) {
+  public VcdMrl startingPosition(String startingPosition) {
     this.startingPosition = startingPosition;
     return this;
   }
 
-  public VcdMediaUrl number(int number) {
+  public VcdMrl number(int number) {
     this.number = number;
     return this;
   }

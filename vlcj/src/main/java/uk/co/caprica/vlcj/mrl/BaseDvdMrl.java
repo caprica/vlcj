@@ -1,21 +1,21 @@
 package uk.co.caprica.vlcj.mrl;
 
 /**
- * Base implementation of a media URL for DVD URLs.
+ * Base implementation of a media resource locator for DVD MRLs.
  * <p>
- * This class provides a fluent API for initialising the URL, e.g.
+ * This class provides a fluent API for initialising the MRL, e.g.
  * <pre>
- * String url = new BaseDvdMediaUrl().type("dvdsimple").
- *                                   .device("/media/dvd")
- *                                   .rawDevice("/dev/cdrom0")
- *                                   .title(0)
- *                                   .chapter(3)
- *                                   .angle(1)
- *                                   .value();
+ * String mrl = new BaseDvdMrl().type("dvdsimple").
+ *                              .device("/media/dvd")
+ *                              .rawDevice("/dev/cdrom0")
+ *                              .title(0)
+ *                              .chapter(3)
+ *                              .angle(1)
+ *                              .value();
  * </pre>
  * This will generate <code>"dvdsimple:///media/dvd/@dev/cdrom@0:3:1"</code>.
  */
-public class BaseDvdMediaUrl implements MediaUrl {
+public class BaseDvdMrl implements Mrl {
 
   private String type;
   private String device;
@@ -26,32 +26,32 @@ public class BaseDvdMediaUrl implements MediaUrl {
 
   private String value;
   
-  public BaseDvdMediaUrl type(String type) {
+  public BaseDvdMrl type(String type) {
     this.type = type;
     return this;
   }
   
-  public BaseDvdMediaUrl device(String device) {
+  public BaseDvdMrl device(String device) {
     this.device = device;
     return this;
   }
 
-  public BaseDvdMediaUrl rawDevice(String rawDevice) {
+  public BaseDvdMrl rawDevice(String rawDevice) {
     this.rawDevice = rawDevice;
     return this;
   }
   
-  public BaseDvdMediaUrl title(int title) {
+  public BaseDvdMrl title(int title) {
     this.title = title;
     return this;
   }
 
-  public BaseDvdMediaUrl chapter(int chapter) {
+  public BaseDvdMrl chapter(int chapter) {
     this.chapter = chapter;
     return this;
   }
 
-  public BaseDvdMediaUrl angle(int angle) {
+  public BaseDvdMrl angle(int angle) {
     this.angle = angle;
     return this;
   }

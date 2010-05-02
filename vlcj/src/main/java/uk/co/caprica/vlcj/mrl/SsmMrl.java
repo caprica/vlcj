@@ -1,18 +1,18 @@
 package uk.co.caprica.vlcj.mrl;
 
 /**
- * Implementation of a media URL for SSM streams.
+ * Implementation of a media resource locator for SSM streams.
  * <p>
- * This class provides a fluent API for initialising the URL, e.g.
+ * This class provides a fluent API for initialising the MRL, e.g.
  * <pre>
- * String url = new RtpMediaUrl().serverAddress("myhost.com")
- *                               .multicastAddress("234.0.0.1")
- *                               .port(5401)
- *                               .value();
+ * String mrl = new RtpMrl().serverAddress("myhost.com")
+ *                          .multicastAddress("234.0.0.1")
+ *                          .port(5401)
+ *                          .value();
  * </pre>
  * This will generate <code>"rtp://myhost.com@234.0.0.1:5401"</code>.
  */
-public class SsmMediaUrl implements MediaUrl {
+public class SsmMrl implements Mrl {
 
   private static final String RTP_TYPE = "rtp";
   
@@ -22,17 +22,17 @@ public class SsmMediaUrl implements MediaUrl {
 
   private String value;
   
-  public SsmMediaUrl serverAddress(String serverAddress) {
+  public SsmMrl serverAddress(String serverAddress) {
     this.serverAddress = serverAddress;
     return this;
   }
   
-  public SsmMediaUrl multicastAddress(String multicastAddress) {
+  public SsmMrl multicastAddress(String multicastAddress) {
     this.multicastAddress = multicastAddress;
     return this;
   }
 
-  public SsmMediaUrl port(int port) {
+  public SsmMrl port(int port) {
     this.port = port;
     return this;
   }

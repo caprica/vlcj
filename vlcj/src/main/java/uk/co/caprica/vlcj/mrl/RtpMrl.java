@@ -1,17 +1,17 @@
 package uk.co.caprica.vlcj.mrl;
 
 /**
- * Implementation of a media URL for RTP streams.
+ * Implementation of a media resource locator for RTP streams.
  * <p>
- * This class provides a fluent API for initialising the URL, e.g.
+ * This class provides a fluent API for initialising the MRL, e.g.
  * <pre>
- * String url = new RtpMediaUrl().multicastAddress("234.0.0.1")
- *                               .port(5401)
- *                               .value();
+ * String mrl = new RtpMrl().multicastAddress("234.0.0.1")
+ *                          .port(5401)
+ *                          .value();
  * </pre>
  * This will generate <code>"rtp://@234.0.0.1:5401"</code>.
  */
-public class RtpMediaUrl implements MediaUrl {
+public class RtpMrl implements Mrl {
 
   private static final String RTP_TYPE = "rtp";
   
@@ -21,12 +21,12 @@ public class RtpMediaUrl implements MediaUrl {
   private String value;
   
   
-  public RtpMediaUrl multicastAddress(String multicastAddress) {
+  public RtpMrl multicastAddress(String multicastAddress) {
     this.multicastAddress = multicastAddress;
     return this;
   }
 
-  public RtpMediaUrl port(int port) {
+  public RtpMrl port(int port) {
     this.port = port;
     return this;
   }

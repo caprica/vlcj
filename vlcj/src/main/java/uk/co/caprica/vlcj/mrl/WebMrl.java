@@ -3,17 +3,17 @@ package uk.co.caprica.vlcj.mrl;
 /**
  * Implementation for a web-style URL.
  * <p>
- * This class provides a fluent API for initialising the URL, e.g.
+ * This class provides a fluent API for initialising the MRL, e.g.
  * <pre>
- * String url = new WebMediaUrl().type("http")
- *                               .host("www.myhost.com")
- *                               .port("8080")
- *                               .path("/media/example.mp4")
- *                               .value();
+ * String mrl = new WebMrl().type("http")
+ *                          .host("www.myhost.com")
+ *                          .port("8080")
+ *                          .path("/media/example.mp4")
+ *                          .value();
  * </pre>
  * This will generate <code>"http://www.myhost.com:8080/media/example.mp4"</code>.
  */
-public class WebMediaUrl implements MediaUrl {
+public class WebMrl implements Mrl {
 
   /**
    * 
@@ -40,22 +40,22 @@ public class WebMediaUrl implements MediaUrl {
    */
   private String value;
   
-  public WebMediaUrl type(String type) {
+  public WebMrl type(String type) {
     this.type = type;
     return this;
   }
   
-  public WebMediaUrl host(String host) {
+  public WebMrl host(String host) {
     this.host = host;
     return this;
   }
 
-  public WebMediaUrl port(int port) {
+  public WebMrl port(int port) {
     this.port = port;
     return this;
   }
   
-  public WebMediaUrl path(String path) {
+  public WebMrl path(String path) {
     this.path = path;
     return this;
   }
