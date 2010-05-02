@@ -77,11 +77,11 @@ vlc-<version>.jar and the jna-<version>.jar file.
 The application may be started like this for example (assuming a "$" command-
 line prompt):
 
-$java -jar vlc-1.1a-test.jar
+$java -jar vlc-1.1e-test.jar
 
 For the test player you can specify a logo file name on the command-line.
 
-$java -jar vlc-1.1a-test.jar /some/directory/vlcj-logo.png
+$java -jar vlc-1.1e-test.jar /some/directory/vlcj-logo.png
 
 
 == Known Issues ==
