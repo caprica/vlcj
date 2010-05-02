@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -290,17 +291,24 @@ public class PlayerControlsPanel extends JPanel {
     
     @Override
     public void run() {
-      long time = mediaPlayer.getTime();
+      final long time = mediaPlayer.getTime();
       
-      long duration = mediaPlayer.getLength();
-      int position = duration > 0 ? (int)Math.round(100.0 * (double)time / (double)duration) : 0;
+      final long duration = mediaPlayer.getLength();
+      final int position = duration > 0 ? (int)Math.round(100.0 * (double)time / (double)duration) : 0;
 
-      int chapter = mediaPlayer.getChapter();
-      int chapterCount = mediaPlayer.getChapterCount();
+      final int chapter = mediaPlayer.getChapter();
+      final int chapterCount = mediaPlayer.getChapterCount();
       
-      updateTime(time);
-      updatePosition(position);
-      updateChapter(chapter, chapterCount);
+      // Updates to user interface components must be executed on the Event
+      // Dispatch Thread
+      SwingUtilities.invokeLater(new Runnable() {
+        @Override
+        public void run() {
+          updateTime(time);
+          updatePosition(position);
+          updateChapter(chapter, chapterCount);
+        }
+      });
     }
   }
   
