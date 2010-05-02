@@ -2,6 +2,7 @@ package uk.co.caprica.vlcj.test;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.Executors;
@@ -34,6 +35,7 @@ public class PlayerControlsPanel extends JPanel {
   
   private JLabel timeLabel;
   private JProgressBar positionProgressBar;
+  private JSlider positionSlider;
   private JLabel chapterLabel;
   
   private JButton previousChapterButton;
@@ -56,6 +58,12 @@ public class PlayerControlsPanel extends JPanel {
   
   private JFileChooser fileChooser;
   
+  // Guard to prevent the position slider firing spurious change events when
+  // the position changes during play-back - events are only needed when the 
+  // user actually drags the slider and without the guard the play-back 
+  // position will jump around
+  private boolean setPositionValue;
+
   public PlayerControlsPanel(MediaPlayer mediaPlayer) {
     this.mediaPlayer = mediaPlayer;
     
@@ -76,6 +84,12 @@ public class PlayerControlsPanel extends JPanel {
     positionProgressBar = new JProgressBar();
     positionProgressBar.setMinimum(0);
     positionProgressBar.setMaximum(100);
+    positionProgressBar.setValue(0);
+    
+    positionSlider = new JSlider();
+    positionSlider.setMinimum(0);
+    positionSlider.setMaximum(100);
+    positionSlider.setValue(0);
     
     chapterLabel = new JLabel("00/00");
     
@@ -142,12 +156,19 @@ public class PlayerControlsPanel extends JPanel {
     setBorder(new EmptyBorder(4, 4, 4, 4));
     
     setLayout(new BorderLayout());
+
+    JPanel positionPanel = new JPanel();
+    positionPanel.setLayout(new GridLayout(2, 1));
+    positionPanel.add(positionProgressBar);
+    positionPanel.add(positionSlider);
     
     JPanel topPanel = new JPanel();
     topPanel.setLayout(new BorderLayout(8, 0));
+    
     topPanel.add(timeLabel, BorderLayout.WEST);
-    topPanel.add(positionProgressBar, BorderLayout.CENTER);
+    topPanel.add(positionPanel, BorderLayout.CENTER);
     topPanel.add(chapterLabel, BorderLayout.EAST);
+    
     add(topPanel, BorderLayout.NORTH);
     
     JPanel bottomPanel = new JPanel();
@@ -178,6 +199,16 @@ public class PlayerControlsPanel extends JPanel {
       @Override
       public void playing(MediaPlayer mediaPlayer) {
         updateVolume(mediaPlayer.getVolume());
+      }
+    });
+    
+    positionSlider.addChangeListener(new ChangeListener() {
+      @Override
+      public void stateChanged(ChangeEvent e) {
+        if(!positionSlider.getValueIsAdjusting() && !setPositionValue) {
+          float positionValue = (float)positionSlider.getValue() / 100.0f;
+          mediaPlayer.setPosition(positionValue);
+        }
       }
     });
     
@@ -323,6 +354,11 @@ public class PlayerControlsPanel extends JPanel {
 
   private void updatePosition(int value) {
     positionProgressBar.setValue(value);
+    
+    // Set the guard to stop the update from firing a change event
+    setPositionValue = true;
+    positionSlider.setValue(value);
+    setPositionValue = false;
   }
   
   private void updateChapter(int chapter, int chapterCount) {
