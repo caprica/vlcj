@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.test;
 
+import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -26,12 +27,15 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.AWTEventListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -56,9 +60,9 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 public class TestPlayer {
   
   private Frame mainFrame;
-  
   private Canvas videoSurface;
-
+  private JPanel controlsPanel;
+  
   private MediaPlayerFactory mediaPlayerFactory;
 
   private MediaPlayer mediaPlayer;
@@ -125,18 +129,39 @@ public class TestPlayer {
 	  mediaPlayer.setStandardMediaOptions(standardOptions);
 	}
 	
+	controlsPanel = new PlayerControlsPanel(mediaPlayer);
+	
     mainFrame.setLayout(new BorderLayout());
     mainFrame.setBackground(Color.black);
     mainFrame.add(videoSurface, BorderLayout.CENTER);
-    mainFrame.add(new PlayerControlsPanel(mediaPlayer), BorderLayout.SOUTH);
+    mainFrame.add(controlsPanel, BorderLayout.SOUTH);
     mainFrame.setBounds(100, 100, 900, 600);
     mainFrame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent evt) {
         System.exit(0);
       }
     });
+    
+    // Global AWT key handler, you're better off using Swing's InputMap and 
+    // ActionMap with a JFrame - that would solve all sorts of focus issues too
+    Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
+      @Override
+      public void eventDispatched(AWTEvent event) {
+        if(event instanceof KeyEvent) {
+          KeyEvent keyEvent = (KeyEvent)event;
+          if(keyEvent.getID() == KeyEvent.KEY_PRESSED) {
+            if(keyEvent.getKeyCode() == KeyEvent.VK_F12) {
+              controlsPanel.setVisible(!controlsPanel.isVisible());
+              mainFrame.invalidate();
+              mainFrame.validate();
+            }
+          }
+        }
+      }
+    }, AWTEvent.KEY_EVENT_MASK);
+    
     mainFrame.setVisible(true);
-	
+    
 	mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
 	mediaPlayer.setVideoSurface(videoSurface);
     
