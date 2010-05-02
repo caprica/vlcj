@@ -1,4 +1,4 @@
-package uk.co.caprica.vlcj.url;
+package uk.co.caprica.vlcj.mrl;
 
 /**
  * Implementation of a media URL for SSM streams.
