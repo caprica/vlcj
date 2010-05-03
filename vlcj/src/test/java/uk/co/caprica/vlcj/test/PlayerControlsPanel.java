@@ -88,11 +88,13 @@ public class PlayerControlsPanel extends JPanel {
     positionProgressBar.setMinimum(0);
     positionProgressBar.setMaximum(100);
     positionProgressBar.setValue(0);
+    positionProgressBar.setToolTipText("Time");
     
     positionSlider = new JSlider();
     positionSlider.setMinimum(0);
     positionSlider.setMaximum(100);
     positionSlider.setValue(0);
+    positionSlider.setToolTipText("Position");
     
     chapterLabel = new JLabel("00/00");
     
