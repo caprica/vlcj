@@ -29,6 +29,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -49,7 +51,10 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.VideoMetaData;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.runtime.windows.WindowsCanvas;
 import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
+
+import com.sun.jna.Native;
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
@@ -68,6 +73,9 @@ public class TestPlayer {
   private MediaPlayer mediaPlayer;
   
   public static void main(final String[] args) throws Exception {
+    // Experimental
+    Native.setProtected(true);
+    
     new EnvironmentCheckerFactory().newEnvironmentChecker().checkEnvironment();
     
     System.out.println("  version: " + LibVlc.INSTANCE.libvlc_get_version());
@@ -101,10 +109,20 @@ public class TestPlayer {
   public TestPlayer(String[] args) {
     Runtime.getRuntime().addShutdownHook(new TestPlayerShutdownHook());
 
-	videoSurface = new Canvas();
+    if(RuntimeUtil.isWindows()) {
+      videoSurface = new WindowsCanvas();
+    }
+    else {
+      videoSurface = new Canvas();
+    }
+    
 	videoSurface.setBackground(Color.black);
 	videoSurface.setSize(800, 600); // Only for initial layout
 
+	TestPlayerMouseListener mouseListener = new TestPlayerMouseListener();
+	videoSurface.addMouseListener(mouseListener);
+    videoSurface.addMouseMotionListener(mouseListener);
+	
 	List<String> vlcArgs = new ArrayList<String>();
 
 	// Add some other arguments here, or take them from the command-line
@@ -228,6 +246,23 @@ public class TestPlayer {
     else {
       Image blankImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
       videoSurface.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(0, 0), ""));
+    }
+  }
+  
+  private final class TestPlayerMouseListener extends MouseAdapter {
+    @Override
+    public void mouseMoved(MouseEvent e) {
+//      System.out.println("MOVE: " + e);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+      System.out.println("PRESS: " + e);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+      System.out.println("RELEASE: " + e);
     }
   }
   
