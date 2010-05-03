@@ -33,7 +33,7 @@ public class WindowsRuntimeUtil {
   public static final String VLC_REGISTRY_KEY = "SOFTWARE\\VideoLAN\\VLC";
   
   /**
-   * The VLC registry key for the installaton directory.
+   * The VLC registry key for the installation directory.
    */
   public static final String VLC_INSTALL_DIR_KEY = "InstallDir";
   
