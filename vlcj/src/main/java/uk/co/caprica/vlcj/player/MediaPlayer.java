@@ -800,10 +800,7 @@ public abstract class MediaPlayer {
       for(int i = eventListenerList.size() - 1; i >= 0; i--) {
         MediaPlayerEventListener listener = eventListenerList.get(i);
         int eventType = event.type;
-//        System.out.println("eventType: " + eventType + " -> " + libvlc_event_e.event(eventType));
-        
         switch(libvlc_event_e.event(eventType)) {
-
           case libvlc_MediaDurationChanged:
             long newDuration = ((media_duration_changed)event.u.getTypedValue(media_duration_changed.class)).new_duration;
 //            listener.durationChanged(this, newDuration);
