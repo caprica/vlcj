@@ -38,7 +38,7 @@ public interface LowLevelMouseProc extends HOOKPROC {
   public static final int WM_RBUTTONUP = 517;
   public static final int WM_MBUTTONDOWN = 519;
   public static final int WM_MBUTTONUP = 520;
-//  public static final int WM_MOUSEWHEEL = 522;
+  public static final int WM_MOUSEWHEEL = 522;
   
   /**
    * 
@@ -48,5 +48,5 @@ public interface LowLevelMouseProc extends HOOKPROC {
    * @param lParam
    * @return
    */
-  LRESULT callback(int nCode, WPARAM wParam, MOUSEHOOKSTRUCT lParam);
+  LRESULT callback(int nCode, WPARAM wParam, MSLLHOOKSTRUCT lParam);
 }

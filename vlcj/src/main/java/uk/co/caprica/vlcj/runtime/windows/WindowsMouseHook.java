@@ -21,14 +21,18 @@ package uk.co.caprica.vlcj.runtime.windows;
 
 import java.awt.Component;
 import java.awt.Point;
+import java.awt.Window;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
+import javax.swing.SwingUtilities;
 import javax.swing.event.EventListenerList;
 
 import uk.co.caprica.vlcj.runtime.windows.internal.LowLevelMouseProc;
-import uk.co.caprica.vlcj.runtime.windows.internal.MOUSEHOOKSTRUCT;
+import uk.co.caprica.vlcj.runtime.windows.internal.MSLLHOOKSTRUCT;
 
 import com.sun.jna.Platform;
 import com.sun.jna.platform.win32.Kernel32;
@@ -50,6 +54,7 @@ import com.sun.jna.platform.win32.W32API.WPARAM;
  *   <li>Mouse Moved</li>
  *   <li>Mouse Pressed</li>
  *   <li>Mouse Released</li>
+ *   <li>Mouse Wheel Moved</li>
  * </ul>
  * <strong>Any listeners added must execute and return quickly since they will be 
  * executing as part of the native event queue.</strong> 
@@ -58,7 +63,8 @@ import com.sun.jna.platform.win32.W32API.WPARAM;
  * <ul>
  *   <li>Modifiers are not passed along with the event</li>
  *   <li>The semantic events like DRAGGED, CLICKED, ENTER and EXIT are not implemented</li>
- *   <li>Perhaps the events should be notified asynchronously via an executor so as not to hold up the hook</li> 
+ *   <li>Perhaps the events should be notified asynchronously via an executor so as not to hold up the hook</li>
+ *   <li>The thread-safetiness issues are unclear especially wrt creating the hook in the thread</li> 
  * </ul>
  * The hook must be started after it has been created.
  */
@@ -138,6 +144,24 @@ public class WindowsMouseHook implements LowLevelMouseProc {
   }
 
   /**
+   * 
+   * 
+   * @param listener
+   */
+  public void addMouseWheelListener(MouseWheelListener listener) {
+    listenerList.add(MouseWheelListener.class, listener);
+  }
+  
+  /**
+   * 
+   * 
+   * @param listener
+   */
+  public void removeMouseWheelListener(MouseWheelListener listener) {
+    listenerList.remove(MouseWheelListener.class, listener);
+  }
+  
+  /**
    * Start the hook.
    */
   public void start() {
@@ -175,51 +199,59 @@ public class WindowsMouseHook implements LowLevelMouseProc {
   }
   
   @Override
-  public LRESULT callback(int nCode, WPARAM wParam, MOUSEHOOKSTRUCT lParam) {
+  public LRESULT callback(int nCode, WPARAM wParam, MSLLHOOKSTRUCT lParam) {
     if(nCode >= 0) {
-      // Is the component visible...
-      if(relativeTo.isVisible() && relativeTo.isValid()) {
-        // Did the event occur inside the component bounds...
-        int absX = lParam.pt.x;
-        int absY = lParam.pt.y;
-        Point componentPoint = relativeTo.getLocationOnScreen();
-        int relX = componentPoint.x;
-        int relY = componentPoint.y;
-        int relW = relX + relativeTo.getWidth();
-        int relH = relY + relativeTo.getHeight();
-        if(absX >= relX && absY >= relY && absX < relW && absY < relH) {
-          // The event did occur inside the component bounds, so translate it...
-          switch(wParam.intValue()) {
-            case WM_MOUSEMOVE:
-              fireMouseMotionEvent(MouseEvent.MOUSE_MOVED, MouseEvent.NOBUTTON, lParam);
-              break;
-          
-            case WM_LBUTTONDOWN:
-              fireMouseEvent(MouseEvent.MOUSE_PRESSED, MouseEvent.BUTTON1, lParam);
-              break;
-                
-            case WM_LBUTTONUP:
-              fireMouseEvent(MouseEvent.MOUSE_RELEASED, MouseEvent.BUTTON1, lParam);
-              break;
-                
-            case WM_RBUTTONDOWN:
-              fireMouseEvent(MouseEvent.MOUSE_PRESSED, MouseEvent.BUTTON2, lParam);
-              break;
-    
-            case WM_RBUTTONUP:
-              fireMouseEvent(MouseEvent.MOUSE_RELEASED, MouseEvent.BUTTON2, lParam);
-              break;
-                
-            case WM_MBUTTONDOWN:
-              fireMouseEvent(MouseEvent.MOUSE_PRESSED, MouseEvent.BUTTON3, lParam);
-              break;
-          
-            case WM_MBUTTONUP:
-              fireMouseEvent(MouseEvent.MOUSE_RELEASED, MouseEvent.BUTTON3, lParam);
-              break;
-              
-            default:
+      // Is the window active...
+      Window window = SwingUtilities.getWindowAncestor(relativeTo);
+      if(window != null && window.isActive()) {
+        // Is the component visible...
+        if(relativeTo.isVisible() && relativeTo.isValid()) {
+          // Did the event occur inside the component bounds...
+          int absX = lParam.pt.x;
+          int absY = lParam.pt.y;
+          Point componentPoint = relativeTo.getLocationOnScreen();
+          int relX = componentPoint.x;
+          int relY = componentPoint.y;
+          int relW = relX + relativeTo.getWidth();
+          int relH = relY + relativeTo.getHeight();
+          if(absX >= relX && absY >= relY && absX < relW && absY < relH) {
+            // The event did occur inside the component bounds, so translate it...
+            switch(wParam.intValue()) {
+              case WM_MOUSEMOVE:
+                fireMouseMotionEvent(MouseEvent.MOUSE_MOVED, MouseEvent.NOBUTTON, lParam);
                 break;
+            
+              case WM_LBUTTONDOWN:
+                fireMouseEvent(MouseEvent.MOUSE_PRESSED, MouseEvent.BUTTON1, lParam);
+                break;
+                  
+              case WM_LBUTTONUP:
+                fireMouseEvent(MouseEvent.MOUSE_RELEASED, MouseEvent.BUTTON1, lParam);
+                break;
+                  
+              case WM_RBUTTONDOWN:
+                fireMouseEvent(MouseEvent.MOUSE_PRESSED, MouseEvent.BUTTON2, lParam);
+                break;
+      
+              case WM_RBUTTONUP:
+                fireMouseEvent(MouseEvent.MOUSE_RELEASED, MouseEvent.BUTTON2, lParam);
+                break;
+                  
+              case WM_MBUTTONDOWN:
+                fireMouseEvent(MouseEvent.MOUSE_PRESSED, MouseEvent.BUTTON3, lParam);
+                break;
+            
+              case WM_MBUTTONUP:
+                fireMouseEvent(MouseEvent.MOUSE_RELEASED, MouseEvent.BUTTON3, lParam);
+                break;
+                
+              case WM_MOUSEWHEEL:
+                fireMouseWheelEvent(MouseEvent.MOUSE_WHEEL, lParam);
+                break;
+                
+              default:
+                break;
+            }
           }
         }
       }
@@ -228,16 +260,16 @@ public class WindowsMouseHook implements LowLevelMouseProc {
   }
 
   /**
-   * Fire a mouse motion event.
+   * Fire a mouse motion event to the registered listeners.
    * 
    * @param eventType
    * @param button
    * @param lParam
    */
-  private void fireMouseMotionEvent(int eventType, int button, MOUSEHOOKSTRUCT lParam) {
+  private void fireMouseMotionEvent(int eventType, int button, MSLLHOOKSTRUCT lParam) {
     MouseMotionListener[] listeners = listenerList.getListeners(MouseMotionListener.class);
     if(listeners.length > 0) {
-      MouseEvent evt = createEvent(eventType, button, lParam);
+      MouseEvent evt = createMouseEvent(eventType, button, lParam);
       for(int i = listeners.length -1; i >= 0; i--) {
         switch(eventType) {
           case MouseEvent.MOUSE_MOVED:
@@ -249,16 +281,16 @@ public class WindowsMouseHook implements LowLevelMouseProc {
   }
 
   /**
-   * Fire a mouse event.
+   * Fire a mouse event to the registered listeners.
    * 
    * @param eventType
    * @param button
    * @param lParam
    */
-  private void fireMouseEvent(int eventType, int button, MOUSEHOOKSTRUCT lParam) {
+  private void fireMouseEvent(int eventType, int button, MSLLHOOKSTRUCT lParam) {
     MouseListener[] listeners = listenerList.getListeners(MouseListener.class);
     if(listeners.length > 0) {
-      MouseEvent evt = createEvent(eventType, button, lParam);
+      MouseEvent evt = createMouseEvent(eventType, button, lParam);
       for(int i = listeners.length -1; i >= 0; i--) {
         switch(eventType) {
           case MouseEvent.MOUSE_PRESSED:
@@ -274,6 +306,27 @@ public class WindowsMouseHook implements LowLevelMouseProc {
   }
 
   /**
+   * Fire a mouse wheel event to the registered listeners.
+   * 
+   * @param eventType
+   * @param button
+   * @param lParam
+   */
+  private void fireMouseWheelEvent(int eventType, MSLLHOOKSTRUCT lParam) {
+    MouseWheelListener[] listeners = listenerList.getListeners(MouseWheelListener.class);
+    if(listeners.length > 0) {
+      MouseWheelEvent evt = createMouseWheelEvent(eventType, lParam);
+      for(int i = listeners.length -1; i >= 0; i--) {
+        switch(eventType) {
+          case MouseEvent.MOUSE_WHEEL:
+            listeners[i].mouseWheelMoved(evt);
+            break;
+        }
+      }
+    }
+  }
+  
+  /**
    * Create a new mouse event.
    * 
    * @param eventType
@@ -281,12 +334,56 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * @param lParam
    * @return
    */
-  private MouseEvent createEvent(int eventType, int button, MOUSEHOOKSTRUCT lParam) {
+  private MouseEvent createMouseEvent(int eventType, int button, MSLLHOOKSTRUCT lParam) {
     POINT pt = lParam.pt;
     Point rl = relativeTo.getLocationOnScreen();
     int x = pt.x - rl.x;
     int y = pt.y - rl.y;
-    return new MouseEvent(relativeTo, eventType, System.currentTimeMillis(), 0, x, y, pt.x, pt.y, 0, false, button);
+    return new MouseEvent(
+      relativeTo, 
+      eventType, 
+      lParam.time.longValue(), 
+      0,
+      x, y, 
+      pt.x, pt.y, 
+      0, 
+      false, 
+      button
+    );
+  }
+
+  /**
+   * Create a new mouse wheel event.
+   * 
+   * In Windows the rotation amount is positive when moving the wheel away from
+   * the user whereas in Java the rotation amount is negative when moving the
+   * wheel away from the user.
+   * <p>
+   * This implementation adjusts the sign so that the value is correct for Java.
+   * 
+   * @param eventType
+   * @param lParam
+   * @return
+   */
+  private MouseWheelEvent createMouseWheelEvent(int eventType, MSLLHOOKSTRUCT lParam) {
+    POINT pt = lParam.pt;
+    Point rl = relativeTo.getLocationOnScreen();
+    int x = pt.x - rl.x;
+    int y = pt.y - rl.y;
+    int wheelRotation = lParam.mouseData.intValue()  >> 16;
+    return new MouseWheelEvent(
+      relativeTo, 
+      eventType, 
+      lParam.time.longValue(), 
+      0, 
+      x, y, 
+      pt.x, pt.y,
+      0,
+      false, 
+      MouseWheelEvent.WHEEL_UNIT_SCROLL,
+      1,
+      wheelRotation * -1
+    );
   }
   
   /**

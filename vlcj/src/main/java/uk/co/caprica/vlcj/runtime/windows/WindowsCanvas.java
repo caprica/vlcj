@@ -19,15 +19,41 @@
 
 package uk.co.caprica.vlcj.runtime.windows;
 
+import java.awt.AWTEvent;
 import java.awt.Canvas;
+import java.awt.Toolkit;
+import java.awt.event.AWTEventListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelListener;
+
+import javax.swing.event.EventListenerList;
 
 /**
  * Implementation of a Canvas that uses a native windows message hook to
  * make sure events are received while the video is playing.
+ * <p>
+ * When VLC plays a movie file, it does not send keyboard or mouse events to
+ * the Canvas component used as the video surface.
+ * <p>
+ * To work around this requires two strategies.
+ * <p>
+ * For keyboard events add a global AWTEventListener.
+ * <p>
+ * For mouse events a register a global Windows message hook.
+ * <p>
+ * This component implements both of those strategies behind the scenes - as
+ * far as client code is concerned key and mouse listeners are added in the
+ * usual way. 
  */
 public class WindowsCanvas extends Canvas {
+
+  /**
+   * List of registered event listeners.
+   */
+  private final EventListenerList listenerList = new EventListenerList();
 
   /**
    * Mouse hook implementation.
@@ -50,8 +76,10 @@ public class WindowsCanvas extends Canvas {
     
     mouseHook = new WindowsMouseHook(this);
     mouseHook.start();
+    
+    Toolkit.getDefaultToolkit().addAWTEventListener(new WindowsKeyListener(), AWTEvent.KEY_EVENT_MASK);
   }
-
+  
   @Override
   public synchronized void addMouseListener(MouseListener l) {
     mouseHook.addMouseListener(l);
@@ -73,10 +101,65 @@ public class WindowsCanvas extends Canvas {
   }
 
   @Override
+  public synchronized void addMouseWheelListener(MouseWheelListener l) {
+    mouseHook.addMouseWheelListener(l);
+  }
+
+  @Override
+  public synchronized void removeMouseWheelListener(MouseWheelListener l) {
+    mouseHook.removeMouseWheelListener(l);
+  }
+
+  @Override
+  public synchronized void addKeyListener(KeyListener l) {
+    listenerList.add(KeyListener.class, l);
+  }
+
+  @Override
+  public synchronized void removeKeyListener(KeyListener l) {
+    listenerList.remove(KeyListener.class, l);
+  }
+
+  @Override
   protected void finalize() throws Throwable {
     if(mouseHook != null) {
       mouseHook.release();
       mouseHook = null;
+    }
+  }
+  
+  /**
+   * Global AWT event listener used to propagate key events to listeners
+   * registered in the usual way.
+   */
+  private final class WindowsKeyListener implements AWTEventListener {
+
+    @Override
+    public void eventDispatched(AWTEvent event) {
+      // Only interested in key events...
+      if(event instanceof KeyEvent) {
+        KeyEvent keyEvent = (KeyEvent)event;
+        // Only interested in events for this component...
+        if(keyEvent.getComponent() == WindowsCanvas.this) {
+          // Propagate the event to each registered listener...
+          KeyListener[] listeners = listenerList.getListeners(KeyListener.class);
+          for(int i = listeners.length - 1; i >= 0; i--) {
+            switch(keyEvent.getID()) {
+              case KeyEvent.KEY_PRESSED:
+                listeners[i].keyPressed(keyEvent);
+                break;
+                
+              case KeyEvent.KEY_RELEASED:
+                listeners[i].keyReleased(keyEvent);
+                break;
+            
+              case KeyEvent.KEY_TYPED:
+                listeners[i].keyTyped(keyEvent);
+                break;
+            }
+          }
+        }
+      }
     }
   }
 }
