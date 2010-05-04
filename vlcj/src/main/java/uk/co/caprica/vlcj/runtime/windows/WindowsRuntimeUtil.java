@@ -40,9 +40,14 @@ public class WindowsRuntimeUtil {
   /**
    * Get the VLC installation directory.
    * 
-   * @return fully-qualified directory name
+   * @return fully-qualified directory name, or <code>null</code> if the value could not be obtained
    */
   public static String getVlcInstallDir() {
-    return Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, VLC_REGISTRY_KEY, VLC_INSTALL_DIR_KEY);
+    try {
+      return Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, VLC_REGISTRY_KEY, VLC_INSTALL_DIR_KEY);
+    }
+    catch(Exception e) {
+      return null;
+    }
   }
 }
