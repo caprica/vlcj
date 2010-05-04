@@ -28,9 +28,11 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -122,6 +124,8 @@ public class TestPlayer {
 	TestPlayerMouseListener mouseListener = new TestPlayerMouseListener();
 	videoSurface.addMouseListener(mouseListener);
     videoSurface.addMouseMotionListener(mouseListener);
+    videoSurface.addMouseWheelListener(mouseListener);
+    videoSurface.addKeyListener(new TestPlayerKeyListener());
 	
 	List<String> vlcArgs = new ArrayList<String>();
 
@@ -252,7 +256,7 @@ public class TestPlayer {
   private final class TestPlayerMouseListener extends MouseAdapter {
     @Override
     public void mouseMoved(MouseEvent e) {
-//      System.out.println("MOVE: " + e);
+//      System.out.println("MOVE: " + e); // TOO many to keep printing!
     }
 
     @Override
@@ -263,6 +267,29 @@ public class TestPlayer {
     @Override
     public void mouseReleased(MouseEvent e) {
       System.out.println("RELEASE: " + e);
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+      System.out.println("WHEEL: " + e);
+    }
+  }
+  
+  private final class TestPlayerKeyListener extends KeyAdapter {
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+      System.out.println("KEY PRESS: " + e);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+      System.out.println("KEY RELEASE: " + e);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+      System.out.println("KEY TYPED: " + e);
     }
   }
   
