@@ -22,11 +22,12 @@ Second, pass, for example, the following options to libvlc during initialisation
 
   --plugin-path="C:\Program Files\VideoLAN\VLC\plugins"
 
-If you want to receive mouse events from the video surface while the video is
-playing then you must use a custom WindowsCanvas implementation for your video
-surface rather than the regular AWT Canvas. This is because to get the mouse 
-events a native Windows message hook is required - the WindowsCanvas manages
-the native message hook.
+If you want to receive mouse or keyboard events from the video surface while 
+the video is playing then you must use a custom WindowsCanvas implementation 
+for your video surface rather than the regular AWT Canvas. This is because to 
+get the mouse events a native Windows message hook is required - the 
+WindowsCanvas manages the native message hook. Key events are handled by a
+global AWT event listener.
 
 == Test Player ==
 
