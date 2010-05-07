@@ -79,6 +79,16 @@ public class WindowsCanvas extends Canvas {
     
     Toolkit.getDefaultToolkit().addAWTEventListener(new WindowsKeyListener(), AWTEvent.KEY_EVENT_MASK);
   }
+
+  /**
+   * 
+   */
+  public void release() {
+    if(mouseHook != null) {
+      mouseHook.release();
+      mouseHook = null;
+    }
+  }
   
   @Override
   public synchronized void addMouseListener(MouseListener l) {
@@ -122,10 +132,7 @@ public class WindowsCanvas extends Canvas {
 
   @Override
   protected void finalize() throws Throwable {
-    if(mouseHook != null) {
-      mouseHook.release();
-      mouseHook = null;
-    }
+    release();
   }
   
   /**
