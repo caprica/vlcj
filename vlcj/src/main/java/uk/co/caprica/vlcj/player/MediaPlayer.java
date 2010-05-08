@@ -169,6 +169,17 @@ public abstract class MediaPlayer {
 
   /**
    * Create a new media player.
+   * <p>
+   * Full-screen will not be supported.
+   * 
+   * @param instance
+   */
+  public MediaPlayer(libvlc_instance_t instance) {
+    this(null, instance);
+  }
+  
+  /**
+   * Create a new media player with a full-screen strategy.
    * 
    * @param fullScreenStrategy
    * @param instance
@@ -774,8 +785,14 @@ public abstract class MediaPlayer {
     IntByReference px = new IntByReference();
     IntByReference py = new IntByReference();
     int result = libvlc.libvlc_video_get_size(mediaPlayerInstance, 0, px, py);
-    // FIXME I think libvlc has this backwards!!! so I'll swap
-    return new Dimension(py.getValue(), px.getValue());
+    if(result == 0) {
+      // vlc 1.1.0pre2 has these the wrong way around
+//      return new Dimension(py.getValue(), px.getValue());
+      return new Dimension(px.getValue(), py.getValue());
+    }
+    else {
+      return null;
+    }
   }
   
   private boolean hasVideoOut() {
