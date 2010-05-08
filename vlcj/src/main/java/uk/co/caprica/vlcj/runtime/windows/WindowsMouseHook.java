@@ -209,6 +209,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
           // Did the event occur inside the component bounds...
           int absX = lParam.pt.x;
           int absY = lParam.pt.y;
+          // FIXME there is a race here where relativeTo may no longer be visible
           Point componentPoint = relativeTo.getLocationOnScreen();
           int relX = componentPoint.x;
           int relY = componentPoint.y;
@@ -336,6 +337,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    */
   private MouseEvent createMouseEvent(int eventType, int button, MSLLHOOKSTRUCT lParam) {
     POINT pt = lParam.pt;
+    // FIXME race condition where relativeTo might not be visible
     Point rl = relativeTo.getLocationOnScreen();
     int x = pt.x - rl.x;
     int y = pt.y - rl.y;
@@ -367,6 +369,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    */
   private MouseWheelEvent createMouseWheelEvent(int eventType, MSLLHOOKSTRUCT lParam) {
     POINT pt = lParam.pt;
+    // FIXME race condition where relativeTo might not be visible
     Point rl = relativeTo.getLocationOnScreen();
     int x = pt.x - rl.x;
     int y = pt.y - rl.y;
