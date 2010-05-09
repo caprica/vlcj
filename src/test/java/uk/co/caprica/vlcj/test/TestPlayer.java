@@ -192,6 +192,8 @@ public class TestPlayer {
     mainFrame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent evt) {
         if(LOG.isDebugEnabled()) {LOG.debug("windowClosing(evt=" + evt + ")");}
+        mediaPlayer.release();
+        mediaPlayer = null;
         System.exit(0);
       }
     });
@@ -325,9 +327,9 @@ public class TestPlayer {
     @Override
     public void run() {
       LOG.debug("run()");
-      if(mediaPlayer != null) {
-        mediaPlayer.release();
-      }
+//      if(mediaPlayer != null) {
+//        mediaPlayer.release();
+//      }
       LOG.debug("runnable exits()");
     }
   }
