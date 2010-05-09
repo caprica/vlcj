@@ -52,6 +52,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import org.apache.log4j.Logger;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.check.EnvironmentCheckerFactory;
 import uk.co.caprica.vlcj.player.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -88,7 +89,7 @@ public class TestPlayer {
     // Experimental
     Native.setProtected(false);
     
-//    new EnvironmentCheckerFactory().newEnvironmentChecker().checkEnvironment();
+    new EnvironmentCheckerFactory().newEnvironmentChecker().checkEnvironment();
     
     if(LOG.isDebugEnabled()) {
       LOG.debug("  version: " + LibVlc.INSTANCE.libvlc_get_version());
