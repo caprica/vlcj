@@ -44,6 +44,8 @@ public class LinuxMediaPlayer extends MediaPlayer {
     if(LOG.isDebugEnabled()) {LOG.debug("nativeSetVideoSurface(mediaPlayerInstance=" + mediaPlayerInstance + ",videoSurface=" + videoSurface + ")");}
     
     long drawable = Native.getComponentID(videoSurface);
+    if(LOG.isDebugEnabled()) {LOG.debug("drawable=" + drawable);}
+
     libvlc_exception_t exception = new libvlc_exception_t();
     libvlc.libvlc_media_player_set_xwindow(mediaPlayerInstance, (int)drawable, exception);
     checkException(exception);
