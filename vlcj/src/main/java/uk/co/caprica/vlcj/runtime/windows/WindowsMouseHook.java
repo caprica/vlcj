@@ -209,6 +209,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
       hook = null;
       hookThread.interrupt();
     }
+    
+    LOG.debug("released");
   }
   
   @Override
@@ -458,7 +460,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
         LOG.error(e);
       }
       
-      LOG.debug("runnable exits");
+      LOG.debug("mouse hook runnable exits");
     }
   }
 }
