@@ -207,6 +207,9 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     if(hook != null) {
       USER32_INSTANCE.UnhookWindowsHookEx(hHook);
       hook = null;
+      
+      // TODO ordinarily I'd interrupt the thread to force it to exit if it's
+      //      blocked, but in this case a fatal VM failure would occur
       hookThread.interrupt();
     }
     
@@ -449,6 +452,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
         hHook = USER32_INSTANCE.SetWindowsHookEx(User32.WH_MOUSE_LL, WindowsMouseHook.this, Kernel32.INSTANCE.GetModuleHandle(null), 0);
         MSG msg = new MSG();
         while((USER32_INSTANCE.GetMessage(msg, null, 0, 0)) != 0) {
+          // TODO we never seem to get here, is this working properly?
           USER32_INSTANCE.TranslateMessage(msg);
           USER32_INSTANCE.DispatchMessage(msg);
           if(getHook() == null) {
