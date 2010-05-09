@@ -23,7 +23,7 @@
   </category>
 
   <category name="uk.co.caprica.vlcj.log.LoggingProxy">
-    <priority value="TRACE"/>
+    <priority value="DEBUG"/>
   </category>
 
   <root>
