@@ -1,2 +1,2 @@
-Class-Path: vlcj-1.0.1a.jar jna.jar platform.jar log4j.jar
+Class-Path: vlcj-1.1f.jar jna.jar platform.jar
 Main-Class: uk.co.caprica.vlcj.test.TestPlayer
