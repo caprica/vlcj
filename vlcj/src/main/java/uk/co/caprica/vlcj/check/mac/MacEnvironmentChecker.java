@@ -22,10 +22,17 @@ package uk.co.caprica.vlcj.check.mac;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import uk.co.caprica.vlcj.check.EnvironmentChecker;
 
 public class MacEnvironmentChecker extends EnvironmentChecker {
 
+  /**
+   * Log.
+   */
+  private static final Logger LOG = Logger.getLogger(MacEnvironmentChecker.class);
+  
   private static final String SHARED_LIBRARY_NAME = "";
 
   private static final List<String> SHARED_LIBRARY_PATHS = new ArrayList<String>();
@@ -42,5 +49,6 @@ public class MacEnvironmentChecker extends EnvironmentChecker {
 
   @Override
   protected void checkNativeEnvironment() {
+    LOG.debug("checkNativeEnvironment()");
   }
 }

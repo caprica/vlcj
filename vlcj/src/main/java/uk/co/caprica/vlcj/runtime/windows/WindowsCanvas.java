@@ -31,6 +31,8 @@ import java.awt.event.MouseWheelListener;
 
 import javax.swing.event.EventListenerList;
 
+import org.apache.log4j.Logger;
+
 /**
  * Implementation of a Canvas that uses a native windows message hook to
  * make sure events are received while the video is playing.
@@ -51,6 +53,11 @@ import javax.swing.event.EventListenerList;
 public class WindowsCanvas extends Canvas {
 
   /**
+   * Log.
+   */
+  private static final Logger LOG = Logger.getLogger(WindowsCanvas.class);
+  
+  /**
    * List of registered event listeners.
    */
   private final EventListenerList listenerList = new EventListenerList();
@@ -64,17 +71,23 @@ public class WindowsCanvas extends Canvas {
    * Create a new canvas.
    */
   public WindowsCanvas() {
+    LOG.debug("WindowsCanvas()");
+    
     // Register a shutdown hook to make sure the mouse hook is removed
     Runtime.getRuntime().addShutdownHook(new Thread() {
       @Override
       public void run() {
+        LOG.debug("run()");
         if(mouseHook != null) {
           mouseHook.release();
         }
+        LOG.debug("runnable exits");
       }
     });
     
     mouseHook = new WindowsMouseHook(this);
+    if(LOG.isDebugEnabled()) {LOG.debug("mouseHook=" + mouseHook);}
+    
     mouseHook.start();
     
     Toolkit.getDefaultToolkit().addAWTEventListener(new WindowsKeyListener(), AWTEvent.KEY_EVENT_MASK);
@@ -84,6 +97,8 @@ public class WindowsCanvas extends Canvas {
    * 
    */
   public void release() {
+    LOG.debug("release()");
+    
     if(mouseHook != null) {
       mouseHook.release();
       mouseHook = null;
@@ -92,46 +107,64 @@ public class WindowsCanvas extends Canvas {
   
   @Override
   public synchronized void addMouseListener(MouseListener l) {
+    if(LOG.isDebugEnabled()) {LOG.debug("addMouseListener(l=" + l + ")");}
+    
     mouseHook.addMouseListener(l);
   }
 
   @Override
   public synchronized void removeMouseListener(MouseListener l) {
+    if(LOG.isDebugEnabled()) {LOG.debug("removeMouseListener(l=" + l + ")");}
+
     mouseHook.removeMouseListener(l);
   }
 
   @Override
   public synchronized void addMouseMotionListener(MouseMotionListener l) {
+    if(LOG.isDebugEnabled()) {LOG.debug("addMouseMotionListener(l=" + l + ")");}
+
     mouseHook.addMouseMotionListener(l);
   }
   
   @Override
   public synchronized void removeMouseMotionListener(MouseMotionListener l) {
+    if(LOG.isDebugEnabled()) {LOG.debug("removeMouseMotionListener(l=" + l + ")");}
+
     mouseHook.removeMouseMotionListener(l);
   }
 
   @Override
   public synchronized void addMouseWheelListener(MouseWheelListener l) {
+    if(LOG.isDebugEnabled()) {LOG.debug("addMouseWheelListener(l=" + l + ")");}
+
     mouseHook.addMouseWheelListener(l);
   }
 
   @Override
   public synchronized void removeMouseWheelListener(MouseWheelListener l) {
+    if(LOG.isDebugEnabled()) {LOG.debug("removeMouseWheelListener(l=" + l + ")");}
+
     mouseHook.removeMouseWheelListener(l);
   }
 
   @Override
   public synchronized void addKeyListener(KeyListener l) {
+    if(LOG.isDebugEnabled()) {LOG.debug("addKeyListener(l=" + l + ")");}
+
     listenerList.add(KeyListener.class, l);
   }
 
   @Override
   public synchronized void removeKeyListener(KeyListener l) {
+    if(LOG.isDebugEnabled()) {LOG.debug("removeKeyListener(l=" + l + ")");}
+
     listenerList.remove(KeyListener.class, l);
   }
 
   @Override
   protected void finalize() throws Throwable {
+    LOG.debug("finalize()");
+    
     release();
   }
   
@@ -143,6 +176,8 @@ public class WindowsCanvas extends Canvas {
 
     @Override
     public void eventDispatched(AWTEvent event) {
+      if(LOG.isTraceEnabled()) {LOG.trace("eventDispatched(event=" + event + ")");}
+      
       // Only interested in key events...
       if(event instanceof KeyEvent) {
         KeyEvent keyEvent = (KeyEvent)event;

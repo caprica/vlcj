@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.player.mac;
 
 import java.awt.Canvas;
 
+import org.apache.log4j.Logger;
+
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.player.FullScreenStrategy;
@@ -28,12 +30,15 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
 
 public class MacMediaPlayer extends MediaPlayer {
 
+  private static final Logger LOG = Logger.getLogger(MacMediaPlayer.class);
+  
   public MacMediaPlayer(FullScreenStrategy fullScreenStrategy, libvlc_instance_t instance) {
     super(fullScreenStrategy, instance);
   }
 
   @Override
   protected void nativeSetVideoSurface(libvlc_media_player_t mediaPlayerInstance, Canvas videoSurface) {
+    if(LOG.isDebugEnabled()) {LOG.debug("nativeSetVideoSurface(mediaPlayerInstance=" + mediaPlayerInstance + ",videoSurface=" + videoSurface + ")");}
     throw new UnsupportedOperationException("Send patches!");
   }
 }

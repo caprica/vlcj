@@ -22,12 +22,19 @@ package uk.co.caprica.vlcj.check.linux;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import uk.co.caprica.vlcj.check.EnvironmentChecker;
 
 /**
  *
  */
 public class LinuxEnvironmentChecker extends EnvironmentChecker {
+
+  /**
+   * Log.
+   */
+  private static final Logger LOG = Logger.getLogger(LinuxEnvironmentChecker.class);
 
   private static final String LIBRARY_NAME = "libvlc.so";
 
@@ -55,5 +62,6 @@ public class LinuxEnvironmentChecker extends EnvironmentChecker {
 
   @Override
   protected void checkNativeEnvironment() {
+    LOG.debug("checkNativeEnvironment()");
   }
 }

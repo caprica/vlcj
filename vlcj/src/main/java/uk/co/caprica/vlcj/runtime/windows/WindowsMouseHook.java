@@ -31,6 +31,8 @@ import java.awt.event.MouseWheelListener;
 import javax.swing.SwingUtilities;
 import javax.swing.event.EventListenerList;
 
+import org.apache.log4j.Logger;
+
 import uk.co.caprica.vlcj.runtime.windows.internal.LowLevelMouseProc;
 import uk.co.caprica.vlcj.runtime.windows.internal.MSLLHOOKSTRUCT;
 
@@ -71,6 +73,11 @@ import com.sun.jna.platform.win32.W32API.WPARAM;
 public class WindowsMouseHook implements LowLevelMouseProc {
 
   /**
+   * Log.
+   */
+  private static final Logger LOG = Logger.getLogger(WindowsMouseHook.class);
+  
+  /**
    * Native library instance.
    */
   private static User32 USER32_INSTANCE = User32.INSTANCE;
@@ -101,9 +108,12 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * @param relativeTo component to report mouse coordinates relative to
    */
   public WindowsMouseHook(Component relativeTo) {
+    if(LOG.isDebugEnabled()) {LOG.debug("WindowsMouseHook(relativeTo=" + relativeTo + ")");}
+    
     if(!Platform.isWindows()) {
       throw new IllegalStateException("Windows only");
     }
+    
     this.relativeTo = relativeTo;
   }
   
@@ -113,6 +123,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * @param listener
    */
   public void addMouseListener(MouseListener listener) {
+    if(LOG.isDebugEnabled()) {LOG.debug("addMouseListener(listener=" + listener + ")");}
+
     listenerList.add(MouseListener.class, listener);
   }
   
@@ -122,6 +134,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * @param listener
    */
   public void removeMouseListener(MouseListener listener) {
+    if(LOG.isDebugEnabled()) {LOG.debug("removeMouseListener(listener=" + listener + ")");}
+
     listenerList.remove(MouseListener.class, listener);
   }
   
@@ -131,6 +145,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * @param listener
    */
   public void addMouseMotionListener(MouseMotionListener listener) {
+    if(LOG.isDebugEnabled()) {LOG.debug("addMouseMotionListener(listener=" + listener + ")");}
+
     listenerList.add(MouseMotionListener.class, listener);
   }
   
@@ -140,6 +156,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * @param listener
    */
   public void removeMouseMotionListener(MouseMotionListener listener) {
+    if(LOG.isDebugEnabled()) {LOG.debug("removeMouseMotionListener(listener=" + listener + ")");}
+
     listenerList.remove(MouseMotionListener.class, listener);
   }
 
@@ -149,6 +167,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * @param listener
    */
   public void addMouseWheelListener(MouseWheelListener listener) {
+    if(LOG.isDebugEnabled()) {LOG.debug("addMouseWheelListener(listener=" + listener + ")");}
+
     listenerList.add(MouseWheelListener.class, listener);
   }
   
@@ -158,6 +178,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * @param listener
    */
   public void removeMouseWheelListener(MouseWheelListener listener) {
+    if(LOG.isDebugEnabled()) {LOG.debug("removeMouseWheelListener(listener=" + listener + ")");}
+
     listenerList.remove(MouseWheelListener.class, listener);
   }
   
@@ -165,9 +187,12 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * Start the hook.
    */
   public void start() {
+    LOG.debug("start()");
+    
     if(hookThread != null) {
       throw new IllegalStateException("Mouse hook already installed");
     }
+    
     hookThread = new MouseHookThread();
     hookThread.start();
   }
@@ -176,6 +201,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * 
    */
   public synchronized void release() {
+    LOG.debug("release()");
+    
     HHOOK hook = getHook();
     if(hook != null) {
       USER32_INSTANCE.UnhookWindowsHookEx(hHook);
@@ -186,6 +213,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
   
   @Override
   protected void finalize() throws Throwable {
+    LOG.debug("finalize()");
+    
     release();
   }
 
@@ -200,12 +229,21 @@ public class WindowsMouseHook implements LowLevelMouseProc {
   
   @Override
   public LRESULT callback(int nCode, WPARAM wParam, MSLLHOOKSTRUCT lParam) {
+    if(LOG.isTraceEnabled()) {LOG.trace("callback(nCode=" + nCode + ",wParam=" + wParam + ",lParam=" + lParam);}
+    
     if(nCode >= 0) {
-      // Is the window active...
       Window window = SwingUtilities.getWindowAncestor(relativeTo);
+      if(LOG.isTraceEnabled()) {LOG.trace("window=" + window);}
+
+      // Is the window active...
       if(window != null && window.isActive()) {
+        LOG.trace("window is active");
+        
         // Is the component visible...
+        // TODO is this still needed or is isActive good enough?
         if(relativeTo.isVisible() && relativeTo.isValid()) {
+          LOG.trace("window is visible");
+          
           // Did the event occur inside the component bounds...
           int absX = lParam.pt.x;
           int absY = lParam.pt.y;
@@ -216,6 +254,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
           int relW = relX + relativeTo.getWidth();
           int relH = relY + relativeTo.getHeight();
           if(absX >= relX && absY >= relY && absX < relW && absY < relH) {
+            LOG.trace("event inside component bounds");
+            
             // The event did occur inside the component bounds, so translate it...
             switch(wParam.intValue()) {
               case WM_MOUSEMOVE:
@@ -268,6 +308,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * @param lParam
    */
   private void fireMouseMotionEvent(int eventType, int button, MSLLHOOKSTRUCT lParam) {
+    if(LOG.isTraceEnabled()) {LOG.trace("fireMouseMotionEvent(eventType=" + eventType + ",button=" + button + ",lParam=" + lParam + ")");}
+
     MouseMotionListener[] listeners = listenerList.getListeners(MouseMotionListener.class);
     if(listeners.length > 0) {
       MouseEvent evt = createMouseEvent(eventType, button, lParam);
@@ -289,6 +331,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * @param lParam
    */
   private void fireMouseEvent(int eventType, int button, MSLLHOOKSTRUCT lParam) {
+    if(LOG.isTraceEnabled()) {LOG.trace("fireMouseEvent(eventType=" + eventType + ",button=" + button + ",lParam=" + lParam + ")");}
+
     MouseListener[] listeners = listenerList.getListeners(MouseListener.class);
     if(listeners.length > 0) {
       MouseEvent evt = createMouseEvent(eventType, button, lParam);
@@ -314,6 +358,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    * @param lParam
    */
   private void fireMouseWheelEvent(int eventType, MSLLHOOKSTRUCT lParam) {
+    if(LOG.isTraceEnabled()) {LOG.trace("fireMouseWheelEvent(eventType=" + eventType + ",lParam=" + lParam + ")");}
+    
     MouseWheelListener[] listeners = listenerList.getListeners(MouseWheelListener.class);
     if(listeners.length > 0) {
       MouseWheelEvent evt = createMouseWheelEvent(eventType, lParam);
@@ -395,6 +441,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
   private class MouseHookThread extends Thread {
     @Override
     public void run()  {
+      LOG.debug("run()");
+      
       try {
         hHook = USER32_INSTANCE.SetWindowsHookEx(User32.WH_MOUSE_LL, WindowsMouseHook.this, Kernel32.INSTANCE.GetModuleHandle(null), 0);
         MSG msg = new MSG();
@@ -407,8 +455,10 @@ public class WindowsMouseHook implements LowLevelMouseProc {
         }
       } 
       catch(Exception e) {
-        e.printStackTrace();
+        LOG.error(e);
       }
+      
+      LOG.debug("runnable exits");
     }
   }
 }

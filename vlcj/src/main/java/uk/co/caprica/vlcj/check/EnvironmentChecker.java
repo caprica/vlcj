@@ -23,20 +23,27 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 /**
  * A heuristic to try and find the libvlc shared object file, to aid debugging.
  */
 public abstract class EnvironmentChecker {
 
   /**
+   * Log.
+   */
+  private static final Logger LOG = Logger.getLogger(EnvironmentChecker.class);
+  
+  /**
    * Check for the existence of the libvlc shared object file.
+   * <p>
+   * This is not comprehensive.
    */
   public void checkEnvironment() {
-    System.out.println("============================================================");
-    System.out.println("=== CHECK ENVIRONMENT ======================================");
-    System.out.println("============================================================");
-    
-    System.out.println();
+    LOG.debug("checkEnvironment()");
+
+    // First collect all of the information...
     
     File jnaLibraryPathResult = checkJnaLibraryPath();
     File currentDirectoryResult = checkCurrentDirectory();
@@ -53,33 +60,24 @@ public abstract class EnvironmentChecker {
       longest = Math.max(longest, file.getAbsolutePath().length());
     }
     
+    // Now check and report...
+    
+    LOG.debug("JNA Library Path...");
     String jnaLibraryPath = System.getProperty("jna.library.path");
-    System.out.println("-Djna.library.path=" + (jnaLibraryPath != null ? jnaLibraryPath : "<not-specified>"));
+    if(LOG.isDebugEnabled()) {LOG.debug("-Djna.library.path=" + (jnaLibraryPath != null ? jnaLibraryPath : "<not-specified>"));}
     if(jnaLibraryPathResult != null) {
       checkExists(jnaLibraryPathResult, longest);
     }
 
-    System.out.println();
-    
-    System.out.println("Current Directory...");
+    LOG.debug("Current Directory...");
     checkExists(currentDirectoryResult, longest);
     
-    System.out.println();
-    
-    System.out.println("Search Paths...");
-    
+    LOG.debug("Search Paths...");
     for(File searchPathResult : searchPathResults) {
       checkExists(searchPathResult, longest);
     }
     
-    System.out.println();
-    
     checkNativeEnvironment();
-    
-    System.out.println();
-
-    System.out.println("============================================================");
-    System.out.println();
   }
 
   /**
@@ -120,8 +118,8 @@ public abstract class EnvironmentChecker {
    * @param file
    */
   private void checkExists(File file, int size) {
-    System.out.printf(" %" + size + "s -> %s", file.getAbsolutePath(), file.exists() ? "FOUND" : "NOT FOUND");
-    System.out.println();
+    if(LOG.isDebugEnabled()) {LOG.debug("checkExists(file=" + file.getAbsolutePath() + ")");}
+    if(LOG.isDebugEnabled()) {LOG.debug("exists=" + file.exists());}
   }
   
   /**

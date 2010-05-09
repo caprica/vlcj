@@ -23,6 +23,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import uk.co.caprica.vlcj.check.EnvironmentChecker;
 import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 
@@ -30,6 +32,11 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
  *
  */
 public class WindowsEnvironmentChecker extends EnvironmentChecker {
+
+  /**
+   * Log.
+   */
+  private static final Logger LOG = Logger.getLogger(WindowsEnvironmentChecker.class);
 
   private static final String LIBRARY_NAME = "libvlc.dll";
 
@@ -53,16 +60,22 @@ public class WindowsEnvironmentChecker extends EnvironmentChecker {
 
   @Override
   protected void checkNativeEnvironment() {
-    System.out.println("Registry...");
+    LOG.debug("checkNativeEnvironment()");
+    
     String vlcInstallDir = WindowsRuntimeUtil.getVlcInstallDir();
+    if(LOG.isDebugEnabled()) {LOG.debug("vlcInstallDir=" + vlcInstallDir);}
+    
     if(vlcInstallDir != null) {
       File dir = new File(vlcInstallDir);
-      System.out.println(" vlcInstallDir=" + vlcInstallDir + " -> " + (dir.exists() ? "FOUND" : "NOT FOUND"));
+      if(LOG.isDebugEnabled()) {LOG.debug("dir=" + dir);}
+      if(LOG.isDebugEnabled()) {LOG.debug("exists=" + dir.exists());}
+
       File pluginsDir = new File(vlcInstallDir, "plugins");
-      System.out.println("    pluginsDir=" + pluginsDir + " -> " + (pluginsDir.exists() ? "FOUND" : "NOT FOUND"));
+      if(LOG.isDebugEnabled()) {LOG.debug("pluginsDir=" + pluginsDir);}
+      if(LOG.isDebugEnabled()) {LOG.debug("exists=" + pluginsDir.exists());}
     }
     else {
-      System.out.println(" vlcInstallDir=<not-available>");
+      LOG.warn("VLC installation directory is not known");
     }
   }
 }

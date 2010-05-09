@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.check;
 
+import org.apache.log4j.Logger;
+
 import uk.co.caprica.vlcj.check.linux.LinuxEnvironmentChecker;
 import uk.co.caprica.vlcj.check.mac.MacEnvironmentChecker;
 import uk.co.caprica.vlcj.check.windows.WindowsEnvironmentChecker;
@@ -30,11 +32,18 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 public class EnvironmentCheckerFactory {
 
   /**
+   * Log.
+   */
+  private static final Logger LOG = Logger.getLogger(EnvironmentCheckerFactory.class);
+  
+  /**
    * 
    * 
    * @return
    */
   public EnvironmentChecker newEnvironmentChecker() {
+    LOG.debug("newEnvironmentChecker()");
+    
     EnvironmentChecker environmentChecker;
     
     if(RuntimeUtil.isNix()) {
@@ -44,12 +53,13 @@ public class EnvironmentCheckerFactory {
       environmentChecker = new WindowsEnvironmentChecker();
     }
     else if(RuntimeUtil.isMac()) {
-      // Mac is not yet supported
       environmentChecker = new MacEnvironmentChecker();
     }
     else {
       throw new UnsupportedOperationException("Failed to detect operating system");
     }
+    
+    if(LOG.isDebugEnabled()) {LOG.debug("environmentChecker=" + environmentChecker + ")");}
     
     return environmentChecker;
   }

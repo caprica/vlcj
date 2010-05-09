@@ -22,12 +22,20 @@ package uk.co.caprica.vlcj.player;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 
+import org.apache.log4j.Logger;
+
+
 /**
  * Default implementation of a full screen strategy that attempts to use the
  * JDK full-screen support.
  */
 public class DefaultFullScreenStrategy implements FullScreenStrategy {
 
+  /**
+   * Log.
+   */
+  private static final Logger LOG = Logger.getLogger(DefaultFullScreenStrategy.class);
+  
   /**
    * 
    */
@@ -39,6 +47,8 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
    * @param window
    */
   public DefaultFullScreenStrategy(Window window) {
+    if(LOG.isDebugEnabled()) {LOG.debug("DefaultFullScreenStrategy(window=" + window + ")");}
+    
     if(window != null) {
       this.window = window;
     }
@@ -49,16 +59,22 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
   
   @Override
   public void enterFullScreenMode() {
+    LOG.debug("enterFullScreenMode()");
+    
     GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(window);
   }
 
   @Override
   public void exitFullScreenMode() {
+    LOG.debug("exitFullScreenMode()");
+    
     GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
   }
 
   @Override
   public boolean isFullScreenMode() {
+    LOG.debug("isFullScreenMode()");
+    
     return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getFullScreenWindow() != null;
   }
 }

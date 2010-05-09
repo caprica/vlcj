@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.binding;
 
+import java.lang.reflect.Proxy;
+
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
@@ -28,6 +30,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
+import uk.co.caprica.vlcj.log.LoggingProxy;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
@@ -63,7 +66,16 @@ public interface LibVlc extends Library {
    */
   LibVlc SYNC_INSTANCE = (LibVlc)Native.synchronizedLibrary(INSTANCE);
 
+  /**
+   * 
+   */
+  LibVlc LOGGING_INSTANCE = (LibVlc)Proxy.newProxyInstance(LibVlc.class.getClassLoader(), new Class<?>[] {LibVlc.class}, new LoggingProxy(LibVlc.INSTANCE));
 
+  /**
+   * 
+   */
+  LibVlc LOGGING_SYNC_INSTANCE = (LibVlc)Proxy.newProxyInstance(LibVlc.class.getClassLoader(), new Class<?>[] {LibVlc.class}, new LoggingProxy(LibVlc.SYNC_INSTANCE));
+  
   
   // === libvlc.h =============================================================
   
@@ -590,7 +602,7 @@ public interface LibVlc extends Library {
    * @param p_mi the Media Player
    * @param drawable the agl handler
    */
-  void libvlc_media_player_set_agl(libvlc_media_player_t p_mi, long drawable);
+  void libvlc_media_player_set_agl(libvlc_media_player_t p_mi, int drawable);
 
   /**
    * Get the agl handler previously set with libvlc_media_player_set_agl().
@@ -598,7 +610,7 @@ public interface LibVlc extends Library {
    * @param p_mi the Media Player
    * @return the agl handler or 0 if none where set
    */
-  long libvlc_media_player_get_agl(libvlc_media_player_t p_mi);
+  int libvlc_media_player_get_agl(libvlc_media_player_t p_mi);
 
   /**
    * Set an X Window System drawable where the media player should render its
@@ -616,7 +628,7 @@ public interface LibVlc extends Library {
    * @param p_mi the Media Player
    * @param drawable the ID of the X window
    */
-  void libvlc_media_player_set_xwindow(libvlc_media_player_t p_mi, long drawable);
+  void libvlc_media_player_set_xwindow(libvlc_media_player_t p_mi, int drawable);
 
   /**
    * Get the X Window System window identifier previously set with
@@ -627,7 +639,7 @@ public interface LibVlc extends Library {
    * @param p_mi the Media Player
    * @return an X window ID, or 0 if none where set.
    */
-  long libvlc_media_player_get_xwindow(libvlc_media_player_t p_mi);
+  int libvlc_media_player_get_xwindow(libvlc_media_player_t p_mi);
 
   /**
    * Set a Win32/Win64 API window handle (HWND) where the media player should
@@ -637,7 +649,7 @@ public interface LibVlc extends Library {
    * @param p_mi the Media Player
    * @param drawable windows handle of the drawable
    */
-  void libvlc_media_player_set_hwnd (libvlc_media_player_t p_mi, Pointer drawable);
+  void libvlc_media_player_set_hwnd(libvlc_media_player_t p_mi, Pointer drawable);
 
   /**
    * Get the Windows API window handle (HWND) previously set with
@@ -647,7 +659,7 @@ public interface LibVlc extends Library {
    * @param p_mi the Media Player
    * @return a window handle or NULL if there are none.
    */
-  Pointer libvlc_media_player_get_hwnd (libvlc_media_player_t p_mi);
+  Pointer libvlc_media_player_get_hwnd(libvlc_media_player_t p_mi);
 
   /** \bug This might go away ... to be replaced by a broader system */
 

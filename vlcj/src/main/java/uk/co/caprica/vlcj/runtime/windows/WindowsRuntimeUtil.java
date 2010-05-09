@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.runtime.windows;
 
+import org.apache.log4j.Logger;
+
 import com.sun.jna.platform.win32.Advapi32Util;
 import com.sun.jna.platform.win32.WinReg;
 
@@ -27,6 +29,11 @@ import com.sun.jna.platform.win32.WinReg;
  */
 public class WindowsRuntimeUtil {
 
+  /**
+   * Log.
+   */
+  private static final Logger LOG = Logger.getLogger(WindowsRuntimeUtil.class);
+  
   /**
    * The VLC registry key, under HKLM.
    */
@@ -43,10 +50,13 @@ public class WindowsRuntimeUtil {
    * @return fully-qualified directory name, or <code>null</code> if the value could not be obtained
    */
   public static String getVlcInstallDir() {
+    LOG.debug("getVlcInstallDir()");
+    
     try {
       return Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, VLC_REGISTRY_KEY, VLC_INSTALL_DIR_KEY);
     }
     catch(Exception e) {
+      LOG.warn("Failed to get VLC installation directory from the registry", e);
       return null;
     }
   }

@@ -19,6 +19,10 @@
 
 package uk.co.caprica.vlcj.player;
 
+import java.util.Arrays;
+
+import org.apache.log4j.Logger;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.player.linux.LinuxMediaPlayer;
@@ -71,6 +75,11 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 public class MediaPlayerFactory {
     
   /**
+   * Log.
+   */
+  private static final Logger LOG = Logger.getLogger(MediaPlayerFactory.class);
+  
+  /**
    * 
    */
   private final LibVlc libvlc = LibVlc.SYNC_INSTANCE;
@@ -91,9 +100,13 @@ public class MediaPlayerFactory {
    * @param libvlcArgs
    */
   public MediaPlayerFactory(String[] libvlcArgs) {
+    if(LOG.isDebugEnabled()) {LOG.debug("MediaPlayerFactory(libvlcArgs=" + Arrays.toString(libvlcArgs) + ")");}
+    
     this.instance = libvlc.libvlc_new(libvlcArgs.length, libvlcArgs);
+    if(LOG.isDebugEnabled()) {LOG.debug("instance=" + instance);}
     
     if(instance == null) {
+      LOG.error("Failed to initialise libvlc");
       throw new IllegalStateException("Unable to initialise libvlc, check your libvlc options and/or check the console for error messages");
     }
   }
@@ -102,6 +115,8 @@ public class MediaPlayerFactory {
    * Release the native resources associated with this factory.
    */
   public void release() {
+    LOG.debug("release()");
+    
     if(!released) {
       if(instance != null) {
         libvlc.libvlc_release(instance);
@@ -118,6 +133,8 @@ public class MediaPlayerFactory {
    * @return media player instance
    */
   public MediaPlayer newMediaPlayer(FullScreenStrategy fullScreenStrategy) {
+    if(LOG.isDebugEnabled()) {LOG.debug("newMediaPlayer(fullScreenStrategy=" + fullScreenStrategy + ")");}
+    
     MediaPlayer mediaPlayer;
     
     if(RuntimeUtil.isNix()) {
@@ -134,11 +151,14 @@ public class MediaPlayerFactory {
       throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
     }
     
+    if(LOG.isDebugEnabled()) {LOG.debug("mediaPlayer=" + mediaPlayer);}
+    
     return mediaPlayer;
   }
   
   @Override
   protected synchronized void finalize() throws Throwable {
+    LOG.debug("finalize()");
     release();
   }
 }

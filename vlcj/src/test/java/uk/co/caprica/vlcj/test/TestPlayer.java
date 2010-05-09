@@ -23,6 +23,7 @@ import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Point;
@@ -36,6 +37,10 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,8 +49,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import org.apache.log4j.Logger;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.check.EnvironmentCheckerFactory;
 import uk.co.caprica.vlcj.player.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -66,6 +72,8 @@ import com.sun.jna.Native;
  */
 public class TestPlayer {
   
+  private static final Logger LOG = Logger.getLogger(TestPlayer.class);
+  
   private Frame mainFrame;
   private Canvas videoSurface;
   private JPanel controlsPanel;
@@ -76,13 +84,15 @@ public class TestPlayer {
   
   public static void main(final String[] args) throws Exception {
     // Experimental
-    Native.setProtected(true);
+    Native.setProtected(false);
     
-    new EnvironmentCheckerFactory().newEnvironmentChecker().checkEnvironment();
+//    new EnvironmentCheckerFactory().newEnvironmentChecker().checkEnvironment();
     
-    System.out.println("  version: " + LibVlc.INSTANCE.libvlc_get_version());
-    System.out.println(" compiler: " + LibVlc.INSTANCE.libvlc_get_compiler());
-    System.out.println("changeset: " + LibVlc.INSTANCE.libvlc_get_changeset());
+    if(LOG.isDebugEnabled()) {
+      LOG.debug("  version: " + LibVlc.INSTANCE.libvlc_get_version());
+      LOG.debug(" compiler: " + LibVlc.INSTANCE.libvlc_get_compiler());
+      LOG.debug("changeset: " + LibVlc.INSTANCE.libvlc_get_changeset());
+    }
     
     setLookAndFeel();
     
@@ -112,11 +122,14 @@ public class TestPlayer {
     Runtime.getRuntime().addShutdownHook(new TestPlayerShutdownHook());
 
     if(RuntimeUtil.isWindows()) {
+      // If running on Windows and you want the mouse/keyboard event hack...
       videoSurface = new WindowsCanvas();
     }
     else {
       videoSurface = new Canvas();
     }
+
+    if(LOG.isDebugEnabled()) {LOG.debug("videoSurface=" + videoSurface);}
     
 	videoSurface.setBackground(Color.black);
 	videoSurface.setSize(800, 600); // Only for initial layout
@@ -129,13 +142,27 @@ public class TestPlayer {
 	
 	List<String> vlcArgs = new ArrayList<String>();
 
-	// Add some other arguments here, or take them from the command-line
+	// For each command-line argument specified...
+	for(String arg : args) {
+	  // ...treat that as a file name to load initialisation options from
+	  File optionsFile = new File(arg);
+	  try {
+	    readOptionsFile(optionsFile, vlcArgs);
+	  }
+	  catch(IOException e) {
+	    LOG.warn("Failed to read options from '" + optionsFile + "'", e);
+	  }
+	}
+	
+	// Add some other arguments here...
 	
 	// Special case to help out users on Windows...
 	if(RuntimeUtil.isWindows()) {
 	  vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
 	}
 
+	if(LOG.isDebugEnabled()) {LOG.debug("vlcArgs=" + vlcArgs);}
+	
     mainFrame = new Frame("VLCJ Test Player for VLC 1.1.x");
 
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
@@ -145,12 +172,12 @@ public class TestPlayer {
 	mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
 
 	// Use any first command-line argument to set a logo
-	if(args.length > 0) {
-	  String logoFile = args[0];
-	  
-	  String[] standardOptions = {"video-filter=logo", "logo-file=" + logoFile, "logo-opacity=25"};
-	  mediaPlayer.setStandardMediaOptions(standardOptions);
-	}
+//	if(args.length > 0) {
+//	  String logoFile = args[0];
+//	  
+//	  String[] standardOptions = {"video-filter=logo", "logo-file=" + logoFile, "logo-opacity=25"};
+//	  mediaPlayer.setStandardMediaOptions(standardOptions);
+//	}
 	
 	controlsPanel = new PlayerControlsPanel(mediaPlayer);
 	
@@ -161,6 +188,7 @@ public class TestPlayer {
     mainFrame.pack();
     mainFrame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent evt) {
+        if(LOG.isDebugEnabled()) {LOG.debug("windowClosing(evt=" + evt + ")");}
         System.exit(0);
       }
     });
@@ -195,31 +223,33 @@ public class TestPlayer {
   private final class TestPlayerMediaPlayerEventListener extends MediaPlayerEventAdapter {
     @Override
     public void finished(MediaPlayer mediaPlayer) {
-      System.out.println("Finished");
+      if(LOG.isDebugEnabled()) {LOG.debug("finished(mediaPlayer=" + mediaPlayer + ")");}
     }
 
     @Override
     public void paused(MediaPlayer mediaPlayer) {
-      System.out.println("Paused");
+      if(LOG.isDebugEnabled()) {LOG.debug("paused(mediaPlayer=" + mediaPlayer + ")");}
     }
 
     @Override
     public void playing(MediaPlayer mediaPlayer) {
-      System.out.println("Playing");
+      if(LOG.isDebugEnabled()) {LOG.debug("playing(mediaPlayer=" + mediaPlayer + ")");}
     }
 
     @Override
     public void stopped(MediaPlayer mediaPlayer) {
-      System.out.println("Stopped");
+      if(LOG.isDebugEnabled()) {LOG.debug("stopped(mediaPlayer=" + mediaPlayer + ")");}
     }
 
     @Override
     public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
-      System.out.println("Meta Data Available");
-      System.out.println(videoMetaData);
+      if(LOG.isDebugEnabled()) {LOG.debug("metaDataAvailable(mediaPlayer=" + mediaPlayer + ",videoMetaData=" + videoMetaData + ")");}
       
-      videoSurface.setSize(videoMetaData.getVideoDimension());
-      mainFrame.pack();
+      Dimension dimension = videoMetaData.getVideoDimension();
+      if(dimension != null) {
+        videoSurface.setSize(videoMetaData.getVideoDimension());
+        mainFrame.pack();
+      }
       
       // You can set a logo like this if you like...
 //      mediaPlayer.setLogoFile("./etc/vlcj-logo.png");
@@ -244,6 +274,7 @@ public class TestPlayer {
    * @param enable
    */
   private void enableMousePointer(boolean enable) {
+    if(LOG.isDebugEnabled()) {LOG.debug("enableMousePointer(enable=" + enable + ")");}
     if(enable) {
       videoSurface.setCursor(null);
     }
@@ -252,52 +283,95 @@ public class TestPlayer {
       videoSurface.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(0, 0), ""));
     }
   }
-  
+
+  /**
+   *
+   */
   private final class TestPlayerMouseListener extends MouseAdapter {
     @Override
     public void mouseMoved(MouseEvent e) {
-//      System.out.println("MOVE: " + e); // TOO many to keep printing!
+      if(LOG.isTraceEnabled()) {LOG.trace("mouseMoved(e=" + e + ")");}
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-      System.out.println("PRESS: " + e);
+      if(LOG.isDebugEnabled()) {LOG.debug("mousePressed(e=" + e + ")");}
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-      System.out.println("RELEASE: " + e);
+      if(LOG.isDebugEnabled()) {LOG.debug("mouseReleased(e=" + e + ")");}
     }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-      System.out.println("WHEEL: " + e);
+      if(LOG.isDebugEnabled()) {LOG.debug("mouseWheelMoved(e=" + e + ")");}
     }
   }
-  
+
+  /**
+   *
+   */
   private final class TestPlayerKeyListener extends KeyAdapter {
 
     @Override
     public void keyPressed(KeyEvent e) {
-      System.out.println("KEY PRESS: " + e);
+      if(LOG.isDebugEnabled()) {LOG.debug("keyPressed(e=" + e + ")");}
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-      System.out.println("KEY RELEASE: " + e);
+      if(LOG.isDebugEnabled()) {LOG.debug("keyReleased(e=" + e + ")");}
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-      System.out.println("KEY TYPED: " + e);
+      if(LOG.isDebugEnabled()) {LOG.debug("keyTyped(e=" + e + ")");}
     }
   }
-  
+
+  /**
+   *
+   */
   private final class TestPlayerShutdownHook extends Thread {
     @Override
     public void run() {
-      if(mediaPlayerFactory != null) {
-        mediaPlayerFactory.release();
+      LOG.debug("run()");
+      if(mediaPlayer != null) {
+        mediaPlayer.release();
+      }
+      LOG.debug("runnable exits()");
+    }
+  }
+
+  /**
+   *
+   * 
+   * @param optionsFile
+   * @param options
+   * @throws IOException
+   */
+  private void readOptionsFile(File optionsFile, List<String> options) throws IOException {
+    if(LOG.isDebugEnabled()) {LOG.debug("readOptionsFile(optionsFile=" + optionsFile.getAbsolutePath() + ")");}
+    BufferedReader in = null;
+    try {
+      in = new BufferedReader(new FileReader(optionsFile));
+      for(;;) {
+        String line = in.readLine();
+        if(line != null) {
+          line = line.trim();
+          if(line.length() > 0 && !line.startsWith("#")) {
+            options.add(line);
+          }
+        }
+        else {
+          break;
+        }
+      }
+    }
+    finally {
+      if(in != null) {
+        in.close();
       }
     }
   }
