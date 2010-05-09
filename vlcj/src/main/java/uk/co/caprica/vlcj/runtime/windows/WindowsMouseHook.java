@@ -210,7 +210,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
       
       // TODO ordinarily I'd interrupt the thread to force it to exit if it's
       //      blocked, but in this case a fatal VM failure would occur
-      hookThread.interrupt();
+//      hookThread.interrupt();
     }
     
     LOG.debug("released");
