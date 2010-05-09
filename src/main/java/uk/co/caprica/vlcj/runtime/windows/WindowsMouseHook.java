@@ -205,7 +205,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     
     HHOOK hook = getHook();
     if(hook != null) {
-      USER32_INSTANCE.UnhookWindowsHookEx(hHook);
+//      USER32_INSTANCE.UnhookWindowsHookEx(hHook);
       hook = null;
       
       // TODO ordinarily I'd interrupt the thread to force it to exit if it's
