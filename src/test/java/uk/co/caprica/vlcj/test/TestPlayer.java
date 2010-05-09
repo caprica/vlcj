@@ -62,6 +62,8 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 
 import com.sun.jna.Native;
 
+//FIXME on Windows a hard VM crash occurs during exit - presumably some native thread is still trying to execute something
+
 /**
  * Simple test harness creates an AWT Window and plays a video.
  * <p>
