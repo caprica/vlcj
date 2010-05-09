@@ -20,10 +20,14 @@
 package uk.co.caprica.vlcj.check;
 
 import java.io.File;
+import java.net.URL;
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+
+import uk.co.caprica.vlcj.binding.LibVlc;
 
 /**
  * A heuristic to try and find the libvlc shared object file, to aid debugging.
@@ -78,6 +82,23 @@ public abstract class EnvironmentChecker {
     }
     
     checkNativeEnvironment();
+    
+    // Some class-path checks...
+    
+    LOG.debug("Code Source...");
+    try {
+      CodeSource codeSource = LibVlc.class.getProtectionDomain().getCodeSource();
+      if(codeSource != null) {
+        URL url = codeSource.getLocation();
+        LOG.debug("Loading VLCJ classes from " + url.toExternalForm());
+      }
+      else {
+        LOG.debug("Unable to get the VLCJ code source");
+      }
+    }
+    catch(SecurityException e) {
+      LOG.debug("Failed to determine code source due to security manager constraint");
+    }
   }
 
   /**
