@@ -64,6 +64,8 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 
 import com.sun.jna.Native;
 
+// FIXME on Windows a hard VM crash occurs during exit - presumably some native thread is still trying to execute something
+
 /**
  * Simple test harness creates an AWT Window and plays a video.
  * <p>
@@ -189,6 +191,8 @@ public class TestPlayer {
     mainFrame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent evt) {
         if(LOG.isDebugEnabled()) {LOG.debug("windowClosing(evt=" + evt + ")");}
+        mediaPlayer.release();
+        mediaPlayer = null;
         System.exit(0);
       }
     });
@@ -337,10 +341,10 @@ public class TestPlayer {
     @Override
     public void run() {
       LOG.debug("run()");
-      if(mediaPlayer != null) {
-        mediaPlayer.release();
-      }
-      LOG.debug("runnable exits()");
+//      if(mediaPlayer != null) {
+//        mediaPlayer.release();
+//      }
+      LOG.debug("shutdown hook runnable exits()");
     }
   }
 
