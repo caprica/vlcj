@@ -205,7 +205,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
   public synchronized void release() {
     LOG.debug("release()");
 
-    removeHook();
+//    removeHook();
     
     LOG.debug("released");
   }
