@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 /**
@@ -27,7 +26,9 @@ import com.sun.jna.Structure;
  */
 public class libvlc_track_description_t extends Structure {
 
-  int i_id;
-  String psz_name;
-  Pointer p_next;
+  public static class ByReference extends libvlc_track_description_t implements Structure.ByReference {}
+  
+  public int i_id;
+  public String psz_name;
+  public libvlc_track_description_t.ByReference p_next;  
 }
