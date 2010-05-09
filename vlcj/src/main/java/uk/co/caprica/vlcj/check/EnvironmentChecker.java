@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.check;
 
 import java.io.File;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +99,12 @@ public abstract class EnvironmentChecker {
     }
     catch(SecurityException e) {
       LOG.debug("Failed to determine code source due to security manager constraint");
+    }
+    
+    LOG.debug("Classpath...");
+    URL[] urls = ((URLClassLoader)ClassLoader.getSystemClassLoader()).getURLs();
+    for(URL url : urls) {
+      LOG.debug(url.toExternalForm());
     }
   }
 
