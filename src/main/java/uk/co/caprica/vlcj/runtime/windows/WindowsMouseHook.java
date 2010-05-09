@@ -100,7 +100,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
   /**
    * Native hook handle.
    */
-  private volatile HHOOK hHook;
+  private volatile HHOOK hook;
   
   /**
    * Create a new mouse hook.
@@ -195,6 +195,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     
     hookThread = new MouseHookThread();
     hookThread.start();
+    
+    installHook();
   }
   
   /**
@@ -202,16 +204,10 @@ public class WindowsMouseHook implements LowLevelMouseProc {
    */
   public synchronized void release() {
     LOG.debug("release()");
+
+    removeHook();
     
-    HHOOK hook = getHook();
-    if(hook != null) {
-      USER32_INSTANCE.UnhookWindowsHookEx(hHook);
-      hook = null;
-      
-      // TODO ordinarily I'd interrupt the thread to force it to exit if it's
-      //      blocked, but in this case a fatal VM failure would occur
-//      hookThread.interrupt();
-    }
+    LOG.debug("released");
   }
   
   @Override
@@ -221,15 +217,6 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     release();
   }
 
-  /**
-   * 
-   * 
-   * @return
-   */
-  private synchronized HHOOK getHook() {
-    return hHook;
-  }
-  
   @Override
   public LRESULT callback(int nCode, WPARAM wParam, MSLLHOOKSTRUCT lParam) {
     if(LOG.isTraceEnabled()) {LOG.trace("callback(nCode=" + nCode + ",wParam=" + wParam + ",lParam=" + lParam);}
@@ -300,9 +287,24 @@ public class WindowsMouseHook implements LowLevelMouseProc {
         }
       }
     }
-    return USER32_INSTANCE.CallNextHookEx(hHook, nCode, wParam, lParam.getPointer());
+    return USER32_INSTANCE.CallNextHookEx(hook, nCode, wParam, lParam.getPointer());
   }
 
+  private void installHook() {
+    LOG.debug("installHook()");
+    hook = USER32_INSTANCE.SetWindowsHookEx(User32.WH_MOUSE_LL, WindowsMouseHook.this, Kernel32.INSTANCE.GetModuleHandle(null), 0);
+    LOG.debug("hook installed");
+  }
+  
+  private void removeHook() {
+    LOG.debug("removeHook()");
+    if(hook != null) {
+      USER32_INSTANCE.UnhookWindowsHookEx(hook);
+      hook = null;
+    }
+    LOG.debug("hook removed");
+  }
+  
   /**
    * Fire a mouse motion event to the registered listeners.
    * 
@@ -447,14 +449,14 @@ public class WindowsMouseHook implements LowLevelMouseProc {
       LOG.debug("run()");
       
       try {
-        hHook = USER32_INSTANCE.SetWindowsHookEx(User32.WH_MOUSE_LL, WindowsMouseHook.this, Kernel32.INSTANCE.GetModuleHandle(null), 0);
         MSG msg = new MSG();
-        while((USER32_INSTANCE.GetMessage(msg, null, 0, 0)) != 0) {
+        int result;
+        while((result = USER32_INSTANCE.GetMessage(msg, null, 0, 0)) != 0) {
+          if(LOG.isTraceEnabled()) {LOG.trace("result=" + result);}
           // TODO we never seem to get here, is this working properly?
-          USER32_INSTANCE.TranslateMessage(msg);
-          USER32_INSTANCE.DispatchMessage(msg);
-          if(getHook() == null) {
-            break;
+          if(result != -1) {
+            USER32_INSTANCE.TranslateMessage(msg);
+            USER32_INSTANCE.DispatchMessage(msg);
           }
         }
       } 
@@ -462,7 +464,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
         LOG.error(e);
       }
       
-      LOG.debug("runnable exits");
+      LOG.debug("mouse hook runnable exits");
     }
   }
 }
