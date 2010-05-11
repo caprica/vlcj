@@ -386,6 +386,28 @@ public abstract class MediaPlayer {
     
     return libvlc.libvlc_media_player_get_rate(mediaPlayerInstance);
   }
+
+  /**
+   * 
+   * 
+   * @return
+   */
+  public int getVideoOutputs() {
+    LOG.trace("getVideoOutputs()");
+    
+    return libvlc.libvlc_media_player_has_vout(mediaPlayerInstance);
+  }
+  
+  /**
+   * Get the number of titles.
+   *
+   * @return number of titles, or -1 if none
+   */
+  public int getTitleCount() {
+    LOG.debug("getTitleCount()");
+    
+    return libvlc.libvlc_media_player_get_title_count(mediaPlayerInstance);
+  }
   
   // === Basic Playback Controls ==============================================
   
@@ -431,12 +453,11 @@ public abstract class MediaPlayer {
   public void skip(long delta) {
     if(LOG.isDebugEnabled()) {LOG.debug("skip(delta=" + delta + ")");}
     
-    long current = libvlc.libvlc_media_player_get_time(mediaPlayerInstance);
+    long current = getTime();
     if(LOG.isDebugEnabled()) {LOG.debug("current=" + current);}
     
-    // TODO fix all these to use getTime()/setTime() rather than the native method!
     if(current != -1) {
-      libvlc.libvlc_media_player_set_time(mediaPlayerInstance, current + delta);
+      setTime(current + delta);
     }
   }
   
@@ -448,11 +469,11 @@ public abstract class MediaPlayer {
   public void skip(float delta) {
     if(LOG.isDebugEnabled()) {LOG.debug("skip(delta=" + delta + ")");}
 
-    float current = libvlc.libvlc_media_player_get_position(mediaPlayerInstance);
+    float current = getPosition();
     if(LOG.isDebugEnabled()) {LOG.debug("current=" + current);}
 
     if(current != -1) {
-      libvlc.libvlc_media_player_set_position(mediaPlayerInstance, current + delta);
+      setPosition(current + delta);
     }
   }
   
@@ -501,7 +522,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * Test whether or not the volume is current muted.
+   * Test whether or not the volume is currently muted.
    * 
    * @return mute <code>true</code> if the volume is muted, <code>false</code> if the volume is not muted
    */
@@ -593,9 +614,9 @@ public abstract class MediaPlayer {
   // === Sub-Picture/Sub-Title Controls =======================================
   
   /**
-   * 
+   * Get the number of sub-pictures/sub-titles.
    *
-   * @return
+   * @return number of sub-titles
    */
   public int getSpuCount() {
     LOG.debug("getSpuCount()");
@@ -604,9 +625,9 @@ public abstract class MediaPlayer {
   }
   
   /**
+   * Get the current sub-title track.
    * 
-   * 
-   * @return
+   * @return sub-title number, or -1 if none
    */
   public int getSpu() {
     LOG.debug("getSpu()");
@@ -615,32 +636,113 @@ public abstract class MediaPlayer {
   }
   
   /**
+   * Set the current sub-title track.
    * 
-   * 
-   * @param spu
+   * @param spu sub-title number, or -1 for none
    */
   public void setSpu(int spu) {
     if(LOG.isDebugEnabled()) {LOG.debug("setSpu(spu=" + spu + ")");}
     
     libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
   }
+
+  // === Description Controls =================================================
   
   /**
+   * Get the title descriptions. 
    * 
+   * @return list of descriptions
+   */
+  public List<String> getTitleDescriptions() {
+    if(LOG.isDebugEnabled()) {LOG.debug("getTitleDescriptions()");}
+    
+    List<String> trackDescriptions = new ArrayList<String>();
+    libvlc_track_description_t trackDescription = libvlc.libvlc_video_get_title_description(mediaPlayerInstance);
+    while(trackDescription != null) {
+      trackDescriptions.add(trackDescription.psz_name);
+      trackDescription = trackDescription.p_next;      
+    }   
+    libvlc.libvlc_track_description_release(trackDescription);
+    return trackDescriptions;
+  }  
+  
+  /**
+   * Get the video (i.e. "title") track descriptions.
    * 
-   * @return
+   * @return list of descriptions
+   */
+  public List<String> getVideoDescriptions() {
+    if(LOG.isDebugEnabled()) {LOG.debug("getVideoDescriptions()");}
+    
+    List<String> trackDescriptions = new ArrayList<String>();
+    libvlc_track_description_t trackDescription = libvlc.libvlc_video_get_track_description(mediaPlayerInstance);
+    while(trackDescription != null) {
+      trackDescriptions.add(trackDescription.psz_name);
+      trackDescription = trackDescription.p_next;      
+    }   
+    libvlc.libvlc_track_description_release(trackDescription);
+    return trackDescriptions;
+  }
+  
+  /**
+   * Get the audio track descriptions. 
+   * 
+   * @return list of descriptions
+   */
+  public List<String> getAudioDescriptions() {
+    if(LOG.isDebugEnabled()) {LOG.debug("getAudioDescriptions()");}
+    
+    List<String> trackDescriptions = new ArrayList<String>();
+    libvlc_track_description_t trackDescription = libvlc.libvlc_audio_get_track_description(mediaPlayerInstance);
+    while(trackDescription != null) {
+      trackDescriptions.add(trackDescription.psz_name);
+      trackDescription = trackDescription.p_next;      
+    }   
+    libvlc.libvlc_track_description_release(trackDescription);
+    return trackDescriptions;
+  }  
+  
+  /**
+   * Get the sub-title track descriptions. 
+   * 
+   * @return list of descriptions
    */
   public List<String> getSpuDescriptions() {
     if(LOG.isDebugEnabled()) {LOG.debug("getSpuDescriptions()");}
     
-    List<String> spuDescriptions = new ArrayList<String>();
+    List<String> trackDescriptions = new ArrayList<String>();
     libvlc_track_description_t trackDescription = libvlc.libvlc_video_get_spu_description(mediaPlayerInstance);
     while(trackDescription != null) {
-      spuDescriptions.add(trackDescription.psz_name);
+      trackDescriptions.add(trackDescription.psz_name);
       trackDescription = trackDescription.p_next;      
     }   
-    return spuDescriptions;
+    libvlc.libvlc_track_description_release(trackDescription);
+    return trackDescriptions;
   }  
+
+  /**
+   * Get the chapter descriptions for a title.
+   * 
+   * @param title title number TODO is it number or index?
+   * @return list of descriptions
+   */
+  public List<String> getChapterDescriptions(int title) {
+    if(LOG.isDebugEnabled()) {LOG.debug("getChapterDescriptions(title=" + title + ")");}
+    
+    List<String> trackDescriptions = new ArrayList<String>();
+    libvlc_track_description_t trackDescription = libvlc.libvlc_video_get_chapter_description(mediaPlayerInstance, title);
+    while(trackDescription != null) {
+      trackDescriptions.add(trackDescription.psz_name);
+      trackDescription = trackDescription.p_next;      
+    }   
+    libvlc.libvlc_track_description_release(trackDescription);
+    return trackDescriptions;
+  }  
+
+  // TODO
+  // also counts for track/title/audio
+  
+
   
   // === Snapshot Controls ====================================================
 
@@ -921,6 +1023,9 @@ public abstract class MediaPlayer {
     metaService.shutdown();
   }
 
+  /**
+   * 
+   */
   private void registerEventListener() {
     LOG.debug("registerEventListener()");
     
@@ -939,6 +1044,9 @@ public abstract class MediaPlayer {
     }
   }
 
+  /**
+   * 
+   */
   private void deregisterEventListener() {
     LOG.debug("deregisterEventListener()");
     
@@ -1000,20 +1108,11 @@ public abstract class MediaPlayer {
     IntByReference py = new IntByReference();
     int result = libvlc.libvlc_video_get_size(mediaPlayerInstance, 0, px, py);
     if(result == 0) {
-      // vlc 1.1.0pre2 has these the wrong way around
-//      return new Dimension(py.getValue(), px.getValue());
       return new Dimension(px.getValue(), py.getValue());
     }
     else {
       return null;
     }
-  }
-  
-  private boolean hasVideoOut() {
-    LOG.trace("hasVideoOut()");
-    
-    int hasVideoOut = libvlc.libvlc_media_player_has_vout(mediaPlayerInstance);
-    return hasVideoOut != 0;
   }
   
   public void release() {
@@ -1146,10 +1245,19 @@ public abstract class MediaPlayer {
         try {
           Thread.sleep(VOUT_WAIT_PERIOD);
 
-          if(hasVideoOut()) {
+          if(getVideoOutputs() > 0) {
             VideoMetaData videoMetaData = new VideoMetaData();
             videoMetaData.setVideoDimension(getVideoDimension());
+            
+            videoMetaData.setTitleCount(getTitleCount());
             videoMetaData.setSpuCount(getSpuCount());
+
+            videoMetaData.setTitleDescriptions(getTitleDescriptions());
+            videoMetaData.setVideoDescriptions(getVideoDescriptions());
+            videoMetaData.setAudioDescriptions(getAudioDescriptions());
+            videoMetaData.setSpuDescriptions(getSpuDescriptions());
+
+            // TODO chapters
             
             notifyListeners(videoMetaData);
             

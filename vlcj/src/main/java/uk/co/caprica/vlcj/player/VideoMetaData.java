@@ -20,6 +20,9 @@
 package uk.co.caprica.vlcj.player;
 
 import java.awt.Dimension;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Basic video meta data.
@@ -32,9 +35,39 @@ public class VideoMetaData {
   private Dimension videoDimension;
   
   /**
+   * 
+   */
+  private int titleCount;
+  
+  /**
    * Number of sub-picture/sub-titles.
    */
   private int spuCount;
+  
+  /**
+   * 
+   */
+  private List<String> titleDescriptions;
+  
+  /**
+   * 
+   */
+  private List<String> videoDescriptions;
+  
+  /**
+   * 
+   */
+  private List<String> audioDescriptions;
+  
+  /**
+   * 
+   */
+  private List<String> spuDescriptions;
+  
+  /**
+   * 
+   */
+  private final Map<Integer, List<String>> chapterDescriptions = new HashMap<Integer, List<String>>();
   
   public Dimension getVideoDimension() {
     return videoDimension;
@@ -44,6 +77,14 @@ public class VideoMetaData {
     this.videoDimension = videoDimension;
   }
   
+  public int getTitleCount() {
+    return titleCount;
+  }
+
+  public void setTitleCount(int titleCount) {
+    this.titleCount = titleCount;
+  }
+
   public int getSpuCount() {
     return spuCount;
   }
@@ -52,10 +93,53 @@ public class VideoMetaData {
     this.spuCount = spuCount;
   }
 
+  public List<String> getTitleDescriptions() {
+    return titleDescriptions;
+  }
+
+  public void setTitleDescriptions(List<String> titleDescriptions) {
+    this.titleDescriptions = titleDescriptions;
+  }
+
+  public List<String> getVideoDescriptions() {
+    return videoDescriptions;
+  }
+
+  public void setVideoDescriptions(List<String> videoDescriptions) {
+    this.videoDescriptions = videoDescriptions;
+  }
+
+  public List<String> getAudioDescriptions() {
+    return audioDescriptions;
+  }
+
+  public void setAudioDescriptions(List<String> audioDescriptions) {
+    this.audioDescriptions = audioDescriptions;
+  }
+
+  public List<String> getSpuDescriptions() {
+    return spuDescriptions;
+  }
+
+  public void setSpuDescriptions(List<String> spuDescriptions) {
+    this.spuDescriptions = spuDescriptions;
+  }
+
+  public Map<Integer, List<String>> getChapterDescriptions() {
+    return chapterDescriptions;
+  }
+
   public String toString() {
-    StringBuilder sb = new StringBuilder(20);
+    StringBuilder sb = new StringBuilder(200);
+    sb.append(getClass().getSimpleName()).append('[');
     sb.append("videoDimension=").append(videoDimension).append(',');
-    sb.append("spuCount=").append(spuCount);
+    sb.append("titleCount=").append(titleCount).append(',');
+    sb.append("spuCount=").append(spuCount).append(',');
+    sb.append("titleDescriptions=").append(titleDescriptions).append(',');
+    sb.append("videoDescriptions=").append(videoDescriptions).append(',');
+    sb.append("audioDescriptions=").append(audioDescriptions).append(',');
+    sb.append("spuDescriptions=").append(spuDescriptions).append(',');
+    sb.append("chapterDescriptions=").append(chapterDescriptions).append(']');
     return sb.toString();
   }
 }
