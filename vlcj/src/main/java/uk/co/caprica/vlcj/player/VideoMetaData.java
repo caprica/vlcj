@@ -67,7 +67,7 @@ public class VideoMetaData {
   /**
    * 
    */
-  private final Map<Integer, List<String>> chapterDescriptions = new HashMap<Integer, List<String>>();
+  private Map<Integer, List<String>> chapterDescriptions = new HashMap<Integer, List<String>>();
   
   public Dimension getVideoDimension() {
     return videoDimension;
@@ -127,6 +127,10 @@ public class VideoMetaData {
 
   public Map<Integer, List<String>> getChapterDescriptions() {
     return chapterDescriptions;
+  }
+
+  public void setChapterDescriptions(Map<Integer, List<String>> chapterDescriptions) {
+    this.chapterDescriptions = chapterDescriptions;
   }
 
   public String toString() {

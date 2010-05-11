@@ -26,6 +26,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -662,7 +664,7 @@ public abstract class MediaPlayer {
       trackDescriptions.add(trackDescription.psz_name);
       trackDescription = trackDescription.p_next;      
     }   
-    libvlc.libvlc_track_description_release(trackDescription);
+//    libvlc.libvlc_track_description_release(trackDescription); // Calling release here will cause a native crash on exit
     return trackDescriptions;
   }  
   
@@ -680,7 +682,7 @@ public abstract class MediaPlayer {
       trackDescriptions.add(trackDescription.psz_name);
       trackDescription = trackDescription.p_next;      
     }   
-    libvlc.libvlc_track_description_release(trackDescription);
+//    libvlc.libvlc_track_description_release(trackDescription); // Calling release here will cause a native crash on exit
     return trackDescriptions;
   }
   
@@ -698,7 +700,7 @@ public abstract class MediaPlayer {
       trackDescriptions.add(trackDescription.psz_name);
       trackDescription = trackDescription.p_next;      
     }   
-    libvlc.libvlc_track_description_release(trackDescription);
+//    libvlc.libvlc_track_description_release(trackDescription); // Calling release here will cause a native crash on exit
     return trackDescriptions;
   }  
   
@@ -716,7 +718,7 @@ public abstract class MediaPlayer {
       trackDescriptions.add(trackDescription.psz_name);
       trackDescription = trackDescription.p_next;      
     }   
-    libvlc.libvlc_track_description_release(trackDescription);
+//    libvlc.libvlc_track_description_release(trackDescription); // Calling release here will cause a native crash on exit
     return trackDescriptions;
   }  
 
@@ -735,14 +737,9 @@ public abstract class MediaPlayer {
       trackDescriptions.add(trackDescription.psz_name);
       trackDescription = trackDescription.p_next;      
     }   
-    libvlc.libvlc_track_description_release(trackDescription);
+//    libvlc.libvlc_track_description_release(trackDescription); // Calling release here will cause a native crash on exit
     return trackDescriptions;
   }  
-
-  // TODO
-  // also counts for track/title/audio
-  
-
   
   // === Snapshot Controls ====================================================
 
@@ -1257,8 +1254,12 @@ public abstract class MediaPlayer {
             videoMetaData.setAudioDescriptions(getAudioDescriptions());
             videoMetaData.setSpuDescriptions(getSpuDescriptions());
 
-            // TODO chapters
-            
+            Map<Integer, List<String>> allChapterDescriptions = new TreeMap<Integer, List<String>>();
+            for(int i = 0; i < getTitleCount(); i++) {
+              allChapterDescriptions.put(i, getChapterDescriptions(i));
+            }
+            videoMetaData.setChapterDescriptions(allChapterDescriptions);
+
             notifyListeners(videoMetaData);
             
             break;
