@@ -324,6 +324,34 @@ public abstract class MediaPlayer {
     return rate;
   }
   
+  /**
+   * 
+   * 
+   * @return
+   */
+  public int getVideoOutputs() {
+    LOG.trace("getVideoOutputs()");
+    
+    libvlc_exception_t exception = new libvlc_exception_t();
+    int videoOutputs = libvlc.libvlc_media_player_has_vout(mediaPlayerInstance, exception);
+    checkException(exception);
+    return videoOutputs;
+  }
+  
+  /**
+   * Get the number of titles.
+   *
+   * @return number of titles, or -1 if none
+   */
+  public int getTitleCount() {
+    LOG.debug("getTitleCount()");
+    
+    libvlc_exception_t exception = new libvlc_exception_t();
+    int titleCount = libvlc.libvlc_media_player_get_title_count(mediaPlayerInstance, exception);
+    checkException(exception);
+    return titleCount;
+  }
+  
   // === Basic Playback Controls ==============================================
   
   /**
@@ -862,16 +890,6 @@ public abstract class MediaPlayer {
     }
   }
   
-  private boolean hasVideoOut() {
-    LOG.trace("hasVideoOut()");
-    
-    libvlc_exception_t exception = new libvlc_exception_t();
-    int hasVideoOut = libvlc.libvlc_media_player_has_vout(mediaPlayerInstance, exception);
-    checkException(exception);
-    
-    return hasVideoOut != 0;
-  }
-  
   public void release() {
     LOG.debug("release()");
     
@@ -1005,9 +1023,11 @@ public abstract class MediaPlayer {
         try {
           Thread.sleep(VOUT_WAIT_PERIOD);
 
-          if(hasVideoOut()) {
+          if(getVideoOutputs() > 0) {
             VideoMetaData videoMetaData = new VideoMetaData();
             videoMetaData.setVideoDimension(getVideoDimension());
+            
+            videoMetaData.setTitleCount(getTitleCount());
             videoMetaData.setSpuCount(getSpuCount());
             
             notifyListeners(videoMetaData);

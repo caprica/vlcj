@@ -20,6 +20,9 @@
 package uk.co.caprica.vlcj.player;
 
 import java.awt.Dimension;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Basic video meta data.
@@ -30,6 +33,11 @@ public class VideoMetaData {
    * Video width/height.
    */
   private Dimension videoDimension;
+  
+  /**
+   * 
+   */
+  private int titleCount;
   
   /**
    * Number of sub-picture/sub-titles.
@@ -44,6 +52,14 @@ public class VideoMetaData {
     this.videoDimension = videoDimension;
   }
   
+  public int getTitleCount() {
+    return titleCount;
+  }
+
+  public void setTitleCount(int titleCount) {
+    this.titleCount = titleCount;
+  }
+
   public int getSpuCount() {
     return spuCount;
   }
@@ -53,9 +69,11 @@ public class VideoMetaData {
   }
 
   public String toString() {
-    StringBuilder sb = new StringBuilder(20);
+    StringBuilder sb = new StringBuilder(200);
+    sb.append(getClass().getSimpleName()).append('[');
     sb.append("videoDimension=").append(videoDimension).append(',');
-    sb.append("spuCount=").append(spuCount);
+    sb.append("titleCount=").append(titleCount).append(',');
+    sb.append("spuCount=").append(spuCount).append(']');
     return sb.toString();
   }
 }
