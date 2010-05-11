@@ -48,7 +48,9 @@ import org.apache.log4j.Logger;
  * <p>
  * This component implements both of those strategies behind the scenes - as
  * far as client code is concerned key and mouse listeners are added in the
- * usual way. 
+ * usual way.
+ * <p>
+ * <strong>This class is experimental, unsupported and unstable in operation.</strong>
  */
 public class WindowsCanvas extends Canvas {
 
