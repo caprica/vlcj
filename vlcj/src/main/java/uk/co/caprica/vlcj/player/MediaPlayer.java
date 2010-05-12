@@ -1424,4 +1424,13 @@ public abstract class MediaPlayer {
    * @param videoSurface video surface component
    */
   protected abstract void nativeSetVideoSurface(libvlc_media_player_t instance, Canvas videoSurface);
+  
+  /**
+   * Allow sub-classes to use the native media player instance. 
+   * 
+   * @return media player instance
+   */
+  protected final libvlc_media_player_t mediaPlayerInstance() {
+    return mediaPlayerInstance;
+  }
 }
