@@ -20,9 +20,6 @@
 package uk.co.caprica.vlcj.player;
 
 import java.awt.Dimension;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Basic video meta data.
