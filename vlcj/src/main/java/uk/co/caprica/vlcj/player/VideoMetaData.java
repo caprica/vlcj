@@ -164,6 +164,8 @@ public class VideoMetaData {
     sb.append(getClass().getSimpleName()).append('[');
     sb.append("videoDimension=").append(videoDimension).append(',');
     sb.append("titleCount=").append(titleCount).append(',');
+    sb.append("videoTrackCount=").append(videoTrackCount).append(',');
+    sb.append("audioTrackCount=").append(audioTrackCount).append(',');
     sb.append("spuCount=").append(spuCount).append(',');
     sb.append("titleDescriptions=").append(titleDescriptions).append(',');
     sb.append("videoDescriptions=").append(videoDescriptions).append(',');
