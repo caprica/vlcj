@@ -400,6 +400,8 @@ public abstract class MediaPlayer {
     return libvlc.libvlc_media_player_has_vout(mediaPlayerInstance);
   }
   
+  // === Title/Track Controls =================================================
+  
   /**
    * Get the number of titles.
    *
@@ -416,7 +418,31 @@ public abstract class MediaPlayer {
    * 
    * @return
    */
+  public int getTitle() {
+    LOG.debug("getTitle()");
+    
+    return libvlc.libvlc_media_player_get_title(mediaPlayerInstance);
+  }
+  
+  /**
+   * 
+   * 
+   * @param track
+   */
+  public void setTitle(int title) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setTitle(title=" + title + ")");}
+    
+    libvlc.libvlc_media_player_set_title(mediaPlayerInstance, title);
+  }
+  
+  /**
+   * 
+   * 
+   * @return
+   */
   public int getVideoTrackCount() {
+    LOG.debug("getVideoTrackCount()");
+    
     return libvlc.libvlc_video_get_track_count(mediaPlayerInstance);
   }
   
@@ -425,8 +451,54 @@ public abstract class MediaPlayer {
    * 
    * @return
    */
+  public int getVideoTrack() {
+    LOG.debug("getVideoTrack()");
+    
+    return libvlc.libvlc_video_get_track(mediaPlayerInstance);
+  }
+  
+  /**
+   * 
+   * 
+   * @param track
+   */
+  public void setVideoTrack(int track) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setVideoTrack(track=" + track + ")");}
+    
+    libvlc.libvlc_video_set_track(mediaPlayerInstance, track);
+  }
+  
+  /**
+   * 
+   * 
+   * @return
+   */
   public int getAudioTrackCount() {
+    LOG.debug("getVideoTrackCount()");
+
     return libvlc.libvlc_audio_get_track_count(mediaPlayerInstance);
+  }
+
+  /**
+   * 
+   * 
+   * @return
+   */
+  public int getAudioTrack() {
+    LOG.debug("getAudioTrack()");
+    
+    return libvlc.libvlc_audio_get_track(mediaPlayerInstance);
+  }
+  
+  /**
+   * 
+   * 
+   * @param track
+   */
+  public void setAudioTrack(int track) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setAudioTrack(track=" + track + ")");}
+    
+    libvlc.libvlc_audio_set_track(mediaPlayerInstance, track);
   }
   
   // === Basic Playback Controls ==============================================
@@ -949,6 +1021,31 @@ public abstract class MediaPlayer {
     
     libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_X.intValue(), x);
     libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Y.intValue(), y);
+  }
+  
+  // === Filter Controls ======================================================
+  
+  /**
+   * Set the de-interlace filter to use.
+   * 
+   * Available modes:
+   * <ul>
+   *   <li>discard</li>
+   *   <li>blend</li>
+   *   <li>mean</li>
+   *   <li>bob</li>
+   *   <li>linear</li>
+   *   <li>x</li>
+   *   <li>yadif</li>
+   *   <li>yadif2x</li>
+   * </ul>
+   * 
+   * @param deinterlaceMode mode, or null to disable the de-interlace filter 
+   */
+  public void setDeinterlace(String deinterlaceMode) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setDeinterlace(deinterlaceMode=" + deinterlaceMode + ")");}
+    
+    libvlc.libvlc_video_set_deinterlace(mediaPlayerInstance, deinterlaceMode);
   }
   
   // === User Interface =======================================================
