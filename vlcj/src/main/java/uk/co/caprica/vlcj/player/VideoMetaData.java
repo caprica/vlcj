@@ -40,6 +40,16 @@ public class VideoMetaData {
   private int titleCount;
   
   /**
+   * 
+   */
+  private int videoTrackCount;
+  
+  /**
+   * 
+   */
+  private int audioTrackCount;
+  
+  /**
    * Number of sub-picture/sub-titles.
    */
   private int spuCount;
@@ -83,6 +93,22 @@ public class VideoMetaData {
 
   public void setTitleCount(int titleCount) {
     this.titleCount = titleCount;
+  }
+
+  public int getVideoTrackCount() {
+    return videoTrackCount;
+  }
+
+  public void setVideoTrackCount(int videoTrackCount) {
+    this.videoTrackCount = videoTrackCount;
+  }
+
+  public int getAudioTrackCount() {
+    return audioTrackCount;
+  }
+
+  public void setAudioTrackCount(int audioTrackCount) {
+    this.audioTrackCount = audioTrackCount;
   }
 
   public int getSpuCount() {

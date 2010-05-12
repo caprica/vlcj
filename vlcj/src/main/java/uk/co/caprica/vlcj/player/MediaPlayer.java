@@ -410,6 +410,24 @@ public abstract class MediaPlayer {
     
     return libvlc.libvlc_media_player_get_title_count(mediaPlayerInstance);
   }
+
+  /**
+   * 
+   * 
+   * @return
+   */
+  public int getVideoTrackCount() {
+    return libvlc.libvlc_video_get_track_count(mediaPlayerInstance);
+  }
+  
+  /**
+   * 
+   * 
+   * @return
+   */
+  public int getAudioTrackCount() {
+    return libvlc.libvlc_audio_get_track_count(mediaPlayerInstance);
+  }
   
   // === Basic Playback Controls ==============================================
   
@@ -447,6 +465,15 @@ public abstract class MediaPlayer {
     libvlc.libvlc_media_player_pause(mediaPlayerInstance);
   }
 
+  /**
+   * Advance one frame. 
+   */
+  public void nextFrame() {
+    LOG.debug("nextFrame()");
+    
+    libvlc.libvlc_media_player_next_frame(mediaPlayerInstance);
+  }
+  
   /**
    * Skip forward or backward by a period of time.
    * 
@@ -1247,6 +1274,8 @@ public abstract class MediaPlayer {
             videoMetaData.setVideoDimension(getVideoDimension());
             
             videoMetaData.setTitleCount(getTitleCount());
+            videoMetaData.setVideoTrackCount(getVideoTrackCount());
+            videoMetaData.setAudioTrackCount(getAudioTrackCount());
             videoMetaData.setSpuCount(getSpuCount());
 
             videoMetaData.setTitleDescriptions(getTitleDescriptions());
