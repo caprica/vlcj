@@ -181,6 +181,22 @@ public interface LibVlc extends Library {
   void libvlc_event_detach(libvlc_event_manager_t p_event_manager, int i_event_type, libvlc_callback_t f_callback, Pointer p_user_data);
 
   /**
+   * Return the VLC messaging verbosity level.
+   *
+   * @param p_instance libvlc instance
+   * @return verbosity level for messages
+   */
+  int libvlc_get_log_verbosity(libvlc_instance_t p_instance);
+
+  /**
+   * Set the VLC messaging verbosity level.
+   *
+   * @param p_instance libvlc log instance
+   * @param level log level
+   */
+  void libvlc_set_log_verbosity(libvlc_instance_t p_instance, int level);
+  
+  /**
    * Get an event's type name.
    *
    * @param event_type the desired event
