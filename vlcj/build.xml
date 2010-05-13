@@ -57,7 +57,6 @@
   
   <target name="jar" depends="compile">
     <jar jarfile="build/${ant.project.name}-${build.version}.jar" basedir="build/classes">
-      <fileset dir="build/classes"/>
       <fileset dir="doc" includes="gpl.txt,README.LICENSE,README,README.icons,README.status,README.windows"/>
     	<manifest>
     		<attribute name="Implementation-Title" value="${project.name}"/>
@@ -70,7 +69,6 @@
   
   <target name="jar.test" depends="compile.test">
     <jar jarfile="build/${ant.project.name}-${build.version}-test.jar" basedir="build/test-classes" manifest="etc/test-manifest.txt">
-      <fileset dir="build/test-classes"/>
     	<fileset dir="src/test/resources"/>
       <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
     </jar>
