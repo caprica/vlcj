@@ -600,6 +600,20 @@ public abstract class MediaPlayer {
     libvlc.libvlc_media_player_set_position(mediaPlayerInstance, position);
   }
   
+  /**
+   * Set the video play rate.
+   * <p>
+   * Some media protocols are not able to change the rate.
+   * 
+   * @param rate rate, where 1.0 is normal speed, 0.5 is half speed, 2.0 is double speed and so on
+   * @return -1 on error, 0 on success
+   */
+  public int setRate(float rate) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setRate(rate=" + rate + ")");}
+    
+    return libvlc.libvlc_media_player_set_rate(mediaPlayerInstance, rate);
+  }
+  
   // === Audio Controls =======================================================
 
   /**
