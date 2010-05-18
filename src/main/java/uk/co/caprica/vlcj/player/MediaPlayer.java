@@ -452,6 +452,19 @@ public abstract class MediaPlayer {
     checkException(exception);
   }
   
+  /**
+   * Set the video play-back rate.
+   * 
+   * @param rate rate, where 1.0 is normal speed, 0.5 is half speed, 2.0 is double speed and so on
+   */
+  public void setRate(float rate) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setRate(rate=" + rate + ")");}
+    
+    libvlc_exception_t exception = new libvlc_exception_t();
+    libvlc.libvlc_media_player_set_rate(mediaPlayerInstance, rate, exception);
+    checkException(exception);
+  }
+  
   // === Audio Controls =======================================================
 
   /**
