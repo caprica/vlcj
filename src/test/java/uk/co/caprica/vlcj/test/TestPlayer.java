@@ -168,7 +168,7 @@ public class TestPlayer {
 
 	if(LOG.isDebugEnabled()) {LOG.debug("vlcArgs=" + vlcArgs);}
 	
-    mainFrame = new Frame("VLCJ Test Player for VLC 1.1.x");
+    mainFrame = new Frame("VLCJ Test Player for VLC 1.0.x");
 
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
 	
