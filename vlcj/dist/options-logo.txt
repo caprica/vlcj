@@ -1,5 +1,0 @@
---video-filter
-logo
---logo-file
-vlcj-logo.png
-
