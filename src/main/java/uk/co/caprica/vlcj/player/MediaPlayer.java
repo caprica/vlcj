@@ -21,13 +21,17 @@ package uk.co.caprica.vlcj.player;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 
@@ -707,6 +711,27 @@ public abstract class MediaPlayer {
     }
     else {
       throw new RuntimeException("Directory does not exist and could not be created for '" + file.getAbsolutePath() + "'");
+    }
+  }
+  
+  /**
+   * Get a snapshot of the currently playing video.
+   * 
+   * @return snapshot image
+   */
+  public BufferedImage getSnapshot() {
+    LOG.debug("getSnapshot()");
+    try {
+      File file = File.createTempFile("vlcj-snapshot-", ".png");
+      if(LOG.isDebugEnabled()) {LOG.debug("file=" + file.getAbsolutePath());}
+      saveSnapshot(file);
+      BufferedImage snapshotImage = ImageIO.read(file);
+      boolean deleted = file.delete();
+      if(LOG.isDebugEnabled()) {LOG.debug("deleted=" + deleted);}
+      return snapshotImage;
+    }
+    catch(IOException e) {
+      throw new RuntimeException("Failed to get snapshot image", e);
     }
   }
   
