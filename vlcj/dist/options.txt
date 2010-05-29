@@ -1,0 +1,1 @@
+--plugin-path=/home/linux/libvlc-1.1.0-git/vlc/flaasasdt
