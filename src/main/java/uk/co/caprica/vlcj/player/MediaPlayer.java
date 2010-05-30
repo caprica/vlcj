@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.player;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -716,6 +719,13 @@ public abstract class MediaPlayer {
   
   /**
    * Get a snapshot of the currently playing video.
+   * <p>
+   * This implementation uses the native libvlc method to save a snapshot of
+   * the currently playing video. This snapshot is saved to a temporary file
+   * and then the resultant image is loaded from the file.
+   * <p>
+   * The size of the image will be that produced by the libvlc native snapshot
+   * function.
    * 
    * @return snapshot image
    */
@@ -732,6 +742,29 @@ public abstract class MediaPlayer {
     }
     catch(IOException e) {
       throw new RuntimeException("Failed to get snapshot image", e);
+    }
+  }
+  
+  /**
+   * Get the contents of the video surface component. 
+   * <p>
+   * This implementation uses the AWT Robot class to capture the contents of
+   * the video surface component.
+   * <p>
+   * The size of the returned image will match the current size of the video
+   * surface.
+   * 
+   * @return current contents of the video surface
+   */
+  public BufferedImage getVideoSurfaceContents() {
+    LOG.debug("getVideoSurfaceContents()");
+    try {
+      Rectangle bounds = videoSurface.getBounds();
+      bounds.setLocation(videoSurface.getLocationOnScreen());
+      return new Robot().createScreenCapture(bounds);
+    } 
+    catch(Exception e) {
+      throw new RuntimeException("Failed to get video surface contents", e);
     }
   }
   
