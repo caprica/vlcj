@@ -21,7 +21,6 @@ package uk.co.caprica.vlcj.player;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
@@ -675,7 +674,6 @@ public abstract class MediaPlayer {
     return spuDescriptions;
   }  
   
-  
   // === Snapshot Controls ====================================================
 
   /**
@@ -1141,7 +1139,6 @@ public abstract class MediaPlayer {
    * @param videoSurface video surface component
    */
   protected abstract void nativeSetVideoSurface(LibVlcMediaInstance instance, Canvas videoSurface);
-  
   
   /**
    * Allow sub-classes to use the native media player instance. 
