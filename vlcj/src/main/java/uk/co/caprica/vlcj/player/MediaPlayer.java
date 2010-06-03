@@ -1166,6 +1166,28 @@ public abstract class MediaPlayer {
     }
   }
   
+  /**
+   * 
+   * 
+   * @param enable
+   */
+  public void setEnableMouseInputHandling(boolean enable) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setEnableMouseInputHandling(enable=" + enable + ")");}
+    
+    libvlc.libvlc_video_set_mouse_input(mediaPlayerInstance, enable ? 1 : 0);
+  }
+  
+  /**
+   * 
+   * 
+   * @param enable
+   */
+  public void setEnableKeyInputHandling(boolean enable) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setEnableKeyInputHandling(enable=" + enable + ")");}
+    
+    libvlc.libvlc_video_set_key_input(mediaPlayerInstance, enable ? 1 : 0);
+  }
+  
   // === Implementation =======================================================
 
   /**
