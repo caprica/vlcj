@@ -385,9 +385,9 @@ public abstract class MediaPlayer {
   }
   
   /**
+   * Get the current video play rate.
    * 
-   * 
-   * @return
+   * @param rate, where 1.0 is normal speed, 0.5 is half speed, 2.0 is double speed and so on
    */
   public float getRate() {
     LOG.trace("getRate()");
