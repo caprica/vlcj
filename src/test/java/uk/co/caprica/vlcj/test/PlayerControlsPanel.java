@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import uk.co.caprica.vlcj.filter.swing.FileNameExtensionFilterFactory;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 
@@ -151,6 +152,10 @@ public class PlayerControlsPanel extends JPanel {
     
     fileChooser = new JFileChooser();
     fileChooser.setApproveButtonText("Play");
+    fileChooser.addChoosableFileFilter(FileNameExtensionFilterFactory.newVideoFileNameExtensionFilter());
+    fileChooser.addChoosableFileFilter(FileNameExtensionFilterFactory.newAudioFileNameExtensionFilter());
+    fileChooser.addChoosableFileFilter(FileNameExtensionFilterFactory.newPlayListFileFilter());
+    fileChooser.addChoosableFileFilter(FileNameExtensionFilterFactory.newMediaFileNameExtensionFilter());
 
     fullScreenButton = new JButton();
     fullScreenButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/image.png")));
