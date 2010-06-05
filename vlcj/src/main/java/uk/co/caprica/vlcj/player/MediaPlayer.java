@@ -1465,9 +1465,16 @@ public abstract class MediaPlayer {
       
       for(;;) {
         try {
+          LOG.trace("Waiting for video output...");
+          
           Thread.sleep(VOUT_WAIT_PERIOD);
 
-          if(getVideoOutputs() > 0) {
+          LOG.trace("Checking for video output...");
+          
+          int videoOutputs = getVideoOutputs();
+          if(LOG.isTraceEnabled()) {LOG.trace("videoOutputs=" + videoOutputs);}
+          
+          if(videoOutputs > 0) {
             VideoMetaData videoMetaData = new VideoMetaData();
             videoMetaData.setVideoDimension(getVideoDimension());
             
