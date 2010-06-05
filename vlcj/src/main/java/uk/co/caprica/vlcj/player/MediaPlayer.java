@@ -406,6 +406,28 @@ public abstract class MediaPlayer {
     return libvlc.libvlc_media_player_has_vout(mediaPlayerInstance);
   }
   
+  /**
+   * Get the video size.
+   * <p>
+   * The video dimensions are not available until after the video has started
+   * playing. 
+   * 
+   * @return video size if available, or <code>null</code>
+   */
+  public Dimension getVideoDimension() {
+    LOG.debug("getVideoDimension()");
+    
+    IntByReference px = new IntByReference();
+    IntByReference py = new IntByReference();
+    int result = libvlc.libvlc_video_get_size(mediaPlayerInstance, 0, px, py);
+    if(result == 0) {
+      return new Dimension(px.getValue(), py.getValue());
+    }
+    else {
+      return null;
+    }
+  }
+  
   // === Title/Track Controls =================================================
   
   /**
@@ -1315,20 +1337,6 @@ public abstract class MediaPlayer {
     libvlc.libvlc_media_release(mediaDescriptor);
   }
 
-  private Dimension getVideoDimension() {
-    LOG.debug("getVideoDimension()");
-    
-    IntByReference px = new IntByReference();
-    IntByReference py = new IntByReference();
-    int result = libvlc.libvlc_video_get_size(mediaPlayerInstance, 0, px, py);
-    if(result == 0) {
-      return new Dimension(px.getValue(), py.getValue());
-    }
-    else {
-      return null;
-    }
-  }
-  
   public void release() {
     LOG.debug("release()");
     
