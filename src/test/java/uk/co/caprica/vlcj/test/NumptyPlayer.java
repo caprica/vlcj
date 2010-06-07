@@ -71,18 +71,17 @@ public class NumptyPlayer {
     
     videoSurface = new Canvas();
     
-	// This burns so many people on Windows that I decided to leave it in...
-	String vlcArgs = null;
-	if(RuntimeUtil.isWindows()) {
-	  vlcArgs = "--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins";
-	}
-
-    mainFrame = new Frame("VLCJ Numpty Player");
+    // This burns so many people on Windows that I decided to leave it in...
+    String vlcArgs = null;
+    if(RuntimeUtil.isWindows()) {
+      vlcArgs = "--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins";
+    }
 
     mediaPlayerFactory = new MediaPlayerFactory(vlcArgs != null ? new String[] {vlcArgs} : new String[]{});
     
-	mediaPlayer = mediaPlayerFactory.newMediaPlayer(null);
+    mediaPlayer = mediaPlayerFactory.newMediaPlayer(null);
 
+    mainFrame = new Frame("VLCJ Numpty Player");
     mainFrame.setLayout(new BorderLayout());
     mainFrame.add(videoSurface, BorderLayout.CENTER);
     mainFrame.setSize(800, 600);
