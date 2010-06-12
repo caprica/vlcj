@@ -28,9 +28,6 @@ import java.util.TreeSet;
 
 /**
  * Base implementation for file filters that are based on file name extensions.
- * <p>
- * This filter can be configured to allow directories to be accepted or 
- * rejected.
  */
 public abstract class ExtensionFileFilter implements FileFilter {
 
