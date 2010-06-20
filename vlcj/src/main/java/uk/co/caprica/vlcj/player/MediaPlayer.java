@@ -1474,7 +1474,9 @@ public abstract class MediaPlayer {
           int videoOutputs = getVideoOutputs();
           if(LOG.isTraceEnabled()) {LOG.trace("videoOutputs=" + videoOutputs);}
           
-          if(videoOutputs > 0) {
+          boolean isPlaying = isPlaying();
+          
+          if(isPlaying) {
             VideoMetaData videoMetaData = new VideoMetaData();
             videoMetaData.setVideoDimension(getVideoDimension());
             
