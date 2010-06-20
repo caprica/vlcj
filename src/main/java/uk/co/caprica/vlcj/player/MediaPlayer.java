@@ -1094,7 +1094,7 @@ public abstract class MediaPlayer {
         try {
           Thread.sleep(VOUT_WAIT_PERIOD);
 
-          if(getVideoOutputs() > 0) {
+          if(isPlaying()) {
             VideoMetaData videoMetaData = new VideoMetaData();
             videoMetaData.setVideoDimension(getVideoDimension());
             
