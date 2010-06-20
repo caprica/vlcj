@@ -705,7 +705,7 @@ public abstract class MediaPlayer {
    * @return number of chapters, or -1 if no chapters
    */
   public int getChapterCount() {
-    LOG.debug("getChapterCount()");
+    LOG.trace("getChapterCount()");
     
     return libvlc.libvlc_media_player_get_chapter_count(mediaPlayerInstance);
   }
@@ -716,7 +716,7 @@ public abstract class MediaPlayer {
    * @return chapter number, where zero is the first chatper, or -1 if no media
    */
   public int getChapter() {
-    LOG.debug("getChapter()");
+    LOG.trace("getChapter()");
     
     return libvlc.libvlc_media_player_get_chapter(mediaPlayerInstance);
   }
