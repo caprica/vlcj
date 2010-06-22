@@ -47,7 +47,10 @@ public abstract class ExtensionFileFilter implements FileFilter {
    * @param extensions file extensions to accept
    */
   protected ExtensionFileFilter(String[] extensions) {
-    this.extensions = Arrays.copyOf(extensions, extensions.length);
+//    this.extensions = Arrays.copyOf(extensions, extensions.length);
+    // Maintain JDK 1.5 compatibility
+    this.extensions = Arrays.asList(extensions).toArray(new String[extensions.length]);
+
     Arrays.sort(this.extensions);
 
     // Make a hash-set for faster look-up 
@@ -64,7 +67,9 @@ public abstract class ExtensionFileFilter implements FileFilter {
    * @return file extensions accepted by the filter
    */
   public String[] getExtensions() {
-    return Arrays.copyOf(extensions, extensions.length);
+//    return Arrays.copyOf(extensions, extensions.length);
+    // Maintain JDK 1.5 compatibility
+    return Arrays.asList(extensions).toArray(new String[extensions.length]);
   }
   
   /**
