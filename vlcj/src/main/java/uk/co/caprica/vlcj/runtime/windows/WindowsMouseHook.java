@@ -57,6 +57,8 @@ import com.sun.jna.platform.win32.W32API.WPARAM;
  *   <li>Mouse Pressed</li>
  *   <li>Mouse Released</li>
  *   <li>Mouse Wheel Moved</li>
+ *   <li>Mouse Entered</li>
+ *   <li>Mouse Exited</li>
  * </ul>
  * <strong>Any listeners added must execute and return quickly since they will be 
  * executing as part of the native event queue.</strong> 
