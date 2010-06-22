@@ -103,6 +103,11 @@ public class WindowsMouseHook implements LowLevelMouseProc {
   private volatile HHOOK hHook;
   
   /**
+   * True if the mouse entered the component (rectangle), otherwise false.
+   */
+  private volatile boolean mouseEntered;
+  
+  /**
    * Create a new mouse hook.
    * 
    * @param relativeTo component to report mouse coordinates relative to
@@ -261,6 +266,11 @@ public class WindowsMouseHook implements LowLevelMouseProc {
           if(absX >= relX && absY >= relY && absX < relW && absY < relH) {
             LOG.trace("event inside component bounds");
             
+            if(!this.mouseEntered) {
+              this.mouseEntered = true;
+              fireMouseEvent(MouseEvent.MOUSE_ENTERED, MouseEvent.NOBUTTON, lParam);
+            }            
+            
             // The event did occur inside the component bounds, so translate it...
             switch(wParam.intValue()) {
               case WM_MOUSEMOVE:
@@ -297,6 +307,14 @@ public class WindowsMouseHook implements LowLevelMouseProc {
                 
               default:
                 break;
+            }
+          }
+          else {
+            LOG.trace("event outside component bounds");
+
+            if(this.mouseEntered) {
+              this.mouseEntered = false;
+              fireMouseEvent(MouseEvent.MOUSE_EXITED, MouseEvent.NOBUTTON, lParam);
             }
           }
         }
@@ -349,6 +367,14 @@ public class WindowsMouseHook implements LowLevelMouseProc {
             
           case MouseEvent.MOUSE_RELEASED:
             listeners[i].mouseReleased(evt);
+            break;
+            
+          case MouseEvent.MOUSE_ENTERED:
+            listeners[i].mouseEntered(evt);
+            break;
+            
+          case MouseEvent.MOUSE_EXITED:
+            listeners[i].mouseExited(evt);
             break;
         }
       }
