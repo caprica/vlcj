@@ -137,7 +137,11 @@ public class FileNameExtensionFilterFactory {
    * @return joined array
    */
   private static String[] add(String[] first, String[] second) {
-    String[] result = Arrays.copyOf(first, first.length + second.length);
+//    String[] result = Arrays.copyOf(first, first.length + second.length);
+//    System.arraycopy(second, 0, result, first.length, second.length);
+    // Maintain JDK 1.5 compatibility
+    String[] result = new String[first.length + second.length];
+    System.arraycopy(first, 0, result, 0, first.length);
     System.arraycopy(second, 0, result, first.length, second.length);
     return result;
   }
