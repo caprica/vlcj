@@ -66,7 +66,7 @@ import com.sun.jna.platform.win32.W32API.WPARAM;
  * There are several deficiencies that could be addressed:
  * <ul>
  *   <li>Modifiers are not passed along with the event</li>
- *   <li>The semantic events like DRAGGED, CLICKED, ENTER and EXIT are not implemented</li>
+ *   <li>The semantic events like DRAGGED and CLICKED are not implemented</li>
  *   <li>Perhaps the events should be notified asynchronously via an executor so as not to hold up the hook</li>
  *   <li>The thread-safetiness issues are unclear especially wrt creating the hook in the thread</li> 
  * </ul>
