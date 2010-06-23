@@ -61,6 +61,9 @@ import com.sun.jna.ptr.IntByReference;
 /**
  * Media player implementation.
  * <p>
+ * This is the main class that developers working with VLCJ are expected to 
+ * use.
+ * <p>
  * This implementation provides the following functions:
  * <ul>
  *   <li>Status controls - e.g. length, time</li> 
