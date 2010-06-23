@@ -139,7 +139,7 @@ import com.sun.jna.ptr.IntByReference;
  * the video has started playing. There is also a noticeable stutter in video
  * play-back when enabling the logo filter in this way.
  * <p>
- * With regard to overlaying marquee's, again there are three approaches (similar
+ * With regard to overlaying marquees, again there are three approaches (similar
  * to those for logos).
  * <p>
  * In this instance only the final way showing the usage of the API is used, for
