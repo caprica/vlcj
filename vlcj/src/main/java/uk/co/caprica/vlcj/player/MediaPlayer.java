@@ -45,6 +45,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
@@ -997,7 +998,7 @@ public abstract class MediaPlayer {
   /**
    * Set the logo opacity.
    * 
-   * @param opacity opacity in the range 0 to 100 where 100 is fully opaque
+   * @param opacity opacity in the range 0 to 255 where 255 is fully opaque
    */
   public void setLogoOpacity(int opacity) {
     if(LOG.isDebugEnabled()) {LOG.debug("setLogoOpacity(opacity=" + opacity + ")");}
@@ -1006,7 +1007,21 @@ public abstract class MediaPlayer {
   }
 
   /**
-   * Set the logo location
+   * Set the logo opacity.
+   * 
+   * @param opacity opacity percentage in the range 0.0 to 1.0 where 1.0 is fully opaque
+   */
+  public void setLogoOpacity(float opacity) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setLogoOpacity(opacity=" + opacity + ")");}
+    
+    int opacityValue = Math.round(opacity * 255.0f);
+    if(LOG.isDebugEnabled()) {LOG.debug("opacityValue=" + opacityValue);}
+    
+    libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_opacity.intValue(), opacityValue);
+  }
+  
+  /**
+   * Set the logo location.
    * 
    * @param x x co-ordinate for the top left of the logo
    * @param y y co-ordinate for the top left of the logo
@@ -1018,6 +1033,18 @@ public abstract class MediaPlayer {
     libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_y.intValue(), y);
   }
 
+  /**
+   * Set the logo position.
+   * 
+   * @param position position
+   */
+  public void setLogoPosition(libvlc_logo_position_e position) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setLogoPosition(position=" + position + ")");}
+    
+    libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_position.intValue(), position.intValue());
+    
+  }
+  
   /**
    * Set the logo file.
    * 
@@ -1080,14 +1107,28 @@ public abstract class MediaPlayer {
   /**
    * Set the marquee opacity.
    * 
-   * @param opacity opacity in the range 0 to 100 where 100 is fully opaque
+   * @param opacity opacity in the range 0 to 100 where 255 is fully opaque
    */
   public void setMarqueeOpacity(int opacity) {
     if(LOG.isDebugEnabled()) {LOG.debug("setMarqueeOpacity(opacity=" + opacity + ")");}
     
     libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Opacity.intValue(), opacity);
   }
-
+  
+  /**
+   * Set the marquee opacity.
+   * 
+   * @param opacity opacity percentage in the range 0.0 to 1.0 where 1.0 is fully opaque
+   */
+  public void setMarqueeOpacity(float opacity) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setMarqueeOpacity(opacity=" + opacity + ")");}
+    
+    int opacityValue = Math.round(opacity * 255.0f);
+    if(LOG.isDebugEnabled()) {LOG.debug("opacityValue=" + opacityValue);}
+    
+    libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Opacity.intValue(), opacityValue);
+  }
+  
   /**
    * Set the marquee size.
    * 
