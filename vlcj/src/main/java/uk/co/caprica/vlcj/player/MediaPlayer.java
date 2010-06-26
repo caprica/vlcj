@@ -1193,7 +1193,7 @@ public abstract class MediaPlayer {
   // === Video Adjustment Controls ============================================
   
   /**
-   * 
+   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
    * 
    * @return
    */
@@ -1204,7 +1204,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * 
+   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
    * 
    * @param contrast
    */
@@ -1215,7 +1215,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * 
+   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
    * 
    * @return
    */
@@ -1226,7 +1226,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * 
+   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
    * 
    * @param brightness
    */
@@ -1237,7 +1237,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * 
+   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
    * 
    * @return
    */
@@ -1248,7 +1248,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * 
+   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
    * 
    * @param hue
    */
@@ -1259,7 +1259,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * 
+   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
    * 
    * @return
    */
@@ -1270,7 +1270,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * 
+   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
    * 
    * @param saturation
    */
@@ -1281,7 +1281,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * 
+   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
    * 
    * @return
    */
@@ -1292,7 +1292,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * 
+   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
    * 
    * @param gamma
    */
