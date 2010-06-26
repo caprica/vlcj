@@ -49,6 +49,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
 import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
@@ -1187,6 +1188,118 @@ public abstract class MediaPlayer {
     if(LOG.isDebugEnabled()) {LOG.debug("setDeinterlace(deinterlaceMode=" + deinterlaceMode + ")");}
     
     libvlc.libvlc_video_set_deinterlace(mediaPlayerInstance, deinterlaceMode);
+  }
+  
+  // === Video Adjustment Controls ============================================
+  
+  /**
+   * 
+   * 
+   * @return
+   */
+  public float getContrast() {
+    if(LOG.isDebugEnabled()) {LOG.debug("getContrast()");}
+    
+    return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Contrast.intValue());
+  }
+  
+  /**
+   * 
+   * 
+   * @param contrast
+   */
+  public void setContrast(float contrast) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setContrast(contrast=" + contrast + ")");}
+    
+    libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Contrast.intValue(), contrast);
+  }
+  
+  /**
+   * 
+   * 
+   * @return
+   */
+  public float getBrightness() {
+    if(LOG.isDebugEnabled()) {LOG.debug("getBrightness()");}
+    
+    return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Brightness.intValue());
+  }
+  
+  /**
+   * 
+   * 
+   * @param brightness
+   */
+  public void setBrightness(float brightness) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setBrightness(brightness=" + brightness + ")");}
+    
+    libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Brightness.intValue(), brightness);
+  }
+  
+  /**
+   * 
+   * 
+   * @return
+   */
+  public int getHue() {
+    if(LOG.isDebugEnabled()) {LOG.debug("getHue()");}
+    
+    return libvlc.libvlc_video_get_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue());
+  }
+  
+  /**
+   * 
+   * 
+   * @param hue
+   */
+  public void setHue(int hue) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setHue(hue=" + hue + ")");}
+    
+    libvlc.libvlc_video_set_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue(), hue);
+  }
+  
+  /**
+   * 
+   * 
+   * @return
+   */
+  public float getSaturation() {
+    if(LOG.isDebugEnabled()) {LOG.debug("getSaturation()");}
+    
+    return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Saturation.intValue());
+  }
+  
+  /**
+   * 
+   * 
+   * @param saturation
+   */
+  public void setSaturation(float saturation) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setSaturation(saturation=" + saturation + ")");}
+    
+    libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Saturation.intValue(), saturation);
+  }
+  
+  /**
+   * 
+   * 
+   * @return
+   */
+  public float getGamma() {
+    if(LOG.isDebugEnabled()) {LOG.debug("getGamma()");}
+    
+    return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue());
+  }
+  
+  /**
+   * 
+   * 
+   * @param gamma
+   */
+  public void setGamma(float gamma) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setGamma(gamma=" + gamma + ")");}
+    
+    libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue(), gamma);
   }
   
   // === User Interface =======================================================
