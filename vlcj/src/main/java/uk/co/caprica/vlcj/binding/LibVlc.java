@@ -1260,11 +1260,52 @@ public interface LibVlc extends Library {
   void libvlc_video_set_logo_string(libvlc_media_player_t p_mi, int option, String psz_value);
 
   /**
+   * Get integer adjust option.
+   *
+   * @param p_mi libvlc media player instance
+   * @param option adjust option to get, values of libvlc_video_adjust_option_t
+   * @return value
+   */
+  int libvlc_video_get_adjust_int(libvlc_media_player_t p_mi, int option);
+
+  /**
+   * Set adjust option as integer. Options that take a different type value
+   * are ignored.
+   * 
+   * Passing libvlc_adjust_enable as option value has the side effect of
+   * starting (arg !0) or stopping (arg 0) the adjust filter.
+   *
+   * @param p_mi libvlc media player instance
+   * @param option adust option to set, values of libvlc_video_adjust_option_t
+   * @param value adjust option value
+   */
+  void libvlc_video_set_adjust_int(libvlc_media_player_t p_mi, int option, int value);
+  
+  /**
+   * Get float adjust option.
+   *
+   * @param p_mi libvlc media player instance
+   * @param option adjust option to get, values of libvlc_video_adjust_option_t
+   * @return value
+   */
+  float libvlc_video_get_adjust_float(libvlc_media_player_t p_mi, int option);
+  
+  /**
+   * Set adjust option as float. Options that take a different type value
+   * are ignored.
+   *
+   * @param p_mi libvlc media player instance
+   * @param option adust option to set, values of libvlc_video_adjust_option_t
+   * @param value adjust option value
+   */
+  void libvlc_video_set_adjust_float(libvlc_media_player_t p_mi, int option, float value);
+  
+  /**
    * Get the list of available audio outputs
    *
    * @param p_instance libvlc instance
    * @return list of available audio outputs. It must be freed it with
-  *          @see libvlc_audio_output_list_release @see libvlc_audio_output_t .
+   *         @see libvlc_audio_output_list_release @see libvlc_audio_output_t .
    *         In case of error, NULL is returned.
    */
   libvlc_audio_output_t libvlc_audio_output_list_get(libvlc_instance_t p_instance);
