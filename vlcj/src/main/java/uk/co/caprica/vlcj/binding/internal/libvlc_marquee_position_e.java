@@ -19,25 +19,41 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-public enum libvlc_video_marquee_option_t {
+import java.util.HashMap;
+import java.util.Map;
 
-  libvlc_marquee_Enable  (0),
-  libvlc_marquee_Text    (1),        /** string argument */
-  libvlc_marquee_Color   (2),
-  libvlc_marquee_Opacity (3),
-  libvlc_marquee_Position(4),
-  libvlc_marquee_Refresh (5),
-  libvlc_marquee_Size    (6),
-  libvlc_marquee_Timeout (7),
-  libvlc_marquee_X       (8),
-  libvlc_marquee_Y       (9);
+public enum libvlc_marquee_position_e {
 
-  private final int intValue;
+  centre      ( 0),
+  left        ( 1),
+  right       ( 2),
   
-  private libvlc_video_marquee_option_t(int intValue) {
-    this.intValue = intValue;
+  top         ( 4),
+  top_left    ( 5),
+  top_right   ( 6),
+  
+  bottom      ( 8),
+  bottom_left ( 9),
+  bottom_right(10);
+  
+  private static final Map<Integer, libvlc_marquee_position_e> INT_MAP = new HashMap<Integer, libvlc_marquee_position_e>(); 
+
+  static {
+    for(libvlc_marquee_position_e event : libvlc_marquee_position_e.values()) {
+      INT_MAP.put(event.intValue, event);
+    }
   }
 
+  public static libvlc_marquee_position_e event(int intValue) {
+    return INT_MAP.get(intValue);
+  }
+  
+  private final int intValue;
+
+  private libvlc_marquee_position_e(int intValue) {
+    this.intValue = intValue;
+  }
+  
   public int intValue() {
     return intValue;
   }
