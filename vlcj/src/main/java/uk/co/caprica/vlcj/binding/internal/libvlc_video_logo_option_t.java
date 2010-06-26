@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.binding.internal;
 public enum libvlc_video_logo_option_t {
   
   libvlc_logo_enable  (0),
-  libvlc_logo_file    (1),           /**< string argument, "file,d,t;file,d,t;..." */
+  libvlc_logo_file    (1),           /** string argument, "file,d,t;file,d,t;..." */
   libvlc_logo_x       (2),
   libvlc_logo_y       (3),
   libvlc_logo_delay   (4),
