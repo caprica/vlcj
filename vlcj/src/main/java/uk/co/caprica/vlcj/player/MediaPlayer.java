@@ -960,6 +960,10 @@ public abstract class MediaPlayer {
    * <p>
    * The size of the returned image will match the current size of the video
    * surface.
+   * <p>
+   * <strong>Since this implementation uses the AWT Robot class to make a
+   * screen capture, care must be taken when invoking this method to ensure 
+   * that nothing else is overlaying the video surface!</strong>
    * 
    * @return current contents of the video surface
    */
