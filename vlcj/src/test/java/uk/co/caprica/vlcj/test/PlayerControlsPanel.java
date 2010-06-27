@@ -42,6 +42,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import uk.co.caprica.vlcj.binding.LibVlcConst;
 import uk.co.caprica.vlcj.filter.swing.FileNameExtensionFilterFactory;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
@@ -152,8 +153,8 @@ public class PlayerControlsPanel extends JPanel {
     
     volumeSlider = new JSlider();
     volumeSlider.setOrientation(JSlider.HORIZONTAL);
-    volumeSlider.setMinimum(0);
-    volumeSlider.setMaximum(200);
+    volumeSlider.setMinimum(LibVlcConst.MIN_VOLUME);
+    volumeSlider.setMaximum(LibVlcConst.MAX_VOLUME);
     volumeSlider.setPreferredSize(new Dimension(100, 40));
     volumeSlider.setToolTipText("Change volume");
     

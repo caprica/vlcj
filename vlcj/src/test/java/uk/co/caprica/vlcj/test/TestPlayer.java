@@ -66,7 +66,6 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 import com.sun.jna.Native;
 
 // FIXME on Windows a hard VM crash occurs during exit - presumably some native thread is still trying to execute something
-// FIXME the ranges used, e.g. for sliders, for volume and video adjustments etc should be constants in LibVlc.java
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
