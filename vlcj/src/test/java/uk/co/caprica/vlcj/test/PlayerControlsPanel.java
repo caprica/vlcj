@@ -134,7 +134,7 @@ public class PlayerControlsPanel extends JPanel {
     volumeSlider = new JSlider();
     volumeSlider.setOrientation(JSlider.HORIZONTAL);
     volumeSlider.setMinimum(0);
-    volumeSlider.setMaximum(100);
+    volumeSlider.setMaximum(200);
     volumeSlider.setPreferredSize(new Dimension(100, 40));
     volumeSlider.setToolTipText("Change volume");
     
