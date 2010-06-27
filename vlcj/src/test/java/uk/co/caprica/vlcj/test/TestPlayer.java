@@ -66,6 +66,7 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 import com.sun.jna.Native;
 
 // FIXME on Windows a hard VM crash occurs during exit - presumably some native thread is still trying to execute something
+// FIXME the ranges used, e.g. for sliders, for volume and video adjustments etc should be constants in LibVlc.java
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
@@ -80,6 +81,7 @@ public class TestPlayer {
   private Frame mainFrame;
   private Canvas videoSurface;
   private JPanel controlsPanel;
+  private JPanel videoAdjustPanel;
   
   private MediaPlayerFactory mediaPlayerFactory;
 
@@ -134,45 +136,48 @@ public class TestPlayer {
 
     if(LOG.isDebugEnabled()) {LOG.debug("videoSurface=" + videoSurface);}
     
-	videoSurface.setBackground(Color.black);
-	videoSurface.setSize(800, 600); // Only for initial layout
+    videoSurface.setBackground(Color.black);
+    videoSurface.setSize(800, 600); // Only for initial layout
 
-	TestPlayerMouseListener mouseListener = new TestPlayerMouseListener();
-	videoSurface.addMouseListener(mouseListener);
+    TestPlayerMouseListener mouseListener = new TestPlayerMouseListener();
+    videoSurface.addMouseListener(mouseListener);
     videoSurface.addMouseMotionListener(mouseListener);
     videoSurface.addMouseWheelListener(mouseListener);
     videoSurface.addKeyListener(new TestPlayerKeyListener());
 	
-	List<String> vlcArgs = new ArrayList<String>();
+    List<String> vlcArgs = new ArrayList<String>();
 
-	// For each command-line argument specified...
-	for(String arg : args) {
-	  // ...treat that as a file name to load initialisation options from
-	  File optionsFile = new File(arg);
-	  try {
-	    readOptionsFile(optionsFile, vlcArgs);
-	  }
-	  catch(IOException e) {
-	    LOG.warn("Failed to read options from '" + optionsFile + "'", e);
-	  }
-	}
+    // For each command-line argument specified...
+    for(String arg : args) {
+      // ...treat that as a file name to load initialisation options from
+      File optionsFile = new File(arg);
+      try {
+        readOptionsFile(optionsFile, vlcArgs);
+      }
+      catch(IOException e) {
+        LOG.warn("Failed to read options from '" + optionsFile + "'", e);
+      }
+    }
 	
-	// Add some other arguments here...
+    // Add some other arguments here...
 	
-	// Special case to help out users on Windows...
-	if(RuntimeUtil.isWindows()) {
-	  vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
-	}
+    // Special case to help out users on Windows...
+    if(RuntimeUtil.isWindows()) {
+      vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
+    }
+    else {
+      vlcArgs.add("--plugin-path=/home/linux/vlc/lib");
+    }
 
-	if(LOG.isDebugEnabled()) {LOG.debug("vlcArgs=" + vlcArgs);}
-	
+  	if(LOG.isDebugEnabled()) {LOG.debug("vlcArgs=" + vlcArgs);}
+  	
     mainFrame = new Frame("VLCJ Test Player for VLC 1.1.x");
-
+  
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
-	
+  
     mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));
     
-	mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
+    mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
 
 	// Use any first command-line argument to set a logo
 //	if(args.length > 0) {
@@ -182,12 +187,14 @@ public class TestPlayer {
 //	  mediaPlayer.setStandardMediaOptions(standardOptions);
 //	}
 	
-	controlsPanel = new PlayerControlsPanel(mediaPlayer);
-	
+    controlsPanel = new PlayerControlsPanel(mediaPlayer);
+    videoAdjustPanel = new PlayerVideoAdjustPanel(mediaPlayer);
+    
     mainFrame.setLayout(new BorderLayout());
     mainFrame.setBackground(Color.black);
     mainFrame.add(videoSurface, BorderLayout.CENTER);
     mainFrame.add(controlsPanel, BorderLayout.SOUTH);
+    mainFrame.add(videoAdjustPanel, BorderLayout.EAST);
     mainFrame.pack();
     mainFrame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent evt) {
@@ -250,24 +257,28 @@ public class TestPlayer {
     public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
       if(LOG.isDebugEnabled()) {LOG.debug("metaDataAvailable(mediaPlayer=" + mediaPlayer + ",videoMetaData=" + videoMetaData + ")");}
       
+      // FIXME video dimension is no longer being provided, see http://trac.videolan.org/vlc/ticket/3679
       Dimension dimension = videoMetaData.getVideoDimension();
       if(dimension != null) {
         videoSurface.setSize(videoMetaData.getVideoDimension());
         mainFrame.pack();
       }
+      else {
+        LOG.warn("Video size not available");
+      }
       
       // You can set a logo like this if you like...
-//      mediaPlayer.setLogoFile("./etc/vlcj-logo.png");
-//      mediaPlayer.setLogoOpacity(50);
-//      mediaPlayer.setLogoLocation(10, 10);
-//      mediaPlayer.enableLogo(true);
+      mediaPlayer.setLogoFile("./etc/vlcj-logo.png");
+      mediaPlayer.setLogoOpacity(1.0f);
+      mediaPlayer.setLogoLocation(10, 10);
+      mediaPlayer.enableLogo(true);
 
       // Demo the marquee      
       mediaPlayer.setMarqueeText("Thank you for using VLCJ");
-      mediaPlayer.setMarqueeSize(30);
+      mediaPlayer.setMarqueeSize(40);
       mediaPlayer.setMarqueeOpacity(95);
-      mediaPlayer.setMarqueeColour(new Color(0xf0a0c0));
-      mediaPlayer.setMarqueeTimeout(5000);
+      mediaPlayer.setMarqueeColour(Color.white);
+      mediaPlayer.setMarqueeTimeout(3000);
       mediaPlayer.setMarqueeLocation(50, 100);
       mediaPlayer.enableMarquee(true);
     }
