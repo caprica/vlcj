@@ -555,6 +555,15 @@ public interface LibVlc extends Library {
   int libvlc_media_player_play(libvlc_media_player_t p_mi);
 
   /**
+   * Pause or resume (no effect if there is no media)
+   *
+   * @param mp the Media Player
+   * @param do_pause play/resume if zero, pause if non-zero
+   * @since LibVLC 1.1.1 or later
+   */
+  void libvlc_media_player_set_pause(libvlc_media_player_t mp, int do_pause);
+  
+  /**
    * Toggle pause (no effect if there is no media)
    *
    * @param p_mi the Media Player
@@ -1265,6 +1274,7 @@ public interface LibVlc extends Library {
    * @param p_mi libvlc media player instance
    * @param option adjust option to get, values of libvlc_video_adjust_option_t
    * @return value
+   * @since LibVLC 1.1.1 or later
    */
   int libvlc_video_get_adjust_int(libvlc_media_player_t p_mi, int option);
 
@@ -1278,6 +1288,7 @@ public interface LibVlc extends Library {
    * @param p_mi libvlc media player instance
    * @param option adust option to set, values of libvlc_video_adjust_option_t
    * @param value adjust option value
+   * @since LibVLC 1.1.1 or later
    */
   void libvlc_video_set_adjust_int(libvlc_media_player_t p_mi, int option, int value);
   
@@ -1287,6 +1298,7 @@ public interface LibVlc extends Library {
    * @param p_mi libvlc media player instance
    * @param option adjust option to get, values of libvlc_video_adjust_option_t
    * @return value
+   * @since LibVLC 1.1.1 or later
    */
   float libvlc_video_get_adjust_float(libvlc_media_player_t p_mi, int option);
   
@@ -1297,6 +1309,7 @@ public interface LibVlc extends Library {
    * @param p_mi libvlc media player instance
    * @param option adust option to set, values of libvlc_video_adjust_option_t
    * @param value adjust option value
+   * @since LibVLC 1.1.1 or later
    */
   void libvlc_video_set_adjust_float(libvlc_media_player_t p_mi, int option, float value);
   

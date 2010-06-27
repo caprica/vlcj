@@ -567,6 +567,19 @@ public abstract class MediaPlayer {
   }
 
   /**
+   * Pause/resume.
+   * <p>
+   * <strong>Requires vlc 1.1.1 or later.</strong>
+   * 
+   * @param pause true to pause, false to play/resume
+   */
+  public void setPause(boolean pause) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setPause(pause=" + pause + ")");}
+    
+    libvlc.libvlc_media_player_set_pause(mediaPlayerInstance, pause ? 1 : 0);
+  }
+  
+  /**
    * Pause play-back.
    * <p>
    * If the play-back is currently paused it will begin playing.
