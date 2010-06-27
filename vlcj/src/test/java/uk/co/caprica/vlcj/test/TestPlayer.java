@@ -164,9 +164,9 @@ public class TestPlayer {
     if(RuntimeUtil.isWindows()) {
       vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
     }
-    else {
-      vlcArgs.add("--plugin-path=/home/linux/vlc/lib");
-    }
+//    else {
+//      vlcArgs.add("--plugin-path=/home/linux/vlc/lib");
+//    }
 
   	if(LOG.isDebugEnabled()) {LOG.debug("vlcArgs=" + vlcArgs);}
   	
