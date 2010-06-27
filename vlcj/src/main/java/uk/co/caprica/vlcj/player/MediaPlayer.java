@@ -694,7 +694,7 @@ public abstract class MediaPlayer {
   /**
    * Set the volume.
    * 
-   * @param volume volume, in the range 0 to 100 where 100 is full volume 
+   * @param volume volume, in the range 0 to 200 where 200 is full volume 
    */
   public void setVolume(int volume) {
     if(LOG.isDebugEnabled()) {LOG.debug("setVolume(volume=" + volume + ")");}
@@ -1195,6 +1195,29 @@ public abstract class MediaPlayer {
   /**
    * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
    * 
+   * The video adjustment controls must be enabled after the video has started 
+   * playing.
+   */
+  public void setAdjustVideo(boolean adjustVideo) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setAdjustVideo(adjustVideo=" + adjustVideo + ")");}
+    
+    libvlc.libvlc_video_set_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Enable.intValue(), adjustVideo ? 1 : 0);
+  }
+  
+  /**
+   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * 
+   * @return
+   */
+  public boolean isAdjustVideo() {
+    if(LOG.isDebugEnabled()) {LOG.debug("isAdjustVideo()");}
+    
+    return libvlc.libvlc_video_get_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Enable.intValue()) == 1;
+  }
+  
+  /**
+   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * 
    * @return
    */
   public float getContrast() {
@@ -1255,7 +1278,7 @@ public abstract class MediaPlayer {
   public void setHue(int hue) {
     if(LOG.isDebugEnabled()) {LOG.debug("setHue(hue=" + hue + ")");}
     
-    libvlc.libvlc_video_set_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue(), hue);
+    libvlc.libvlc_video_set_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue(), hue);
   }
   
   /**
