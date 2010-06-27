@@ -77,6 +77,7 @@ import com.sun.jna.ptr.IntByReference;
  *   <li>Logo controls - enable/disable, set opacity, file</li>
  *   <li>Marquee controls - enable/disable, set colour, size, opacity, timeout</li>
  *   <li>Full-screen controls</li>
+ *   <li>Video adjustment controls - contrast, brightness, hue, saturation, gamma</li>
  * </ul>
  * <p>
  * The basic life-cycle is:
@@ -157,6 +158,12 @@ import com.sun.jna.ptr.IntByReference;
  *   mediaPlayer.setMarqueeTimeout(3000);
  *   mediaPlayer.setMarqueeLocation(300, 400);
  *   mediaPlayer.enableMarquee(true);
+ * </pre>
+ * With regard to video adjustment controls, after the video has started playing:
+ * <pre>
+ *   mediaPlayer.setAdjustVideo(true);
+ *   mediaPlayer.setGamma(0.9f);
+ *   mediaPlayer.setHue(10);
  * </pre>
  */
 public abstract class MediaPlayer {
