@@ -83,7 +83,13 @@
 	</target>
 	
   <target name="javadoc" depends="prepare">
+  	<!--
+    <delete dir="javadoc"/>
+    --> 
     <javadoc sourcepath="src/main/java" destdir="build/javadoc" classpathref="project.classes" access="protected" author="yes" windowtitle="VLCJ Documentation" footer="(C)2010 Caprica Software Limited"/>
+  	<copy todir="javadoc">
+  	  <fileset dir="build/javadoc"/>
+  	</copy>
   </target>
   
   <target name="docjar" depends="javadoc">
