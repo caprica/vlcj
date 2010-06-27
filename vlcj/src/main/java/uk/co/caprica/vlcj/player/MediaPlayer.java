@@ -1200,10 +1200,14 @@ public abstract class MediaPlayer {
   // === Video Adjustment Controls ============================================
   
   /**
-   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
-   * 
+   * Enable/disable the video adjustments.
+   * <p>
    * The video adjustment controls must be enabled after the video has started 
    * playing.
+   * <p>
+   * <strong>Requires vlc 1.1.1 or later.</strong>
+   * 
+   * @param true if the video adjustments are enabled, otherwise false 
    */
   public void setAdjustVideo(boolean adjustVideo) {
     if(LOG.isDebugEnabled()) {LOG.debug("setAdjustVideo(adjustVideo=" + adjustVideo + ")");}
@@ -1212,9 +1216,11 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * Test whether or not the video adjustments are enabled.
+   * <p>
+   * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @return
+   * @return true if the video adjustments are enabled, otherwise false
    */
   public boolean isAdjustVideo() {
     if(LOG.isDebugEnabled()) {LOG.debug("isAdjustVideo()");}
@@ -1223,9 +1229,11 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * Get the current video contrast.
+   * <p>
+   * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @return
+   * @return contrast, in the range from 0.0 to 2.0
    */
   public float getContrast() {
     if(LOG.isDebugEnabled()) {LOG.debug("getContrast()");}
@@ -1234,9 +1242,13 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * Set the video contrast.
+   * <p>
+   * Video adjustments must be enabled for this to have any effect.
    * 
-   * @param contrast
+   * <strong>Requires vlc 1.1.1 or later.</strong>
+   * 
+   * @param contrast, in the range from 0.0 to 2.0
    */
   public void setContrast(float contrast) {
     if(LOG.isDebugEnabled()) {LOG.debug("setContrast(contrast=" + contrast + ")");}
@@ -1245,9 +1257,11 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * Get the current video brightness.
+   * <p>
+   * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @return
+   * @return brightness, in the range from 0.0 to 2.0
    */
   public float getBrightness() {
     if(LOG.isDebugEnabled()) {LOG.debug("getBrightness()");}
@@ -1256,9 +1270,13 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * Set the video brightness.
+   * <p>
+   * Video adjustments must be enabled for this to have any effect.
+   * <p>
+   * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @param brightness
+   * @param brightness, in the range from 0.0 to 2.0
    */
   public void setBrightness(float brightness) {
     if(LOG.isDebugEnabled()) {LOG.debug("setBrightness(brightness=" + brightness + ")");}
@@ -1267,9 +1285,11 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * Get the current video hue.
+   * <p>
+   * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @return
+   * @return hue, in the range from 0 to 360
    */
   public int getHue() {
     if(LOG.isDebugEnabled()) {LOG.debug("getHue()");}
@@ -1278,9 +1298,13 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * Set the video hue.
+   * <p>
+   * Video adjustments must be enabled for this to have any effect.
+   * <p>
+   * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @param hue
+   * @param hue, in the range from 0 to 360
    */
   public void setHue(int hue) {
     if(LOG.isDebugEnabled()) {LOG.debug("setHue(hue=" + hue + ")");}
@@ -1289,9 +1313,11 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * Get the current video saturation.
+   * <p>
+   * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @return
+   * @return saturation, in the range from 0.0 to 3.0
    */
   public float getSaturation() {
     if(LOG.isDebugEnabled()) {LOG.debug("getSaturation()");}
@@ -1300,9 +1326,13 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * Set the video saturation.
+   * <p>
+   * Video adjustments must be enabled for this to have any effect.
+   * <p>
+   * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @param saturation
+   * @param saturation, in the range from 0.0 to 3.0
    */
   public void setSaturation(float saturation) {
     if(LOG.isDebugEnabled()) {LOG.debug("setSaturation(saturation=" + saturation + ")");}
@@ -1311,9 +1341,11 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * Get the current video gamma.
+   * <p>
+   * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @return
+   * @return gamma, in the range from 0.01 to 10.0
    */
   public float getGamma() {
     if(LOG.isDebugEnabled()) {LOG.debug("getGamma()");}
@@ -1322,9 +1354,13 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * <strong>NOT AVAILABLE in VLC 1.1.0.</strong>
+   * Set the video gamma.
+   * <p>
+   * Video adjustments must be enabled for this to have any effect.
+   * <p>
+   * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @param gamma
+   * @param gamma, in the range from 0.01 to 10.0
    */
   public void setGamma(float gamma) {
     if(LOG.isDebugEnabled()) {LOG.debug("setGamma(gamma=" + gamma + ")");}
@@ -1335,7 +1371,9 @@ public abstract class MediaPlayer {
   // === User Interface =======================================================
   
   /**
-   * 
+   * Toggle whether the video display is in full-screen or not.
+   * <p>
+   * This method defers to the full-screen strategy implementation.
    */
   public void toggleFullScreen() {
     LOG.debug("toggleFullScreen()");
@@ -1346,9 +1384,11 @@ public abstract class MediaPlayer {
   }
 
   /**
+   * Set full-screen mode. 
+   * <p>
+   * This method defers to the full-screen strategy implementation.
    * 
-   * 
-   * @param fullScreen
+   * @param fullScreen true for full-screen, otherwise false
    */
   public void setFullScreen(boolean fullScreen) {
     if(LOG.isDebugEnabled()) {LOG.debug("setFullScreen(fullScreen=" + fullScreen + ")");}
@@ -1364,9 +1404,11 @@ public abstract class MediaPlayer {
   }
   
   /**
+   * Test the current full-screen mode.
+   * <p>
+   * This method defers to the full-screen strategy implementation.
    * 
-   * 
-   * @return
+   * @return true if full-screen is active, otherwise false
    */
   public boolean isFullScreen() {
     LOG.debug("isFullScreen()");
