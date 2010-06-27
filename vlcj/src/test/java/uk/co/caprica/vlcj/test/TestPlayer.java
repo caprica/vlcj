@@ -322,6 +322,16 @@ public class TestPlayer {
     public void mouseWheelMoved(MouseWheelEvent e) {
       if(LOG.isDebugEnabled()) {LOG.debug("mouseWheelMoved(e=" + e + ")");}
     }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+      if(LOG.isDebugEnabled()) {LOG.debug("mouseEntered(e=" + e + ")");}
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+      if(LOG.isDebugEnabled()) {LOG.debug("mouseExited(e=" + e + ")");}
+    }
   }
 
   /**
