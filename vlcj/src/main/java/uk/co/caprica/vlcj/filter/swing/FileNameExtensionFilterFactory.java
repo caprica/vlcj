@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.filter.swing;
 
-import java.util.Arrays;
-
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import uk.co.caprica.vlcj.filter.AudioFileFilter;
