@@ -440,6 +440,28 @@ public abstract class MediaPlayer {
     }
   }
   
+  /**
+   * 
+   * 
+   * @return
+   */
+  public String getAspectRatio() {
+    LOG.debug("getAspectRatio()");
+    
+    return libvlc.libvlc_video_get_aspect_ratio(mediaPlayerInstance);
+  }
+  
+  /**
+   * 
+   * 
+   * @return
+   */
+  public float getScale() {
+    LOG.debug("getScale()");
+    
+    return libvlc.libvlc_video_get_scale(mediaPlayerInstance);
+  }
+  
   // === Title/Track Controls =================================================
   
   /**
@@ -665,6 +687,28 @@ public abstract class MediaPlayer {
     if(LOG.isDebugEnabled()) {LOG.debug("setRate(rate=" + rate + ")");}
     
     return libvlc.libvlc_media_player_set_rate(mediaPlayerInstance, rate);
+  }
+  
+  /**
+   * 
+   * 
+   * @param aspectRatio
+   */
+  public void setAspectRatio(String aspectRatio) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setAspectRatio(aspectRatio=" + aspectRatio + ")");}
+    
+    libvlc.libvlc_video_set_aspect_ratio(mediaPlayerInstance, aspectRatio);
+  }
+  
+  /**
+   * 
+   * 
+   * @param factor
+   */
+  public void setScale(float factor) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setScale(factor=" + factor + ")");}
+    
+    libvlc.libvlc_video_set_scale(mediaPlayerInstance, factor);
   }
   
   // === Audio Controls =======================================================
