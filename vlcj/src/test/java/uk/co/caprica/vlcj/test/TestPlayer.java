@@ -66,12 +66,15 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 import com.sun.jna.Native;
 
 // FIXME on Windows a hard VM crash occurs during exit - presumably some native thread is still trying to execute something
+// FIXME on Linux mouseExited fires when moving OVER the playing video
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
  * <p>
  * This is <strong>very</strong> basic but should give you an idea of how to build
  * a media player.
+ * <p>
+ * In case you didn't realise, you can press F12 to toggle the visibility of the player controls.
  */
 public class TestPlayer {
   
@@ -146,6 +149,10 @@ public class TestPlayer {
 	
     List<String> vlcArgs = new ArrayList<String>();
 
+    vlcArgs.add("--ignore-config");
+    vlcArgs.add("--no-plugins-cache");
+    vlcArgs.add("--no-video-title");
+    
     // For each command-line argument specified...
     for(String arg : args) {
       // ...treat that as a file name to load initialisation options from
@@ -164,9 +171,9 @@ public class TestPlayer {
     if(RuntimeUtil.isWindows()) {
       vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
     }
-//    else {
-//      vlcArgs.add("--plugin-path=/home/linux/vlc/lib");
-//    }
+    else {
+      vlcArgs.add("--plugin-path=/home/linux/vlc/lib");
+    }
 
   	if(LOG.isDebugEnabled()) {LOG.debug("vlcArgs=" + vlcArgs);}
   	
@@ -214,6 +221,7 @@ public class TestPlayer {
           if(keyEvent.getID() == KeyEvent.KEY_PRESSED) {
             if(keyEvent.getKeyCode() == KeyEvent.VK_F12) {
               controlsPanel.setVisible(!controlsPanel.isVisible());
+              videoAdjustPanel.setVisible(!videoAdjustPanel.isVisible());
               mainFrame.invalidate();
               mainFrame.validate();
             }
@@ -224,8 +232,8 @@ public class TestPlayer {
     
     mainFrame.setVisible(true);
     
-	mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
-	mediaPlayer.setVideoSurface(videoSurface);
+    mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
+    mediaPlayer.setVideoSurface(videoSurface);
     
 	// This might be useful
 //	enableMousePointer(false);
@@ -268,7 +276,7 @@ public class TestPlayer {
       
       // You can set a logo like this if you like...
       mediaPlayer.setLogoFile("./etc/vlcj-logo.png");
-      mediaPlayer.setLogoOpacity(1.0f);
+      mediaPlayer.setLogoOpacity(0.5f);
       mediaPlayer.setLogoLocation(10, 10);
       mediaPlayer.enableLogo(true);
 
