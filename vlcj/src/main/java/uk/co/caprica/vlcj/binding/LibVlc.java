@@ -52,7 +52,9 @@ import com.sun.jna.ptr.IntByReference;
  * team, which was distributed under GPL version 2 or later.
  * <p>
  * This binding is for version 1.1 of vlc. Earlier versions of vlc are radically 
- * different and will not work with these bindings. 
+ * different and will not work with these bindings.
+ * <p>
+ * Some functions are only available <em>after</em> version 1.1.0 of libvlc. 
  */
 public interface LibVlc extends Library {
   
@@ -928,7 +930,7 @@ public interface LibVlc extends Library {
    * for the X window ID of the video widget, then LibVLC will not be able to
    * handle key presses and mouse clicks in any case.
    *
-   * \warning This function is only implemented for X11 at the moment.
+   * \warning This function is only implemented for X11 and Win32 at the moment.
    *
    * @param p_mi the media player
    * @param on true to handle key press events, false to ignore them.
@@ -942,7 +944,7 @@ public interface LibVlc extends Library {
    *
    * \note See also libvlc_video_set_key_input().
    *
-   * \warning This function is only implemented for X11 at the moment.
+   * \warning This function is only implemented for X11 and Win32 at the moment.
    *
    * @param p_mi the media player
    * @param on true to handle mouse click events, false to ignore them.
