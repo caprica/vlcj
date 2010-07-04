@@ -19,31 +19,33 @@
 
 package uk.co.caprica.vlcj.filter.swing;
 
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileFilter;
 
 import uk.co.caprica.vlcj.filter.AudioFileFilter;
+import uk.co.caprica.vlcj.filter.MediaFileFilter;
 import uk.co.caprica.vlcj.filter.PlayListFileFilter;
 import uk.co.caprica.vlcj.filter.SubTitleFileFilter;
 import uk.co.caprica.vlcj.filter.VideoFileFilter;
 
 /**
- * A factory that creates new instances of a {@link javax.swing.filechooser.FileNameExtensionFilter FileNameExtensionFilter}
+ * A factory that creates new instances of a {@link javax.swing.filechooser.FileFilter FileFilter}
  * configured with the recognised vlc file-types.
  * <p>
  * Use this factory to help initialise a {@link javax.swing.JFileChooser}, for example:
  * <pre>
  *  fileChooser = new JFileChooser();
  *  fileChooser.setApproveButtonText("Play");
- *  fileChooser.addChoosableFileFilter(FileNameExtensionFilterFactory.newVideoFileNameExtensionFilter());
- *  fileChooser.addChoosableFileFilter(FileNameExtensionFilterFactory.newAudioFileNameExtensionFilter());
- *  fileChooser.addChoosableFileFilter(FileNameExtensionFilterFactory.newPlayListFileFilter());
- *  fileChooser.addChoosableFileFilter(FileNameExtensionFilterFactory.newMediaFileNameExtensionFilter());
+ *  fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newVideoFileFilter());
+ *  fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newAudioFileFilter());
+ *  fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newPlayListFileFilter());
+ *  fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newMediaFileFilter());
+ *  fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newSubTitleFileFilter());
  * </pre>
  * 
  * @see javax.swing.filechooser.FileNameExtensionFilter
  * @see javax.swing.JFileChooser
  */
-public class FileNameExtensionFilterFactory {
+public class SwingFileFilterFactory {
 
   /**
    * Description for the video file filter.
@@ -75,8 +77,8 @@ public class FileNameExtensionFilterFactory {
    * 
    * @return filter
    */
-  public static FileNameExtensionFilter newVideoFileNameExtensionFilter() {
-    return new FileNameExtensionFilter(VIDEO_FILTER_DESCRIPTION, VideoFileFilter.INSTANCE.getExtensions());
+  public static FileFilter newVideoFileFilter() {
+    return new SwingFileFilter(VIDEO_FILTER_DESCRIPTION, new VideoFileFilter());
   }
   
   /**
@@ -84,8 +86,8 @@ public class FileNameExtensionFilterFactory {
    * 
    * @return filter
    */
-  public static FileNameExtensionFilter newAudioFileNameExtensionFilter() {
-    return new FileNameExtensionFilter(AUDIO_FILTER_DESCRIPTION, AudioFileFilter.INSTANCE.getExtensions());
+  public static FileFilter newAudioFileFilter() {
+    return new SwingFileFilter(AUDIO_FILTER_DESCRIPTION, new AudioFileFilter());
   }
   
   /**
@@ -93,8 +95,8 @@ public class FileNameExtensionFilterFactory {
    * 
    * @return filter
    */
-  public static FileNameExtensionFilter newPlayListFileFilter() {
-    return new FileNameExtensionFilter(PLAYLIST_FILTER_DESCRIPTION, PlayListFileFilter.INSTANCE.getExtensions());
+  public static FileFilter newPlayListFileFilter() {
+    return new SwingFileFilter(PLAYLIST_FILTER_DESCRIPTION, new PlayListFileFilter());
   }
   
   /**
@@ -110,12 +112,8 @@ public class FileNameExtensionFilterFactory {
    * 
    * @return filter
    */
-  public static FileNameExtensionFilter newMediaFileNameExtensionFilter() {
-    return new FileNameExtensionFilter(MEDIA_FILTER_DESCRIPTION, 
-      add(
-        add(VideoFileFilter.INSTANCE.getExtensions(), AudioFileFilter.INSTANCE.getExtensions()),
-        PlayListFileFilter.INSTANCE.getExtensions())
-      );
+  public static FileFilter newMediaFileFilter() {
+    return new SwingFileFilter(MEDIA_FILTER_DESCRIPTION, new MediaFileFilter()); 
   }
 
   /**
@@ -123,24 +121,7 @@ public class FileNameExtensionFilterFactory {
    * 
    * @return filter
    */
-  public static FileNameExtensionFilter newSubtitleFileFilter() {
-    return new FileNameExtensionFilter(SUBTITLE_FILTER_DESCRIPTION, SubTitleFileFilter.INSTANCE.getExtensions());
-  }
-  
-  /**
-   * Join two arrays together.
-   * 
-   * @param first first array
-   * @param second second array
-   * @return joined array
-   */
-  private static String[] add(String[] first, String[] second) {
-//    String[] result = Arrays.copyOf(first, first.length + second.length);
-//    System.arraycopy(second, 0, result, first.length, second.length);
-    // Maintain JDK 1.5 compatibility
-    String[] result = new String[first.length + second.length];
-    System.arraycopy(first, 0, result, 0, first.length);
-    System.arraycopy(second, 0, result, first.length, second.length);
-    return result;
+  public static FileFilter newSubtitleFileFilter() {
+    return new SwingFileFilter(SUBTITLE_FILTER_DESCRIPTION, new SubTitleFileFilter());
   }
 }

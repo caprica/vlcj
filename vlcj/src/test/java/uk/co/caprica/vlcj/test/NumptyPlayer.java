@@ -29,6 +29,7 @@ import javax.swing.SwingUtilities;
 
 import org.apache.log4j.BasicConfigurator;
 
+import uk.co.caprica.vlcj.mrl.FileMrl;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -76,6 +77,9 @@ public class NumptyPlayer {
     if(RuntimeUtil.isWindows()) {
       vlcArgs = "--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins";
     }
+    else {
+      vlcArgs = "--plugin-path=/home/linux/vlc/lib";
+    }
 
     mediaPlayerFactory = new MediaPlayerFactory(vlcArgs != null ? new String[] {vlcArgs} : new String[]{});
     
@@ -98,6 +102,8 @@ public class NumptyPlayer {
 
     mediaPlayer.setVideoSurface(videoSurface);
 
+    final String s = new FileMrl().file("/big/dvd/300.iso").value();
+    
     // There is a race condition in native libraries when starting up, so
     // do not play immediately - empirically the most reliable way to avoid 
     // a native library crash is to sleep for a bit, then start the player 
@@ -111,7 +117,7 @@ public class NumptyPlayer {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
-        mediaPlayer.playMedia(args[0]);
+        mediaPlayer.playMedia(s);
       }
     });
   }

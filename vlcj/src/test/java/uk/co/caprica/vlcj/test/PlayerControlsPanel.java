@@ -43,7 +43,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import uk.co.caprica.vlcj.binding.LibVlcConst;
-import uk.co.caprica.vlcj.filter.swing.FileNameExtensionFilterFactory;
+import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 
@@ -172,11 +172,11 @@ public class PlayerControlsPanel extends JPanel {
     
     fileChooser = new JFileChooser();
     fileChooser.setApproveButtonText("Play");
-    fileChooser.addChoosableFileFilter(FileNameExtensionFilterFactory.newVideoFileNameExtensionFilter());
-    fileChooser.addChoosableFileFilter(FileNameExtensionFilterFactory.newAudioFileNameExtensionFilter());
-    fileChooser.addChoosableFileFilter(FileNameExtensionFilterFactory.newPlayListFileFilter());
-    fileChooser.addChoosableFileFilter(FileNameExtensionFilterFactory.newMediaFileNameExtensionFilter());
-    
+    fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newVideoFileFilter());
+    fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newAudioFileFilter());
+    fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newPlayListFileFilter());
+    fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newMediaFileFilter());
+
     fullScreenButton = new JButton();
     fullScreenButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/image.png")));
     fullScreenButton.setToolTipText("Toggle full-screen");
