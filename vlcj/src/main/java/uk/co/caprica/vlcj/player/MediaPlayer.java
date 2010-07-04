@@ -263,7 +263,7 @@ public abstract class MediaPlayer {
   /**
    * Set the component used to display the rendered video.
    * 
-   * @param videoSurface component
+   * @param videoSurface component used to display video
    */
   public void setVideoSurface(Canvas videoSurface) {
     if(LOG.isDebugEnabled()) {LOG.debug("setVideoSurface(videoSurface=" + videoSurface + ")");}
@@ -273,24 +273,55 @@ public abstract class MediaPlayer {
 
   /**
    * Play a new media item.
+   * <p>
+   * The new media will begin play-back immediately.
    * 
-   * @param media media item
+   * @param mrl media resource locator
    */
-  public void playMedia(String media) {
-    if(LOG.isDebugEnabled()) {LOG.debug("playMedia(media=" + media + ")");}
+  public void playMedia(String mrl) {
+    if(LOG.isDebugEnabled()) {LOG.debug("playMedia(mrl=" + mrl + ")");}
     
-    playMedia(media, (String)null);
+    playMedia(mrl, (String)null);
   }
   
   /**
    * Play a new media item, with options.
+   * <p>
+   * The new media will begin play-back immediately.
    * 
-   * @param media media item
+   * @param mrl media resource locator
    * @param mediaOptions media item options
    */
-  public void playMedia(String media, String... mediaOptions) {
-    if(LOG.isDebugEnabled()) {LOG.debug("playMedia(media=" + media + ",mediaOptions=" + Arrays.toString(mediaOptions) + ")");}
+  public void playMedia(String mrl, String... mediaOptions) {
+    if(LOG.isDebugEnabled()) {LOG.debug("playMedia(mrl=" + mrl + ",mediaOptions=" + Arrays.toString(mediaOptions) + ")");}
 
+    // First 'prepare' the media...
+    prepareMedia(mrl, mediaOptions);
+    
+    // ...then play it
+    play();
+  }
+
+  /**
+   * Prepare a new media item for play-back, but do not begin playing.
+   * 
+   * @param mrl media resource locator
+   */
+  public void prepareMedia(String mrl) {
+    if(LOG.isDebugEnabled()) {LOG.debug("prepareMedia(mrl=" + mrl + ")");}
+    
+    prepareMedia(mrl, (String)null);
+  }
+  
+  /**
+   * Prepare a new media item for play-back, but do not begin playing.
+   * 
+   * @param mrl media resource locator
+   * @param mediaOptions media item options
+   */
+  public void prepareMedia(String mrl, String... mediaOptions) {
+    if(LOG.isDebugEnabled()) {LOG.debug("prepareMedia(mrl=" + mrl + ",mediaOptions=" + Arrays.toString(mediaOptions) + ")");}
+    
     if(LOG.isDebugEnabled()) {LOG.debug("videoSurface=" + videoSurface);}
     
     // TODO not sure this requirement should be enforced since it should be 
@@ -304,11 +335,9 @@ public abstract class MediaPlayer {
     // to actually set the video surface
     nativeSetVideoSurface(mediaPlayerInstance, videoSurface);
 
-    setMedia(media, mediaOptions);
-
-    play();
+    setMedia(mrl, mediaOptions);
   }
-
+  
   // === Status Controls ======================================================
 
   /**
@@ -1573,10 +1602,6 @@ public abstract class MediaPlayer {
         if(LOG.isDebugEnabled()) {LOG.debug("event=" + event);}
         int result = libvlc.libvlc_event_attach(mediaPlayerEventManager, event.intValue(), callback, null);
         if(LOG.isDebugEnabled()) {LOG.debug("result=" + result);}
-        if(result == 0) {
-        }
-        else {
-        }
       }
     }
   }
