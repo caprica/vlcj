@@ -293,6 +293,9 @@ public abstract class MediaPlayer {
 
     if(LOG.isDebugEnabled()) {LOG.debug("videoSurface=" + videoSurface);}
     
+    // TODO not sure this requirement should be enforced since it should be 
+    //      possible to use the media player as e.g. a server component that
+    //      streams the video but does not actually render it 'locally' 
     if(videoSurface == null) {
       throw new IllegalStateException("Must set a video surface");
     }
