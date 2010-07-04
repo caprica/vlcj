@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.version;
 
 /**
  * Encapsulation of version information and related behaviours.
+ * <p>
+ * This may be useful to implement version-specific features. 
  */
 public final class Version implements Comparable<Version> {
 
