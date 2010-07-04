@@ -855,7 +855,15 @@ public abstract class MediaPlayer {
   public void setSpu(int spu) {
     if(LOG.isDebugEnabled()) {LOG.debug("setSpu(spu=" + spu + ")");}
     
-    libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
+    int spuCount = getSpuCount();
+    if(LOG.isDebugEnabled()) {LOG.debug("spuCount=" + spuCount);}
+    
+    if(spuCount != 0 && spu <= spuCount) {
+      libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
+    }
+    else {
+      LOG.warn("Ignored out of range spu number " + spu + " because spu count is " + spuCount);
+    }
   }
 
   // === Description Controls =================================================
