@@ -37,7 +37,7 @@ public class RuntimeUtil {
    * @return
    */
   public static boolean isNix() {
-    return OS_NAME.indexOf("nux") != -1 || OS_NAME.indexOf("nix") != -1;
+    return OS_NAME.indexOf("nux") != -1 || OS_NAME.indexOf("nix") != -1 || OS_NAME.indexOf("freebsd") != -1;
   }
   
   /**
