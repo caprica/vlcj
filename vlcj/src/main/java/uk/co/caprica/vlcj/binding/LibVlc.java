@@ -77,9 +77,13 @@ public interface LibVlc extends Library {
   /**
    * 
    */
-  LibVlc LOGGING_SYNC_INSTANCE = (LibVlc)Proxy.newProxyInstance(LibVlc.class.getClassLoader(), new Class<?>[] {LibVlc.class}, new LoggingProxy(
-  LibVlc.SYNC_INSTANCE));
+  LibVlc LOGGING_SYNC_INSTANCE = (LibVlc)Proxy.newProxyInstance(LibVlc.class.getClassLoader(), new Class<?>[] {LibVlc.class}, new LoggingProxy(LibVlc.SYNC_INSTANCE));
 
+  /**
+   * Application information.
+   */
+  Info info = new Info();
+  
   // === libvlc.h =============================================================
 
   /**
