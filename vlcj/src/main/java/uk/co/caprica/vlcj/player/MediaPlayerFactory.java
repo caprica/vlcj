@@ -112,6 +112,29 @@ public class MediaPlayerFactory {
   }
 
   /**
+   * Set the application name.
+   * 
+   * @param userAgent application name
+   */
+  public void setUserAgent(String userAgent) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setUserAgent(userAgent=" + userAgent + ")");}
+    
+    setUserAgent(userAgent, null);
+  }
+  
+  /**
+   * Set the application name.
+   * 
+   * @param userAgent application name
+   * @param httpUserAgent application name for HTTP
+   */
+  public void setUserAgent(String userAgent, String httpUserAgent) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setUserAgent(userAgent=" + userAgent + ",httpUserAgent=" + httpUserAgent + ")");}
+    
+    libvlc.libvlc_set_user_agent(instance, userAgent, userAgent);
+  }
+  
+  /**
    * Release the native resources associated with this factory.
    */
   public void release() {
