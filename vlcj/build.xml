@@ -45,7 +45,7 @@
   
   <target name="compile" depends="prepare">
     <mkdir dir="build/classes"/>
-    <javac srcdir="src/main/java:src/main/resources" destdir="build/classes" classpathref="project.classes" target="${target.version}" source="${source.version}" debug="${compile.debug}"/> 
+    <javac srcdir="src/main/java:src/main/resources" destdir="build/classes" classpathref="project.classes" target="${target.version}" source="${source.version}" debug="${compile.debug}" includeantruntime="no"/> 
   </target>
   
   <target name="compile.test" depends="compile">
