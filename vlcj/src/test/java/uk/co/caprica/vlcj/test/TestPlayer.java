@@ -152,6 +152,9 @@ public class TestPlayer {
     vlcArgs.add("--ignore-config");
     vlcArgs.add("--no-plugins-cache");
     vlcArgs.add("--no-video-title");
+
+    // Verbose logging from libvlc
+    vlcArgs.add("-vvv");
     
     // For each command-line argument specified...
     for(String arg : args) {
