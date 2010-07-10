@@ -60,6 +60,11 @@ import com.sun.jna.ptr.IntByReference;
 public interface LibVlc extends Library {
 
   /**
+   * Application information.
+   */
+  Info info = new Info();
+  
+  /**
    * Native library instance.
    */
   LibVlc INSTANCE = (LibVlc)Native.loadLibrary(Platform.isWindows() ? "libvlc" : "vlc", LibVlc.class);
@@ -79,11 +84,6 @@ public interface LibVlc extends Library {
    */
   LibVlc LOGGING_SYNC_INSTANCE = (LibVlc)Proxy.newProxyInstance(LibVlc.class.getClassLoader(), new Class<?>[] {LibVlc.class}, new LoggingProxy(LibVlc.SYNC_INSTANCE));
 
-  /**
-   * Application information.
-   */
-  Info info = new Info();
-  
   // === libvlc.h =============================================================
 
   /**
