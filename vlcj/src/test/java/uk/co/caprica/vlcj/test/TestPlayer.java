@@ -182,6 +182,7 @@ public class TestPlayer {
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
   
     mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));
+    mediaPlayerFactory.setUserAgent("vlcj test player");
     
     mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
 
