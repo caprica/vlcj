@@ -32,24 +32,24 @@ public final class Version implements Comparable<Version> {
   private final String version;
   
   /**
-   * 
+   * Major version number.
    */
   private final int major;
   
   /**
-   * 
+   * Minor version number.
    */
   private final int minor;
   
   /**
-   * 
+   * Revision number.
    */
   private final int revision;
 
   /**
+   * Create a new version.
    * 
-   * 
-   * @param version
+   * @param version version string
    */
   public Version(final String version) {
     this.version = version;
@@ -61,36 +61,36 @@ public final class Version implements Comparable<Version> {
   }
 
   /**
+   * Get the original version string.
    * 
-   * 
-   * @return
+   * @return version
    */
   public String version() {
     return version;
   }
  
   /**
+   * Get the major version.
    * 
-   * 
-   * @return
+   * @return major version number
    */
   public int major() {
     return major;
   }
   
   /**
+   * Get the minor version.
    * 
-   * 
-   * @return
+   * @return minor version number
    */
   public int minor() {
     return minor;
   }
   
   /**
+   * Get the revision.
    * 
-   * 
-   * @return
+   * @return revision number
    */
   public int revision() {
     return revision;
