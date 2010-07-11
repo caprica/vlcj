@@ -18,6 +18,9 @@ First, you may need to explicitly specify the library path for JNA, for example:
 
   java -Djna.library.path="C:\Program Files\VideoLAN\VLC\plugins"
 
+This is _not_ supposed to be needed since libvlc is supposed to be able to find
+it's own plugins.
+
 Second, pass, for example, the following options to libvlc during initialisation.
 
   --plugin-path="C:\Program Files\VideoLAN\VLC\plugins"
