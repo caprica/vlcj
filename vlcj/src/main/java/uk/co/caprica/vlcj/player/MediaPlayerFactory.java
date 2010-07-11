@@ -33,7 +33,8 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 /**
  * Factory for media player instances.
  * <p>
- * The factory initialises a single libvlc instance for the entire application.
+ * The factory initialises a single libvlc instance and uses that to create 
+ * media player instances.
  * <p>
  * If required, you can create multiple factory instances each with their own
  * libvlc options.
@@ -68,9 +69,6 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  *   // Release the factory
  *   factory.release();
  * </pre>
- * 
- * @param args arguments to pass to libvlc
- * @return media player instance
  */
 public class MediaPlayerFactory {
     
@@ -120,6 +118,28 @@ public class MediaPlayerFactory {
     if(LOG.isDebugEnabled()) {LOG.debug("setUserAgent(userAgent=" + userAgent + ")");}
     
     setUserAgent(userAgent, null);
+  }
+
+  /**
+   * Get the current log verbosity level.
+   * 
+   * @return log level
+   */
+  public int getLogVerbosity() {
+    if(LOG.isDebugEnabled()) {LOG.debug("getLogVerbosity()");}
+    
+    return libvlc.libvlc_get_log_verbosity(instance);
+  }
+  
+  /**
+   * Set the log verbosity level.
+   * 
+   * @param level log level
+   */
+  public void setLogVerbosity(int level) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setLogVerbosity(level=" + level + ")");}
+
+    libvlc.libvlc_set_log_verbosity(instance, level);
   }
   
   /**
