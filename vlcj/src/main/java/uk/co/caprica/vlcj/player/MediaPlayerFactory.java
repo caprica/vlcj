@@ -152,7 +152,6 @@ public class MediaPlayerFactory {
   /**
    * Create a new media player.
    * 
-   * @param args arguments to pass to libvlc
    * @return media player instance
    */
   public MediaPlayer newMediaPlayer(FullScreenStrategy fullScreenStrategy) {
