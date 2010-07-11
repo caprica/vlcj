@@ -259,7 +259,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
           // Did the event occur inside the component bounds...
           int absX = lParam.pt.x;
           int absY = lParam.pt.y;
-          // FIXME there is a race here where relativeTo may no longer be visible
+          // FIXME there is a race here where relativeTo may no longer be visible, should I lock the component tree - is that OK from non-EDT?
           Point componentPoint = relativeTo.getLocationOnScreen();
           int relX = componentPoint.x;
           int relY = componentPoint.y;
