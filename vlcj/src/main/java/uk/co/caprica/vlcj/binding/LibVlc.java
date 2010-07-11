@@ -38,7 +38,6 @@ import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
-
 /**
  * JNA interface to the libvlc native library.
  * <p>
@@ -208,6 +207,8 @@ public interface LibVlc extends Library {
    */
   void libvlc_set_log_verbosity(libvlc_instance_t p_instance, int level);
 
+  // TODO add bindings for the logging sub-system
+  
   /**
    * Get an event's type name.
    * 
@@ -1431,6 +1432,27 @@ public interface LibVlc extends Library {
    */
   int libvlc_audio_set_channel(libvlc_media_player_t p_mi, int channel);
 
-  // === libvlc_media_player_h ================================================
+  /**
+   * Get current audio delay.
+   * 
+   * @param p_mi media player
+   * @return amount audio is being delayed by, in microseconds
+   * @since LibVLC 1.1.1
+   */
+  long libvlc_audio_get_delay(libvlc_media_player_t p_mi);
+  
+  /**
+   * Set current audio delay.
+   * 
+   * The delay is only active for the current media item and will be reset to 
+   * zero each time the media changes.
+   * 
+   * @param p_mi media player
+   * @param i_delay amount to delay audio by, in microseconds
+   * @return 0 on success, -1 on error
+   * @since LibVLC 1.1.1
+   */
+  int libvlc_audio_set_delay(libvlc_media_player_t p_mi, long i_delay);
 
+  // === libvlc_media_player_h ================================================
 }
