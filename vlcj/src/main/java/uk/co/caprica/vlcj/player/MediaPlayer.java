@@ -60,6 +60,8 @@ import uk.co.caprica.vlcj.binding.internal.media_player_time_changed;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
+// TODO this class file has nearly 2k lines and that is too many
+
 /**
  * Media player implementation.
  * <p>
@@ -78,6 +80,7 @@ import com.sun.jna.ptr.IntByReference;
  *   <li>Marquee controls - enable/disable, set colour, size, opacity, timeout</li>
  *   <li>Full-screen controls</li>
  *   <li>Video adjustment controls - contrast, brightness, hue, saturation, gamma</li>
+ *   <li>Audio adjustment controls - delay</li>
  * </ul>
  * <p>
  * The basic life-cycle is:
@@ -796,6 +799,31 @@ public abstract class MediaPlayer {
     if(LOG.isDebugEnabled()) {LOG.debug("setVolume(volume=" + volume + ")");}
     
     libvlc.libvlc_audio_set_volume(mediaPlayerInstance, volume);
+  }
+
+  /**
+   * Get the audio delay.
+   * 
+   * @return audio delay, in microseconds
+   */
+  public long getAudioDelay() {
+    if(LOG.isDebugEnabled()) {LOG.debug("getAudioDelay()");}
+    
+    return libvlc.libvlc_audio_get_delay(mediaPlayerInstance);
+  }
+
+  /**
+   * Set the audio delay.
+   * <p>
+   * The audio delay is set for the current item only and will be reset to zero
+   * each time the media changes.
+   * 
+   * @param delay desired audio delay, in microseconds
+   */
+  public void setAudioDelay(long delay) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setAudioDelay(delay=" + delay + ")");}
+    
+    libvlc.libvlc_audio_set_delay(mediaPlayerInstance, delay);
   }
   
   // === Chapter Controls =====================================================
