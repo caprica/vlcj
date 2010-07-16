@@ -1851,7 +1851,7 @@ public abstract class MediaPlayer {
             videoMetaData.setChapterDescriptions(allChapterDescriptions);
 
             notifyListeners(videoMetaData);
-            
+
             break;
           }
         }
