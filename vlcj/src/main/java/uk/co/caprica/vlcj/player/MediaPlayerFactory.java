@@ -20,11 +20,14 @@
 package uk.co.caprica.vlcj.player;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.log.Log;
+import uk.co.caprica.vlcj.log.LogMessage;
 import uk.co.caprica.vlcj.player.linux.LinuxMediaPlayer;
 import uk.co.caprica.vlcj.player.mac.MacMediaPlayer;
 import uk.co.caprica.vlcj.player.windows.WindowsMediaPlayer;
@@ -71,7 +74,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * </pre>
  */
 public class MediaPlayerFactory {
-    
+
   /**
    * Log.
    */
@@ -107,6 +110,8 @@ public class MediaPlayerFactory {
       LOG.error("Failed to initialise libvlc");
       throw new IllegalStateException("Unable to initialise libvlc, check your libvlc options and/or check the console for error messages");
     }
+    
+    libvlc.libvlc_set_log_verbosity(instance, 3);
   }
 
   /**
@@ -196,6 +201,21 @@ public class MediaPlayerFactory {
     if(LOG.isDebugEnabled()) {LOG.debug("mediaPlayer=" + mediaPlayer);}
     
     return mediaPlayer;
+  }
+  
+  /**
+   * Get a new message log.
+   * <p>
+   * The log will be opened.
+   * 
+   * @return new log instance
+   */
+  public Log newLog() {
+    if(LOG.isDebugEnabled()) {LOG.debug("newLog()");}
+    
+    Log log = new Log(libvlc, instance);
+    log.open();
+    return log;
   }
   
   @Override

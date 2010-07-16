@@ -42,8 +42,10 @@ public class Log {
    */
   private static final Logger LOG = Logger.getLogger(Log.class);
   
-  // TODO
-  private final LibVlc libvlc = LibVlc.LOGGING_INSTANCE;
+  /**
+   * 
+   */
+  private final LibVlc libvlc;
 
   /**
    * 
@@ -58,11 +60,13 @@ public class Log {
   /**
    * 
    * 
+   * @param libvlc 
    * @param instance
    */
-  public Log(libvlc_instance_t instance) {
-    if(LOG.isDebugEnabled()) {LOG.debug("LibVlcLog(instance=" + instance + ")");}
-    
+  public Log(LibVlc libvlc, libvlc_instance_t instance) {
+    if(LOG.isDebugEnabled()) {LOG.debug("LibVlcLog(libvlc=" + libvlc + ",instance=" + instance + ")");}
+
+    this.libvlc = libvlc;
     this.instance = instance;
   }
 
