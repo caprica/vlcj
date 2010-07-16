@@ -48,6 +48,8 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * You should release the factory when your application terminates to properly
  * clean up native resources.
  * <p>
+ * The factory also provides access to the native libvlc log.
+ * <p>
  * Usage:
  * <pre>
  *   // Set some options for libvlc
