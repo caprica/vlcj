@@ -150,6 +150,10 @@ public class Log {
       }
     }
     
+    // Iterating the native log does not clear it, so clear it
+    // FIXME Is there a race where there is a missed log message, and could that be fixed?
+    clear();
+    
     return messages;
   }
 
