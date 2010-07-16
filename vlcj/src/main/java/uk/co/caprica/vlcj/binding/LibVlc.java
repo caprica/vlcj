@@ -25,6 +25,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_log_iterator_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_log_message_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -207,7 +210,72 @@ public interface LibVlc extends Library {
    */
   void libvlc_set_log_verbosity(libvlc_instance_t p_instance, int level);
 
-  // TODO add bindings for the logging sub-system
+  /**
+   * Open a VLC message log instance.
+   *
+   * @param p_instance libvlc instance
+   * @return log message instance or NULL on error
+   */
+  libvlc_log_t libvlc_log_open(libvlc_instance_t p_instance);
+
+  /**
+   * Close a VLC message log instance.
+   *
+   * @param p_log libvlc log instance or NULL
+   */
+  void libvlc_log_close(libvlc_log_t p_log);
+
+  /**
+   * Returns the number of messages in a log instance.
+   *
+   * @param p_log libvlc log instance or NULL
+   * @return number of log messages, 0 if p_log is NULL
+   */
+  int libvlc_log_count(libvlc_log_t p_log);
+
+  /**
+   * Clear a log instance.
+   *
+   * All messages in the log are removed. The log should be cleared on a
+   * regular basis to avoid clogging.
+   *
+   * @param p_log libvlc log instance or NULL
+   */
+  void libvlc_log_clear(libvlc_log_t p_log);
+
+  /**
+   * Allocate and returns a new iterator to messages in log.
+   *
+   * @param p_log libvlc log instance
+   * @return log iterator object or NULL on error
+   */
+  libvlc_log_iterator_t libvlc_log_get_iterator(libvlc_log_t p_log);
+
+  /**
+   * Release a previoulsy allocated iterator.
+   *
+   * @param p_iter libvlc log iterator or NULL
+   */
+  void libvlc_log_iterator_free(libvlc_log_iterator_t p_iter);
+
+  /**
+   * Return whether log iterator has more messages.
+   *
+   * @param p_iter libvlc log iterator or NULL
+   * @return true if iterator has more message objects, else false
+   */
+  int libvlc_log_iterator_has_next(libvlc_log_iterator_t p_iter);
+
+  /**
+   * Return the next log message.
+   *
+   * The message contents must not be freed
+   *
+   * @param p_iter libvlc log iterator or NULL
+   * @param p_buffer log buffer
+   * @return log message object or NULL if none left
+   */
+  libvlc_log_message_t libvlc_log_iterator_next(libvlc_log_iterator_t p_iter, libvlc_log_message_t p_buffer);
   
   /**
    * Get an event's type name.
