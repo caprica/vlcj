@@ -140,8 +140,7 @@ public class Log {
         libvlc_log_message_t message = new libvlc_log_message_t(); 
         message = libvlc.libvlc_log_iterator_next(it, message);
         if(message != null) {
-          // TODO convert severity to enum
-          messages.add(new LogMessage(null, message.psz_type, message.psz_name, message.psz_header, message.psz_message));
+          messages.add(new LogMessage(LogSeverity.value(message.i_severity), message.psz_type, message.psz_name, message.psz_header, message.psz_message));
         }
       }
     }
