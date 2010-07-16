@@ -110,4 +110,16 @@ public class LogMessage {
   public String message() {
     return message;
   }
+  
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder(100);
+    sb.append('[');
+    sb.append("severity=").append(severity).append(',');
+    sb.append("type=").append(type).append(',');
+    sb.append("name=").append(name).append(',');
+    sb.append("header=").append(header).append(',');
+    sb.append("message=").append(message).append(']');
+    return sb.toString();
+  }
 }
