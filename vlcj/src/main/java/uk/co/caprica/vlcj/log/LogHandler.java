@@ -30,7 +30,8 @@ import org.apache.log4j.Logger;
  * Consumer for the native log.
  * <p>
  * If a log is opened, it's contents must be regularly consumed to prevent 
- * clogging.
+ * clogging - this implementation creates a background thread to consume the
+ * log messages and send them to local log sub-system.
  */
 public class LogHandler {
 
