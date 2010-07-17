@@ -32,8 +32,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
 
 /**
  * Preliminary native log support.
- * <p>
- * <strong>EXPERIMENTAL.</strong>
  */
 public class Log {
 
