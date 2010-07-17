@@ -434,7 +434,7 @@ public abstract class MediaPlayer {
   /**
    * Get the current video play rate.
    * 
-   * @param rate, where 1.0 is normal speed, 0.5 is half speed, 2.0 is double speed and so on
+   * @return rate, where 1.0 is normal speed, 0.5 is half speed, 2.0 is double speed and so on
    */
   public float getRate() {
     LOG.trace("getRate()");
@@ -524,7 +524,7 @@ public abstract class MediaPlayer {
   /**
    * 
    * 
-   * @param track
+   * @param title title number
    */
   public void setTitle(int title) {
     if(LOG.isDebugEnabled()) {LOG.debug("setTitle(title=" + title + ")");}
@@ -557,7 +557,7 @@ public abstract class MediaPlayer {
   /**
    * 
    * 
-   * @param track
+   * @param track track number
    */
   public void setVideoTrack(int track) {
     if(LOG.isDebugEnabled()) {LOG.debug("setVideoTrack(track=" + track + ")");}
@@ -590,7 +590,7 @@ public abstract class MediaPlayer {
   /**
    * 
    * 
-   * @param track
+   * @param track track number
    */
   public void setAudioTrack(int track) {
     if(LOG.isDebugEnabled()) {LOG.debug("setAudioTrack(track=" + track + ")");}
@@ -702,7 +702,7 @@ public abstract class MediaPlayer {
   /**
    *  Jump to a specific position.
    * 
-   * @param position, a percentage (e.g. 0.15 is 15%)
+   * @param position position value, a percentage (e.g. 0.15 is 15%)
    */
   public void setPosition(float position) {
     if(LOG.isDebugEnabled()) {LOG.debug("setPosition(position=" + position + ")");}
@@ -1040,7 +1040,7 @@ public abstract class MediaPlayer {
    * <p>
    * Any missing directory path will be created if it does not exist.
    * 
-   * @param filename name of the file to contain the snapshot
+   * @param file file to contain the snapshot
    */
   public void saveSnapshot(File file) {
     if(LOG.isDebugEnabled()) {LOG.debug("saveSnapshot(file=" + file + ")");}
@@ -1332,7 +1332,7 @@ public abstract class MediaPlayer {
    * <p>
    * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @param true if the video adjustments are enabled, otherwise false 
+   * @param adjustVideo true if the video adjustments are enabled, otherwise false 
    */
   public void setAdjustVideo(boolean adjustVideo) {
     if(LOG.isDebugEnabled()) {LOG.debug("setAdjustVideo(adjustVideo=" + adjustVideo + ")");}
@@ -1373,7 +1373,7 @@ public abstract class MediaPlayer {
    * 
    * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @param contrast, in the range from 0.0 to 2.0
+   * @param contrast contrast value, in the range from 0.0 to 2.0
    */
   public void setContrast(float contrast) {
     if(LOG.isDebugEnabled()) {LOG.debug("setContrast(contrast=" + contrast + ")");}
@@ -1401,7 +1401,7 @@ public abstract class MediaPlayer {
    * <p>
    * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @param brightness, in the range from 0.0 to 2.0
+   * @param brightness brightness value, in the range from 0.0 to 2.0
    */
   public void setBrightness(float brightness) {
     if(LOG.isDebugEnabled()) {LOG.debug("setBrightness(brightness=" + brightness + ")");}
@@ -1429,7 +1429,7 @@ public abstract class MediaPlayer {
    * <p>
    * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @param hue, in the range from 0 to 360
+   * @param hue hue value, in the range from 0 to 360
    */
   public void setHue(int hue) {
     if(LOG.isDebugEnabled()) {LOG.debug("setHue(hue=" + hue + ")");}
@@ -1457,7 +1457,7 @@ public abstract class MediaPlayer {
    * <p>
    * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @param saturation, in the range from 0.0 to 3.0
+   * @param saturation saturation value, in the range from 0.0 to 3.0
    */
   public void setSaturation(float saturation) {
     if(LOG.isDebugEnabled()) {LOG.debug("setSaturation(saturation=" + saturation + ")");}
@@ -1470,7 +1470,7 @@ public abstract class MediaPlayer {
    * <p>
    * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @return gamma, in the range from 0.01 to 10.0
+   * @return gamma value, in the range from 0.01 to 10.0
    */
   public float getGamma() {
     if(LOG.isDebugEnabled()) {LOG.debug("getGamma()");}
@@ -1485,7 +1485,7 @@ public abstract class MediaPlayer {
    * <p>
    * <strong>Requires vlc 1.1.1 or later.</strong>
    * 
-   * @param gamma, in the range from 0.01 to 10.0
+   * @param gamma gamma, in the range from 0.01 to 10.0
    */
   public void setGamma(float gamma) {
     if(LOG.isDebugEnabled()) {LOG.debug("setGamma(gamma=" + gamma + ")");}
