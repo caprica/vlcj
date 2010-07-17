@@ -25,38 +25,38 @@ package uk.co.caprica.vlcj.log;
 public class LogMessage {
   
   /**
-   * 
+   * Log severity level.
    */
   private final LogLevel severity;
   
   /**
-   * 
+   * Type of message.
    */
   private final String type;
   
   /**
-   * 
+   * Module name.
    */
   private final String name;
   
   /**
-   * 
+   * Optional header.
    */
   private final String header;
   
   /**
-   * 
+   * Message text.
    */
   private final String message;
   
   /**
+   * Create a new log message.
    * 
-   * 
-   * @param severity
-   * @param type
-   * @param name
-   * @param header
-   * @param message
+   * @param severity severity level
+   * @param type type of message
+   * @param name module name
+   * @param header optional message header
+   * @param message message text
    */
   public LogMessage(LogLevel severity, String type, String name, String header, String message) {
     this.severity = severity;
@@ -67,45 +67,45 @@ public class LogMessage {
   }
   
   /**
+   * Get the log message severity level.
    * 
-   * 
-   * @return
+   * @return severity level
    */
   public LogLevel severity() {
     return severity;
   }
   
   /**
+   * Get the log message type.
    * 
-   * 
-   * @return
+   * @return message type
    */
   public String type() {
     return type;
   }
   
   /**
+   * Get the name of the module that generated the log message.
    * 
-   * 
-   * @return
+   * @return module name
    */
   public String name() {
     return name;
   }
   
   /**
+   * Get the (optional) message header.
    * 
-   * 
-   * @return
+   * @return message header, may be <code>null</code>
    */
   public String header() {
     return header;
   }
   
   /**
+   * Get the message text.
    * 
-   * 
-   * @return
+   * @return text
    */
   public String message() {
     return message;
