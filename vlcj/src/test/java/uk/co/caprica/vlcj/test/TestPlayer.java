@@ -53,6 +53,9 @@ import org.apache.log4j.Logger;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.check.EnvironmentCheckerFactory;
+import uk.co.caprica.vlcj.log.Log;
+import uk.co.caprica.vlcj.log.LogHandler;
+import uk.co.caprica.vlcj.log.LogLevel;
 import uk.co.caprica.vlcj.player.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -87,6 +90,8 @@ public class TestPlayer {
   
   private MediaPlayerFactory mediaPlayerFactory;
 
+  private Log log;
+  
   private MediaPlayer mediaPlayer;
   
   public static void main(final String[] args) throws Exception {
@@ -149,15 +154,18 @@ public class TestPlayer {
 	
     List<String> vlcArgs = new ArrayList<String>();
 
-    vlcArgs.add("--ignore-config");
-    vlcArgs.add("--no-plugins-cache");
-    vlcArgs.add("--no-video-title");
+//    vlcArgs.add("--no-plugins-cache");
+    vlcArgs.add("--no-video-title-show");
 
     // Verbose logging from libvlc
-    vlcArgs.add("-vvv");
+//    vlcArgs.add("-vvv");
     
+    // Seems to be required on 1.1.1+ (at least on my snapshot build)
+//    vlcArgs.add("--sub-filter");
+//    vlcArgs.add("logo");
+
     // For each command-line argument specified...
-    for(String arg : args) {
+/*    for(String arg : args) {
       // ...treat that as a file name to load initialisation options from
       File optionsFile = new File(arg);
       try {
@@ -166,11 +174,11 @@ public class TestPlayer {
       catch(IOException e) {
         LOG.warn("Failed to read options from '" + optionsFile + "'", e);
       }
-    }
+    }*/
 	
     // Add some other arguments here...
 	
-    // Special case to help out users on Windows...
+    // Special case to help out users on Windows (supposedly this is not actually needed)...
     if(RuntimeUtil.isWindows()) {
       vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
     }
@@ -187,6 +195,13 @@ public class TestPlayer {
     mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));
     mediaPlayerFactory.setUserAgent("vlcj test player");
     
+    mediaPlayerFactory.setLogLevel(LogLevel.ERR);
+
+    // Create a new log handler to display the native libvlc log
+    // FIXME this should be properly cleaned up during shutdown
+    log = mediaPlayerFactory.newLog();
+    new LogHandler(log, 1000).start();
+    
     mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
 
 	// Use any first command-line argument to set a logo
@@ -196,7 +211,7 @@ public class TestPlayer {
 //	  String[] standardOptions = {"video-filter=logo", "logo-file=" + logoFile, "logo-opacity=25"};
 //	  mediaPlayer.setStandardMediaOptions(standardOptions);
 //	}
-	
+    
     controlsPanel = new PlayerControlsPanel(mediaPlayer);
     videoAdjustPanel = new PlayerVideoAdjustPanel(mediaPlayer);
     
@@ -209,8 +224,10 @@ public class TestPlayer {
     mainFrame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent evt) {
         if(LOG.isDebugEnabled()) {LOG.debug("windowClosing(evt=" + evt + ")");}
+
         mediaPlayer.release();
         mediaPlayer = null;
+
         System.exit(0);
       }
     });
@@ -228,6 +245,14 @@ public class TestPlayer {
               videoAdjustPanel.setVisible(!videoAdjustPanel.isVisible());
               mainFrame.invalidate();
               mainFrame.validate();
+            }
+            else if(keyEvent.getKeyCode() == KeyEvent.VK_A) {
+              mediaPlayer.setAudioDelay(mediaPlayer.getAudioDelay() - 50000);
+              System.out.println("Audio Delay: " + mediaPlayer.getAudioDelay());
+            }
+            else if(keyEvent.getKeyCode() == KeyEvent.VK_S) {
+              mediaPlayer.setAudioDelay(mediaPlayer.getAudioDelay() + 50000);
+              System.out.println("Audio Delay: " + mediaPlayer.getAudioDelay());
             }
           }
         }
@@ -375,7 +400,7 @@ public class TestPlayer {
     public void run() {
       LOG.debug("run()");
 //      if(mediaPlayer != null) {
-//        mediaPlayer.release();
+//        mediaPlayer.release(); // Can cause JVM crash
 //      }
       LOG.debug("shutdown hook runnable exits()");
     }
