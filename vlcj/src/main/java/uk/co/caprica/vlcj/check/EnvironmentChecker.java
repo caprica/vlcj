@@ -32,6 +32,8 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 
 /**
  * A heuristic to try and find the libvlc shared object file, to aid debugging.
+ * 
+ * @deprecated this will be removed in a future release
  */
 public abstract class EnvironmentChecker {
 
@@ -39,7 +41,7 @@ public abstract class EnvironmentChecker {
    * Log.
    */
   private static final Logger LOG = Logger.getLogger(EnvironmentChecker.class);
-  
+
   /**
    * Check for the existence of the libvlc shared object file.
    * <p>

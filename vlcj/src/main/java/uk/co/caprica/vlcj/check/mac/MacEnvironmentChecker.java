@@ -26,13 +26,18 @@ import org.apache.log4j.Logger;
 
 import uk.co.caprica.vlcj.check.EnvironmentChecker;
 
+/**
+ *
+ *
+ * @deprecated this will be removed in a future release
+ */
 public class MacEnvironmentChecker extends EnvironmentChecker {
 
   /**
    * Log.
    */
   private static final Logger LOG = Logger.getLogger(MacEnvironmentChecker.class);
-  
+
   private static final String SHARED_LIBRARY_NAME = "";
 
   private static final List<String> SHARED_LIBRARY_PATHS = new ArrayList<String>();

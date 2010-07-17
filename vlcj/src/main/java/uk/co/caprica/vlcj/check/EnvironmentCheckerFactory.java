@@ -27,7 +27,9 @@ import uk.co.caprica.vlcj.check.windows.WindowsEnvironmentChecker;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
+ *
  * 
+ * @deprecated this will be removed in a future release
  */
 public class EnvironmentCheckerFactory {
 
@@ -35,7 +37,7 @@ public class EnvironmentCheckerFactory {
    * Log.
    */
   private static final Logger LOG = Logger.getLogger(EnvironmentCheckerFactory.class);
-  
+
   /**
    * 
    * 

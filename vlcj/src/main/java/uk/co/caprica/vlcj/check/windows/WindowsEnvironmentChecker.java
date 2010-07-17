@@ -30,6 +30,7 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 
 /**
  *
+ * @deprecated this will be removed in a future release
  */
 public class WindowsEnvironmentChecker extends EnvironmentChecker {
 

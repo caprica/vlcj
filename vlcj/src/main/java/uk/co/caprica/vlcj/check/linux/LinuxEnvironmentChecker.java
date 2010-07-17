@@ -28,6 +28,8 @@ import uk.co.caprica.vlcj.check.EnvironmentChecker;
 
 /**
  *
+ *
+ * @deprecated this will be removed in a future release
  */
 public class LinuxEnvironmentChecker extends EnvironmentChecker {
 
@@ -39,7 +41,7 @@ public class LinuxEnvironmentChecker extends EnvironmentChecker {
   private static final String LIBRARY_NAME = "libvlc.so";
 
   private static final List<String> LIBRARY_PATHS = new ArrayList<String>();
-  
+
   static {
     LIBRARY_PATHS.add("/usr/lib");
     LIBRARY_PATHS.add("/usr/local/lib");
