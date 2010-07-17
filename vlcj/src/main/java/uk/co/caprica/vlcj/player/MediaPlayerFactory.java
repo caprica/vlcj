@@ -20,14 +20,13 @@
 package uk.co.caprica.vlcj.player;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.log.Log;
-import uk.co.caprica.vlcj.log.LogMessage;
+import uk.co.caprica.vlcj.log.LogLevel;
 import uk.co.caprica.vlcj.player.linux.LinuxMediaPlayer;
 import uk.co.caprica.vlcj.player.mac.MacMediaPlayer;
 import uk.co.caprica.vlcj.player.windows.WindowsMediaPlayer;
@@ -143,10 +142,10 @@ public class MediaPlayerFactory {
    * 
    * @param level log level
    */
-  public void setLogVerbosity(int level) {
+  public void setLogLevel(LogLevel level) {
     if(LOG.isDebugEnabled()) {LOG.debug("setLogVerbosity(level=" + level + ")");}
 
-    libvlc.libvlc_set_log_verbosity(instance, level);
+    libvlc.libvlc_set_log_verbosity(instance, level.intValue());
   }
   
   /**
