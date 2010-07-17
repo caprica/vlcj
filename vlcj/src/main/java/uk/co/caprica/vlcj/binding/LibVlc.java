@@ -425,8 +425,8 @@ public interface LibVlc extends Library {
   /**
    * get the current statistics about the media
    * 
-   * @param p_md: media descriptor object
-   * @param p_stats: structure that contain the statistics about the media (this
+   * @param p_md media descriptor object
+   * @param p_stats structure that contain the statistics about the media (this
    *          structure must be allocated by the caller)
    * @return true if the statistics are available, false otherwise
    */
@@ -646,7 +646,7 @@ public interface LibVlc extends Library {
    * @param lock callback to allocate video memory
    * @param unlock callback to release video memory
    * @param opaque private pointer for the three callbacks (as first parameter)
-   * @version LibVLC 1.1.1 or later
+   * @since LibVLC 1.1.1 or later
    */
   void libvlc_video_set_callbacks(libvlc_media_player_t mp, Pointer lock, Pointer unlock, Pointer display, Pointer opaque);
 
@@ -660,7 +660,7 @@ public interface LibVlc extends Library {
    * @param width pixel width
    * @param height pixel height
    * @param pitch line pitch (in bytes)
-   * @version LibVLC 1.1.1 or later
+   * @since LibVLC 1.1.1 or later
    */
   void libvlc_video_set_format(libvlc_media_player_t mp, String chroma, int width, int height, int pitch);
   
