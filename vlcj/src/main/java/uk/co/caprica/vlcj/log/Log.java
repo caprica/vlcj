@@ -51,12 +51,17 @@ public class Log {
    * 
    */
   private final libvlc_instance_t instance;
-  
+
+  /**
+   * 
+   */
+  private LogLevel threshold;
+
   /**
    * 
    */
   private libvlc_log_t logInstance;
-  
+
   /**
    * 
    * 
@@ -72,6 +77,17 @@ public class Log {
 
   /**
    * 
+   * 
+   * @param threshold
+   */
+  public void setThreshold(LogLevel threshold) {
+    if(LOG.isDebugEnabled()) {LOG.debug("setThreshold(threshold=" + threshold + ")");}
+    
+    this.threshold = threshold;
+  }
+  
+  /**
+   * Open a log instance.
    */
   public void open() {
     if(LOG.isDebugEnabled()) {LOG.debug("open()");}
@@ -85,7 +101,9 @@ public class Log {
   }
   
   /**
-   * 
+   * Close the log instance.
+   * <p>
+   * The underlying native log itself is not actually 'closed'.
    */
   public void close() {
     if(LOG.isDebugEnabled()) {LOG.debug("close()");}
@@ -98,9 +116,9 @@ public class Log {
   }
   
   /**
+   * Get the count of the number of messages in the log.
    * 
-   * 
-   * @return
+   * @return number of messages in the log
    */
   public int count() {
     if(LOG.isDebugEnabled()) {LOG.debug("count()");}
@@ -109,7 +127,7 @@ public class Log {
   }
   
   /**
-   * 
+   * Clear (remove all messages from) the log.
    */
   public void clear() {
     if(LOG.isDebugEnabled()) {LOG.debug("clear()");}
@@ -118,8 +136,11 @@ public class Log {
   }
 
   /**
+   * Get all of the messages currently in the log.
+   * <p>
+   * The log will be cleared after the messages have been retrieved.
    * 
-   * @return
+   * @return messages
    */
   public List<LogMessage> messages() {
     if(LOG.isDebugEnabled()) {LOG.debug("messages()");}
@@ -128,10 +149,12 @@ public class Log {
   }
 
   /**
+   * Get all of the messages currently in the log.
+   * <p>
+   * The log will be cleared after the messages have been retrieved.
    * 
-   * 
-   * @param messages
-   * @return
+   * @param messages list to store the messages in
+   * @return messages
    */
   public List<LogMessage> messages(List<LogMessage> messages) {
     if(LOG.isDebugEnabled()) {LOG.debug("messages(messages=[" + messages.size() + "])");}
@@ -144,7 +167,10 @@ public class Log {
         libvlc_log_message_t message = new libvlc_log_message_t(); 
         message = libvlc.libvlc_log_iterator_next(it, message);
         if(message != null) {
-          messages.add(new LogMessage(LogSeverity.value(message.i_severity), message.psz_type, message.psz_name, message.psz_header, message.psz_message));
+          LogLevel severity = LogLevel.value(message.i_severity);
+          if(threshold == null || message.i_severity <= threshold.intValue()) {
+            messages.add(new LogMessage(severity, message.psz_type, message.psz_name, message.psz_header, message.psz_message));
+          }
         }
       }
     }

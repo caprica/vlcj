@@ -23,11 +23,11 @@ package uk.co.caprica.vlcj.log;
  * Representation of a native log message.
  */
 public class LogMessage {
-
+  
   /**
    * 
    */
-  private final LogSeverity severity;
+  private final LogLevel severity;
   
   /**
    * 
@@ -58,7 +58,7 @@ public class LogMessage {
    * @param header
    * @param message
    */
-  public LogMessage(LogSeverity severity, String type, String name, String header, String message) {
+  public LogMessage(LogLevel severity, String type, String name, String header, String message) {
     this.severity = severity;
     this.type = type;
     this.name = name;
@@ -71,7 +71,7 @@ public class LogMessage {
    * 
    * @return
    */
-  public LogSeverity severity() {
+  public LogLevel severity() {
     return severity;
   }
   

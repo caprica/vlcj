@@ -22,33 +22,31 @@ package uk.co.caprica.vlcj.log;
 import java.util.HashMap;
 import java.util.Map;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
-
 /**
  * Representation of a native log message severity level.
  */
-public enum LogSeverity {
+public enum LogLevel {
 
   INFO(0),
   ERR (1),
   WARN(2),
   DBG (3);
   
-  private static final Map<Integer, LogSeverity> INT_MAP = new HashMap<Integer, LogSeverity>(); 
+  private static final Map<Integer, LogLevel> INT_MAP = new HashMap<Integer, LogLevel>(); 
 
   static {
-    for(LogSeverity event : LogSeverity.values()) {
+    for(LogLevel event : LogLevel.values()) {
       INT_MAP.put(event.intValue, event);
     }
   }
 
-  public static LogSeverity value(int intValue) {
+  public static LogLevel value(int intValue) {
     return INT_MAP.get(intValue);
   }
 
   private final int intValue;
   
-  private LogSeverity(int intValue) {
+  private LogLevel(int intValue) {
     this.intValue = intValue;
   }
 
