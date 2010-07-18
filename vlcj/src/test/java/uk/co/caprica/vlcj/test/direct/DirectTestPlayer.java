@@ -58,7 +58,9 @@ public class DirectTestPlayer {
 	// The size does NOT need to match the video size - it's the size that the video will be scaled to
 	// Matching the native size will be faster of course
   private final int width = 720;
-  private final int height = 576;
+  private final int height = 480;
+//  private final int width = 1280;
+//  private final int height = 720;
 
   /**
    * Buffer to hold the video frame data.
