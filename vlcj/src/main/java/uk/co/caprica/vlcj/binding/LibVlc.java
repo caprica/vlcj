@@ -23,8 +23,10 @@ import java.lang.reflect.Proxy;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_iterator_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_message_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
@@ -33,6 +35,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
 import uk.co.caprica.vlcj.log.LoggingProxy;
 
 import com.sun.jna.Library;
@@ -643,20 +646,20 @@ public interface LibVlc extends Library {
    * the return value from the lock callback.
    *
    * @param mp the media player
-   * @param lock callback to allocate video memory
-   * @param unlock callback to release video memory
-   * @param opaque private pointer for the three callbacks (as first parameter)
+   * @param p_lock callback to allocate video memory
+   * @param p_unlock callback to release video memory
+   * @param p_display callback when ready to display a video frame
+   * @param p_opaque private pointer for the three callbacks (as first parameter)
    * @since LibVLC 1.1.1 or later
    */
-  void libvlc_video_set_callbacks(libvlc_media_player_t mp, Pointer lock, Pointer unlock, Pointer display, Pointer opaque);
+  void libvlc_video_set_callbacks(libvlc_media_player_t mp, libvlc_lock_callback_t p_lock, libvlc_unlock_callback_t p_unlock, libvlc_display_callback_t p_display, Pointer p_opaque);
 
   /**
    * Set decoded video chroma and dimensions. This only works in combination with
    * libvlc_video_set_callbacks().
    *
    * @param mp the media player
-   * @param chroma a four-characters string identifying the chroma
-   *               (e.g. "RV32" or "I420")
+   * @param chroma a four-characters string identifying the chroma (e.g. "RV32" or "I420")
    * @param width pixel width
    * @param height pixel height
    * @param pitch line pitch (in bytes)
