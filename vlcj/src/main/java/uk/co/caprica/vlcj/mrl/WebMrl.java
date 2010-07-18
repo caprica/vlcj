@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.mrl;
 
 /**
- * Implementation for a web-style MRL.
+ * Implementation for a web-style MRL. // TODO perhaps this should simply have been UrlMrl?
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
  * <pre>
