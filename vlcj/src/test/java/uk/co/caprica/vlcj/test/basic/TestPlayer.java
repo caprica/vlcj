@@ -156,7 +156,8 @@ public class TestPlayer {
 
 //    vlcArgs.add("--no-plugins-cache");
     vlcArgs.add("--no-video-title-show");
-
+    vlcArgs.add("--no-snapshot-preview");
+    
     // Verbose logging from libvlc
 //    vlcArgs.add("-vvv");
     
