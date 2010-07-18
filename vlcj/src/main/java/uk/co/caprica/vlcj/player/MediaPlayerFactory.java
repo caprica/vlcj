@@ -25,6 +25,8 @@ import org.apache.log4j.Logger;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.experimental.DirectVideo;
+import uk.co.caprica.vlcj.experimental.RenderCallback;
 import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogLevel;
 import uk.co.caprica.vlcj.player.linux.LinuxMediaPlayer;
@@ -202,6 +204,20 @@ public class MediaPlayerFactory {
     if(LOG.isDebugEnabled()) {LOG.debug("mediaPlayer=" + mediaPlayer);}
     
     return mediaPlayer;
+  }
+
+  /**
+   * Create a new direct video rendering media player.
+   * 
+   * <strong>This method is experimental and subject to change.</strong>
+   * 
+   * @param width
+   * @param height
+   * @param callback
+   * @return
+   */
+  public DirectVideo newOffscreenVideo(int width, int height, RenderCallback callback) {
+    return new DirectVideo(instance, width, height, callback);
   }
   
   /**
