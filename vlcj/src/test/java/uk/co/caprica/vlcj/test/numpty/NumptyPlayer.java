@@ -17,7 +17,7 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.test;
+package uk.co.caprica.vlcj.test.numpty;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -40,8 +40,6 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
  * Specify a single media MRL as a command-line argument.
  * <p>
  * VLCJ depends on log4j, so ensure you have a log4j.jar file in your class-path.
- * <p>
- * If you don't know how to do that, you're already out of your depth.
  */
 public class NumptyPlayer {
   

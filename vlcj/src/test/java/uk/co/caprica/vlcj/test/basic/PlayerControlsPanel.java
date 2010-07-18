@@ -17,7 +17,7 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.test;
+package uk.co.caprica.vlcj.test.basic;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
