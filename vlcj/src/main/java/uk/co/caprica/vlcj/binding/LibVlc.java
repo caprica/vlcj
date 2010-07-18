@@ -286,7 +286,7 @@ public interface LibVlc extends Library {
 
   // === libvlc.h =============================================================
 
-  // === libvlc_media_h =======================================================
+  // === libvlc_media.h =======================================================
 
   /**
    * Create a media with a certain given media resource location.
@@ -522,9 +522,9 @@ public interface LibVlc extends Library {
    */
   int libvlc_media_get_tracks_info(libvlc_media_t media, Pointer tracks);
 
-  // === libvlc_media_h =======================================================
+  // === libvlc_media.h =======================================================
 
-  // === libvlc_media_player_h ================================================
+  // === libvlc_media_player.h ================================================
 
   /**
    * Create an empty Media Player object
@@ -1561,5 +1561,5 @@ public interface LibVlc extends Library {
    */
   int libvlc_audio_set_delay(libvlc_media_player_t p_mi, long i_delay);
 
-  // === libvlc_media_player_h ================================================
+  // === libvlc_media_player.h ================================================
 }
