@@ -145,6 +145,8 @@ public class DirectTestPlayer {
 
 	private final class TestRenderCallback implements RenderCallback {
 	  
+	  // FIXME we would probably just pass an already populated int[] rather than exposing the Memory object 
+	  
 	  @Override
 	  public void display(Memory buffer) {
 	    buffer.read(0, imageBuffer, 0, width * height);
