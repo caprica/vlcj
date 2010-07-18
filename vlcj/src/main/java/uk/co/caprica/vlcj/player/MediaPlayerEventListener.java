@@ -19,21 +19,69 @@
 
 package uk.co.caprica.vlcj.player;
 
+/**
+ * Specification for a component that is interested in receiving event
+ * notifications from the media player.
+ */
 public interface MediaPlayerEventListener {
 
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   */
   void playing(MediaPlayer mediaPlayer);
 
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   */
   void paused(MediaPlayer mediaPlayer);
 
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   */
   void stopped(MediaPlayer mediaPlayer);
 
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   */
   void finished(MediaPlayer mediaPlayer);
   
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   * @param newPosition
+   */
   void positionChanged(MediaPlayer mediaPlayer, float newPosition);
-  
+
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   * @param newTime
+   */
   void timeChanged(MediaPlayer mediaPlayer, long newTime);
-  
+
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   * @param videoMetaData
+   */
   void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData);
 
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   * @param newLength
+   */
   void lengthChanged(MediaPlayer mediaPlayer, long newLength);
 }

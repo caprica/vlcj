@@ -24,7 +24,6 @@ import java.awt.Window;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * Default implementation of a full screen strategy that attempts to use the
  * JDK full-screen support.
@@ -37,14 +36,14 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
   private static final Logger LOG = Logger.getLogger(DefaultFullScreenStrategy.class);
   
   /**
-   * 
+   * The component that will be made full-screen. 
    */
   private final Window window;
   
   /**
+   * Create a new full-screen strategy.
    * 
-   * 
-   * @param window
+   * @param window component that will be made full-screen
    */
   public DefaultFullScreenStrategy(Window window) {
     if(LOG.isDebugEnabled()) {LOG.debug("DefaultFullScreenStrategy(window=" + window + ")");}
@@ -77,4 +76,6 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
     
     return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getFullScreenWindow() != null;
   }
+  
+  // TODO perhaps allow to set the DisplayMode? Users can always do that in their own implementation of course...
 }
