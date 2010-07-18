@@ -31,11 +31,15 @@ public interface RenderCallback {
 
   /**
    * Call-back to allocate video memory.
+   * 
+   * TODO does not really make sense to have this so will probably be removed
    */
   public void lock();
 
   /**
    * Call-back to release video memory.
+   * 
+   * TODO does not really make sense to have this so will probably be removed
    */
   public void unlock();
 
