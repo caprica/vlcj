@@ -135,6 +135,9 @@ public class DirectTestPlayer {
     public void paint(Graphics g) {
       Graphics2D g2 = (Graphics2D)g;
       g2.drawImage(image, null, 0, 0);
+      // You could draw on top of the image here...
+//      g2.setColor(Color.red);
+//      g2.fillRect(200, 100, 100, 100);
     }
   }
 
