@@ -22,8 +22,12 @@
     <priority value="DEBUG"/>
   </category>
 
-  <category name="uk.co.caprica.vlcj.log.LoggingProxy">
+  <category name="uk.co.caprica.vlcj.log">
     <priority value="DEBUG"/>
+  </category>
+
+  <category name="uk.co.caprica.vlcj.log.LoggingProxy">
+    <priority value="TRACE"/>
   </category>
 
   <root>
