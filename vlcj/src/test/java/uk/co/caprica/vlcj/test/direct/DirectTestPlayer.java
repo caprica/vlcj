@@ -23,9 +23,11 @@ import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
+import java.awt.RenderingHints;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -80,7 +82,7 @@ public class DirectTestPlayer {
 
 			@Override
 			public void run() {
-				JFrame frame = new JFrame();
+				JFrame frame = new JFrame("VLCJ 1.1.1 Direct Video Test");
 				imagePane = new ImagePane(image);
 				imagePane.setSize(width, height);
         imagePane.setMinimumSize(new Dimension(width, height));
@@ -108,8 +110,6 @@ public class DirectTestPlayer {
 	}
 	
 	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
-		BasicConfigurator.configure();
-		
 		if(args.length < 1) {
 			System.out.println("Specify a single media URL");
 			System.exit(1);
@@ -123,7 +123,10 @@ public class DirectTestPlayer {
 	}
 
   private final class ImagePane extends JPanel {
+
     private final BufferedImage image;
+    
+    private final Font font = new Font("Sansserif", Font.BOLD, 36);
     
     public ImagePane(BufferedImage image) {
       this.image = image;
@@ -134,9 +137,15 @@ public class DirectTestPlayer {
       Graphics2D g2 = (Graphics2D)g;
       g2.drawImage(image, null, 0, 0);
       // You could draw on top of the image here...
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
       g2.setColor(Color.red);
-      g2.setComposite(AlphaComposite.SrcOver.derive(0.2f));
-      g2.fillRect(200, 100, 100, 100);
+      g2.setComposite(AlphaComposite.SrcOver.derive(0.3f));
+      g2.fillRoundRect(100, 100, 100, 80, 32, 32);
+      g2.setComposite(AlphaComposite.SrcOver);
+      g2.setColor(Color.white);
+      g2.setFont(font);
+      g2.drawString("vlcj direct video", 130, 150);
     }
   }
 
