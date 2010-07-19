@@ -46,6 +46,7 @@ import uk.co.caprica.vlcj.binding.LibVlcConst;
 import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 public class PlayerControlsPanel extends JPanel {
 
@@ -53,7 +54,7 @@ public class PlayerControlsPanel extends JPanel {
   
   private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
-  private final MediaPlayer mediaPlayer;
+  private final EmbeddedMediaPlayer mediaPlayer;
   
   private JLabel timeLabel;
   private JProgressBar positionProgressBar;
@@ -88,7 +89,7 @@ public class PlayerControlsPanel extends JPanel {
   // position will jump around
   private boolean setPositionValue;
 
-  public PlayerControlsPanel(MediaPlayer mediaPlayer) {
+  public PlayerControlsPanel(EmbeddedMediaPlayer mediaPlayer) {
     this.mediaPlayer = mediaPlayer;
     
     createUI();

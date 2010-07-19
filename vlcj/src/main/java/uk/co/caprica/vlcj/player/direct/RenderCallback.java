@@ -17,7 +17,7 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.experimental;
+package uk.co.caprica.vlcj.player.direct;
 
 /**
  * Specification for a component that wishes to be called back to process video
@@ -30,7 +30,7 @@ public interface RenderCallback {
   /**
    * Call-back when ready to display a video frame.
    * 
-   * @param data video data
+   * @param data video data for one frame
    */
   public void display(int[] data);
 }

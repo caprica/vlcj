@@ -25,14 +25,19 @@ import org.apache.log4j.Logger;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.experimental.DirectVideo;
-import uk.co.caprica.vlcj.experimental.RenderCallback;
 import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogLevel;
-import uk.co.caprica.vlcj.player.linux.LinuxMediaPlayer;
-import uk.co.caprica.vlcj.player.mac.MacMediaPlayer;
-import uk.co.caprica.vlcj.player.windows.WindowsMediaPlayer;
+import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
+import uk.co.caprica.vlcj.player.direct.RenderCallback;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.linux.LinuxEmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.mac.MacEmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.windows.WindowsEmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+
+//FIXME update javadoc for new API
 
 /**
  * Factory for media player instances.
@@ -84,12 +89,12 @@ public class MediaPlayerFactory {
   private static final Logger LOG = Logger.getLogger(MediaPlayerFactory.class);
   
   /**
-   * 
+   * Native library interface.
    */
   private final LibVlc libvlc = LibVlc.SYNC_INSTANCE;
   
   /**
-   * 
+   * Native library instance.
    */
   private libvlc_instance_t instance;
   
@@ -99,9 +104,9 @@ public class MediaPlayerFactory {
   private boolean released;
   
   /**
+   * Create a new media player factory.
    * 
-   * 
-   * @param libvlcArgs
+   * @param libvlcArgs initialisation arguments to pass to libvlc
    */
   public MediaPlayerFactory(String[] libvlcArgs) {
     if(LOG.isDebugEnabled()) {LOG.debug("MediaPlayerFactory(libvlcArgs=" + Arrays.toString(libvlcArgs) + ")");}
@@ -113,8 +118,6 @@ public class MediaPlayerFactory {
       LOG.error("Failed to initialise libvlc");
       throw new IllegalStateException("Unable to initialise libvlc, check your libvlc options and/or check the console for error messages");
     }
-    
-    libvlc.libvlc_set_log_verbosity(instance, 3);
   }
 
   /**
@@ -178,24 +181,25 @@ public class MediaPlayerFactory {
   }
   
   /**
-   * Create a new media player.
+   * Create a new embedded media player.
    * 
+   * @param fullScreenStrategy
    * @return media player instance
    */
-  public MediaPlayer newMediaPlayer(FullScreenStrategy fullScreenStrategy) {
+  public EmbeddedMediaPlayer newMediaPlayer(FullScreenStrategy fullScreenStrategy) {
     if(LOG.isDebugEnabled()) {LOG.debug("newMediaPlayer(fullScreenStrategy=" + fullScreenStrategy + ")");}
     
-    MediaPlayer mediaPlayer;
+    EmbeddedMediaPlayer mediaPlayer;
     
     if(RuntimeUtil.isNix()) {
-      mediaPlayer = new LinuxMediaPlayer(fullScreenStrategy, instance);
+      mediaPlayer = new LinuxEmbeddedMediaPlayer(instance, fullScreenStrategy);
     }
     else if(RuntimeUtil.isWindows()) {
-      mediaPlayer = new WindowsMediaPlayer(fullScreenStrategy, instance);
+      mediaPlayer = new WindowsEmbeddedMediaPlayer(instance, fullScreenStrategy);
     }
     else if(RuntimeUtil.isMac()) {
       // Mac is not yet supported
-      mediaPlayer = new MacMediaPlayer(fullScreenStrategy, instance);
+      mediaPlayer = new MacEmbeddedMediaPlayer(instance, fullScreenStrategy);
     }
     else {
       throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
@@ -209,15 +213,28 @@ public class MediaPlayerFactory {
   /**
    * Create a new direct video rendering media player.
    * 
-   * <strong>This method is experimental and subject to change.</strong>
-   * 
    * @param width
    * @param height
-   * @param callback
-   * @return
+   * @param renderCallback
+   * @return media player instance
    */
-  public DirectVideo newOffscreenVideo(int width, int height, RenderCallback callback) {
-    return new DirectVideo(instance, width, height, callback);
+  public DirectMediaPlayer newMediaPlayer(int width, int height, RenderCallback renderCallback) {
+    if(LOG.isDebugEnabled()) {LOG.debug("newMediaPlayer(width=" + width + ",height=" + height + ",renderCallback=" + renderCallback + ")");}
+
+    DirectMediaPlayer mediaPlayer = new DirectMediaPlayer(instance, width, height, renderCallback);
+    return mediaPlayer;
+  }
+  
+  /**
+   * Create a new head-less media player.
+   * 
+   * @return media player instance
+   */
+  public HeadlessMediaPlayer newMediaPlayer() {
+    if(LOG.isDebugEnabled()) {LOG.debug("newMediaPlayer()");}
+    
+    HeadlessMediaPlayer mediaPlayer = new HeadlessMediaPlayer(instance);
+    return mediaPlayer;
   }
   
   /**

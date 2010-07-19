@@ -17,7 +17,7 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player;
+package uk.co.caprica.vlcj.player.embedded;
 
 /**
  * Specification for a full-screen strategy implementation.
@@ -25,19 +25,19 @@ package uk.co.caprica.vlcj.player;
 public interface FullScreenStrategy {
 
   /**
-   * 
+   * Attempt to enter full-screen mode.
    */
   void enterFullScreenMode();
   
   /**
-   * 
+   * Exit full-screen mode.
    */
   void exitFullScreenMode();
 
   /**
+   * Test whether or not full-screen mode is currently active.
    * 
-   * 
-   * @return
+   * @return true if full-screen mode is active, otherwise false
    */
   boolean isFullScreenMode();
 }

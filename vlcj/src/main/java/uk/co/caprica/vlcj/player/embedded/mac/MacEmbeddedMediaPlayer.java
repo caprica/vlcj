@@ -17,7 +17,7 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.linux;
+package uk.co.caprica.vlcj.player.embedded.mac;
 
 import java.awt.Canvas;
 
@@ -25,26 +25,34 @@ import org.apache.log4j.Logger;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
-import uk.co.caprica.vlcj.player.FullScreenStrategy;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 
-import com.sun.jna.Native;
+/**
+ *
+ */
+public class MacEmbeddedMediaPlayer extends EmbeddedMediaPlayer {
 
-public class LinuxMediaPlayer extends MediaPlayer {
-
-  private static final Logger LOG = Logger.getLogger(LinuxMediaPlayer.class);
+  /**
+   * Log.
+   */
+  private static final Logger LOG = Logger.getLogger(MacEmbeddedMediaPlayer.class);
   
-  public LinuxMediaPlayer(FullScreenStrategy fullScreenStrategy, libvlc_instance_t instance) {
-    super(fullScreenStrategy, instance);
+  /**
+   * 
+   * 
+   * @param instance
+   * @param fullScreenStrategy
+   */
+  public MacEmbeddedMediaPlayer(libvlc_instance_t instance, FullScreenStrategy fullScreenStrategy) {
+    super(instance, fullScreenStrategy);
   }
 
   @Override
   protected void nativeSetVideoSurface(libvlc_media_player_t mediaPlayerInstance, Canvas videoSurface) {
     if(LOG.isDebugEnabled()) {LOG.debug("nativeSetVideoSurface(mediaPlayerInstance=" + mediaPlayerInstance + ",videoSurface=" + videoSurface + ")");}
-    
-    long drawable = Native.getComponentID(videoSurface);
-    if(LOG.isDebugEnabled()) {LOG.debug("drawable=" + drawable);}
-    
-    libvlc.libvlc_media_player_set_xwindow(mediaPlayerInstance, (int)drawable);
+
+    // FIXME how?
+    throw new UnsupportedOperationException("Send patches!");
   }
 }

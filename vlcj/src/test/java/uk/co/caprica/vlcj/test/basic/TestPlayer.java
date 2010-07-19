@@ -56,12 +56,13 @@ import uk.co.caprica.vlcj.check.EnvironmentCheckerFactory;
 import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogHandler;
 import uk.co.caprica.vlcj.log.LogLevel;
-import uk.co.caprica.vlcj.player.DefaultFullScreenStrategy;
-import uk.co.caprica.vlcj.player.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.VideoMetaData;
+import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsCanvas;
 import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
@@ -92,7 +93,7 @@ public class TestPlayer {
 
   private Log log;
   
-  private MediaPlayer mediaPlayer;
+  private EmbeddedMediaPlayer mediaPlayer;
   
   public static void main(final String[] args) throws Exception {
     // Experimental

@@ -38,26 +38,24 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import org.apache.log4j.BasicConfigurator;
-
-import uk.co.caprica.vlcj.experimental.DirectVideo;
-import uk.co.caprica.vlcj.experimental.RenderCallback;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
+import uk.co.caprica.vlcj.player.direct.RenderCallback;
 
 /**
- * This simple test player shows how to get direct access to the video frame
+ * This simple test player shows how to get direct access to the mediaPlayer frame
  * data.
  * <p>
- * This implementation uses the new (1.1.1) libvlc video call-backs function.
+ * This implementation uses the new (1.1.1) libvlc mediaPlayer call-backs function.
  * <p>
- * Since the video frame data is made available, the Java callback may modify
+ * Since the mediaPlayer frame data is made available, the Java callback may modify
  * the contents of the frame if required.
  * <p>
  * The frame data may also be rendered components such as an OpenGL texture.
  */
 public class DirectTestPlayer {
 	
-	// The size does NOT need to match the video size - it's the size that the video will be scaled to
+	// The size does NOT need to match the mediaPlayer size - it's the size that the mediaPlayer will be scaled to
 	// Matching the native size will be faster of course
   private final int width = 720;
   private final int height = 480;
@@ -65,12 +63,12 @@ public class DirectTestPlayer {
 //  private final int height = 720;
 
   /**
-   * Image to render the video frame data.
+   * Image to render the mediaPlayer frame data.
    */
 	private final BufferedImage image;
 	
 	private final MediaPlayerFactory factory;
-	private final DirectVideo video;
+	private final DirectMediaPlayer mediaPlayer;
 	
 	private ImagePane imagePane;
 	
@@ -95,7 +93,7 @@ public class DirectTestPlayer {
 				
 				frame.addWindowListener(new WindowAdapter() {
 					public void windowClosing(WindowEvent evt) {
-						video.release();
+						mediaPlayer.release();
 						factory.release();
 						System.exit(0);
 					}
@@ -105,8 +103,12 @@ public class DirectTestPlayer {
 		});
 		
 		factory = new MediaPlayerFactory(args);
-		video = factory.newOffscreenVideo(width, height, new TestRenderCallback());
-		video.playMedia(media);
+		mediaPlayer = factory.newMediaPlayer(width, height, new TestRenderCallback());
+		mediaPlayer.playMedia(media);
+		
+		// Just to show regular media player functions still work...
+		Thread.sleep(5000);
+		mediaPlayer.nextChapter();
 	}
 	
 	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
@@ -145,7 +147,7 @@ public class DirectTestPlayer {
       g2.setComposite(AlphaComposite.SrcOver);
       g2.setColor(Color.white);
       g2.setFont(font);
-      g2.drawString("vlcj direct video", 130, 150);
+      g2.drawString("vlcj direct media player", 130, 150);
     }
   }
 

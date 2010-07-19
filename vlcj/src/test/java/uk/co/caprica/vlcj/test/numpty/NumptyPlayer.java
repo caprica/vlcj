@@ -29,8 +29,8 @@ import javax.swing.SwingUtilities;
 
 import org.apache.log4j.BasicConfigurator;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 
@@ -48,7 +48,7 @@ public class NumptyPlayer {
   
   private MediaPlayerFactory mediaPlayerFactory;
 
-  private MediaPlayer mediaPlayer;
+  private EmbeddedMediaPlayer mediaPlayer;
   
   public static void main(final String[] args) throws Exception {
     BasicConfigurator.configure();

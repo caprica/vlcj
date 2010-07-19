@@ -17,7 +17,7 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player;
+package uk.co.caprica.vlcj.player.embedded;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
@@ -27,6 +27,9 @@ import org.apache.log4j.Logger;
 /**
  * Default implementation of a full screen strategy that attempts to use the
  * JDK full-screen support.
+ * <p>
+ * Client applications may wish to set the DisplayMode - extend this class and
+ * override {@link #enterFullScreenMode()} to do so.
  */
 public class DefaultFullScreenStrategy implements FullScreenStrategy {
 
@@ -76,6 +79,4 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
     
     return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getFullScreenWindow() != null;
   }
-  
-  // TODO perhaps allow to set the DisplayMode? Users can always do that in their own implementation of course...
 }

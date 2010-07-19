@@ -19,11 +19,8 @@
 
 package uk.co.caprica.vlcj.player;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -61,6 +58,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
 // TODO this class file has nearly 2k lines and that is too many
+// FIXME update javadoc for new API
 
 /**
  * Media player implementation.
@@ -187,8 +185,6 @@ public abstract class MediaPlayer {
   private final ExecutorService listenersService = Executors.newSingleThreadExecutor();
 
   private final ExecutorService metaService = Executors.newSingleThreadExecutor();
-  
-  private final FullScreenStrategy fullScreenStrategy;
 
   private libvlc_instance_t instance;
   private libvlc_media_player_t mediaPlayerInstance;
@@ -196,32 +192,17 @@ public abstract class MediaPlayer {
   private libvlc_callback_t callback;
 
   private String[] standardMediaOptions;
-
-  private Canvas videoSurface;
   
   private volatile boolean released;
-
+  
   /**
    * Create a new media player.
-   * <p>
-   * Full-screen will not be supported.
    * 
    * @param instance
    */
   public MediaPlayer(libvlc_instance_t instance) {
-    this(null, instance);
-  }
-  
-  /**
-   * Create a new media player with a full-screen strategy.
-   * 
-   * @param fullScreenStrategy
-   * @param instance
-   */
-  public MediaPlayer(FullScreenStrategy fullScreenStrategy, libvlc_instance_t instance) {
-    if(LOG.isDebugEnabled()) {LOG.debug("MediaPlayer(fullScreenStrategy=" + fullScreenStrategy + ",instance=" + instance + ")");}
+    if(LOG.isDebugEnabled()) {LOG.debug("MediaPlayer(instance=" + instance + ")");}
     
-    this.fullScreenStrategy = fullScreenStrategy;
     this.instance = instance;
     
     createInstance();
@@ -261,17 +242,6 @@ public abstract class MediaPlayer {
     if(LOG.isDebugEnabled()) {LOG.debug("setStandardMediaOptions(options=" + Arrays.toString(options) + ")");}
     
     this.standardMediaOptions = options;
-  }
-
-  /**
-   * Set the component used to display the rendered video.
-   * 
-   * @param videoSurface component used to display video
-   */
-  public void setVideoSurface(Canvas videoSurface) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setVideoSurface(videoSurface=" + videoSurface + ")");}
-    
-    this.videoSurface = videoSurface;
   }
 
   /**
@@ -325,19 +295,6 @@ public abstract class MediaPlayer {
   public void prepareMedia(String mrl, String... mediaOptions) {
     if(LOG.isDebugEnabled()) {LOG.debug("prepareMedia(mrl=" + mrl + ",mediaOptions=" + Arrays.toString(mediaOptions) + ")");}
     
-    if(LOG.isDebugEnabled()) {LOG.debug("videoSurface=" + videoSurface);}
-    
-    // TODO not sure this requirement should be enforced since it should be 
-    //      possible to use the media player as e.g. a server component that
-    //      streams the video but does not actually render it 'locally' 
-    if(videoSurface == null) {
-      throw new IllegalStateException("Must set a video surface");
-    }
-
-    // Delegate to the template method in the OS-specific implementation class
-    // to actually set the video surface
-    nativeSetVideoSurface(mediaPlayerInstance, videoSurface);
-
     setMedia(mrl, mediaOptions);
   }
   
@@ -1086,33 +1043,6 @@ public abstract class MediaPlayer {
     }
   }
   
-  /**
-   * Get the contents of the video surface component. 
-   * <p>
-   * This implementation uses the AWT Robot class to capture the contents of
-   * the video surface component.
-   * <p>
-   * The size of the returned image will match the current size of the video
-   * surface.
-   * <p>
-   * <strong>Since this implementation uses the AWT Robot class to make a
-   * screen capture, care must be taken when invoking this method to ensure 
-   * that nothing else is overlaying the video surface!</strong>
-   * 
-   * @return current contents of the video surface
-   */
-  public BufferedImage getVideoSurfaceContents() {
-    LOG.debug("getVideoSurfaceContents()");
-    try {
-      Rectangle bounds = videoSurface.getBounds();
-      bounds.setLocation(videoSurface.getLocationOnScreen());
-      return new Robot().createScreenCapture(bounds);
-    } 
-    catch(Exception e) {
-      throw new RuntimeException("Failed to get video surface contents", e);
-    }
-  }
-  
   // === Logo Controls ========================================================
 
   /**
@@ -1496,57 +1426,6 @@ public abstract class MediaPlayer {
   // === User Interface =======================================================
   
   /**
-   * Toggle whether the video display is in full-screen or not.
-   * <p>
-   * This method defers to the full-screen strategy implementation.
-   */
-  public void toggleFullScreen() {
-    LOG.debug("toggleFullScreen()");
-    
-    if(fullScreenStrategy != null) {
-      setFullScreen(!fullScreenStrategy.isFullScreenMode());
-    }
-  }
-
-  /**
-   * Set full-screen mode. 
-   * <p>
-   * This method defers to the full-screen strategy implementation.
-   * 
-   * @param fullScreen true for full-screen, otherwise false
-   */
-  public void setFullScreen(boolean fullScreen) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setFullScreen(fullScreen=" + fullScreen + ")");}
-    
-    if(fullScreenStrategy != null) {
-      if(fullScreen) {
-        fullScreenStrategy.enterFullScreenMode();
-      }
-      else {
-        fullScreenStrategy.exitFullScreenMode();
-      }
-    }
-  }
-  
-  /**
-   * Test the current full-screen mode.
-   * <p>
-   * This method defers to the full-screen strategy implementation.
-   * 
-   * @return true if full-screen is active, otherwise false
-   */
-  public boolean isFullScreen() {
-    LOG.debug("isFullScreen()");
-    
-    if(fullScreenStrategy != null) {
-      return fullScreenStrategy.isFullScreenMode();
-    }
-    else {
-      return false;
-    }
-  }
-  
-  /**
    * 
    * 
    * @param enable
@@ -1877,17 +1756,6 @@ public abstract class MediaPlayer {
       metaService.submit(new NotifyMetaRunnable());
     }
   }
-  
-  /**
-   * Template method for setting the video surface natively.
-   * <p>
-   * Implementing classes should override this method to invoke the appropriate
-   * libvlc method to set the video surface.
-   * 
-   * @param instance media player instance
-   * @param videoSurface video surface component
-   */
-  protected abstract void nativeSetVideoSurface(libvlc_media_player_t instance, Canvas videoSurface);
   
   /**
    * Allow sub-classes to use the native media player instance. 
