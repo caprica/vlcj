@@ -52,7 +52,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import org.apache.log4j.Logger;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.check.EnvironmentCheckerFactory;
 import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogHandler;
 import uk.co.caprica.vlcj.log.LogLevel;
@@ -98,8 +97,6 @@ public class TestPlayer {
   public static void main(final String[] args) throws Exception {
     // Experimental
     Native.setProtected(false);
-    
-    new EnvironmentCheckerFactory().newEnvironmentChecker().checkEnvironment();
     
     if(LOG.isDebugEnabled()) {
       LOG.debug("  version: " + LibVlc.INSTANCE.libvlc_get_version());
