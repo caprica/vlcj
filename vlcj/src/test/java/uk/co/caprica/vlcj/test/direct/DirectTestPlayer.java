@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.test.direct;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -39,8 +41,6 @@ import org.apache.log4j.BasicConfigurator;
 import uk.co.caprica.vlcj.experimental.DirectVideo;
 import uk.co.caprica.vlcj.experimental.RenderCallback;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-
-import com.sun.jna.Memory;
 
 /**
  * This simple test player shows how to get direct access to the video frame
@@ -63,11 +63,6 @@ public class DirectTestPlayer {
 //  private final int height = 720;
 
   /**
-   * Buffer to hold the video frame data.
-   */
-  private final int[] imageBuffer = new int[width * height];
-
-  /**
    * Image to render the video frame data.
    */
 	private final BufferedImage image;
@@ -79,6 +74,7 @@ public class DirectTestPlayer {
 	
 	public DirectTestPlayer(String media, String[] args) throws InterruptedException, InvocationTargetException {		
     image = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(width, height);
+    image.setAccelerationPriority(1.0f);
 
 	  SwingUtilities.invokeAndWait(new Runnable() {
 
@@ -138,29 +134,18 @@ public class DirectTestPlayer {
       Graphics2D g2 = (Graphics2D)g;
       g2.drawImage(image, null, 0, 0);
       // You could draw on top of the image here...
-//      g2.setColor(Color.red);
-//      g2.fillRect(200, 100, 100, 100);
+      g2.setColor(Color.red);
+      g2.setComposite(AlphaComposite.SrcOver.derive(0.2f));
+      g2.fillRect(200, 100, 100, 100);
     }
   }
 
 	private final class TestRenderCallback implements RenderCallback {
-	  
-	  // FIXME we would probably just pass an already populated int[] rather than exposing the Memory object 
-	  
 	  @Override
-	  public void display(Memory buffer) {
-	    buffer.read(0, imageBuffer, 0, width * height);
-	    image.setRGB(0, 0, width, height, imageBuffer, 0, width);
-	    // The image could be manipulated here... 
+	  public void display(int[] data) {
+	    image.setRGB(0, 0, width, height, data, 0, width);
+	    // The image data could be manipulated here... 
 	    imagePane.repaint();
-	  }
-
-	  @Override
-	  public void lock() {
-	  }
-
-	  @Override
-	  public void unlock() {
 	  }
 	}
 }
