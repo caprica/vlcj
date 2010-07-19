@@ -41,6 +41,7 @@ import javax.swing.SwingUtilities;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
+import uk.co.caprica.vlcj.test.basic.PlayerControlsPanel;
 
 /**
  * This simple test player shows how to get direct access to the mediaPlayer frame
@@ -154,8 +155,8 @@ public class DirectTestPlayer {
 	private final class TestRenderCallback implements RenderCallback {
 	  @Override
 	  public void display(int[] data) {
-	    image.setRGB(0, 0, width, height, data, 0, width);
 	    // The image data could be manipulated here... 
+	    image.setRGB(0, 0, width, height, data, 0, width);
 	    imagePane.repaint();
 	  }
 	}
