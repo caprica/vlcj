@@ -37,8 +37,6 @@ import uk.co.caprica.vlcj.player.embedded.windows.WindowsEmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
-//FIXME update javadoc for new API
-
 /**
  * Factory for media player instances.
  * <p>
