@@ -116,10 +116,9 @@ public class DirectMediaPlayer extends MediaPlayer {
     this.imageBuffer = new int[width * height];
     
     // Memory must be aligned correctly (on a 32-byte boundary) for the libvlc 
-    // API functions
-    // FIXME For some reason 16 extra bytes must be requested on certain 
-    //       platforms (e.g. 64-bit Linux)
-    this.nativeBuffer = new Memory(width * height * 4 + 16).align(32);
+    // API functions (extra bytes are allocated to allow for enough memory if
+    // the alignment needs to be changed)
+    this.nativeBuffer = new Memory(width * height * 4 + 32).align(32);
 
     this.lock = new libvlc_lock_callback_t() {
       @Override
