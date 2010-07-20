@@ -58,7 +58,6 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
 // TODO this class file has nearly 2k lines and that is too many
-// FIXME update javadoc for new API
 
 /**
  * Media player implementation.
@@ -76,7 +75,6 @@ import com.sun.jna.ptr.IntByReference;
  *   <li>Snapshot controls</li>
  *   <li>Logo controls - enable/disable, set opacity, file</li>
  *   <li>Marquee controls - enable/disable, set colour, size, opacity, timeout</li>
- *   <li>Full-screen controls</li>
  *   <li>Video adjustment controls - contrast, brightness, hue, saturation, gamma</li>
  *   <li>Audio adjustment controls - delay</li>
  * </ul>
