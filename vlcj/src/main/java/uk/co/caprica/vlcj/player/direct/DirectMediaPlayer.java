@@ -65,11 +65,6 @@ public class DirectMediaPlayer extends MediaPlayer {
   private final RenderCallback renderCallback;
 
   /**
-   * Buffer to hold the video frame data.
-   */
-  private final int[] imageBuffer;
-
-  /**
    * Native memory buffer.
    */
   private final Memory nativeBuffer;
@@ -113,8 +108,6 @@ public class DirectMediaPlayer extends MediaPlayer {
     this.height = height;
     this.renderCallback = renderCallback;
     
-    this.imageBuffer = new int[width * height];
-    
     // Memory must be aligned correctly (on a 32-byte boundary) for the libvlc 
     // API functions (extra bytes are allocated to allow for enough memory if
     // the alignment needs to be changed)
@@ -154,11 +147,8 @@ public class DirectMediaPlayer extends MediaPlayer {
       public void display(Pointer opaque, Pointer picture) {
         LOG.trace("display");
         
-        // Populate the image buffer from the native memory buffer
-        nativeBuffer.read(0, imageBuffer, 0, DirectMediaPlayer.this.width * DirectMediaPlayer.this.height);
-        
         // Invoke the call-back
-        DirectMediaPlayer.this.renderCallback.display(imageBuffer);
+        DirectMediaPlayer.this.renderCallback.display(nativeBuffer);
 
         LOG.trace("display finished");
       }
