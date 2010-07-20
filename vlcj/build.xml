@@ -21,7 +21,7 @@
 
 <project name="vlcj" default="all">
 
-	<property name="build.version" value="1.1.1"/>
+	<property name="build.version" value="1.1.1pre1"/>
 
 	<buildnumber/>
 
