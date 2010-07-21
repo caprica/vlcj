@@ -61,6 +61,12 @@ import com.sun.jna.ptr.IntByReference;
  * different and will not work with these bindings.
  * <p>
  * Some functions are only available <em>after</em> version 1.1.0 of libvlc.
+ * <p>
+ * This flag may be useful:
+ * <pre>
+ * -Djna.dump_memory=true
+ * </pre>
+ * TODO think about using JNA Direct Mapping
  */
 public interface LibVlc extends Library {
 
