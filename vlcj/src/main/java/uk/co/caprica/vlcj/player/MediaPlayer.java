@@ -252,7 +252,7 @@ public abstract class MediaPlayer {
   public void playMedia(String mrl) {
     if(LOG.isDebugEnabled()) {LOG.debug("playMedia(mrl=" + mrl + ")");}
     
-    playMedia(mrl, (String)null);
+    playMedia(mrl, (String[])null);
   }
   
   /**
@@ -281,7 +281,7 @@ public abstract class MediaPlayer {
   public void prepareMedia(String mrl) {
     if(LOG.isDebugEnabled()) {LOG.debug("prepareMedia(mrl=" + mrl + ")");}
     
-    prepareMedia(mrl, (String)null);
+    prepareMedia(mrl, (String[])null);
   }
   
   /**
