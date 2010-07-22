@@ -891,14 +891,17 @@ public abstract class MediaPlayer {
   public List<String> getTitleDescriptions() {
     if(LOG.isDebugEnabled()) {LOG.debug("getTitleDescriptions()");}
     
-    List<String> trackDescriptions = new ArrayList<String>();
-    libvlc_track_description_t trackDescription = libvlc.libvlc_video_get_title_description(mediaPlayerInstance);
+    List<String> trackDescriptionList = new ArrayList<String>();
+    libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_title_description(mediaPlayerInstance);
+    libvlc_track_description_t trackDescription = trackDescriptions;
     while(trackDescription != null) {
-      trackDescriptions.add(trackDescription.psz_name);
+      trackDescriptionList.add(trackDescription.psz_name);
       trackDescription = trackDescription.p_next;      
     }   
-//    libvlc.libvlc_track_description_release(trackDescription); // Calling release here will cause a native crash on exit
-    return trackDescriptions;
+    if(trackDescriptions != null) {
+      libvlc.libvlc_track_description_release(trackDescriptions);
+    }
+    return trackDescriptionList;
   }  
   
   /**
@@ -909,14 +912,17 @@ public abstract class MediaPlayer {
   public List<String> getVideoDescriptions() {
     if(LOG.isDebugEnabled()) {LOG.debug("getVideoDescriptions()");}
     
-    List<String> trackDescriptions = new ArrayList<String>();
-    libvlc_track_description_t trackDescription = libvlc.libvlc_video_get_track_description(mediaPlayerInstance);
+    List<String> trackDescriptionList = new ArrayList<String>();
+    libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_track_description(mediaPlayerInstance);
+    libvlc_track_description_t trackDescription = trackDescriptions;
     while(trackDescription != null) {
-      trackDescriptions.add(trackDescription.psz_name);
+      trackDescriptionList.add(trackDescription.psz_name);
       trackDescription = trackDescription.p_next;      
     }   
-//    libvlc.libvlc_track_description_release(trackDescription); // Calling release here will cause a native crash on exit
-    return trackDescriptions;
+    if(trackDescriptions != null) {
+      libvlc.libvlc_track_description_release(trackDescriptions);
+    }
+    return trackDescriptionList;
   }
   
   /**
@@ -927,14 +933,17 @@ public abstract class MediaPlayer {
   public List<String> getAudioDescriptions() {
     if(LOG.isDebugEnabled()) {LOG.debug("getAudioDescriptions()");}
     
-    List<String> trackDescriptions = new ArrayList<String>();
-    libvlc_track_description_t trackDescription = libvlc.libvlc_audio_get_track_description(mediaPlayerInstance);
+    List<String> trackDescriptionList = new ArrayList<String>();
+    libvlc_track_description_t trackDescriptions = libvlc.libvlc_audio_get_track_description(mediaPlayerInstance);
+    libvlc_track_description_t trackDescription = trackDescriptions;
     while(trackDescription != null) {
-      trackDescriptions.add(trackDescription.psz_name);
+      trackDescriptionList.add(trackDescription.psz_name);
       trackDescription = trackDescription.p_next;      
     }   
-//    libvlc.libvlc_track_description_release(trackDescription); // Calling release here will cause a native crash on exit
-    return trackDescriptions;
+    if(trackDescriptions != null) {
+      libvlc.libvlc_track_description_release(trackDescriptions);
+    }
+    return trackDescriptionList;
   }  
   
   /**
@@ -945,14 +954,17 @@ public abstract class MediaPlayer {
   public List<String> getSpuDescriptions() {
     if(LOG.isDebugEnabled()) {LOG.debug("getSpuDescriptions()");}
     
-    List<String> trackDescriptions = new ArrayList<String>();
-    libvlc_track_description_t trackDescription = libvlc.libvlc_video_get_spu_description(mediaPlayerInstance);
+    List<String> trackDescriptionList = new ArrayList<String>();
+    libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_spu_description(mediaPlayerInstance);
+    libvlc_track_description_t trackDescription = trackDescriptions;
     while(trackDescription != null) {
-      trackDescriptions.add(trackDescription.psz_name);
+      trackDescriptionList.add(trackDescription.psz_name);
       trackDescription = trackDescription.p_next;      
     }   
-//    libvlc.libvlc_track_description_release(trackDescription); // Calling release here will cause a native crash on exit
-    return trackDescriptions;
+    if(trackDescriptions != null) {
+      libvlc.libvlc_track_description_release(trackDescriptions);
+    }
+    return trackDescriptionList;
   }  
 
   /**
@@ -964,14 +976,17 @@ public abstract class MediaPlayer {
   public List<String> getChapterDescriptions(int title) {
     if(LOG.isDebugEnabled()) {LOG.debug("getChapterDescriptions(title=" + title + ")");}
     
-    List<String> trackDescriptions = new ArrayList<String>();
-    libvlc_track_description_t trackDescription = libvlc.libvlc_video_get_chapter_description(mediaPlayerInstance, title);
+    List<String> trackDescriptionList = new ArrayList<String>();
+    libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_chapter_description(mediaPlayerInstance, title);
+    libvlc_track_description_t trackDescription = trackDescriptions;
     while(trackDescription != null) {
-      trackDescriptions.add(trackDescription.psz_name);
+      trackDescriptionList.add(trackDescription.psz_name);
       trackDescription = trackDescription.p_next;      
-    }   
-//    libvlc.libvlc_track_description_release(trackDescription); // Calling release here will cause a native crash on exit
-    return trackDescriptions;
+    }
+    if(trackDescriptions != null) {
+      libvlc.libvlc_track_description_release(trackDescriptions);
+    }
+    return trackDescriptionList;
   }  
   
   // === Snapshot Controls ====================================================
