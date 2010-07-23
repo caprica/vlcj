@@ -292,9 +292,9 @@ public class TestPlayer {
     public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
       if(LOG.isDebugEnabled()) {LOG.debug("metaDataAvailable(mediaPlayer=" + mediaPlayer + ",videoMetaData=" + videoMetaData + ")");}
       
-      // FIXME video dimension is no longer being provided, see http://trac.videolan.org/vlc/ticket/3679
       Dimension dimension = videoMetaData.getVideoDimension();
       if(dimension != null) {
+        // FIXME with some videos this sometimes causes lots of errors and corrupted playback until the canvas is resized _again_
         videoSurface.setSize(videoMetaData.getVideoDimension());
         mainFrame.pack();
       }
