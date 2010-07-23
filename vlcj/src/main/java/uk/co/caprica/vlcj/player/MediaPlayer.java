@@ -899,7 +899,7 @@ public abstract class MediaPlayer {
       trackDescription = trackDescription.p_next;      
     }   
     if(trackDescriptions != null) {
-      libvlc.libvlc_track_description_release(trackDescriptions);
+//      libvlc.libvlc_track_description_release(trackDescriptions); // FIXME something is wrong I see random crashes here
     }
     return trackDescriptionList;
   }  
@@ -920,7 +920,7 @@ public abstract class MediaPlayer {
       trackDescription = trackDescription.p_next;      
     }   
     if(trackDescriptions != null) {
-      libvlc.libvlc_track_description_release(trackDescriptions);
+//      libvlc.libvlc_track_description_release(trackDescriptions); // FIXME something is wrong I see random crashes here
     }
     return trackDescriptionList;
   }
@@ -941,7 +941,7 @@ public abstract class MediaPlayer {
       trackDescription = trackDescription.p_next;      
     }   
     if(trackDescriptions != null) {
-      libvlc.libvlc_track_description_release(trackDescriptions);
+//      libvlc.libvlc_track_description_release(trackDescriptions); // FIXME something is wrong I see random crashes here
     }
     return trackDescriptionList;
   }  
@@ -962,7 +962,7 @@ public abstract class MediaPlayer {
       trackDescription = trackDescription.p_next;      
     }   
     if(trackDescriptions != null) {
-      libvlc.libvlc_track_description_release(trackDescriptions);
+//      libvlc.libvlc_track_description_release(trackDescriptions); // FIXME something is wrong I see random crashes here
     }
     return trackDescriptionList;
   }  
@@ -984,7 +984,7 @@ public abstract class MediaPlayer {
       trackDescription = trackDescription.p_next;      
     }
     if(trackDescriptions != null) {
-      libvlc.libvlc_track_description_release(trackDescriptions);
+//      libvlc.libvlc_track_description_release(trackDescriptions); // FIXME something is wrong I see random crashes here
     }
     return trackDescriptionList;
   }  
