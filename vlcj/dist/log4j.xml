@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+  <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %-5p %-14.14t %32.32c{1}:%-4L %m%n"/>
+    </layout>
+  </appender>
+
+  <appender name="FILE" class="org.apache.log4j.FileAppender">
+    <param name="File" value="vlcj.log"/>
+    <param name="Append" value="false"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %-5p %-14.14t %32.32c{1}:%-4L %m%n"/>
+    </layout>
+  </appender>
+
+  <category name="uk.co.caprica">
+    <priority value="DEBUG"/>
+  </category>
+
+  <category name="uk.co.caprica.vlcj.log">
+    <priority value="DEBUG"/>
+  </category>
+
+  <category name="uk.co.caprica.vlcj.log.LoggingProxy">
+    <priority value="TRACE"/>
+  </category>
+
+  <root>
+    <priority value="DEBUG"/>
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="FILE"/>
+  </root>
+
+</log4j:configuration>
