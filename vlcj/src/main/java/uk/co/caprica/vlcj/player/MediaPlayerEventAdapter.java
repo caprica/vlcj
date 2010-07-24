@@ -27,6 +27,10 @@ package uk.co.caprica.vlcj.player;
 public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
 
   @Override
+  public void mediaChanged(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
   public void playing(MediaPlayer mediaPlayer) {
   }
 
@@ -56,5 +60,9 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
 
   @Override
   public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
+  }
+  
+  @Override
+  public void error(MediaPlayer mediaPlayer) {
   }
 }

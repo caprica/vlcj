@@ -44,12 +44,12 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
-import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_position_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_time_changed;
@@ -191,6 +191,8 @@ public abstract class MediaPlayer {
 
   private String[] standardMediaOptions;
   
+  private libvlc_media_stats_t libvlcMediaStats;
+
   private volatile boolean released;
   
   /**
@@ -450,6 +452,29 @@ public abstract class MediaPlayer {
     LOG.debug("getScale()");
     
     return libvlc.libvlc_video_get_scale(mediaPlayerInstance);
+  }
+
+  /**
+   * Get the current media statistics. 
+   * <p>
+   * Statistics are only updated if the video is playing.
+   * 
+   * @return media statistics
+   */
+  // FIXME For now I'll simply return the internal binding structure but I don't really want to do that do I?
+  public libvlc_media_stats_t getMediaStatistics() {
+    if(LOG.isDebugEnabled()) {LOG.debug("getMediaStatistics()");}
+    
+    // Must first check that the media is playing otherwise a fatal JVM crash
+    // will occur
+    if(isPlaying()) {
+      libvlc_media_t mediaDescriptor = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
+      if(mediaDescriptor != null) {
+        libvlc.libvlc_media_get_stats(mediaDescriptor, libvlcMediaStats);
+        libvlc.libvlc_media_release(mediaDescriptor);
+      }
+    }
+    return libvlcMediaStats;
   }
   
   // === Title/Track Controls =================================================
@@ -1581,6 +1606,9 @@ public abstract class MediaPlayer {
     
     libvlc.libvlc_media_player_set_media(mediaPlayerInstance, mediaDescriptor);
     libvlc.libvlc_media_release(mediaDescriptor);
+
+    // Prepare a new statistics object to re-use for the new media item
+    libvlcMediaStats = new libvlc_media_stats_t();
   }
 
   public void release() {
@@ -1601,17 +1629,16 @@ public abstract class MediaPlayer {
 
   private void notifyListeners(libvlc_event_t event) {
     if(LOG.isTraceEnabled()) {LOG.trace("notifyListeners(event=" + event + ")");}
-    
+
     if(!eventListenerList.isEmpty()) {
       for(int i = eventListenerList.size() - 1; i >= 0; i--) {
         MediaPlayerEventListener listener = eventListenerList.get(i);
         int eventType = event.type;
         switch(libvlc_event_e.event(eventType)) {
-          case libvlc_MediaDurationChanged:
-            long newDuration = ((media_duration_changed)event.u.getTypedValue(media_duration_changed.class)).new_duration;
-//            listener.durationChanged(this, newDuration);
+          case libvlc_MediaPlayerMediaChanged:
+            listener.mediaChanged(this);
             break;
-        
+          
           case libvlc_MediaPlayerPlaying:
             listener.playing(this);
             break;

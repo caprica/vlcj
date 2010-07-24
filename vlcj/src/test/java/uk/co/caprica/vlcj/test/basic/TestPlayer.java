@@ -269,6 +269,11 @@ public class TestPlayer {
   
   private final class TestPlayerMediaPlayerEventListener extends MediaPlayerEventAdapter {
     @Override
+    public void mediaChanged(MediaPlayer mediaPlayer) {
+      if(LOG.isDebugEnabled()) {LOG.debug("mediaChanged(mediaPlayer=" + mediaPlayer + ")");}
+    }
+
+    @Override
     public void finished(MediaPlayer mediaPlayer) {
       if(LOG.isDebugEnabled()) {LOG.debug("finished(mediaPlayer=" + mediaPlayer + ")");}
     }
@@ -316,6 +321,11 @@ public class TestPlayer {
       mediaPlayer.setMarqueeTimeout(3000);
       mediaPlayer.setMarqueeLocation(50, 100);
       mediaPlayer.enableMarquee(true);
+    }
+
+    @Override
+    public void error(MediaPlayer mediaPlayer) {
+      if(LOG.isDebugEnabled()) {LOG.debug("error(mediaPlayer=" + mediaPlayer + ")");}
     }
   }
   

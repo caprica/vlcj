@@ -30,6 +30,13 @@ public interface MediaPlayerEventListener {
    * 
    * @param mediaPlayer
    */
+  void mediaChanged(MediaPlayer mediaPlayer);
+
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   */
   void playing(MediaPlayer mediaPlayer);
 
   /**
@@ -84,4 +91,11 @@ public interface MediaPlayerEventListener {
    * @param newLength
    */
   void lengthChanged(MediaPlayer mediaPlayer, long newLength);
+
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   */
+  void error(MediaPlayer mediaPlayer);
 }
