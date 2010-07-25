@@ -69,7 +69,6 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 import com.sun.jna.Native;
 
 // FIXME on Windows a hard VM crash occurs during exit - presumably some native thread is still trying to execute something
-// FIXME on Linux mouseExited fires when moving OVER the playing video
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
@@ -157,9 +156,6 @@ public class TestPlayer {
     vlcArgs.add("--no-snapshot-preview");
     
     // Verbose logging from libvlc
-//    vlcArgs.add("-vvv");
-    
-    // Seems to be required on 1.1.1+ (at least on my snapshot build)
 //    vlcArgs.add("--sub-filter");
 //    vlcArgs.add("logo");
 
@@ -180,9 +176,6 @@ public class TestPlayer {
     // Special case to help out users on Windows (supposedly this is not actually needed)...
     if(RuntimeUtil.isWindows()) {
       vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
-    }
-    else {
-      vlcArgs.add("--plugin-path=/home/linux/vlc/lib");
     }
 
   	if(LOG.isDebugEnabled()) {LOG.debug("vlcArgs=" + vlcArgs);}
