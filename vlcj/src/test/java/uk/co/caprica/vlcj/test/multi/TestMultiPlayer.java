@@ -105,9 +105,9 @@ public class TestMultiPlayer {
         }
       }
     });
-    
-    String[] args = {"--plugin-path=/home/linux/vlc/lib"};
 
+    String[] args = {};
+    
     factory = new MediaPlayerFactory(args);
     
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
@@ -151,6 +151,7 @@ public class TestMultiPlayer {
     for(int i = 0; i < medias.length; i++) {
       EmbeddedMediaPlayer mediaPlayer = players.get(i).mediaPlayer();
       mediaPlayer.play();
+      // FIXME this will block forever if there's an error (like media file not found)
       while(!mediaPlayer.isPlaying()) {
         Thread.yield();
       }
