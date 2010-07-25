@@ -101,7 +101,7 @@ public class NumptyPlayer {
     // a native library crash is to sleep for a bit, then start the player 
     // on the EDT. Not ideal, if you find a better way let me know.
     try {
-      Thread.sleep(1000);
+      Thread.sleep(100);
     }
     catch (InterruptedException e) {
     }
