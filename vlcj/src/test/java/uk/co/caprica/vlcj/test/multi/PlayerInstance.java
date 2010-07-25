@@ -22,12 +22,15 @@ package uk.co.caprica.vlcj.test.multi;
 import java.awt.Canvas;
 import java.awt.Color;
 
+import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.player.VideoMetaData;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
  * A single player instance and associated video surface.
  */
-public class PlayerInstance {
+public class PlayerInstance implements MediaPlayerEventListener {
 
   private final EmbeddedMediaPlayer mediaPlayer;
   private final Canvas videoSurface;
@@ -36,6 +39,8 @@ public class PlayerInstance {
     this.mediaPlayer = mediaPlayer;
     this.videoSurface = new Canvas();
     this.videoSurface.setBackground(Color.black);
+    
+    mediaPlayer.addMediaPlayerEventListener(this);
   }
   
   public EmbeddedMediaPlayer mediaPlayer() {
@@ -44,5 +49,59 @@ public class PlayerInstance {
   
   public Canvas videoSurface() {
     return videoSurface;
+  }
+
+  @Override
+  public void mediaChanged(MediaPlayer mediaPlayer) {
+    System.out.println("mediaChanged");
+  }
+
+  @Override
+  public void playing(MediaPlayer mediaPlayer) {
+    System.out.println("playing");
+  }
+
+  @Override
+  public void paused(MediaPlayer mediaPlayer) {
+    System.out.println("paused");
+  }
+
+  @Override
+  public void stopped(MediaPlayer mediaPlayer) {
+    System.out.println("stopped");
+  }
+
+  @Override
+  public void finished(MediaPlayer mediaPlayer) {
+    System.out.println("finished");
+  }
+
+  @Override
+  public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void error(MediaPlayer mediaPlayer) {
+    System.out.println("error");
   }
 }

@@ -47,10 +47,7 @@ import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 public class TestMultiPlayer {
 
   private String[] medias = {
-    "/home/mark/Desktop/vidtest/1.mp4", 
-    "/home/mark/Desktop/vidtest/2.mp4", 
-    "/home/mark/Desktop/vidtest/3.mp4", 
-    "/home/mark/Desktop/vidtest/4.mp4" 
+    // Your MRL's go here
   };
     
   private int rows = 1;
@@ -106,6 +103,7 @@ public class TestMultiPlayer {
       }
     });
 
+//    String[] args = {"--no-xlib"};
     String[] args = {};
     
     factory = new MediaPlayerFactory(args);
@@ -151,6 +149,11 @@ public class TestMultiPlayer {
     for(int i = 0; i < medias.length; i++) {
       EmbeddedMediaPlayer mediaPlayer = players.get(i).mediaPlayer();
       mediaPlayer.play();
+      
+      // TODO seems like on error you just don't get libvlc_Opening and are stuck at libvlc_nothingspceial
+      System.out.println("state: " + mediaPlayer.getMediaState());
+      System.out.println("err: " + LibVlc.LOGGING_INSTANCE.libvlc_errmsg());
+      
       // FIXME this will block forever if there's an error (like media file not found)
       while(!mediaPlayer.isPlaying()) {
         Thread.yield();
