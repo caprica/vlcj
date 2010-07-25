@@ -429,7 +429,7 @@ public interface LibVlc extends Library {
    * @param p_meta_desc a media descriptor object
    * @return state of media descriptor object
    */
-  libvlc_state_t libvlc_media_get_state(libvlc_media_t p_meta_desc);
+  int libvlc_media_get_state(libvlc_media_t p_meta_desc);
 
   /**
    * get the current statistics about the media
