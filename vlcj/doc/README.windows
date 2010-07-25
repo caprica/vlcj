@@ -1,0 +1,44 @@
+
+                          === VLCJ on Windows ===
+                                
+
+== Introduction ==
+
+This file contains issues that are particular to Windows users.
+
+VLCJ has been proven to work on Windows Operating Systems.
+
+However you may need to jump through additional hoops to get up and running on
+Windows.
+
+The most common issue is that of libvlc failing to initialise and failing to 
+find it's plugins.
+
+First, you may need to explicitly specify the library path for JNA, for example:
+
+  java -Djna.library.path="C:\Program Files\VideoLAN\VLC\plugins"
+
+This is _not_ supposed to be needed since libvlc is supposed to be able to find
+it's own plugins.
+
+Second, pass, for example, the following options to libvlc during initialisation.
+
+  --plugin-path="C:\Program Files\VideoLAN\VLC\plugins"
+
+If you want to receive mouse or keyboard events from the video surface while 
+the video is playing then you must use a custom WindowsCanvas implementation 
+for your video surface rather than the regular AWT Canvas. This is because to 
+get the mouse events a native Windows message hook is required - the 
+WindowsCanvas manages the native message hook. Key events are handled by a
+global AWT event listener.
+
+== Test Player ==
+
+The test player implementation ordinarily passes no arguments to libvlc.
+
+There is one special case for Windows to solve a common environmental issue -
+the test player will attempt to automatically set the plugin-path setting as
+described above.
+
+It is expected that your own player implementation would accept command-line
+arguments or read the required initialisation options from a configuration file. 
