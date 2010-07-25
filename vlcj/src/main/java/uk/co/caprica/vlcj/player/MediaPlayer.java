@@ -46,6 +46,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
@@ -475,6 +476,26 @@ public abstract class MediaPlayer {
       }
     }
     return libvlcMediaStats;
+  }
+
+  /**
+   * 
+   * 
+   * @return
+   */
+  // FIXME For now I'll simply return the internal binding structure but I don't really want to do that do I?
+  public libvlc_state_t getMediaState() {
+    if(LOG.isDebugEnabled()) {LOG.debug("getMediaStatistics()");}
+    
+    libvlc_state_t state = null;
+    
+    libvlc_media_t mediaDescriptor = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
+    if(mediaDescriptor != null) {
+      state = libvlc_state_t.state(libvlc.libvlc_media_get_state(mediaDescriptor));
+      libvlc.libvlc_media_release(mediaDescriptor);
+    }
+    
+    return state;
   }
   
   // === Title/Track Controls =================================================
