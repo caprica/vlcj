@@ -485,7 +485,7 @@ public abstract class MediaPlayer {
    */
   // FIXME For now I'll simply return the internal binding structure but I don't really want to do that do I?
   public libvlc_state_t getMediaState() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getMediaStatistics()");}
+    if(LOG.isDebugEnabled()) {LOG.debug("getMediaState()");}
     
     libvlc_state_t state = null;
     
