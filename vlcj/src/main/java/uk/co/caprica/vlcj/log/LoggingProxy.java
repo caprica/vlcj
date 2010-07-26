@@ -82,7 +82,14 @@ public class LoggingProxy implements InvocationHandler {
    * @param result
    */
   private void after(Method method, Object result) {
-    if(LOG.isTraceEnabled()) {LOG.trace("return " + method.getName() + ": " + result);}
+    if(LOG.isTraceEnabled()) {
+      if(!method.getReturnType().equals(Void.TYPE)) {
+        LOG.trace("return " + method.getName() + ": " + result);
+      }
+      else {
+        LOG.trace("return " + method.getName() + ": void");
+      }
+    }
   }
 
   /**
