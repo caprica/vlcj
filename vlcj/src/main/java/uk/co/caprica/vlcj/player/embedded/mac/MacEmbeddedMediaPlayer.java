@@ -21,10 +21,9 @@ package uk.co.caprica.vlcj.player.embedded.mac;
 
 import java.awt.Canvas;
 
-import org.apache.log4j.Logger;
-
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 
@@ -33,11 +32,6 @@ import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
  */
 public class MacEmbeddedMediaPlayer extends EmbeddedMediaPlayer {
 
-  /**
-   * Log.
-   */
-  private static final Logger LOG = Logger.getLogger(MacEmbeddedMediaPlayer.class);
-  
   /**
    * 
    * 
@@ -50,7 +44,7 @@ public class MacEmbeddedMediaPlayer extends EmbeddedMediaPlayer {
 
   @Override
   protected void nativeSetVideoSurface(libvlc_media_player_t mediaPlayerInstance, Canvas videoSurface) {
-    if(LOG.isDebugEnabled()) {LOG.debug("nativeSetVideoSurface(mediaPlayerInstance=" + mediaPlayerInstance + ",videoSurface=" + videoSurface + ")");}
+    Logger.debug("nativeSetVideoSurface(mediaPlayerInstance={},videoSurface={})", mediaPlayerInstance, videoSurface);
 
     // FIXME how?
     throw new UnsupportedOperationException("Send patches!");

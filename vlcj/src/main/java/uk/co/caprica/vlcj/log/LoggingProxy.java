@@ -24,18 +24,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import org.apache.log4j.Logger;
-
 /**
  *
  */
 public class LoggingProxy implements InvocationHandler {
 
-  /**
-   * 
-   */
-  private static final Logger LOG = Logger.getLogger(LoggingProxy.class);
-  
   /**
    * 
    */
@@ -72,7 +65,7 @@ public class LoggingProxy implements InvocationHandler {
    * @param args
    */
   private void before(Method method, Object[] args) {
-    if(LOG.isTraceEnabled()) {LOG.trace("call " + method.getName() + ": " + Arrays.toString(args));}
+    Logger.trace("call {}: {}", method.getName(), Arrays.toString(args));
   }
 
   /**
@@ -82,13 +75,11 @@ public class LoggingProxy implements InvocationHandler {
    * @param result
    */
   private void after(Method method, Object result) {
-    if(LOG.isTraceEnabled()) {
-      if(!method.getReturnType().equals(Void.TYPE)) {
-        LOG.trace("return " + method.getName() + ": " + result);
-      }
-      else {
-        LOG.trace("return " + method.getName() + ": void");
-      }
+    if(!method.getReturnType().equals(Void.TYPE)) {
+      Logger.trace("return {}: {}", method.getName(), result);
+    }
+    else {
+      Logger.trace("return {}: void", method.getName());
     }
   }
 
@@ -99,6 +90,6 @@ public class LoggingProxy implements InvocationHandler {
    * @param t
    */
   private void exception(Method method, Throwable t) {
-    if(LOG.isTraceEnabled()) {LOG.trace("exception " + method.getName() + ": " + t);}
+    Logger.trace("exception {}: {}", method.getName(), t);
   }
 }

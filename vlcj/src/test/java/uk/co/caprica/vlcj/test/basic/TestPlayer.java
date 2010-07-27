@@ -49,12 +49,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import org.apache.log4j.Logger;
-
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogHandler;
 import uk.co.caprica.vlcj.log.LogLevel;
+import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -80,8 +79,6 @@ import com.sun.jna.Native;
  */
 public class TestPlayer {
   
-  private static final Logger LOG = Logger.getLogger(TestPlayer.class);
-  
   private Frame mainFrame;
   private Canvas videoSurface;
   private JPanel controlsPanel;
@@ -97,11 +94,11 @@ public class TestPlayer {
     // Experimental
     Native.setProtected(false);
     
-    if(LOG.isDebugEnabled()) {
-      LOG.debug("  version: " + LibVlc.INSTANCE.libvlc_get_version());
-      LOG.debug(" compiler: " + LibVlc.INSTANCE.libvlc_get_compiler());
-      LOG.debug("changeset: " + LibVlc.INSTANCE.libvlc_get_changeset());
-    }
+    Logger.setLevel(Logger.Level.INFO);
+    
+    Logger.info("  version: {}", LibVlc.INSTANCE.libvlc_get_version());
+    Logger.info(" compiler: {}", LibVlc.INSTANCE.libvlc_get_compiler());
+    Logger.info("changeset: {}", LibVlc.INSTANCE.libvlc_get_changeset());
     
     setLookAndFeel();
     
@@ -138,7 +135,7 @@ public class TestPlayer {
       videoSurface = new Canvas();
     }
 
-    if(LOG.isDebugEnabled()) {LOG.debug("videoSurface=" + videoSurface);}
+    Logger.debug("videoSurface={}", videoSurface);
     
     videoSurface.setBackground(Color.black);
     videoSurface.setSize(800, 600); // Only for initial layout
@@ -167,7 +164,7 @@ public class TestPlayer {
         readOptionsFile(optionsFile, vlcArgs);
       }
       catch(IOException e) {
-        LOG.warn("Failed to read options from '" + optionsFile + "'", e);
+        Logger.warn("Failed to read options from '{}'", optionsFile, e);
       }
     }*/
 	
@@ -178,7 +175,7 @@ public class TestPlayer {
       vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
     }
 
-  	if(LOG.isDebugEnabled()) {LOG.debug("vlcArgs=" + vlcArgs);}
+  	Logger.debug("vlcArgs={}", vlcArgs);
   	
     mainFrame = new Frame("VLCJ Test Player for VLC 1.1.x");
   
@@ -187,10 +184,9 @@ public class TestPlayer {
     mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));
     mediaPlayerFactory.setUserAgent("vlcj test player");
     
-    mediaPlayerFactory.setLogLevel(LogLevel.ERR);
+    mediaPlayerFactory.setLogLevel(LogLevel.DBG);
 
     // Create a new log handler to display the native libvlc log
-    // FIXME this should be properly cleaned up during shutdown
     log = mediaPlayerFactory.newLog();
     new LogHandler(log, 1000).start();
     
@@ -215,7 +211,7 @@ public class TestPlayer {
     mainFrame.pack();
     mainFrame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent evt) {
-        if(LOG.isDebugEnabled()) {LOG.debug("windowClosing(evt=" + evt + ")");}
+        Logger.debug("windowClosing(evt={})", evt);
 
         mediaPlayer.release();
         mediaPlayer = null;
@@ -263,32 +259,32 @@ public class TestPlayer {
   private final class TestPlayerMediaPlayerEventListener extends MediaPlayerEventAdapter {
     @Override
     public void mediaChanged(MediaPlayer mediaPlayer) {
-      if(LOG.isDebugEnabled()) {LOG.debug("mediaChanged(mediaPlayer=" + mediaPlayer + ")");}
+      Logger.debug("mediaChanged(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void finished(MediaPlayer mediaPlayer) {
-      if(LOG.isDebugEnabled()) {LOG.debug("finished(mediaPlayer=" + mediaPlayer + ")");}
+      Logger.debug("finished(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void paused(MediaPlayer mediaPlayer) {
-      if(LOG.isDebugEnabled()) {LOG.debug("paused(mediaPlayer=" + mediaPlayer + ")");}
+      Logger.debug("paused(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void playing(MediaPlayer mediaPlayer) {
-      if(LOG.isDebugEnabled()) {LOG.debug("playing(mediaPlayer=" + mediaPlayer + ")");}
+      Logger.debug("playing(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void stopped(MediaPlayer mediaPlayer) {
-      if(LOG.isDebugEnabled()) {LOG.debug("stopped(mediaPlayer=" + mediaPlayer + ")");}
+      Logger.debug("stopped(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
-      if(LOG.isDebugEnabled()) {LOG.debug("metaDataAvailable(mediaPlayer=" + mediaPlayer + ",videoMetaData=" + videoMetaData + ")");}
+      Logger.debug("metaDataAvailable(mediaPlayer={},videoMetaData={})", mediaPlayer, videoMetaData);
       
       Dimension dimension = videoMetaData.getVideoDimension();
       if(dimension != null) {
@@ -297,7 +293,7 @@ public class TestPlayer {
         mainFrame.pack();
       }
       else {
-        LOG.warn("Video size not available");
+        Logger.warn("Video size not available");
       }
       
       // You can set a logo like this if you like...
@@ -318,7 +314,7 @@ public class TestPlayer {
 
     @Override
     public void error(MediaPlayer mediaPlayer) {
-      if(LOG.isDebugEnabled()) {LOG.debug("error(mediaPlayer=" + mediaPlayer + ")");}
+      Logger.debug("error(mediaPlayer={})", mediaPlayer);
     }
   }
   
@@ -328,7 +324,7 @@ public class TestPlayer {
    * @param enable
    */
   private void enableMousePointer(boolean enable) {
-    if(LOG.isDebugEnabled()) {LOG.debug("enableMousePointer(enable=" + enable + ")");}
+    Logger.debug("enableMousePointer(enable={})", enable);
     if(enable) {
       videoSurface.setCursor(null);
     }
@@ -344,32 +340,32 @@ public class TestPlayer {
   private final class TestPlayerMouseListener extends MouseAdapter {
     @Override
     public void mouseMoved(MouseEvent e) {
-      if(LOG.isTraceEnabled()) {LOG.trace("mouseMoved(e=" + e + ")");}
+      Logger.trace("mouseMoved(e={})", e);
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-      if(LOG.isDebugEnabled()) {LOG.debug("mousePressed(e=" + e + ")");}
+      Logger.debug("mousePressed(e={})", e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-      if(LOG.isDebugEnabled()) {LOG.debug("mouseReleased(e=" + e + ")");}
+      Logger.debug("mouseReleased(e={})", e);
     }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-      if(LOG.isDebugEnabled()) {LOG.debug("mouseWheelMoved(e=" + e + ")");}
+      Logger.debug("mouseWheelMoved(e={})", e);
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-      if(LOG.isDebugEnabled()) {LOG.debug("mouseEntered(e=" + e + ")");}
+      Logger.debug("mouseEntered(e={})", e);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-      if(LOG.isDebugEnabled()) {LOG.debug("mouseExited(e=" + e + ")");}
+      Logger.debug("mouseExited(e={})", e);
     }
   }
 
@@ -380,17 +376,17 @@ public class TestPlayer {
 
     @Override
     public void keyPressed(KeyEvent e) {
-      if(LOG.isDebugEnabled()) {LOG.debug("keyPressed(e=" + e + ")");}
+      Logger.debug("keyPressed(e={})", e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-      if(LOG.isDebugEnabled()) {LOG.debug("keyReleased(e=" + e + ")");}
+      Logger.debug("keyReleased(e={})", e);
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-      if(LOG.isDebugEnabled()) {LOG.debug("keyTyped(e=" + e + ")");}
+      Logger.debug("keyTyped(e={})", e);
     }
   }
 
@@ -400,11 +396,15 @@ public class TestPlayer {
   private final class TestPlayerShutdownHook extends Thread {
     @Override
     public void run() {
-      LOG.debug("run()");
+      Logger.debug("run()");
+      if(log != null) {
+        log.close();
+      }
+      
 //      if(mediaPlayer != null) {
 //        mediaPlayer.release(); // Can cause JVM crash
 //      }
-      LOG.debug("shutdown hook runnable exits()");
+      Logger.debug("shutdown hook runnable exits()");
     }
   }
 
@@ -416,7 +416,7 @@ public class TestPlayer {
    * @throws IOException
    */
   private void readOptionsFile(File optionsFile, List<String> options) throws IOException {
-    if(LOG.isDebugEnabled()) {LOG.debug("readOptionsFile(optionsFile=" + optionsFile.getAbsolutePath() + ")");}
+    Logger.debug("readOptionsFile(optionsFile={})", optionsFile.getAbsolutePath());
     BufferedReader in = null;
     try {
       in = new BufferedReader(new FileReader(optionsFile));

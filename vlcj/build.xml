@@ -21,7 +21,7 @@
 
 <project name="vlcj" default="all">
 
-	<property name="build.version" value="1.1.1.1"/>
+	<property name="build.version" value="1.1.1.2"/>
 
 	<buildnumber/>
 
@@ -36,7 +36,6 @@
   <path id="project.classes">
     <pathelement location="lib/jna.jar"/>
     <pathelement location="lib/platform.jar"/>
-    <pathelement location="lib/log4j.jar"/>
   </path>
   
   <target name="prepare">
@@ -108,7 +107,6 @@
       <fileset dir="build" includes="*.jar"/>
     	<fileset dir="lib" includes="*.jar"/>
       <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
-      <fileset dir="etc" includes="log4j.xml"/>
     </copy>
   </target>
   

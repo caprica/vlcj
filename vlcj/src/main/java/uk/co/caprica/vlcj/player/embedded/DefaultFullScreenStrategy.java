@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player.embedded;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 
-import org.apache.log4j.Logger;
+import uk.co.caprica.vlcj.log.Logger;
 
 /**
  * Default implementation of a full screen strategy that attempts to use the
@@ -34,11 +34,6 @@ import org.apache.log4j.Logger;
 public class DefaultFullScreenStrategy implements FullScreenStrategy {
 
   /**
-   * Log.
-   */
-  private static final Logger LOG = Logger.getLogger(DefaultFullScreenStrategy.class);
-  
-  /**
    * The component that will be made full-screen. 
    */
   private final Window window;
@@ -49,7 +44,7 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
    * @param window component that will be made full-screen
    */
   public DefaultFullScreenStrategy(Window window) {
-    if(LOG.isDebugEnabled()) {LOG.debug("DefaultFullScreenStrategy(window=" + window + ")");}
+    Logger.debug("DefaultFullScreenStrategy(window={})", window);
     
     if(window != null) {
       this.window = window;
@@ -61,21 +56,21 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
   
   @Override
   public void enterFullScreenMode() {
-    LOG.debug("enterFullScreenMode()");
+    Logger.debug("enterFullScreenMode()");
     
     GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(window);
   }
 
   @Override
   public void exitFullScreenMode() {
-    LOG.debug("exitFullScreenMode()");
+    Logger.debug("exitFullScreenMode()");
     
     GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
   }
 
   @Override
   public boolean isFullScreenMode() {
-    LOG.debug("isFullScreenMode()");
+    Logger.debug("isFullScreenMode()");
     
     return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getFullScreenWindow() != null;
   }

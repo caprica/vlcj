@@ -24,10 +24,9 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
 
-import org.apache.log4j.Logger;
-
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 /**
@@ -35,11 +34,6 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
  * component.
  */
 public abstract class EmbeddedMediaPlayer extends MediaPlayer {
-
-  /**
-   * Log.
-   */
-  private static final Logger LOG = Logger.getLogger(EmbeddedMediaPlayer.class);
 
   /**
    * Full-screen strategy implementation, may be <code>null</code>. 
@@ -83,7 +77,7 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
    * @param videoSurface component to render video to
    */
   public void setVideoSurface(Canvas videoSurface) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setVideoSurface(videoSurface=" + videoSurface + ")");}
+    Logger.debug("setVideoSurface(videoSurface={})", videoSurface);
     
     // Keep a hard reference to the video surface component
     this.videoSurface = videoSurface;
@@ -99,7 +93,7 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
    * This method defers to the full-screen strategy implementation.
    */
   public void toggleFullScreen() {
-    LOG.debug("toggleFullScreen()");
+    Logger.debug("toggleFullScreen()");
     
     if(fullScreenStrategy != null) {
       setFullScreen(!fullScreenStrategy.isFullScreenMode());
@@ -114,7 +108,7 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
    * @param fullScreen true for full-screen, otherwise false
    */
   public void setFullScreen(boolean fullScreen) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setFullScreen(fullScreen=" + fullScreen + ")");}
+    Logger.debug("setFullScreen(fullScreen={})", fullScreen);
     
     if(fullScreenStrategy != null) {
       if(fullScreen) {
@@ -134,7 +128,7 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
    * @return true if full-screen is active, otherwise false
    */
   public boolean isFullScreen() {
-    LOG.debug("isFullScreen()");
+    Logger.debug("isFullScreen()");
     
     if(fullScreenStrategy != null) {
       return fullScreenStrategy.isFullScreenMode();
@@ -160,7 +154,7 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
    * @return current contents of the video surface
    */
   public BufferedImage getVideoSurfaceContents() {
-    LOG.debug("getVideoSurfaceContents()");
+    Logger.debug("getVideoSurfaceContents()");
     try {
       Rectangle bounds = videoSurface.getBounds();
       bounds.setLocation(videoSurface.getLocationOnScreen());

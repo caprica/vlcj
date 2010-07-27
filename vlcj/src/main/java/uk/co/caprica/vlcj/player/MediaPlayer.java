@@ -34,8 +34,6 @@ import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
 
-import org.apache.log4j.Logger;
-
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
@@ -54,6 +52,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
 import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_position_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_time_changed;
+import uk.co.caprica.vlcj.log.Logger;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
@@ -168,11 +167,6 @@ import com.sun.jna.ptr.IntByReference;
  */
 public abstract class MediaPlayer {
 
-  /**
-   * Log.
-   */
-  private static final Logger LOG = Logger.getLogger(MediaPlayer.class);
-  
   private static final int VOUT_WAIT_PERIOD = 1000;
   
   // TODO
@@ -202,7 +196,7 @@ public abstract class MediaPlayer {
    * @param instance
    */
   public MediaPlayer(libvlc_instance_t instance) {
-    if(LOG.isDebugEnabled()) {LOG.debug("MediaPlayer(instance=" + instance + ")");}
+    Logger.debug("MediaPlayer(instance={})", instance);
     
     this.instance = instance;
     
@@ -215,7 +209,7 @@ public abstract class MediaPlayer {
    * @param listener component to notify
    */
   public void addMediaPlayerEventListener(MediaPlayerEventListener listener) {
-    if(LOG.isDebugEnabled()) {LOG.debug("addMediaPlayerEventListener(listener=" + listener + ")");}
+    Logger.debug("addMediaPlayerEventListener(listener={})", listener);
     
     eventListenerList.add(listener);
   }
@@ -227,7 +221,7 @@ public abstract class MediaPlayer {
    * @param listener component to stop notifying
    */
   public void removeMediaPlayerEventListener(MediaPlayerEventListener listener) {
-    if(LOG.isDebugEnabled()) {LOG.debug("removeMediaPlayerEventListener(listener=" + listener + ")");}
+    Logger.debug("removeMediaPlayerEventListener(listener={})", listener);
     
     eventListenerList.remove(listener);
   }
@@ -240,7 +234,7 @@ public abstract class MediaPlayer {
    * @param options options to apply to all subsequently played media items
    */
   public void setStandardMediaOptions(String... options) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setStandardMediaOptions(options=" + Arrays.toString(options) + ")");}
+    Logger.debug("setStandardMediaOptions(options={})", Arrays.toString(options));
     
     this.standardMediaOptions = options;
   }
@@ -253,7 +247,7 @@ public abstract class MediaPlayer {
    * @param mrl media resource locator
    */
   public void playMedia(String mrl) {
-    if(LOG.isDebugEnabled()) {LOG.debug("playMedia(mrl=" + mrl + ")");}
+    Logger.debug("playMedia(mrl={})", mrl);
     
     playMedia(mrl, (String[])null);
   }
@@ -267,7 +261,7 @@ public abstract class MediaPlayer {
    * @param mediaOptions media item options
    */
   public void playMedia(String mrl, String... mediaOptions) {
-    if(LOG.isDebugEnabled()) {LOG.debug("playMedia(mrl=" + mrl + ",mediaOptions=" + Arrays.toString(mediaOptions) + ")");}
+    Logger.debug("playMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
 
     // First 'prepare' the media...
     prepareMedia(mrl, mediaOptions);
@@ -282,7 +276,7 @@ public abstract class MediaPlayer {
    * @param mrl media resource locator
    */
   public void prepareMedia(String mrl) {
-    if(LOG.isDebugEnabled()) {LOG.debug("prepareMedia(mrl=" + mrl + ")");}
+    Logger.debug("prepareMedia(mrl={})", mrl);
     
     prepareMedia(mrl, (String[])null);
   }
@@ -294,7 +288,7 @@ public abstract class MediaPlayer {
    * @param mediaOptions media item options
    */
   public void prepareMedia(String mrl, String... mediaOptions) {
-    if(LOG.isDebugEnabled()) {LOG.debug("prepareMedia(mrl=" + mrl + ",mediaOptions=" + Arrays.toString(mediaOptions) + ")");}
+    Logger.debug("prepareMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
     
     setMedia(mrl, mediaOptions);
   }
@@ -307,7 +301,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public boolean isPlayable() {
-    LOG.trace("isPlayable()");
+    Logger.trace("isPlayable()");
 
     return libvlc.libvlc_media_player_will_play(mediaPlayerInstance) == 1;
   }
@@ -318,7 +312,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public boolean isPlaying() {
-    LOG.trace("isPlaying()");
+    Logger.trace("isPlaying()");
     
     return libvlc.libvlc_media_player_is_playing(mediaPlayerInstance) == 1;
   }
@@ -329,7 +323,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public boolean isSeekable() {
-    LOG.trace("isSeekable()");
+    Logger.trace("isSeekable()");
     
     return libvlc.libvlc_media_player_is_seekable(mediaPlayerInstance) == 1;
   }
@@ -340,7 +334,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public boolean canPause() {
-    LOG.trace("canPause()");
+    Logger.trace("canPause()");
     
     return libvlc.libvlc_media_player_can_pause(mediaPlayerInstance) == 1;
   }
@@ -351,7 +345,7 @@ public abstract class MediaPlayer {
    * @return length, in milliseconds
    */
   public long getLength() {
-    LOG.trace("getLength()");
+    Logger.trace("getLength()");
     
     return libvlc.libvlc_media_player_get_length(mediaPlayerInstance);
   }
@@ -362,7 +356,7 @@ public abstract class MediaPlayer {
    * @return current time, expressed as a number of milliseconds
    */
   public long getTime() {
-    LOG.trace("getTime()");
+    Logger.trace("getTime()");
     
     return libvlc.libvlc_media_player_get_time(mediaPlayerInstance);
   }
@@ -373,7 +367,7 @@ public abstract class MediaPlayer {
    * @return current position, expressed as a percentage (e.g. 0.15 is returned for 15% complete)
    */
   public float getPosition() {
-    LOG.trace("getPosition()");
+    Logger.trace("getPosition()");
     
     return libvlc.libvlc_media_player_get_position(mediaPlayerInstance);
   }
@@ -384,7 +378,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public float getFps() {
-    LOG.trace("getFps()");
+    Logger.trace("getFps()");
     
     return libvlc.libvlc_media_player_get_fps(mediaPlayerInstance);
   }
@@ -395,7 +389,7 @@ public abstract class MediaPlayer {
    * @return rate, where 1.0 is normal speed, 0.5 is half speed, 2.0 is double speed and so on
    */
   public float getRate() {
-    LOG.trace("getRate()");
+    Logger.trace("getRate()");
     
     return libvlc.libvlc_media_player_get_rate(mediaPlayerInstance);
   }
@@ -406,7 +400,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public int getVideoOutputs() {
-    LOG.trace("getVideoOutputs()");
+    Logger.trace("getVideoOutputs()");
     
     return libvlc.libvlc_media_player_has_vout(mediaPlayerInstance);
   }
@@ -420,7 +414,7 @@ public abstract class MediaPlayer {
    * @return video size if available, or <code>null</code>
    */
   public Dimension getVideoDimension() {
-    LOG.debug("getVideoDimension()");
+    Logger.debug("getVideoDimension()");
     
     IntByReference px = new IntByReference();
     IntByReference py = new IntByReference();
@@ -439,7 +433,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public String getAspectRatio() {
-    LOG.debug("getAspectRatio()");
+    Logger.debug("getAspectRatio()");
     
     return libvlc.libvlc_video_get_aspect_ratio(mediaPlayerInstance);
   }
@@ -450,7 +444,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public float getScale() {
-    LOG.debug("getScale()");
+    Logger.debug("getScale()");
     
     return libvlc.libvlc_video_get_scale(mediaPlayerInstance);
   }
@@ -464,7 +458,7 @@ public abstract class MediaPlayer {
    */
   // FIXME For now I'll simply return the internal binding structure but I don't really want to do that do I?
   public libvlc_media_stats_t getMediaStatistics() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getMediaStatistics()");}
+    Logger.debug("getMediaStatistics()");
     
     // Must first check that the media is playing otherwise a fatal JVM crash
     // will occur
@@ -485,7 +479,7 @@ public abstract class MediaPlayer {
    */
   // FIXME For now I'll simply return the internal binding structure but I don't really want to do that do I?
   public libvlc_state_t getMediaState() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getMediaState()");}
+    Logger.debug("getMediaState()");
     
     libvlc_state_t state = null;
     
@@ -506,7 +500,7 @@ public abstract class MediaPlayer {
    * @return number of titles, or -1 if none
    */
   public int getTitleCount() {
-    LOG.debug("getTitleCount()");
+    Logger.debug("getTitleCount()");
     
     return libvlc.libvlc_media_player_get_title_count(mediaPlayerInstance);
   }
@@ -517,7 +511,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public int getTitle() {
-    LOG.debug("getTitle()");
+    Logger.debug("getTitle()");
     
     return libvlc.libvlc_media_player_get_title(mediaPlayerInstance);
   }
@@ -528,7 +522,7 @@ public abstract class MediaPlayer {
    * @param title title number
    */
   public void setTitle(int title) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setTitle(title=" + title + ")");}
+    Logger.debug("setTitle(title={})", title);
     
     libvlc.libvlc_media_player_set_title(mediaPlayerInstance, title);
   }
@@ -539,7 +533,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public int getVideoTrackCount() {
-    LOG.debug("getVideoTrackCount()");
+    Logger.debug("getVideoTrackCount()");
     
     return libvlc.libvlc_video_get_track_count(mediaPlayerInstance);
   }
@@ -550,7 +544,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public int getVideoTrack() {
-    LOG.debug("getVideoTrack()");
+    Logger.debug("getVideoTrack()");
     
     return libvlc.libvlc_video_get_track(mediaPlayerInstance);
   }
@@ -561,7 +555,7 @@ public abstract class MediaPlayer {
    * @param track track number
    */
   public void setVideoTrack(int track) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setVideoTrack(track=" + track + ")");}
+    Logger.debug("setVideoTrack(track={})", track);
     
     libvlc.libvlc_video_set_track(mediaPlayerInstance, track);
   }
@@ -572,7 +566,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public int getAudioTrackCount() {
-    LOG.debug("getVideoTrackCount()");
+    Logger.debug("getVideoTrackCount()");
 
     return libvlc.libvlc_audio_get_track_count(mediaPlayerInstance);
   }
@@ -583,7 +577,7 @@ public abstract class MediaPlayer {
    * @return
    */
   public int getAudioTrack() {
-    LOG.debug("getAudioTrack()");
+    Logger.debug("getAudioTrack()");
     
     return libvlc.libvlc_audio_get_track(mediaPlayerInstance);
   }
@@ -594,7 +588,7 @@ public abstract class MediaPlayer {
    * @param track track number
    */
   public void setAudioTrack(int track) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setAudioTrack(track=" + track + ")");}
+    Logger.debug("setAudioTrack(track={})", track);
     
     libvlc.libvlc_audio_set_track(mediaPlayerInstance, track);
   }
@@ -608,7 +602,7 @@ public abstract class MediaPlayer {
    * current position.
    */
   public void play() {
-    LOG.debug("play()");
+    Logger.debug("play()");
     
     libvlc.libvlc_media_player_play(mediaPlayerInstance);
   }
@@ -619,7 +613,7 @@ public abstract class MediaPlayer {
    * A subsequent play will play-back from the start.
    */
   public void stop() {
-    LOG.debug("stop()");
+    Logger.debug("stop()");
     
     libvlc.libvlc_media_player_stop(mediaPlayerInstance);
   }
@@ -632,7 +626,7 @@ public abstract class MediaPlayer {
    * @param pause true to pause, false to play/resume
    */
   public void setPause(boolean pause) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setPause(pause=" + pause + ")");}
+    Logger.debug("setPause(pause={})", pause);
     
     libvlc.libvlc_media_player_set_pause(mediaPlayerInstance, pause ? 1 : 0);
   }
@@ -643,7 +637,7 @@ public abstract class MediaPlayer {
    * If the play-back is currently paused it will begin playing.
    */
   public void pause() {
-    LOG.debug("pause()");
+    Logger.debug("pause()");
     
     libvlc.libvlc_media_player_pause(mediaPlayerInstance);
   }
@@ -652,7 +646,7 @@ public abstract class MediaPlayer {
    * Advance one frame. 
    */
   public void nextFrame() {
-    LOG.debug("nextFrame()");
+    Logger.debug("nextFrame()");
     
     libvlc.libvlc_media_player_next_frame(mediaPlayerInstance);
   }
@@ -663,10 +657,10 @@ public abstract class MediaPlayer {
    * @param delta time period, in milliseconds
    */
   public void skip(long delta) {
-    if(LOG.isDebugEnabled()) {LOG.debug("skip(delta=" + delta + ")");}
+    Logger.debug("skip(delta={})", delta);
     
     long current = getTime();
-    if(LOG.isDebugEnabled()) {LOG.debug("current=" + current);}
+    Logger.debug("current={}", current);
     
     if(current != -1) {
       setTime(current + delta);
@@ -679,10 +673,10 @@ public abstract class MediaPlayer {
    * @param delta
    */
   public void skip(float delta) {
-    if(LOG.isDebugEnabled()) {LOG.debug("skip(delta=" + delta + ")");}
+    Logger.debug("skip(delta={})", delta);
 
     float current = getPosition();
-    if(LOG.isDebugEnabled()) {LOG.debug("current=" + current);}
+    Logger.debug("current={}", current);
 
     if(current != -1) {
       setPosition(current + delta);
@@ -695,7 +689,7 @@ public abstract class MediaPlayer {
    * @param time time since the beginning, in milliseconds
    */
   public void setTime(long time) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setTime(time=" + time + ")");}
+    Logger.debug("setTime(time={})", time);
     
     libvlc.libvlc_media_player_set_time(mediaPlayerInstance, time);
   }
@@ -706,7 +700,7 @@ public abstract class MediaPlayer {
    * @param position position value, a percentage (e.g. 0.15 is 15%)
    */
   public void setPosition(float position) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setPosition(position=" + position + ")");}
+    Logger.debug("setPosition(position={})", position);
     
     libvlc.libvlc_media_player_set_position(mediaPlayerInstance, position);
   }
@@ -720,7 +714,7 @@ public abstract class MediaPlayer {
    * @return -1 on error, 0 on success
    */
   public int setRate(float rate) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setRate(rate=" + rate + ")");}
+    Logger.debug("setRate(rate={})", rate);
     
     return libvlc.libvlc_media_player_set_rate(mediaPlayerInstance, rate);
   }
@@ -731,7 +725,7 @@ public abstract class MediaPlayer {
    * @param aspectRatio
    */
   public void setAspectRatio(String aspectRatio) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setAspectRatio(aspectRatio=" + aspectRatio + ")");}
+    Logger.debug("setAspectRatio(aspectRatio={})", aspectRatio);
     
     libvlc.libvlc_video_set_aspect_ratio(mediaPlayerInstance, aspectRatio);
   }
@@ -742,7 +736,7 @@ public abstract class MediaPlayer {
    * @param factor
    */
   public void setScale(float factor) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setScale(factor=" + factor + ")");}
+    Logger.debug("setScale(factor={})", factor);
     
     libvlc.libvlc_video_set_scale(mediaPlayerInstance, factor);
   }
@@ -753,7 +747,7 @@ public abstract class MediaPlayer {
    * Toggle volume mute.
    */
   public void mute() {
-    LOG.debug("mute()");
+    Logger.debug("mute()");
     
     libvlc.libvlc_audio_toggle_mute(mediaPlayerInstance);
   }
@@ -764,7 +758,7 @@ public abstract class MediaPlayer {
    * @param mute <code>true</code> to mute the volume, <code>false</code> to un-mute it
    */
   public void mute(boolean mute) {
-    if(LOG.isDebugEnabled()) {LOG.debug("mute(mute=" + mute + ")");}
+    Logger.debug("mute(mute={})", mute);
     
     libvlc.libvlc_audio_set_mute(mediaPlayerInstance, mute ? 1 : 0);
   }
@@ -775,7 +769,7 @@ public abstract class MediaPlayer {
    * @return mute <code>true</code> if the volume is muted, <code>false</code> if the volume is not muted
    */
   public boolean isMute() {
-    LOG.debug("isMute()");
+    Logger.debug("isMute()");
     
     return libvlc.libvlc_audio_get_mute(mediaPlayerInstance) != 0;
   }
@@ -786,7 +780,7 @@ public abstract class MediaPlayer {
    * @return volume, in the range 0 to 100 where 100 is full volume
    */
   public int getVolume() {
-    LOG.debug("getVolume()");
+    Logger.debug("getVolume()");
     
     return libvlc.libvlc_audio_get_volume(mediaPlayerInstance);
   }
@@ -797,7 +791,7 @@ public abstract class MediaPlayer {
    * @param volume volume, in the range 0 to 200 where 200 is full volume 
    */
   public void setVolume(int volume) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setVolume(volume=" + volume + ")");}
+    Logger.debug("setVolume(volume={})", volume);
     
     libvlc.libvlc_audio_set_volume(mediaPlayerInstance, volume);
   }
@@ -808,7 +802,7 @@ public abstract class MediaPlayer {
    * @return audio delay, in microseconds
    */
   public long getAudioDelay() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getAudioDelay()");}
+    Logger.debug("getAudioDelay()");
     
     return libvlc.libvlc_audio_get_delay(mediaPlayerInstance);
   }
@@ -822,7 +816,7 @@ public abstract class MediaPlayer {
    * @param delay desired audio delay, in microseconds
    */
   public void setAudioDelay(long delay) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setAudioDelay(delay=" + delay + ")");}
+    Logger.debug("setAudioDelay(delay={})", delay);
     
     libvlc.libvlc_audio_set_delay(mediaPlayerInstance, delay);
   }
@@ -835,7 +829,7 @@ public abstract class MediaPlayer {
    * @return number of chapters, or -1 if no chapters
    */
   public int getChapterCount() {
-    LOG.trace("getChapterCount()");
+    Logger.trace("getChapterCount()");
     
     return libvlc.libvlc_media_player_get_chapter_count(mediaPlayerInstance);
   }
@@ -846,7 +840,7 @@ public abstract class MediaPlayer {
    * @return chapter number, where zero is the first chatper, or -1 if no media
    */
   public int getChapter() {
-    LOG.trace("getChapter()");
+    Logger.trace("getChapter()");
     
     return libvlc.libvlc_media_player_get_chapter(mediaPlayerInstance);
   }
@@ -857,7 +851,7 @@ public abstract class MediaPlayer {
    * @param chapterNumber chapter number, where zero is the first chapter
    */
   public void setChapter(int chapterNumber) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setChapter(chapterNumber=" + chapterNumber + ")");}
+    Logger.debug("setChapter(chapterNumber={})", chapterNumber);
     
     libvlc.libvlc_media_player_set_chapter(mediaPlayerInstance, chapterNumber);
   }
@@ -868,7 +862,7 @@ public abstract class MediaPlayer {
    * If the play-back is already at the last chapter, this will have no effect.
    */
   public void nextChapter() {
-    LOG.debug("nextChapter()");
+    Logger.debug("nextChapter()");
     
     libvlc.libvlc_media_player_next_chapter(mediaPlayerInstance);
   }
@@ -879,7 +873,7 @@ public abstract class MediaPlayer {
    * If the play-back is already at the first chapter, this will have no effect.
    */
   public void previousChapter() {
-    LOG.debug("previousChapter()");
+    Logger.debug("previousChapter()");
     
     libvlc.libvlc_media_player_previous_chapter(mediaPlayerInstance);
   }
@@ -892,7 +886,7 @@ public abstract class MediaPlayer {
    * @return number of sub-titles
    */
   public int getSpuCount() {
-    LOG.debug("getSpuCount()");
+    Logger.debug("getSpuCount()");
     
     return libvlc.libvlc_video_get_spu_count(mediaPlayerInstance);
   }
@@ -903,7 +897,7 @@ public abstract class MediaPlayer {
    * @return sub-title number, or -1 if none
    */
   public int getSpu() {
-    LOG.debug("getSpu()");
+    Logger.debug("getSpu()");
     
     return libvlc.libvlc_video_get_spu(mediaPlayerInstance);
   }
@@ -914,16 +908,16 @@ public abstract class MediaPlayer {
    * @param spu sub-title number, or -1 for none
    */
   public void setSpu(int spu) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setSpu(spu=" + spu + ")");}
+    Logger.debug("setSpu(spu={})", spu);
     
     int spuCount = getSpuCount();
-    if(LOG.isDebugEnabled()) {LOG.debug("spuCount=" + spuCount);}
+    Logger.debug("spuCount={}", spuCount);
     
     if(spuCount != 0 && spu <= spuCount) {
       libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
     }
     else {
-      LOG.warn("Ignored out of range spu number " + spu + " because spu count is " + spuCount);
+      Logger.warn("Ignored out of range spu number {} because spu count is {}", spu, spuCount);
     }
   }
 
@@ -935,7 +929,7 @@ public abstract class MediaPlayer {
    * @return list of descriptions
    */
   public List<String> getTitleDescriptions() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getTitleDescriptions()");}
+    Logger.debug("getTitleDescriptions()");
     
     List<String> trackDescriptionList = new ArrayList<String>();
     libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_title_description(mediaPlayerInstance);
@@ -956,7 +950,7 @@ public abstract class MediaPlayer {
    * @return list of descriptions
    */
   public List<String> getVideoDescriptions() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getVideoDescriptions()");}
+    Logger.debug("getVideoDescriptions()");
     
     List<String> trackDescriptionList = new ArrayList<String>();
     libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_track_description(mediaPlayerInstance);
@@ -977,7 +971,7 @@ public abstract class MediaPlayer {
    * @return list of descriptions
    */
   public List<String> getAudioDescriptions() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getAudioDescriptions()");}
+    Logger.debug("getAudioDescriptions()");
     
     List<String> trackDescriptionList = new ArrayList<String>();
     libvlc_track_description_t trackDescriptions = libvlc.libvlc_audio_get_track_description(mediaPlayerInstance);
@@ -998,7 +992,7 @@ public abstract class MediaPlayer {
    * @return list of descriptions
    */
   public List<String> getSpuDescriptions() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getSpuDescriptions()");}
+    Logger.debug("getSpuDescriptions()");
     
     List<String> trackDescriptionList = new ArrayList<String>();
     libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_spu_description(mediaPlayerInstance);
@@ -1020,7 +1014,7 @@ public abstract class MediaPlayer {
    * @return list of descriptions
    */
   public List<String> getChapterDescriptions(int title) {
-    if(LOG.isDebugEnabled()) {LOG.debug("getChapterDescriptions(title=" + title + ")");}
+    Logger.debug("getChapterDescriptions(title={})", title);
     
     List<String> trackDescriptionList = new ArrayList<String>();
     libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_chapter_description(mediaPlayerInstance, title);
@@ -1044,7 +1038,7 @@ public abstract class MediaPlayer {
    * a filename based on the current time.
    */
   public void saveSnapshot() {
-    LOG.debug("saveSnapshot()");
+    Logger.debug("saveSnapshot()");
     
     File snapshotDirectory = new File(System.getProperty("user.home"));
     File snapshotFile = new File(snapshotDirectory, "vlcj-snapshot-" + System.currentTimeMillis() + ".png");
@@ -1059,7 +1053,7 @@ public abstract class MediaPlayer {
    * @param file file to contain the snapshot
    */
   public void saveSnapshot(File file) {
-    if(LOG.isDebugEnabled()) {LOG.debug("saveSnapshot(file=" + file + ")");}
+    Logger.debug("saveSnapshot(file={})", file);
     
     File snapshotDirectory = file.getParentFile();
     if(!snapshotDirectory.exists()) {
@@ -1087,14 +1081,14 @@ public abstract class MediaPlayer {
    * @return snapshot image
    */
   public BufferedImage getSnapshot() {
-    LOG.debug("getSnapshot()");
+    Logger.debug("getSnapshot()");
     try {
       File file = File.createTempFile("vlcj-snapshot-", ".png");
-      if(LOG.isDebugEnabled()) {LOG.debug("file=" + file.getAbsolutePath());}
+      Logger.debug("file={}", file.getAbsolutePath());
       saveSnapshot(file);
       BufferedImage snapshotImage = ImageIO.read(file);
       boolean deleted = file.delete();
-      if(LOG.isDebugEnabled()) {LOG.debug("deleted=" + deleted);}
+      Logger.debug("deleted={}", deleted);
       return snapshotImage;
     }
     catch(IOException e) {
@@ -1112,7 +1106,7 @@ public abstract class MediaPlayer {
    * @param enable <code>true</code> to show the logo, <code>false</code> to hide it
    */
   public void enableLogo(boolean enable) {
-    if(LOG.isDebugEnabled()) {LOG.debug("enableLogo(enable=" + enable + ")");}
+    Logger.debug("enableLogo(enable={})", enable);
     
     libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_enable.intValue(), enable ? 1 : 0);
   }
@@ -1123,7 +1117,7 @@ public abstract class MediaPlayer {
    * @param opacity opacity in the range 0 to 255 where 255 is fully opaque
    */
   public void setLogoOpacity(int opacity) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setLogoOpacity(opacity=" + opacity + ")");}
+    Logger.debug("setLogoOpacity(opacity={})", opacity);
     
     libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_opacity.intValue(), opacity);
   }
@@ -1134,10 +1128,10 @@ public abstract class MediaPlayer {
    * @param opacity opacity percentage in the range 0.0 to 1.0 where 1.0 is fully opaque
    */
   public void setLogoOpacity(float opacity) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setLogoOpacity(opacity=" + opacity + ")");}
+    Logger.debug("setLogoOpacity(opacity={})", opacity);
     
     int opacityValue = Math.round(opacity * 255.0f);
-    if(LOG.isDebugEnabled()) {LOG.debug("opacityValue=" + opacityValue);}
+    Logger.debug("opacityValue={}", opacityValue);
     
     libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_opacity.intValue(), opacityValue);
   }
@@ -1149,7 +1143,7 @@ public abstract class MediaPlayer {
    * @param y y co-ordinate for the top left of the logo
    */
   public void setLogoLocation(int x, int y) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setLogoLocation(x=" + x + ",y=" + y + ")");}
+    Logger.debug("setLogoLocation(x={},y={})", x ,y);
     
     libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_x.intValue(), x);
     libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_y.intValue(), y);
@@ -1161,7 +1155,7 @@ public abstract class MediaPlayer {
    * @param position position
    */
   public void setLogoPosition(libvlc_logo_position_e position) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setLogoPosition(position=" + position + ")");}
+    Logger.debug("setLogoPosition(position={})", position);
     
     libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_position.intValue(), position.intValue());
     
@@ -1173,7 +1167,7 @@ public abstract class MediaPlayer {
    * @param logoFile logo file name
    */
   public void setLogoFile(String logoFile) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setLogoFile(logoFile=" + logoFile + ")");}
+    Logger.debug("setLogoFile(logoFile={})", logoFile);
     
     libvlc.libvlc_video_set_logo_string(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_file.intValue(), logoFile);
   }
@@ -1188,7 +1182,7 @@ public abstract class MediaPlayer {
    * @param enable <code>true</code> to show the marquee, <code>false</code> to hide it
    */
   public void enableMarquee(boolean enable) {
-    if(LOG.isDebugEnabled()) {LOG.debug("enableMarquee(enable=" + enable + ")");}
+    Logger.debug("enableMarquee(enable={})", enable);
     
     libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Enable.intValue(), enable ? 1 : 0);
   }
@@ -1199,7 +1193,7 @@ public abstract class MediaPlayer {
    * @param text text
    */
   public void setMarqueeText(String text) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setMarqueeText(text=" + text + ")");}
+    Logger.debug("setMarqueeText(text={})", text);
     
     libvlc.libvlc_video_set_marquee_string(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Text.intValue(), text);
   }
@@ -1210,7 +1204,7 @@ public abstract class MediaPlayer {
    * @param colour colour, any alpha component will be masked off
    */
   public void setMarqueeColour(Color colour) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setMarqueeColour(colour=" + colour + ")");}
+    Logger.debug("setMarqueeColour(colour={})", colour);
     
     setMarqueeColour(colour.getRGB() & 0x00ffffff);
   }
@@ -1221,7 +1215,7 @@ public abstract class MediaPlayer {
    * @param colour RGB colour value
    */
   public void setMarqueeColour(int colour) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setMarqueeColour(colour=" + colour + ")");}
+    Logger.debug("setMarqueeColour(colour={})", colour);
     
     libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Color.intValue(), colour);
   }
@@ -1232,7 +1226,7 @@ public abstract class MediaPlayer {
    * @param opacity opacity in the range 0 to 100 where 255 is fully opaque
    */
   public void setMarqueeOpacity(int opacity) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setMarqueeOpacity(opacity=" + opacity + ")");}
+    Logger.debug("setMarqueeOpacity(opacity={})", opacity);
     
     libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Opacity.intValue(), opacity);
   }
@@ -1243,10 +1237,10 @@ public abstract class MediaPlayer {
    * @param opacity opacity percentage in the range 0.0 to 1.0 where 1.0 is fully opaque
    */
   public void setMarqueeOpacity(float opacity) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setMarqueeOpacity(opacity=" + opacity + ")");}
+    Logger.debug("setMarqueeOpacity(opacity={})", opacity);
     
     int opacityValue = Math.round(opacity * 255.0f);
-    if(LOG.isDebugEnabled()) {LOG.debug("opacityValue=" + opacityValue);}
+    Logger.debug("opacityValue={}", opacityValue);
     
     libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Opacity.intValue(), opacityValue);
   }
@@ -1257,7 +1251,7 @@ public abstract class MediaPlayer {
    * @param size size, height of the marquee text in pixels
    */
   public void setMarqueeSize(int size) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setMarqueeSize(size=" + size + ")");}
+    Logger.debug("setMarqueeSize(size={})", size);
     
     libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Size.intValue(), size);
   }
@@ -1268,7 +1262,7 @@ public abstract class MediaPlayer {
    * @param timeout timeout, in milliseconds
    */
   public void setMarqueeTimeout(int timeout) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setMarqueeTimeout(timeout=" + timeout + ")");}
+    Logger.debug("setMarqueeTimeout(timeout={})", timeout);
     
     libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Timeout.intValue(), timeout);
   }
@@ -1280,7 +1274,7 @@ public abstract class MediaPlayer {
    * @param y y co-ordinate for the top left of the marquee
    */
   public void setMarqueeLocation(int x, int y) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setMarqueeLocation(x=" + x + ",y=" + y + ")");}
+    Logger.debug("setMarqueeLocation(x={},y={})", x ,y);
     
     libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_X.intValue(), x);
     libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Y.intValue(), y);
@@ -1306,7 +1300,7 @@ public abstract class MediaPlayer {
    * @param deinterlaceMode mode, or null to disable the de-interlace filter 
    */
   public void setDeinterlace(String deinterlaceMode) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setDeinterlace(deinterlaceMode=" + deinterlaceMode + ")");}
+    Logger.debug("setDeinterlace(deinterlaceMode={})", deinterlaceMode);
     
     libvlc.libvlc_video_set_deinterlace(mediaPlayerInstance, deinterlaceMode);
   }
@@ -1324,7 +1318,7 @@ public abstract class MediaPlayer {
    * @param adjustVideo true if the video adjustments are enabled, otherwise false 
    */
   public void setAdjustVideo(boolean adjustVideo) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setAdjustVideo(adjustVideo=" + adjustVideo + ")");}
+    Logger.debug("setAdjustVideo(adjustVideo={})", adjustVideo);
     
     libvlc.libvlc_video_set_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Enable.intValue(), adjustVideo ? 1 : 0);
   }
@@ -1337,7 +1331,7 @@ public abstract class MediaPlayer {
    * @return true if the video adjustments are enabled, otherwise false
    */
   public boolean isAdjustVideo() {
-    if(LOG.isDebugEnabled()) {LOG.debug("isAdjustVideo()");}
+    Logger.debug("isAdjustVideo()");
     
     return libvlc.libvlc_video_get_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Enable.intValue()) == 1;
   }
@@ -1350,7 +1344,7 @@ public abstract class MediaPlayer {
    * @return contrast, in the range from 0.0 to 2.0
    */
   public float getContrast() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getContrast()");}
+    Logger.debug("getContrast()");
     
     return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Contrast.intValue());
   }
@@ -1365,7 +1359,7 @@ public abstract class MediaPlayer {
    * @param contrast contrast value, in the range from 0.0 to 2.0
    */
   public void setContrast(float contrast) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setContrast(contrast=" + contrast + ")");}
+    Logger.debug("setContrast(contrast={})", contrast);
     
     libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Contrast.intValue(), contrast);
   }
@@ -1378,7 +1372,7 @@ public abstract class MediaPlayer {
    * @return brightness, in the range from 0.0 to 2.0
    */
   public float getBrightness() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getBrightness()");}
+    Logger.debug("getBrightness()");
     
     return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Brightness.intValue());
   }
@@ -1393,7 +1387,7 @@ public abstract class MediaPlayer {
    * @param brightness brightness value, in the range from 0.0 to 2.0
    */
   public void setBrightness(float brightness) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setBrightness(brightness=" + brightness + ")");}
+    Logger.debug("setBrightness(brightness={})", brightness);
     
     libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Brightness.intValue(), brightness);
   }
@@ -1406,7 +1400,7 @@ public abstract class MediaPlayer {
    * @return hue, in the range from 0 to 360
    */
   public int getHue() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getHue()");}
+    Logger.debug("getHue()");
     
     return libvlc.libvlc_video_get_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue());
   }
@@ -1421,7 +1415,7 @@ public abstract class MediaPlayer {
    * @param hue hue value, in the range from 0 to 360
    */
   public void setHue(int hue) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setHue(hue=" + hue + ")");}
+    Logger.debug("setHue(hue={})", hue);
     
     libvlc.libvlc_video_set_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue(), hue);
   }
@@ -1434,7 +1428,7 @@ public abstract class MediaPlayer {
    * @return saturation, in the range from 0.0 to 3.0
    */
   public float getSaturation() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getSaturation()");}
+    Logger.debug("getSaturation()");
     
     return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Saturation.intValue());
   }
@@ -1449,7 +1443,7 @@ public abstract class MediaPlayer {
    * @param saturation saturation value, in the range from 0.0 to 3.0
    */
   public void setSaturation(float saturation) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setSaturation(saturation=" + saturation + ")");}
+    Logger.debug("setSaturation(saturation={})", saturation);
     
     libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Saturation.intValue(), saturation);
   }
@@ -1462,7 +1456,7 @@ public abstract class MediaPlayer {
    * @return gamma value, in the range from 0.01 to 10.0
    */
   public float getGamma() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getGamma()");}
+    Logger.debug("getGamma()");
     
     return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue());
   }
@@ -1477,7 +1471,7 @@ public abstract class MediaPlayer {
    * @param gamma gamma, in the range from 0.01 to 10.0
    */
   public void setGamma(float gamma) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setGamma(gamma=" + gamma + ")");}
+    Logger.debug("setGamma(gamma={})", gamma);
     
     libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue(), gamma);
   }
@@ -1490,7 +1484,7 @@ public abstract class MediaPlayer {
    * @param enable
    */
   public void setEnableMouseInputHandling(boolean enable) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setEnableMouseInputHandling(enable=" + enable + ")");}
+    Logger.debug("setEnableMouseInputHandling(enable={})", enable);
     
     libvlc.libvlc_video_set_mouse_input(mediaPlayerInstance, enable ? 1 : 0);
   }
@@ -1501,7 +1495,7 @@ public abstract class MediaPlayer {
    * @param enable
    */
   public void setEnableKeyInputHandling(boolean enable) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setEnableKeyInputHandling(enable=" + enable + ")");}
+    Logger.debug("setEnableKeyInputHandling(enable={})", enable);
     
     libvlc.libvlc_video_set_key_input(mediaPlayerInstance, enable ? 1 : 0);
   }
@@ -1512,13 +1506,13 @@ public abstract class MediaPlayer {
    * Create and prepare the native media player resources.
    */
   private void createInstance() {
-    LOG.debug("createInstance()");
+    Logger.debug("createInstance()");
     
     mediaPlayerInstance = libvlc.libvlc_media_player_new(instance);
-    if(LOG.isDebugEnabled()) {LOG.debug("mediaPlayerInstance=" + mediaPlayerInstance);}
+    Logger.debug("mediaPlayerInstance={}", mediaPlayerInstance);
     
     mediaPlayerEventManager = libvlc.libvlc_media_player_event_manager(mediaPlayerInstance);
-    if(LOG.isDebugEnabled()) {LOG.debug("mediaPlayerEventManager=" + mediaPlayerEventManager);}
+    Logger.debug("mediaPlayerEventManager={}", mediaPlayerEventManager);
   
     registerEventListener();
       
@@ -1529,11 +1523,11 @@ public abstract class MediaPlayer {
    * Clean up the native media player resources.
    */
   private void destroyInstance() {
-    LOG.debug("destroyInstance()");
+    Logger.debug("destroyInstance()");
     
-    LOG.debug("Detach events...");
+    Logger.debug("Detach events...");
     deregisterEventListener();
-    LOG.debug("Events detached.");
+    Logger.debug("Events detached.");
 
     eventListenerList.clear();
     
@@ -1542,15 +1536,15 @@ public abstract class MediaPlayer {
     }
 
     if(mediaPlayerInstance != null) {
-      LOG.debug("Release media player...");
+      Logger.debug("Release media player...");
       libvlc.libvlc_media_player_release(mediaPlayerInstance);
-      LOG.debug("Media player released");
+      Logger.debug("Media player released");
       mediaPlayerInstance = null;
     }
 
-    LOG.debug("Shut down listeners...");
+    Logger.debug("Shut down listeners...");
     listenersService.shutdown();
-    LOG.debug("Listeners shut down");
+    Logger.debug("Listeners shut down");
     
     metaService.shutdown();
   }
@@ -1559,15 +1553,15 @@ public abstract class MediaPlayer {
    * 
    */
   private void registerEventListener() {
-    LOG.debug("registerEventListener()");
+    Logger.debug("registerEventListener()");
     
     callback = new VlcVideoPlayerCallback();
 
     for(libvlc_event_e event : libvlc_event_e.values()) {
       if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() < libvlc_event_e.libvlc_MediaListItemAdded.intValue()) {
-        if(LOG.isDebugEnabled()) {LOG.debug("event=" + event);}
+        Logger.debug("event={}", event);
         int result = libvlc.libvlc_event_attach(mediaPlayerEventManager, event.intValue(), callback, null);
-        if(LOG.isDebugEnabled()) {LOG.debug("result=" + result);}
+        Logger.debug("result={}", result);
       }
     }
   }
@@ -1576,12 +1570,12 @@ public abstract class MediaPlayer {
    * 
    */
   private void deregisterEventListener() {
-    LOG.debug("deregisterEventListener()");
+    Logger.debug("deregisterEventListener()");
     
     if(callback != null) {
       for(libvlc_event_e event : libvlc_event_e.values()) {
         if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() < libvlc_event_e.libvlc_MediaListItemAdded.intValue()) {
-          if(LOG.isDebugEnabled()) {LOG.debug("event=" + event);}
+          Logger.debug("event={}", event);
           libvlc.libvlc_event_detach(mediaPlayerEventManager, event.intValue(), callback, null);
         }
       }
@@ -1597,21 +1591,21 @@ public abstract class MediaPlayer {
    * @param mediaOptions
    */
   private void setMedia(String media, String... mediaOptions) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setMedia(media=" + media + ",mediaOptions=" + Arrays.toString(mediaOptions) + ")");}
+    Logger.debug("setMedia(media={},mediaOptions={})" , media, Arrays.toString(mediaOptions));
     
     libvlc_media_t mediaDescriptor = libvlc.libvlc_media_new_path(instance, media);
-    if(LOG.isDebugEnabled()) {LOG.debug("mediaDescriptor=" + mediaDescriptor);}
+    Logger.debug("mediaDescriptor={}", mediaDescriptor);
     
     if(standardMediaOptions != null) {
       for(String standardMediaOption : standardMediaOptions) {
-        if(LOG.isDebugEnabled()) {LOG.debug("standardMediaOption=" + standardMediaOption);}
+        Logger.debug("standardMediaOption={}", standardMediaOption);
         libvlc.libvlc_media_add_option(mediaDescriptor, standardMediaOption);
       }
     }
     
     if(mediaOptions != null) {
       for(String mediaOption : mediaOptions) {
-        if(LOG.isDebugEnabled()) {LOG.debug("mediaOption=" + mediaOption);}
+        Logger.debug("mediaOption={}", mediaOption);
         libvlc.libvlc_media_add_option(mediaDescriptor, mediaOption);
       }
     }
@@ -1633,7 +1627,7 @@ public abstract class MediaPlayer {
   }
 
   public void release() {
-    LOG.debug("release()");
+    Logger.debug("release()");
     
     if(!released) {
       destroyInstance();
@@ -1643,13 +1637,13 @@ public abstract class MediaPlayer {
 
   @Override
   protected synchronized void finalize() throws Throwable {
-    LOG.debug("finalize()");
+    Logger.debug("finalize()");
     
     release();
   }
 
   private void notifyListeners(libvlc_event_t event) {
-    if(LOG.isTraceEnabled()) {LOG.trace("notifyListeners(event=" + event + ")");}
+    Logger.trace("notifyListeners(event={})", event);
 
     if(!eventListenerList.isEmpty()) {
       for(int i = eventListenerList.size() - 1; i >= 0; i--) {
@@ -1696,7 +1690,7 @@ public abstract class MediaPlayer {
   }
 
   private void notifyListeners(VideoMetaData videoMetaData) {
-    if(LOG.isTraceEnabled()) {LOG.trace("notifyListeners(videoMetaData=" + videoMetaData + ")");}
+    Logger.trace("notifyListeners(videoMetaData={})", videoMetaData);
     
     if(!eventListenerList.isEmpty()) {
       for(int i = eventListenerList.size() - 1; i >= 0; i--) {
@@ -1709,7 +1703,7 @@ public abstract class MediaPlayer {
   private final class VlcVideoPlayerCallback implements libvlc_callback_t {
 
     public void callback(libvlc_event_t event, Pointer userData) {
-      if(LOG.isTraceEnabled()) {LOG.trace("callback(event=" + event + ",userData=" + userData + ")");}
+      Logger.trace("callback(event={},userData={})", event, userData);
       
       // Notify listeners in a different thread - the other thread is
       // necessary to prevent a potential native library failure if the
@@ -1730,9 +1724,9 @@ public abstract class MediaPlayer {
 
     @Override
     public void run() {
-      if(LOG.isTraceEnabled()) {LOG.trace("run()");}
+      Logger.trace("run()");
       notifyListeners(event);
-      if(LOG.isTraceEnabled()) {LOG.trace("runnable exits");}
+      Logger.trace("runnable exits");
     }
   }
   
@@ -1755,18 +1749,18 @@ public abstract class MediaPlayer {
 
     @Override
     public void run() {
-      LOG.trace("run()");
+      Logger.trace("run()");
       
       for(;;) {
         try {
-          LOG.trace("Waiting for video output...");
+          Logger.trace("Waiting for video output...");
           
           Thread.sleep(VOUT_WAIT_PERIOD);
 
-          LOG.trace("Checking for video output...");
+          Logger.trace("Checking for video output...");
           
           int videoOutputs = getVideoOutputs();
-          if(LOG.isTraceEnabled()) {LOG.trace("videoOutputs=" + videoOutputs);}
+          Logger.trace("videoOutputs={}", videoOutputs);
           
           boolean isPlaying = isPlaying();
           
@@ -1799,7 +1793,7 @@ public abstract class MediaPlayer {
         }
       }
       
-      LOG.trace("runnable exits");
+      Logger.trace("runnable exits");
     }
   }
 
@@ -1810,7 +1804,7 @@ public abstract class MediaPlayer {
 
     @Override
     public void playing(MediaPlayer mediaPlayer) {
-      if(LOG.isTraceEnabled()) {LOG.trace("playing(" + mediaPlayer + ")");}
+      Logger.trace("playing(mediaPlayer={})", mediaPlayer);
       
       // Kick off an asynchronous task to obtain the video meta data (when
       // available)

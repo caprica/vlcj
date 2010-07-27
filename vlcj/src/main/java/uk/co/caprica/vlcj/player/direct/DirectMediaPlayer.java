@@ -21,12 +21,11 @@ package uk.co.caprica.vlcj.player.direct;
 
 import java.util.concurrent.Semaphore;
 
-import org.apache.log4j.Logger;
-
 import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
+import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 import com.sun.jna.Memory;
@@ -37,11 +36,6 @@ import com.sun.jna.Pointer;
  * data.
  */
 public class DirectMediaPlayer extends MediaPlayer {
-
-  /**
-   * Log.
-   */
-  private static final Logger LOG = Logger.getLogger(DirectMediaPlayer.class);
 
   /**
    * Use a semaphore with a single permit to ensure that the lock, display, 
@@ -116,14 +110,14 @@ public class DirectMediaPlayer extends MediaPlayer {
     this.lock = new libvlc_lock_callback_t() {
       @Override
       public Pointer lock(Pointer opaque, Pointer plane) {
-        LOG.trace("lock");
+        Logger.trace("lock");
         // Acquire the single permit from the semaphore to ensure that the 
         // memory buffer is not trashed while display() is invoked
-        LOG.trace("acquire");
+        Logger.trace("acquire");
         semaphore.acquireUninterruptibly();
-        LOG.trace("acquired");
+        Logger.trace("acquired");
         plane.setPointer(0, nativeBuffer);
-        LOG.trace("lock finished");
+        Logger.trace("lock finished");
         return null;
       }
     };
@@ -131,26 +125,26 @@ public class DirectMediaPlayer extends MediaPlayer {
     this.unlock = new libvlc_unlock_callback_t() {
       @Override
       public void unlock(Pointer opaque, Pointer picture, Pointer plane) {
-        LOG.trace("unlock");
+        Logger.trace("unlock");
         
         // Release the semaphore
-        LOG.trace("release");
+        Logger.trace("release");
         semaphore.release();
-        LOG.trace("released");
+        Logger.trace("released");
 
-        LOG.trace("unlock finished");
+        Logger.trace("unlock finished");
       }
     };
 
     this.display = new libvlc_display_callback_t() {
       @Override
       public void display(Pointer opaque, Pointer picture) {
-        LOG.trace("display");
+        Logger.trace("display");
         
         // Invoke the call-back
         DirectMediaPlayer.this.renderCallback.display(nativeBuffer);
 
-        LOG.trace("display finished");
+        Logger.trace("display finished");
       }
     };
 

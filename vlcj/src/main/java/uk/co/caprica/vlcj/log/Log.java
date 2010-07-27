@@ -22,8 +22,6 @@ package uk.co.caprica.vlcj.log;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_iterator_t;
@@ -35,11 +33,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
  */
 public class Log {
 
-  /**
-   * Log.
-   */
-  private static final Logger LOG = Logger.getLogger(Log.class);
-  
   /**
    * 
    */
@@ -67,7 +60,7 @@ public class Log {
    * @param instance
    */
   public Log(LibVlc libvlc, libvlc_instance_t instance) {
-    if(LOG.isDebugEnabled()) {LOG.debug("LibVlcLog(libvlc=" + libvlc + ",instance=" + instance + ")");}
+    Logger.debug("Log(libvlc={},instance={})", libvlc, instance);
 
     this.libvlc = libvlc;
     this.instance = instance;
@@ -79,7 +72,7 @@ public class Log {
    * @param threshold
    */
   public void setThreshold(LogLevel threshold) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setThreshold(threshold=" + threshold + ")");}
+    Logger.debug("setThreshold(threshold={})", threshold);
     
     this.threshold = threshold;
   }
@@ -88,7 +81,7 @@ public class Log {
    * Open a log instance.
    */
   public void open() {
-    if(LOG.isDebugEnabled()) {LOG.debug("open()");}
+    Logger.debug("open()");
 
     if(logInstance == null) {
       logInstance = libvlc.libvlc_log_open(instance);
@@ -104,7 +97,7 @@ public class Log {
    * The underlying native log itself is not actually 'closed'.
    */
   public void close() {
-    if(LOG.isDebugEnabled()) {LOG.debug("close()");}
+    Logger.debug("close()");
 
     if(logInstance != null) {
       clear();
@@ -114,40 +107,40 @@ public class Log {
   }
   
   /**
-   * Get the count of the number of messages in the log.
+   * Get the count of the number of messages in the Logger.
    * 
    * @return number of messages in the log
    */
   public int count() {
-    if(LOG.isDebugEnabled()) {LOG.debug("count()");}
+    Logger.debug("count()");
 
     return libvlc.libvlc_log_count(logInstance);
   }
   
   /**
-   * Clear (remove all messages from) the log.
+   * Clear (remove all messages from) the Logger.
    */
   public void clear() {
-    if(LOG.isDebugEnabled()) {LOG.debug("clear()");}
+    Logger.debug("clear()");
 
     libvlc.libvlc_log_clear(logInstance);
   }
 
   /**
-   * Get all of the messages currently in the log.
+   * Get all of the messages currently in the Logger.
    * <p>
    * The log will be cleared after the messages have been retrieved.
    * 
    * @return messages
    */
   public List<LogMessage> messages() {
-    if(LOG.isDebugEnabled()) {LOG.debug("messages()");}
+    Logger.debug("messages()");
     
     return messages(new ArrayList<LogMessage>(40));
   }
 
   /**
-   * Get all of the messages currently in the log.
+   * Get all of the messages currently in the Logger.
    * <p>
    * The log will be cleared after the messages have been retrieved.
    * 
@@ -155,7 +148,7 @@ public class Log {
    * @return messages
    */
   public List<LogMessage> messages(List<LogMessage> messages) {
-    if(LOG.isDebugEnabled()) {LOG.debug("messages(messages=[" + messages.size() + "])");}
+    Logger.debug("messages(messages=[{}])", messages.size());
 
     libvlc_log_iterator_t it = null;
     try {

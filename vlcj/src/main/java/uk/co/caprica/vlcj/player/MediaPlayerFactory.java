@@ -21,12 +21,11 @@ package uk.co.caprica.vlcj.player;
 
 import java.util.Arrays;
 
-import org.apache.log4j.Logger;
-
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogLevel;
+import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -52,7 +51,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * You should release the factory when your application terminates to properly
  * clean up native resources.
  * <p>
- * The factory also provides access to the native libvlc log.
+ * The factory also provides access to the native libvlc Logger.
  * <p>
  * Usage:
  * <pre>
@@ -82,11 +81,6 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 public class MediaPlayerFactory {
 
   /**
-   * Log.
-   */
-  private static final Logger LOG = Logger.getLogger(MediaPlayerFactory.class);
-  
-  /**
    * Native library interface.
    */
   private final LibVlc libvlc = LibVlc.SYNC_INSTANCE;
@@ -107,13 +101,13 @@ public class MediaPlayerFactory {
    * @param libvlcArgs initialisation arguments to pass to libvlc
    */
   public MediaPlayerFactory(String[] libvlcArgs) {
-    if(LOG.isDebugEnabled()) {LOG.debug("MediaPlayerFactory(libvlcArgs=" + Arrays.toString(libvlcArgs) + ")");}
+    Logger.debug("MediaPlayerFactory(libvlcArgs={})", Arrays.toString(libvlcArgs));
     
     this.instance = libvlc.libvlc_new(libvlcArgs.length, libvlcArgs);
-    if(LOG.isDebugEnabled()) {LOG.debug("instance=" + instance);}
+    Logger.debug("instance={}", instance);
     
     if(instance == null) {
-      LOG.error("Failed to initialise libvlc");
+      Logger.error("Failed to initialise libvlc");
       throw new IllegalStateException("Unable to initialise libvlc, check your libvlc options and/or check the console for error messages");
     }
   }
@@ -124,9 +118,21 @@ public class MediaPlayerFactory {
    * @param userAgent application name
    */
   public void setUserAgent(String userAgent) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setUserAgent(userAgent=" + userAgent + ")");}
+    Logger.debug("setUserAgent(userAgent={})", userAgent);
     
     setUserAgent(userAgent, null);
+  }
+  
+  /**
+   * Set the application name.
+   * 
+   * @param userAgent application name
+   * @param httpUserAgent application name for HTTP
+   */
+  public void setUserAgent(String userAgent, String httpUserAgent) {
+    Logger.debug("setUserAgent(userAgent={},httpUserAgent={})", userAgent, httpUserAgent);
+    
+    libvlc.libvlc_set_user_agent(instance, userAgent, userAgent);
   }
 
   /**
@@ -135,7 +141,7 @@ public class MediaPlayerFactory {
    * @return log level
    */
   public int getLogVerbosity() {
-    if(LOG.isDebugEnabled()) {LOG.debug("getLogVerbosity()");}
+    Logger.debug("getLogVerbosity()");
     
     return libvlc.libvlc_get_log_verbosity(instance);
   }
@@ -146,28 +152,16 @@ public class MediaPlayerFactory {
    * @param level log level
    */
   public void setLogLevel(LogLevel level) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setLogVerbosity(level=" + level + ")");}
+    Logger.debug("setLogVerbosity(level={})", level);
 
     libvlc.libvlc_set_log_verbosity(instance, level.intValue());
-  }
-  
-  /**
-   * Set the application name.
-   * 
-   * @param userAgent application name
-   * @param httpUserAgent application name for HTTP
-   */
-  public void setUserAgent(String userAgent, String httpUserAgent) {
-    if(LOG.isDebugEnabled()) {LOG.debug("setUserAgent(userAgent=" + userAgent + ",httpUserAgent=" + httpUserAgent + ")");}
-    
-    libvlc.libvlc_set_user_agent(instance, userAgent, userAgent);
   }
   
   /**
    * Release the native resources associated with this factory.
    */
   public void release() {
-    LOG.debug("release()");
+    Logger.debug("release()");
     
     if(!released) {
       if(instance != null) {
@@ -185,7 +179,7 @@ public class MediaPlayerFactory {
    * @return media player instance
    */
   public EmbeddedMediaPlayer newMediaPlayer(FullScreenStrategy fullScreenStrategy) {
-    if(LOG.isDebugEnabled()) {LOG.debug("newMediaPlayer(fullScreenStrategy=" + fullScreenStrategy + ")");}
+    Logger.debug("newMediaPlayer(fullScreenStrategy={})", fullScreenStrategy);
     
     EmbeddedMediaPlayer mediaPlayer;
     
@@ -203,7 +197,7 @@ public class MediaPlayerFactory {
       throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
     }
     
-    if(LOG.isDebugEnabled()) {LOG.debug("mediaPlayer=" + mediaPlayer);}
+    Logger.debug("mediaPlayer={}", mediaPlayer);
     
     return mediaPlayer;
   }
@@ -217,7 +211,7 @@ public class MediaPlayerFactory {
    * @return media player instance
    */
   public DirectMediaPlayer newMediaPlayer(int width, int height, RenderCallback renderCallback) {
-    if(LOG.isDebugEnabled()) {LOG.debug("newMediaPlayer(width=" + width + ",height=" + height + ",renderCallback=" + renderCallback + ")");}
+    Logger.debug("newMediaPlayer(width={},height={},renderCallback={})", width ,height, renderCallback);
 
     DirectMediaPlayer mediaPlayer = new DirectMediaPlayer(instance, width, height, renderCallback);
     return mediaPlayer;
@@ -229,21 +223,21 @@ public class MediaPlayerFactory {
    * @return media player instance
    */
   public HeadlessMediaPlayer newMediaPlayer() {
-    if(LOG.isDebugEnabled()) {LOG.debug("newMediaPlayer()");}
+    Logger.debug("newMediaPlayer()");
     
     HeadlessMediaPlayer mediaPlayer = new HeadlessMediaPlayer(instance);
     return mediaPlayer;
   }
   
   /**
-   * Get a new message log.
+   * Get a new message Logger.
    * <p>
    * The log will be opened.
    * 
    * @return new log instance
    */
   public Log newLog() {
-    if(LOG.isDebugEnabled()) {LOG.debug("newLog()");}
+    Logger.debug("newLog()");
     
     Log log = new Log(libvlc, instance);
     log.open();
@@ -252,7 +246,7 @@ public class MediaPlayerFactory {
   
   @Override
   protected synchronized void finalize() throws Throwable {
-    LOG.debug("finalize()");
+    Logger.debug("finalize()");
     release();
   }
 }

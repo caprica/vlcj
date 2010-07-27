@@ -24,7 +24,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.log4j.Logger;
 
 /**
  * Consumer for the native log.
@@ -36,12 +35,7 @@ import org.apache.log4j.Logger;
 public class LogHandler {
 
   /**
-   * Log.
-   */
-  private static final Logger LOG = Logger.getLogger(LogHandler.class);
-
-  /**
-   * The log. 
+   * The Logger. 
    */
   private final Log log;
   
@@ -62,7 +56,7 @@ public class LogHandler {
    * @param period log refresh period, in milliseconds
    */
   public LogHandler(Log log, int period) {
-    if(LOG.isDebugEnabled()) {LOG.debug("LogHandler(log=" + log + ",period=" + period + ")");}
+    Logger.debug("LogHandler(log={},period={})", log, period);
     
     this.log = log;
     this.period = period;
@@ -72,7 +66,7 @@ public class LogHandler {
    * 
    */
   public void start() {
-    if(LOG.isDebugEnabled()) {LOG.debug("start()");}
+    Logger.debug("start()");
     
     executor.scheduleAtFixedRate(new LogProcessor(), period, period, TimeUnit.MILLISECONDS);
   }
@@ -81,7 +75,7 @@ public class LogHandler {
    * 
    */
   public void release() {
-    if(LOG.isDebugEnabled()) {LOG.debug("release()");}
+    Logger.debug("release()");
     
     executor.shutdown();
   }
@@ -93,14 +87,14 @@ public class LogHandler {
 
     @Override
     public void run() {
-      LOG.trace("run()");
+      Logger.trace("run()");
       
       int count = log.count();
-      if(LOG.isTraceEnabled()) {LOG.trace("count=" + count);}
+      Logger.trace("count={}", count);
       
       List<LogMessage> messages = log.messages();
       for(LogMessage message : messages) {
-        LOG.debug("message=" + message);
+        Logger.debug("message={}", message);
       }
     }
   }
