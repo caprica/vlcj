@@ -420,7 +420,6 @@ public class WindowsMouseHook implements LowLevelMouseProc {
       lParam.time.longValue(), 
       0,
       x, y, 
-      pt.x, pt.y, 
       0, 
       false, 
       button
@@ -453,7 +452,6 @@ public class WindowsMouseHook implements LowLevelMouseProc {
       lParam.time.longValue(), 
       0, 
       x, y, 
-      pt.x, pt.y,
       0,
       false, 
       MouseWheelEvent.WHEEL_UNIT_SCROLL,
