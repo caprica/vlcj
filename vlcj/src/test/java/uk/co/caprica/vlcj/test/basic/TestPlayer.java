@@ -37,10 +37,6 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,8 +63,6 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 
 import com.sun.jna.Native;
 
-// FIXME on Windows a hard VM crash occurs during exit - presumably some native thread is still trying to execute something
-
 /**
  * Simple test harness creates an AWT Window and plays a video.
  * <p>
@@ -94,7 +88,7 @@ public class TestPlayer {
     // Experimental
     Native.setProtected(false);
     
-    Logger.setLevel(Logger.Level.INFO);
+    Logger.setLevel(Logger.Level.TRACE);
     
     Logger.info("  version: {}", LibVlc.INSTANCE.libvlc_get_version());
     Logger.info(" compiler: {}", LibVlc.INSTANCE.libvlc_get_compiler());
@@ -125,8 +119,6 @@ public class TestPlayer {
   }
    
   public TestPlayer(String[] args) {
-    Runtime.getRuntime().addShutdownHook(new TestPlayerShutdownHook());
-
     if(RuntimeUtil.isWindows()) {
       // If running on Windows and you want the mouse/keyboard event hack...
       videoSurface = new WindowsCanvas();
@@ -148,31 +140,16 @@ public class TestPlayer {
 	
     List<String> vlcArgs = new ArrayList<String>();
 
-//    vlcArgs.add("--no-plugins-cache");
+    vlcArgs.add("--no-plugins-cache");
     vlcArgs.add("--no-video-title-show");
     vlcArgs.add("--no-snapshot-preview");
-    
-    // Verbose logging from libvlc
-//    vlcArgs.add("--sub-filter");
-//    vlcArgs.add("logo");
-
-    // For each command-line argument specified...
-/*    for(String arg : args) {
-      // ...treat that as a file name to load initialisation options from
-      File optionsFile = new File(arg);
-      try {
-        readOptionsFile(optionsFile, vlcArgs);
-      }
-      catch(IOException e) {
-        Logger.warn("Failed to read options from '{}'", optionsFile, e);
-      }
-    }*/
-	
-    // Add some other arguments here...
 	
     // Special case to help out users on Windows (supposedly this is not actually needed)...
     if(RuntimeUtil.isWindows()) {
       vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
+    }
+    else {
+      vlcArgs.add("--plugin-path=/home/linux/vlc/lib");
     }
 
   	Logger.debug("vlcArgs={}", vlcArgs);
@@ -213,8 +190,20 @@ public class TestPlayer {
       public void windowClosing(WindowEvent evt) {
         Logger.debug("windowClosing(evt={})", evt);
 
-        mediaPlayer.release();
-        mediaPlayer = null;
+        if(log != null) {
+          log.close();
+          log = null;
+        }
+
+        if(mediaPlayer != null) {
+          mediaPlayer.release();
+          mediaPlayer = null;
+        }
+
+        if(mediaPlayerFactory != null) {
+          mediaPlayerFactory.release();
+          mediaPlayerFactory = null;
+        }
 
         System.exit(0);
       }
@@ -303,7 +292,7 @@ public class TestPlayer {
       mediaPlayer.enableLogo(true);
 
       // Demo the marquee      
-      mediaPlayer.setMarqueeText("Thank you for using VLCJ");
+      mediaPlayer.setMarqueeText("VLCJ 1.1.1.2");
       mediaPlayer.setMarqueeSize(40);
       mediaPlayer.setMarqueeOpacity(95);
       mediaPlayer.setMarqueeColour(Color.white);
@@ -387,56 +376,6 @@ public class TestPlayer {
     @Override
     public void keyTyped(KeyEvent e) {
       Logger.debug("keyTyped(e={})", e);
-    }
-  }
-
-  /**
-   *
-   */
-  private final class TestPlayerShutdownHook extends Thread {
-    @Override
-    public void run() {
-      Logger.debug("run()");
-      if(log != null) {
-        log.close();
-      }
-      
-//      if(mediaPlayer != null) {
-//        mediaPlayer.release(); // Can cause JVM crash
-//      }
-      Logger.debug("shutdown hook runnable exits()");
-    }
-  }
-
-  /**
-   *
-   * 
-   * @param optionsFile
-   * @param options
-   * @throws IOException
-   */
-  private void readOptionsFile(File optionsFile, List<String> options) throws IOException {
-    Logger.debug("readOptionsFile(optionsFile={})", optionsFile.getAbsolutePath());
-    BufferedReader in = null;
-    try {
-      in = new BufferedReader(new FileReader(optionsFile));
-      for(;;) {
-        String line = in.readLine();
-        if(line != null) {
-          line = line.trim();
-          if(line.length() > 0 && !line.startsWith("#")) {
-            options.add(line);
-          }
-        }
-        else {
-          break;
-        }
-      }
-    }
-    finally {
-      if(in != null) {
-        in.close();
-      }
     }
   }
 }
