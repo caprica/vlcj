@@ -21,17 +21,18 @@
 
 <project name="vlcj" default="all">
 
-	<property name="build.version" value="1.1.1.2"/>
+  <property name="build.version" value="1.1.1.2"/>
 
-	<buildnumber/>
+  <buildnumber/>
 
-	<tstamp>
-		<format property="build.timestamp" pattern="yyyy-MM-dd HH:mm:ss"/>
-	</tstamp>
+  <tstamp>
+    <format property="build.timestamp" pattern="yyyy-MM-dd HH:mm:ss"/>
+  </tstamp>
 	
-	<property name="source.version" value="1.5"/>
-	<property name="target.version" value="1.5"/>
-  <property name="compile.debug" value="on"/>
+  <property name="source.version"   value="1.5"/>
+  <property name="target.version"   value="1.5"/>
+  <property name="compile.debug"    value="no" />
+  <property name="compile.optimize" value="yes"/>
 	
   <path id="project.classes">
     <pathelement location="lib/jna.jar"/>
@@ -44,12 +45,12 @@
   
   <target name="compile" depends="prepare">
     <mkdir dir="build/classes"/>
-    <javac srcdir="src/main/java:src/main/resources" destdir="build/classes" classpathref="project.classes" target="${target.version}" source="${source.version}" debug="${compile.debug}" includeantruntime="no"/> 
+    <javac srcdir="src/main/java:src/main/resources" destdir="build/classes" classpathref="project.classes" target="${target.version}" source="${source.version}" debug="${compile.debug}" optimize="${compile.optimize}" includeantruntime="no"/> 
   </target>
   
   <target name="compile.test" depends="compile">
     <mkdir dir="build/test-classes"/>
-    <javac srcdir="src/test/java:src/test/resources" destdir="build/test-classes" classpathref="project.classes" target="${target.version}" source="${source.version}" debug="${compile.debug}" includeantruntime="no">
+    <javac srcdir="src/test/java:src/test/resources" destdir="build/test-classes" classpathref="project.classes" target="${target.version}" source="${source.version}" debug="${compile.debug}" optimize="${compile.optimize}" includeantruntime="no">
     	<classpath path="build/classes"/> 
   	</javac>
   </target>
