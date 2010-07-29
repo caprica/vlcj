@@ -148,6 +148,7 @@ public class DirectMediaPlayer extends MediaPlayer {
       }
     };
 
+    // RV15, RV16, RV24, RV32, RGBA, YUYV
     libvlc.libvlc_video_set_format(mediaPlayerInstance(), "RV32", width, height, width * 4);
     libvlc.libvlc_video_set_callbacks(mediaPlayerInstance(), lock, unlock, display, null);
   }
