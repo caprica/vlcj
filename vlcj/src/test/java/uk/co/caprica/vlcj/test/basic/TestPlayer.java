@@ -148,9 +148,9 @@ public class TestPlayer {
     if(RuntimeUtil.isWindows()) {
       vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
     }
-    else {
-      vlcArgs.add("--plugin-path=/home/linux/vlc/lib");
-    }
+//    else {
+//      vlcArgs.add("--plugin-path=/home/linux/vlc/lib");
+//    }
 
   	Logger.debug("vlcArgs={}", vlcArgs);
   	
@@ -292,7 +292,7 @@ public class TestPlayer {
       mediaPlayer.enableLogo(true);
 
       // Demo the marquee      
-      mediaPlayer.setMarqueeText("VLCJ 1.1.1.2");
+      mediaPlayer.setMarqueeText("VLCJ 1.1.2");
       mediaPlayer.setMarqueeSize(40);
       mediaPlayer.setMarqueeOpacity(95);
       mediaPlayer.setMarqueeColour(Color.white);
