@@ -55,7 +55,7 @@ public class MediaFileFilter implements FileFilter {
    */
   public static final MediaFileFilter INSTANCE = new MediaFileFilter();
   
-  @Override
+//  @Override
   public boolean accept(File pathname) {
     return videoFileFilter.accept(pathname) || audioFileFilter.accept(pathname) || playlistFileFilter.accept(pathname);
   }

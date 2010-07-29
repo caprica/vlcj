@@ -54,21 +54,21 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
     }
   }
   
-  @Override
+//  @Override
   public void enterFullScreenMode() {
     Logger.debug("enterFullScreenMode()");
     
     GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(window);
   }
 
-  @Override
+//  @Override
   public void exitFullScreenMode() {
     Logger.debug("exitFullScreenMode()");
     
     GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
   }
 
-  @Override
+//  @Override
   public boolean isFullScreenMode() {
     Logger.debug("isFullScreenMode()");
     

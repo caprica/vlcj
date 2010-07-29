@@ -85,7 +85,7 @@ public class LogHandler {
    */
   private final class LogProcessor implements Runnable {
 
-    @Override
+//    @Override
     public void run() {
       Logger.trace("run()");
       

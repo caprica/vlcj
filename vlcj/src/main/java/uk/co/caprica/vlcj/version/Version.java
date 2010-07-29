@@ -96,7 +96,7 @@ public final class Version implements Comparable<Version> {
     return revision;
   }
  
-  @Override
+//  @Override
   public int compareTo(Version o) {
     if(major == o.major) {
       if(minor == o.minor) {

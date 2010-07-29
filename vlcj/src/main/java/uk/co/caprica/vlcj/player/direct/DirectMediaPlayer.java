@@ -108,7 +108,7 @@ public class DirectMediaPlayer extends MediaPlayer {
     this.nativeBuffer = new Memory(width * height * 4 + 32).align(32);
 
     this.lock = new libvlc_lock_callback_t() {
-      @Override
+//      @Override
       public Pointer lock(Pointer opaque, Pointer plane) {
         Logger.trace("lock");
         // Acquire the single permit from the semaphore to ensure that the 
@@ -123,7 +123,7 @@ public class DirectMediaPlayer extends MediaPlayer {
     };
 
     this.unlock = new libvlc_unlock_callback_t() {
-      @Override
+//      @Override
       public void unlock(Pointer opaque, Pointer picture, Pointer plane) {
         Logger.trace("unlock");
         
@@ -137,7 +137,7 @@ public class DirectMediaPlayer extends MediaPlayer {
     };
 
     this.display = new libvlc_display_callback_t() {
-      @Override
+//      @Override
       public void display(Pointer opaque, Pointer picture) {
         Logger.trace("display");
         

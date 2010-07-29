@@ -233,7 +233,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     return hHook;
   }
   
-  @Override
+//  @Override
   public LRESULT callback(int nCode, WPARAM wParam, MSLLHOOKSTRUCT lParam) {
     Logger.trace("callback(nCode={},wParam={},lParam={})", nCode, wParam, lParam);
     

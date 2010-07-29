@@ -41,7 +41,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     this.rgbBuffer = rgbBuffer;
   }
   
-  @Override
+//  @Override
   public final void display(Memory nativeBuffer) {
     nativeBuffer.read(0, rgbBuffer, 0, rgbBuffer.length);
     onDisplay(rgbBuffer);

@@ -58,6 +58,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
 // TODO this class file has nearly 2k lines and that is too many
+// FIXME sure there are still threading issues in here, may need to sync more especially on clean-up
 
 /**
  * Media player implementation.
@@ -1722,7 +1723,7 @@ public abstract class MediaPlayer {
       this.event = event;
     }
 
-    @Override
+//    @Override
     public void run() {
       Logger.trace("run()");
       notifyListeners(event);
@@ -1747,7 +1748,7 @@ public abstract class MediaPlayer {
    */
   private final class NotifyMetaRunnable implements Runnable {
 
-    @Override
+//    @Override
     public void run() {
       Logger.trace("run()");
       
