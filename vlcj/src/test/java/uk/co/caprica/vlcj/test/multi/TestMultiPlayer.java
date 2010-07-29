@@ -47,8 +47,8 @@ import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 public class TestMultiPlayer {
 
   private String[] medias = {
-    "/home/mark/Desktop/vidtest/1.mp4",
-    "wibble.mp4"
+    "wibble1.mp4",
+    "wibble2.mp4"
     // Your MRL's go here
   };
     
@@ -106,7 +106,8 @@ public class TestMultiPlayer {
     });
 
 //    String[] args = {"--no-xlib"};
-    String[] args = {"--plugin-path=/home/linux/vlc/lib"};
+//    String[] args = {"--plugin-path=/home/linux/vlc/lib"};
+    String[] args = {};
     
     factory = new MediaPlayerFactory(args);
     
