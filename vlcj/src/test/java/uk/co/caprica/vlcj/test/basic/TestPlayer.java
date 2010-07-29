@@ -88,7 +88,7 @@ public class TestPlayer {
     // Experimental
     Native.setProtected(false);
     
-    Logger.setLevel(Logger.Level.TRACE);
+    Logger.setLevel(Logger.Level.DEBUG);
     
     Logger.info("  version: {}", LibVlc.INSTANCE.libvlc_get_version());
     Logger.info(" compiler: {}", LibVlc.INSTANCE.libvlc_get_compiler());
