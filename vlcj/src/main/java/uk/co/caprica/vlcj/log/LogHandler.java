@@ -24,13 +24,19 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-
 /**
  * Consumer for the native log.
  * <p>
  * If a log is opened, it's contents must be regularly consumed to prevent 
  * clogging - this implementation creates a background thread to consume the
  * log messages and send them to the local log sub-system.
+ * <p>
+ * This implementation periodically checks the native libvlc log to retrieve
+ * log messages. It then invokes {@link #onMessages(List)} to process the
+ * retrieved messages if there are some.
+ * <p>
+ * Sub-classes may override {@link #onMessages(List)} to apply their own
+ * processing on the log messages.
  */
 public class LogHandler {
 
@@ -91,26 +97,39 @@ public class LogHandler {
       
       int count = log.count();
       Logger.trace("count={}", count);
-      
-      List<LogMessage> messages = log.messages();
-      for(LogMessage message : messages) {
-        switch(message.severity()) {
-          case ERR:
-            Logger.error("libvlc {} {}", message.name(), message.message());
-            break;
-            
-          case WARN:
-            Logger.warn("libvlc {} {}", message.name(), message.message());
-            break;
-            
-          case INFO:
-            Logger.info("libvlc {} {}", message.name(), message.message());
-            break;
-            
-          case DBG:
-            Logger.debug("libvlc {} {}", message.name(), message.message());
-            break;
-        }
+
+      if(count > 0) {
+        onMessages(log.messages());
+      }
+    }
+  }
+  
+  /**
+   * 
+   * 
+   * Sub-classes may override this to provide their own native log message 
+   * handling.
+   * 
+   * @param messages current batch of messages
+   */
+  protected void onMessages(List<LogMessage> messages) {
+    for(LogMessage message : messages) {
+      switch(message.severity()) {
+        case ERR:
+          Logger.error("(libvlc {}) {}", message.name(), message.message());
+          break;
+          
+        case WARN:
+          Logger.warn("(libvlc {}) {}", message.name(), message.message());
+          break;
+          
+        case INFO:
+          Logger.info("(libvlc {}) {}", message.name(), message.message());
+          break;
+          
+        case DBG:
+          Logger.debug("(libvlc {}) {}", message.name(), message.message());
+          break;
       }
     }
   }
