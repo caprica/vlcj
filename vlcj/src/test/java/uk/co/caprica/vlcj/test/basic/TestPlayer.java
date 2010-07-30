@@ -165,6 +165,7 @@ public class TestPlayer {
 
     // Create a new log handler to display the native libvlc log
     log = mediaPlayerFactory.newLog();
+    log.setThreshold(LogLevel.DBG);
     new LogHandler(log, 1000).start();
     
     mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
