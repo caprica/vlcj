@@ -112,7 +112,7 @@ public class Log {
    * @return number of messages in the log
    */
   public int count() {
-    Logger.debug("count()");
+    Logger.trace("count()");
 
     return libvlc.libvlc_log_count(logInstance);
   }
@@ -121,7 +121,7 @@ public class Log {
    * Clear (remove all messages from) the Logger.
    */
   public void clear() {
-    Logger.debug("clear()");
+    Logger.trace("clear()");
 
     libvlc.libvlc_log_clear(logInstance);
   }
@@ -134,7 +134,7 @@ public class Log {
    * @return messages
    */
   public List<LogMessage> messages() {
-    Logger.debug("messages()");
+    Logger.trace("messages()");
     
     return messages(new ArrayList<LogMessage>(40));
   }
@@ -148,7 +148,7 @@ public class Log {
    * @return messages
    */
   public List<LogMessage> messages(List<LogMessage> messages) {
-    Logger.debug("messages(messages=[{}])", messages.size());
+    Logger.trace("messages(messages=[{}])", messages.size());
 
     libvlc_log_iterator_t it = null;
     try {
@@ -180,8 +180,6 @@ public class Log {
 
   @Override
   protected void finalize() throws Throwable {
-    if(logInstance != null) {
-      close();
-    }
+    close();
   }
 }
