@@ -913,7 +913,7 @@ public interface LibVlc extends Library {
    * @return the current state of the media player (playing, paused, ...) @see
    *         libvlc_state_t
    */
-  libvlc_state_t libvlc_media_player_get_state(libvlc_media_player_t p_mi);
+  int libvlc_media_player_get_state(libvlc_media_player_t p_mi);
 
   /**
    * Get movie fps rate
