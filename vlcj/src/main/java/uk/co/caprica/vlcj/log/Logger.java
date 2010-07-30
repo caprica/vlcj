@@ -55,6 +55,10 @@ public class Logger {
     INSTANCE.threshold = threshold;
   }
   
+  public static Level level() {
+    return INSTANCE.threshold;
+  }
+  
   public static void trace(String msg, Object... args) {
     if(Level.TRACE.compareTo(INSTANCE.threshold) <= 0) {
       out("TRACE", msg, null, args);
