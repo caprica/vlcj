@@ -94,7 +94,23 @@ public class LogHandler {
       
       List<LogMessage> messages = log.messages();
       for(LogMessage message : messages) {
-        Logger.debug("message={}", message);
+        switch(message.severity()) {
+          case ERR:
+            Logger.error("libvlc {} {}", message.name(), message.message());
+            break;
+            
+          case WARN:
+            Logger.warn("libvlc {} {}", message.name(), message.message());
+            break;
+            
+          case INFO:
+            Logger.info("libvlc {} {}", message.name(), message.message());
+            break;
+            
+          case DBG:
+            Logger.debug("libvlc {} {}", message.name(), message.message());
+            break;
+        }
       }
     }
   }
