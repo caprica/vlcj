@@ -72,7 +72,7 @@ The test jar has a proper manifest class path and main class so it may be
 executed directly to start the application.
 
 The vlc-<version>-test.jar MUST be in the same directory as the
-vlc-<version>.jar, the JNA platform.jar and jna.jar files and the log4j.jar.
+vlc-<version>.jar, the JNA platform.jar and jna.jar files.
 
 The application may be started like this for example (assuming a "$" command-
 line prompt):
@@ -82,10 +82,6 @@ $java -jar vlc-1.1.2-test.jar
 For the test player you can specify a logo file name on the command-line.
 
 $java -jar vlc-1.1.2-test.jar /some/directory/vlcj-logo.png
-
-To specify a logging configuration:
-
-$java -Dlog4j.configuration=file:log4j.xml -jar vlc-1.1.2-test.jar
 
 == Known Issues ==
 
