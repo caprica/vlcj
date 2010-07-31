@@ -451,6 +451,17 @@ public abstract class MediaPlayer {
   }
 
   /**
+   * 
+   * 
+   * @return
+   */
+  public String getCropGeometry() {
+    Logger.debug("getCropGeometry()");
+    
+    return libvlc.libvlc_video_get_crop_geometry(mediaPlayerInstance);
+  }
+
+  /**
    * Get the current media statistics. 
    * <p>
    * Statistics are only updated if the video is playing.
@@ -752,6 +763,17 @@ public abstract class MediaPlayer {
     Logger.debug("setScale(factor={})", factor);
     
     libvlc.libvlc_video_set_scale(mediaPlayerInstance, factor);
+  }
+  
+  /**
+   * Set the crop geometry.
+   * 
+   * @param cropGeometry
+   */
+  public void setCropGeometry(String cropGeometry) {
+    Logger.debug("setCropGeometry(cropGeometry={})", cropGeometry);
+    
+    libvlc.libvlc_video_set_crop_geometry(mediaPlayerInstance, cropGeometry);
   }
   
   // === Audio Controls =======================================================
