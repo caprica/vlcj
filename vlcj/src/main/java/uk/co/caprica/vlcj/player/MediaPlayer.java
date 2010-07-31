@@ -492,6 +492,18 @@ public abstract class MediaPlayer {
     
     return state;
   }
+
+  /**
+   * 
+   * 
+   * @return
+   */
+  // FIXME For now I'll simply return the internal binding structure but I don't really want to do that do I?
+  public libvlc_state_t getMediaPlayerState() {
+    Logger.debug("getMediaPlayerState()");
+
+    return libvlc_state_t.state(libvlc.libvlc_media_player_get_state(mediaPlayerInstance));
+  }
   
   // === Title/Track Controls =================================================
   
