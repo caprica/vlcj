@@ -65,7 +65,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  *   FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
  *   
  *   // Create a media player instance for the run-time operating system
- *   MediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
+ *   EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
  * 
  *   // Do some interesting things with the media player
  *   
