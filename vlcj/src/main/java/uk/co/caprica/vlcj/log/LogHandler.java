@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -32,11 +33,15 @@ import java.util.concurrent.TimeUnit;
  * log messages and send them to the local log sub-system.
  * <p>
  * This implementation periodically checks the native libvlc log to retrieve
- * log messages. It then invokes {@link #onMessages(List)} to process the
- * retrieved messages if there are some.
+ * log messages.
  * <p>
- * Sub-classes may override {@link #onMessages(List)} to apply their own
- * processing on the log messages.
+ * Log message handler implementations may be added to the log handler itself
+ * so that individual messages may be inspected and processed - for example to
+ * send the messages to a debug log or raise events when certain log messages 
+ * are detected.
+ * <p>
+ * In this way the proper consumption of the native log messages is isolated 
+ * from the specific message handling implementation.
  */
 public class LogHandler {
 
@@ -56,6 +61,11 @@ public class LogHandler {
   private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
   
   /**
+   * Collection of log message handlers.
+   */
+  private final List<LogMessageHandler> logMessageHandlers = new ArrayList<LogMessageHandler>();
+  
+  /**
    * Create a new log handler.
    * 
    * @param log log
@@ -63,17 +73,37 @@ public class LogHandler {
    */
   public LogHandler(Log log, int period) {
     Logger.debug("LogHandler(log={},period={})", log, period);
-    
     this.log = log;
     this.period = period;
   }
 
   /**
    * 
+   * 
+   * @param logMessageHandler
+   * @return this
+   */
+  public LogHandler addLogMessageHandler(LogMessageHandler logMessageHandler) {
+    Logger.debug("addLogMessageHandler(logMessageHandler={})", logMessageHandler);
+    logMessageHandlers.add(logMessageHandler);
+    return this;
+  }
+  
+  /**
+   * 
+   * 
+   * @param logMessageHandler
+   */
+  public void removeLogMessageHandler(LogMessageHandler logMessageHandler) {
+    Logger.debug("removeLogMessageHandler(logMessageHandler={})", logMessageHandler);
+    logMessageHandlers.remove(logMessageHandler);
+  }
+  
+  /**
+   * 
    */
   public void start() {
     Logger.debug("start()");
-    
     executor.scheduleAtFixedRate(new LogProcessor(), period, period, TimeUnit.MILLISECONDS);
   }
   
@@ -82,7 +112,6 @@ public class LogHandler {
    */
   public void release() {
     Logger.debug("release()");
-    
     executor.shutdown();
   }
   
@@ -98,38 +127,14 @@ public class LogHandler {
       int count = log.count();
       Logger.trace("count={}", count);
 
-      if(count > 0) {
-        onMessages(log.messages());
-      }
-    }
-  }
-  
-  /**
-   * 
-   * 
-   * Sub-classes may override this to provide their own native log message 
-   * handling.
-   * 
-   * @param messages current batch of messages
-   */
-  protected void onMessages(List<LogMessage> messages) {
-    for(LogMessage message : messages) {
-      switch(message.severity()) {
-        case ERR:
-          Logger.error("(libvlc {}) {}", message.name(), message.message());
-          break;
-          
-        case WARN:
-          Logger.warn("(libvlc {}) {}", message.name(), message.message());
-          break;
-          
-        case INFO:
-          Logger.info("(libvlc {}) {}", message.name(), message.message());
-          break;
-          
-        case DBG:
-          Logger.debug("(libvlc {}) {}", message.name(), message.message());
-          break;
+      // If there is at least one message and at least one message handler...
+      if(count > 0 && !logMessageHandlers.isEmpty()) {
+        // ...get the next batch of log messages
+        List<LogMessage> logMessages = log.messages();
+        // ...and send each message to each handler
+        for(LogMessageHandler logMessageHandler : logMessageHandlers) {
+          logMessageHandler.messages(logMessages);
+        }
       }
     }
   }

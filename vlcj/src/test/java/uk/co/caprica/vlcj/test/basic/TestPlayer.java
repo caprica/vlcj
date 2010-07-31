@@ -39,6 +39,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -50,6 +51,9 @@ import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogHandler;
 import uk.co.caprica.vlcj.log.LogLevel;
 import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.log.logger.DefaultLogMessageHandler;
+import uk.co.caprica.vlcj.log.matcher.MatcherCallback;
+import uk.co.caprica.vlcj.log.matcher.MatcherLogMessageHandler;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -166,7 +170,17 @@ public class TestPlayer {
     // Create a new log handler to display the native libvlc log
     log = mediaPlayerFactory.newLog();
     log.setThreshold(LogLevel.DBG);
-    new LogHandler(log, 1000).start();
+    new LogHandler(log, 1000)
+      // Add a log message handler to send the native log messages to the local log
+      .addLogMessageHandler(new DefaultLogMessageHandler())
+      // Add a log message handler to search for file not found error messages in the native log
+      .addLogMessageHandler(new MatcherLogMessageHandler("^VLC is unable to open the MRL '(.+?)'.*$", new MatcherCallback() {
+        @Override
+        public void matched(Matcher matcher) {
+          Logger.error("failed to open filename {}", matcher.group(1));
+        }
+      })
+    ).start();
     
     mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
 
@@ -226,11 +240,9 @@ public class TestPlayer {
             }
             else if(keyEvent.getKeyCode() == KeyEvent.VK_A) {
               mediaPlayer.setAudioDelay(mediaPlayer.getAudioDelay() - 50000);
-              System.out.println("Audio Delay: " + mediaPlayer.getAudioDelay());
             }
             else if(keyEvent.getKeyCode() == KeyEvent.VK_S) {
               mediaPlayer.setAudioDelay(mediaPlayer.getAudioDelay() + 50000);
-              System.out.println("Audio Delay: " + mediaPlayer.getAudioDelay());
             }
           }
         }
