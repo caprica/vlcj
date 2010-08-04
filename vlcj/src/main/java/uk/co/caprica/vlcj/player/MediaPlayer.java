@@ -952,7 +952,7 @@ public abstract class MediaPlayer {
       libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
     }
     else {
-      Logger.warn("Ignored out of range spu number {} because spu count is {}", spu, spuCount);
+      Logger.debug("Ignored out of range spu number {} because spu count is {}", spu, spuCount);
     }
   }
 
