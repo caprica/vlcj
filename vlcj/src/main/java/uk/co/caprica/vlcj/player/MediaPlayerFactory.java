@@ -166,7 +166,6 @@ public class MediaPlayerFactory {
     if(!released) {
       if(instance != null) {
         libvlc.libvlc_release(instance);
-        instance = null;
       }
       released = true;
     }
@@ -242,11 +241,5 @@ public class MediaPlayerFactory {
     Log log = new Log(libvlc, instance);
     log.open();
     return log;
-  }
-  
-  @Override
-  protected synchronized void finalize() throws Throwable {
-    Logger.debug("finalize()");
-    release();
   }
 }
