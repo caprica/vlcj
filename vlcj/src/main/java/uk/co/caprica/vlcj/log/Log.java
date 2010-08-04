@@ -177,9 +177,4 @@ public class Log {
     
     return messages;
   }
-
-  @Override
-  protected void finalize() throws Throwable {
-    close();
-  }
 }
