@@ -22,7 +22,12 @@ package uk.co.caprica.vlcj.player.embedded;
 import java.awt.Canvas;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.Window;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
+
+import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
@@ -32,6 +37,43 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
 /**
  * Implementation of a media player that renders video to an embedded Canvas
  * component.
+ * <p>
+ * This implementation supports the use of an 'overlay' window that will track
+ * the video surface position and size. Such an overlay could be used to paint
+ * custom graphics over the top of the video.
+ * <p>
+ * The overlay window should be non-opaque - support for this depends on the 
+ * JVM, desktop window manager and graphics device hardware and software.
+ * <p>
+ * The overlay also has some significant limitations, it is a component that
+ * covers the video surface component and will prevent mouse and keyboard 
+ * events from being processed by the video surface. Workarounds to delegate
+ * the mouse and keyboard events to the underlying Canvas may be possible but
+ * that is a responsibility of the overlay component itself and not these
+ * bindings.
+ * <p>
+ * The overlay will also 'lag' the main application frame when the frame is
+ * dragged - the event used to track the frame position does not fire until 
+ * after the window drag operation has completed (i.e. the mouse pointer is
+ * released).
+ * <p>
+ * A further limitation is that the overlay will not appear when full-screen
+ * exclusive mode is used - if an overlay is required in full-screen mode then
+ * the full-screen mode must be simulated (by re-sizing the main window, 
+ * removing decorations and so on).
+ * <p>
+ * If an overlay is used, then because the window is required to be non-opaque
+ * then it will appear in front of <strong>all</strong> other desktop windows,
+ * including application dialog windows. For this reason, it may be necessary
+ * to disable the overlay while displaying dialog boxes, or when the window
+ * is deactivated.
+ * <p>
+ * The overlay implementation in this class simply keeps a supplied window in
+ * sync with the video surface. It is the responsibility of the client 
+ * application itself to supply an appropriate overlay component.
+ * <p>
+ * <strong>Finally, the overlay is experimental and support for the overlay may
+ * be changed or removed.</strong> 
  */
 public abstract class EmbeddedMediaPlayer extends MediaPlayer {
 
@@ -41,9 +83,20 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
   private final FullScreenStrategy fullScreenStrategy;
   
   /**
+   * Listener implementation used to keep the overlay position and size in sync
+   * with the video surface.
+   */
+  private final OverlayAdapter overlayAdapter;
+  
+  /**
    * Component to render the video to.
    */
   private Canvas videoSurface;
+  
+  /**
+   * Optional overlay component.
+   */
+  private Window overlay;
   
   /**
    * Create a new media player.
@@ -66,6 +119,7 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
     super(instance);
     
     this.fullScreenStrategy = fullScreenStrategy;
+    this.overlayAdapter = new OverlayAdapter();
   }
 
   /**
@@ -155,6 +209,7 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
    */
   public BufferedImage getVideoSurfaceContents() {
     Logger.debug("getVideoSurfaceContents()");
+
     try {
       Rectangle bounds = videoSurface.getBounds();
       bounds.setLocation(videoSurface.getLocationOnScreen());
@@ -163,6 +218,80 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
     catch(Exception e) {
       throw new RuntimeException("Failed to get video surface contents", e);
     }
+  }
+  
+  /**
+   * Get the overlay component.
+   * 
+   * @return overlay component, may be <code>null</code>
+   */
+  public Window getOverlay() {
+    Logger.debug("getOverlay()");
+    
+    return overlay;
+  }
+  
+  /**
+   * Set a new overlay component.
+   * <p>
+   * The existing overlay if there is one will be disabled.
+   * <p>
+   * The new overlay will <strong>not</strong> automatically be enabled.
+   * 
+   * @param overlay
+   */
+  public void setOverlay(Window overlay) {
+    Logger.debug("setOverlay(overlay={})", overlay);
+    
+    if(videoSurface != null) {
+      // Disable the current overlay if there is one
+      enableOverlay(false);
+    
+      // Set the new overlay, but do not enable it
+      this.overlay = overlay;
+    }
+    else {
+      throw new IllegalStateException("Can't set an overlay when there's no video surface");
+    }
+  }
+
+  /**
+   * Enable/disable the overlay component if there is one.
+   * 
+   * @param enable whether to enable the overlay or disable it
+   */
+  public void enableOverlay(boolean enable) {
+    Logger.debug("enableOverlay(enable={})", enable);
+    
+    if(overlay != null) {
+      if(enable) {
+        if(!overlay.isVisible()) {
+          overlay.setLocation(videoSurface.getLocationOnScreen());
+          overlay.setSize(videoSurface.getSize());
+          Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface);
+          window.addComponentListener(overlayAdapter);
+          overlay.setVisible(true);
+        }
+      }
+      else {
+        if(overlay.isVisible()) {
+          overlay.setVisible(false);
+          Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface);
+          window.removeComponentListener(overlayAdapter);
+        }
+      }
+    }
+  }
+  
+  /**
+   * Check whether or not there is an overlay component currently enabled.
+   * 
+   * @return true if theere is an overlay enabled, otherwise false 
+   */
+  public boolean overlayEnabled() {
+    Logger.debug("overlayEnabled()");
+    
+    return overlay != null && overlay.isVisible();
   }
   
   /**
@@ -175,4 +304,27 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
    * @param videoSurface video surface component
    */
   protected abstract void nativeSetVideoSurface(libvlc_media_player_t instance, Canvas videoSurface);
+  
+  /**
+   * Component event listener to keep the overlay component in sync with the
+   * video surface component.
+   */
+  private final class OverlayAdapter extends ComponentAdapter {
+
+    // TODO automatically hide overlay when window not active? 
+    //      otherwise it's appearing in front of all other windows and the 
+    //      application has to mange it
+    
+    @Override
+    public void componentResized(ComponentEvent e) {
+      Logger.trace("componentResized(e={})", e);
+      overlay.setSize(videoSurface.getSize());
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) {
+      Logger.trace("componentMoved(e={})", e);
+      overlay.setLocation(videoSurface.getLocationOnScreen());
+    }
+  }
 }
