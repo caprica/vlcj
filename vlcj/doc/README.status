@@ -4,7 +4,7 @@
 These bindings are for version 1.1.x of libvlc.
 
 Bindings exist for the core player functionality, the media player, events,
-logos and marquees.
+logos and marquees, and direct video frame buffer access.
 
 Some of the bindings, particularly with regard to structures, may not (yet) be
 complete. There may well be bugs in the JNA mappings. My intention is to keep
@@ -28,7 +28,8 @@ When using multiple player instances you may be affected by a race condition
 that can occur when executing media player play calls in quick succession 
 causing fatal VM crashes due to native library failures.
 
-You can mitigate this somewhat by staggering your play calls by a second or so.
+You can mitigate this somewhat by staggering your play calls by a second or so
+or using some other blocking mechanism.
 
 There should be enough here to get a good media player working, have a look at
 the TestPlayer class to help you get started.
@@ -44,8 +45,9 @@ One significant difference is that there are now multiple methods available to
 set the video surface - and this depends on the OS you are running under.
 
 For this reason, you will need to determine which OS you are running on at
-run-time and instantiate an appropriate player instance. A factory 
-implementation is provided to encapsulate this for you.
+run-time and instantiate an appropriate player instance. 
+
+A factory implementation is provided to encapsulate this for you.
 
 Out of the box this works for Linux and Windows.
 
