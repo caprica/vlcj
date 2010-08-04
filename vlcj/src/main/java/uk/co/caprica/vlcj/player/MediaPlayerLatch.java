@@ -25,6 +25,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * This class implements a strategy for handling multiple player instances.
  * <p>
+ * A strategy is required since there are threading issues in the native 
+ * libraries that are exposed as races when repeated calls to play() are made.
+ * <p>
  * The strategy is simply to block the play call until a media player playing 
  * event is received.
  * <p>
@@ -34,13 +37,21 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * For this reason it is possible to specify a timeout - if the timeout expires
  * before a playing event is received then the play method will return (the
- * return value will be <code>false</code>.
+ * return value will be <code>false</code>. It is possible that the media will
+ * still actually start playing even if <code>false</code> is returned. 
  * <p>
  * Example usage:
  * <pre>
  *   mediaPlayer.prepareMedia(mrl, options);
  *   new MediaPlayerLatch(mediaPlayer).play();
- * </pre> 
+ * </pre>
+ * Or:
+ * <pre>
+ *   mediaPlayer.prepareMedia(mrl, options);
+ *   MediaPlayerLatch playerLatch = new MediaPlayerLatch(mediaPlayer);
+ *   playerLatch.setTimeout(3, TimeUnit.SECONDS);   
+ *   boolean maybeStarted = playerLatch.play();
+ * </pre>
  * <strong>This class is experimental and is subject to change/removal.</strong>
  */
 public class MediaPlayerLatch {
