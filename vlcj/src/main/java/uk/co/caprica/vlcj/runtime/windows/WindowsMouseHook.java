@@ -217,13 +217,6 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     Logger.debug("released");
   }
   
-  @Override
-  protected void finalize() throws Throwable {
-    Logger.debug("finalize()");
-    
-    release();
-  }
-
   /**
    * 
    * 

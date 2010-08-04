@@ -160,13 +160,6 @@ public class WindowsCanvas extends Canvas {
     listenerList.remove(KeyListener.class, l);
   }
 
-  @Override
-  protected void finalize() throws Throwable {
-    Logger.debug("finalize()");
-    
-    release();
-  }
-  
   /**
    * Global AWT event listener used to propagate key events to listeners
    * registered in the usual way.
