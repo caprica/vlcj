@@ -627,7 +627,7 @@ public abstract class MediaPlayer {
    */
   public void play() {
     Logger.debug("play()");
-    
+
     libvlc.libvlc_media_player_play(mediaPlayerInstance);
   }
 
@@ -1566,15 +1566,10 @@ public abstract class MediaPlayer {
 
     eventListenerList.clear();
     
-    if(mediaPlayerEventManager != null) {
-      mediaPlayerEventManager = null;
-    }
-
     if(mediaPlayerInstance != null) {
       Logger.debug("Release media player...");
       libvlc.libvlc_media_player_release(mediaPlayerInstance);
       Logger.debug("Media player released");
-      mediaPlayerInstance = null;
     }
 
     Logger.debug("Shut down listeners...");
@@ -1668,13 +1663,6 @@ public abstract class MediaPlayer {
       destroyInstance();
       released = true;
     }
-  }
-
-  @Override
-  protected synchronized void finalize() throws Throwable {
-    Logger.debug("finalize()");
-    
-    release();
   }
 
   private void notifyListeners(libvlc_event_t event) {
