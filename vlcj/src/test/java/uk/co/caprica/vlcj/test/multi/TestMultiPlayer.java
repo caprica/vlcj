@@ -29,6 +29,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -37,6 +38,7 @@ import javax.swing.border.LineBorder;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.MediaPlayerLatch;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
@@ -151,16 +153,10 @@ public class TestMultiPlayer {
     // does not occur
     for(int i = 0; i < medias.length; i++) {
       EmbeddedMediaPlayer mediaPlayer = players.get(i).mediaPlayer();
-      mediaPlayer.play();
       
-      // TODO seems like on error you just don't get libvlc_Opening and are stuck at libvlc_nothingspceial
-      System.out.println("state: " + mediaPlayer.getMediaState());
-      System.out.println("err: " + LibVlc.LOGGING_INSTANCE.libvlc_errmsg());
-      
-      // FIXME this will block forever if there's an error (like media file not found)
-      while(!mediaPlayer.isPlaying()) {
-        Thread.yield();
-      }
+      MediaPlayerLatch l = new MediaPlayerLatch(mediaPlayer);
+      l.setTimeout(3, TimeUnit.SECONDS);
+      l.play();
     }
   }
 }
