@@ -24,6 +24,15 @@ import java.util.Formatter;
 
 /**
  * A very simple lightweight log system.
+ * <p>
+ * The log level can be changed by invoking {@link #setLevel(Level)}.
+ * <p>
+ * The log level can be configured at run-time by specifying a system property
+ * on the command-line, for example:
+ * <pre>
+ *   -Dvlcj.log=INFO
+ * </pre> 
+ * The log levels are defined in {@link Level}.
  */
 public class Logger {
 
@@ -49,6 +58,10 @@ public class Logger {
   }
   
   private Logger() {
+    String logProperty = System.getProperty("vlcj.log");
+    if(logProperty != null) {
+      threshold = Level.valueOf(logProperty);
+    }
   }
   
   public static void setLevel(Level threshold) {
