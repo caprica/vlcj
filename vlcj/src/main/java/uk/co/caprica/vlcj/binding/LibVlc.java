@@ -961,7 +961,7 @@ public interface LibVlc extends Library {
    * 
    * @param p_track_description the structure to release
    */
-  void libvlc_track_description_release(libvlc_track_description_t p_track_description);
+  void libvlc_track_description_release(Pointer p_track_description);
 
   /**
    * Toggle fullscreen status on non-embedded video outputs.
