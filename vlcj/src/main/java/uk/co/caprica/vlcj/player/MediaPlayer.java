@@ -767,6 +767,19 @@ public abstract class MediaPlayer {
   
   /**
    * Set the crop geometry.
+   * <p>
+   * The format for the crop geometry is one of:
+   * <ul>
+   *   <li>numerator:denominator</li>
+   *   <li>width:height+x+y</li>
+   *   <li>left:top:right:bottom</li>
+   * </ul>
+   * For example:
+   * <pre>
+   *   mediaPlayer.setCropGeometry("4:3");
+   *   mediaPlayer.setCropGeometry("719x575+0+0");
+   *   mediaPlayer.setCropGeometry("6:10:6:10");
+   * </pre>
    * 
    * @param cropGeometry
    */
