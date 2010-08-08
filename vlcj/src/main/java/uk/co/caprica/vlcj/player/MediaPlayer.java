@@ -781,7 +781,7 @@ public abstract class MediaPlayer {
    *   mediaPlayer.setCropGeometry("6:10:6:10");
    * </pre>
    * 
-   * @param cropGeometry
+   * @param cropGeometry formatted string describing the desired crop geometry
    */
   public void setCropGeometry(String cropGeometry) {
     Logger.debug("setCropGeometry(cropGeometry={})", cropGeometry);
