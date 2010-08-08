@@ -58,7 +58,6 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
 // TODO this class file has nearly 2k lines and that is too many
-// FIXME sure there are still threading issues in here, may need to sync more especially on clean-up
 
 /**
  * Media player implementation.
@@ -1780,6 +1779,7 @@ public abstract class MediaPlayer {
    * occasions the event seems not to fire. 
    * 
    * TODO is this still required with libvlc 1.1?
+   * FIXME this should latch on the playing event rather than sleeping and looping
    */
   private final class NotifyMetaRunnable implements Runnable {
 
