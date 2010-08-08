@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.binding;
 
+import uk.co.caprica.vlcj.log.Logger;
+
 /**
  * Application information banner.
  */
@@ -60,5 +62,6 @@ class Info {
   Info() {
     System.err.println(APP_MSG);
     System.err.println(LICENSE_MSG);
+    Logger.info("vlcj 1.1.2");
   }
 }
