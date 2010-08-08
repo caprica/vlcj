@@ -41,6 +41,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -331,10 +332,13 @@ public class TestPlayer {
       }
       
       // You can set a logo like this if you like...
-      mediaPlayer.setLogoFile("./etc/vlcj-logo.png");
-      mediaPlayer.setLogoOpacity(0.5f);
-      mediaPlayer.setLogoLocation(10, 10);
-      mediaPlayer.enableLogo(true);
+      File logoFile = new File("./etc/vlcj-logo.png");
+      if(logoFile.exists()) {
+        mediaPlayer.setLogoFile(logoFile.getAbsolutePath());
+        mediaPlayer.setLogoOpacity(0.5f);
+        mediaPlayer.setLogoLocation(10, 10);
+        mediaPlayer.enableLogo(true);
+      }
 
       // Demo the marquee      
       mediaPlayer.setMarqueeText("VLCJ 1.1.2");
