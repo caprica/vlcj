@@ -24,10 +24,14 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.AWTEventListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -41,6 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -65,7 +70,9 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsCanvas;
 import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 
+import com.sun.awt.AWTUtilities;
 import com.sun.jna.Native;
+import com.sun.jna.platform.WindowUtils;
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
@@ -77,7 +84,7 @@ import com.sun.jna.Native;
  */
 public class TestPlayer {
   
-  private Frame mainFrame;
+  private JFrame mainFrame;
   private Canvas videoSurface;
   private JPanel controlsPanel;
   private JPanel videoAdjustPanel;
@@ -91,8 +98,6 @@ public class TestPlayer {
   public static void main(final String[] args) throws Exception {
     // Experimental
     Native.setProtected(false);
-    
-    Logger.setLevel(Logger.Level.DEBUG);
     
     Logger.info("  version: {}", LibVlc.INSTANCE.libvlc_get_version());
     Logger.info(" compiler: {}", LibVlc.INSTANCE.libvlc_get_compiler());
@@ -158,7 +163,7 @@ public class TestPlayer {
 
   	Logger.debug("vlcArgs={}", vlcArgs);
   	
-    mainFrame = new Frame("VLCJ Test Player for VLC 1.1.x");
+    mainFrame = new JFrame("VLCJ Test Player for VLC 1.1.x");
   
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
   
@@ -173,7 +178,7 @@ public class TestPlayer {
     new LogHandler(log, 1000)
       // Add a log message handler to send the native log messages to the local log
       .addLogMessageHandler(new DefaultLogMessageHandler())
-      // Add a log message handler to search for file not found error messages in the native log
+      // Add a log message handler to search for media opening error messages in the native log
       .addLogMessageHandler(new MatcherLogMessageHandler("^VLC is unable to open the MRL '(.+?)'.*$", new MatcherCallback() {
         @Override
         public void matched(Matcher matcher) {
@@ -184,14 +189,6 @@ public class TestPlayer {
     
     mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
 
-	// Use any first command-line argument to set a logo
-//	if(args.length > 0) {
-//	  String logoFile = args[0];
-//	  
-//	  String[] standardOptions = {"video-filter=logo", "logo-file=" + logoFile, "logo-opacity=25"};
-//	  mediaPlayer.setStandardMediaOptions(standardOptions);
-//	}
-    
     controlsPanel = new PlayerControlsPanel(mediaPlayer);
     videoAdjustPanel = new PlayerVideoAdjustPanel(mediaPlayer);
     
@@ -254,6 +251,40 @@ public class TestPlayer {
     mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
     mediaPlayer.setVideoSurface(videoSurface);
     
+    // Won't work with OpenJDK or JDK1.7, requires a Sun/Oracle JVM (currently)
+    boolean transparentWindowsSupport = true;
+    try {
+      Class.forName("com.sun.awt.AWTUtilities");
+    }
+    catch(Exception e) {
+      transparentWindowsSupport = false;
+    }
+    
+    Logger.debug("transparentWindowsSupport={}", transparentWindowsSupport);
+    
+    if(transparentWindowsSupport) {
+      final Window test = new Window(mainFrame, WindowUtils.getAlphaCompatibleGraphicsConfiguration()) {
+        public void paint(Graphics g) {
+          Graphics2D g2 = (Graphics2D)g;
+  
+          g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+          g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+          
+          g.setColor(Color.white);
+          g.fillRoundRect(100, 150, 100, 100, 32, 32);
+          
+          g.setFont(new Font("Sans", Font.BOLD, 32));
+          g.drawString("Heavyweight overlay test", 100, 300);
+        }
+      };
+  
+      AWTUtilities.setWindowOpaque(test, false); // Doesn't work in full-screen exclusive mode, you would have to use 'simulated' full-screen - requires Sun/Oracle JDK
+      test.setBackground(new Color(0, 0, 0, 0)); // This is what you do in JDK7
+      
+      mediaPlayer.setOverlay(test);
+      mediaPlayer.enableOverlay(true);
+    }
+    
 	// This might be useful
 //	enableMousePointer(false);
   }
@@ -289,8 +320,9 @@ public class TestPlayer {
       Logger.debug("metaDataAvailable(mediaPlayer={},videoMetaData={})", mediaPlayer, videoMetaData);
       
       Dimension dimension = videoMetaData.getVideoDimension();
+      Logger.debug("dimension={}", dimension);
       if(dimension != null) {
-        // FIXME with some videos this sometimes causes lots of errors and corrupted playback until the canvas is resized _again_
+        // FIXME with some videos this sometimes causes lots of errors and corrupted playback until the canvas is resized _again_ or movie is paused and played
         videoSurface.setSize(videoMetaData.getVideoDimension());
         mainFrame.pack();
       }
@@ -312,6 +344,29 @@ public class TestPlayer {
       mediaPlayer.setMarqueeTimeout(3000);
       mediaPlayer.setMarqueeLocation(50, 100);
       mediaPlayer.enableMarquee(true);
+
+      // Not quite sure how crop geometry is supposed to work...
+      //
+      // Assertions in libvlc code:
+      //
+      // top + height must be less than visible height
+      // left + width must be less than visible width
+      //
+      // With DVD source material:
+      //
+      // Reported size is 1024x576 - this is what libvlc reports when you call 
+      // get video size
+      //
+      // mpeg size is 720x576 - this is what is reported in the native log
+      //
+      // The crop geometry relates to the mpeg size, not the size reported 
+      // through the API
+      //
+      // For 720x576, attempting to set geometry to anything bigger than 
+      // 719x575 results in the assertion failures above (seems like it should
+      // allow 720x576) to me
+      
+//      mediaPlayer.setCropGeometry("4:3");
     }
 
     @Override
