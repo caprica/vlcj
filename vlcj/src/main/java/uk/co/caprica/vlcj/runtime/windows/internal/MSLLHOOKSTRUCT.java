@@ -20,9 +20,9 @@
 package uk.co.caprica.vlcj.runtime.windows.internal;
 
 import com.sun.jna.Structure;
-import com.sun.jna.platform.win32.User32.POINT;
-import com.sun.jna.platform.win32.W32API.DWORD;
-import com.sun.jna.platform.win32.W32API.ULONG_PTR;
+import com.sun.jna.platform.win32.BaseTSD.ULONG_PTR;
+import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinUser.POINT;
 
 /**
  *

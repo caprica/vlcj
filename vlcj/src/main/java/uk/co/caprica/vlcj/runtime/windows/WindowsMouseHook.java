@@ -38,11 +38,12 @@ import uk.co.caprica.vlcj.runtime.windows.internal.MSLLHOOKSTRUCT;
 import com.sun.jna.Platform;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.User32.HHOOK;
-import com.sun.jna.platform.win32.User32.MSG;
-import com.sun.jna.platform.win32.User32.POINT;
-import com.sun.jna.platform.win32.W32API.LRESULT;
-import com.sun.jna.platform.win32.W32API.WPARAM;
+import com.sun.jna.platform.win32.WinDef.LRESULT;
+import com.sun.jna.platform.win32.WinDef.WPARAM;
+import com.sun.jna.platform.win32.WinUser;
+import com.sun.jna.platform.win32.WinUser.HHOOK;
+import com.sun.jna.platform.win32.WinUser.MSG;
+import com.sun.jna.platform.win32.WinUser.POINT;
 
 /**
  * Windows Mouse Hook implementation.
@@ -462,7 +463,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
       Logger.debug("run()");
       
       try {
-        hHook = USER32_INSTANCE.SetWindowsHookEx(User32.WH_MOUSE_LL, WindowsMouseHook.this, Kernel32.INSTANCE.GetModuleHandle(null), 0);
+        hHook = USER32_INSTANCE.SetWindowsHookEx(WinUser.WH_MOUSE_LL, WindowsMouseHook.this, Kernel32.INSTANCE.GetModuleHandle(null), 0);
         MSG msg = new MSG();
         while((USER32_INSTANCE.GetMessage(msg, null, 0, 0)) != 0) {
           // This code is never reached

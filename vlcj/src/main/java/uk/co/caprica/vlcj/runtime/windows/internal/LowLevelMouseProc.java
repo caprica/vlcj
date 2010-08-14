@@ -19,9 +19,9 @@
 
 package uk.co.caprica.vlcj.runtime.windows.internal;
 
-import com.sun.jna.platform.win32.User32.HOOKPROC;
-import com.sun.jna.platform.win32.W32API.LRESULT;
-import com.sun.jna.platform.win32.W32API.WPARAM;
+import com.sun.jna.platform.win32.WinDef.LRESULT;
+import com.sun.jna.platform.win32.WinDef.WPARAM;
+import com.sun.jna.platform.win32.WinUser.HOOKPROC;
 
 /**
  * 
