@@ -238,7 +238,7 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
    * <p>
    * The new overlay will <strong>not</strong> automatically be enabled.
    * 
-   * @param overlay
+   * @param overlay overlay component
    */
   public void setOverlay(Window overlay) {
     Logger.debug("setOverlay(overlay={})", overlay);
@@ -286,7 +286,7 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
   /**
    * Check whether or not there is an overlay component currently enabled.
    * 
-   * @return true if theere is an overlay enabled, otherwise false 
+   * @return true if there is an overlay enabled, otherwise false 
    */
   public boolean overlayEnabled() {
     Logger.debug("overlayEnabled()");
@@ -313,7 +313,7 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
 
     // TODO automatically hide overlay when window not active? 
     //      otherwise it's appearing in front of all other windows and the 
-    //      application has to mange it
+    //      application has to manage it
     
     @Override
     public void componentResized(ComponentEvent e) {
