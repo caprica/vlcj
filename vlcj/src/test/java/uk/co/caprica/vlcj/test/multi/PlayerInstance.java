@@ -78,26 +78,18 @@ public class PlayerInstance implements MediaPlayerEventListener {
 
   @Override
   public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
-    // TODO Auto-generated method stub
-    
   }
 
   @Override
   public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-    // TODO Auto-generated method stub
-    
   }
 
   @Override
   public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
-    // TODO Auto-generated method stub
-    
   }
 
   @Override
   public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
-    // TODO Auto-generated method stub
-    
   }
 
   @Override
