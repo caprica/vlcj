@@ -66,7 +66,6 @@ import com.sun.jna.ptr.IntByReference;
  * <pre>
  * -Djna.dump_memory=true
  * </pre>
- * TODO think about using JNA Direct Mapping
  */
 public interface LibVlc extends Library {
 
