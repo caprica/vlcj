@@ -171,9 +171,7 @@ public abstract class MediaPlayer {
 
   private static final int VOUT_WAIT_PERIOD = 1000;
   
-  // TODO
-//  protected final LibVlc libvlc = LibVlc.SYNC_INSTANCE;
-  protected final LibVlc libvlc = LibVlc.LOGGING_INSTANCE;
+  protected final LibVlc libvlc = LibVlcFactory.factory().synchronise().log().create();
   
   private final List<MediaPlayerEventListener> eventListenerList = new ArrayList<MediaPlayerEventListener>();
 

@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.binding;
 
-import java.lang.reflect.Proxy;
-
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
@@ -36,7 +34,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
-import uk.co.caprica.vlcj.log.LoggingProxy;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
@@ -83,16 +80,6 @@ public interface LibVlc extends Library {
    * Synchronised native library instance.
    */
   LibVlc SYNC_INSTANCE = (LibVlc)Native.synchronizedLibrary(INSTANCE);
-
-  /**
-   * 
-   */
-  LibVlc LOGGING_INSTANCE = (LibVlc)Proxy.newProxyInstance(LibVlc.class.getClassLoader(), new Class<?>[] {LibVlc.class}, new LoggingProxy(LibVlc.INSTANCE));
-
-  /**
-   * 
-   */
-  LibVlc LOGGING_SYNC_INSTANCE = (LibVlc)Proxy.newProxyInstance(LibVlc.class.getClassLoader(), new Class<?>[] {LibVlc.class}, new LoggingProxy(LibVlc.SYNC_INSTANCE));
 
   // === libvlc.h =============================================================
 

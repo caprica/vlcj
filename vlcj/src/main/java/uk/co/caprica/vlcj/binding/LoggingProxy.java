@@ -17,29 +17,31 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.log;
+package uk.co.caprica.vlcj.binding;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+import uk.co.caprica.vlcj.log.Logger;
+
 /**
  *
  */
-public class LoggingProxy implements InvocationHandler {
+class LoggingProxy implements InvocationHandler {
 
   /**
    * 
    */
-  private final Object target;
+  private final LibVlc target;
   
   /**
    * 
    * 
    * @param target
    */
-  public LoggingProxy(Object target) {
+  LoggingProxy(LibVlc target) {
     this.target = target;
   }
   

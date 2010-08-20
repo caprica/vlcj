@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.player;
 import java.util.Arrays;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogLevel;
@@ -83,7 +84,7 @@ public class MediaPlayerFactory {
   /**
    * Native library interface.
    */
-  private final LibVlc libvlc = LibVlc.SYNC_INSTANCE;
+  private final LibVlc libvlc;
   
   /**
    * Native library instance.
@@ -91,17 +92,32 @@ public class MediaPlayerFactory {
   private libvlc_instance_t instance;
   
   /**
-   * 
+   * True when the factory has been released.
    */
   private boolean released;
   
   /**
    * Create a new media player factory.
+   * <p>
+   * This factory uses an implementation of the interface to the native libvlc
+   * library that is synchronised and logs each method invocation.
    * 
    * @param libvlcArgs initialisation arguments to pass to libvlc
    */
   public MediaPlayerFactory(String[] libvlcArgs) {
-    Logger.debug("MediaPlayerFactory(libvlcArgs={})", Arrays.toString(libvlcArgs));
+    this(libvlcArgs, LibVlcFactory.factory().synchronise().log().create());
+  }
+
+  /**
+   * Create a new media player factory.
+   * 
+   * @param libvlcArgs initialisation arguments to pass to libvlc
+   * @param libvlc interface to the native library
+   */
+  public MediaPlayerFactory(String[] libvlcArgs, LibVlc libvlc) {
+    Logger.debug("MediaPlayerFactory(libvlcArgs={},libvlc={})", Arrays.toString(libvlcArgs), libvlc);
+    
+    this.libvlc = libvlc;
     
     this.instance = libvlc.libvlc_new(libvlcArgs.length, libvlcArgs);
     Logger.debug("instance={}", instance);
@@ -111,7 +127,7 @@ public class MediaPlayerFactory {
       throw new IllegalStateException("Unable to initialise libvlc, check your libvlc options and/or check the console for error messages");
     }
   }
-
+  
   /**
    * Set the application name.
    * 
