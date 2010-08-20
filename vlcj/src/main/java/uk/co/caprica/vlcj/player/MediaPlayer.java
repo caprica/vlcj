@@ -31,10 +31,12 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.imageio.ImageIO;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
@@ -188,7 +190,10 @@ public abstract class MediaPlayer {
   
   private libvlc_media_stats_t libvlcMediaStats;
 
-  private volatile boolean released;
+  /**
+   * Set to true when the player has been released.
+   */
+  private AtomicBoolean released = new AtomicBoolean();
   
   /**
    * Create a new media player.
@@ -1668,12 +1673,14 @@ public abstract class MediaPlayer {
     libvlcMediaStats = new libvlc_media_stats_t();
   }
 
+  /**
+   * Release the media player, freeing all associated (including native) resources.
+   */
   public void release() {
     Logger.debug("release()");
     
-    if(!released) {
+    if(released.compareAndSet(false, true)) {
       destroyInstance();
-      released = true;
     }
   }
 
