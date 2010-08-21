@@ -112,7 +112,7 @@ public class LogHandler {
    */
   public void release() {
     Logger.debug("release()");
-    executor.shutdown();
+    executor.shutdownNow();
   }
   
   /**
