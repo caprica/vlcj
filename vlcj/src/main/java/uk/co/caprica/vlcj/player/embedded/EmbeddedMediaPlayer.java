@@ -25,6 +25,8 @@ import java.awt.Robot;
 import java.awt.Window;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.SwingUtilities;
@@ -86,7 +88,13 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
    * Listener implementation used to keep the overlay position and size in sync
    * with the video surface.
    */
-  private final OverlayAdapter overlayAdapter;
+  private final OverlayComponentAdapter overlayComponentAdapter;
+  
+  /**
+   * Listener implementation used to keep the overlay visibility state in sync
+   * with the video surface.
+   */
+  private final OverlayWindowAdapter overlayWindowAdapter;
   
   /**
    * Component to render the video to.
@@ -98,6 +106,18 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
    */
   private Window overlay;
   
+  /**
+   * Track the requested overlay enabled/disabled state so it can be restored
+   * when needed.
+   */
+  private boolean requestedOverlay;
+  
+  /**
+   * Track whether or not the overlay should be restored when the video surface
+   * is shown/hidden. 
+   */
+  private boolean restoreOverlay;
+
   /**
    * Create a new media player.
    * <p>
@@ -119,7 +139,8 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
     super(instance);
     
     this.fullScreenStrategy = fullScreenStrategy;
-    this.overlayAdapter = new OverlayAdapter();
+    this.overlayComponentAdapter = new OverlayComponentAdapter();
+    this.overlayWindowAdapter = new OverlayWindowAdapter();
   }
 
   /**
@@ -247,8 +268,11 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
       // Disable the current overlay if there is one
       enableOverlay(false);
     
-      // Set the new overlay, but do not enable it
-      this.overlay = overlay;
+      // Remove the existing overlay if there is one
+      removeOverlay();
+
+      // Add the new overlay, but do not enable it
+      addOverlay(overlay);
     }
     else {
       throw new IllegalStateException("Can't set an overlay when there's no video surface");
@@ -263,13 +287,15 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
   public void enableOverlay(boolean enable) {
     Logger.debug("enableOverlay(enable={})", enable);
     
+    requestedOverlay = enable;
+    
     if(overlay != null) {
       if(enable) {
         if(!overlay.isVisible()) {
           overlay.setLocation(videoSurface.getLocationOnScreen());
           overlay.setSize(videoSurface.getSize());
           Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface);
-          window.addComponentListener(overlayAdapter);
+          window.addComponentListener(overlayComponentAdapter);
           overlay.setVisible(true);
         }
       }
@@ -277,7 +303,7 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
         if(overlay.isVisible()) {
           overlay.setVisible(false);
           Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface);
-          window.removeComponentListener(overlayAdapter);
+          window.removeComponentListener(overlayComponentAdapter);
         }
       }
     }
@@ -295,6 +321,34 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
   }
   
   /**
+   * 
+   * 
+   * @param overlay overlay window
+   */
+  private void addOverlay(Window overlay) {
+    Logger.debug("addOverlay(overlay={})", overlay);
+    if(overlay != null) {
+      Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface);
+      window.addWindowListener(overlayWindowAdapter);
+      this.overlay = overlay;
+    }
+  }
+  
+  /**
+   * 
+   * 
+   * @param overlay overlay window
+   */
+  private void removeOverlay() {
+    Logger.debug("removeOverlay()");
+    if(overlay != null) {
+      Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface);
+      window.removeWindowListener(overlayWindowAdapter);
+      overlay = null;
+    }
+  }
+  
+  /**
    * Template method for setting the video surface natively.
    * <p>
    * Implementing classes should override this method to invoke the appropriate
@@ -309,22 +363,73 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
    * Component event listener to keep the overlay component in sync with the
    * video surface component.
    */
-  private final class OverlayAdapter extends ComponentAdapter {
+  private final class OverlayComponentAdapter extends ComponentAdapter {
 
-    // TODO automatically hide overlay when window not active? 
-    //      otherwise it's appearing in front of all other windows and the 
-    //      application has to manage it
-    
-    @Override
+//    @Override
     public void componentResized(ComponentEvent e) {
       Logger.trace("componentResized(e={})", e);
       overlay.setSize(videoSurface.getSize());
     }
 
-    @Override
+//    @Override
     public void componentMoved(ComponentEvent e) {
       Logger.trace("componentMoved(e={})", e);
       overlay.setLocation(videoSurface.getLocationOnScreen());
+    }
+
+//    @Override
+    public void componentShown(ComponentEvent e) {
+      Logger.trace("componentShown(e={})", e);
+      showOverlay();
+    }
+
+//    @Override
+    public void componentHidden(ComponentEvent e) {
+      Logger.trace("componentHidden(e={})", e);
+      hideOverlay();
+    }
+  }
+  
+  /**
+   * Window event listener to hide the overlay when the video window is hidden,
+   * and vice versa.
+   */
+  private final class OverlayWindowAdapter extends WindowAdapter {
+    
+//    @Override
+    public void windowIconified(WindowEvent e) {
+      Logger.trace("windowIconified(e={})", e);
+      hideOverlay();
+    }
+
+//    @Override
+    public void windowDeiconified(WindowEvent e) {
+      Logger.trace("windowDeiconified(e={})", e);
+      showOverlay();
+    }
+  }
+  
+  /**
+   * 
+   */
+  private void showOverlay() {
+    Logger.trace("showOverlay()");
+    if(restoreOverlay) {
+      enableOverlay(true);
+    }
+  }
+  
+  /**
+   * 
+   */
+  private void hideOverlay() {
+    Logger.trace("hideOverlay()");
+    if(requestedOverlay) {
+      restoreOverlay = true;
+      enableOverlay(false);
+    }
+    else {
+      restoreOverlay = false;
     }
   }
 }
