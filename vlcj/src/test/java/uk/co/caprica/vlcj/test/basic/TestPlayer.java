@@ -426,7 +426,7 @@ public class TestPlayer {
       }
 
       // Demo the marquee      
-      mediaPlayer.setMarqueeText("VLCJ 1.1.2");
+      mediaPlayer.setMarqueeText("VLCJ 1.1.3");
       mediaPlayer.setMarqueeSize(40);
       mediaPlayer.setMarqueeOpacity(95);
       mediaPlayer.setMarqueeColour(Color.white);
