@@ -72,18 +72,6 @@ public class WindowsCanvas extends Canvas {
     
     Logger.warn("You are using the WindowsCanvas implementation, this may cause spurious random VM crashes when you shut down your application");
     
-    // Register a shutdown hook to make sure the mouse hook is removed
-    Runtime.getRuntime().addShutdownHook(new Thread() {
-      @Override
-      public void run() {
-        Logger.debug("run()");
-        if(mouseHook != null) {
-          mouseHook.release();
-        }
-        Logger.debug("runnable exits");
-      }
-    });
-    
     mouseHook = new WindowsMouseHook(this);
     Logger.debug("mouseHook={}", mouseHook);
     
