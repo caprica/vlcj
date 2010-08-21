@@ -1674,11 +1674,12 @@ public abstract class MediaPlayer {
   /**
    * Release the media player, freeing all associated (including native) resources.
    */
-  public void release() {
+  public final void release() {
     Logger.debug("release()");
     
     if(released.compareAndSet(false, true)) {
       destroyInstance();
+      onAfterRelease();
     }
   }
 
@@ -1860,5 +1861,12 @@ public abstract class MediaPlayer {
    */
   protected final libvlc_media_player_t mediaPlayerInstance() {
     return mediaPlayerInstance;
+  }
+
+  /**
+   * Allow sub-classes to clean-up.
+   */
+  protected void onAfterRelease() {
+    // Base implementation does nothing
   }
 }
