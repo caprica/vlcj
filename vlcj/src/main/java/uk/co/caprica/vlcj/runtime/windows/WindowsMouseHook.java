@@ -207,9 +207,9 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     
     HHOOK hook = getHook();
     if(hook != null) {
-//      USER32_INSTANCE.UnhookWindowsHookEx(hHook); //FIXME this should be possible without causing a VM crash? are there some ordering issues?
+      USER32_INSTANCE.UnhookWindowsHookEx(hHook);
       hook = null;
-      
+
       // TODO ordinarily I'd interrupt the thread to force it to exit if it's
       //      blocked, but in this case a fatal VM failure would occur
 //      hookThread.interrupt();
@@ -239,9 +239,9 @@ public class WindowsMouseHook implements LowLevelMouseProc {
       if(window != null && window.isActive()) {
         Logger.trace("window is active");
         
-        // Is the component visible...
+        // Is the component showing...
         // TODO is this still needed or is isActive good enough?
-        if(relativeTo.isVisible() && relativeTo.isValid()) {
+        if(relativeTo.isShowing() && relativeTo.isValid()) {
           Logger.trace("window is visible");
           
           // Did the event occur inside the component bounds...
