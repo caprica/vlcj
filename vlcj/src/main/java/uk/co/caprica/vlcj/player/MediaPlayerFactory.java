@@ -186,7 +186,6 @@ public class MediaPlayerFactory {
     List<AudioOutput> result = new ArrayList<AudioOutput>();
     libvlc_audio_output_t audioOutput = libvlc.libvlc_audio_output_list_get(instance);
     while(audioOutput != null) {
-      System.out.println(audioOutput.psz_name);
       result.add(new AudioOutput(audioOutput.psz_name, audioOutput.psz_description));
       audioOutput = audioOutput.p_next;
     }
