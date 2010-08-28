@@ -19,10 +19,13 @@
 
 package uk.co.caprica.vlcj.player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogLevel;
@@ -171,6 +174,24 @@ public class MediaPlayerFactory {
     Logger.debug("setLogVerbosity(level={})", level);
 
     libvlc.libvlc_set_log_verbosity(instance, level.intValue());
+  }
+
+  /**
+   * Get the available audio outputs.
+   * 
+   * @return collection of audio outputs
+   */
+  public List<AudioOutput> getAudioOutputs() {
+    Logger.debug("getAudioOutputs()");
+    List<AudioOutput> result = new ArrayList<AudioOutput>();
+    libvlc_audio_output_t audioOutput = libvlc.libvlc_audio_output_list_get(instance);
+    while(audioOutput != null) {
+      System.out.println(audioOutput.psz_name);
+      result.add(new AudioOutput(audioOutput.psz_name, audioOutput.psz_description));
+      audioOutput = audioOutput.p_next;
+    }
+    libvlc.libvlc_audio_output_list_release(audioOutput);
+    return result;
   }
   
   /**

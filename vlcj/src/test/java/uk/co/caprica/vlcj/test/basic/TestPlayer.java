@@ -64,6 +64,7 @@ import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.log.logger.DefaultLogMessageHandler;
 import uk.co.caprica.vlcj.log.matcher.MatcherCallback;
 import uk.co.caprica.vlcj.log.matcher.MatcherLogMessageHandler;
+import uk.co.caprica.vlcj.player.AudioOutput;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -193,6 +194,9 @@ public class TestPlayer {
       })
     );
     logHandler.start();
+
+    List<AudioOutput> audioOutputs = mediaPlayerFactory.getAudioOutputs();
+    Logger.info("audioOutputs={}", audioOutputs);
     
     mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
 

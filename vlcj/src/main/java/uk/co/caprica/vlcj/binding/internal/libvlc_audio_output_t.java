@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 /**
@@ -27,7 +26,9 @@ import com.sun.jna.Structure;
  */
 public class libvlc_audio_output_t extends Structure {
 
-  String psz_name;
-  String psz_description;
-  Pointer p_next;
+  public static class ByReference extends libvlc_audio_output_t implements Structure.ByReference {}
+
+  public String psz_name;
+  public String psz_description;
+  public libvlc_audio_output_t.ByReference p_next;
 }
