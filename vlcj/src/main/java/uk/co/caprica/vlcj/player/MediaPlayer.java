@@ -60,6 +60,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
 // TODO this class file has nearly 2k lines and that is too many
+// TODO do i need a new approach for robustness - i.e. check if release has been called, and guard each method - but then each method must lock the libvlc/mediaplayer in case someone else releases it!? - e.g. a critical section?
 
 /**
  * Media player implementation.
@@ -793,6 +794,20 @@ public abstract class MediaPlayer {
   
   // === Audio Controls =======================================================
 
+  /**
+   * Set the desired audio output.
+   * 
+   * The change will not be applied until the media player has been stopped and
+   * then played again.
+   * 
+   * @param outputName name of the desired audio output
+   */
+  public void selectAudioOutput(String outputName) {
+    Logger.debug("selectAudioOutput(outputName={})", outputName);
+    
+    libvlc.libvlc_audio_output_set(mediaPlayerInstance, outputName);
+  }
+  
   /**
    * Toggle volume mute.
    */
