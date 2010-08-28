@@ -158,7 +158,8 @@ public class VideoMetaData {
   public void setChapterDescriptions(Map<Integer, List<String>> chapterDescriptions) {
     this.chapterDescriptions = chapterDescriptions;
   }
-
+  
+//  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(200);
     sb.append(getClass().getSimpleName()).append('[');
