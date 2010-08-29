@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * If a log is opened, it's contents must be regularly consumed to prevent 
  * clogging - this implementation creates a background thread to consume the
- * log messages and send them to the local log sub-system.
+ * log messages for processing by client applications.
  * <p>
  * This implementation periodically checks the native libvlc log to retrieve
  * log messages.
