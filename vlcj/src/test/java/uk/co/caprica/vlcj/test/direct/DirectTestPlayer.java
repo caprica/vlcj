@@ -43,12 +43,12 @@ import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
 
 /**
- * This simple test player shows how to get direct access to the mediaPlayer frame
+ * This simple test player shows how to get direct access to the video frame
  * data.
  * <p>
- * This implementation uses the new (1.1.1) libvlc mediaPlayer call-backs function.
+ * This implementation uses the new (1.1.1) libvlc video call-backs function.
  * <p>
- * Since the mediaPlayer frame data is made available, the Java callback may modify
+ * Since the video frame data is made available, the Java callback may modify
  * the contents of the frame if required.
  * <p>
  * The frame data may also be rendered components such as an OpenGL texture.
@@ -63,7 +63,7 @@ public class DirectTestPlayer {
 //  private final int height = 720;
 
   /**
-   * Image to render the mediaPlayer frame data.
+   * Image to render the video frame data.
    */
 	private final BufferedImage image;
 	
