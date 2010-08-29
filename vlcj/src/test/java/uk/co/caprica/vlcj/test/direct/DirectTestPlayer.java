@@ -42,6 +42,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
 
+
 /**
  * This simple test player shows how to get direct access to the video frame
  * data.
@@ -54,86 +55,90 @@ import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
  * The frame data may also be rendered components such as an OpenGL texture.
  */
 public class DirectTestPlayer {
-	
-	// The size does NOT need to match the mediaPlayer size - it's the size that the mediaPlayer will be scaled to
-	// Matching the native size will be faster of course
+
+  // The size does NOT need to match the mediaPlayer size - it's the size that
+// the mediaPlayer will be scaled to
+  // Matching the native size will be faster of course
   private final int width = 720;
+
   private final int height = 480;
-//  private final int width = 1280;
-//  private final int height = 720;
+
+// private final int width = 1280;
+// private final int height = 720;
 
   /**
    * Image to render the video frame data.
    */
-	private final BufferedImage image;
-	
-	private final MediaPlayerFactory factory;
-	private final DirectMediaPlayer mediaPlayer;
-	
-	private ImagePane imagePane;
-	
-	public DirectTestPlayer(String media, String[] args) throws InterruptedException, InvocationTargetException {		
+  private final BufferedImage image;
+
+  private final MediaPlayerFactory factory;
+
+  private final DirectMediaPlayer mediaPlayer;
+
+  private ImagePane imagePane;
+
+  public DirectTestPlayer(String media, String[] args) throws InterruptedException, InvocationTargetException {
     image = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(width, height);
     image.setAccelerationPriority(1.0f);
 
-	  SwingUtilities.invokeAndWait(new Runnable() {
+    SwingUtilities.invokeAndWait(new Runnable() {
 
-			@Override
-			public void run() {
-				JFrame frame = new JFrame("VLCJ 1.1.1 Direct Video Test");
-				imagePane = new ImagePane(image);
-				imagePane.setSize(width, height);
+      @Override
+      public void run() {
+        JFrame frame = new JFrame("VLCJ 1.1.1 Direct Video Test");
+        imagePane = new ImagePane(image);
+        imagePane.setSize(width, height);
         imagePane.setMinimumSize(new Dimension(width, height));
         imagePane.setPreferredSize(new Dimension(width, height));
-				frame.getContentPane().setLayout(new BorderLayout());
-				frame.getContentPane().add(imagePane, BorderLayout.CENTER);
-				frame.pack();
-				frame.setResizable(false);
-				frame.setVisible(true);
-				
-				frame.addWindowListener(new WindowAdapter() {
-					public void windowClosing(WindowEvent evt) {
-						mediaPlayer.release();
-						factory.release();
-						System.exit(0);
-					}
-				});
-			}
-			
-		});
-		
-		factory = new MediaPlayerFactory(args);
-		mediaPlayer = factory.newMediaPlayer(width, height, new TestRenderCallback());
-		mediaPlayer.playMedia(media);
-		
-		// Just to show regular media player functions still work...
-		Thread.sleep(5000);
-		mediaPlayer.nextChapter();
-	}
-	
-	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
-		if(args.length < 1) {
-			System.out.println("Specify a single media URL");
-			System.exit(1);
-		}
-		
-		String[] vlcArgs = (args.length == 1) ? new String[] { } : Arrays.copyOfRange(args, 1, args.length);
-		
-		new DirectTestPlayer(args[0], vlcArgs);
-		
-		// Application will not exit since the UI thread is running
-	}
+        frame.getContentPane().setLayout(new BorderLayout());
+        frame.getContentPane().add(imagePane, BorderLayout.CENTER);
+        frame.pack();
+        frame.setResizable(false);
+        frame.setVisible(true);
+
+        frame.addWindowListener(new WindowAdapter() {
+          public void windowClosing(WindowEvent evt) {
+            mediaPlayer.release();
+            factory.release();
+            System.exit(0);
+          }
+        });
+      }
+
+    });
+
+    factory = new MediaPlayerFactory(args);
+    mediaPlayer = factory.newMediaPlayer(width, height, new TestRenderCallback());
+    mediaPlayer.playMedia(media);
+
+    // Just to show regular media player functions still work...
+    Thread.sleep(5000);
+    mediaPlayer.nextChapter();
+  }
+
+  public static void main(String[] args) throws InterruptedException, InvocationTargetException {
+    if(args.length < 1) {
+      System.out.println("Specify a single media URL");
+      System.exit(1);
+    }
+
+    String[] vlcArgs = (args.length == 1) ? new String[] {} : Arrays.copyOfRange(args, 1, args.length);
+
+    new DirectTestPlayer(args[0], vlcArgs);
+
+    // Application will not exit since the UI thread is running
+  }
 
   private final class ImagePane extends JPanel {
 
     private final BufferedImage image;
-    
+
     private final Font font = new Font("Sansserif", Font.BOLD, 36);
-    
+
     public ImagePane(BufferedImage image) {
       this.image = image;
     }
-    
+
     @Override
     public void paint(Graphics g) {
       Graphics2D g2 = (Graphics2D)g;
@@ -151,17 +156,17 @@ public class DirectTestPlayer {
     }
   }
 
-	private final class TestRenderCallback extends RenderCallbackAdapter {
-	  
-	  public TestRenderCallback() {
-	    super(new int[width * height]);
-	  }
-	  
-	  @Override
-	  public void onDisplay(int[] data) {
-	    // The image data could be manipulated here... 
-	    image.setRGB(0, 0, width, height, data, 0, width);
-	    imagePane.repaint();
-	  }
-	}
+  private final class TestRenderCallback extends RenderCallbackAdapter {
+
+    public TestRenderCallback() {
+      super(new int[width * height]);
+    }
+
+    @Override
+    public void onDisplay(int[] data) {
+      // The image data could be manipulated here...
+      image.setRGB(0, 0, width, height, data, 0, width);
+      imagePane.repaint();
+    }
+  }
 }
