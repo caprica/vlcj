@@ -48,7 +48,7 @@ import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
  * <p>
  * This implementation uses the new (1.1.1) libvlc video call-backs function.
  * <p>
- * Since the video frame data is made available, the Java callback may modify
+ * Since the video frame data is made available, the Java call-back may modify
  * the contents of the frame if required.
  * <p>
  * The frame data may also be rendered components such as an OpenGL texture.
