@@ -102,6 +102,12 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
   private Canvas videoSurface;
   
   /**
+   * Setting the video surface is deferred, this flag tracks whether or not the
+   * video surface has been set for the native player.
+   */
+  private boolean videoSurfaceSet;
+
+  /**
    * Optional overlay component.
    */
   private Window overlay;
@@ -146,8 +152,9 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
   /**
    * Set the component used to render video.
    * <p>
-   * The video surface component must be visible and fully 'realised' before
-   * calling this method.
+   * Setting the video surface on the native component is actually deferred so
+   * the component used as the video surface need <em>not</em> be visible and
+   * fully realised before calling this method.
    * 
    * @param videoSurface component to render video to
    */
@@ -156,10 +163,9 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
     
     // Keep a hard reference to the video surface component
     this.videoSurface = videoSurface;
-    
-    // Delegate to the template method in the OS-specific implementation 
-    // class to actually set the video surface
-    nativeSetVideoSurface(mediaPlayerInstance(), videoSurface);
+
+    // Defer setting the video surface until later
+    this.videoSurfaceSet = false;
   }
   
   /**
@@ -348,6 +354,18 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
     }
   }
   
+//  @Override
+  protected void onBeforePlay() {
+    Logger.debug("onBeforePlay()");
+    Logger.debug("videoSurfaceSet={}", videoSurfaceSet);
+    if(!videoSurfaceSet) {
+      // Delegate to the template method in the OS-specific implementation 
+      // class to actually set the video surface
+      nativeSetVideoSurface(mediaPlayerInstance(), videoSurface);
+      videoSurfaceSet = true;
+    }
+  }
+
   /**
    * Template method for setting the video surface natively.
    * <p>

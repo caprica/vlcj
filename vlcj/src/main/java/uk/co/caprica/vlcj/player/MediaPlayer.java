@@ -631,6 +631,8 @@ public abstract class MediaPlayer {
   public void play() {
     Logger.debug("play()");
 
+    onBeforePlay();
+
     libvlc.libvlc_media_player_play(mediaPlayerInstance);
   }
 
@@ -1878,6 +1880,13 @@ public abstract class MediaPlayer {
     return mediaPlayerInstance;
   }
 
+  /**
+   * Allow sub-classes to do something just before the video is started.
+   */
+  protected void onBeforePlay() {
+    // Base implementation does nothing
+  }
+  
   /**
    * Allow sub-classes to clean-up.
    */
