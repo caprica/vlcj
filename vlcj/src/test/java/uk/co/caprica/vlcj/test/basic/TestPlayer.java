@@ -308,8 +308,8 @@ public class TestPlayer {
       AWTUtilities.setWindowOpaque(test, false); // Doesn't work in full-screen exclusive mode, you would have to use 'simulated' full-screen - requires Sun/Oracle JDK
       test.setBackground(new Color(0, 0, 0, 0)); // This is what you do in JDK7
       
-      mediaPlayer.setOverlay(test);
-      mediaPlayer.enableOverlay(true);
+//      mediaPlayer.setOverlay(test);
+//      mediaPlayer.enableOverlay(true);
     }
     
 	// This might be useful
@@ -380,7 +380,7 @@ public class TestPlayer {
     helpMenu.add(helpAboutMenuItem);
     
     menuBar.add(helpMenu);
-    
+
     return menuBar;
   }
 
