@@ -51,6 +51,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -148,6 +149,10 @@ public class TestPlayer {
     videoSurface.setBackground(Color.black);
     videoSurface.setSize(800, 600); // Only for initial layout
 
+    // Since we're mixing lightweight Swing components and heavyweight AWT 
+    // components this is probably a good idea
+    JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+    
     TestPlayerMouseListener mouseListener = new TestPlayerMouseListener();
     videoSurface.addMouseListener(mouseListener);
     videoSurface.addMouseMotionListener(mouseListener);
