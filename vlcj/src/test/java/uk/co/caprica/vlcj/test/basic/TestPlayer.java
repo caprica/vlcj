@@ -199,6 +199,7 @@ public class TestPlayer {
     Logger.info("audioOutputs={}", audioOutputs);
     
     mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
+    mediaPlayer.setVideoSurface(videoSurface);
 
     controlsPanel = new PlayerControlsPanel(mediaPlayer);
     videoAdjustPanel = new PlayerVideoAdjustPanel(mediaPlayer);
@@ -271,7 +272,6 @@ public class TestPlayer {
     mainFrame.setVisible(true);
     
     mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
-    mediaPlayer.setVideoSurface(videoSurface);
     
     // Won't work with OpenJDK or JDK1.7, requires a Sun/Oracle JVM (currently)
     boolean transparentWindowsSupport = true;
