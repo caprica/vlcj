@@ -642,7 +642,7 @@ public interface LibVlc extends Library {
    * @param p_unlock callback to release video memory
    * @param p_display callback when ready to display a video frame
    * @param p_opaque private pointer for the three callbacks (as first parameter)
-   * @since LibVLC 1.1.1 or later
+   * @since LibVLC 1.1.1
    */
   void libvlc_video_set_callbacks(libvlc_media_player_t mp, libvlc_lock_callback_t p_lock, libvlc_unlock_callback_t p_unlock, libvlc_display_callback_t p_display, Pointer p_opaque);
 
@@ -655,7 +655,7 @@ public interface LibVlc extends Library {
    * @param width pixel width
    * @param height pixel height
    * @param pitch line pitch (in bytes)
-   * @since LibVLC 1.1.1 or later
+   * @since LibVLC 1.1.1
    */
   void libvlc_video_set_format(libvlc_media_player_t mp, String chroma, int width, int height, int pitch);
   
@@ -942,6 +942,15 @@ public interface LibVlc extends Library {
    */
   void libvlc_media_player_next_frame(libvlc_media_player_t p_mi);
 
+  /**
+   * Navigate through DVD Menu
+   *
+   * @param p_mi the Media Player
+   * @param navigate the Navigation mode
+   * since libVLC 1.2.0
+   */
+  void libvlc_media_player_navigate(libvlc_media_player_t p_mi, int navigate);
+  
   /**
    * Release (free) libvlc_track_description_t
    * 
