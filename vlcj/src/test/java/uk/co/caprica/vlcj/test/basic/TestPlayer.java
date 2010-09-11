@@ -201,7 +201,7 @@ public class TestPlayer {
     logHandler.start();
 
     List<AudioOutput> audioOutputs = mediaPlayerFactory.getAudioOutputs();
-    Logger.info("audioOutputs={}", audioOutputs);
+    Logger.debug("audioOutputs={}", audioOutputs);
     
     mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
     mediaPlayer.setVideoSurface(videoSurface);
