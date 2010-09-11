@@ -39,12 +39,12 @@ public enum libvlc_marquee_position_e {
   private static final Map<Integer, libvlc_marquee_position_e> INT_MAP = new HashMap<Integer, libvlc_marquee_position_e>(); 
 
   static {
-    for(libvlc_marquee_position_e event : libvlc_marquee_position_e.values()) {
-      INT_MAP.put(event.intValue, event);
+    for(libvlc_marquee_position_e value : libvlc_marquee_position_e.values()) {
+      INT_MAP.put(value.intValue, value);
     }
   }
 
-  public static libvlc_marquee_position_e event(int intValue) {
+  public static libvlc_marquee_position_e position(int intValue) {
     return INT_MAP.get(intValue);
   }
   
