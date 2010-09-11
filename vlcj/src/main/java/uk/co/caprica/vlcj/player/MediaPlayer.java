@@ -46,6 +46,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
@@ -943,6 +944,58 @@ public abstract class MediaPlayer {
     Logger.debug("previousChapter()");
     
     libvlc.libvlc_media_player_previous_chapter(mediaPlayerInstance);
+  }
+
+  // === DVD Menu Navigation Controls =========================================
+
+  /**
+   * 
+   * 
+   * <strong>Requires vlc 1.2.0 or later.</strong>
+   */
+  public void menuActivate() {
+    Logger.debug("menuActivate()");
+    libvlc.libvlc_media_player_navigate(mediaPlayerInstance, libvlc_navigate_mode_e.libvlc_navigate_activate.intValue());
+  }
+  
+  /**
+   * 
+   * 
+   * <strong>Requires vlc 1.2.0 or later.</strong>
+   */
+  public void menuUp() {
+    Logger.debug("menuUp()");
+    libvlc.libvlc_media_player_navigate(mediaPlayerInstance, libvlc_navigate_mode_e.libvlc_navigate_up.intValue());
+  }
+  
+  /**
+   * 
+   * 
+   * <strong>Requires vlc 1.2.0 or later.</strong>
+   */
+  public void menuDown() {
+    Logger.debug("menuDown()");
+    libvlc.libvlc_media_player_navigate(mediaPlayerInstance, libvlc_navigate_mode_e.libvlc_navigate_down.intValue());
+  }
+  
+  /**
+   * 
+   * 
+   * <strong>Requires vlc 1.2.0 or later.</strong>
+   */
+  public void menuLeft() {
+    Logger.debug("menuLeft()");
+    libvlc.libvlc_media_player_navigate(mediaPlayerInstance, libvlc_navigate_mode_e.libvlc_navigate_left.intValue());
+  }
+
+  /**
+   * 
+   * 
+   * <strong>Requires vlc 1.2.0 or later.</strong>
+   */
+  public void menuRight() {
+    Logger.debug("menuRight()");
+    libvlc.libvlc_media_player_navigate(mediaPlayerInstance, libvlc_navigate_mode_e.libvlc_navigate_right.intValue());
   }
   
   // === Sub-Picture/Sub-Title Controls =======================================
