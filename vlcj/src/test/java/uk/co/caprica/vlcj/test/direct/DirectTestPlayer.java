@@ -57,7 +57,7 @@ import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
 public class DirectTestPlayer {
 
   // The size does NOT need to match the mediaPlayer size - it's the size that
-// the mediaPlayer will be scaled to
+  // the mediaPlayer will be scaled to
   // Matching the native size will be faster of course
   private final int width = 720;
 
