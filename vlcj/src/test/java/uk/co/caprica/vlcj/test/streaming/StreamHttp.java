@@ -12,7 +12,7 @@ public class StreamHttp {
 
   public static void main(String[] args) throws Exception {
     String media = "/home/movies/test.mp4";
-    String options = formatHttpstream("127.0.0.1", 5555);
+    String options = formatHttpStream("127.0.0.1", 5555);
 
     System.out.println("Streaming '" + media + "' to '" + options + "'");
 
@@ -24,7 +24,7 @@ public class StreamHttp {
     Thread.currentThread().join();
   }
 
-  private static String formatHttpstream(String serverAddress, int serverPort) {
+  private static String formatHttpStream(String serverAddress, int serverPort) {
     StringBuilder sb = new StringBuilder(60);
     sb.append(":sout=#duplicate{dst=std{access=http,mux=ts,");
     sb.append("dst=");
