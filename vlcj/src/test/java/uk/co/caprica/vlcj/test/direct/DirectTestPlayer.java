@@ -52,7 +52,8 @@ import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
  * Since the video frame data is made available, the Java call-back may modify
  * the contents of the frame if required.
  * <p>
- * The frame data may also be rendered components such as an OpenGL texture.
+ * The frame data may also be rendered into components such as an OpenGL 
+ * texture.
  */
 public class DirectTestPlayer {
 
