@@ -36,8 +36,6 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
  * Minimal media player application.
  * <p>
  * Specify a single media MRL as a command-line argument.
- * <p>
- * VLCJ depends on log4j, so ensure you have a log4j.jar file in your class-path.
  */
 public class NumptyPlayer {
   
