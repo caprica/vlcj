@@ -17,8 +17,8 @@ public class TestMediaListPlayer {
     mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventListener() {});
     
     MediaList mediaList = mediaPlayerFactory.newMediaList();
-    mediaList.addMedia("/big/PearlAndDeanIntro-16x9.avi");
-    mediaList.addMedia("/home/mark/Desktop/nfs.mp4");
+    mediaList.addMedia("/intro.mp4");
+    mediaList.addMedia("/home/movie/1.mp4");
     
     mediaListPlayer.setMediaList(mediaList);
 
