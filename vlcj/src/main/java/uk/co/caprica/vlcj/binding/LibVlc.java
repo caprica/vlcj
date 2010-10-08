@@ -1573,22 +1573,22 @@ public interface LibVlc extends Library {
   /**
    * Create an empty media list.
    *
-   * \param p_instance libvlc instance
-   * \return empty media list, or NULL on error
+   * @param p_instance libvlc instance
+   * @return empty media list, or NULL on error
    */
   libvlc_media_list_t libvlc_media_list_new(libvlc_instance_t p_instance);
 
   /**
    * Release media list created with libvlc_media_list_new().
    *
-   * \param p_ml a media list created with libvlc_media_list_new()
+   * @param p_ml a media list created with libvlc_media_list_new()
    */
   void libvlc_media_list_release(libvlc_media_list_t p_ml);
 
   /**
    * Retain reference to a media list
    *
-   * \param p_ml a media list created with libvlc_media_list_new()
+   * @param p_ml a media list created with libvlc_media_list_new()
    */
   void libvlc_media_list_retain(libvlc_media_list_t p_ml);
 
@@ -1597,8 +1597,8 @@ public interface LibVlc extends Library {
    * If another media instance was present it will be released.
    * The libvlc_media_list_lock should NOT be held upon entering this function.
    *
-   * \param p_ml a media list instance
-   * \param p_md media instance to add
+   * @param p_ml a media list instance
+   * @param p_md media instance to add
    */
   void libvlc_media_list_set_media(libvlc_media_list_t p_ml, libvlc_media_t p_md);
 
@@ -1607,8 +1607,8 @@ public interface LibVlc extends Library {
    * the refcount on the media instance.
    * The libvlc_media_list_lock should NOT be held upon entering this function.
    *
-   * \param p_ml a media list instance
-   * \return media instance
+   * @param p_ml a media list instance
+   * @return media instance
    */
   libvlc_media_t libvlc_media_list_media(libvlc_media_list_t p_ml);
 
@@ -1616,9 +1616,9 @@ public interface LibVlc extends Library {
    * Add media instance to media list
    * The libvlc_media_list_lock should be held upon entering this function.
    *
-   * \param p_ml a media list instance
-   * \param p_md a media instance
-   * \return 0 on success, -1 if the media list is read-only
+   * @param p_ml a media list instance
+   * @param p_md a media instance
+   * @return 0 on success, -1 if the media list is read-only
    */
   int libvlc_media_list_add_media(libvlc_media_list_t p_ml, libvlc_media_t p_md);
 
@@ -1626,10 +1626,10 @@ public interface LibVlc extends Library {
    * Insert media instance in media list on a position
    * The libvlc_media_list_lock should be held upon entering this function.
    *
-   * \param p_ml a media list instance
-   * \param p_md a media instance
-   * \param i_pos position in array where to insert
-   * \return 0 on success, -1 if the media list si read-only
+   * @param p_ml a media list instance
+   * @param p_md a media instance
+   * @param i_pos position in array where to insert
+   * @return 0 on success, -1 if the media list si read-only
    */
   int libvlc_media_list_insert_media(libvlc_media_list_t p_ml, libvlc_media_t p_md, int i_pos);
 
@@ -1637,9 +1637,9 @@ public interface LibVlc extends Library {
    * Remove media instance from media list on a position
    * The libvlc_media_list_lock should be held upon entering this function.
    *
-   * \param p_ml a media list instance
-   * \param i_pos position in array where to insert
-   * \return 0 on success, -1 if the list is read-only or the item was not found
+   * @param p_ml a media list instance
+   * @param i_pos position in array where to insert
+   * @return 0 on success, -1 if the list is read-only or the item was not found
    */
   int libvlc_media_list_remove_index(libvlc_media_list_t p_ml, int i_pos);
 
@@ -1647,8 +1647,8 @@ public interface LibVlc extends Library {
    * Get count on media list items
    * The libvlc_media_list_lock should be held upon entering this function.
    *
-   * \param p_ml a media list instance
-   * \return number of items in media list
+   * @param p_ml a media list instance
+   * @return number of items in media list
    */
   int libvlc_media_list_count(libvlc_media_list_t p_ml);
 
@@ -1656,9 +1656,9 @@ public interface LibVlc extends Library {
    * List media instance in media list at a position
    * The libvlc_media_list_lock should be held upon entering this function.
    *
-   * \param p_ml a media list instance
-   * \param i_pos position in array where to insert
-   * \return media instance at position i_pos, or NULL if not found.
+   * @param p_ml a media list instance
+   * @param i_pos position in array where to insert
+   * @return media instance at position i_pos, or NULL if not found.
    * In case of success, libvlc_media_retain() is called to increase the refcount
    * on the media.
    */
@@ -1669,24 +1669,24 @@ public interface LibVlc extends Library {
    * Warning: the function will return the first matched position.
    * The libvlc_media_list_lock should be held upon entering this function.
    *
-   * \param p_ml a media list instance
-   * \param p_md media list instance
-   * \return position of media instance
+   * @param p_ml a media list instance
+   * @param p_md media list instance
+   * @return position of media instance
    */
   int libvlc_media_list_index_of_item(libvlc_media_list_t p_ml, libvlc_media_t p_md);
 
   /**
    * This indicates if this media list is read-only from a user point of view
    *
-   * \param p_ml media list instance
-   * \return 0 on readonly, 1 on readwrite
+   * @param p_ml media list instance
+   * @return 0 on readonly, 1 on readwrite
    */
   int libvlc_media_list_is_readonly(libvlc_media_list_t p_ml);
 
   /**
    * Get lock on media list items
    *
-   * \param p_ml a media list instance
+   * @param p_ml a media list instance
    */
   void libvlc_media_list_lock(libvlc_media_list_t p_ml);
 
@@ -1694,7 +1694,7 @@ public interface LibVlc extends Library {
    * Release lock on media list items
    * The libvlc_media_list_lock should be held upon entering this function.
    *
-   * \param p_ml a media list instance
+   * @param p_ml a media list instance
    */
   void libvlc_media_list_unlock(libvlc_media_list_t p_ml);
 
@@ -1702,8 +1702,8 @@ public interface LibVlc extends Library {
    * Get libvlc_event_manager from this media list instance.
    * The p_event_manager is immutable, so you don't have to hold the lock
    *
-   * \param p_ml a media list instance
-   * \return libvlc_event_manager
+   * @param p_ml a media list instance
+   * @return libvlc_event_manager
    */
   libvlc_event_manager_t libvlc_media_list_event_manager(libvlc_media_list_t p_ml);
   
