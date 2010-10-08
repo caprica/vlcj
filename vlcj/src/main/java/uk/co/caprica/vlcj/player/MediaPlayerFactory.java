@@ -38,6 +38,8 @@ import uk.co.caprica.vlcj.player.embedded.linux.LinuxEmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.mac.MacEmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.windows.WindowsEmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
+import uk.co.caprica.vlcj.player.list.MediaList;
+import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
@@ -262,6 +264,30 @@ public class MediaPlayerFactory {
     
     HeadlessMediaPlayer mediaPlayer = new HeadlessMediaPlayer(instance);
     return mediaPlayer;
+  }
+
+  /**
+   * 
+   * 
+   * @return
+   */
+  public MediaListPlayer newMediaListPlayer() {
+    Logger.debug("newMediaListPlayer()");
+    
+    MediaListPlayer mediaListPlayer = new MediaListPlayer(instance);
+    return mediaListPlayer;
+  }
+  
+  /**
+   *
+   * 
+   * @return
+   */
+  public MediaList newMediaList() {
+    Logger.debug("newMediaList()");
+    
+    MediaList mediaList = new MediaList(instance);
+    return mediaList;
   }
   
   /**
