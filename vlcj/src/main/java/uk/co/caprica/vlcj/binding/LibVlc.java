@@ -28,9 +28,12 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_iterator_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_message_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
@@ -1564,4 +1567,267 @@ public interface LibVlc extends Library {
   int libvlc_audio_set_delay(libvlc_media_player_t p_mi, long i_delay);
 
   // === libvlc_media_player.h ================================================
+  
+  // === libvlc_media_list.h ==================================================
+
+  /**
+   * Create an empty media list.
+   *
+   * \param p_instance libvlc instance
+   * \return empty media list, or NULL on error
+   */
+  libvlc_media_list_t libvlc_media_list_new(libvlc_instance_t p_instance);
+
+  /**
+   * Release media list created with libvlc_media_list_new().
+   *
+   * \param p_ml a media list created with libvlc_media_list_new()
+   */
+  void libvlc_media_list_release(libvlc_media_list_t p_ml);
+
+  /**
+   * Retain reference to a media list
+   *
+   * \param p_ml a media list created with libvlc_media_list_new()
+   */
+  void libvlc_media_list_retain(libvlc_media_list_t p_ml);
+
+  /**
+   * Associate media instance with this media list instance.
+   * If another media instance was present it will be released.
+   * The libvlc_media_list_lock should NOT be held upon entering this function.
+   *
+   * \param p_ml a media list instance
+   * \param p_md media instance to add
+   */
+  void libvlc_media_list_set_media(libvlc_media_list_t p_ml, libvlc_media_t p_md);
+
+  /**
+   * Get media instance from this media list instance. This action will increase
+   * the refcount on the media instance.
+   * The libvlc_media_list_lock should NOT be held upon entering this function.
+   *
+   * \param p_ml a media list instance
+   * \return media instance
+   */
+  libvlc_media_t libvlc_media_list_media(libvlc_media_list_t p_ml);
+
+  /**
+   * Add media instance to media list
+   * The libvlc_media_list_lock should be held upon entering this function.
+   *
+   * \param p_ml a media list instance
+   * \param p_md a media instance
+   * \return 0 on success, -1 if the media list is read-only
+   */
+  int libvlc_media_list_add_media(libvlc_media_list_t p_ml, libvlc_media_t p_md);
+
+  /**
+   * Insert media instance in media list on a position
+   * The libvlc_media_list_lock should be held upon entering this function.
+   *
+   * \param p_ml a media list instance
+   * \param p_md a media instance
+   * \param i_pos position in array where to insert
+   * \return 0 on success, -1 if the media list si read-only
+   */
+  int libvlc_media_list_insert_media(libvlc_media_list_t p_ml, libvlc_media_t p_md, int i_pos);
+
+  /**
+   * Remove media instance from media list on a position
+   * The libvlc_media_list_lock should be held upon entering this function.
+   *
+   * \param p_ml a media list instance
+   * \param i_pos position in array where to insert
+   * \return 0 on success, -1 if the list is read-only or the item was not found
+   */
+  int libvlc_media_list_remove_index(libvlc_media_list_t p_ml, int i_pos);
+
+  /**
+   * Get count on media list items
+   * The libvlc_media_list_lock should be held upon entering this function.
+   *
+   * \param p_ml a media list instance
+   * \return number of items in media list
+   */
+  int libvlc_media_list_count(libvlc_media_list_t p_ml);
+
+  /**
+   * List media instance in media list at a position
+   * The libvlc_media_list_lock should be held upon entering this function.
+   *
+   * \param p_ml a media list instance
+   * \param i_pos position in array where to insert
+   * \return media instance at position i_pos, or NULL if not found.
+   * In case of success, libvlc_media_retain() is called to increase the refcount
+   * on the media.
+   */
+  libvlc_media_t libvlc_media_list_item_at_index(libvlc_media_list_t p_ml, int i_pos);
+  
+  /**
+   * Find index position of List media instance in media list.
+   * Warning: the function will return the first matched position.
+   * The libvlc_media_list_lock should be held upon entering this function.
+   *
+   * \param p_ml a media list instance
+   * \param p_md media list instance
+   * \return position of media instance
+   */
+  int libvlc_media_list_index_of_item(libvlc_media_list_t p_ml, libvlc_media_t p_md);
+
+  /**
+   * This indicates if this media list is read-only from a user point of view
+   *
+   * \param p_ml media list instance
+   * \return 0 on readonly, 1 on readwrite
+   */
+  int libvlc_media_list_is_readonly(libvlc_media_list_t p_ml);
+
+  /**
+   * Get lock on media list items
+   *
+   * \param p_ml a media list instance
+   */
+  void libvlc_media_list_lock(libvlc_media_list_t p_ml);
+
+  /**
+   * Release lock on media list items
+   * The libvlc_media_list_lock should be held upon entering this function.
+   *
+   * \param p_ml a media list instance
+   */
+  void libvlc_media_list_unlock(libvlc_media_list_t p_ml);
+
+  /**
+   * Get libvlc_event_manager from this media list instance.
+   * The p_event_manager is immutable, so you don't have to hold the lock
+   *
+   * \param p_ml a media list instance
+   * \return libvlc_event_manager
+   */
+  libvlc_event_manager_t libvlc_media_list_event_manager(libvlc_media_list_t p_ml);
+  
+  // === libvlc_media_list.h ==================================================
+  
+  // === libvlc_media_list_player.h ===========================================
+  
+  /**
+   * Create new media_list_player.
+   *
+   * @param p_instance libvlc instance
+   * @return media list player instance or NULL on error
+   */
+  libvlc_media_list_player_t libvlc_media_list_player_new(libvlc_instance_t p_instance);
+
+  /**
+   * Release media_list_player.
+   *
+   * @param p_mlp media list player instance
+   */
+  void libvlc_media_list_player_release(libvlc_media_list_player_t p_mlp);
+
+  /**
+   * Return the event manager of this media_list_player.
+   *
+   * @param p_mlp media list player instance
+   * @return the event manager
+   */
+  libvlc_event_manager_t libvlc_media_list_player_event_manager(libvlc_media_list_player_t p_mlp);
+
+  /**
+   * Replace media player in media_list_player with this instance.
+   *
+   * @param p_mlp media list player instance
+   * @param p_mi media player instance
+   */
+  void libvlc_media_list_player_set_media_player(libvlc_media_list_player_t p_mlp, libvlc_media_player_t p_mi);
+
+  /**
+   * Set the media list associated with the player
+   *
+   * @param p_mlp media list player instance
+   * @param p_mlist list of media
+   */
+  void libvlc_media_list_player_set_media_list(libvlc_media_list_player_t p_mlp, libvlc_media_list_t p_mlist);
+
+  /**
+   * Play media list
+   *
+   * @param p_mlp media list player instance
+   */
+  void libvlc_media_list_player_play(libvlc_media_list_player_t p_mlp);
+
+  /**
+   * Pause media list
+   *
+   * @param p_mlp media list player instance
+   */
+  void libvlc_media_list_player_pause(libvlc_media_list_player_t p_mlp);
+
+  /**
+   * Is media list playing?
+   *
+   * @param p_mlp media list player instance
+   * @return true for playing and false for not playing
+   */
+  int libvlc_media_list_player_is_playing(libvlc_media_list_player_t p_mlp);
+
+  /**
+   * Get current libvlc_state of media list player
+   *
+   * @param p_mlp media list player instance
+   * @return libvlc_state_t for media list player
+   */
+  libvlc_state_t libvlc_media_list_player_get_state(libvlc_media_list_player_t p_mlp);
+
+  /**
+   * Play media list item at position index
+   *
+   * @param p_mlp media list player instance
+   * @param i_index index in media list to play
+   * @return 0 upon success -1 if the item wasn't found
+   */
+  int libvlc_media_list_player_play_item_at_index(libvlc_media_list_player_t p_mlp, int i_index);
+
+  /**
+   * Play the given media item
+   *
+   * @param p_mlp media list player instance
+   * @param p_md the media instance
+   * @return 0 upon success, -1 if the media is not part of the media list
+   */
+  int libvlc_media_list_player_play_item(libvlc_media_list_player_t p_mlp, libvlc_media_t p_md);
+
+  /**
+   * Stop playing media list
+   *
+   * @param p_mlp media list player instance
+   */
+  void libvlc_media_list_player_stop( libvlc_media_list_player_t p_mlp);
+
+  /**
+   * Play next item from media list
+   *
+   * @param p_mlp media list player instance
+   * @return 0 upon success -1 if there is no next item
+   */
+  int libvlc_media_list_player_next(libvlc_media_list_player_t p_mlp);
+
+  /**
+   * Play previous item from media list
+   *
+   * @param p_mlp media list player instance
+   * @return 0 upon success -1 if there is no previous item
+   */
+  int libvlc_media_list_player_previous(libvlc_media_list_player_t p_mlp);
+
+  /**
+   * Sets the playback mode for the playlist
+   *
+   * @param p_mlp media list player instance
+   * @param e_mode playback mode specification
+   */
+  void libvlc_media_list_player_set_playback_mode(libvlc_media_list_player_t p_mlp, libvlc_playback_mode_e e_mode);
+  
+  // === libvlc_media_list_player.h ===========================================
 }
