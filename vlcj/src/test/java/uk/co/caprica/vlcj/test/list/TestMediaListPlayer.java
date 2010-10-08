@@ -1,9 +1,9 @@
 package uk.co.caprica.vlcj.test.list;
 
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.list.MediaList;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
+import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 public class TestMediaListPlayer {
 
@@ -14,7 +14,7 @@ public class TestMediaListPlayer {
     
     MediaListPlayer mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
     
-    mediaListPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {});
+    mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventListener() {});
     
     MediaList mediaList = mediaPlayerFactory.newMediaList();
     mediaList.addMedia("/big/PearlAndDeanIntro-16x9.avi");
