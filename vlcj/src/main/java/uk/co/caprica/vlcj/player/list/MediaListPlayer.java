@@ -36,7 +36,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
 import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
 import com.sun.jna.Pointer;
 
@@ -53,7 +52,7 @@ public class MediaListPlayer {
   /**
    * 
    */
-  private final List<MediaPlayerEventListener> eventListenerList = new ArrayList<MediaPlayerEventListener>();
+  private final List<MediaListPlayerEventListener> eventListenerList = new ArrayList<MediaListPlayerEventListener>();
   
   /**
    * 
@@ -97,11 +96,11 @@ public class MediaListPlayer {
   }
 
   /**
-   * Add a component to be notified of media player events.
+   * Add a component to be notified of media list player events.
    * 
    * @param listener component to notify
    */
-  public void addMediaPlayerEventListener(MediaPlayerEventListener listener) {
+  public void addMediaListPlayerEventListener(MediaListPlayerEventListener listener) {
     Logger.debug("addMediaPlayerEventListener(listener={})", listener);
     
     eventListenerList.add(listener);
@@ -109,11 +108,11 @@ public class MediaListPlayer {
 
   /**
    * Remove a component that was previously interested in notifications of
-   * media player events.
+   * media list player events.
    * 
    * @param listener component to stop notifying
    */
-  public void removeMediaPlayerEventListener(MediaPlayerEventListener listener) {
+  public void removeMediaListPlayerEventListener(MediaListPlayerEventListener listener) {
     Logger.debug("removeMediaPlayerEventListener(listener={})", listener);
     
     eventListenerList.remove(listener);
@@ -319,7 +318,7 @@ public class MediaListPlayer {
 
     if(!eventListenerList.isEmpty()) {
       for(int i = eventListenerList.size() - 1; i >= 0; i--) {
-        MediaPlayerEventListener listener = eventListenerList.get(i);
+        MediaListPlayerEventListener listener = eventListenerList.get(i);
         int eventType = event.type;
         switch(libvlc_event_e.event(eventType)) {
           // FIXME what are the valid event types for a media list player?
