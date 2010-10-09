@@ -19,6 +19,15 @@
 
 package uk.co.caprica.vlcj.player.list;
 
-public class MediaListPlayerEventListener {
+/**
+ *
+ */
+public interface MediaListPlayerEventListener {
 
+  /**
+   * 
+   * 
+   * @param mediaListPlayer
+   */
+  void nextItem(MediaListPlayer mediaListPlayer);
 }

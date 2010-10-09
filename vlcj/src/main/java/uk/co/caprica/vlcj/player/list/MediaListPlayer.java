@@ -287,7 +287,7 @@ public class MediaListPlayer {
     callback = new VlcVideoPlayerCallback();
 
     for(libvlc_event_e event : libvlc_event_e.values()) {
-      if(event.intValue() >= libvlc_event_e.libvlc_MediaListPlayerPlayed.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListPlayerStopped.intValue()) {
+      if(event.intValue() >= libvlc_event_e.libvlc_MediaListPlayerNextItemSet.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListPlayerNextItemSet.intValue()) {
         Logger.debug("event={}", event);
         int result = libvlc.libvlc_event_attach(mediaListPlayerEventManager, event.intValue(), callback, null);
         Logger.debug("result={}", result);
@@ -303,7 +303,7 @@ public class MediaListPlayer {
     
     if(callback != null) {
       for(libvlc_event_e event : libvlc_event_e.values()) {
-        if(event.intValue() >= libvlc_event_e.libvlc_MediaListPlayerPlayed.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListPlayerStopped.intValue()) {
+        if(event.intValue() >= libvlc_event_e.libvlc_MediaListPlayerNextItemSet.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListPlayerNextItemSet.intValue()) {
           Logger.debug("event={}", event);
           libvlc.libvlc_event_detach(mediaListPlayerEventManager, event.intValue(), callback, null);
         }
@@ -321,7 +321,9 @@ public class MediaListPlayer {
         MediaListPlayerEventListener listener = eventListenerList.get(i);
         int eventType = event.type;
         switch(libvlc_event_e.event(eventType)) {
-          // FIXME what are the valid event types for a media list player?
+          case libvlc_MediaListPlayerNextItemSet:
+            listener.nextItem(this);
+            break;
         }
       }
     }

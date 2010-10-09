@@ -14,7 +14,12 @@ public class TestMediaListPlayer {
     
     MediaListPlayer mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
     
-    mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventListener() {});
+    mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventListener() {
+      @Override
+      public void nextItem(MediaListPlayer mediaListPlayer) {
+        System.out.println("nextItem()");
+      }
+    });
     
     MediaList mediaList = mediaPlayerFactory.newMediaList();
     mediaList.addMedia("/intro.mp4");
