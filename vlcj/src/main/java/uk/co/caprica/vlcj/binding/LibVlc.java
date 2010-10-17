@@ -170,6 +170,15 @@ public interface LibVlc extends Library {
   String libvlc_get_changeset();
 
   /**
+   * Frees an heap allocation returned by a LibVLC function.
+   * If you know you're using the same underlying C run-time as the LibVLC
+   * implementation, then you can call ANSI C free() directly instead.
+   *
+   * @param ptr the pointer
+   */
+  void libvlc_free(Pointer ptr);
+
+  /**
    * Register for an event notification.
    * 
    * @param p_event_manager the event manager to which you want to attach to.
