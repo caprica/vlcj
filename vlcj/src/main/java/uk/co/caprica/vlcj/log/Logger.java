@@ -22,6 +22,8 @@ package uk.co.caprica.vlcj.log;
 import java.io.PrintWriter;
 import java.util.Formatter;
 
+// FIXME this should be in a separate package from the native log implementation
+
 /**
  * A very simple lightweight log system.
  * <p>
