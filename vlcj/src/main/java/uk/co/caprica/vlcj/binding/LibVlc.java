@@ -118,7 +118,15 @@ public interface LibVlc extends Library {
    * @param p_instance the instance to destroy
    */
   void libvlc_release(libvlc_instance_t p_instance);
-
+  
+  /**
+   * Increments the reference count of a libvlc instance.
+   * The initial reference count is 1 after libvlc_new() returns.
+   *
+   * @param p_instance the instance to reference
+   */
+  void libvlc_retain(libvlc_instance_t p_instance);
+  
   /**
    * Try to start a user interface for the libvlc instance.
    * 
