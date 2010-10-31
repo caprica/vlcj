@@ -15,7 +15,7 @@
     }
 
     h1 {
-      margin: 1em 0 0;
+      margin: 0.5em 0 0;
       font-size: 4em;
     }
 
@@ -85,7 +85,7 @@
 
     div#footer {
       border-top: 1px dotted #cccccc;
-      margin-top: 4em;
+      margin-top: 2em;
       color: #888888;
       font-size: 0.9em;
     }
@@ -126,75 +126,80 @@
     </style>
   </head>
 
-	<body>
-	  <script src="http://www.java.com/js/deployJava.js"></script>
-	
-	  <h1>vlcj</h1>
-	  <h2>Java bindings for the vlc media player</h2>
-	
-	  <div id="content">
-	    <div id="contentInner">
-	      <h3>Information</h3>
-	      <p>
-	        The <a href="http://code.google.com/p/vlcj">vlcj</a> project provides 
-	        Java bindings for the excellent <a href="http://www.videolan.org">VLC</a>
-	        media player from VideoLAN.
-	      </p>
-	      <p>
-	        The bindings can be used to build media player client and server
-	        software using Java - everything from simply playing local media files
-	        to a full-blown video-on-demand streaming server is possible.
-	      </p>
-	      <p>
-	        This page allows you to download and execute the test media player
-	        application that is included with vlcj. Please check the demo requirements
-	        and click the Launch button below to try it out!
-	      </p>
-	      <div id="launcher">
-	        <script type="text/javascript">
-	        var dir = location.href.substring(0, location.href.lastIndexOf('/')+1);
-	        var url = dir + "vlcj-test-webstart.jnlp";
-	        deployJava.createWebStartLaunchButton(url, '1.6.0');
-	        </script>
-	      </div>
-	    </div>
-	  </div>
-	
-	  <div id="right">
-	    <div class="rightInner">
-	      <h3>Demo Requirements</h3>
-	      <p>
-	        The vlcj bindings have a minimum requirement of Java&nbsp;5. The demo
-	        video player requires Java&nbsp;6.
-	      </p>
-	      <p>
-	        The native libraries for vlc that are included in this WebStart download
-	        are those for 64-bit Linux. This demo has been confirmed to work without
-	        problems on Ubuntu&nbsp;10.10.
-	      </p>
-	      <p>
-	        If you are not using a 64-bit Linux operating system then this WebStart demo 
-	        simply will <strong>not</strong> work. This restriction does not apply to 
-	        the stand-alone test player.
-	      </p>
-	    </div>
-	  </div>
-	
-	  <div class="clear"></div>
-	
-	  <div id="footer">
-	    <p>
-	      &copy; Copyright 2010 | <a href="http://www.capricasoftware.co.uk">Caprica Software Limited</a> | All Rights Reserved
-	    </p>
-	  </div>
-	
-	  <div id="mocking">
-	    <p>
-	      This web page has been designed to appear correctly in modern, 
-	      standards-compliant web browsers such as Firefox, Opera or Chrome.
-	    </p>
-	  </div>
-	
-	</body>
+<body>
+  <script src="http://www.java.com/js/deployJava.js"></script>
+
+  <h1>vlcj</h1>
+  <h2>Java bindings for the vlc media player</h2>
+
+  <div id="content">
+    <div id="contentInner">
+      <h3>Information</h3>
+      <p>
+        The <a href="http://code.google.com/p/vlcj">vlcj</a> project provides 
+        Java bindings for the excellent <a href="http://www.videolan.org">VLC</a>
+        media player from VideoLAN.
+      </p>
+      <p>
+        The bindings can be used to build media player client and server
+        software using Java - everything from simply playing local media files
+        to a full-blown video-on-demand streaming server is possible.
+      </p>
+      <p>
+        This page allows you to download and execute the test media player
+        application that is included with vlcj. Please check the demo requirements
+        and click the Launch button below to try it out!
+      </p>
+      <div id="launcher">
+        <script type="text/javascript">
+        var dir = location.href.substring(0, location.href.lastIndexOf('/')+1);
+        var url = dir + "vlcj-test-webstart.jnlp";
+        deployJava.createWebStartLaunchButton(url, '1.6.0');
+        </script>
+      </div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div class="rightInner">
+      <h3>Demo Requirements</h3>
+      <p>
+        The vlcj bindings have a minimum requirement of Java&nbsp;5. The demo
+        video player requires Java&nbsp;6.
+      </p>
+      <p>
+        The native libraries for vlc that are included in this WebStart download
+        are those for 64-bit Linux. This demo has been confirmed to work without
+        problems on Ubuntu&nbsp;10.10.
+      </p>
+      <p>
+        If you are not using a 64-bit Linux operating system then this WebStart demo 
+        simply will <strong>not</strong> work. This restriction does not apply to 
+        the stand-alone test player.
+      </p>
+      <p>
+        Since native libraries are used, the application requires all security
+        permissions. You must accept any security warning dialogs if you want to
+        see the demo.
+      </p>
+    </div>
+  </div>
+
+  <div class="clear"></div>
+
+  <div id="footer">
+    <p>
+      &copy; Copyright 2010 | <a href="http://www.capricasoftware.co.uk">Caprica Software Limited</a> | All Rights Reserved
+    </p>
+  </div>
+
+  <div id="mocking">
+    <p>
+      This web page has been designed to appear correctly in modern, 
+      standards-compliant web browsers such as Firefox, Opera or Chrome.
+    </p>
+  </div>
+
+</body>
 
 </html>
