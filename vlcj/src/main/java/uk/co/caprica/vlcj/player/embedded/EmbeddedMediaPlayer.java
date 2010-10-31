@@ -358,14 +358,14 @@ public abstract class EmbeddedMediaPlayer extends MediaPlayer {
   protected void onBeforePlay() {
     Logger.debug("onBeforePlay()");
     Logger.debug("videoSurfaceSet={}", videoSurfaceSet);
-    if(!videoSurfaceSet) {
+    if(!videoSurfaceSet && videoSurface != null) {
       // Delegate to the template method in the OS-specific implementation 
       // class to actually set the video surface
       nativeSetVideoSurface(mediaPlayerInstance(), videoSurface);
       videoSurfaceSet = true;
     }
   }
-
+  
   /**
    * Template method for setting the video surface natively.
    * <p>
