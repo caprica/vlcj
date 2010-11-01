@@ -18,7 +18,7 @@
     <jar href="jna.jar" part="vlcj"/>
     <jar href="platform.jar" part="vlcj"/>
   </resources>
-  <resources os="Linux" arch="x86_64">
+  <resources os="Linux" arch="amd64">
     <nativelib href="libvlc-linux-x86_64.jar"/>
   </resources>
   <resources os="Windows" arch="x86">
