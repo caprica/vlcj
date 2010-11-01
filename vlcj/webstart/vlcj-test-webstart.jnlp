@@ -22,7 +22,7 @@
     <nativelib href="libvlc-linux-x86_64.jar"/>
   </resources>
   <resources os="Windows" arch="x86">
-    <nativelib href="libvlc-win32-x86.jar"/>
+    <nativelib href="libvlc-win-x86.jar"/>
   </resources>
   <application-desc
     name="VLCJ Test Player"
