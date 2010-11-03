@@ -19,12 +19,6 @@
     <jar href="platform.jar" part="vlcj"/>
     <property name="jna.library.path" value="@user.home/.vlcj"/>
   </resources>
-  <resources os="Linux" arch="amd64">
-    <nativelib href="libvlc-linux-x86_64.jar"/>
-  </resources>
-  <resources os="Windows" arch="x86">
-    <nativelib href="libvlc-win-x86.jar"/>
-  </resources>
   <application-desc
     name="VLCJ Test Player"
     main-class="uk.co.caprica.vlcj.test.basic.TestPlayer"
