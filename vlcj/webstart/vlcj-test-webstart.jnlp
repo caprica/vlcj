@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jnlp spec="1.0+" codebase="http://vlcj.googlecode.com/svn/trunk/vlcj/webstart" href="vlcj-test-webstart.jnlp">
+<jnlp spec="1.0+" codebase="." href="vlcj-test-webstart.jnlp">
   <information>
     <title>VLCJ Test Player</title>
     <vendor>Caprica Software Limited</vendor>
@@ -17,6 +17,7 @@
     <jar href="vlcj-1.1.3.jar" part="vlcj"/>
     <jar href="jna.jar" part="vlcj"/>
     <jar href="platform.jar" part="vlcj"/>
+    <property name="jna.library.path" value="@user.home/.vlcj"/>
   </resources>
   <resources os="Linux" arch="amd64">
     <nativelib href="libvlc-linux-x86_64.jar"/>
