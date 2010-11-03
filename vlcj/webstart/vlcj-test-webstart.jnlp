@@ -21,7 +21,7 @@
   </resources>
   <application-desc
     name="VLCJ Test Player"
-    main-class="uk.co.caprica.vlcj.test.basic.TestPlayer"
+    main-class="uk.co.caprica.vlcj.test.webstart.WebStartLauncher"
     width="800"
     height="600">
   </application-desc>
