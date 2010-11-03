@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jnlp spec="1.0+" codebase="." href="vlcj-test-webstart.jnlp">
+<jnlp spec="1.0+" codebase="http://vlcj.googlecode.com/svn/trunk/vlcj/webstart" href="vlcj-test-webstart.jnlp">
   <information>
     <title>VLCJ Test Player</title>
     <vendor>Caprica Software Limited</vendor>
