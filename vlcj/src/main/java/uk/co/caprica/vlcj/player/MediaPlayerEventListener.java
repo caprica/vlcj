@@ -64,14 +64,6 @@ public interface MediaPlayerEventListener {
    * 
    * 
    * @param mediaPlayer
-   * @param newPosition
-   */
-  void positionChanged(MediaPlayer mediaPlayer, float newPosition);
-
-  /**
-   * 
-   * 
-   * @param mediaPlayer
    * @param newTime
    */
   void timeChanged(MediaPlayer mediaPlayer, long newTime);
@@ -80,9 +72,41 @@ public interface MediaPlayerEventListener {
    * 
    * 
    * @param mediaPlayer
-   * @param videoMetaData
+   * @param newPosition
    */
-  void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData);
+  void positionChanged(MediaPlayer mediaPlayer, float newPosition);
+
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   * @param newSeekable
+   */
+  void seekableChanged(MediaPlayer mediaPlayer, int newSeekable);
+
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   * @param newSeekable
+   */
+  void pausableChanged(MediaPlayer mediaPlayer, int newSeekable);
+
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   * @param newSeekable
+   */
+  void titleChanged(MediaPlayer mediaPlayer, int newSeekable);
+
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   * @param filename
+   */
+  void snapshotTaken(MediaPlayer mediaPlayer, String filename);
 
   /**
    * 
@@ -98,4 +122,12 @@ public interface MediaPlayerEventListener {
    * @param mediaPlayer
    */
   void error(MediaPlayer mediaPlayer);
+
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   * @param videoMetaData
+   */
+  void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData);
 }

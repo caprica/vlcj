@@ -85,7 +85,19 @@ public class PlayerInstance implements MediaPlayerEventListener {
   }
 
   @Override
-  public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
+  public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
+  }
+
+  @Override
+  public void pausableChanged(MediaPlayer mediaPlayer, int newSeekable) {
+  }
+
+  @Override
+  public void titleChanged(MediaPlayer mediaPlayer, int newSeekable) {
+  }
+
+  @Override
+  public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
   }
 
   @Override
@@ -95,5 +107,9 @@ public class PlayerInstance implements MediaPlayerEventListener {
   @Override
   public void error(MediaPlayer mediaPlayer) {
     System.out.println("error");
+  }
+  
+  @Override
+  public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
   }
 }

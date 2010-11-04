@@ -75,7 +75,6 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsCanvas;
-import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 
 import com.sun.awt.AWTUtilities;
 import com.sun.jna.Native;
@@ -166,13 +165,15 @@ public class TestPlayer {
     vlcArgs.add("--no-snapshot-preview");
 	
     // Special case to help out users on Windows (supposedly this is not actually needed)...
-    if(RuntimeUtil.isWindows()) {
-      vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
-    }
+//    if(RuntimeUtil.isWindows()) {
+//      vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
+//    }
 //    else {
 //      vlcArgs.add("--plugin-path=/home/linux/vlc/lib");
 //    }
 
+//    vlcArgs.add("--plugin-path=" + System.getProperty("user.home") + "/.vlcj");
+    
   	Logger.debug("vlcArgs={}", vlcArgs);
   	
     mainFrame = new JFrame("VLCJ Test Player for VLC 1.1.x");
@@ -268,6 +269,36 @@ public class TestPlayer {
             }
             else if(keyEvent.getKeyCode() == KeyEvent.VK_S) {
               mediaPlayer.setAudioDelay(mediaPlayer.getAudioDelay() + 50000);
+            }
+//            else if(keyEvent.getKeyCode() == KeyEvent.VK_N) {
+//              mediaPlayer.nextFrame();
+//            }
+            else if(keyEvent.getKeyCode() == KeyEvent.VK_1) {
+              mediaPlayer.setTime(60000*1);
+            }
+            else if(keyEvent.getKeyCode() == KeyEvent.VK_2) {
+              mediaPlayer.setTime(60000*2);
+            }
+            else if(keyEvent.getKeyCode() == KeyEvent.VK_3) {
+              mediaPlayer.setTime(60000*3);
+            }
+            else if(keyEvent.getKeyCode() == KeyEvent.VK_4) {
+              mediaPlayer.setTime(60000*4);
+            }
+            else if(keyEvent.getKeyCode() == KeyEvent.VK_5) {
+              mediaPlayer.setTime(60000*5);
+            }
+            else if(keyEvent.getKeyCode() == KeyEvent.VK_6) {
+              mediaPlayer.setTime(60000*6);
+            }
+            else if(keyEvent.getKeyCode() == KeyEvent.VK_7) {
+              mediaPlayer.setTime(60000*7);
+            }
+            else if(keyEvent.getKeyCode() == KeyEvent.VK_8) {
+              mediaPlayer.setTime(60000*8);
+            }
+            else if(keyEvent.getKeyCode() == KeyEvent.VK_9) {
+              mediaPlayer.setTime(60000*9);
             }
           }
         }

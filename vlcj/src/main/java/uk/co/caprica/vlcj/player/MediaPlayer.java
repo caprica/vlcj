@@ -53,8 +53,12 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
 import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
+import uk.co.caprica.vlcj.binding.internal.media_player_pausable_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_position_changed;
+import uk.co.caprica.vlcj.binding.internal.media_player_seekable_changed;
+import uk.co.caprica.vlcj.binding.internal.media_player_snapshot_taken;
 import uk.co.caprica.vlcj.binding.internal.media_player_time_changed;
+import uk.co.caprica.vlcj.binding.internal.media_player_title_changed;
 import uk.co.caprica.vlcj.log.Logger;
 
 import com.sun.jna.Pointer;
@@ -1791,6 +1795,26 @@ public abstract class MediaPlayer {
             listener.positionChanged(this, newPosition);
             break;
             
+          case libvlc_MediaPlayerSeekableChanged:
+            int newSeekable = ((media_player_seekable_changed)event.u.getTypedValue(media_player_seekable_changed.class)).new_seekable;
+            listener.seekableChanged(this, newSeekable);
+            break;
+            
+          case libvlc_MediaPlayerPausableChanged:
+            int newPausable = ((media_player_pausable_changed)event.u.getTypedValue(media_player_pausable_changed.class)).new_pausable;
+            listener.pausableChanged(this, newPausable);
+            break;
+          
+          case libvlc_MediaPlayerTitleChanged:
+            int newTitle = ((media_player_title_changed)event.u.getTypedValue(media_player_title_changed.class)).new_title;
+            listener.titleChanged(this, newTitle);
+            break;
+            
+          case libvlc_MediaPlayerSnapshotTaken:
+            String filename = ((media_player_snapshot_taken)event.u.getTypedValue(media_player_snapshot_taken.class)).filename;
+            listener.snapshotTaken(this, filename);
+            break;
+
           case libvlc_MediaPlayerLengthChanged:
             long newLength = ((media_player_length_changed)event.u.getTypedValue(media_player_length_changed.class)).new_length;
             listener.lengthChanged(this, newLength);

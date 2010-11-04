@@ -47,7 +47,7 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
   }
 
 //  @Override
-  public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
+  public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
   }
 
 //  @Override
@@ -55,7 +55,19 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
   }
 
 //  @Override
-  public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
+  public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
+  }
+
+//  @Override
+  public void pausableChanged(MediaPlayer mediaPlayer, int newSeekable) {
+  }
+
+//  @Override
+  public void titleChanged(MediaPlayer mediaPlayer, int newSeekable) {
+  }
+
+//  @Override
+  public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
   }
 
 //  @Override
@@ -64,5 +76,9 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
   
 //  @Override
   public void error(MediaPlayer mediaPlayer) {
+  }
+  
+//  @Override
+  public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
   }
 }
