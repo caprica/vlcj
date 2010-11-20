@@ -112,6 +112,24 @@ public interface LibVlc extends Library {
   libvlc_instance_t libvlc_new(int argc, String[] argv);
 
   /**
+   * Create and initialize a libvlc instance.
+   *
+   * \param argc the number of arguments
+   * \param argv command-line-type arguments
+   * \param builtins a NULL terminated array of \see vlc_plugin.
+   * \return the libvlc instance or NULL in case of error
+   * @begincode
+   * {
+   *     vlc_declare_plugin(mp4);
+   *     vlc_declare_plugin(dummy);
+   *     const void **builtins = { vlc_plugin(mp4), vlc_plugin(dummy), NULL };
+   *     libvlc_instance_t *vlc = libvlc_new_with_builtins(argc, argv, builtins);
+   * }
+   * @endcode
+   */
+  libvlc_instance_t libvlc_new_with_builtins(int argc, String[] argv, Pointer[] builtins);
+  
+  /**
    * Decrement the reference count of a libvlc instance, and destroy it if it
    * reaches zero.
    * 
@@ -1407,8 +1425,7 @@ public interface LibVlc extends Library {
    * Set the audio output. Change will be applied after stop and play.
    * 
    * @param p_mi media player
-   * @param psz_name name of audio output, use psz_name of @see
-   *          libvlc_audio_output_t
+   * @param psz_name name of audio output, use psz_name of @see libvlc_audio_output_t
    * @return true if function succeded
    */
   int libvlc_audio_output_set(libvlc_media_player_t p_mi, String psz_name);
