@@ -207,6 +207,9 @@ public class TestPlayer {
     mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
     mediaPlayer.setVideoSurface(videoSurface);
 
+    mediaPlayer.setEnableKeyInputHandling(false);
+    mediaPlayer.setEnableMouseInputHandling(false);
+
     controlsPanel = new PlayerControlsPanel(mediaPlayer);
     videoAdjustPanel = new PlayerVideoAdjustPanel(mediaPlayer);
     
