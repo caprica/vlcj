@@ -1073,14 +1073,14 @@ public abstract class MediaPlayer {
    * 
    * @return list of descriptions
    */
-  public List<String> getVideoDescriptions() {
+  public List<TrackDescription> getVideoDescriptions() {
     Logger.debug("getVideoDescriptions()");
     
-    List<String> trackDescriptionList = new ArrayList<String>();
+    List<TrackDescription> trackDescriptionList = new ArrayList<TrackDescription>();
     libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_track_description(mediaPlayerInstance);
     libvlc_track_description_t trackDescription = trackDescriptions;
     while(trackDescription != null) {
-      trackDescriptionList.add(trackDescription.psz_name);
+      trackDescriptionList.add(new TrackDescription(trackDescription.i_id, trackDescription.psz_name));
       trackDescription = trackDescription.p_next;      
     }   
     if(trackDescriptions != null) {
@@ -1094,14 +1094,14 @@ public abstract class MediaPlayer {
    * 
    * @return list of descriptions
    */
-  public List<String> getAudioDescriptions() {
+  public List<TrackDescription> getAudioDescriptions() {
     Logger.debug("getAudioDescriptions()");
     
-    List<String> trackDescriptionList = new ArrayList<String>();
+    List<TrackDescription> trackDescriptionList = new ArrayList<TrackDescription>();
     libvlc_track_description_t trackDescriptions = libvlc.libvlc_audio_get_track_description(mediaPlayerInstance);
     libvlc_track_description_t trackDescription = trackDescriptions;
     while(trackDescription != null) {
-      trackDescriptionList.add(trackDescription.psz_name);
+      trackDescriptionList.add(new TrackDescription(trackDescription.i_id, trackDescription.psz_name));
       trackDescription = trackDescription.p_next;      
     }   
     if(trackDescriptions != null) {

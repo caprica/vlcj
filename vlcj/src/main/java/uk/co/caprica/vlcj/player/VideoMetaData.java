@@ -62,12 +62,12 @@ public class VideoMetaData {
   /**
    * 
    */
-  private List<String> videoDescriptions;
+  private List<TrackDescription> videoDescriptions;
   
   /**
    * 
    */
-  private List<String> audioDescriptions;
+  private List<TrackDescription> audioDescriptions;
   
   /**
    * 
@@ -127,19 +127,19 @@ public class VideoMetaData {
     this.titleDescriptions = titleDescriptions;
   }
 
-  public List<String> getVideoDescriptions() {
+  public List<TrackDescription> getVideoDescriptions() {
     return videoDescriptions;
   }
 
-  public void setVideoDescriptions(List<String> videoDescriptions) {
+  public void setVideoDescriptions(List<TrackDescription> videoDescriptions) {
     this.videoDescriptions = videoDescriptions;
   }
 
-  public List<String> getAudioDescriptions() {
+  public List<TrackDescription> getAudioDescriptions() {
     return audioDescriptions;
   }
 
-  public void setAudioDescriptions(List<String> audioDescriptions) {
+  public void setAudioDescriptions(List<TrackDescription> audioDescriptions) {
     this.audioDescriptions = audioDescriptions;
   }
 
