@@ -869,6 +869,36 @@ public abstract class MediaPlayer {
   }
 
   /**
+   * Get the current audio channel.
+   * 
+   * For channel values see {@link libvlc_audio_output_channel_t}.
+   * 
+   * <strong>Warning this API is subject to change.</strong>
+   * 
+   * @return audio channel
+   */
+  public int getAudioChannel() {
+    Logger.debug("getAudioChannel()");
+    
+    return libvlc.libvlc_audio_get_channel(mediaPlayerInstance);
+  }
+  
+  /**
+   * Set the audio channel.
+   * 
+   * For channel values see {@link libvlc_audio_output_channel_t}.
+   * 
+   * <strong>Warning this API is subject to change.</strong>
+   * 
+   * @param channel channel
+   */
+  public void setAudioChannel(int channel) {
+    Logger.debug("setAudioChannel(channel={})", channel);
+
+    libvlc.libvlc_audio_set_channel(mediaPlayerInstance, channel);
+  }
+  
+  /**
    * Get the audio delay.
    * 
    * @return audio delay, in microseconds
