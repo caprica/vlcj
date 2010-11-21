@@ -31,8 +31,8 @@ public interface libvlc_lock_callback_t extends Callback {
    * 
    * 
    * @param opaque
-   * @param plane
+   * @param planes
    * @return
    */
-  Pointer lock(Pointer opaque, Pointer plane);
+  Pointer lock(Pointer opaque, Pointer planes);
 }
