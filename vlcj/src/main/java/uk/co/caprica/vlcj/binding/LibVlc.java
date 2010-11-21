@@ -37,6 +37,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
@@ -660,42 +662,49 @@ public interface LibVlc extends Library {
 
   /**
    * Set callbacks and private data to render decoded video to a custom area
-   * in memory. Use libvlc_video_set_format() to configure the decoded format.
-   *
-   * Whenever a new video frame needs to be decoded, the lock callback is
-   * invoked. Depending on the video chroma, one or three pixel planes of
-   * adequate dimensions must be returned via the second parameter. Those
-   * planes must be aligned on 32-bytes boundaries.
-   *
-   * When the video frame is decoded, the unlock callback is invoked. The
-   * second parameter to the callback corresponds is the return value of the
-   * lock callback. The third parameter conveys the pixel planes for convenience.
-   *
-   * When the video frame needs to be shown, as determined by the media playback
-   * clock, the display callback is invoked. The second parameter also conveys
-   * the return value from the lock callback.
+   * in memory.
+   * 
+   * Use libvlc_video_set_format() or libvlc_video_set_format_callbacks()
+   * to configure the decoded format.
    *
    * @param mp the media player
-   * @param p_lock callback to allocate video memory
-   * @param p_unlock callback to release video memory
-   * @param p_display callback when ready to display a video frame
-   * @param p_opaque private pointer for the three callbacks (as first parameter)
+   * @param lock callback to allocate video memory
+   * @param unlock callback to release video memory
+   * @param display callback when ready to display a video frame
+   * @param opaque private pointer for the three callbacks (as first parameter)
    * @since LibVLC 1.1.1
    */
-  void libvlc_video_set_callbacks(libvlc_media_player_t mp, libvlc_lock_callback_t p_lock, libvlc_unlock_callback_t p_unlock, libvlc_display_callback_t p_display, Pointer p_opaque);
+  void libvlc_video_set_callbacks(libvlc_media_player_t mp, libvlc_lock_callback_t lock, libvlc_unlock_callback_t unlock, libvlc_display_callback_t display, Pointer opaque);
 
+  /**
+   * Set decoded video chroma and dimensions.
+   * 
+   * This only works in combination with libvlc_video_set_callbacks(),
+   * and is mutually exclusive with libvlc_video_set_format_callbacks().
+   *
+   * @param mp the media player
+   * @param chroma a four-characters string identifying the chroma (e.g. "RV32" or "YUYV")
+   * @param width pixel width
+   * @param height pixel height
+   * @param pitch line pitch (in bytes)
+   * @since LibVLC 1.1.1
+   * 
+   * @bug All pixel planes are expected to have the same pitch.
+   * To use the YCbCr color space with chrominance subsampling,
+   * consider using libvlc_video_set_format_callback() instead.
+   */
+  void libvlc_video_set_format(libvlc_media_player_t mp, String chroma, int width, int height, int pitch);
+  
   /**
    * Set decoded video chroma and dimensions. This only works in combination with
    * libvlc_video_set_callbacks().
    *
    * @param mp the media player
-   * @param chroma a four-characters string identifying the chroma (e.g. "RV32" or "I420")
-   * @param width pixel width
-   * @param height pixel height
-   * @param pitch line pitch (in bytes)
-   * @since LibVLC 1.1.1
+   * @param setup callback to select the video format (cannot be NULL)
+   * @param cleanup callback to release any allocated resources (or NULL)
+   * @since LibVLC 1.2.0 or later
    */
-  void libvlc_video_set_format(libvlc_media_player_t mp, String chroma, int width, int height, int pitch);
+  void libvlc_video_set_format_callbacks(libvlc_media_player_t mp, libvlc_video_format_cb setup, libvlc_video_cleanup_cb cleanup);
   
   /**
    * Set the NSView handler where the media player should render its video
