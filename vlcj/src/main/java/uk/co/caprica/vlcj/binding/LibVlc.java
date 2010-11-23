@@ -468,6 +468,18 @@ public interface LibVlc extends Library {
   int libvlc_media_get_stats(libvlc_media_t p_md, libvlc_media_stats_t p_stats);
 
   /**
+   * Get subitems of media descriptor object. This will increment
+   * the reference count of supplied media descriptor object. Use
+   * libvlc_media_list_release() to decrement the reference counting.
+   *
+   * @param p_md media descriptor object
+   * @return list of media descriptor subitems or NULL
+   *
+   * This method uses libvlc_media_list_t, however, media_list usage is optionnal
+   * and this is here for convenience */
+  libvlc_media_list_t libvlc_media_subitems(libvlc_media_t p_md);
+  
+  /**
    * Get event manager from media descriptor object. NOTE: this function doesn't
    * increment reference counting.
    * 
