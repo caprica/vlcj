@@ -222,7 +222,7 @@ public class MediaPlayerFactory {
   /**
    * Create a new embedded media player.
    * 
-   * @param fullScreenStrategy
+   * @param fullScreenStrategy full screen implementation, may be <code>null</code>
    * @return media player instance
    */
   public EmbeddedMediaPlayer newMediaPlayer(FullScreenStrategy fullScreenStrategy) {
