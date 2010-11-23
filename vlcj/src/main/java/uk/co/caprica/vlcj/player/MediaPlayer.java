@@ -37,6 +37,7 @@ import javax.imageio.ImageIO;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_channel_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
@@ -1966,7 +1967,8 @@ public abstract class MediaPlayer {
   }
 
   /**
-   * Event listener implementation that waits for video "playing" events.
+   * Event listener implementation that responds to video "playing" events to
+   * process media meta data.
    */
   private final class MetaDataEventHandler extends MediaPlayerEventAdapter {
 
