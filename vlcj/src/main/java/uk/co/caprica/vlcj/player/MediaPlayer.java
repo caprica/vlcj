@@ -43,6 +43,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -1669,8 +1670,9 @@ public abstract class MediaPlayer {
     Logger.debug("mediaPlayerEventManager={}", mediaPlayerEventManager);
   
     registerEventListener();
-      
+
     eventListenerList.add(new MetaDataEventHandler());
+    eventListenerList.add(new SubItemEventHandler());
   }
 
   /**
@@ -1975,6 +1977,45 @@ public abstract class MediaPlayer {
       // Kick off an asynchronous task to obtain the video meta data (when
       // available)
       metaService.submit(new NotifyMetaRunnable());
+    }
+  }
+  
+  /**
+   * Event listener implementation that handles media sub-items.
+   * <p>
+   * Some media types when you 'play' them do not actually play any media and
+   * instead sub-items are created and attached to the current media 
+   * descriptor.  
+   * <p>
+   * This event listener responds to the media player "finished" event by
+   * getting the current media from the player and automatically playing the
+   * first sub-item (if there is one).
+   * <p>
+   * Note that the sub-item will be automatically 'consumed' so even though 
+   * this listener will be called back at the end of the sub-item, it will not
+   * loop playing that same sub-item forever. 
+   */
+  private final class SubItemEventHandler extends MediaPlayerEventAdapter {
+
+    @Override
+    public void finished(MediaPlayer mediaPlayer) {
+      Logger.trace("playing(mediaPlayer={})", mediaPlayer);
+
+      libvlc_media_t media = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
+      Logger.trace("media={}", media);
+      
+      libvlc_media_list_t subitems = libvlc.libvlc_media_subitems(media);
+      Logger.trace("subitems={}", subitems);
+      
+      if(subitems != null) {
+        Logger.debug("Handlig media sub-item...");
+        libvlc.libvlc_media_list_lock(subitems);
+        libvlc_media_t subitem = libvlc.libvlc_media_list_item_at_index(subitems, 0); // FIXME what about more than one item?
+        libvlc.libvlc_media_list_unlock(subitems);
+        libvlc.libvlc_media_player_set_media(mediaPlayerInstance, subitem);
+        libvlc.libvlc_media_player_play(mediaPlayerInstance);
+        libvlc.libvlc_media_list_release(subitems);
+      }
     }
   }
   
