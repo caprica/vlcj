@@ -174,6 +174,11 @@ import com.sun.jna.ptr.IntByReference;
  *   mediaPlayer.setGamma(0.9f);
  *   mediaPlayer.setHue(10);
  * </pre>
+ * Some media when played may cause one or more media sub-items to created. These 
+ * sub-items subsequently need to be played. The media player can be set to 
+ * automatically play these sub-items via {@link #setPlaySubItems(boolean)}, 
+ * otherwise {@link #playNextSubItem()} can be invoked in response to a
+ * {@link MediaPlayerEventListener#finished()} event.
  */
 public abstract class MediaPlayer {
 
@@ -196,6 +201,11 @@ public abstract class MediaPlayer {
   
   private libvlc_media_stats_t libvlcMediaStats;
 
+  /**
+   * Flag whether or not to automatically play media sub-items if there are any.
+   */
+  private boolean playSubItems;
+  
   /**
    * Set to true when the player has been released.
    */
@@ -302,6 +312,54 @@ public abstract class MediaPlayer {
     Logger.debug("prepareMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
     
     setMedia(mrl, mediaOptions);
+  }
+  
+  // === Sub-Item Controls ====================================================
+  
+  /**
+   * Set whether or not the media player should automatically play media sub-
+   * items.
+   * 
+   * @param playSubItems <code>true</code> to automatically play sub-items, otherwise <code>false</code>
+   */
+  public void setPlaySubItems(boolean playSubItems) {
+    this.playSubItems = playSubItems;
+  }
+
+  /**
+   * Play the next sub-item (if there is one).
+   * 
+   * @return <code>true</code> if there is a sub-item, otherwise <code>false</code>
+   */
+  public boolean playNextSubItem() {
+    Logger.debug("playNextSubItem()");
+    
+    boolean subItemPlayed = false;
+    
+    libvlc_media_t media = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
+    Logger.trace("media={}", media);
+    
+    if(media != null) {
+      libvlc_media_list_t subItems = libvlc.libvlc_media_subitems(media);
+      Logger.trace("subItems={}", subItems);
+      
+      if(subItems != null) {
+        Logger.debug("Handling media sub-item...");
+        libvlc.libvlc_media_list_lock(subItems);
+        libvlc_media_t subItem = libvlc.libvlc_media_list_item_at_index(subItems, 0);
+        if(subItem != null) {
+          libvlc.libvlc_media_player_set_media(mediaPlayerInstance, subItem);
+          libvlc.libvlc_media_player_play(mediaPlayerInstance);
+          libvlc.libvlc_media_release(subItem);
+          subItemPlayed = true;
+        }
+        libvlc.libvlc_media_list_unlock(subItems);
+        libvlc.libvlc_media_list_release(subItems);
+      }
+    }
+    
+    Logger.debug("subItemPlayed={}", subItemPlayed);
+    return subItemPlayed;
   }
   
   // === Status Controls ======================================================
@@ -1077,6 +1135,25 @@ public abstract class MediaPlayer {
     }
   }
 
+  /**
+   * Select the next sub-title track (or disable sub-titles).
+   */
+  public void cycleSpu() {
+    Logger.debug("cycleSpu()");
+    
+    int spu = getSpu();
+    int spuCount = getSpuCount();
+    
+    if(spu >= spuCount) {
+      spu = 0;
+    }
+    else {
+      spu++;
+    }
+    
+    setSpu(spu);
+  }
+  
   // === Description Controls =================================================
   
   /**
@@ -1659,6 +1736,18 @@ public abstract class MediaPlayer {
   // === Implementation =======================================================
 
   /**
+   * Release the media player, freeing all associated (including native) resources.
+   */
+  public final void release() {
+    Logger.debug("release()");
+    
+    if(released.compareAndSet(false, true)) {
+      destroyInstance();
+      onAfterRelease();
+    }
+  }
+
+  /**
    * Create and prepare the native media player resources.
    */
   private void createInstance() {
@@ -1778,21 +1867,8 @@ public abstract class MediaPlayer {
     libvlcMediaStats = new libvlc_media_stats_t();
   }
 
-  /**
-   * Release the media player, freeing all associated (including native) resources.
-   */
-  public final void release() {
-    Logger.debug("release()");
-    
-    if(released.compareAndSet(false, true)) {
-      destroyInstance();
-      onAfterRelease();
-    }
-  }
-
   private void notifyListeners(libvlc_event_t event) {
     Logger.trace("notifyListeners(event={})", event);
-
     if(!eventListenerList.isEmpty()) {
       for(int i = eventListenerList.size() - 1; i >= 0; i--) {
         MediaPlayerEventListener listener = eventListenerList.get(i);
@@ -1802,6 +1878,9 @@ public abstract class MediaPlayer {
             listener.mediaChanged(this);
             break;
           
+          case libvlc_MediaPlayerNothingSpecial:
+            break;
+            
           case libvlc_MediaPlayerPlaying:
             listener.playing(this);
             break;
@@ -1993,30 +2072,21 @@ public abstract class MediaPlayer {
    * getting the current media from the player and automatically playing the
    * first sub-item (if there is one).
    * <p>
-   * Note that the sub-item will be automatically 'consumed' so even though 
-   * this listener will be called back at the end of the sub-item, it will not
-   * loop playing that same sub-item forever. 
+   * Note that the sub-item will be automatically 'consumed' after is has
+   * finished playing so even though this listener will be called back at the 
+   * end of the sub-item, it will not loop playing that same sub-item forever. 
+   * <p>
+   * If there is more than one sub-item, then they will simply be played and
+   * consumed in order.
    */
   private final class SubItemEventHandler extends MediaPlayerEventAdapter {
 
     @Override
     public void finished(MediaPlayer mediaPlayer) {
-      Logger.trace("playing(mediaPlayer={})", mediaPlayer);
+      Logger.trace("finished(mediaPlayer={})", mediaPlayer);
 
-      libvlc_media_t media = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
-      Logger.trace("media={}", media);
-      
-      libvlc_media_list_t subitems = libvlc.libvlc_media_subitems(media);
-      Logger.trace("subitems={}", subitems);
-      
-      if(subitems != null) {
-        Logger.debug("Handlig media sub-item...");
-        libvlc.libvlc_media_list_lock(subitems);
-        libvlc_media_t subitem = libvlc.libvlc_media_list_item_at_index(subitems, 0); // FIXME what about more than one item?
-        libvlc.libvlc_media_list_unlock(subitems);
-        libvlc.libvlc_media_player_set_media(mediaPlayerInstance, subitem);
-        libvlc.libvlc_media_player_play(mediaPlayerInstance);
-        libvlc.libvlc_media_list_release(subitems);
+      if(playSubItems) {
+        playNextSubItem();
       }
     }
   }
