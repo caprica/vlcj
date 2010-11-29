@@ -105,7 +105,8 @@ public class MediaPlayerFactory {
    * Create a new media player factory.
    * <p>
    * This factory uses an implementation of the interface to the native libvlc
-   * library that is synchronised and logs each method invocation.
+   * library that is synchronised and logs each method invocation - if you do
+   * not want this behaviour you must use one of the other constructors.
    */
   public MediaPlayerFactory() {
     this(new String[] {});
@@ -115,7 +116,8 @@ public class MediaPlayerFactory {
    * Create a new media player factory.
    * <p>
    * This factory uses an implementation of the interface to the native libvlc
-   * library that is synchronised and logs each method invocation.
+   * library that is synchronised and logs each method invocation - if you do
+   * not want this behaviour you must use one of the other constructors.
    * 
    * @param libvlcArgs initialisation arguments to pass to libvlc
    */
