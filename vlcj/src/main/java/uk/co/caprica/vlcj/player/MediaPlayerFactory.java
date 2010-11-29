@@ -100,6 +100,16 @@ public class MediaPlayerFactory {
    * True when the factory has been released.
    */
   private boolean released;
+
+  /**
+   * Create a new media player factory.
+   * <p>
+   * This factory uses an implementation of the interface to the native libvlc
+   * library that is synchronised and logs each method invocation.
+   */
+  public MediaPlayerFactory() {
+    this(new String[] {});
+  }
   
   /**
    * Create a new media player factory.
@@ -113,6 +123,15 @@ public class MediaPlayerFactory {
     this(libvlcArgs, LibVlcFactory.factory().synchronise().log().create());
   }
 
+  /**
+   * Create a new media player factory.
+   * 
+   * @param libvlc interface to the native library
+   */
+  public MediaPlayerFactory(LibVlc libvlc) {
+    this(new String[] {}, libvlc);
+  }
+  
   /**
    * Create a new media player factory.
    * 
