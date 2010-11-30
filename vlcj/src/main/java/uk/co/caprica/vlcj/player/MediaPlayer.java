@@ -323,6 +323,8 @@ public abstract class MediaPlayer {
    * @param playSubItems <code>true</code> to automatically play sub-items, otherwise <code>false</code>
    */
   public void setPlaySubItems(boolean playSubItems) {
+    Logger.debug("setPlaySubItems(playSubItems={})", playSubItems);
+    
     this.playSubItems = playSubItems;
   }
 
