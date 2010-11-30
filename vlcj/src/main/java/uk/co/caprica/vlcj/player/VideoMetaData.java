@@ -57,7 +57,7 @@ public class VideoMetaData {
   /**
    * 
    */
-  private List<String> titleDescriptions;
+  private List<TrackDescription> titleDescriptions;
   
   /**
    * 
@@ -72,7 +72,7 @@ public class VideoMetaData {
   /**
    * 
    */
-  private List<String> spuDescriptions;
+  private List<TrackDescription> spuDescriptions;
   
   /**
    * 
@@ -119,11 +119,11 @@ public class VideoMetaData {
     this.spuCount = spuCount;
   }
 
-  public List<String> getTitleDescriptions() {
+  public List<TrackDescription> getTitleDescriptions() {
     return titleDescriptions;
   }
 
-  public void setTitleDescriptions(List<String> titleDescriptions) {
+  public void setTitleDescriptions(List<TrackDescription> titleDescriptions) {
     this.titleDescriptions = titleDescriptions;
   }
 
@@ -143,11 +143,11 @@ public class VideoMetaData {
     this.audioDescriptions = audioDescriptions;
   }
 
-  public List<String> getSpuDescriptions() {
+  public List<TrackDescription> getSpuDescriptions() {
     return spuDescriptions;
   }
 
-  public void setSpuDescriptions(List<String> spuDescriptions) {
+  public void setSpuDescriptions(List<TrackDescription> spuDescriptions) {
     this.spuDescriptions = spuDescriptions;
   }
 
