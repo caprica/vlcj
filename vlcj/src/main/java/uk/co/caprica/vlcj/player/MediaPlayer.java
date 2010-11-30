@@ -66,7 +66,7 @@ import uk.co.caprica.vlcj.log.Logger;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
-// TODO this class file has nearly 2k lines and that is too many
+// TODO this class file is over 2k lines and that is too many
 // TODO do i need a new approach for robustness - i.e. check if release has been called, and guard each method - but then each method must lock the libvlc/mediaplayer in case someone else releases it!? - e.g. a critical section?
 
 /**
@@ -464,9 +464,9 @@ public abstract class MediaPlayer {
   }
 
   /**
+   * Get the number of video outputs for the media player.
    * 
-   * 
-   * @return
+   * @return number of video outputs, may be zero
    */
   public int getVideoOutputs() {
     Logger.trace("getVideoOutputs()");
@@ -598,9 +598,9 @@ public abstract class MediaPlayer {
   }
 
   /**
+   * Get the current title.
    * 
-   * 
-   * @return
+   * @return title number
    */
   public int getTitle() {
     Logger.debug("getTitle()");
@@ -609,7 +609,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * 
+   * Set a new title to play.
    * 
    * @param title title number
    */
@@ -620,9 +620,9 @@ public abstract class MediaPlayer {
   }
   
   /**
+   * Get the number of available video tracks.
    * 
-   * 
-   * @return
+   * @return number of tracks
    */
   public int getVideoTrackCount() {
     Logger.debug("getVideoTrackCount()");
@@ -631,9 +631,9 @@ public abstract class MediaPlayer {
   }
   
   /**
+   * Get the current video track.
    * 
-   * 
-   * @return
+   * @return track number
    */
   public int getVideoTrack() {
     Logger.debug("getVideoTrack()");
@@ -642,7 +642,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * 
+   * Set a new video track to play.
    * 
    * @param track track number
    */
@@ -653,9 +653,9 @@ public abstract class MediaPlayer {
   }
   
   /**
+   * Get the number of available audio tracks.
    * 
-   * 
-   * @return
+   * @return track count
    */
   public int getAudioTrackCount() {
     Logger.debug("getVideoTrackCount()");
@@ -664,9 +664,9 @@ public abstract class MediaPlayer {
   }
 
   /**
+   * Get the current audio track.
    * 
-   * 
-   * @return
+   * @return track number
    */
   public int getAudioTrack() {
     Logger.debug("getAudioTrack()");
@@ -675,7 +675,7 @@ public abstract class MediaPlayer {
   }
   
   /**
-   * 
+   * Set a new audio track to play.
    * 
    * @param track track number
    */
