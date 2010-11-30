@@ -71,6 +71,8 @@ import com.sun.jna.platform.win32.WinUser.POINT;
  *   <li>The thread-safetiness issues are unclear especially wrt creating the hook in the thread</li> 
  * </ul>
  * The hook must be started after it has been created.
+ * <p>
+ * <strong>This class is experimental, unsupported and unstable in operation.</strong>
  */
 public class WindowsMouseHook implements LowLevelMouseProc {
 
