@@ -61,7 +61,7 @@
     	<manifest>
     		<attribute name="Implementation-Title" value="${ant.project.name}"/>
         <attribute name="Implementation-Vendor" value="Caprica Software Limited"/>
-        <attribute name="Implementation-URL" value="http://code.google.com/vlcj/"/>
+        <attribute name="Implementation-URL" value="http://code.google.com/p/vlcj/"/>
         <attribute name="Implementation-Version" value="${build.version}.${build.number} (${build.timestamp})"/>
     	</manifest>
     </jar>
