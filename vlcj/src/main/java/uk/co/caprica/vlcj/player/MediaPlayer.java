@@ -247,6 +247,8 @@ public abstract class MediaPlayer {
     eventListenerList.remove(listener);
   }
 
+  // === Media Controls =======================================================
+  
   /**
    * Set standard media options for all media items subsequently played.
    * <p>
@@ -312,6 +314,29 @@ public abstract class MediaPlayer {
     Logger.debug("prepareMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
     
     setMedia(mrl, mediaOptions);
+  }
+  
+  /**
+   * Add options to the current media. 
+   * 
+   * @param mediaOptions media options
+   */
+  public void addMediaOptions(String... mediaOptions) {
+    Logger.debug("addMediaOptions(mediaOptions={})", Arrays.toString(mediaOptions));
+    
+    libvlc_media_t media = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
+    Logger.trace("media={}", media);
+    
+    if(media != null) {
+      for(String mediaOption : mediaOptions) {
+        Logger.debug("mediaOption={}", mediaOption);
+        libvlc.libvlc_media_add_option(media, mediaOption);
+      }
+      libvlc.libvlc_media_release(media);
+    }
+    else {
+      throw new RuntimeException("No media");
+    }
   }
   
   // === Sub-Item Controls ====================================================
