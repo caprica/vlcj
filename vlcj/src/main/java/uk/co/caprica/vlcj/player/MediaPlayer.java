@@ -659,8 +659,11 @@ public abstract class MediaPlayer {
   
   /**
    * Get the current video track.
+   * <p>
+   * This does not return the <strong>id</strong> of the track,
+   * see {@link #getVideoDescriptions()}.
    * 
-   * @return track number
+   * @return track number, starting at 1, or -1 if the video is currently disabled
    */
   public int getVideoTrack() {
     Logger.debug("getVideoTrack()");
@@ -670,8 +673,12 @@ public abstract class MediaPlayer {
   
   /**
    * Set a new video track to play.
+   * <p>
+   * This does not take the track number returned from {@link #getVideoTrack()},
+   * rather it takes the track <strong>id</strong> obtained from
+   * see {@link #getVideoDescriptions()}.
    * 
-   * @param track track number
+   * @param track track id, or -1 to disable the video
    */
   public void setVideoTrack(int track) {
     Logger.debug("setVideoTrack(track={})", track);
