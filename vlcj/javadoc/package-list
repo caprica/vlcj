@@ -13,6 +13,7 @@ uk.co.caprica.vlcj.player.embedded.linux
 uk.co.caprica.vlcj.player.embedded.mac
 uk.co.caprica.vlcj.player.embedded.windows
 uk.co.caprica.vlcj.player.headless
+uk.co.caprica.vlcj.player.list
 uk.co.caprica.vlcj.runtime
 uk.co.caprica.vlcj.runtime.windows
 uk.co.caprica.vlcj.runtime.windows.internal
