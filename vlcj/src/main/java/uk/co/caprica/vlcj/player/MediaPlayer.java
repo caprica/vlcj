@@ -2025,6 +2025,7 @@ public abstract class MediaPlayer {
    * occasions the event seems not to fire. 
    * 
    * TODO is this still required with libvlc 1.1?
+   * TODO think about having a specific event that fires when video output is detect
    * FIXME this should latch on the playing event rather than sleeping and looping
    */
   private final class NotifyMetaRunnable implements Runnable {
