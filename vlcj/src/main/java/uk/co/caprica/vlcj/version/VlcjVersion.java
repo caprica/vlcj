@@ -25,7 +25,7 @@ public class VlcjVersion {
   /**
    * Run-time version of vlc/libvlc.
    */
-  private static final Version VERSION = new Version("1.1.4");
+  private static final Version VERSION = new Version("1.1.5");
 
   /**
    * Get the run-time version.
