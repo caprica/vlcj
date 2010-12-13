@@ -112,4 +112,13 @@ public class PlayerInstance implements MediaPlayerEventListener {
   @Override
   public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
   }
+
+  @Override
+  public void opening(MediaPlayer mediaPlayer) {
+    System.out.println("opening");
+  }
+
+  @Override
+  public void buffering(MediaPlayer mediaPlayer) {
+  }
 }
