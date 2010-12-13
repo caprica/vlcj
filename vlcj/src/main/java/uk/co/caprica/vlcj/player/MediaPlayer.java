@@ -1914,6 +1914,18 @@ public abstract class MediaPlayer {
           
           case libvlc_MediaPlayerNothingSpecial:
             break;
+
+          /**
+           * More than one of these may be raised per media item, presumably as
+           * different input modules try to open the media
+           */
+          case libvlc_MediaPlayerOpening:
+            listener.opening(this);
+            break;
+            
+          case libvlc_MediaPlayerBuffering:
+            listener.buffering(this);
+            break;
             
           case libvlc_MediaPlayerPlaying:
             listener.playing(this);
@@ -1931,6 +1943,14 @@ public abstract class MediaPlayer {
             listener.finished(this);
             break;
         
+          /**
+           * More than one of these may be raised per media item, presumably as
+           * different input modules fail to open the media
+           */
+          case libvlc_MediaPlayerEncounteredError:
+            listener.error(this);
+            break;
+            
           case libvlc_MediaPlayerTimeChanged:
             long newTime = ((media_player_time_changed)event.u.getTypedValue(media_player_time_changed.class)).new_time;
             listener.timeChanged(this, newTime);
