@@ -34,7 +34,7 @@ class Info {
     "__   _| | ___ (_)"   + "\n" +
     "\\ \\ / / |/ __|| |" + "\n" +
     " \\ V /| | (__ | |"  + "\n" +
-    "  \\_/ |_|\\___|/ | 1.1.4" + "\n" +
+    "  \\_/ |_|\\___|/ | 1.1.5" + "\n" +
     "            |__/"   + "\n";
   
   /**
@@ -62,6 +62,6 @@ class Info {
   Info() {
     System.err.println(APP_MSG);
     System.err.println(LICENSE_MSG);
-    Logger.info("vlcj 1.1.4");
+    Logger.info("vlcj 1.1.5");
   }
 }
