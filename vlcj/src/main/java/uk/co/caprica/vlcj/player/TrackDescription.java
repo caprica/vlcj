@@ -19,10 +19,17 @@
 
 package uk.co.caprica.vlcj.player;
 
+import java.io.Serializable;
+
 /**
  * Description of a track, e.g. a video or audio track.
  */
-public class TrackDescription {
+public class TrackDescription implements Serializable {
+
+  /**
+   * Serial version.
+   */
+  private static final long serialVersionUID = 1L;
 
   /**
    * Identifier.

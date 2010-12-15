@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player;
 
 import java.awt.Dimension;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,12 @@ import java.util.Map;
 /**
  * Basic video meta data.
  */
-public class VideoMetaData {
+public class VideoMetaData implements Serializable {
+
+  /**
+   * Serial version.
+   */
+  private static final long serialVersionUID = 1L;
 
   /**
    * Video width/height.
