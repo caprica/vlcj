@@ -26,4 +26,16 @@ import com.sun.jna.Structure;
  */
 public class libvlc_media_track_info_t extends Structure {
 
+  /* Codec fourcc */
+  public int i_codec;
+  public int i_id;
+  
+  // libvlc_track_type_t i_type; // enum or int? how do i normally do that?
+  public int i_type;
+  
+  /* Codec specific */
+  public int i_profile;
+  public int i_level;
+  
+  public libvlc_media_track_info_u u;
 }
