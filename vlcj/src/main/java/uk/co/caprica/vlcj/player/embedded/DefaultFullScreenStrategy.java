@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.embedded;
 
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 
@@ -26,10 +28,13 @@ import uk.co.caprica.vlcj.log.Logger;
 
 /**
  * Default implementation of a full screen strategy that attempts to use the
- * JDK full-screen support.
+ * JDK full-screen exclusive mode support.
  * <p>
- * Client applications may wish to set the DisplayMode - extend this class and
- * override {@link #enterFullScreenMode()} to do so.
+ * Client applications may wish to select a screen device other than the 
+ * default - extend this class and override {@link #getScreenDevice()} to do so.
+ * <p>
+ * Client applications may wish to explicitly set the DisplayMode - extend this
+ * class and override {@link #getDisplayMode(DisplayMode[])} to do so.
  */
 public class DefaultFullScreenStrategy implements FullScreenStrategy {
 
@@ -54,24 +59,54 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
     }
   }
   
-//  @Override
+  @Override
   public void enterFullScreenMode() {
     Logger.debug("enterFullScreenMode()");
     
-    GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(window);
+    GraphicsDevice graphicsDevice = getScreenDevice();
+    graphicsDevice.setFullScreenWindow(window);
+
+    DisplayMode displayMode = getDisplayMode(graphicsDevice.getDisplayModes());
+    if(displayMode != null) {
+      graphicsDevice.setDisplayMode(displayMode);
+    }
   }
 
-//  @Override
+  @Override
   public void exitFullScreenMode() {
     Logger.debug("exitFullScreenMode()");
     
-    GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
+    getScreenDevice().setFullScreenWindow(null);
   }
 
-//  @Override
+  @Override
   public boolean isFullScreenMode() {
     Logger.debug("isFullScreenMode()");
     
     return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getFullScreenWindow() != null;
+  }
+  
+  /**
+   * Get the desired screen device.
+   * <p>
+   * The default implementation simply returns the default screen device.
+   * 
+   * @return screen device, must not be <code>null</code>
+   */
+  protected GraphicsDevice getScreenDevice() {
+    return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+  }
+  
+  /**
+   * Get the desired display mode.
+   * <p>
+   * The default implementation returns <code>null</code> to accept the default
+   * display mode.
+   * 
+   * @param displayModes available display modes
+   * @return display mode, may be <code>null</code>
+   */
+  protected DisplayMode getDisplayMode(DisplayMode[] displayModes) {
+    return null;
   }
 }
