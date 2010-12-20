@@ -33,6 +33,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
@@ -228,6 +229,13 @@ public interface LibVlc extends Library {
    * @param p_user_data user provided data to carry with the event
    */
   void libvlc_event_detach(libvlc_event_manager_t p_event_manager, int i_event_type, libvlc_callback_t f_callback, Pointer p_user_data);
+  
+  /**
+   * Get an event's type name.
+   * 
+   * @param event_type the desired event
+   */
+  String libvlc_event_type_name(int event_type);
 
   /**
    * Return the VLC messaging verbosity level.
@@ -311,14 +319,9 @@ public interface LibVlc extends Library {
    * @return log message object or NULL if none left
    */
   libvlc_log_message_t libvlc_log_iterator_next(libvlc_log_iterator_t p_iter, libvlc_log_message_t p_buffer);
-  
-  /**
-   * Get an event's type name.
-   * 
-   * @param event_type the desired event
-   */
-  String libvlc_event_type_name(int event_type);
 
+  
+  
   // === libvlc.h =============================================================
 
   // === libvlc_media.h =======================================================
@@ -475,8 +478,9 @@ public interface LibVlc extends Library {
    * @param p_md media descriptor object
    * @return list of media descriptor subitems or NULL
    *
-   * This method uses libvlc_media_list_t, however, media_list usage is optionnal
-   * and this is here for convenience */
+   * This method uses libvlc_media_list_t, however, media_list usage is optional
+   * and this is here for convenience 
+   */
   libvlc_media_list_t libvlc_media_subitems(libvlc_media_t p_md);
   
   /**
@@ -567,7 +571,8 @@ public interface LibVlc extends Library {
    *          descriptions (must be freed by the caller) return the number of
    *          Elementary Streams
    */
-  int libvlc_media_get_tracks_info(libvlc_media_t media, Pointer tracks);
+  // TODO not sure this is the right sig
+  int libvlc_media_get_tracks_info(libvlc_media_t media, libvlc_media_track_info_t[] tracks);
 
   // === libvlc_media.h =======================================================
 
