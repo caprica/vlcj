@@ -69,4 +69,13 @@ public class TrackDescription implements Serializable {
   public String description() {
     return description;
   }
+  
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder(60);
+    sb.append(getClass().getSimpleName()).append('[');
+    sb.append("id=").append(id).append(',');
+    sb.append("description=").append(description).append(']');
+    return sb.toString();
+  }
 }
