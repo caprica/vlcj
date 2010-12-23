@@ -34,6 +34,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
@@ -320,7 +321,38 @@ public interface LibVlc extends Library {
    */
   libvlc_log_message_t libvlc_log_iterator_next(libvlc_log_iterator_t p_iter, libvlc_log_message_t p_buffer);
 
-  
+  /**
+   * Release a list of module descriptions.
+   *
+   * @param p_list the list to be released
+   */
+  void libvlc_module_description_list_release(libvlc_module_description_t p_list);
+
+  /**
+   * Returns a list of audio filters that are available.
+   *
+   * @param p_instance libvlc instance
+   *
+   * @return a list of module descriptions. It should be freed with libvlc_module_description_list_release().
+   *         In case of an error, NULL is returned.
+   *
+   * @see libvlc_module_description_t
+   * @see libvlc_module_description_list_release
+   */
+  libvlc_module_description_t libvlc_audio_filter_list_get(libvlc_instance_t p_instance);
+
+  /**
+   * Returns a list of video filters that are available.
+   *
+   * @param p_instance libvlc instance
+   *
+   * @return a list of module descriptions. It should be freed with libvlc_module_description_list_release().
+   *         In case of an error, NULL is returned.
+   *
+   * @see libvlc_module_description_t
+   * @see libvlc_module_description_list_release
+   */
+  libvlc_module_description_t libvlc_video_filter_list_get(libvlc_instance_t p_instance);
   
   // === libvlc.h =============================================================
 
