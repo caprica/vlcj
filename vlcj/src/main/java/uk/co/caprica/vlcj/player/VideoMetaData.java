@@ -165,7 +165,7 @@ public class VideoMetaData implements Serializable {
     this.chapterDescriptions = chapterDescriptions;
   }
   
-//  @Override
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(200);
     sb.append(getClass().getSimpleName()).append('[');

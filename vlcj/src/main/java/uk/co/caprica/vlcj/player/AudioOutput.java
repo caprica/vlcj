@@ -63,7 +63,7 @@ public class AudioOutput {
     return description;
   }
   
-//  @Override
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(60);
     sb.append(getClass().getSimpleName()).append('[');
