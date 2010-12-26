@@ -121,4 +121,12 @@ public class PlayerInstance implements MediaPlayerEventListener {
   @Override
   public void buffering(MediaPlayer mediaPlayer) {
   }
+
+  @Override
+  public void forward(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void backward(MediaPlayer mediaPlayer) {
+  }
 }
