@@ -54,14 +54,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
-import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
-import uk.co.caprica.vlcj.binding.internal.media_player_pausable_changed;
-import uk.co.caprica.vlcj.binding.internal.media_player_position_changed;
-import uk.co.caprica.vlcj.binding.internal.media_player_seekable_changed;
-import uk.co.caprica.vlcj.binding.internal.media_player_snapshot_taken;
-import uk.co.caprica.vlcj.binding.internal.media_player_time_changed;
-import uk.co.caprica.vlcj.binding.internal.media_player_title_changed;
 import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
+import uk.co.caprica.vlcj.player.events.MediaPlayerEventFactory;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
@@ -187,6 +182,8 @@ public abstract class MediaPlayer {
   protected final LibVlc libvlc = LibVlcFactory.factory().synchronise().log().create();
   
   private final List<MediaPlayerEventListener> eventListenerList = new ArrayList<MediaPlayerEventListener>();
+
+  private final MediaPlayerEventFactory eventFactory = new MediaPlayerEventFactory(this);
 
   private final ExecutorService listenersService = Executors.newSingleThreadExecutor();
 
@@ -1901,95 +1898,6 @@ public abstract class MediaPlayer {
     libvlcMediaStats = new libvlc_media_stats_t();
   }
 
-  private void notifyListeners(libvlc_event_t event) {
-    Logger.trace("notifyListeners(event={})", event);
-    if(!eventListenerList.isEmpty()) {
-      for(int i = eventListenerList.size() - 1; i >= 0; i--) {
-        MediaPlayerEventListener listener = eventListenerList.get(i);
-        int eventType = event.type;
-        switch(libvlc_event_e.event(eventType)) {
-          case libvlc_MediaPlayerMediaChanged:
-            listener.mediaChanged(this);
-            break;
-          
-          case libvlc_MediaPlayerNothingSpecial:
-            break;
-
-          /**
-           * More than one of these may be raised per media item, presumably as
-           * different input modules try to open the media
-           */
-          case libvlc_MediaPlayerOpening:
-            listener.opening(this);
-            break;
-            
-          case libvlc_MediaPlayerBuffering:
-            listener.buffering(this);
-            break;
-            
-          case libvlc_MediaPlayerPlaying:
-            listener.playing(this);
-            break;
-        
-          case libvlc_MediaPlayerPaused:
-            listener.paused(this);
-            break;
-        
-          case libvlc_MediaPlayerStopped:
-            listener.stopped(this);
-            break;
-        
-          case libvlc_MediaPlayerEndReached:
-            listener.finished(this);
-            break;
-        
-          /**
-           * More than one of these may be raised per media item, presumably as
-           * different input modules fail to open the media
-           */
-          case libvlc_MediaPlayerEncounteredError:
-            listener.error(this);
-            break;
-            
-          case libvlc_MediaPlayerTimeChanged:
-            long newTime = ((media_player_time_changed)event.u.getTypedValue(media_player_time_changed.class)).new_time;
-            listener.timeChanged(this, newTime);
-            break;
-
-          case libvlc_MediaPlayerPositionChanged:
-            float newPosition = ((media_player_position_changed)event.u.getTypedValue(media_player_position_changed.class)).new_position;
-            listener.positionChanged(this, newPosition);
-            break;
-            
-          case libvlc_MediaPlayerSeekableChanged:
-            int newSeekable = ((media_player_seekable_changed)event.u.getTypedValue(media_player_seekable_changed.class)).new_seekable;
-            listener.seekableChanged(this, newSeekable);
-            break;
-            
-          case libvlc_MediaPlayerPausableChanged:
-            int newPausable = ((media_player_pausable_changed)event.u.getTypedValue(media_player_pausable_changed.class)).new_pausable;
-            listener.pausableChanged(this, newPausable);
-            break;
-          
-          case libvlc_MediaPlayerTitleChanged:
-            int newTitle = ((media_player_title_changed)event.u.getTypedValue(media_player_title_changed.class)).new_title;
-            listener.titleChanged(this, newTitle);
-            break;
-            
-          case libvlc_MediaPlayerSnapshotTaken:
-            String filename = ((media_player_snapshot_taken)event.u.getTypedValue(media_player_snapshot_taken.class)).filename;
-            listener.snapshotTaken(this, filename);
-            break;
-
-          case libvlc_MediaPlayerLengthChanged:
-            long newLength = ((media_player_length_changed)event.u.getTypedValue(media_player_length_changed.class)).new_length;
-            listener.lengthChanged(this, newLength);
-            break;
-        }
-      }
-    }
-  }
-
   private void notifyListeners(VideoMetaData videoMetaData) {
     Logger.trace("notifyListeners(videoMetaData={})", videoMetaData);
     
@@ -2010,23 +1918,40 @@ public abstract class MediaPlayer {
       // necessary to prevent a potential native library failure if the
       // native library is re-entered
       if(!eventListenerList.isEmpty()) {
-        listenersService.submit(new NotifyListenersRunnable(event));
+        // Create a new media player event for the native event
+        MediaPlayerEvent mediaPlayerEvent = eventFactory.newMediaPlayerEvent(event);
+        Logger.trace("mediaPlayerEvent={}", mediaPlayerEvent);
+        if(mediaPlayerEvent != null) {
+          // Notify listeners in a different thread - the other thread is
+          // necessary to prevent a potential native library failure if the
+          // native library is re-entered
+          listenersService.submit(new NotifyListenersRunnable(mediaPlayerEvent));
+        }
       }
     }
   }
 
   private final class NotifyListenersRunnable implements Runnable {
 
-    private final libvlc_event_t event;
+    private final MediaPlayerEvent mediaPlayerEvent;
 
-    private NotifyListenersRunnable(libvlc_event_t event) {
-      this.event = event;
+    private NotifyListenersRunnable(MediaPlayerEvent mediaPlayerEvent) {
+      this.mediaPlayerEvent = mediaPlayerEvent;
     }
 
 //    @Override
     public void run() {
       Logger.trace("run()");
-      notifyListeners(event);
+      for(int i = eventListenerList.size() - 1; i >= 0; i--) {
+        MediaPlayerEventListener listener = eventListenerList.get(i);
+        try {
+          mediaPlayerEvent.notify(listener);
+        }
+        catch(Throwable t) {
+          Logger.warn("Event listener {} threw an exception", t, listener);
+          // Continue with the next listener...
+        }
+      }
       Logger.trace("runnable exits");
     }
   }

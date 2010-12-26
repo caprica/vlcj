@@ -51,6 +51,14 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
   }
 
 //  @Override
+  public void forward(MediaPlayer mediaPlayer) {
+  }
+
+//  @Override
+  public void backward(MediaPlayer mediaPlayer) {
+  }
+
+//  @Override
   public void finished(MediaPlayer mediaPlayer) {
   }
 

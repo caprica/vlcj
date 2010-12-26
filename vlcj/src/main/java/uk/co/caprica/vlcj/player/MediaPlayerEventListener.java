@@ -72,6 +72,20 @@ public interface MediaPlayerEventListener {
    * 
    * @param mediaPlayer
    */
+  void forward(MediaPlayer mediaPlayer);
+
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   */
+  void backward(MediaPlayer mediaPlayer);
+
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   */
   void finished(MediaPlayer mediaPlayer);
   
   /**
