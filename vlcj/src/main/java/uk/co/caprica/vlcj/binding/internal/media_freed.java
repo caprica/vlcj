@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 /**
@@ -30,5 +29,5 @@ public class media_freed extends Structure {
   /**
    * 
    */
-  public Pointer md;
+  public libvlc_media_t md;
 }
