@@ -55,6 +55,11 @@ import uk.co.caprica.vlcj.log.Logger;
 public class WindowsCanvas extends Canvas {
 
   /**
+   * Serial version.
+   */
+  private static final long serialVersionUID = 1L;
+
+  /**
    * List of registered event listeners.
    */
   private final EventListenerList listenerList = new EventListenerList();
@@ -81,7 +86,7 @@ public class WindowsCanvas extends Canvas {
   }
 
   /**
-   * 
+   * Release the canvas resources.
    */
   public void release() {
     Logger.debug("release()");
