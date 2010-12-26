@@ -23,6 +23,8 @@ import com.sun.jna.Union;
 
 public class libvlc_event_u extends Union {
 
+  public static class ByValue extends libvlc_event_u implements Union.ByValue {}
+
   public media_meta_changed              media_meta_changed;
   public media_subitem_added             media_subitem_added;
   public media_duration_changed          media_duration_changed;

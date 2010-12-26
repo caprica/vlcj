@@ -40,5 +40,5 @@ public class libvlc_event_t extends Structure {
   /**
    * 
    */
-  public libvlc_event_u u;
+  public libvlc_event_u.ByValue u;
 }
