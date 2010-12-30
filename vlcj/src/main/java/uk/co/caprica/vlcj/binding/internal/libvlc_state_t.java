@@ -22,9 +22,8 @@ package uk.co.caprica.vlcj.binding.internal;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
- *
+ * Enumeration of native media/player states.
  */
 public enum libvlc_state_t {
 
@@ -45,16 +44,35 @@ public enum libvlc_state_t {
     }
   }
 
+  /**
+   * Get an enumerated value for a native value.
+   * 
+   * @param intValue native value
+   * @return enumerated value
+   */
   public static libvlc_state_t state(int intValue) {
     return INT_MAP.get(intValue);
   }
   
+  /**
+   * Native value.
+   */
   private final int intValue;
 
+  /**
+   * Create an enumerated value.
+   * 
+   * @param intValue native value
+   */
   private libvlc_state_t(int intValue) {
     this.intValue = intValue;
   }
   
+  /**
+   * Get the native value.
+   * 
+   * @return value
+   */
   public int intValue() {
     return intValue;
   }
