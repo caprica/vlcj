@@ -54,86 +54,121 @@ public class MediaPlayerEventFactory {
    * Create a new media player event for a given native event.
    * 
    * @param event native event
-   * @return media player event, or <code>null</code> if the native event type could not be handled
+   * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
+   * @return media player event, or <code>null</code> if the native event type is not enabled or otherwise could not be handled
    */
-  public MediaPlayerEvent newMediaPlayerEvent(libvlc_event_t event) {
-    MediaPlayerEvent result = null;
-    
+  public MediaPlayerEvent newMediaPlayerEvent(libvlc_event_t event, int eventMask) {
     // Create an event suitable for the native event type...
+    MediaPlayerEvent result = null;
     switch(libvlc_event_e.event(event.type)) {
       case libvlc_MediaPlayerMediaChanged:
-        result = new MediaPlayerMediaChangedEvent(mediaPlayer);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_CHANGED)) {
+          result = new MediaPlayerMediaChangedEvent(mediaPlayer);
+        }
         break;
       
       case libvlc_MediaPlayerNothingSpecial:
-        result = new MediaPlayerNothingSpecialEvent(mediaPlayer);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_CHANGED)) {
+          result = new MediaPlayerNothingSpecialEvent(mediaPlayer);
+        }
         break;
 
       case libvlc_MediaPlayerOpening:
-        result = new MediaPlayerOpeningEvent(mediaPlayer);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.OPENING)) {
+          result = new MediaPlayerOpeningEvent(mediaPlayer);
+        }
         break;
         
       case libvlc_MediaPlayerBuffering:
-        result = new MediaPlayerBufferingEvent(mediaPlayer);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.BUFFERING)) {
+          result = new MediaPlayerBufferingEvent(mediaPlayer);
+        }
         break;
         
       case libvlc_MediaPlayerPlaying:
-        result = new MediaPlayerPlayingEvent(mediaPlayer);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.PLAYING)) {
+          result = new MediaPlayerPlayingEvent(mediaPlayer);
+        }
         break;
     
       case libvlc_MediaPlayerPaused:
-        result = new MediaPlayerPausedEvent(mediaPlayer);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.PAUSED)) {
+          result = new MediaPlayerPausedEvent(mediaPlayer);
+        }
         break;
     
       case libvlc_MediaPlayerStopped:
-        result = new MediaPlayerStoppedEvent(mediaPlayer);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.STOPPED)) {
+          result = new MediaPlayerStoppedEvent(mediaPlayer);
+        }
         break;
     
       case libvlc_MediaPlayerForward:
-        result = new MediaPlayerForwardEvent(mediaPlayer);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.FORWARD)) {
+          result = new MediaPlayerForwardEvent(mediaPlayer);
+        }
         break;
         
       case libvlc_MediaPlayerBackward:
-        result = new MediaPlayerBackwardEvent(mediaPlayer);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.BACKWARD)) {
+          result = new MediaPlayerBackwardEvent(mediaPlayer);
+        }
         break;
         
       case libvlc_MediaPlayerEndReached:
-        result = new MediaPlayerEndReachedEvent(mediaPlayer);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.FINISHED)) {
+          result = new MediaPlayerEndReachedEvent(mediaPlayer);
+        }
         break;
     
       case libvlc_MediaPlayerEncounteredError:
-        result = new MediaPlayerEncounteredErrorEvent(mediaPlayer);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.ERROR)) {
+          result = new MediaPlayerEncounteredErrorEvent(mediaPlayer);
+        }
         break;
         
       case libvlc_MediaPlayerTimeChanged:
-        result = new MediaPlayerTimeChangedEvent(mediaPlayer, ((media_player_time_changed)event.u.getTypedValue(media_player_time_changed.class)).new_time);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.TIME_CHANGED)) {
+          result = new MediaPlayerTimeChangedEvent(mediaPlayer, ((media_player_time_changed)event.u.getTypedValue(media_player_time_changed.class)).new_time);
+        }
         break;
 
       case libvlc_MediaPlayerPositionChanged:
-        result = new MediaPlayerPositionChangedEvent(mediaPlayer, ((media_player_position_changed)event.u.getTypedValue(media_player_position_changed.class)).new_position);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.POSITION_CHANGED)) {
+          result = new MediaPlayerPositionChangedEvent(mediaPlayer, ((media_player_position_changed)event.u.getTypedValue(media_player_position_changed.class)).new_position);
+        }
         break;
         
       case libvlc_MediaPlayerSeekableChanged:
-        result = new MediaPlayerSeekableChangedEvent(mediaPlayer, ((media_player_seekable_changed)event.u.getTypedValue(media_player_seekable_changed.class)).new_seekable);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.SEEKABLE_CHANGED)) {
+          result = new MediaPlayerSeekableChangedEvent(mediaPlayer, ((media_player_seekable_changed)event.u.getTypedValue(media_player_seekable_changed.class)).new_seekable);
+        }
         break;
         
       case libvlc_MediaPlayerPausableChanged:
-        result = new MediaPlayerPausableChangedEvent(mediaPlayer, ((media_player_pausable_changed)event.u.getTypedValue(media_player_pausable_changed.class)).new_pausable);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.PAUSABLE_CHANGED)) {
+          result = new MediaPlayerPausableChangedEvent(mediaPlayer, ((media_player_pausable_changed)event.u.getTypedValue(media_player_pausable_changed.class)).new_pausable);
+        }
         break;
       
       case libvlc_MediaPlayerTitleChanged:
-        result = new MediaPlayerTitleChangedEvent(mediaPlayer, ((media_player_title_changed)event.u.getTypedValue(media_player_title_changed.class)).new_title);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.TITLE_CHANGED)) {
+          result = new MediaPlayerTitleChangedEvent(mediaPlayer, ((media_player_title_changed)event.u.getTypedValue(media_player_title_changed.class)).new_title);
+        }
         break;
         
       case libvlc_MediaPlayerSnapshotTaken:
-        result = new MediaPlayerSnapshotTakenEvent(mediaPlayer, ((media_player_snapshot_taken)event.u.getTypedValue(media_player_snapshot_taken.class)).filename);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.SNAPSHOT_TAKEN)) {
+          result = new MediaPlayerSnapshotTakenEvent(mediaPlayer, ((media_player_snapshot_taken)event.u.getTypedValue(media_player_snapshot_taken.class)).filename);
+        }
         break;
 
       case libvlc_MediaPlayerLengthChanged:
-        result = new MediaPlayerLengthChangedEvent(mediaPlayer, ((media_player_length_changed)event.u.getTypedValue(media_player_length_changed.class)).new_length);
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.LENGTH_CHANGED)) {
+          result = new MediaPlayerLengthChangedEvent(mediaPlayer, ((media_player_length_changed)event.u.getTypedValue(media_player_length_changed.class)).new_length);
+        }
         break;
     }
-    
     return result;
   }
 }

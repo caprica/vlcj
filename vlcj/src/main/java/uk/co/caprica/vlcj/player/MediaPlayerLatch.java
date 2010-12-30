@@ -20,89 +20,119 @@
 package uk.co.caprica.vlcj.player;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import uk.co.caprica.vlcj.log.Logger;
 
 /**
- * This class implements a strategy for handling multiple player instances.
+ * This class implements a mechanism to play a media item and wait for it to
+ * start (or wait for it to raise an error instead of starting).
  * <p>
- * A strategy is required since there are threading issues in the native 
- * libraries that are exposed as races when repeated calls to play() are made.
+ * Ordinarily a call to play new media returns immediately and the native media
+ * player attempts to open and start playing the media asynchronously. This can
+ * make it a little difficult for application code to know if the media 
+ * successfully started or failed to start because of an error.
  * <p>
- * The strategy is simply to block the play call until a media player playing 
- * event is received.
+ * It is possible for application code to respond to media player events to
+ * determine whether the media started successfully or failed because of an 
+ * error but this class serves as a convenient encapsulation of that 
+ * functionality.
  * <p>
- * This has limitations in that if an error occurs (e.g. file not found) then
- * it will block forever since no playing event will be received nor in fact 
- * will any error event.
- * <p>
- * For this reason it is possible to specify a timeout - if the timeout expires
- * before a playing event is received then the play method will return (the
- * return value will be <code>false</code>. It is possible that the media will
- * still actually start playing even if <code>false</code> is returned. 
+ * The strategy is simply to block the play call until a media player "playing" 
+ * or "error" event is received.
  * <p>
  * Example usage:
  * <pre>
  *   mediaPlayer.prepareMedia(mrl, options);
- *   new MediaPlayerLatch(mediaPlayer).play();
+ *   boolean definitelyStarted = new MediaPlayerLatch(mediaPlayer).play();
  * </pre>
- * Or:
- * <pre>
- *   mediaPlayer.prepareMedia(mrl, options);
- *   MediaPlayerLatch playerLatch = new MediaPlayerLatch(mediaPlayer);
- *   playerLatch.setTimeout(3, TimeUnit.SECONDS);   
- *   boolean maybeStarted = playerLatch.play();
- * </pre>
- * <strong>This class is experimental and is subject to change/removal.</strong>
+ * The {@link DefaultMediaPlayer} uses this class for the "play and wait..."
+ * implementation, see {@link MediaPlayer#playMediaAndWait(String)} and
+ * {@link MediaPlayer#playMediaAndWait(String, String...)}.
+ * <p> 
+ * Most applications are not expected to need this class and use the "play and
+ * wait..." functionality on the media player instead.
  */
 public class MediaPlayerLatch {
 
+  /**
+   * Media player instance.
+   */
   private final MediaPlayer mediaPlayer;
-  private long timeout;
-  private TimeUnit timeUnit;
   
+  /**
+   * Create a new media player latch.
+   * 
+   * @param mediaPlayer media player instance
+   */
   public MediaPlayerLatch(MediaPlayer mediaPlayer) {
     this.mediaPlayer = mediaPlayer;
   }
   
-  public void setTimeout(long timeout, TimeUnit timeUnit) {
-    this.timeout = timeout;
-    this.timeUnit = timeUnit;
-  }
-  
+  /**
+   * Play the media and wait for it to either start playing or error.
+   * 
+   * @return true if the media definitely started playing and false if it 
+   *         did not or the thread was interrupted while waiting (unlikely, but
+   *         in which case the media player <em>might</em> still start)   
+   */
   public boolean play() { 
+    Logger.debug("play()");
     CountDownLatch latch = new CountDownLatch(1);
-    MediaPlayerEventListener listener = new LatchListener(latch);
+    LatchListener listener = new LatchListener(latch);
     mediaPlayer.addMediaPlayerEventListener(listener);
     mediaPlayer.play();
     try {
-      if(timeout > 0L) {
-        return latch.await(timeout, timeUnit);
-      }
-      else {
-        latch.await();
-        return true;
-      }
+      Logger.debug("Waiting for media playing or error...");
+      latch.await();
+      Logger.debug("Finished waiting.");
+      boolean started = listener.playing.get();
+      Logger.debug("started={}", started);
+      return started;
     }
     catch(InterruptedException e) {
+      Logger.debug("Interrupted while waiting for media player", e);
+      return false;
     }
     finally {
       mediaPlayer.removeMediaPlayerEventListener(listener);
     }
-    return false;
   }
   
+  /**
+   * Short-lived listener to wait for playing/error events. 
+   */
   private final class LatchListener extends MediaPlayerEventAdapter {
+
+    /**
+     * Synchronisation latch.
+     */
+    private final CountDownLatch latch;
     
-    private CountDownLatch latch;
+    /**
+     * True if the media started, otherwise false.
+     */
+    private AtomicBoolean playing = new AtomicBoolean();
     
+    /**
+     * Create a new listener.
+     * 
+     * @param latch synchronisation latch.
+     */
     private LatchListener(CountDownLatch latch) {
       this.latch = latch;
     }
     
     @Override
     public void playing(MediaPlayer mediaPlayer) {
+      playing.set(true);
       latch.countDown();
-      latch = null;
+    }
+
+    @Override
+    public void error(MediaPlayer mediaPlayer) {
+      playing.set(false);
+      latch.countDown();
     }
   }
 }

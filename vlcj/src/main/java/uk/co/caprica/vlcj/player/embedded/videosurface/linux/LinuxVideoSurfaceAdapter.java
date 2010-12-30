@@ -17,20 +17,26 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.headless;
+package uk.co.caprica.vlcj.player.embedded.videosurface.linux;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
 
 /**
- * Specification for a media player component that is not intended to display
- * the media.
- * <p>
- * This is useful, for example, when a media player component is being used to
- * stream media.
- * <p>
- * Note that client applications must still set proper media options otherwise
- * a native video window may still appear.
+ * Implementation of a video surface adapter for Linux.
  */
-public interface HeadlessMediaPlayer extends MediaPlayer {
-  // Nothing extra
+public class LinuxVideoSurfaceAdapter implements VideoSurfaceAdapter {
+
+  /**
+   * Serial version.
+   */
+  private static final long serialVersionUID = 1L;
+
+  @Override
+  public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+    Logger.debug("attach(componentId={}", componentId);
+    libvlc.libvlc_media_player_set_xwindow(mediaPlayer.mediaPlayerInstance(), (int)componentId);
+  }
 }

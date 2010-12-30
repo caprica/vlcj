@@ -22,8 +22,10 @@ package uk.co.caprica.vlcj.player.direct;
 import com.sun.jna.Memory;
 
 /**
- * A render call-back adapter implementation that fills an array of rgb integer
+ * A render call-back adapter implementation that fills an array of RGB integer
  * data for an entire video frame.
+ * <p>
+ * The media player must be sending pixels in the RV32 format.
  */
 public abstract class RenderCallbackAdapter implements RenderCallback {
 

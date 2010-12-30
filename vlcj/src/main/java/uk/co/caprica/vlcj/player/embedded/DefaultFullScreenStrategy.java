@@ -23,6 +23,7 @@ import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
+import java.util.Arrays;
 
 import uk.co.caprica.vlcj.log.Logger;
 
@@ -50,7 +51,6 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
    */
   public DefaultFullScreenStrategy(Window window) {
     Logger.debug("DefaultFullScreenStrategy(window={})", window);
-    
     if(window != null) {
       this.window = window;
     }
@@ -59,31 +59,29 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
     }
   }
   
-  @Override
+//  @Override
   public void enterFullScreenMode() {
     Logger.debug("enterFullScreenMode()");
-    
     GraphicsDevice graphicsDevice = getScreenDevice();
+    Logger.debug("graphicsDevice={}", graphicsDevice);
     graphicsDevice.setFullScreenWindow(window);
-
     DisplayMode displayMode = getDisplayMode(graphicsDevice.getDisplayModes());
+    Logger.debug("displayMode={}", displayMode);
     if(displayMode != null) {
       graphicsDevice.setDisplayMode(displayMode);
     }
   }
 
-  @Override
+//  @Override
   public void exitFullScreenMode() {
     Logger.debug("exitFullScreenMode()");
-    
     getScreenDevice().setFullScreenWindow(null);
   }
 
-  @Override
+//  @Override
   public boolean isFullScreenMode() {
     Logger.debug("isFullScreenMode()");
-    
-    return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getFullScreenWindow() != null;
+    return getScreenDevice().getFullScreenWindow() != null;
   }
   
   /**
@@ -94,6 +92,7 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
    * @return screen device, must not be <code>null</code>
    */
   protected GraphicsDevice getScreenDevice() {
+    Logger.debug("getScreenDevice()");
     return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
   }
   
@@ -107,6 +106,7 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
    * @return display mode, may be <code>null</code>
    */
   protected DisplayMode getDisplayMode(DisplayMode[] displayModes) {
+    Logger.debug("getDisplayMode()", Arrays.toString(displayModes));
     return null;
   }
 }

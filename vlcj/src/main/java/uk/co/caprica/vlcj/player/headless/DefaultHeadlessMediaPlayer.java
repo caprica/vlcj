@@ -19,18 +19,28 @@
 
 package uk.co.caprica.vlcj.player.headless;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.player.DefaultMediaPlayer;
 
 /**
- * Specification for a media player component that is not intended to display
- * the media.
+ * A media player implementation with no user interface component to render the
+ * video to.
  * <p>
- * This is useful, for example, when a media player component is being used to
- * stream media.
+ * This is useful for a streaming server component.
  * <p>
- * Note that client applications must still set proper media options otherwise
- * a native video window may still appear.
+ * Client applications must use the correct media options otherwise a native 
+ * video window may still appear. 
  */
-public interface HeadlessMediaPlayer extends MediaPlayer {
-  // Nothing extra
+public class DefaultHeadlessMediaPlayer extends DefaultMediaPlayer implements HeadlessMediaPlayer {
+
+  /**
+   * Create a new media player.
+   * 
+   * @param libvlc native interface
+   * @param instance libvlc instance
+   */
+  public DefaultHeadlessMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
+    super(libvlc, instance);
+  }
 }

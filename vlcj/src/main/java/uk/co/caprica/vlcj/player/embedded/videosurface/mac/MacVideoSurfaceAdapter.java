@@ -17,35 +17,26 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded.mac;
+package uk.co.caprica.vlcj.player.embedded.videosurface.mac;
 
-import java.awt.Canvas;
-
-import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.log.Logger;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
 
 /**
- *
+ * Implementation of a video surface adapter for Mac.
  */
-public class MacEmbeddedMediaPlayer extends EmbeddedMediaPlayer {
+public class MacVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
   /**
-   * 
-   * 
-   * @param instance
-   * @param fullScreenStrategy
+   * Serial version.
    */
-  public MacEmbeddedMediaPlayer(libvlc_instance_t instance, FullScreenStrategy fullScreenStrategy) {
-    super(instance, fullScreenStrategy);
-  }
+  private static final long serialVersionUID = 1L;
 
   @Override
-  protected void nativeSetVideoSurface(libvlc_media_player_t mediaPlayerInstance, Canvas videoSurface) {
-    Logger.debug("nativeSetVideoSurface(mediaPlayerInstance={},videoSurface={})", mediaPlayerInstance, videoSurface);
-
+  public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+    Logger.debug("attach(componentId={}", componentId);
     // FIXME how?
     throw new UnsupportedOperationException("Send patches!");
   }

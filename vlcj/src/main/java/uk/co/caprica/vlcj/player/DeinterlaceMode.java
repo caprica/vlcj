@@ -17,25 +17,73 @@
  * Copyright 2009, 2010 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.list;
+package uk.co.caprica.vlcj.player;
 
 /**
- * Enumeration of media list player modes.
+ * Enumeration of deinterlace modes.
  */
-public enum MediaListPlayerMode {
+public enum DeinterlaceMode {
 
   /**
-   *
+   * 
    */
-  DEFAULT,
+  DISCARD("discard"),
   
   /**
    * 
    */
-  LOOP,
+  BLEND("blend"),
   
   /**
    * 
    */
-  REPEAT
+  MEAN("mean"),
+  
+  /**
+   * 
+   */
+  BOB("bob"),
+  
+  /**
+   * 
+   */
+  LINEAR("linear"),
+  
+  /**
+   * 
+   */
+  X("x"),
+  
+  /**
+   * 
+   */
+  YADIF("yadif"),
+  
+  /**
+   * 
+   */
+  YADIF2X("yadif2x");
+  
+  /**
+   * Native mode value.
+   */
+  private final String mode;
+  
+  /**
+   * Create an enumerated value.
+   * 
+   * @param mode native mode value
+   */
+  private DeinterlaceMode(String mode) {
+    this.mode = mode;
+  }
+
+  /**
+   * Get the native mode value.
+   * 
+   * @return mode value
+   */
+  public final String mode() {
+    return mode;
+  }
 }

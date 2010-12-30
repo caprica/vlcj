@@ -19,155 +19,19 @@
 
 package uk.co.caprica.vlcj.player.direct;
 
-import java.util.concurrent.Semaphore;
-
-import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
-import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
-import com.sun.jna.Memory;
-import com.sun.jna.Pointer;
-
 /**
- * Media player implementation that provides direct access to the video frame
- * data.
+ * Specification for a media player that provides direct access to the video 
+ * frame data.
+ * <p>
+ * Such a media player is useful for user interface toolkits that do not 
+ * support the embedding of an AWT Canvas, like JavaFX or an OpenGL toolkit
+ * like jMonkeyEngine.
+ * <p>
+ * A direct media player is also useful for applications that need access to
+ * the video frame data to process it in some way. 
  */
-public class DirectMediaPlayer extends MediaPlayer {
-
-  /**
-   * Use a semaphore with a single permit to ensure that the lock, display, 
-   * unlock cycle goes in a serial manner.
-   */
-  private final Semaphore semaphore = new Semaphore(1);
-  
-  /**
-   * Video buffer width.
-   */
-  private final int width;
-  
-  /**
-   * Video buffer height.
-   */
-  private final int height;
-  
-  /**
-   * Component to call-back for each video frame.
-   */
-  private final RenderCallback renderCallback;
-
-  /**
-   * Native memory buffer.
-   */
-  private final Memory nativeBuffer;
-
-  /**
-   * Lock call-back.
-   * <p>
-   * A hard reference to the call-back must be kept otherwise the call-back 
-   * will get garbage collected and cause a native crash.
-   */
-  private final libvlc_lock_callback_t lock;
-
-  /**
-   * Unlock call-back.
-   * <p>
-   * A hard reference to the call-back must be kept otherwise the call-back 
-   * will get garbage collected and cause a native crash.
-   */
-  private final libvlc_unlock_callback_t unlock;
-
-  /**
-   * Display call-back.
-   * <p>
-   * A hard reference to the call-back must be kept otherwise the call-back 
-   * will get garbage collected and cause a native crash.
-   */
-  private final libvlc_display_callback_t display;
-  
-  /**
-   * Create a new media player.
-   * 
-   * @param instance libvlc instance
-   * @param width width for the video
-   * @param height height for the video
-   * @param renderCallback call-back to receive the video frame data
-   */
-  public DirectMediaPlayer(libvlc_instance_t instance, int width, int height, RenderCallback renderCallback) {
-    super(instance);
-
-    this.width = width;
-    this.height = height;
-    this.renderCallback = renderCallback;
-    
-    // Memory must be aligned correctly (on a 32-byte boundary) for the libvlc 
-    // API functions (extra bytes are allocated to allow for enough memory if
-    // the alignment needs to be changed)
-    this.nativeBuffer = new Memory(width * height * 4 + 32).align(32);
-
-    this.lock = new libvlc_lock_callback_t() {
-//      @Override
-      public Pointer lock(Pointer opaque, Pointer plane) {
-        Logger.trace("lock");
-        // Acquire the single permit from the semaphore to ensure that the 
-        // memory buffer is not trashed while display() is invoked
-        Logger.trace("acquire");
-        semaphore.acquireUninterruptibly();
-        Logger.trace("acquired");
-        plane.setPointer(0, nativeBuffer);
-        Logger.trace("lock finished");
-        return null;
-      }
-    };
-
-    this.unlock = new libvlc_unlock_callback_t() {
-//      @Override
-      public void unlock(Pointer opaque, Pointer picture, Pointer plane) {
-        Logger.trace("unlock");
-        
-        // Release the semaphore
-        Logger.trace("release");
-        semaphore.release();
-        Logger.trace("released");
-
-        Logger.trace("unlock finished");
-      }
-    };
-
-    this.display = new libvlc_display_callback_t() {
-//      @Override
-      public void display(Pointer opaque, Pointer picture) {
-        Logger.trace("display");
-        
-        // Invoke the call-back
-        DirectMediaPlayer.this.renderCallback.display(nativeBuffer);
-
-        Logger.trace("display finished");
-      }
-    };
-
-    // RV15, RV16, RV24, RV32, RGBA, YUYV
-    libvlc.libvlc_video_set_format(mediaPlayerInstance(), "RV32", width, height, width * 4);
-    libvlc.libvlc_video_set_callbacks(mediaPlayerInstance(), lock, unlock, display, null);
-  }
-  
-  /**
-   * Get the buffer width.
-   * 
-   * @return width
-   */
-  public int width() {
-    return width;
-  }
-
-  /**
-   * Get the buffer height.
-   * 
-   * @return height
-   */
-  public int height() {
-    return height;
-  }
+public interface DirectMediaPlayer extends MediaPlayer {
+  // Nothing extra
 }

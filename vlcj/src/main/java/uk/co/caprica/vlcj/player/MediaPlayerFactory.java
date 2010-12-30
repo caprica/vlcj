@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player;
 
+import java.awt.Canvas;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,17 +28,25 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
 import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogLevel;
 import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
+import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
-import uk.co.caprica.vlcj.player.embedded.linux.LinuxEmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.mac.MacEmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.windows.WindowsEmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.ComponentIdVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
+import uk.co.caprica.vlcj.player.embedded.videosurface.linux.LinuxVideoSurfaceAdapter;
+import uk.co.caprica.vlcj.player.embedded.videosurface.mac.MacVideoSurfaceAdapter;
+import uk.co.caprica.vlcj.player.embedded.videosurface.windows.WindowsVideoSurfaceAdapter;
+import uk.co.caprica.vlcj.player.headless.DefaultHeadlessMediaPlayer;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
+import uk.co.caprica.vlcj.player.list.DefaultMediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaList;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -45,19 +54,21 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 /**
  * Factory for media player instances.
  * <p>
- * The factory initialises a single libvlc instance and uses that to create 
+ * The factory initialises a single libvlc instance and uses that to create
  * media player instances.
  * <p>
  * If required, you can create multiple factory instances each with their own
  * libvlc options.
  * <p>
- * This factory attempts to determine the run-time operating system and 
- * create an appropriate media player instance.
+ * This factory attempts to determine the run-time operating system and create
+ * an appropriate media player resources.
  * <p>
  * You should release the factory when your application terminates to properly
  * clean up native resources.
  * <p>
- * The factory also provides access to the native libvlc Logger.
+ * The factory also provides access to the native libvlc Logger and other
+ * resources such as the list of audio outputs, and the list of available audio
+ * and video filters.
  * <p>
  * Usage:
  * <pre>
@@ -71,7 +82,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  *   FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
  *   
  *   // Create a media player instance for the run-time operating system
- *   EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
+ *   EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(fullScreenStrategy);
  * 
  *   // Do some interesting things with the media player
  *   
@@ -90,12 +101,12 @@ public class MediaPlayerFactory {
    * Native library interface.
    */
   private final LibVlc libvlc;
-  
+
   /**
    * Native library instance.
    */
   private libvlc_instance_t instance;
-  
+
   /**
    * True when the factory has been released.
    */
@@ -104,66 +115,85 @@ public class MediaPlayerFactory {
   /**
    * Create a new media player factory.
    * <p>
-   * This factory uses an implementation of the interface to the native libvlc
-   * library that is synchronised and logs each method invocation - if you do
-   * not want this behaviour you must use one of the other constructors.
+   * If you want to enable logging or synchronisation of the native library
+   * interface you must use {@link #MediaPlayerFactory(LibVlc)} and
+   * {@link LibVlcFactory}.
    */
   public MediaPlayerFactory() {
     this(new String[] {});
   }
-  
+
   /**
    * Create a new media player factory.
    * <p>
-   * This factory uses an implementation of the interface to the native libvlc
-   * library that is synchronised and logs each method invocation - if you do
-   * not want this behaviour you must use one of the other constructors.
+   * If you want to enable logging or synchronisation of the native library
+   * interface you must use {@link #MediaPlayerFactory(LibVlc)} and
+   * {@link LibVlcFactory}.
    * 
    * @param libvlcArgs initialisation arguments to pass to libvlc
    */
   public MediaPlayerFactory(String[] libvlcArgs) {
-    this(libvlcArgs, LibVlcFactory.factory().synchronise().log().create());
+    this(libvlcArgs, LibVlcFactory.factory().create());
   }
 
   /**
    * Create a new media player factory.
+   * <p>
+   * Use {@link LibVlcFactory} to get a reference to the native library.
    * 
    * @param libvlc interface to the native library
    */
   public MediaPlayerFactory(LibVlc libvlc) {
     this(new String[] {}, libvlc);
   }
-  
+
   /**
    * Create a new media player factory.
+   * <p>
+   * Use {@link LibVlcFactory} to get a reference to the native library.
    * 
    * @param libvlcArgs initialisation arguments to pass to libvlc
    * @param libvlc interface to the native library
    */
   public MediaPlayerFactory(String[] libvlcArgs, LibVlc libvlc) {
     Logger.debug("MediaPlayerFactory(libvlcArgs={},libvlc={})", Arrays.toString(libvlcArgs), libvlc);
-    
+
     // JNA will look for the libvlc shared library here...
     Logger.debug("jna.library.path={}", System.getProperty("jna.library.path"));
-    
+
     // libvlc will look for it's plugins here...
     for(String libvlcArg : libvlcArgs) {
       if(libvlcArg.startsWith("--plugin-path=")) {
         Logger.debug(libvlcArg);
       }
     }
-    
+
     this.libvlc = libvlc;
-    
+
     this.instance = libvlc.libvlc_new(libvlcArgs.length, libvlcArgs);
     Logger.debug("instance={}", instance);
-    
+
     if(instance == null) {
       Logger.error("Failed to initialise libvlc");
       throw new IllegalStateException("Unable to initialise libvlc, check your libvlc options and/or check the console for error messages");
     }
   }
-  
+
+  /**
+   * Release the native resources associated with this factory.
+   */
+  public void release() {
+    Logger.debug("release()");
+    if(!released) {
+      if(instance != null) {
+        libvlc.libvlc_release(instance);
+      }
+      released = true;
+    }
+  }
+
+  // === Factory Configuration ================================================
+
   /**
    * Set the application name.
    * 
@@ -171,10 +201,9 @@ public class MediaPlayerFactory {
    */
   public void setUserAgent(String userAgent) {
     Logger.debug("setUserAgent(userAgent={})", userAgent);
-    
     setUserAgent(userAgent, null);
   }
-  
+
   /**
    * Set the application name.
    * 
@@ -183,7 +212,6 @@ public class MediaPlayerFactory {
    */
   public void setUserAgent(String userAgent, String httpUserAgent) {
     Logger.debug("setUserAgent(userAgent={},httpUserAgent={})", userAgent, httpUserAgent);
-    
     libvlc.libvlc_set_user_agent(instance, userAgent, userAgent);
   }
 
@@ -194,10 +222,9 @@ public class MediaPlayerFactory {
    */
   public int getLogVerbosity() {
     Logger.debug("getLogVerbosity()");
-    
     return libvlc.libvlc_get_log_verbosity(instance);
   }
-  
+
   /**
    * Set the log verbosity level.
    * 
@@ -205,7 +232,6 @@ public class MediaPlayerFactory {
    */
   public void setLogLevel(LogLevel level) {
     Logger.debug("setLogVerbosity(level={})", level);
-
     libvlc.libvlc_set_log_verbosity(instance, level.intValue());
   }
 
@@ -225,102 +251,226 @@ public class MediaPlayerFactory {
     libvlc.libvlc_audio_output_list_release(audioOutput);
     return result;
   }
-  
+
   /**
-   * Release the native resources associated with this factory.
+   * Get the available audio filters.
+   * 
+   * @return collection of audio filter descriptions
+   * 
+   * @since libvlc 1.2.0
    */
-  public void release() {
-    Logger.debug("release()");
-    
-    if(!released) {
-      if(instance != null) {
-        libvlc.libvlc_release(instance);
-      }
-      released = true;
-    }
+  public List<ModuleDescription> getAudioFilters() {
+    Logger.debug("getAudioFilters()");
+
+    libvlc_module_description_t moduleDescriptions = libvlc.libvlc_audio_filter_list_get(instance);
+
+    // Without disabling auto synch on this JNA structure a fatal crash will 
+    // intermittently occur when the release call is made - this is the only 
+    // time in all of the vlcj bindings that this is required and I do not 
+    // understand why it is needed only in this case
+    moduleDescriptions.setAutoSynch(false);
+
+    List<ModuleDescription> result = getModuleDescriptions(moduleDescriptions);
+    libvlc.libvlc_module_description_list_release(moduleDescriptions);
+    return result;
   }
   
+  /**
+   * Get the available video filters.
+   * 
+   * @return collection of video filter descriptions
+   * 
+   * @since libvlc 1.2.0
+   */
+  public List<ModuleDescription> getVideoFilters() {
+    Logger.debug("getVideoFilters()");
+
+    libvlc_module_description_t moduleDescriptions = libvlc.libvlc_video_filter_list_get(instance);
+
+    // Without disabling auto synch on this JNA structure a fatal crash will 
+    // intermittently occur when the release call is made - this is the only 
+    // time in all of the vlcj bindings that this is required and I do not 
+    // understand why it is needed only in this case
+    moduleDescriptions.setAutoSynch(false);
+
+    List<ModuleDescription> result = getModuleDescriptions(moduleDescriptions);
+    libvlc.libvlc_module_description_list_release(moduleDescriptions);
+    return result;
+  }
+
+  /**
+   * Convert a collection of native module description structures.
+   * 
+   * @param moduleDescriptions module descriptions
+   * @return collection of module descriptions
+   */
+  private List<ModuleDescription> getModuleDescriptions(libvlc_module_description_t moduleDescriptions) {
+    List<ModuleDescription> result = new ArrayList<ModuleDescription>();
+    libvlc_module_description_t moduleDescription = moduleDescriptions;
+    while(moduleDescription != null) {
+      result.add(new ModuleDescription(moduleDescription.psz_name, moduleDescription.psz_shortname, moduleDescription.psz_longname, moduleDescription.psz_help));
+      moduleDescription = moduleDescription.p_next;
+    }
+    return result;
+  }
+  
+  // === Media Player =========================================================
+
+  /**
+   * Create a new embedded media player.
+   * <p>
+   * Full-screen will not be available, to enable full-screen support see
+   * {@link #newEmbeddedMediaPlayer(FullScreenStrategy)}.
+   * 
+   * @return media player instance
+   */
+  public EmbeddedMediaPlayer newEmbeddedMediaPlayer() {
+    Logger.debug("newEmbeddedMediaPlayer()");
+    return newEmbeddedMediaPlayer(null);
+  }
+
   /**
    * Create a new embedded media player.
    * 
    * @param fullScreenStrategy full screen implementation, may be <code>null</code>
    * @return media player instance
    */
-  public EmbeddedMediaPlayer newMediaPlayer(FullScreenStrategy fullScreenStrategy) {
-    Logger.debug("newMediaPlayer(fullScreenStrategy={})", fullScreenStrategy);
-    
-    EmbeddedMediaPlayer mediaPlayer;
-    
+  public EmbeddedMediaPlayer newEmbeddedMediaPlayer(FullScreenStrategy fullScreenStrategy) {
+    Logger.debug("newEmbeddedMediaPlayer(fullScreenStrategy={})", fullScreenStrategy);
+    return new DefaultEmbeddedMediaPlayer(libvlc, instance, fullScreenStrategy);
+  }
+
+  /**
+   * Create a new direct video rendering media player with a pixel format
+   * suitable for, amongst other things, rendering into a BufferedImage.
+   * <p>
+   * The pixel format used is "RV32" (a raw RGB format with padded alpha)
+   * and the pitch is (width*4).
+   * 
+   * @param width width for the video
+   * @param height height for the video
+   * @param renderCallback call-back to receive the video frame data
+   * @return
+   */
+  public DirectMediaPlayer newDirectMediaPlayer(int width, int height, RenderCallback renderCallback) {
+    Logger.debug("newDirectMediaPlayer(width={},height={},renderCallback={})", width, height, renderCallback);
+    return newDirectMediaPlayer("RV32", width, height, width * 4, renderCallback);
+  }  
+  
+  /**
+   * Create a new direct video rendering media player.
+   * 
+   * @param width width for the video
+   * @param height height for the video
+   * @param format pixel format (e.g. RV15, RV16, RV24, RV32, RGBA, YUYV)
+   * @param pitch pitch, also known as stride
+   * @param renderCallback call-back to receive the video frame data
+   * @return media player instance
+   */
+  public DirectMediaPlayer newDirectMediaPlayer(String format, int width, int height, int pitch, RenderCallback renderCallback) {
+    Logger.debug("newDirectMediaPlayer(format={},width={},height={},pitch={},renderCallback={})", format, width, height, pitch, renderCallback);
+    return new DefaultDirectMediaPlayer(libvlc, instance, format, width, height, pitch, renderCallback);
+  }
+
+  /**
+   * Create a new head-less media player.
+   * <p>
+   * The head-less player may spawn a native video player window unless you set
+   * proper media options when playing media.
+   * 
+   * @return media player instance
+   */
+  public HeadlessMediaPlayer newHeadlessMediaPlayer() {
+    Logger.debug("newHeadlessMediaPlayer()");
+    return new DefaultHeadlessMediaPlayer(libvlc, instance);
+  }
+
+  /**
+   * Create a new play-list media player.
+   * 
+   * @return media player instance
+   */
+  public MediaListPlayer newMediaListPlayer() {
+    Logger.debug("newMediaListPlayer()");
+    return new DefaultMediaListPlayer(libvlc, instance);
+  }
+
+  // === Video Surface ========================================================
+
+  /**
+   * Create a new video surface for a Canvas.
+   * 
+   * @param canvas canvas
+   * @return video surface
+   */
+  public CanvasVideoSurface newVideoSurface(Canvas canvas) {
+    Logger.debug("newVideoSurface(canvas={})", canvas);
+
+    VideoSurfaceAdapter videoSurfaceAdapter;
     if(RuntimeUtil.isNix()) {
-      mediaPlayer = new LinuxEmbeddedMediaPlayer(instance, fullScreenStrategy);
+      videoSurfaceAdapter = new LinuxVideoSurfaceAdapter();
     }
     else if(RuntimeUtil.isWindows()) {
-      mediaPlayer = new WindowsEmbeddedMediaPlayer(instance, fullScreenStrategy);
+      videoSurfaceAdapter = new WindowsVideoSurfaceAdapter();
     }
     else if(RuntimeUtil.isMac()) {
-      // Mac is not yet supported
-      mediaPlayer = new MacEmbeddedMediaPlayer(instance, fullScreenStrategy);
+      videoSurfaceAdapter = new MacVideoSurfaceAdapter();
     }
     else {
       throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
     }
-    
-    Logger.debug("mediaPlayer={}", mediaPlayer);
-    
-    return mediaPlayer;
+
+    CanvasVideoSurface videoSurface = new CanvasVideoSurface(canvas, videoSurfaceAdapter);
+    Logger.debug("videoSurface={}", videoSurface);
+
+    return videoSurface;
   }
 
   /**
-   * Create a new direct video rendering media player.
+   * Create a new video surface for a native component id.
    * 
-   * @param width
-   * @param height
-   * @param renderCallback
-   * @return media player instance
+   * @param componentId native component id
+   * @return video surface
    */
-  public DirectMediaPlayer newMediaPlayer(int width, int height, RenderCallback renderCallback) {
-    Logger.debug("newMediaPlayer(width={},height={},renderCallback={})", width ,height, renderCallback);
+  public ComponentIdVideoSurface newVideoSurface(long componentId) {
+    Logger.debug("newVideoSurface(componentId={})", componentId);
 
-    DirectMediaPlayer mediaPlayer = new DirectMediaPlayer(instance, width, height, renderCallback);
-    return mediaPlayer;
-  }
-  
-  /**
-   * Create a new head-less media player.
-   * 
-   * @return media player instance
-   */
-  public HeadlessMediaPlayer newMediaPlayer() {
-    Logger.debug("newMediaPlayer()");
-    
-    HeadlessMediaPlayer mediaPlayer = new HeadlessMediaPlayer(instance);
-    return mediaPlayer;
+    VideoSurfaceAdapter videoSurfaceAdapter;
+
+    if(RuntimeUtil.isNix()) {
+      videoSurfaceAdapter = new LinuxVideoSurfaceAdapter();
+    }
+    else if(RuntimeUtil.isWindows()) {
+      videoSurfaceAdapter = new WindowsVideoSurfaceAdapter();
+    }
+    else if(RuntimeUtil.isMac()) {
+      videoSurfaceAdapter = new MacVideoSurfaceAdapter();
+    }
+    else {
+      throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
+    }
+
+    ComponentIdVideoSurface videoSurface = new ComponentIdVideoSurface(componentId, videoSurfaceAdapter);
+
+    Logger.debug("videoSurface={}", videoSurface);
+
+    return videoSurface;
   }
 
+  // === Media List ===========================================================
+
   /**
+   * Create a new media list for a play-list media player.
    * 
-   * 
-   * @return
-   */
-  public MediaListPlayer newMediaListPlayer() {
-    Logger.debug("newMediaListPlayer()");
-    
-    MediaListPlayer mediaListPlayer = new MediaListPlayer(instance);
-    return mediaListPlayer;
-  }
-  
-  /**
-   *
-   * 
-   * @return
+   * @return media list instance
    */
   public MediaList newMediaList() {
     Logger.debug("newMediaList()");
-    
-    MediaList mediaList = new MediaList(instance);
-    return mediaList;
+    return new MediaList(instance);
   }
-  
+
+  // === Log ==================================================================
+
   /**
    * Get a new message Logger.
    * <p>
@@ -330,7 +480,6 @@ public class MediaPlayerFactory {
    */
   public Log newLog() {
     Logger.debug("newLog()");
-    
     Log log = new Log(libvlc, instance);
     log.open();
     return log;
