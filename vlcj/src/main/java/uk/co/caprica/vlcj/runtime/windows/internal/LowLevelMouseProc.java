@@ -1,0 +1,52 @@
+/*
+ * This file is part of VLCJ.
+ *
+ * VLCJ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * VLCJ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Copyright 2009, 2010 Caprica Software Limited.
+ */
+
+package uk.co.caprica.vlcj.runtime.windows.internal;
+
+import com.sun.jna.platform.win32.WinDef.LRESULT;
+import com.sun.jna.platform.win32.WinDef.WPARAM;
+import com.sun.jna.platform.win32.WinUser.HOOKPROC;
+
+/**
+ * 
+ */
+public interface LowLevelMouseProc extends HOOKPROC {
+
+  /**
+   * 
+   */
+  public static final int WM_MOUSEMOVE = 512;
+  public static final int WM_LBUTTONDOWN = 513;
+  public static final int WM_LBUTTONUP = 514;
+  public static final int WM_RBUTTONDOWN = 516;
+  public static final int WM_RBUTTONUP = 517;
+  public static final int WM_MBUTTONDOWN = 519;
+  public static final int WM_MBUTTONUP = 520;
+  public static final int WM_MOUSEWHEEL = 522;
+  
+  /**
+   * 
+   * 
+   * @param nCode
+   * @param wParam
+   * @param lParam
+   * @return
+   */
+  LRESULT callback(int nCode, WPARAM wParam, MSLLHOOKSTRUCT lParam);
+}
