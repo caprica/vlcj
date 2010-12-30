@@ -42,7 +42,6 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
 
-
 /**
  * This simple test player shows how to get direct access to the video frame
  * data.
@@ -61,7 +60,6 @@ public class DirectTestPlayer {
   // the mediaPlayer will be scaled to
   // Matching the native size will be faster of course
   private final int width = 720;
-
   private final int height = 480;
 
 // private final int width = 1280;
@@ -86,7 +84,7 @@ public class DirectTestPlayer {
 
       @Override
       public void run() {
-        JFrame frame = new JFrame("VLCJ 1.1.1 Direct Video Test");
+        JFrame frame = new JFrame("VLCJ 1.2.0 Direct Video Test");
         imagePane = new ImagePane(image);
         imagePane.setSize(width, height);
         imagePane.setMinimumSize(new Dimension(width, height));
@@ -109,7 +107,7 @@ public class DirectTestPlayer {
     });
 
     factory = new MediaPlayerFactory(args);
-    mediaPlayer = factory.newMediaPlayer(width, height, new TestRenderCallback());
+    mediaPlayer = factory.newDirectMediaPlayer(width, height, new TestRenderCallback());
     mediaPlayer.playMedia(media);
 
     // Just to show regular media player functions still work...

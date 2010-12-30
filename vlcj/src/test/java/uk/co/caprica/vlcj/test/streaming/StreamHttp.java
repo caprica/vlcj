@@ -36,7 +36,7 @@ public class StreamHttp {
     System.out.println("Streaming '" + media + "' to '" + options + "'");
 
     MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(args);
-    HeadlessMediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer();
+    HeadlessMediaPlayer mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
     mediaPlayer.playMedia(media, options);
     
     // Don't exit

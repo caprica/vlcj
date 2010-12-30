@@ -29,7 +29,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -37,6 +36,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.MediaPlayerLatch;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
@@ -64,6 +64,9 @@ public class TestMultiPlayer {
   private MediaPlayerFactory factory;
   
   public static void main(String[] args) {
+    // This seems very reliable
+    LibX11.INSTANCE.XInitThreads();
+
     System.out.println(LibVlc.INSTANCE.libvlc_get_version());
     System.out.println(LibVlc.INSTANCE.libvlc_get_changeset());
     
@@ -81,7 +84,7 @@ public class TestMultiPlayer {
     contentPane.setLayout(new GridLayout(rows, cols, 16, 16));
     contentPane.setBorder(new EmptyBorder(16, 16, 16, 16));
     
-    mainFrame = new Frame("VLCJ Test Multi Player for VLC 1.1.x");
+    mainFrame = new Frame("VLCJ Test Multi Player for VLC 1.2.x");
     
     mainFrame.setLayout(new BorderLayout());
     mainFrame.setBackground(Color.black);
@@ -107,8 +110,6 @@ public class TestMultiPlayer {
       }
     });
 
-//    String[] args = {"--no-xlib"};
-//    String[] args = {"--plugin-path=/home/linux/vlc/lib"};
     String[] args = {};
     
     factory = new MediaPlayerFactory(args);
@@ -116,7 +117,7 @@ public class TestMultiPlayer {
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
     
     for(int i = 0; i < medias.length; i++) {
-      EmbeddedMediaPlayer player = factory.newMediaPlayer(fullScreenStrategy);
+      EmbeddedMediaPlayer player = factory.newEmbeddedMediaPlayer(fullScreenStrategy);
       PlayerInstance playerInstance = new PlayerInstance(player);
       players.add(playerInstance);
       
@@ -133,7 +134,7 @@ public class TestMultiPlayer {
   
   private void start() {
     for(int i = 0; i < medias.length; i++) {
-      players.get(i).mediaPlayer().setVideoSurface(players.get(i).videoSurface());
+      players.get(i).mediaPlayer().setVideoSurface(factory.newVideoSurface(players.get(i).videoSurface()));
       players.get(i).mediaPlayer().prepareMedia(medias[i]);
     }
 
@@ -155,7 +156,6 @@ public class TestMultiPlayer {
       EmbeddedMediaPlayer mediaPlayer = players.get(i).mediaPlayer();
       
       MediaPlayerLatch l = new MediaPlayerLatch(mediaPlayer);
-      l.setTimeout(3, TimeUnit.SECONDS);
       l.play();
     }
   }

@@ -36,7 +36,7 @@ public class StreamRtp {
     System.out.println("Streaming '" + media + "' to '" + options + "'");
     
     MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(args);
-    HeadlessMediaPlayer mediaPlayer = mediaPlayerFactory.newMediaPlayer();
+    HeadlessMediaPlayer mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
     mediaPlayer.playMedia(media,
       options,
       ":no-sout-rtp-sap", 

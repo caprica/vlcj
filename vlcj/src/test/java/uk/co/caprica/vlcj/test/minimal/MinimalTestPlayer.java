@@ -25,18 +25,19 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
  * An absolute minimum test player.
- * <p>
- * <strong>It is very important that the main frame is made visible 
- * <em>before</em> the MediaPlayerFactory is created.</strong>
  */
 public class MinimalTestPlayer {
 
   public static void main(String[] args) throws Exception {
+    // This seems very reliable
+    LibX11.INSTANCE.XInitThreads();
+
     Frame f = new Frame("Test Player");
     f.setSize(800, 600);
     f.addWindowListener(new WindowAdapter() {
@@ -52,8 +53,8 @@ public class MinimalTestPlayer {
     
     MediaPlayerFactory factory = new MediaPlayerFactory(new String[] {});
     
-    EmbeddedMediaPlayer mediaPlayer = factory.newMediaPlayer(null);
-    mediaPlayer.setVideoSurface(vs);
+    EmbeddedMediaPlayer mediaPlayer = factory.newEmbeddedMediaPlayer();
+    mediaPlayer.setVideoSurface(factory.newVideoSurface(vs));
     
     mediaPlayer.playMedia("SomeMovie.mp4");
     Thread.currentThread().join();

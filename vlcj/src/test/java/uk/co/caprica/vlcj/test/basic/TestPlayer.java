@@ -176,7 +176,7 @@ public class TestPlayer {
     
   	Logger.debug("vlcArgs={}", vlcArgs);
   	
-    mainFrame = new JFrame("VLCJ Test Player for VLC 1.1.x");
+    mainFrame = new JFrame("VLCJ Test Player for VLC 1.2.x");
   
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
   
@@ -204,8 +204,8 @@ public class TestPlayer {
     List<AudioOutput> audioOutputs = mediaPlayerFactory.getAudioOutputs();
     Logger.debug("audioOutputs={}", audioOutputs);
     
-    mediaPlayer = mediaPlayerFactory.newMediaPlayer(fullScreenStrategy);
-    mediaPlayer.setVideoSurface(videoSurface);
+    mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(fullScreenStrategy);
+    mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(videoSurface));
     mediaPlayer.setPlaySubItems(true);
 
     mediaPlayer.setEnableKeyInputHandling(false);
