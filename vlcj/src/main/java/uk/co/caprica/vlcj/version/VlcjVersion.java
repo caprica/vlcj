@@ -19,13 +19,15 @@
 
 package uk.co.caprica.vlcj.version;
 
-
+/**
+ * Encapsulation of bindings current version information.
+ */
 public class VlcjVersion {
 
   /**
    * Run-time version of vlc/libvlc.
    */
-  private static final Version VERSION = new Version("1.1.5");
+  private static final Version VERSION = new Version("1.2.0");
 
   /**
    * Get the run-time version.

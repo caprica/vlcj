@@ -77,11 +77,11 @@ vlc-<version>.jar, the JNA platform.jar and jna.jar files.
 The application may be started like this for example (assuming a "$" command-
 line prompt):
 
-$java -jar vlc-1.1.5-test.jar
+$java -jar vlc-1.2.0-test.jar
 
 For the test player you can specify a logo file name on the command-line.
 
-$java -jar vlc-1.1.5-test.jar /some/directory/vlcj-logo.png
+$java -jar vlc-1.2.0-test.jar /some/directory/vlcj-logo.png
 
 == Known Issues ==
 
@@ -105,8 +105,8 @@ It should be simple to add the missing implementation for the other operating
 systems but I can not do this myself due to lack of suitable testing 
 environments.
 
-The test video player attempts to work out the runtime operating system and
-create the appropriate video player instance.
+The bindings attempt to work out the runtime operating system and create the
+appropriate video player instance.
 
 
 == Feedback and Contact Details ==
