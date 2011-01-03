@@ -26,6 +26,8 @@ import com.sun.jna.Structure;
  */
 public class libvlc_media_track_info_t extends Structure {
 
+  public static class ByReference extends libvlc_media_track_info_t implements Structure.ByReference {}
+
   /* Codec fourcc */
   public int i_codec;
   public int i_id;
