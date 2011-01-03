@@ -215,7 +215,9 @@ public interface MediaPlayer {
   void prepareMedia(String mrl, String... mediaOptions);
 
   /**
-   * Play a new media item and wait for it to start playing or error. 
+   * Play a new media item and wait for it to start playing or error.
+   * <p> 
+   * This call will <strong>block</strong> until the media starts or errors.
    * 
    * @param mrl media resource locator
    * @return <code>true</code> if the media started playing, <code>false</code>
@@ -226,6 +228,8 @@ public interface MediaPlayer {
   /**
    * Play a new media item, with options, and wait for it to start playing or
    * error.
+   * <p> 
+   * This call will <strong>block</strong> until the media starts or errors.
    * 
    * @param mrl media resource locator
    * @param mediaOptions media item options
@@ -465,6 +469,8 @@ public interface MediaPlayer {
    * <p>
    * If called when the play-back is paused, the play-back will resume from the
    * current position.
+   * <p>
+   * This call will <strong>block</strong> until the media starts or errors.
    * 
    * @return <code>true</code> if the media started playing, <code>false</code>
    *         if the media failed to start because of an error 
