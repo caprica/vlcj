@@ -100,12 +100,12 @@ public class MediaPlayerFactory {
   /**
    * Native library interface.
    */
-  private final LibVlc libvlc;
+  protected final LibVlc libvlc;
 
   /**
    * Native library instance.
    */
-  private libvlc_instance_t instance;
+  protected final libvlc_instance_t instance;
 
   /**
    * True when the factory has been released.
