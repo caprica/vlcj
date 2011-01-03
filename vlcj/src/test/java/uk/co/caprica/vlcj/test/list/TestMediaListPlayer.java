@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.list.MediaList;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
+import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 
 public class TestMediaListPlayer {
 
@@ -46,7 +47,8 @@ public class TestMediaListPlayer {
     mediaList.addMedia("/home/movies/three.mp4");
     
     mediaListPlayer.setMediaList(mediaList);
-
+    mediaListPlayer.setMode(MediaListPlayerMode.REPEAT);
+    
     mediaListPlayer.play();
     
     Thread.currentThread().join();
