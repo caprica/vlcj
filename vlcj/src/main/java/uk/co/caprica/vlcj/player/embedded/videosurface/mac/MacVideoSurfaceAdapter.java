@@ -36,7 +36,7 @@ public class MacVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
   @Override
   public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-    Logger.debug("attach(componentId={}", componentId);
+    Logger.debug("attach(componentId={})", componentId);
     // FIXME how?
     throw new UnsupportedOperationException("Send patches!");
   }
