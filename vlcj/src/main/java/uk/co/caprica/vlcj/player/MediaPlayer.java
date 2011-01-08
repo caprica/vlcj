@@ -567,7 +567,7 @@ public interface MediaPlayer {
    * The format for the crop geometry is one of:
    * <ul>
    *   <li>numerator:denominator</li>
-   *   <li>width:height+x+y</li>
+   *   <li>widthxheight+x+y</li>
    *   <li>left:top:right:bottom</li>
    * </ul>
    * For example:
