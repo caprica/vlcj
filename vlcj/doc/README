@@ -1,0 +1,118 @@
+
+                               === VLCJ ===
+
+
+== Introduction ==
+
+VLCJ provides a Java binding, using JNA, to the VideoLAN native media player.
+
+It was inspired by, and is in part derived from, the JVLC bindings which seem 
+to be no longer available, or at least not actively maintained.
+
+Along with the native bindings, a basic media player class is included in the
+distribution as is an example video player application to launch it.
+
+There are a very small number of relevant files in the distribution so it 
+should be very easy to work out what is happening.
+
+Make sure you understand how to setup your environment to use JNA. In 
+particular you may need to set the "jna.library.path" environment variable to
+point to the directory containing the "libvlc" native shared library file.
+
+See also the "README.status" file.
+
+
+== License ==
+
+Make sure you read and understand the README.LICENSE file. VLCJ, JVLC and VLC
+itself all use open source licenses. You must respect the terms of the GPL 3
+license.
+
+This software makes use of JNA. You must respect the terms under which JNA is
+licensed.
+
+
+== VLC Compatibility ==
+
+Note that the current versions of these bindings require VLC 1.1.x, they will
+NOT work with VLC 1.0.x.
+
+If you have previously used VLCJ you may well need to make changes in your own 
+code to make use of the new bindings - this is unavoidable because the new 
+version of libvlc has changed a lot.
+
+Versions of the bindings that do work with 1.0.x are available in the project
+Downloads section.
+
+
+== Distribution Contents ==
+
+The main artefacts are:
+
+  vlcj-<version>.jar           - jar file for compiling and running against
+  vlcj-<version>-sources.jar   - all source code
+  vlcj-<version>-javadoc.jar   - generated javadoc API documentation
+
+
+== Usage ==
+
+The main class is the MediaPlayer class.
+
+I encourage you to read the javadoc for that class, or consult the TestPlayer
+implementation (see below).
+
+
+== The Example Video Player Application ==
+
+In addition, there is a test video player application available:
+
+  vlcj-<version>-test.jar      - (see below)
+
+The test jar has a proper manifest class path and main class so it may be
+executed directly to start the application.
+
+The vlc-<version>-test.jar MUST be in the same directory as the
+vlc-<version>.jar, the JNA platform.jar and jna.jar files.
+
+The application may be started like this for example (assuming a "$" command-
+line prompt):
+
+$java -jar vlc-1.1.5.1-test.jar
+
+For the test player you can specify a logo file name on the command-line.
+
+$java -jar vlc-1.1.5.1-test.jar /some/directory/vlcj-logo.png
+
+== Known Issues ==
+
+Development and testing of this software is almost exclusively under Linux. I
+have no access whatsoever to Mac hardware, and I very rarely use Windows.
+
+That being said, there is no reason why these bindings will not work on those
+operating systems.
+
+One thing that changed in libvlc 1.0 as compared to libvlc 1.1 is that there
+are now multiple methods provided to set the video rendering surface - this is
+operating-system dependant.
+
+This means at run-time you need to detect which operating system you are 
+running on and call the appropriate method.
+
+At the moment the implementations provided out-of-the-box by VLCJ are for
+Linux and Windows. There is no Mac version yet.
+
+It should be simple to add the missing implementation for the other operating
+systems but I can not do this myself due to lack of suitable testing 
+environments.
+
+The test video player attempts to work out the runtime operating system and
+create the appropriate video player instance.
+
+
+== Feedback and Contact Details ==
+
+I'd be happy to hear about any interesting uses you may put this to!
+
+See http://forum.videolan.org/viewtopic.php?f=32&t=56939
+
+email: mark.lee <at> capricasoftware.co.uk

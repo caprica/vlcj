@@ -1,0 +1,131 @@
+<!--
+/*
+ * This file is part of VLCJ.
+ *
+ * VLCJ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * VLCJ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Copyright 2009, 2010 Caprica Software Limited.
+ */
+-->
+
+<project name="vlcj" default="all">
+
+  <property name="build.version" value="1.1.5.1"/>
+
+  <buildnumber/>
+
+  <tstamp>
+    <format property="build.timestamp" pattern="yyyy-MM-dd HH:mm:ss"/>
+  </tstamp>
+	
+  <property name="source.version"   value="1.5"/>
+  <property name="target.version"   value="1.5"/>
+  <property name="compile.debug"    value="yes"/> <!-- Core library jar file size will be reduced by about 20k if you set debug to "no" -->
+  <property name="compile.optimize" value="yes"/>
+	
+  <path id="project.classes">
+    <pathelement location="lib/jna.jar"/>
+    <pathelement location="lib/platform.jar"/>
+  </path>
+  
+  <target name="prepare">
+    <mkdir dir="build"/>
+  </target>
+  
+  <target name="compile" depends="prepare">
+    <mkdir dir="build/classes"/>
+    <javac srcdir="src/main/java:src/main/resources" destdir="build/classes" classpathref="project.classes" target="${target.version}" source="${source.version}" debug="${compile.debug}" optimize="${compile.optimize}" includeantruntime="no"/> 
+  </target>
+  
+  <target name="compile.test" depends="compile">
+    <mkdir dir="build/test-classes"/>
+    <javac srcdir="src/test/java:src/test/resources" destdir="build/test-classes" classpathref="project.classes" target="${target.version}" source="${source.version}" debug="${compile.debug}" optimize="${compile.optimize}" includeantruntime="no">
+    	<classpath path="build/classes"/> 
+  	</javac>
+  </target>
+  
+  <target name="jar" depends="compile">
+    <jar jarfile="build/${ant.project.name}-${build.version}.jar" basedir="build/classes">
+      <fileset dir="doc" includes="gpl.txt,README.LICENSE,README,README.status,README.windows"/>
+    	<manifest>
+    		<attribute name="Implementation-Title" value="${ant.project.name}"/>
+        <attribute name="Implementation-Vendor" value="Caprica Software Limited"/>
+        <attribute name="Implementation-URL" value="http://code.google.com/p/vlcj/"/>
+        <attribute name="Implementation-Version" value="${build.version}.${build.number} (${build.timestamp})"/>
+    	</manifest>
+    </jar>
+  </target>
+  
+  <target name="jar.test" depends="compile.test">
+    <jar jarfile="build/${ant.project.name}-${build.version}-test.jar" basedir="build/test-classes" manifest="etc/test-manifest.txt">
+    	<fileset dir="src/test/resources"/>
+      <fileset dir="doc" includes="gpl.txt,README.LICENSE,README,README.icons"/>
+    </jar>
+  </target>
+  
+  <target name="srcjar" depends="prepare">
+    <jar jarfile="build/${ant.project.name}-${build.version}-sources.jar" basedir="src/main/java"/>
+  </target>
+  
+	<target name="srcjar.test" depends="prepare">
+    <jar jarfile="build/${ant.project.name}-${build.version}-test-sources.jar" basedir="src/test/java"/>
+	</target>
+	
+  <target name="javadoc" depends="prepare">
+  	<!--
+    <delete dir="javadoc"/>
+    --> 
+    <javadoc sourcepath="src/main/java" destdir="build/javadoc" classpathref="project.classes" access="protected" author="yes" windowtitle="VLCJ ${build.version} Documentation" footer="(C)2010 Caprica Software Limited"/>
+  	<copy todir="javadoc">
+  	  <fileset dir="build/javadoc"/>
+  	</copy>
+  </target>
+  
+  <target name="docjar" depends="javadoc">
+    <jar jarfile="build/${ant.project.name}-${build.version}-javadoc.jar" basedir="build/javadoc"/>
+  </target>
+  
+  <target name="clean" description="Clean transient build artefacts - this does NOT delete the contents of the 'dist' folder">
+    <delete dir="build"/>
+  </target>
+  
+  <target name="dist" depends="jar, srcjar, docjar, jar.test, srcjar.test">
+  	<!--
+  	<delete dir="dist"/>
+  	-->
+    <copy todir="dist">
+      <fileset dir="build" includes="*.jar"/>
+    	<fileset dir="lib" includes="*.jar"/>
+      <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
+    </copy>
+  </target>
+  
+  <target name="package" depends="dist" description="Build full distribution archives">
+    <!--
+    <delete dir="package"/>
+    -->
+    <mkdir dir="package/${ant.project.name}-${build.version}"/>
+    <copy todir="package/${ant.project.name}-${build.version}">
+      <fileset dir="dist" excludes="**/*.log"/>
+    </copy>
+    <tar tarfile="package/${ant.project.name}-${build.version}-dist.tgz" basedir="package" includes="${ant.project.name}-${build.version}/**/*" compression="gzip"/>
+    <zip zipfile="package/${ant.project.name}-${build.version}-dist.zip" basedir="package" includes="${ant.project.name}-${build.version}/**/*"/>
+    <delete dir="package/${ant.project.name}-${build.version}"/>
+  </target>
+	
+  <target name="rebuild" depends="clean, jar" description="Perform a clean build to produce a new jar file"/>
+	
+  <target name="all" depends="clean, dist" description="Perform a full clean build and produce distribution jar files"/>
+  
+</project>
