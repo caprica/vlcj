@@ -33,9 +33,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
@@ -47,6 +45,7 @@ import com.sun.jna.Native;
 import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
 
 /**
  * JNA interface to the libvlc native library.
@@ -65,6 +64,8 @@ import com.sun.jna.ptr.IntByReference;
  * different and will not work with these bindings.
  * <p>
  * Some functions are only available <em>after</em> version 1.1.0 of libvlc.
+ * <p>
+ * Some functions are only available <em>after</em> version 1.2.0 of libvlc.
  * <p>
  * This flag may be useful:
  * <pre>
@@ -586,25 +587,20 @@ public interface LibVlc extends Library {
   Pointer libvlc_media_get_user_data(libvlc_media_t p_md);
 
   /**
-   * Get media descriptor's elementary streams description Note, you need to
-   * play the media _one_ time with --sout="#description" Not doing this will
-   * result in an empty array, and doing it more than once will duplicate the
-   * entries in the array each time. Something like this:
-   * 
-   * @begincode libvlc_media_player_t *player =
-   *            libvlc_media_player_new_from_media(media);
-   *            libvlc_media_add_option_flag(media, "sout=\"#description\"");
-   *            libvlc_media_player_play(player); // ... wait until playing
-   *            libvlc_media_player_release(player);
-   * @endcode This is very likely to change in next release, and be done at the
-   *          parsing phase.
-   * @param media media descriptor object
+   * Get media descriptor's elementary streams description.
+   * <p>
+   * Note, you need to call libvlc_media_parse() or play the media at least once
+   * before calling this function.
+   * <p>
+   * Not doing this will result in an empty array.
+   *
+   * @param p_md media descriptor object
    * @param tracks address to store an allocated array of Elementary Streams
-   *          descriptions (must be freed by the caller) return the number of
-   *          Elementary Streams
+   *               descriptions (must be freed by the caller)
+   *
+   * @return the number of Elementary Streams
    */
-  // TODO not sure this is the right sig
-  int libvlc_media_get_tracks_info(libvlc_media_t media, libvlc_media_track_info_t[] tracks);
+  int libvlc_media_get_tracks_info(libvlc_media_t p_md, PointerByReference tracks);
 
   // === libvlc_media.h =======================================================
 
@@ -1919,7 +1915,7 @@ public interface LibVlc extends Library {
    * @param p_mlp media list player instance
    * @param e_mode playback mode specification
    */
-  void libvlc_media_list_player_set_playback_mode(libvlc_media_list_player_t p_mlp, libvlc_playback_mode_e e_mode);
+  void libvlc_media_list_player_set_playback_mode(libvlc_media_list_player_t p_mlp, int e_mode);
   
   // === libvlc_media_list_player.h ===========================================
 }
