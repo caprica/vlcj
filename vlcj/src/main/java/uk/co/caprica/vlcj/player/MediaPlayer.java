@@ -796,6 +796,13 @@ public interface MediaPlayer {
   List<String> getChapterDescriptions(int title);
 
   /**
+   * Get the track (i.e. "elementary streams") information.
+   * 
+   * @return collection of track information, or <code>null</code> if there is no current media
+   */
+  List<TrackInfo> getTrackInfo();
+
+  /**
    * Save a snapshot of the currently playing video.
    * <p>
    * The snapshot will be created in the user's home directory and be assigned
