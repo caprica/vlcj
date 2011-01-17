@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 /**
@@ -26,7 +27,12 @@ import com.sun.jna.Structure;
  */
 public class libvlc_media_track_info_t extends Structure {
 
-  public static class ByReference extends libvlc_media_track_info_t implements Structure.ByReference {}
+  public libvlc_media_track_info_t() {
+  }
+
+  public libvlc_media_track_info_t(Pointer value) {
+    super(value);
+  }
 
   /* Codec fourcc */
   public int i_codec;
