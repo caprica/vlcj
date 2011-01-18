@@ -32,6 +32,11 @@ public abstract class TrackInfo {
   /**
    * 
    */
+  private final String codecName;
+
+  /**
+   * 
+   */
   private final int id;
   
   /**
@@ -54,6 +59,7 @@ public abstract class TrackInfo {
    */
   protected TrackInfo(int codec, int id, int profile, int level) {
     this.codec = codec;
+    this.codecName = codec != 0 ? new String(new byte[] {(byte)(codec >>> 24), (byte)(codec >>> 16), (byte)(codec >>> 8), (byte)codec}).trim() : null;
     this.id = id;
     this.profile = profile;
     this.level = level;
@@ -66,6 +72,16 @@ public abstract class TrackInfo {
    */
   public int codec() {
     return codec;
+  }
+  
+  /**
+   * 
+   * 
+   * @param value
+   * @return
+   */
+  public String codecName() {
+    return codecName;
   }
   
   /**
@@ -94,12 +110,13 @@ public abstract class TrackInfo {
   public int level() {
     return level;
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(100);
     sb.append(getClass().getSimpleName()).append('[');
     sb.append("codec=").append(codec).append(',');
+    sb.append("codecName=").append(codecName).append(',');
     sb.append("id=").append(id).append(',');
     sb.append("profile=").append(profile).append(',');
     sb.append("level=").append(level).append(']');
