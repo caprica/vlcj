@@ -97,6 +97,9 @@ public interface MediaListPlayer {
 
   /**
    * Set the media list play mode.
+   * <p>
+   * Note that if you set the play mode to REPEAT before you have played any
+   * media then play-back will never start.
    * 
    * @param mode mode
    */
