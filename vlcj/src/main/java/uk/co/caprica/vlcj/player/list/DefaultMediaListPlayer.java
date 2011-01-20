@@ -182,7 +182,7 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
       default:
         throw new IllegalArgumentException("Invalid mode " + mode);
     }
-    libvlc.libvlc_media_list_player_set_playback_mode(mediaListPlayerInstance, playbackMode);
+    libvlc.libvlc_media_list_player_set_playback_mode(mediaListPlayerInstance, playbackMode.intValue());
   }
   
 //  @Override
