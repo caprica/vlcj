@@ -349,12 +349,24 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
     @Override
     public void windowIconified(WindowEvent e) {
       Logger.trace("windowIconified(e={})", e);
-      hideOverlay();
+      // Nothing, this is taken care of by "windowDeactivated"
     }
 
     @Override
     public void windowDeiconified(WindowEvent e) {
       Logger.trace("windowDeiconified(e={})", e);
+      showOverlay();
+    }
+    
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+      Logger.trace("windowDeactivated(e={})", e);
+      hideOverlay();
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+      Logger.trace("windowActivated(e={})", e);
       showOverlay();
     }
   }
