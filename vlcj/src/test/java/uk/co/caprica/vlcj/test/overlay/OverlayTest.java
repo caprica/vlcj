@@ -29,6 +29,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Window;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -46,6 +48,15 @@ import com.sun.jna.platform.WindowUtils;
 /**
  * An absolute minimum test player demonstrating how to achieve a transparent
  * overlay and translucent painting.
+ * <p>
+ * Press SPACE to pause the video play-back.
+ * <p>
+ * Press F11 to toggle the overlay.
+ * <p>
+ * If the video looks darker with the overlay enabled, then most likely you are
+ * using a compositing window manager that is doing some fancy blending of the
+ * overlay window and the main application window. You have to turn off those
+ * window effects.
  */
 public class OverlayTest {
   
@@ -70,6 +81,7 @@ public class OverlayTest {
         System.exit(0);
       }
     });
+
     f.setLayout(new BorderLayout());
     Canvas vs = new Canvas();
     f.add(vs, BorderLayout.CENTER);
@@ -77,8 +89,23 @@ public class OverlayTest {
     
     MediaPlayerFactory factory = new MediaPlayerFactory(new String[] {});
     
-    EmbeddedMediaPlayer mediaPlayer = factory.newEmbeddedMediaPlayer();
+    final EmbeddedMediaPlayer mediaPlayer = factory.newEmbeddedMediaPlayer();
     mediaPlayer.setVideoSurface(factory.newVideoSurface(vs));
+
+    f.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e) {
+        switch(e.getKeyCode()) {
+          case KeyEvent.VK_F11:
+            mediaPlayer.enableOverlay(!mediaPlayer.overlayEnabled());
+            break;
+            
+          case KeyEvent.VK_SPACE:
+            mediaPlayer.pause();
+            break;
+        }
+      }
+    });
     
     mediaPlayer.setOverlay(new Overlay(f));
     mediaPlayer.enableOverlay(true);
