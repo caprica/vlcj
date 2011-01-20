@@ -32,6 +32,7 @@ public class libvlc_media_track_info_t extends Structure {
 
   public libvlc_media_track_info_t(Pointer value) {
     super(value);
+    read();
   }
 
   /* Codec fourcc */
