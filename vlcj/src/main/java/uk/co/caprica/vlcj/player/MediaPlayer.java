@@ -254,11 +254,22 @@ public interface MediaPlayer {
   void setPlaySubItems(boolean playSubItems);
 
   /**
-   * Play the next sub-item (if there is one).
+   * Get the number of sub-items (if any).
    * 
+   * @return sub-item count, or -1 if there is no current media
+   */
+  int subItemCount();
+  
+  /**
+   * Play the next sub-item (if there is one).
+   * <p>
+   * If any standard media options have been set via {@link #setStandardMediaOptions(String...)}
+   * then those options will be applied to the sub-item.
+   * 
+   * @param mediaOptions media options for the sub-item
    * @return <code>true</code> if there is a sub-item, otherwise <code>false</code>
    */
-  boolean playNextSubItem();
+  boolean playNextSubItem(String... mediaOptions);
 
   /**
    * 

@@ -258,10 +258,40 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     Logger.debug("setPlaySubItems(playSubItems={})", playSubItems);
     this.playSubItems = playSubItems;
   }
-
+  
 //  @Override
-  public boolean playNextSubItem() {
-    Logger.debug("playNextSubItem()");
+  public int subItemCount() {
+    Logger.debug("subItemCount()");
+    // Get the current media
+    libvlc_media_t media = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
+    Logger.trace("media={}", media);
+    // If there is a current media...
+    if(media != null) {
+      // Get the list of sub-items
+      libvlc_media_list_t subItems = libvlc.libvlc_media_subitems(media);
+      if(subItems != null) {
+        // Lock the sub-item list
+        libvlc.libvlc_media_list_lock(subItems);
+        // Count the items in the list
+        int count = libvlc.libvlc_media_list_count(subItems);
+        // Clean up
+        libvlc.libvlc_media_list_unlock(subItems);
+        libvlc.libvlc_media_list_release(subItems);
+        // Return the count
+        return count;
+      }
+      else {
+        return 0;
+      }
+    }
+    else {
+      return -1;
+    }
+  }
+  
+  //  @Override
+  public boolean playNextSubItem(String... mediaOptions) {
+    Logger.debug("playNextSubItem(mediaOptions={})", Arrays.toString(mediaOptions));
     // Assume a sub-item was not played
     boolean subItemPlayed = false;
     // Get the current media
@@ -283,6 +313,20 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
         if(subItem != null) {
           // Set the sub-item as the new media for the media player
           libvlc.libvlc_media_player_set_media(mediaPlayerInstance, subItem);
+          // Set any standard media options
+          if(standardMediaOptions != null) {
+            for(String standardMediaOption : standardMediaOptions) {
+              Logger.debug("standardMediaOption={}", standardMediaOption);
+              libvlc.libvlc_media_add_option(subItem, standardMediaOption);
+            }
+          }
+          // Set any media options
+          if(mediaOptions != null) {
+            for(String mediaOption : mediaOptions) {
+              Logger.debug("mediaOption={}", mediaOption);
+              libvlc.libvlc_media_add_option(subItem, mediaOption);
+            }
+          }
           // Play the media
           libvlc.libvlc_media_player_play(mediaPlayerInstance);
           // Release the sub-item
