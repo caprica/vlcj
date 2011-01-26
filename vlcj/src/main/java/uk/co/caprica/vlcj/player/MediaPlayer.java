@@ -176,18 +176,9 @@ public interface MediaPlayer {
    * <p>
    * This will <strong>not</strong> affect any currently playing media item.
    * 
-   * @param options options to apply to all subsequently played media items
+   * @param mediaOptions options to apply to all subsequently played media items
    */
-  void setStandardMediaOptions(String... options);
-
-  /**
-   * Play a new media item.
-   * <p>
-   * The new media will begin play-back immediately.
-   * 
-   * @param mrl media resource locator
-   */
-  void playMedia(String mrl);
+  void setStandardMediaOptions(String... mediaOptions);
 
   /**
    * Play a new media item, with options.
@@ -195,7 +186,7 @@ public interface MediaPlayer {
    * The new media will begin play-back immediately.
    * 
    * @param mrl media resource locator
-   * @param mediaOptions media item options
+   * @param mediaOptions zero or more media item options
    */
   void playMedia(String mrl, String... mediaOptions);
 
@@ -203,27 +194,9 @@ public interface MediaPlayer {
    * Prepare a new media item for play-back, but do not begin playing.
    * 
    * @param mrl media resource locator
-   */
-  void prepareMedia(String mrl);
-
-  /**
-   * Prepare a new media item for play-back, but do not begin playing.
-   * 
-   * @param mrl media resource locator
-   * @param mediaOptions media item options
+   * @param mediaOptions zero or more media item options
    */
   void prepareMedia(String mrl, String... mediaOptions);
-
-  /**
-   * Play a new media item and wait for it to start playing or error.
-   * <p> 
-   * This call will <strong>block</strong> until the media starts or errors.
-   * 
-   * @param mrl media resource locator
-   * @return <code>true</code> if the media started playing, <code>false</code>
-   *         if the media failed to start because of an error 
-   */
-  boolean playMediaAndWait(String mrl);
 
   /**
    * Play a new media item, with options, and wait for it to start playing or
@@ -232,7 +205,7 @@ public interface MediaPlayer {
    * This call will <strong>block</strong> until the media starts or errors.
    * 
    * @param mrl media resource locator
-   * @param mediaOptions media item options
+   * @param mediaOptions zero or more media item options
    * @return <code>true</code> if the media started playing, <code>false</code>
    *         if the media failed to start because of an error 
    */
@@ -266,7 +239,7 @@ public interface MediaPlayer {
    * If any standard media options have been set via {@link #setStandardMediaOptions(String...)}
    * then those options will be applied to the sub-item.
    * 
-   * @param mediaOptions media options for the sub-item
+   * @param mediaOptions zero or more media options for the sub-item
    * @return <code>true</code> if there is a sub-item, otherwise <code>false</code>
    */
   boolean playNextSubItem(String... mediaOptions);

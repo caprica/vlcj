@@ -193,12 +193,6 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
 
 //  @Override
-  public void playMedia(String mrl) {
-    Logger.debug("playMedia(mrl={})", mrl);
-    playMedia(mrl, (String[])null);
-  }
-  
-//  @Override
   public void playMedia(String mrl, String... mediaOptions) {
     Logger.debug("playMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
     // First 'prepare' the media...
@@ -208,23 +202,11 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
 
 //  @Override
-  public void prepareMedia(String mrl) {
-    Logger.debug("prepareMedia(mrl={})", mrl);
-    prepareMedia(mrl, (String[])null);
-  }
-  
-//  @Override
   public void prepareMedia(String mrl, String... mediaOptions) {
     Logger.debug("prepareMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
     setMedia(mrl, mediaOptions);
   }
 
-//  @Override
-  public boolean playMediaAndWait(String mrl) {
-    Logger.debug("playAndWaitForMedia(mrl={})", mrl);
-    return playMediaAndWait(mrl, (String[])null);
-  }
-  
 //  @Override
   public boolean playMediaAndWait(String mrl, String... mediaOptions) {
     Logger.debug("playAndWaitForMedia(mrl={}, mediaOptions)", mrl, Arrays.toString(mediaOptions));
