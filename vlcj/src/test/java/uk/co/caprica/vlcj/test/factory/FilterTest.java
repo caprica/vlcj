@@ -67,6 +67,6 @@ public class FilterTest {
   }
 
   private static String formatHelp(String help) {
-    return help != null ? help.replaceAll("[\\r|\\n]", " ") : "";
+    return help != null ? help.replaceAll("\\n", " ") : "";
   }
 }
