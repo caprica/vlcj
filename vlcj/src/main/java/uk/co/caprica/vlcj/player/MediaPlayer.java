@@ -1077,6 +1077,9 @@ public interface MediaPlayer {
 
   /**
    * Provide access to the native media player instance. 
+   * <p>
+   * This is exposed on the interface as an implementation side-effect, ordinary
+   * applications are not expected to use this.
    * 
    * @return media player instance
    */
