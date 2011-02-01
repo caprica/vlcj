@@ -63,6 +63,10 @@ public class FilterTest {
   }
 
   private static void dump(int i, ModuleDescription moduleDescription) {
-    System.out.printf(FORMAT_PATTERN , String.valueOf(i+1), moduleDescription.name(), moduleDescription.shortName(), moduleDescription.longName(), moduleDescription.help());
+    System.out.printf(FORMAT_PATTERN , String.valueOf(i+1), moduleDescription.name(), moduleDescription.shortName(), moduleDescription.longName(), formatHelp(moduleDescription.help()));
+  }
+
+  private static String formatHelp(String help) {
+    return help != null ? help.replaceAll("[\\r|\\n]", " ") : "";
   }
 }
