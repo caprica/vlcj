@@ -45,6 +45,9 @@ public interface LibX11 extends Library {
 
   /**
    * Initialise Xlib support for concurrent threads. 
+   * <p>
+   * Invoking this at the start of an application can reduce the change of a
+   * fatal JVM crash when using multiple media players.
    * 
    * @return non-zero on success, zero on failure (or if threading is not supported)
    */
