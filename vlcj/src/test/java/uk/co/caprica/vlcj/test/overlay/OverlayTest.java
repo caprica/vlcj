@@ -46,8 +46,8 @@ import com.sun.awt.AWTUtilities;
 import com.sun.jna.platform.WindowUtils;
 
 /**
- * An absolute minimum test player demonstrating how to achieve a transparent
- * overlay and translucent painting.
+ * An test player demonstrating how to achieve a transparent overlay and 
+ * translucent painting.
  * <p>
  * Press SPACE to pause the video play-back.
  * <p>
