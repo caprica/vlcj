@@ -29,6 +29,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -38,7 +39,6 @@ import javax.swing.border.LineBorder;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.MediaPlayerLatch;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
@@ -110,8 +110,7 @@ public class TestMultiPlayer {
       }
     });
 
-    String[] args = {};
-    
+    String[] args = {"--no-video-title-show"};
     factory = new MediaPlayerFactory(args);
     
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
@@ -133,30 +132,33 @@ public class TestMultiPlayer {
   }
   
   private void start() {
-    for(int i = 0; i < medias.length; i++) {
-      players.get(i).mediaPlayer().setVideoSurface(factory.newVideoSurface(players.get(i).videoSurface()));
-      players.get(i).mediaPlayer().prepareMedia(medias[i]);
-    }
+    Executors.newSingleThreadExecutor().execute(new Runnable() {
+      @Override
+      public void run() {
+        for(int i = 0; i < medias.length; i++) {
+          players.get(i).mediaPlayer().setVideoSurface(factory.newVideoSurface(players.get(i).videoSurface()));
+          players.get(i).mediaPlayer().prepareMedia(medias[i]);
+        }
 
-    // There is a race condition somewhere when invoking libvlc_media_player_play()
-    // multiple times in quick succession that causes a hard-failure and a fatal 
-    // VM crash.
-    //
-    // This is _not_ about _concurrently_ calling play multiple times, but the
-    // native play function call must be off-loading something to a separate
-    // thread and returning - then a subsequent call to play somehow interferes
-    // with that or fails because of that.
-    //
-    // When libvlc_media_player_play() is called, the video playback is kicked 
-    // off asynchronously - so the API call will return before the video has
-    // started playing. If we invoke play and then wait (making this effectively
-    // a synchronous call) for the player to start playing, the hard VM crash
-    // does not occur
-    for(int i = 0; i < medias.length; i++) {
-      EmbeddedMediaPlayer mediaPlayer = players.get(i).mediaPlayer();
-      
-      MediaPlayerLatch l = new MediaPlayerLatch(mediaPlayer);
-      l.play();
-    }
+        // There is a race condition somewhere when invoking libvlc_media_player_play()
+        // multiple times in quick succession that causes a hard-failure and a fatal 
+        // VM crash.
+        //
+        // This is _not_ about _concurrently_ calling play multiple times, but the
+        // native play function call must be off-loading something to a separate
+        // thread and returning - then a subsequent call to play somehow interferes
+        // with that or fails because of that.
+        //
+        // When libvlc_media_player_play() is called, the video playback is kicked 
+        // off asynchronously - so the API call will return before the video has
+        // started playing. If we invoke play and then wait (making this effectively
+        // a synchronous call) for the player to start playing, the hard VM crash
+        // does not occur
+        for(int i = 0; i < medias.length; i++) {
+          EmbeddedMediaPlayer mediaPlayer = players.get(i).mediaPlayer();
+          mediaPlayer.playAndWait();
+        }
+      }
+    });
   }
 }
