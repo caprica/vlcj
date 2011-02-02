@@ -47,7 +47,7 @@ public class TestMediaListPlayer {
     mediaList.addMedia("/home/movies/three.mp4");
     
     mediaListPlayer.setMediaList(mediaList);
-    mediaListPlayer.setMode(MediaListPlayerMode.REPEAT);
+    mediaListPlayer.setMode(MediaListPlayerMode.LOOP);
     
     mediaListPlayer.play();
     
