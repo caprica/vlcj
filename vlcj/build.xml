@@ -86,7 +86,7 @@
   	<!--
     <delete dir="javadoc"/>
     --> 
-    <javadoc sourcepath="src/main/java" destdir="build/javadoc" classpathref="project.classes" access="protected" author="yes" windowtitle="VLCJ ${build.version} Documentation" footer="(C)2010 Caprica Software Limited"/>
+    <javadoc sourcepath="src/main/java" destdir="build/javadoc" classpathref="project.classes" access="protected" author="yes" windowtitle="VLCJ ${build.version} Documentation" footer="(C)2011 Caprica Software Limited"/>
   	<copy todir="javadoc">
   	  <fileset dir="build/javadoc"/>
   	</copy>
