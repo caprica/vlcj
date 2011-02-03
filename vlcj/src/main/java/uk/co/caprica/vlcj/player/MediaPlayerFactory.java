@@ -60,9 +60,6 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * If required, you can create multiple factory instances each with their own
  * libvlc options.
  * <p>
- * This factory attempts to determine the run-time operating system and create
- * an appropriate media player resources.
- * <p>
  * You should release the factory when your application terminates to properly
  * clean up native resources.
  * <p>
@@ -81,10 +78,10 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  *   // Create a full-screen strategy
  *   FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
  *   
- *   // Create a media player instance for the run-time operating system
+ *   // Create a media player instance
  *   EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(fullScreenStrategy);
  * 
- *   // Do some interesting things with the media player
+ *   // Do some interesting things with the media player, like setting a video surface...
  *   
  *   ...
  *   
