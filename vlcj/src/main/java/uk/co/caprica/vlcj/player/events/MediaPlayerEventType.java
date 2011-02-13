@@ -5,27 +5,34 @@ package uk.co.caprica.vlcj.player.events;
  */
 public enum MediaPlayerEventType {
 
-  MEDIA_CHANGED      (0x00000001),
-  OPENING            (0x00000002),
-  BUFFERING          (0x00000004),
-  PLAYING            (0x00000008),
-  PAUSED             (0x00000010),
-  STOPPED            (0x00000020),
-  FORWARD            (0x00000040),
-  BACKWARD           (0x00000080),
-  FINISHED           (0x00000100),
-  TIME_CHANGED       (0x00000200),
-  POSITION_CHANGED   (0x00000400),
-  SEEKABLE_CHANGED   (0x00000800),
-  PAUSABLE_CHANGED   (0x00001000),
-  TITLE_CHANGED      (0x00002000),
-  SNAPSHOT_TAKEN     (0x00004000),
-  LENGTH_CHANGED     (0x00008000),
-  ERROR              (0x00010000),
+  MEDIA_CHANGED         (0x00000001),
+  OPENING               (0x00000002),
+  BUFFERING             (0x00000004),
+  PLAYING               (0x00000008),
+  PAUSED                (0x00000010),
+  STOPPED               (0x00000020),
+  FORWARD               (0x00000040),
+  BACKWARD              (0x00000080),
+  FINISHED              (0x00000100),
+  TIME_CHANGED          (0x00000200),
+  POSITION_CHANGED      (0x00000400),
+  SEEKABLE_CHANGED      (0x00000800),
+  PAUSABLE_CHANGED      (0x00001000),
+  TITLE_CHANGED         (0x00002000),
+  SNAPSHOT_TAKEN        (0x00004000),
+  LENGTH_CHANGED        (0x00008000),
+  ERROR                 (0x00010000),
 
-  META_DATA_AVAILABLE(0x80000000), // FIXME use this
+  MEDIA_META_CHANGED    (0X00020000),
+  MEDIA_SUB_ITEM_ADDED  (0X00040000),
+  MEDIA_DURATION_CHANGED(0X00080000),
+  MEDIA_PARSED_CHANGED  (0X00100000),
+  MEDIA_FREED           (0X00200000),
+  MEDIA_STATE_CHANGED   (0X00400000),
+  
+  META_DATA_AVAILABLE   (0x80000000), // FIXME use this
 
-  ALL                (0xffffffff);
+  ALL                   (0xffffffff);
   
   /**
    * Bit-mask.

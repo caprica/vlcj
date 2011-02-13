@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.player.events;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
+import uk.co.caprica.vlcj.binding.internal.media_meta_changed;
+import uk.co.caprica.vlcj.binding.internal.media_parsed_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_pausable_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_position_changed;
@@ -28,6 +31,7 @@ import uk.co.caprica.vlcj.binding.internal.media_player_seekable_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_snapshot_taken;
 import uk.co.caprica.vlcj.binding.internal.media_player_time_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_title_changed;
+import uk.co.caprica.vlcj.binding.internal.media_state_changed;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 /**
@@ -61,6 +65,9 @@ public class MediaPlayerEventFactory {
     // Create an event suitable for the native event type...
     MediaPlayerEvent result = null;
     switch(libvlc_event_e.event(event.type)) {
+
+      // === Events relating to the media player ==============================
+      
       case libvlc_MediaPlayerMediaChanged:
         if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_CHANGED)) {
           result = new MediaPlayerMediaChangedEvent(mediaPlayer);
@@ -166,6 +173,44 @@ public class MediaPlayerEventFactory {
       case libvlc_MediaPlayerLengthChanged:
         if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.LENGTH_CHANGED)) {
           result = new MediaPlayerLengthChangedEvent(mediaPlayer, ((media_player_length_changed)event.u.getTypedValue(media_player_length_changed.class)).new_length);
+        }
+        break;
+        
+      // === Events relating to the current media =============================
+
+      case libvlc_MediaMetaChanged:
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_META_CHANGED)) {
+          result = new MediaMetaChangedEvent(mediaPlayer, ((media_meta_changed)event.u.getTypedValue(media_meta_changed.class)).meta_type);
+        }
+        break;
+
+      case libvlc_MediaSubItemAdded:
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_SUB_ITEM_ADDED)) {
+          result = new MediaSubItemAddedEvent(mediaPlayer);
+        }
+        break;
+
+      case libvlc_MediaDurationChanged:
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_DURATION_CHANGED)) {
+          result = new MediaDurationChangedEvent(mediaPlayer, ((media_duration_changed)event.u.getTypedValue(media_duration_changed.class)).new_duration);
+        }
+        break;
+
+      case libvlc_MediaParsedChanged:
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PARSED_CHANGED)) {
+          result = new MediaParsedChangedEvent(mediaPlayer, ((media_parsed_changed)event.u.getTypedValue(media_parsed_changed.class)).new_status);
+        }
+        break;
+
+      case libvlc_MediaFreed:
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_FREED)) {
+          result = new MediaFreedEvent(mediaPlayer);
+        }
+        break;
+
+      case libvlc_MediaStateChanged:
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_STATE_CHANGED)) {
+          result = new MediaStateChangedEvent(mediaPlayer, ((media_state_changed)event.u.getTypedValue(media_state_changed.class)).new_state);
         }
         break;
     }
