@@ -652,6 +652,8 @@ public interface LibVlc extends Library {
 
   /**
    * Get the media used by the media_player.
+   * <p>
+   * You do <strong>not</strong> need to invoke libvlc_media_player_release().
    * 
    * @param p_mi the Media Player
    * @return the media associated with p_mi, or NULL if no media is associated
