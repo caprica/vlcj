@@ -514,7 +514,7 @@ public class TestPlayer {
 
     @Override
     public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-      Logger.info("mediaDurationChangedAdded(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
+      Logger.info("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
     }
 
     @Override
@@ -534,7 +534,7 @@ public class TestPlayer {
 
     @Override
     public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
-      Logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
+      Logger.info("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
     }
   }
   
