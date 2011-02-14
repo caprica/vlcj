@@ -23,14 +23,13 @@ import java.awt.Canvas;
 import java.awt.Color;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.VideoMetaData;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
  * A single player instance and associated video surface.
  */
-public class PlayerInstance implements MediaPlayerEventListener {
+public class PlayerInstance extends MediaPlayerEventAdapter {
 
   private final EmbeddedMediaPlayer mediaPlayer;
   private final Canvas videoSurface;
@@ -46,7 +45,7 @@ public class PlayerInstance implements MediaPlayerEventListener {
   public EmbeddedMediaPlayer mediaPlayer() {
     return mediaPlayer;
   }
-  
+ 
   public Canvas videoSurface() {
     return videoSurface;
   }
@@ -77,56 +76,12 @@ public class PlayerInstance implements MediaPlayerEventListener {
   }
 
   @Override
-  public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
-  }
-
-  @Override
-  public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-  }
-
-  @Override
-  public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-  }
-
-  @Override
-  public void pausableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-  }
-
-  @Override
-  public void titleChanged(MediaPlayer mediaPlayer, int newSeekable) {
-  }
-
-  @Override
-  public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
-  }
-
-  @Override
-  public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
-  }
-
-  @Override
   public void error(MediaPlayer mediaPlayer) {
     System.out.println("error");
   }
   
   @Override
-  public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
-  }
-
-  @Override
   public void opening(MediaPlayer mediaPlayer) {
     System.out.println("opening");
-  }
-
-  @Override
-  public void buffering(MediaPlayer mediaPlayer) {
-  }
-
-  @Override
-  public void forward(MediaPlayer mediaPlayer) {
-  }
-
-  @Override
-  public void backward(MediaPlayer mediaPlayer) {
   }
 }
