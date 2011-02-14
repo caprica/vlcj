@@ -514,7 +514,7 @@ public class TestPlayer {
 
     @Override
     public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-      Logger.info("mediaSubItemAdded(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
+      Logger.info("mediaDurationChangedAdded(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
     }
 
     @Override
