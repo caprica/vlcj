@@ -210,7 +210,29 @@ public interface MediaPlayer {
    *         if the media failed to start because of an error 
    */
   boolean playMediaAndWait(String mrl, String... mediaOptions);
-    
+
+  /**
+   * Parse local meta data from the current media.
+   * <p>
+   * This method is synchronous.
+   * <p>
+   * <strong>Invoking this method on a stream may cause a hang.</strong>
+   */
+  void parseMedia();
+
+  /**
+   * Parse local meta data from the current media.
+   * <p>
+   * This method is asynchronous and a media player event will be raised when
+   * the parsed status changes.
+   * <p>
+   * If the media has already been parsed when this function calls then <em>no</em>
+   * event will be raised.
+   * <p>
+   * <strong>Invoking this method on a stream may cause a hang.</strong>
+   */
+  void requestParseMedia();
+
   /**
    * Add options to the current media. 
    * 

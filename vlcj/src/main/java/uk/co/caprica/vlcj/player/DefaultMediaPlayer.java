@@ -222,6 +222,18 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
   
 //  @Override
+  public void parseMedia() {
+    Logger.debug("parseMedia()");
+    libvlc.libvlc_media_parse(mediaInstance);
+  }
+
+//  @Override
+  public void requestParseMedia() {
+    Logger.debug("requestParseMedia()");
+    libvlc.libvlc_media_parse_async(mediaInstance);
+  }
+
+  //  @Override
   public void addMediaOptions(String... mediaOptions) {
     Logger.debug("addMediaOptions(mediaOptions={})", Arrays.toString(mediaOptions));
     if(mediaInstance != null) {
