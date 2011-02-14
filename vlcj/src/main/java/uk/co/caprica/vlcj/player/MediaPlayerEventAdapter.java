@@ -26,6 +26,8 @@ package uk.co.caprica.vlcj.player;
  */
 public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
 
+  // === Events relating to the media player ==================================
+
 //  @Override
   public void mediaChanged(MediaPlayer mediaPlayer) {
   }
@@ -93,6 +95,34 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
 //  @Override
   public void error(MediaPlayer mediaPlayer) {
   }
+  
+  // === Events relating to the current media =================================
+
+//  @Override
+  public void mediaSubItemAdded(MediaPlayer mediaPlayer) {
+  }
+
+//  @Override
+  public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
+  }
+
+//  @Override
+  public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
+  }
+
+//  @Override
+  public void mediaFreed(MediaPlayer mediaPlayer) {
+  }
+
+//  @Override
+  public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
+  }
+  
+//  @Override
+  public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
+  }
+  
+  // === Special/synthetic events =============================================
   
 //  @Override
   public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
