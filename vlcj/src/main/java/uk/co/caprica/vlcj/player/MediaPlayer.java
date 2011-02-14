@@ -234,6 +234,20 @@ public interface MediaPlayer {
   void requestParseMedia();
 
   /**
+   * Get a local meta data value.
+   * <p>
+   * The meta data <em>should</em> be parsed before making this call. If not,
+   * <code>null</code> will be returned and the underlying native library will
+   * asynchronously parse the meta data ultimately raising a media meta changed 
+   * event.  
+   * 
+   * @param metaType type of meta
+   * @return meta data value, or <code>null</code> if the media has not been parsed
+   */
+  // TODO replace with a Java enum?
+  String getMeta(int metaType);
+  
+  /**
    * Add options to the current media. 
    * 
    * @param mediaOptions media options

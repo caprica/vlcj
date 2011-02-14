@@ -224,13 +224,34 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
 //  @Override
   public void parseMedia() {
     Logger.debug("parseMedia()");
-    libvlc.libvlc_media_parse(mediaInstance);
+    if(mediaInstance != null) {
+      libvlc.libvlc_media_parse(mediaInstance);
+    }
+    else {
+      throw new RuntimeException("Attempt to parse media when there is no media");
+    }
   }
 
 //  @Override
   public void requestParseMedia() {
     Logger.debug("requestParseMedia()");
-    libvlc.libvlc_media_parse_async(mediaInstance);
+    if(mediaInstance != null) {
+      libvlc.libvlc_media_parse_async(mediaInstance);
+    }
+    else {
+      throw new RuntimeException("Attempt to parse media when there is no media");
+    }
+  }
+  
+//  @Override
+  public String getMeta(int metaType) {
+    Logger.debug("getMeta(metaType={})", metaType);
+    if(mediaInstance != null) {
+      return libvlc.libvlc_media_get_meta(mediaInstance, metaType);
+    }
+    else {
+      throw new RuntimeException("Attempt to get media meta when there is no media");
+    }
   }
 
   //  @Override
