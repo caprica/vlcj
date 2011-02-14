@@ -183,7 +183,7 @@ public class TestPlayer {
     mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));
     mediaPlayerFactory.setUserAgent("vlcj test player");
     
-    mediaPlayerFactory.setLogLevel(LogLevel.DBG);
+    mediaPlayerFactory.setLogLevel(LogLevel.ERR);
 
     // Create a new log handler to display the native libvlc log
     log = mediaPlayerFactory.newLog();
@@ -504,32 +504,32 @@ public class TestPlayer {
 
     @Override
     public void error(MediaPlayer mediaPlayer) {
-      Logger.debug("error(mediaPlayer={})", mediaPlayer);
+      Logger.info("error(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void mediaSubItemAdded(MediaPlayer mediaPlayer) {
-      Logger.debug("mediaSubItemAdded(mediaPlayer={})", mediaPlayer);
+      Logger.info("mediaSubItemAdded(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-      Logger.debug("mediaSubItemAdded(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
+      Logger.info("mediaSubItemAdded(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
     }
 
     @Override
     public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-      Logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
+      Logger.info("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
     }
 
     @Override
     public void mediaFreed(MediaPlayer mediaPlayer) {
-      Logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
+      Logger.info("mediaFreed(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
-      Logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
+      Logger.info("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
     }
 
     @Override
