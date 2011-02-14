@@ -120,6 +120,11 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   private libvlc_callback_t callback;
 
   /**
+   * Native media instance for current media (if there is one).
+   */
+  private libvlc_media_t mediaInstance;
+  
+  /**
    * Mask of the native events that will cause notifications to be sent to
    * listeners.
    */
@@ -219,14 +224,11 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
 //  @Override
   public void addMediaOptions(String... mediaOptions) {
     Logger.debug("addMediaOptions(mediaOptions={})", Arrays.toString(mediaOptions));
-    libvlc_media_t media = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
-    Logger.trace("media={}", media);
-    if(media != null) {
+    if(mediaInstance != null) {
       for(String mediaOption : mediaOptions) {
         Logger.debug("mediaOption={}", mediaOption);
-        libvlc.libvlc_media_add_option(media, mediaOption);
+        libvlc.libvlc_media_add_option(mediaInstance, mediaOption);
       }
-      libvlc.libvlc_media_release(media);
     }
     else {
       throw new RuntimeException("No media");
@@ -244,13 +246,10 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
 //  @Override
   public int subItemCount() {
     Logger.debug("subItemCount()");
-    // Get the current media
-    libvlc_media_t media = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
-    Logger.trace("media={}", media);
     // If there is a current media...
-    if(media != null) {
+    if(mediaInstance != null) {
       // Get the list of sub-items
-      libvlc_media_list_t subItems = libvlc.libvlc_media_subitems(media);
+      libvlc_media_list_t subItems = libvlc.libvlc_media_subitems(mediaInstance);
       if(subItems != null) {
         // Lock the sub-item list
         libvlc.libvlc_media_list_lock(subItems);
@@ -276,13 +275,10 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     Logger.debug("playNextSubItem(mediaOptions={})", Arrays.toString(mediaOptions));
     // Assume a sub-item was not played
     boolean subItemPlayed = false;
-    // Get the current media
-    libvlc_media_t media = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
-    Logger.trace("media={}", media);
     // If there is a current media...
-    if(media != null) {
+    if(mediaInstance != null) {
       // Get the list of sub-items
-      libvlc_media_list_t subItems = libvlc.libvlc_media_subitems(media);
+      libvlc_media_list_t subItems = libvlc.libvlc_media_subitems(mediaInstance);
       Logger.trace("subItems={}", subItems);
       // If there are sub-items...
       if(subItems != null) {
@@ -425,10 +421,8 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     // Must first check that the media is playing otherwise a fatal JVM crash
     // will occur
     if(isPlaying()) {
-      libvlc_media_t mediaDescriptor = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
-      if(mediaDescriptor != null) {
-        libvlc.libvlc_media_get_stats(mediaDescriptor, libvlcMediaStats);
-        libvlc.libvlc_media_release(mediaDescriptor);
+      if(mediaInstance != null) {
+        libvlc.libvlc_media_get_stats(mediaInstance, libvlcMediaStats);
       }
     }
     return libvlcMediaStats;
@@ -439,10 +433,8 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   public libvlc_state_t getMediaState() {
     Logger.debug("getMediaState()");
     libvlc_state_t state = null;
-    libvlc_media_t mediaDescriptor = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
-    if(mediaDescriptor != null) {
-      state = libvlc_state_t.state(libvlc.libvlc_media_get_state(mediaDescriptor));
-      libvlc.libvlc_media_release(mediaDescriptor);
+    if(mediaInstance != null) {
+      state = libvlc_state_t.state(libvlc.libvlc_media_get_state(mediaInstance));
     }
     return state;
   }
@@ -856,11 +848,9 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
 //  @Override
   public List<TrackInfo> getTrackInfo() {
     Logger.debug("getTrackInfo()");
-    libvlc_media_t media = libvlc.libvlc_media_player_get_media(mediaPlayerInstance);
-    Logger.trace("media={}", media);
-    if(media != null) {
+    if(mediaInstance != null) {
       PointerByReference tracks = new PointerByReference();
-      int numberOfTracks = libvlc.libvlc_media_get_tracks_info(media, tracks);
+      int numberOfTracks = libvlc.libvlc_media_get_tracks_info(mediaInstance, tracks);
       Logger.trace("numberOfTracks={}", numberOfTracks);
       libvlc_media_track_info_t trackInfos = new libvlc_media_track_info_t(tracks.getValue());
       libvlc_media_track_info_t[] trackInfoArray = (libvlc_media_track_info_t[])trackInfos.toArray(numberOfTracks);
@@ -897,7 +887,6 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
         }
       }
       libvlc.libvlc_free(tracks.getValue());
-      libvlc.libvlc_media_release(media);
       return result;
     }
     else {
@@ -1195,27 +1184,37 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   private void destroyInstance() {
     Logger.debug("destroyInstance()");
     
-    Logger.debug("Detach events...");
+    Logger.debug("Detach media events...");
+    deregisterMediaEventListener();
+    Logger.debug("Media events detached.");
+    
+    if(mediaInstance != null) {
+      Logger.debug("Release media...");
+      libvlc.libvlc_media_release(mediaInstance);
+      Logger.debug("Media released.");
+    }
+    
+    Logger.debug("Detach media player events...");
     deregisterEventListener();
-    Logger.debug("Events detached.");
+    Logger.debug("Media player events detached.");
 
     eventListenerList.clear();
     
     if(mediaPlayerInstance != null) {
       Logger.debug("Release media player...");
       libvlc.libvlc_media_player_release(mediaPlayerInstance);
-      Logger.debug("Media player released");
+      Logger.debug("Media player released.");
     }
 
     Logger.debug("Shut down listeners...");
     listenersService.shutdown();
-    Logger.debug("Listeners shut down");
+    Logger.debug("Listeners shut down.");
     
     metaService.shutdown();
   }
 
   /**
-   * Register a call-back to receive native events.
+   * Register a call-back to receive native media player events.
    */
   private void registerEventListener() {
     Logger.debug("registerEventListener()");
@@ -1230,7 +1229,7 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
 
   /**
-   * Deregister the call-back used to receive native events.
+   * De-register the call-back used to receive native media player events.
    */
   private void deregisterEventListener() {
     Logger.debug("deregisterEventListener()");
@@ -1246,45 +1245,80 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
 
   /**
+   * Register a call-back to receive media native events.
+   */
+  private void registerMediaEventListener() {
+    Logger.debug("registerMediaEventListener()");
+    // If there is a media, register a new listener...
+    if(mediaInstance != null) {
+      libvlc_event_manager_t mediaEventManager = libvlc.libvlc_media_event_manager(mediaInstance);
+      for(libvlc_event_e event : libvlc_event_e.values()) {
+        if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaStateChanged.intValue()) {
+          Logger.debug("event={}", event);
+          int result = libvlc.libvlc_event_attach(mediaEventManager, event.intValue(), callback, null);
+          Logger.debug("result={}", result);
+        }
+      }
+    }
+  }
+  
+  /**
+   * De-register the call-back used to receive native media events.
+   */
+  private void deregisterMediaEventListener() {
+    Logger.debug("deregisterMediaEventListener()");
+    // If there is a media, deregister the listener...
+    if(mediaInstance != null) {
+      libvlc_event_manager_t mediaEventManager = libvlc.libvlc_media_event_manager(mediaInstance);
+      for(libvlc_event_e event : libvlc_event_e.values()) {
+        if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaStateChanged.intValue()) {
+          Logger.debug("event={}", event);
+          libvlc.libvlc_event_detach(mediaEventManager, event.intValue(), callback, null);
+        }
+      }
+      mediaEventManager = null;
+    }
+  }
+
+  /**
    * 
    * 
    * @param media
    * @param mediaOptions
    */
-  private void setMedia(String media, String... mediaOptions) {
+  private boolean setMedia(String media, String... mediaOptions) {
     Logger.debug("setMedia(media={},mediaOptions={})" , media, Arrays.toString(mediaOptions));
-    
-    libvlc_media_t mediaDescriptor = libvlc.libvlc_media_new_path(instance, media);
-    Logger.debug("mediaDescriptor={}", mediaDescriptor);
-    
-    if(standardMediaOptions != null) {
-      for(String standardMediaOption : standardMediaOptions) {
-        Logger.debug("standardMediaOption={}", standardMediaOption);
-        libvlc.libvlc_media_add_option(mediaDescriptor, standardMediaOption);
-      }
+    // If there is a current media, clean it up
+    if(mediaInstance != null) {
+      deregisterMediaEventListener();
+      mediaInstance = null;
     }
-    
-    if(mediaOptions != null) {
-      for(String mediaOption : mediaOptions) {
-        Logger.debug("mediaOption={}", mediaOption);
-        libvlc.libvlc_media_add_option(mediaDescriptor, mediaOption);
+    // Create new media...
+    mediaInstance = libvlc.libvlc_media_new_path(instance, media);
+    Logger.debug("mediaInstance={}", mediaInstance);
+    if(mediaInstance != null) {
+      // Set the standard media options (if any)...
+      if(standardMediaOptions != null) {
+        for(String standardMediaOption : standardMediaOptions) {
+          Logger.debug("standardMediaOption={}", standardMediaOption);
+          libvlc.libvlc_media_add_option(mediaInstance, standardMediaOption);
+        }
       }
+      // Set the particular media options (if any)...
+      if(mediaOptions != null) {
+        for(String mediaOption : mediaOptions) {
+          Logger.debug("mediaOption={}", mediaOption);
+          libvlc.libvlc_media_add_option(mediaInstance, mediaOption);
+        }
+      }
+      // Attach a listener to the new media
+      registerMediaEventListener();
+      // Set the new media on the media player
+      libvlc.libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
     }
-  
-    // FIXME parsing causes problems e.g. when playing HTTP URLs
-//    libvlc.libvlc_media_parse(mediaDescriptor);
-    
-//    libvlc_meta_t[] metas = libvlc_meta_t.values();
-//    
-//    for(libvlc_meta_t meta : metas) {
-//      System.out.println("meta=" + libvlc.libvlc_media_get_meta(mediaDescriptor, meta.intValue()));
-//    }
-    
-    libvlc.libvlc_media_player_set_media(mediaPlayerInstance, mediaDescriptor);
-    libvlc.libvlc_media_release(mediaDescriptor);
-
     // Prepare a new statistics object to re-use for the new media item
     libvlcMediaStats = new libvlc_media_stats_t();
+    return mediaInstance != null;
   }
 
   /**
@@ -1432,13 +1466,13 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     @Override
     public void run() {
       Logger.trace("run()");
-      
+      // TODO maybe this loop construct can be replaced by waiting for the new media parse changed event?
       for(;;) {
         try {
           Logger.trace("Waiting for video output...");
           Thread.sleep(META_WAIT_PERIOD);
           Logger.trace("Checking for video output...");
-          
+
           VideoMetaData videoMetaData = getVideoMetaData();
           if(videoMetaData != null) {
             notifyListeners(videoMetaData);
@@ -1448,7 +1482,6 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
         catch(InterruptedException e) {
         }
       }
-      
       Logger.trace("runnable exits");
     }
   }
