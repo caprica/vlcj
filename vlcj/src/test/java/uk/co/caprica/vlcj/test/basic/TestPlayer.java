@@ -506,6 +506,36 @@ public class TestPlayer {
     public void error(MediaPlayer mediaPlayer) {
       Logger.debug("error(mediaPlayer={})", mediaPlayer);
     }
+
+    @Override
+    public void mediaSubItemAdded(MediaPlayer mediaPlayer) {
+      Logger.debug("mediaSubItemAdded(mediaPlayer={})", mediaPlayer);
+    }
+
+    @Override
+    public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
+      Logger.debug("mediaSubItemAdded(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
+    }
+
+    @Override
+    public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
+      Logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
+    }
+
+    @Override
+    public void mediaFreed(MediaPlayer mediaPlayer) {
+      Logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
+    }
+
+    @Override
+    public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
+      Logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
+    }
+
+    @Override
+    public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
+      Logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
+    }
   }
   
   /**
