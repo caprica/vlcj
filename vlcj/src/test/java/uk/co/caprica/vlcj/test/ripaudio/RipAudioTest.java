@@ -34,8 +34,8 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * On Linux at least you can have a media player play the mp3 file as it is 
  * being generated.
  * <p>
- * The media is played back at normal speed of course so it may take a while to
- * grab the entire audio.
+ * Since no video is being displayed the audio is played back and encoded as
+ * quickly as possible.
  */
 public class RipAudioTest {
 
