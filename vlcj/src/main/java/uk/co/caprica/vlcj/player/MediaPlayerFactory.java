@@ -227,6 +227,10 @@ public class MediaPlayerFactory {
 
   /**
    * Set the log verbosity level.
+   * <p>
+   * The log verbosity level <em>must</em> be set before opening the native
+   * log otherwise it will be ignored (at least until the log is closed and
+   * then opened again).
    * 
    * @param level log level
    */
