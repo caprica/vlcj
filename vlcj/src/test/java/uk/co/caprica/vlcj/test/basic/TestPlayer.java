@@ -103,9 +103,6 @@ public class TestPlayer {
   private EmbeddedMediaPlayer mediaPlayer;
   
   public static void main(final String[] args) throws Exception {
-    // Experimental
-    Native.setProtected(false);
-    
     Logger.info("  version: {}", LibVlc.INSTANCE.libvlc_get_version());
     Logger.info(" compiler: {}", LibVlc.INSTANCE.libvlc_get_compiler());
     Logger.info("changeset: {}", LibVlc.INSTANCE.libvlc_get_changeset());
