@@ -28,9 +28,15 @@ public class VideoFileFilter extends ExtensionFileFilter {
    * From the vlc_interfaces.h include file.
    */
   private static final String[] EXTENSIONS_VIDEO = {
+    "3g2",
+    "3gp",
+    "3gp2",
+    "3gpp",
     "amv",
     "asf",
     "avi",
+    "bin",
+    "cue",
     "divx",
     "dv",
     "flv",
@@ -44,12 +50,17 @@ public class VideoFileFilter extends ExtensionFileFilter {
     "mkv",
     "mov",
     "mp2",
+    "mp2v",
     "mp4",
+    "mp4v",
+    "mpa",
+    "mpe",
     "mpeg",
     "mpeg1",
     "mpeg2",
     "mpeg4",
     "mpg",
+    "mpv2",
     "mts",
     "mxf",
     "nsv",
@@ -64,9 +75,11 @@ public class VideoFileFilter extends ExtensionFileFilter {
     "rmvb",
     "tod",
     "ts",
+    "tts",
     "vob",
     "vro",
-    "wmv"    
+    "webm",
+    "wmv"
   };
 
   /**

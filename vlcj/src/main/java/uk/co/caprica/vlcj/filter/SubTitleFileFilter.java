@@ -35,11 +35,13 @@ public class SubTitleFileFilter extends ExtensionFileFilter {
     "utf",
     "ass",
     "ssa",
-    "qt",
+    "aqt",
     "jss",
     "psb",
     "rt",
-    "smi"
+    "smi",
+    "txt",
+    "smil"
   };
 
   /**
