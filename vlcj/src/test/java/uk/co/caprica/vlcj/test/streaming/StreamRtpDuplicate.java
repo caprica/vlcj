@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.test.streaming;
 
 import java.awt.Canvas;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 
@@ -30,7 +31,10 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 
 /**
  * An example of how to stream a media file using RTP and use the "duplicate"
- * output to also display the video in an embedded media player.
+ * output to also display the video locally in an embedded media player.
+ * <p>
+ * Note that the duplicated output does not play it's own <em>stream</em>, so
+ * video displayed by client applications will lag the local duplicated output.
  * <p>
  * The client specifies an MRL of <code>rtp://@230.0.0.1:5555</code>
  */
@@ -48,12 +52,14 @@ public class StreamRtpDuplicate {
     EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
     
     Canvas canvas = new Canvas();
+    canvas.setBackground(Color.black);
     CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
     mediaPlayer.setVideoSurface(videoSurface);
     
-    JFrame f = new JFrame();
+    JFrame f = new JFrame("vlcj duplicate output test");
     f.add(canvas);
     f.setSize(800, 600);
+    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     f.setVisible(true);
     
     mediaPlayer.playMedia(media,
