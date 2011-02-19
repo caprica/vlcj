@@ -62,6 +62,6 @@ class Info {
   Info() {
     System.err.println(APP_MSG);
     System.err.println(LICENSE_MSG);
-    Logger.info("vlcj 1.2.0b1");
+    Logger.info("vlcj 1.2.0");
   }
 }
