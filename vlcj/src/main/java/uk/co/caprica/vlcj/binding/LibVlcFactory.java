@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.binding;
 
 import java.lang.reflect.Proxy;
 
+import uk.co.caprica.vlcj.log.Logger;
+
 /**
  * A factory that creates interfaces to the libvlc native library.
  */
@@ -79,12 +81,11 @@ public class LibVlcFactory {
   public LibVlc create() {
     // Synchronised or not...
     LibVlc instance = synchronise ? LibVlc.SYNC_INSTANCE : LibVlc.INSTANCE;
-    
     // Logged...
     if(log) {
       instance = (LibVlc)Proxy.newProxyInstance(LibVlc.class.getClassLoader(), new Class<?>[] {LibVlc.class}, new LoggingProxy(instance));
     }
-    
+    Logger.info("vlc {}", instance.libvlc_get_version());
     return instance;
   }
 }
