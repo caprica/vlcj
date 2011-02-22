@@ -78,9 +78,9 @@ public class RipAudioTest {
     System.out.println("Rip '" + args[0] + "' to '" + args[1] + "'...");
     
     // Play the media - the media options can be tweaked to get whatever 
-    // encoding results you want. Of course "dummy" is not a real vcodec but
-    // specifying it here prevents any video output being created (there may be
-    // a better way)
+    // encoding results you want. Of course "dummy" is not a real video codec 
+    // but specifying it here prevents any video output being created (there 
+    // may be a better way)
     mediaPlayer.playMedia(args[0], "sout=#transcode{acodec=mp3,channels=2,ab=192,samplerate=44100,vcodec=dummy}:standard{dst=" + args[1] + ",mux=raw,access=file}");
     
     try {
