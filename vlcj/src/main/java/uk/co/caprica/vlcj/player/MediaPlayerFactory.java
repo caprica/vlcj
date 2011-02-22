@@ -168,6 +168,14 @@ public class MediaPlayerFactory {
       }
     }
 
+    // The "--plugin-path" switch is deprecated in libvlc 1.2.x and is replaced
+    // by an environment variable - again as per the above comment it should
+    // not be necessary to set this
+    String vlcPluginPath = System.getProperty("VLC_PLUGIN_PATH");
+    if(vlcPluginPath != null) {
+      Logger.debug("VLC_PLUGIN_PATH={}", vlcPluginPath);
+    }
+    
     this.libvlc = libvlc;
 
     this.instance = libvlc.libvlc_new(libvlcArgs.length, libvlcArgs);
