@@ -37,7 +37,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  *    COPYRIGHT -> 
  *        ALBUM -> 40 Summer Trance Hits 2010
  *  TRACKNUMBER -> 16
- *  DESCRIPTION -> PWT 2010
+ *  DESCRIPTION -> 
  *       RATING -> 
  *         DATE -> 2010
  *      SETTING -> 
