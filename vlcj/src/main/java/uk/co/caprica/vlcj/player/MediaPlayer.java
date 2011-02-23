@@ -244,8 +244,7 @@ public interface MediaPlayer {
    * @param metaType type of meta
    * @return meta data value, or <code>null</code> if the media has not been parsed
    */
-  // TODO replace with a Java enum?
-  String getMeta(int metaType);
+  String getMeta(MediaMetaType metaType);
   
   /**
    * Add options to the current media. 
