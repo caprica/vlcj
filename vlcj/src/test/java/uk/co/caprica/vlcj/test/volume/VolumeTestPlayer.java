@@ -34,7 +34,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
- * A minimumal volume test player.
+ * A minimal volume (not audio volume!) test player.
  * <p>
  * This test scans a directory recursively for ".iso" media files and plays
  * each one for a short period.
