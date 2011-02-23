@@ -29,7 +29,7 @@ import java.util.List;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.list.MediaList;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
+import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 
 /**
@@ -82,7 +82,7 @@ public class StreamingAudioPlayListTest {
   public StreamingAudioPlayListTest() {
     factory = new MediaPlayerFactory();
     mediaListPlayer = factory.newMediaListPlayer();
-    mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventListener() {
+    mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
       @Override
       public void nextItem(MediaListPlayer mediaListPlayer) {
         System.out.println("Playing next item");

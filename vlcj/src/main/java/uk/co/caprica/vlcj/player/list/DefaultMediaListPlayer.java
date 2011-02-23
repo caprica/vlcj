@@ -232,6 +232,8 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
     Logger.debug("registerEventListener()");
     callback = new VlcVideoPlayerCallback();
     for(libvlc_event_e event : libvlc_event_e.values()) {
+      // TODO The native event manager reports that it does not support 
+      // libvlc_MediaListPlayerPlayed or libvlc_MediaListPlayerStopped  
       if(event.intValue() >= libvlc_event_e.libvlc_MediaListPlayerNextItemSet.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListPlayerNextItemSet.intValue()) {
         Logger.debug("event={}", event);
         int result = libvlc.libvlc_event_attach(mediaListPlayerEventManager, event.intValue(), callback, null);
@@ -247,6 +249,8 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
     Logger.debug("deregisterEventListener()");
     if(callback != null) {
       for(libvlc_event_e event : libvlc_event_e.values()) {
+        // TODO The native event manager reports that it does not support 
+        // libvlc_MediaListPlayerPlayed or libvlc_MediaListPlayerStopped  
         if(event.intValue() >= libvlc_event_e.libvlc_MediaListPlayerNextItemSet.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListPlayerNextItemSet.intValue()) {
           Logger.debug("event={}", event);
           libvlc.libvlc_event_detach(mediaListPlayerEventManager, event.intValue(), callback, null);

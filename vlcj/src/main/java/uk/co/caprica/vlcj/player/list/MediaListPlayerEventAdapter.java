@@ -20,34 +20,21 @@
 package uk.co.caprica.vlcj.player.list;
 
 /**
- *
+ * Default implementation of the media player event listener.
+ * <p>
+ * Simply override the methods you're interested in.
  */
-public interface MediaListPlayerEventListener {
+public class MediaListPlayerEventAdapter implements MediaListPlayerEventListener {
 
-  /**
-   * Place-holder, do not use.
-   * 
-   * <strong>Warning: the native media list player event manager reports that 
-   * it does not support this event.</strong>
-   * 
-   * @param mediaListPlayer
-   */
-  void played(MediaListPlayer mediaListPlayer);
+//  @Override
+  public void played(MediaListPlayer mediaListPlayer) {
+  }
 
-  /**
-   * The media list player started playing the next item in the list.
-   * 
-   * @param mediaListPlayer media list player
-   */
-  void nextItem(MediaListPlayer mediaListPlayer);
+//  @Override
+  public void nextItem(MediaListPlayer mediaListPlayer) {
+  }
 
-  /**
-   * Place-holder, do not use.
-   * 
-   * <strong>Warning: the native media list player event manager reports that 
-   * it does not support this event.</strong>
-   * 
-   * @param mediaListPlayer
-   */
-  void stopped(MediaListPlayer mediaListPlayer);
+//  @Override
+  public void stopped(MediaListPlayer mediaListPlayer) {
+  }
 }

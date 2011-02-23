@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.test.list;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.list.MediaList;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
+import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 
 public class TestMediaListPlayer {
@@ -34,7 +34,7 @@ public class TestMediaListPlayer {
     
     MediaListPlayer mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
     
-    mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventListener() {
+    mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
       @Override
       public void nextItem(MediaListPlayer mediaListPlayer) {
         System.out.println("nextItem()");
