@@ -57,6 +57,11 @@ import com.sun.jna.platform.WindowUtils;
  * using a compositing window manager that is doing some fancy blending of the
  * overlay window and the main application window. You have to turn off those
  * window effects.
+ * <p>
+ * Note that it is not possible to use this approach if you also want to use
+ * Full-Screen Exclusive Mode. If you want to use an overlay and you need full-
+ * screen, then you have to emulate full-screen by changing your window bounds
+ * rather than using FSEM.
  */
 public class OverlayTest {
   
@@ -110,7 +115,7 @@ public class OverlayTest {
     mediaPlayer.setOverlay(new Overlay(f));
     mediaPlayer.enableOverlay(true);
     
-    mediaPlayer.playMedia("whatever.mp4");
+    mediaPlayer.playMedia("whatever.mp4"); // <--- change this!
   }
   
   private class Overlay extends Window {
