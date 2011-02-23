@@ -51,7 +51,7 @@ public class FilterTest {
     
     System.out.println();
     
-    System.out.println("VideoFilters:");
+    System.out.println("Video Filters:");
     System.out.println();
 
     System.out.printf(FORMAT_PATTERN , "#", "Name", "Short Name", "Long Name", "Help");
