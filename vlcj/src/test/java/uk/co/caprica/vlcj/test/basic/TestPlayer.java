@@ -77,7 +77,6 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsCanvas;
 
 import com.sun.awt.AWTUtilities;
-import com.sun.jna.Native;
 import com.sun.jna.platform.WindowUtils;
 
 /**
