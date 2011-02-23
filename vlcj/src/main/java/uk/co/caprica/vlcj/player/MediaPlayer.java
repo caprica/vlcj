@@ -209,7 +209,7 @@ public interface MediaPlayer {
    * @return <code>true</code> if the media started playing, <code>false</code>
    *         if the media failed to start because of an error 
    */
-  boolean playMediaAndWait(String mrl, String... mediaOptions);
+  boolean startMedia(String mrl, String... mediaOptions);
 
   /**
    * Parse local meta data from the current media.

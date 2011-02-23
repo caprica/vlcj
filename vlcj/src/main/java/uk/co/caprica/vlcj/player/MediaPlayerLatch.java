@@ -47,8 +47,7 @@ import uk.co.caprica.vlcj.log.Logger;
  *   boolean definitelyStarted = new MediaPlayerLatch(mediaPlayer).play();
  * </pre>
  * The {@link DefaultMediaPlayer} uses this class for the "play and wait..."
- * implementation, see {@link MediaPlayer#playMediaAndWait(String)} and
- * {@link MediaPlayer#playMediaAndWait(String, String...)}.
+ * implementation, see {@link MediaPlayer#startMedia(String, String...)}.
  * <p> 
  * Most applications are not expected to need this class and use the "play and
  * wait..." functionality on the media player instead.

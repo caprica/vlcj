@@ -73,7 +73,7 @@ public class FullScreenTest {
     f.setVisible(true);
     
     mediaPlayer.setFullScreen(true);
-    mediaPlayer.playMediaAndWait(args[0]);
+    mediaPlayer.startMedia(args[0]);
   }
 }
 

@@ -213,8 +213,8 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
 
 //  @Override
-  public boolean playMediaAndWait(String mrl, String... mediaOptions) {
-    Logger.debug("playAndWaitForMedia(mrl={}, mediaOptions)", mrl, Arrays.toString(mediaOptions));
+  public boolean startMedia(String mrl, String... mediaOptions) {
+    Logger.debug("startMedia(mrl={}, mediaOptions)", mrl, Arrays.toString(mediaOptions));
     // First 'prepare' the media...
     prepareMedia(mrl, mediaOptions);
     // ...then play it and wait for it to start (or error)
