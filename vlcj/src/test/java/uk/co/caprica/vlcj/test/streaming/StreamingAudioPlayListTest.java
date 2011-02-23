@@ -105,8 +105,9 @@ public class StreamingAudioPlayListTest {
     }
     // Loop the play-list over and over
     mediaListPlayer.setMode(MediaListPlayerMode.LOOP);
-    // Finally, start the media player
+    // Attach the play-list to the media player
     mediaListPlayer.setMediaList(playList);
+    // Finally, start the media player
     mediaListPlayer.play();
     System.out.println("Streaming started at rtp://" + address + ":" + port);
     // Wait forever...
