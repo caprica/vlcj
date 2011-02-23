@@ -478,7 +478,7 @@ public class MediaPlayerFactory {
    */
   public MediaList newMediaList() {
     Logger.debug("newMediaList()");
-    return new MediaList(instance);
+    return new MediaList(libvlc, instance);
   }
 
   // === Log ==================================================================

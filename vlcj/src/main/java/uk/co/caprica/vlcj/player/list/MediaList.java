@@ -23,29 +23,28 @@ import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.log.Logger;
 
 /**
- *
+ * A media list (i.e. a play-list).
  */
 public class MediaList {
 
   /**
-   * 
+   * Native interface.
    */
-  private final LibVlc libvlc = LibVlcFactory.factory().synchronise().log().create();
-
+  private LibVlc libvlc;
+  
   /**
-   * 
+   * Native library instance.
    */
   private libvlc_instance_t instance;
 
   /**
-   * 
+   * Play-list instance.
    */
   private libvlc_media_list_t mediaListInstance;
   
@@ -55,16 +54,18 @@ public class MediaList {
   private AtomicBoolean released = new AtomicBoolean();
 
   /**
-   * 
+   * Standard media options to be applied to each media item that is played.
    */
   private String[] standardMediaOptions;
   
   /**
+   * Create a new media list.
    * 
-   * 
-   * @param instance
+   * @param libvlc native interface
+   * @param instance native library instance
    */
-  public MediaList(libvlc_instance_t instance) {
+  public MediaList(LibVlc libvlc, libvlc_instance_t instance) {
+    this.libvlc = libvlc;
     this.instance = instance;
     
     createInstance();
@@ -86,7 +87,6 @@ public class MediaList {
    */
   public void addMedia(String mrl) {
     Logger.debug("add(mrl={})", mrl);
-    
     addMedia(mrl, (String[])null);
   }
   
