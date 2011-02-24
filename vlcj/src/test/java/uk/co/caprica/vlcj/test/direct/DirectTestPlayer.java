@@ -131,6 +131,7 @@ public class DirectTestPlayer {
     // Application will not exit since the UI thread is running
   }
 
+  @SuppressWarnings("serial")
   private final class ImagePane extends JPanel {
 
     private final BufferedImage image;
