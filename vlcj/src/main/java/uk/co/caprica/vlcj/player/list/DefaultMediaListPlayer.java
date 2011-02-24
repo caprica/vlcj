@@ -342,9 +342,6 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
         MediaListPlayerEventListener listener = eventListenerList.get(i);
         try {
           mediaListPlayerEvent.notify(listener);
-          
-          Thread.sleep(3000);
-          playNext();
         }
         catch(Throwable t) {
           Logger.warn("Event listener {} threw an exception", t, listener);
