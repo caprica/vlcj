@@ -303,7 +303,7 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     }
   }
   
-  //  @Override
+//  @Override
   public boolean playNextSubItem(String... mediaOptions) {
     Logger.debug("playNextSubItem(mediaOptions={})", Arrays.toString(mediaOptions));
     // Assume a sub-item was not played
@@ -1556,10 +1556,6 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     @Override
     public void finished(MediaPlayer mediaPlayer) {
       Logger.trace("finished(mediaPlayer={})", mediaPlayer);
-
-      // FIXME sub-items are no longer consumed when finished so the play-list loops forever
-      //       i am sure it did not work this way previously
-      
       if(playSubItems) {
         playNextSubItem();
       }
