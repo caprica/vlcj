@@ -1439,9 +1439,6 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
         MediaPlayerEvent mediaPlayerEvent = eventFactory.newMediaPlayerEvent(event, eventMask);
         Logger.trace("mediaPlayerEvent={}", mediaPlayerEvent);
         if(mediaPlayerEvent != null) {
-          // Notify listeners in a different thread - the other thread is
-          // necessary to prevent a potential native library failure if the
-          // native library is re-entered
           listenersService.submit(new NotifyListenersRunnable(mediaPlayerEvent));
         }
       }
