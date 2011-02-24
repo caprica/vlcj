@@ -322,6 +322,8 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
         libvlc_media_t subItem = libvlc.libvlc_media_list_item_at_index(subItems, 0);
         // If there is an item to play...
         if(subItem != null) {
+          // Remove this item from the list
+          libvlc.libvlc_media_list_remove_index(subItems, 0);
           // Set the sub-item as the new media for the media player
           libvlc.libvlc_media_player_set_media(mediaPlayerInstance, subItem);
           // Set any standard media options
@@ -1555,6 +1557,9 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     public void finished(MediaPlayer mediaPlayer) {
       Logger.trace("finished(mediaPlayer={})", mediaPlayer);
 
+      // FIXME sub-items are no longer consumed when finished so the play-list loops forever
+      //       i am sure it did not work this way previously
+      
       if(playSubItems) {
         playNextSubItem();
       }
