@@ -32,6 +32,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
 import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -41,7 +42,8 @@ import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
 
 import com.sun.jna.Pointer;
 
-// TODO need to dynamically register/de-register the per media event listener when the media changes (may need to separate out the events into it's own factory???)
+// TODO need to support the per media event listener, dynamically register/de-register and submit events (a bit messy because of the two different event types - go back to having one factory and one event type and one listener type??? 
+//      what about the rest of the media player events since event a playlist player has it's own media player (even if we don't set one)
 
 /**
  * Implementation of a media list player.
@@ -227,6 +229,8 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
     Logger.debug("mediaListPlayerEventManager={}", mediaListPlayerEventManager);
   
     registerEventListener();
+    
+    addMediaListPlayerEventListener(new NextItemHandler());
   }
   
   /**
@@ -349,6 +353,61 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
         }
       }
       Logger.trace("runnable exits");
+    }
+  }
+  
+  /**
+   * 
+   */
+  private class NextItemHandler extends MediaListPlayerEventAdapter {
+
+    /**
+     * 
+     */
+    private libvlc_media_t mediaInstance; // TODO maybe need to expose this?
+    
+    @Override
+    public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t mediaInstance) {
+      Logger.debug("nextItem(mediaInstance={})", mediaInstance);
+      deregisterMediaEventListener();
+      this.mediaInstance = mediaInstance;
+      registerMediaEventListener();
+    }
+
+    /**
+     * 
+     */
+    private void registerMediaEventListener() {
+      Logger.debug("registerMediaEventListener()");
+      // If there is a media, register a new listener...
+      if(mediaInstance != null) {
+        libvlc_event_manager_t mediaEventManager = libvlc.libvlc_media_event_manager(mediaInstance);
+        for(libvlc_event_e event : libvlc_event_e.values()) {
+          if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaStateChanged.intValue()) {
+            Logger.debug("event={}", event);
+            int result = libvlc.libvlc_event_attach(mediaEventManager, event.intValue(), callback, null);
+            Logger.debug("result={}", result);
+          }
+        }
+      }
+    }
+
+    /**
+     * 
+     */
+    private void deregisterMediaEventListener() {
+      Logger.debug("deregisterMediaEventListener()");
+      // If there is a media, deregister the listener...
+      if(mediaInstance != null) {
+        libvlc_event_manager_t mediaEventManager = libvlc.libvlc_media_event_manager(mediaInstance);
+        for(libvlc_event_e event : libvlc_event_e.values()) {
+          if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaStateChanged.intValue()) {
+            Logger.debug("event={}", event);
+            libvlc.libvlc_event_detach(mediaEventManager, event.intValue(), callback, null);
+          }
+        }
+        mediaEventManager = null;
+      }
     }
   }
 }
