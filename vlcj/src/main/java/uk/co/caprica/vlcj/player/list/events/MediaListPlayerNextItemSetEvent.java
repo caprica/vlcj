@@ -17,40 +17,35 @@
  * Copyright 2009, 2010, 2011 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.list;
+package uk.co.caprica.vlcj.player.list.events;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.player.list.MediaListPlayer;
+import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 /**
  *
  */
-public interface MediaListPlayerEventListener {
+class MediaListPlayerNextItemSetEvent extends AbstractMediaListPlayerEvent {
 
   /**
-   * Place-holder, do not use.
-   * 
-   * <strong>Warning: the native media list player event manager reports that 
-   * it does not support this event.</strong>
-   * 
-   * @param mediaListPlayer
+   * Media instance.
    */
-  void played(MediaListPlayer mediaListPlayer);
-
+  private final libvlc_media_t item;
+  
   /**
-   * The media list player started playing the next item in the list.
+   * Create a media player event.
    * 
-   * @param mediaListPlayer media list player
-   * @param item next item instance
+   * @param mediaListPlayer media player the event relates to
+   * @param metaType meta data type
    */
-  void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item);
-
-  /**
-   * Place-holder, do not use.
-   * 
-   * <strong>Warning: the native media list player event manager reports that 
-   * it does not support this event.</strong>
-   * 
-   * @param mediaListPlayer
-   */
-  void stopped(MediaListPlayer mediaListPlayer);
+  MediaListPlayerNextItemSetEvent(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
+    super(mediaListPlayer);
+    this.item = item;
+  }
+  
+  @Override
+  public void notify(MediaListPlayerEventListener listener) {
+    listener.nextItem(mediaListPlayer, item);
+  }
 }

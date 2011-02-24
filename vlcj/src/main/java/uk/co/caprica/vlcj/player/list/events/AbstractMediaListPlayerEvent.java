@@ -17,26 +17,28 @@
  * Copyright 2009, 2010, 2011 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.list;
+package uk.co.caprica.vlcj.player.list.events;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 /**
- * Default implementation of the media player event listener.
+ * Base implementation for media list player events.
  * <p>
- * Simply override the methods you're interested in.
+ * Every instance of an event refers to an associated media list player.
  */
-public class MediaListPlayerEventAdapter implements MediaListPlayerEventListener {
+abstract class AbstractMediaListPlayerEvent implements MediaListPlayerEvent {
 
-//  @Override
-  public void played(MediaListPlayer mediaListPlayer) {
-  }
-
-//  @Override
-  public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t mediaInstance) {
-  }
-
-//  @Override
-  public void stopped(MediaListPlayer mediaListPlayer) {
+  /**
+   * The media list player the event relates to.
+   */
+  protected final MediaListPlayer mediaListPlayer;
+  
+  /**
+   * Create a media player event.
+   * 
+   * @param mediaListPlayer media player that the event relates to
+   */
+  protected AbstractMediaListPlayerEvent(MediaListPlayer mediaListPlayer) {
+    this.mediaListPlayer = mediaListPlayer;
   }
 }

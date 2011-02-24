@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.test.list;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.list.MediaList;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
@@ -36,7 +37,7 @@ public class TestMediaListPlayer {
     
     mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
       @Override
-      public void nextItem(MediaListPlayer mediaListPlayer) {
+      public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t mediaInstance) {
         System.out.println("nextItem()");
       }
     });

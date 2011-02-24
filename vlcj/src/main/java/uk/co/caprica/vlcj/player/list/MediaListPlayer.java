@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.list;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
 
 /**
  * Specification for a media list player component.
@@ -41,6 +42,19 @@ public interface MediaListPlayer {
    */
   void removeMediaListPlayerEventListener(MediaListPlayerEventListener listener);
 
+  /**
+   * Restrict the set of media list player events that generate event 
+   * notifications to listeners.
+   * <p>
+   * If a set of events is not explicitly enabled, then it is expected that 
+   * <strong>all</strong> events be enabled.
+   * <p>
+   * See {@link MediaListPlayerEventType}.
+   * 
+   * @param eventMask bit mask of events to enable
+   */
+  void enableEvents(int eventMask);
+  
   /**
    * Associate an actual media player with the media list player.
    * 

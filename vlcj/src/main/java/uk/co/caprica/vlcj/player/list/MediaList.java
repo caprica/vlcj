@@ -85,6 +85,8 @@ public class MediaList {
    * 
    * @param mrl
    */
+  // TODO in future this should support per media user data - maybe a map of native media instance to user data? also support it in mediaplayer somehow? problem with method sig... use Object before String...
+  //      it's a pain in the rear really because this class should not expose the media instance, but then how to get the current item etc... hmm....
   public void addMedia(String mrl) {
     Logger.debug("add(mrl={})", mrl);
     addMedia(mrl, (String[])null);
@@ -103,6 +105,9 @@ public class MediaList {
       lock();
       
       libvlc_media_t mediaDescriptor = newMediaDescriptor(media, mediaOptions);
+      
+      System.out.println("add media descriptor: " + mediaDescriptor);
+      
       libvlc.libvlc_media_list_add_media(mediaListInstance, mediaDescriptor);
       releaseMediaDescriptor(mediaDescriptor);
     }
