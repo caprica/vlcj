@@ -105,9 +105,6 @@ public class MediaList {
       lock();
       
       libvlc_media_t mediaDescriptor = newMediaDescriptor(media, mediaOptions);
-      
-      System.out.println("add media descriptor: " + mediaDescriptor);
-      
       libvlc.libvlc_media_list_add_media(mediaListInstance, mediaDescriptor);
       releaseMediaDescriptor(mediaDescriptor);
     }
