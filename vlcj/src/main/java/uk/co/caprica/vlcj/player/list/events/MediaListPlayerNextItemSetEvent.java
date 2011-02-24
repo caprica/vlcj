@@ -46,6 +46,6 @@ class MediaListPlayerNextItemSetEvent extends AbstractMediaListPlayerEvent {
   
   @Override
   public void notify(MediaListPlayerEventListener listener) {
-    listener.nextItem(mediaListPlayer, item);
+    listener.nextItem(mediaListPlayer, item, mediaListPlayer.getMediaList().mrl(item));
   }
 }

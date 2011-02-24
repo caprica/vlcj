@@ -85,8 +85,9 @@ public class StreamingAudioPlayListTest {
     mediaListPlayer = factory.newMediaListPlayer();
     mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
       @Override
-      public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t mediaInstance) {
-        System.out.println("Playing next item: " + mediaInstance);
+      public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
+        String mrl = mediaListPlayer.getMediaList().mrl(item);
+        System.out.println("Playing next item: " + mrl + " (" + item + ")");
       }
     });
     playList = factory.newMediaList();

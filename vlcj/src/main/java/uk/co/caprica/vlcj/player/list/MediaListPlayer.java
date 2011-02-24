@@ -70,6 +70,13 @@ public interface MediaListPlayer {
   void setMediaList(MediaList mediaList);
 
   /**
+   * Get the media list.
+   * 
+   * @return media list
+   */
+  MediaList getMediaList();
+  
+  /**
    * Play the media list.
    */
   void play();

@@ -41,8 +41,9 @@ public interface MediaListPlayerEventListener {
    * 
    * @param mediaListPlayer media list player
    * @param item next item instance
+   * @param itemMrl MRL of the next item
    */
-  void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item);
+  void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl);
 
   /**
    * Place-holder, do not use.

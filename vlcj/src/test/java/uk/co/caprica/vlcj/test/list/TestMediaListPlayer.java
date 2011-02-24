@@ -37,7 +37,7 @@ public class TestMediaListPlayer {
     
     mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
       @Override
-      public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t mediaInstance) {
+      public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
         System.out.println("nextItem()");
       }
     });

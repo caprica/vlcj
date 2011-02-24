@@ -33,7 +33,7 @@ public class MediaListPlayerEventAdapter implements MediaListPlayerEventListener
   }
 
 //  @Override
-  public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t mediaInstance) {
+  public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
   }
 
 //  @Override

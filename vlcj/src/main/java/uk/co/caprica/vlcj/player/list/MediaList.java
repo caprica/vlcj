@@ -20,6 +20,8 @@
 package uk.co.caprica.vlcj.player.list;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
@@ -59,6 +61,11 @@ public class MediaList {
   private String[] standardMediaOptions;
   
   /**
+   * Map of native media instances.
+   */
+  private final Map<libvlc_media_t, String> mediaListMap = new HashMap<libvlc_media_t, String>();
+  
+  /**
    * Create a new media list.
    * 
    * @param libvlc native interface
@@ -90,7 +97,11 @@ public class MediaList {
     Logger.debug("addMedia(mrl={},mediaOptions={})", mrl, mediaOptions);
     try {
       lock();
+      // Create a new native media descriptor
       libvlc_media_t mediaDescriptor = newMediaDescriptor(mrl, mediaOptions);
+      // Store the new native media descriptor in the MRL map
+      mediaListMap.put(mediaDescriptor, mrl);
+      // Insert the media descriptor into the media list
       libvlc.libvlc_media_list_add_media(mediaListInstance, mediaDescriptor);
       releaseMediaDescriptor(mediaDescriptor);
     }
@@ -110,7 +121,11 @@ public class MediaList {
     Logger.debug("insertMedia(index={},mrl={},mediaOptions={})", index, mrl, mediaOptions);
     try {
       lock();
+      // Create a new native media descriptor
       libvlc_media_t mediaDescriptor = newMediaDescriptor(mrl, mediaOptions);
+      // Store the new native media descriptor in the MRL map
+      mediaListMap.put(mediaDescriptor, mrl);
+      // Insert the media descriptor into the media list
       libvlc.libvlc_media_list_insert_media(mediaListInstance, mediaDescriptor, index);
       releaseMediaDescriptor(mediaDescriptor);
     }
@@ -128,7 +143,13 @@ public class MediaList {
     Logger.debug("removeMedia(index={})", index);
     try {
       lock();
-      libvlc.libvlc_media_list_remove_index(mediaListInstance, index);
+      libvlc_media_t oldMediaInstance = libvlc.libvlc_media_list_item_at_index(mediaListInstance, index);
+      if(oldMediaInstance != null) {
+        // Remove the old native media descriptor from the MRL map
+        mediaListMap.remove(oldMediaInstance);
+        // Remove the media descriptor from the media list
+        libvlc.libvlc_media_list_remove_index(mediaListInstance, index);
+      }
     }
     finally {
       unlock();
@@ -241,6 +262,16 @@ public class MediaList {
   private void releaseMediaDescriptor(libvlc_media_t mediaDescriptor) {
     Logger.debug("releaseMediaDescriptor(mediaDescriptor={})", mediaDescriptor);
     libvlc.libvlc_media_release(mediaDescriptor);
+  }
+  
+  /**
+   * 
+   * 
+   * @param mediaInstance
+   * @return
+   */
+  public String mrl(libvlc_media_t mediaInstance) {
+    return mediaListMap.get(mediaInstance);
   }
   
   /**

@@ -97,6 +97,11 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
   private int eventMask = MediaListPlayerEventType.ALL.value();
 
   /**
+   * Media list.
+   */
+  private MediaList mediaList;
+  
+  /**
    * Set to true when the player has been released.
    */
   private AtomicBoolean released = new AtomicBoolean();
@@ -142,6 +147,13 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
   public void setMediaList(MediaList mediaList) {
     Logger.debug("setMediaList(mediaList={})", mediaList);
     libvlc.libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaList.mediaListInstance());
+    this.mediaList = mediaList;
+  }
+
+//  @Override
+  public MediaList getMediaList() {
+    Logger.debug("getMediaList()");
+    return mediaList;
   }
   
 //  @Override
@@ -362,15 +374,15 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
   private class NextItemHandler extends MediaListPlayerEventAdapter {
 
     /**
-     * 
+     * Current media instance.
      */
-    private libvlc_media_t mediaInstance; // TODO maybe need to expose this?
+    private libvlc_media_t mediaInstance;
     
     @Override
-    public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t mediaInstance) {
-      Logger.debug("nextItem(mediaInstance={})", mediaInstance);
+    public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
+      Logger.debug("nextItem(item={},itemMrl={})", item, itemMrl);
       deregisterMediaEventListener();
-      this.mediaInstance = mediaInstance;
+      this.mediaInstance = item;
       registerMediaEventListener();
     }
 
