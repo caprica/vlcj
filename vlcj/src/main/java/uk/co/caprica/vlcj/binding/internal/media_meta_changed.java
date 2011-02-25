@@ -27,6 +27,12 @@ import com.sun.jna.Structure;
 public class media_meta_changed extends Structure {
 
   /**
+   * Type of meta.
+   * <p>
+   * <strong>This value may be unreliable, for example when parsing media
+   * some types are reported multiple times and some types are not reported at
+   * all.</strong> 
+   * 
    * @see libvlc_meta_t
    */
   public int meta_type;
