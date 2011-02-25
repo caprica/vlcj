@@ -26,6 +26,9 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 
+/**
+ * A simple example showing how to use a media list player.
+ */
 public class TestMediaListPlayer {
 
   public static void main(String[] args) throws Exception {
@@ -58,5 +61,4 @@ public class TestMediaListPlayer {
 //    mediaListPlayer.release();
 //    mediaPlayerFactory.release();
   }
-  
 }
