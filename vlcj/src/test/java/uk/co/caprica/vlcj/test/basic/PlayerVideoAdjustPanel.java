@@ -166,9 +166,9 @@ public class PlayerVideoAdjustPanel extends JPanel {
       @Override
       public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider)e.getSource();
-        if(!source.getValueIsAdjusting()) {
+//        if(!source.getValueIsAdjusting()) {
           mediaPlayer.setContrast(source.getValue() / 100.0f);
-        }
+//        }
       }
     });
 
@@ -176,9 +176,9 @@ public class PlayerVideoAdjustPanel extends JPanel {
       @Override
       public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider)e.getSource();
-        if(!source.getValueIsAdjusting()) {
+//        if(!source.getValueIsAdjusting()) {
           mediaPlayer.setBrightness(source.getValue() / 100.0f);
-        }
+//        }
       }
     });
 
@@ -186,9 +186,9 @@ public class PlayerVideoAdjustPanel extends JPanel {
       @Override
       public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider)e.getSource();
-        if(!source.getValueIsAdjusting()) {
+//        if(!source.getValueIsAdjusting()) {
           mediaPlayer.setHue(source.getValue());
-        }
+//        }
       }
     });
     
@@ -196,9 +196,9 @@ public class PlayerVideoAdjustPanel extends JPanel {
       @Override
       public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider)e.getSource();
-        if(!source.getValueIsAdjusting()) {
+//        if(!source.getValueIsAdjusting()) {
           mediaPlayer.setSaturation(source.getValue() / 100.0f);
-        }
+//        }
       }
     });
     
@@ -206,9 +206,9 @@ public class PlayerVideoAdjustPanel extends JPanel {
       @Override
       public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider)e.getSource();
-        if(!source.getValueIsAdjusting()) {
+//        if(!source.getValueIsAdjusting()) {
           mediaPlayer.setGamma(source.getValue() / 100.0f);
-        }
+//        }
       }
     });
   }
