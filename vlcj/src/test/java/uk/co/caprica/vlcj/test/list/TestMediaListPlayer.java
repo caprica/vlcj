@@ -32,9 +32,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 public class TestMediaListPlayer {
 
   public static void main(String[] args) throws Exception {
-    String[] vlcArgs = {};
-    
-    MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(vlcArgs);
+    MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
     
     MediaListPlayer mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
     
