@@ -42,11 +42,10 @@ import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
 
 import com.sun.jna.Pointer;
 
-// TODO need to support the per media event listener, dynamically register/de-register and submit events (a bit messy because of the two different event types - go back to having one factory and one event type and one listener type??? 
-//      what about the rest of the media player events since event a playlist player has it's own media player (even if we don't set one)
-
 /**
  * Implementation of a media list player.
+ * <p> 
+ * Note that the per-media events are not currently implemented.
  */
 public class DefaultMediaListPlayer implements MediaListPlayer {
 
