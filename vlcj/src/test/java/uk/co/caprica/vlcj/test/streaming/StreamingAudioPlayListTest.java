@@ -56,9 +56,9 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
  *   /home/music 230.0.0.1 5555
  * </pre>
  * Using this example, the streaming audio can be played in vlc with the 
- * address:
+ * following address:
  * <pre>
- *   rtp://230.0.0.1:5555 in your client.
+ *   rtp://230.0.0.1:5555
  * </pre>
  */
 public class StreamingAudioPlayListTest {
@@ -103,11 +103,13 @@ public class StreamingAudioPlayListTest {
     String mediaOptions = formatRtpStream(address, port);
     // Add each media file to the play-list...
     for(File file : files) {
+      // You could instead set standard options on the media list player rather
+      // than setting options each time you add media
       playList.addMedia(file.getAbsolutePath(), mediaOptions);
     }
     // Loop the play-list over and over
     mediaListPlayer.setMode(MediaListPlayerMode.LOOP);
-    // Attach the play-list to the media player
+    // Attach the play-list to the media list player
     mediaListPlayer.setMediaList(playList);
     // Finally, start the media player
     mediaListPlayer.play();
