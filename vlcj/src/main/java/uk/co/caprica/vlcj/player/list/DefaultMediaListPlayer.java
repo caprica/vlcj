@@ -36,6 +36,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
 import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEvent;
 import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventFactory;
 import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
@@ -90,6 +91,13 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
   private libvlc_callback_t callback;
   
   /**
+   * Associated native media player instance.
+   * <p>
+   * This may be <code>null</code>.
+   */
+  private MediaPlayer mediaPlayer;
+
+  /**
    * Mask of the native events that will cause notifications to be sent to
    * listeners.
    */
@@ -139,6 +147,7 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
   //  @Override
   public void setMediaPlayer(MediaPlayer mediaPlayer) {
     Logger.debug("setMediaPlayer(mediaPlayer={})", mediaPlayer);
+    this.mediaPlayer = mediaPlayer;
     libvlc.libvlc_media_list_player_set_media_player(mediaListPlayerInstance, mediaPlayer.mediaPlayerInstance());
   }
   
@@ -158,6 +167,11 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
 //  @Override
   public void play() {
     Logger.debug("play()");
+    // If there is an associated media player then make sure the video surface
+    // is attached
+    if(mediaPlayer instanceof EmbeddedMediaPlayer) {
+      ((EmbeddedMediaPlayer)mediaPlayer).attachVideoSurface();
+    }
     libvlc.libvlc_media_list_player_play(mediaListPlayerInstance);
   }
   
