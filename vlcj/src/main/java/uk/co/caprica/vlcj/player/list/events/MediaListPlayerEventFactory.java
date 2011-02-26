@@ -61,7 +61,6 @@ public class MediaListPlayerEventFactory {
       
       case libvlc_MediaListPlayerNextItemSet:
         if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_CHANGED)) {
-          // FIXME need to map this opaque native media instance to something useful for the listener 
           result = new MediaListPlayerNextItemSetEvent(mediaListPlayer, ((media_list_player_next_item_set)event.u.getTypedValue(media_list_player_next_item_set.class)).item);
         }
         break;
