@@ -35,6 +35,11 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 public class MinimalTestPlayer {
 
   public static void main(String[] args) throws Exception {
+    if(args.length != 1) {
+      System.out.println("Specify an MRL to play");
+      System.exit(1);
+    }
+
     // This seems very reliable
     LibX11.INSTANCE.XInitThreads();
 
@@ -51,12 +56,13 @@ public class MinimalTestPlayer {
     f.add(vs, BorderLayout.CENTER);
     f.setVisible(true);
     
-    MediaPlayerFactory factory = new MediaPlayerFactory(new String[] {});
+    MediaPlayerFactory factory = new MediaPlayerFactory();
     
     EmbeddedMediaPlayer mediaPlayer = factory.newEmbeddedMediaPlayer();
     mediaPlayer.setVideoSurface(factory.newVideoSurface(vs));
-    
-    mediaPlayer.playMedia("SomeMovie.mp4");
+
+    mediaPlayer.setRepeat(true);
+    mediaPlayer.playMedia(args[0]);
     Thread.currentThread().join();
   }
 }

@@ -32,6 +32,11 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 public class Mp3Test {
 
   public static void main(String[] args) throws Exception {
+    if(args.length != 1) {
+      System.out.println("Specify an MRL to play");
+      System.exit(1);
+    }
+
     MediaPlayerFactory factory = new MediaPlayerFactory();
     MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
     mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
