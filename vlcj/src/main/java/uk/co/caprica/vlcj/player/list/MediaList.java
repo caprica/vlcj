@@ -62,6 +62,14 @@ public class MediaList {
   
   /**
    * Map of native media instances.
+   * <p>
+   * This is used so that an application may associate a native media instance
+   * with the MRL that was used to create that instance.
+   * <p>
+   * It is possible simply to ask the native media instance what it's MRL is, 
+   * but the reported MRL (while functionally equivalent to the original MRL)
+   * may actually be different due to URL encoding (the original MRL may not
+   * have been URL-encoded). 
    */
   private final Map<libvlc_media_t, String> mediaListMap = new HashMap<libvlc_media_t, String>();
   
