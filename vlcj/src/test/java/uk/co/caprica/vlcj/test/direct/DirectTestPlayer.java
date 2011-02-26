@@ -59,7 +59,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class DirectTestPlayer extends VlcjTest {
 
   // The size does NOT need to match the mediaPlayer size - it's the size that
-  // the mediaPlayer will be scaled to
+  // the media will be scaled to
   // Matching the native size will be faster of course
   private final int width = 720;
   private final int height = 480;
