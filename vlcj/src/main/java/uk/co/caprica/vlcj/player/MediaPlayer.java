@@ -138,8 +138,8 @@ import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
  * Some media when played may cause one or more media sub-items to created. These 
  * sub-items subsequently need to be played. The media player can be set to 
  * automatically play these sub-items via {@link #setPlaySubItems(boolean)}, 
- * otherwise {@link #playNextSubItem()} can be invoked in response to a
- * {@link MediaPlayerEventListener#finished()} event.
+ * otherwise {@link #playNextSubItem(String...)} can be invoked in response to a
+ * {@link MediaPlayerEventListener#finished(MediaPlayer)} event.
  */
 public interface MediaPlayer {
 
@@ -254,6 +254,17 @@ public interface MediaPlayer {
   void addMediaOptions(String... mediaOptions);
 
   /**
+   * Set whether or not the media player should automatically repeat playing 
+   * the media when it has finished playing.
+   * <p>
+   * There is <em>no</em> guarantee of seamless play-back when using this 
+   * method - see instead {@link uk.co.caprica.vlcj.player.list.MediaListPlayer MediaListPlayer}.
+   *  
+   * @param repeat <code>true</code> to automatically replay the media, otherwise <code>false</code>
+   */
+  void setRepeat(boolean repeat);
+  
+  /**
    * Set whether or not the media player should automatically play media sub-
    * items.
    * 
@@ -280,30 +291,30 @@ public interface MediaPlayer {
   boolean playNextSubItem(String... mediaOptions);
 
   /**
+   * Is the current media playable?
    * 
-   * 
-   * @return
+   * @return <code>true</code> if the current media is playable, otherwise <code>false</code>
    */
   boolean isPlayable();
 
   /**
+   * Is the media player playing?
    * 
-   * 
-   * @return
+   * @return <code>true</code> if the media player is playing, otherwise <code>false</code>
    */
   boolean isPlaying();
 
   /**
+   * Is the current media seekable?
    * 
-   * 
-   * @return
+   * @return <code>true</code> if the current media is seekable, otherwise <code>false</code>
    */
   boolean isSeekable();
 
   /**
+   * Can the current media be paused?
    * 
-   * 
-   * @return
+   * @return <code>true</code> if the current media can be paused, otherwise <code>false</code>
    */
   boolean canPause();
 
@@ -329,9 +340,9 @@ public interface MediaPlayer {
   float getPosition();
 
   /**
+   * Get the current play-back frames-per-second.
    * 
-   * 
-   * @return
+   * @return number of frames-per-second
    */
   float getFps();
 
@@ -360,23 +371,23 @@ public interface MediaPlayer {
   Dimension getVideoDimension();
 
   /**
+   * Get the video aspect ratio.
    * 
-   * 
-   * @return
+   * @return aspect ratio
    */
   String getAspectRatio();
 
   /**
+   * Get the current video scale (zoom).
    * 
-   * 
-   * @return
+   * @return scale
    */
   float getScale();
 
   /**
+   * Get the current video crop geometry.
    * 
-   * 
-   * @return
+   * @return crop geometry
    */
   String getCropGeometry();
 

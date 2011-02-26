@@ -142,6 +142,12 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   private libvlc_media_stats_t libvlcMediaStats;
 
   /**
+   * Flag whether or not to automatically replay media after the media has
+   * finished playing.
+   */
+  private boolean repeat;
+  
+  /**
    * Flag whether or not to automatically play media sub-items if there are 
    * any.
    */
@@ -254,7 +260,7 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     }
   }
 
-  //  @Override
+//  @Override
   public void addMediaOptions(String... mediaOptions) {
     Logger.debug("addMediaOptions(mediaOptions={})", Arrays.toString(mediaOptions));
     if(mediaInstance != null) {
@@ -271,6 +277,12 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   // === Sub-Item Controls ====================================================
   
 //  @Override
+  public void setRepeat(boolean repeat) {
+    Logger.debug("setRepeat(repeat={})", repeat);
+    this.repeat = repeat;
+  }
+
+  //  @Override
   public void setPlaySubItems(boolean playSubItems) {
     Logger.debug("setPlaySubItems(playSubItems={})", playSubItems);
     this.playSubItems = playSubItems;
@@ -1210,6 +1222,7 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     registerEventListener();
 
     eventListenerList.add(new MetaDataEventHandler());
+    eventListenerList.add(new RepeatPlayEventHandler());
     eventListenerList.add(new SubItemEventHandler());
   }
 
@@ -1530,6 +1543,25 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
       // Kick off an asynchronous task to obtain the video meta data (when
       // available)
       metaService.submit(new NotifyMetaRunnable());
+    }
+  }
+  
+  /**
+   * Event listener implementation that handles auto-repeat.
+   */
+  private final class RepeatPlayEventHandler extends MediaPlayerEventAdapter {
+
+    @Override
+    public void finished(MediaPlayer mediaPlayer) {
+      Logger.trace("finished(mediaPlayer={})", mediaPlayer);
+      if(repeat && mediaInstance != null) {
+        String mrl = libvlc.libvlc_media_get_mrl(mediaInstance);
+        Logger.debug("auto repeat mrl={}", mrl);
+        // It is not sufficient to simply call play(), the MRL must explicitly
+        // be played again - this is the reason why the repeat play might not
+        // be seamless
+        mediaPlayer.playMedia(mrl);
+      }
     }
   }
   
