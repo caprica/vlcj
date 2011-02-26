@@ -159,8 +159,24 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
     // Defer setting the video surface until later
     this.videoSurfaceSet = false;
   }
-  
+
 //  @Override
+  public void attachVideoSurface() {
+    Logger.debug("attachVideoSurface()");
+    if(videoSurface != null) {
+      if(videoSurface.canvas().isVisible()) {
+        onBeforePlay();
+      }
+      else {
+        throw new IllegalStateException("The video surface is not visible");
+      }
+    }
+    else {
+      throw new IllegalStateException("No video surface has been set");
+    }
+  }
+
+  //  @Override
   public void toggleFullScreen() {
     Logger.debug("toggleFullScreen()");
     if(fullScreenStrategy != null) {

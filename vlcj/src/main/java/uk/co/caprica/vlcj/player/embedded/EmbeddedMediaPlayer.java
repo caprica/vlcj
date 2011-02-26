@@ -43,6 +43,32 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
   void setVideoSurface(CanvasVideoSurface videoSurface);
 
   /**
+   * Ensure that the video surface has been associated with the native media
+   * player.
+   * <p>
+   * Ordinarily when setting the video surface the actual association of the
+   * video surface with the native media player is deferred until the first 
+   * time media is played.
+   * <p>
+   * This deferring behaviour is usually a good thing because when setting a
+   * video surface component on the native media player the video surface
+   * component must be a visible component and this is often not the case 
+   * during the construction and initialisation of the application.
+   * <p>
+   * Most applications will not need to call this method.
+   * <p>
+   * However, in special circumstances such as associating an embedded media
+   * player with a media list player, media is played through the media list
+   * rather than the media player itself so the deferred association of the
+   * video surface would never happen.
+   * <p>
+   * Calling this method ensures that the video surface is properly associated
+   * with the native media player and consequently the video surface component
+   * must be visible when this method is called.
+   */
+  void attachVideoSurface();
+  
+  /**
    * Toggle whether the video display is in full-screen or not.
    */
   void toggleFullScreen();
