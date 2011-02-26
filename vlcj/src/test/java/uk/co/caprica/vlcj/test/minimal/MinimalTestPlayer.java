@@ -28,11 +28,12 @@ import java.awt.event.WindowEvent;
 import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * An absolute minimum test player.
  */
-public class MinimalTestPlayer {
+public class MinimalTestPlayer extends VlcjTest {
 
   public static void main(String[] args) throws Exception {
     if(args.length != 1) {

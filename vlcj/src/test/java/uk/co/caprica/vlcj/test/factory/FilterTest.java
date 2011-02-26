@@ -24,13 +24,14 @@ import java.util.List;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.ModuleDescription;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * Simple test to dump out audio/video filters.
  * <p>
  * Requires libvlc 1.2.x.
  */
-public class FilterTest {
+public class FilterTest extends VlcjTest {
 
   private static final String FORMAT_PATTERN = "%3s %-24s %-24s %-80s %s\n";
 

@@ -41,6 +41,7 @@ import javax.swing.border.EmptyBorder;
 import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * A minimal YouTube player.
@@ -57,7 +58,7 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
  * Note that it is also possible to programmatically play the sub-item in 
  * response to events - this is slightly more complex but more flexible.
  */
-public class YouTubePlayer {
+public class YouTubePlayer extends VlcjTest {
 
   private MediaPlayerFactory factory;
   private EmbeddedMediaPlayer mediaPlayer;

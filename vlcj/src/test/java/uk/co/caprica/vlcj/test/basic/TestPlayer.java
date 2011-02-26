@@ -75,6 +75,7 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsCanvas;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 import com.sun.awt.AWTUtilities;
 import com.sun.jna.platform.WindowUtils;
@@ -87,7 +88,7 @@ import com.sun.jna.platform.WindowUtils;
  * <p>
  * In case you didn't realise, you can press F12 to toggle the visibility of the player controls.
  */
-public class TestPlayer {
+public class TestPlayer extends VlcjTest {
   
   private JFrame mainFrame;
   private Canvas videoSurface;

@@ -42,11 +42,12 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * Example multi-instance player.
  */
-public class TestMultiPlayer {
+public class TestMultiPlayer extends VlcjTest {
 
   private String[] medias = {
     "wibble1.mp4",

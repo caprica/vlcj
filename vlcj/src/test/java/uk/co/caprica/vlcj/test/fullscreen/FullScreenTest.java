@@ -31,11 +31,12 @@ import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * Simple full-screen test.
  */
-public class FullScreenTest {
+public class FullScreenTest extends VlcjTest {
 
   public static void main(final String[] args) {
     if(args.length != 1) {

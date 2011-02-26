@@ -35,12 +35,13 @@ import uk.co.caprica.vlcj.player.list.MediaList;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * Example showing how to combine a media list player with an embedded media
  * player.
  */
-public class TestMediaListEmbeddedPlayer {
+public class TestMediaListEmbeddedPlayer extends VlcjTest {
 
   public static void main(String[] args) throws Exception {
     LibX11.INSTANCE.XInitThreads();

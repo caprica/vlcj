@@ -24,6 +24,7 @@ import java.util.concurrent.CountDownLatch;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * Simple example to show how to extract the audio track from a media file and
@@ -37,7 +38,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * Since no video is being displayed the audio is played back and encoded as
  * quickly as possible.
  */
-public class RipAudioTest {
+public class RipAudioTest extends VlcjTest {
 
   private CountDownLatch completionLatch;
 

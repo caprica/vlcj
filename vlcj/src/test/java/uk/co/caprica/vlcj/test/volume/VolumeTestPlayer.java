@@ -32,6 +32,7 @@ import java.util.List;
 import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * A minimal volume (not audio volume!) test player.
@@ -39,7 +40,7 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
  * This test scans a directory recursively for ".iso" media files and plays
  * each one for a short period.
  */
-public class VolumeTestPlayer {
+public class VolumeTestPlayer extends VlcjTest {
 
   public static void main(String[] args) throws Exception {
     // This seems very reliable

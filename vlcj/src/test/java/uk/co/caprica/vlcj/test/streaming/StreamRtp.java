@@ -21,13 +21,14 @@ package uk.co.caprica.vlcj.test.streaming;
 
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * An example of how to stream a media file using RTP.
  * <p>
  * The client specifies an MRL of <code>rtp://@230.0.0.1:5555</code>
  */
-public class StreamRtp {
+public class StreamRtp extends VlcjTest {
 
   public static void main(String[] args) throws Exception {
     String media = "/home/movies/test.mp4";

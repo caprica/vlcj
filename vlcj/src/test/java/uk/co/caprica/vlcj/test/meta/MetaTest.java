@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.test.meta;
 import uk.co.caprica.vlcj.player.MediaMetaType;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * Simple test to show local file meta data.
@@ -50,7 +51,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  *      TRACKID -> 
  * </pre>
  */
-public class MetaTest {
+public class MetaTest extends VlcjTest {
 
   public static void main(String[] args) {
     // Create a media player

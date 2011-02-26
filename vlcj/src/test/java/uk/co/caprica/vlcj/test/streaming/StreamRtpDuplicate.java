@@ -28,6 +28,7 @@ import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * An example of how to stream a media file using RTP and use the "duplicate"
@@ -38,7 +39,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  * <p>
  * The client specifies an MRL of <code>rtp://@230.0.0.1:5555</code>
  */
-public class StreamRtpDuplicate {
+public class StreamRtpDuplicate extends VlcjTest {
 
   public static void main(String[] args) throws Exception {
     LibX11.INSTANCE.XInitThreads();

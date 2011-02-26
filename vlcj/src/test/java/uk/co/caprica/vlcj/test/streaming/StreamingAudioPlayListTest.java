@@ -32,6 +32,7 @@ import uk.co.caprica.vlcj.player.list.MediaList;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * A simple example combining a media list player along with network streaming.
@@ -61,7 +62,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
  *   rtp://230.0.0.1:5555
  * </pre>
  */
-public class StreamingAudioPlayListTest {
+public class StreamingAudioPlayListTest extends VlcjTest {
 
   private MediaPlayerFactory factory;
   private MediaListPlayer mediaListPlayer;

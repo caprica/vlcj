@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.test.minimalmp3;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * The smallest amount of code to play an audio file.
@@ -29,7 +30,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * Audio is simple since there's no video surface to worry about (unless you
  * want the audio visualisations).
  */
-public class Mp3Test {
+public class Mp3Test extends VlcjTest {
 
   public static void main(String[] args) throws Exception {
     if(args.length != 1) {

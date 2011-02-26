@@ -42,6 +42,7 @@ import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * This simple test player shows how to get direct access to the video frame
@@ -55,7 +56,7 @@ import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
  * The frame data may also be rendered into components such as an OpenGL 
  * texture.
  */
-public class DirectTestPlayer {
+public class DirectTestPlayer extends VlcjTest {
 
   // The size does NOT need to match the mediaPlayer size - it's the size that
   // the mediaPlayer will be scaled to
