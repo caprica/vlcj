@@ -87,6 +87,11 @@ public class WebMrl implements Mrl {
     return value;
   }
 
+  /**
+   * Construct the MRL from the internal state.
+   * 
+   * @return media resource locator
+   */
   private String constructValue() {
     StringBuilder sb = new StringBuilder(40);
     sb.append(type);

@@ -20,42 +20,42 @@
 package uk.co.caprica.vlcj.player;
 
 /**
- *
+ * Base track info.
  */
 public abstract class TrackInfo {
 
   /**
-   * 
+   * Codec (fourcc).
    */
   private final int codec;
   
   /**
-   * 
+   * Codec name.
    */
   private final String codecName;
 
   /**
-   * 
+   * Track id.
    */
   private final int id;
   
   /**
-   * 
+   * Profile.
    */
   private final int profile;
   
   /**
-   * 
+   * Level.
    */
   private final int level;
   
   /**
+   * Create a new track info.
    * 
-   * 
-   * @param codec
-   * @param id
-   * @param profile
-   * @param level
+   * @param codec codec
+   * @param id track id
+   * @param profile profile
+   * @param level level
    */
   protected TrackInfo(int codec, int id, int profile, int level) {
     this.codec = codec;
@@ -66,46 +66,45 @@ public abstract class TrackInfo {
   }
   
   /**
+   * Get the codec (fourcc).
    * 
-   * 
-   * @return
+   * @return codec
    */
   public int codec() {
     return codec;
   }
   
   /**
+   * Get the codec name.
    * 
-   * 
-   * @param value
-   * @return
+   * @return codec name
    */
   public String codecName() {
     return codecName;
   }
   
   /**
+   * Get the track id.
    * 
-   * 
-   * @return
+   * @return track id
    */
   public int id() {
     return id;
   }
   
   /**
+   * Get the profile.
    * 
-   * 
-   * @return
+   * @return profile
    */
   public int profile() {
     return profile;
   }
   
   /**
+   * Get the level.
    * 
-   * 
-   * @return
+   * @return level
    */
   public int level() {
     return level;

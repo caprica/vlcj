@@ -362,12 +362,12 @@ public class MediaPlayerFactory {
    * @param width width for the video
    * @param height height for the video
    * @param renderCallback call-back to receive the video frame data
-   * @return
+   * @return direct media player implementation
    */
   public DirectMediaPlayer newDirectMediaPlayer(int width, int height, RenderCallback renderCallback) {
     Logger.debug("newDirectMediaPlayer(width={},height={},renderCallback={})", width, height, renderCallback);
     return newDirectMediaPlayer("RV32", width, height, width * 4, renderCallback);
-  }  
+  }
   
   /**
    * Create a new direct video rendering media player.

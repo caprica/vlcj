@@ -20,29 +20,29 @@
 package uk.co.caprica.vlcj.player;
 
 /**
- *
+ * Video track info.
  */
 public class VideoTrackInfo extends TrackInfo {
 
   /**
-   * 
+   * Video width.
    */
   private final int width;
   
   /**
-   * 
+   * Video height.
    */
   private final int height;
   
   /**
+   * Create a new video track info.
    * 
-   * 
-   * @param codec
-   * @param id
-   * @param profile
-   * @param level
-   * @param width
-   * @param height
+   * @param codec video codec
+   * @param id track id
+   * @param profile profile
+   * @param level level
+   * @param width width 
+   * @param height height
    */
   protected VideoTrackInfo(int codec, int id, int profile, int level, int width, int height) {
     super(codec, id, profile, level);
@@ -51,18 +51,18 @@ public class VideoTrackInfo extends TrackInfo {
   }
   
   /**
+   * Get the video width.
    * 
-   * 
-   * @return
+   * @return width
    */
   public int width() {
     return width;
   }
 
   /**
+   * Get the video height.
    * 
-   * 
-   * @return
+   * @return height
    */
   public int height() {
     return height;

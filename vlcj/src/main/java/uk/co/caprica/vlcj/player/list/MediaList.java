@@ -79,19 +79,21 @@ public class MediaList {
   }
 
   /**
+   * Set standard media options for all media items subsequently played.
+   * <p>
+   * This will <strong>not</strong> affect any currently playing media item.
    * 
-   * 
-   * @param standardMediaOptions
+   * @param standardMediaOptions options to apply to all subsequently played media items
    */
   public void setStandardMediaOptions(String... standardMediaOptions) {
     this.standardMediaOptions = standardMediaOptions;
   }
   
   /**
+   * Add a media item, with options, to the play-list.
    * 
-   * 
-   * @param mrl
-   * @param mediaOptions
+   * @param mrl media resource locator
+   * @param mediaOptions zero or more media item options
    */
   public void addMedia(String mrl, String... mediaOptions) {
     Logger.debug("addMedia(mrl={},mediaOptions={})", mrl, mediaOptions);
@@ -111,11 +113,11 @@ public class MediaList {
   }
   
   /**
-   * 
-   * 
-   * @param index
-   * @param mrl
-   * @param mediaOptions
+   * Insert a media item, with options, to the play-list.
+   *
+   * @param index position at which to insert the media item (counting from zero)
+   * @param mrl media resource locator
+   * @param mediaOptions zero or more media item options
    */
   public void insertMedia(int index, String mrl, String... mediaOptions) {
     Logger.debug("insertMedia(index={},mrl={},mediaOptions={})", index, mrl, mediaOptions);
@@ -135,9 +137,9 @@ public class MediaList {
   }
   
   /**
+   * Remove a media item from the play-list.
    * 
-   * 
-   * @param index
+   * @param index item to remove (counting from zero)
    */
   public void removeMedia(int index) {
     Logger.debug("removeMedia(index={})", index);
@@ -174,9 +176,9 @@ public class MediaList {
   }
   
   /**
+   * Test if the play-list is read-only.
    * 
-   * 
-   * @return
+   * @return <code>true</code> if the play-list is currently read-only, otherwise <code>false</code>
    */
   public boolean isReadOnly() {
     Logger.debug("isReadOnly()");
@@ -185,7 +187,7 @@ public class MediaList {
   }
   
   /**
-   * 
+   * Clean up media list resources.
    */
   public final void release() {
     Logger.debug("release()");
@@ -195,7 +197,7 @@ public class MediaList {
   }
   
   /**
-   * 
+   * Create and initialise a new media list instance.
    */
   private void createInstance() {
     Logger.debug("createInstance()");
@@ -203,7 +205,7 @@ public class MediaList {
   }
   
   /**
-   * 
+   * Clean up and free the media list instance.
    */
   private void destroyInstance() {
     Logger.debug("destroyInstance()");
@@ -229,11 +231,11 @@ public class MediaList {
   }
 
   /**
+   * Create a new native media instance.
    * 
-   * 
-   * @param media
-   * @param mediaOptions
-   * @return 
+   * @param media media resource locator
+   * @param mediaOptions zero or more media options
+   * @return native media instance
    */
   private libvlc_media_t newMediaDescriptor(String media, String... mediaOptions) {
     Logger.debug("newMediaDescriptor(media={},mediaOptions={})" , media, Arrays.toString(mediaOptions));
@@ -255,9 +257,9 @@ public class MediaList {
   }
 
   /**
+   * Release a native media instance.
    * 
-   * 
-   * @param mediaDescripor
+   * @param mediaDescripor native media instance
    */
   private void releaseMediaDescriptor(libvlc_media_t mediaDescriptor) {
     Logger.debug("releaseMediaDescriptor(mediaDescriptor={})", mediaDescriptor);
@@ -265,19 +267,19 @@ public class MediaList {
   }
   
   /**
+   * Get the media resource locator for the given native media instance.
    * 
-   * 
-   * @param mediaInstance
-   * @return
+   * @param mediaInstance native media instance
+   * @return media resource locator
    */
   public String mrl(libvlc_media_t mediaInstance) {
     return mediaListMap.get(mediaInstance);
   }
   
   /**
+   * Get the native media list instance handle.
    * 
-   * 
-   * @return
+   * @return native media list handle
    */
   libvlc_media_list_t mediaListInstance() {
     return mediaListInstance;

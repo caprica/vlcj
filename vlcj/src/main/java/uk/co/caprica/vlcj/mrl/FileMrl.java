@@ -32,20 +32,20 @@ package uk.co.caprica.vlcj.mrl;
 public class FileMrl implements Mrl {
 
   /**
-   * 
+   * File path/name.
    */
   private String file;
   
   /**
-   * 
+   * MRL value.
    */
   private String value;
   
   /**
+   * Create a new media resource locaator for a file.
    * 
-   * 
-   * @param file
-   * @return
+   * @param file file path/name
+   * @return this
    */
   public FileMrl file(String file) {
     this.file = file;
@@ -60,6 +60,11 @@ public class FileMrl implements Mrl {
     return value;
   }
 
+  /**
+   * Construct the MRL from the internal state.
+   * 
+   * @return media resource locator
+   */
   private String constructValue() {
     StringBuilder sb = new StringBuilder(40);
     sb.append("file");

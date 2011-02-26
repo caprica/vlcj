@@ -20,29 +20,29 @@
 package uk.co.caprica.vlcj.player;
 
 /**
- *
+ * Audio track info.
  */
 public class AudioTrackInfo extends TrackInfo {
 
   /**
-   * 
+   * Number of audio channels.
    */
   private final int channels;
   
   /**
-   * 
+   * Rate.
    */
   private final int rate;
   
   /**
+   * Create a new audio track info
    * 
-   * 
-   * @param codec
-   * @param id
-   * @param profile
-   * @param level
-   * @param channels
-   * @param rate
+   * @param codec audio codec
+   * @param id track id
+   * @param profile profile
+   * @param level level
+   * @param channels number of channels
+   * @param rate rate
    */
   protected AudioTrackInfo(int codec, int id, int profile, int level, int channels, int rate) {
     super(codec, id, profile, level);
@@ -51,18 +51,18 @@ public class AudioTrackInfo extends TrackInfo {
   }
 
   /**
+   * Get the number of channels.
    * 
-   * 
-   * @return
+   * @return channel count
    */
   public int channels() {
     return channels;
   }
 
   /**
+   * Get the rate.
    * 
-   * 
-   * @return
+   * @return rate
    */
   public int rate() {
     return rate;

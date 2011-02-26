@@ -20,25 +20,25 @@
 package uk.co.caprica.vlcj.player;
 
 /**
- *
+ * Description of an audio output.
  */
 public class AudioOutput {
 
   /**
-   * 
+   * Name.
    */
   private final String name;
   
   /**
-   * 
+   * Description.
    */
   private final String description;
 
   /**
+   * Create an audio output.
    * 
-   * 
-   * @param name
-   * @param description
+   * @param name name
+   * @param description description
    */
   public AudioOutput(String name, String description) {
     this.name = name;
@@ -46,18 +46,18 @@ public class AudioOutput {
   }
 
   /**
+   * Get the name.
    * 
-   * 
-   * @return
+   * @return name
    */
   public String getName() {
     return name;
   }
 
   /**
-   *
+   * Get the description.
    * 
-   * @return
+   * @return description
    */
   public String getDescription() {
     return description;

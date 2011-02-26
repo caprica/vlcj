@@ -32,7 +32,11 @@ public interface libvlc_video_format_cb extends Callback {
    * 
    * 
    * @param opaque
-   * @param plane
+   * @param chroma
+   * @param width
+   * @param height
+   * @param pitches
+   * @param lines
    * @return
    */
   int format(Pointer opaque, String chroma, IntByReference width, IntByReference height, IntByReference pitches, IntByReference lines);
