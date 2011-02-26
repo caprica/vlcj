@@ -83,12 +83,7 @@ public class TestMediaListEmbeddedPlayer {
     
     mediaListPlayer.setMediaList(mediaList);
     mediaListPlayer.setMode(MediaListPlayerMode.LOOP);
-    
-    // FIXME Unfortunately because of the way the media player works, you have 
-    //       to call play here even though it does nothing (except set the 
-    //       video surface)
-    mediaPlayer.play(); 
-    
+
     mediaListPlayer.play();
 
     for(;;) {
