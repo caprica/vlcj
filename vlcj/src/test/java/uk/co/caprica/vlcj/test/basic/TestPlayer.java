@@ -502,37 +502,37 @@ public class TestPlayer extends VlcjTest {
 
     @Override
     public void error(MediaPlayer mediaPlayer) {
-      Logger.info("error(mediaPlayer={})", mediaPlayer);
+      Logger.debug("error(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-      Logger.info("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
+      Logger.debug("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
     }
 
     @Override
     public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-      Logger.info("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
+      Logger.debug("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
     }
 
     @Override
     public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-      Logger.info("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
+      Logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
     }
 
     @Override
     public void mediaFreed(MediaPlayer mediaPlayer) {
-      Logger.info("mediaFreed(mediaPlayer={})", mediaPlayer);
+      Logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
-      Logger.info("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
+      Logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
     }
 
     @Override
     public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
-      Logger.info("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
+      Logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
     }
   }
   
