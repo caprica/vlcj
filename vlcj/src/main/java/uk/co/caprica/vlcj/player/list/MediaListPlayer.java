@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.list;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
 
@@ -125,6 +126,30 @@ public interface MediaListPlayer {
    * @param mode mode
    */
   void setMode(MediaListPlayerMode mode);
+
+  /**
+   * Get the media resource locator for a media instance.
+   * <p>
+   * The native media instance may be an automatically/scripted added sub-item.
+   * 
+   * @param mediaInstance native media instance
+   * @return URL-encoded media resource locator
+   */
+  String mrl(libvlc_media_t mediaInstance);
+  
+  /**
+   * Get the user data associated with the media player. 
+   * 
+   * @return user data
+   */
+  Object userData();
+  
+  /**
+   * Set user data to associate with the media player.
+   * 
+   * @param userData user data
+   */
+  void userData(Object userData);
 
   /**
    * Release the media list player resources.

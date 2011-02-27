@@ -109,6 +109,12 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
   private MediaList mediaList;
   
   /**
+   * Opaque reference to user/application-specific data associated with this 
+   * media player.
+   */
+  private Object userData;
+  
+  /**
    * Set to true when the player has been released.
    */
   private AtomicBoolean released = new AtomicBoolean();
@@ -234,6 +240,24 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
     libvlc.libvlc_media_list_player_set_playback_mode(mediaListPlayerInstance, playbackMode.intValue());
   }
   
+//  @Override
+  public String mrl(libvlc_media_t mediaInstance) {
+    Logger.debug("mrl(mediaInstance={})", mediaInstance);
+    return libvlc.libvlc_media_get_mrl(mediaInstance);
+  }
+
+  // @Override
+  public Object userData() {
+    Logger.debug("userData()");
+    return userData;
+  }
+
+//  @Override
+  public void userData(Object userData) {
+    Logger.debug("userData(userData={})", userData);
+    this.userData = userData;
+  }
+
 //  @Override
   public final void release() {
     Logger.debug("release()");
