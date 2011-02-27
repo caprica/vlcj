@@ -29,6 +29,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_channel_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
 
@@ -1102,6 +1103,16 @@ public interface MediaPlayer {
    */
   void setGamma(float gamma);
 
+  /**
+   * Get the media resource locator for a media instance.
+   * <p>
+   * The native media instance may be an automatically/scripted added sub-item.
+   * 
+   * @param mediaInstance native media instance
+   * @return URL-encoded media resource locator
+   */
+  String mrl(libvlc_media_t mediaInstance);
+  
   /**
    * Get the user data associated with the media player. 
    * 

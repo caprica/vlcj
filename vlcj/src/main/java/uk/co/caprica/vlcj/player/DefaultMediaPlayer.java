@@ -1168,6 +1168,12 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   // === Implementation =======================================================
 
 //  @Override
+  public String mrl(libvlc_media_t mediaInstance) {
+    Logger.debug("mrl(mediaInstance={})", mediaInstance);
+    return libvlc.libvlc_media_get_mrl(mediaInstance);
+  }
+
+//  @Override
   public Object userData() {
     Logger.debug("userData()");
     return userData;
