@@ -276,6 +276,9 @@ public class MediaList {
   
   /**
    * Get the media resource locator for the given native media instance.
+   * <p>
+   * The media instance must have been added to the list - it must not be any
+   * automatically/scripted added sub-item.
    * 
    * @param mediaInstance native media instance
    * @return media resource locator
