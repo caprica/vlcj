@@ -210,6 +210,13 @@ public interface MediaPlayerEventListener {
    * 
    * 
    * @param mediaPlayer
+   */
+  void videoOutputAvailable(MediaPlayer mediaPlayer);
+  
+  /**
+   * 
+   * 
+   * @param mediaPlayer
    * @param videoMetaData
    */
   void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData);

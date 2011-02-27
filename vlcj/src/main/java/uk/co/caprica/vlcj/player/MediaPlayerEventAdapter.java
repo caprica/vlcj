@@ -125,6 +125,10 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
   }
   
   // === Special/synthetic events =============================================
+
+//  @Override
+  public void videoOutputAvailable(MediaPlayer mediaPlayer) {
+  }
   
 //  @Override
   public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
