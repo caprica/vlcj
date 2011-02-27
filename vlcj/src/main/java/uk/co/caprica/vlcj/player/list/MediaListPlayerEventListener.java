@@ -26,6 +26,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
  */
 public interface MediaListPlayerEventListener {
 
+  // === Events relating to the media list player =============================
+
   /**
    * Place-holder, do not use.
    * 
@@ -54,4 +56,53 @@ public interface MediaListPlayerEventListener {
    * @param mediaListPlayer
    */
   void stopped(MediaListPlayer mediaListPlayer);
+  
+  // === Events relating to the current media =================================
+  
+  /**
+   * 
+   * 
+   * @param mediaListPlayer
+   * @param metaType 
+   */
+  void mediaMetaChanged(MediaListPlayer mediaListPlayer, int metaType);
+  
+  /**
+   * 
+   * 
+   * @param mediaListPlayer
+   * @param subItem
+   */
+  void mediaSubItemAdded(MediaListPlayer mediaListPlayer, libvlc_media_t subItem);
+  
+  /**
+   * 
+   * 
+   * @param mediaListPlayer
+   * @param newDuration
+   */
+  void mediaDurationChanged(MediaListPlayer mediaListPlayer, long newDuration);
+  
+  /**
+   * 
+   * 
+   * @param mediaListPlayer
+   * @param newStatus
+   */
+  void mediaParsedChanged(MediaListPlayer mediaListPlayer, int newStatus);
+  
+  /**
+   * 
+   * 
+   * @param mediaListPlayer
+   */
+  void mediaFreed(MediaListPlayer mediaListPlayer);
+
+  /**
+   * 
+   * 
+   * @param mediaListPlayer
+   * @param newState
+   */
+  void mediaStateChanged(MediaListPlayer mediaListPlayer, int newState);
 }
