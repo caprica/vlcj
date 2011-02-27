@@ -71,8 +71,10 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
 
   /**
    * Amount of time to wait when looping for media meta data.
+   * <p>
+   * This is a sensible default, but it can be overridden. 
    */
-  private static final int META_WAIT_PERIOD = 1000;
+  private static final int DEFAULT_VIDEO_OUTPUT_WAIT_PERIOD = 500;
   
   /**
    * Native library interface.
@@ -158,6 +160,12 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
    * media player.
    */
   private Object userData;
+  
+  /**
+   * Rate at which to check the native media player to determine if video 
+   * output is available yet or not.
+   */
+  private int videoOutputWaitPeriod = DEFAULT_VIDEO_OUTPUT_WAIT_PERIOD;
   
   /**
    * Set to true when the player has been released.
@@ -1198,6 +1206,25 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   public final libvlc_media_player_t mediaPlayerInstance() {
     return mediaPlayerInstance;
   }
+
+  /**
+   * Override the default video output test wait period.
+   * <p>
+   * The native media player will be repeatedly polled according to this period
+   * in order to check if video output has started playing or not.
+   * <p> 
+   * This is not part of the MediaPlayer API (it an an implementation detail
+   * and so does not appear on the interface).
+   * <p>
+   * Most applications will not need to use this method, instead relying on the
+   * sensible default wait period. 
+   * 
+   * @param videoOutputWaitPeriod wait period, in milliseconds
+   */
+  public void setVideoOutputWaitPeriod(int videoOutputWaitPeriod) {
+    Logger.debug("setVideoOutputWaitPeriod(videoOutputWaitPeriod={})", videoOutputWaitPeriod);
+    this.videoOutputWaitPeriod = videoOutputWaitPeriod;
+  }
   
   /**
    * Allow sub-classes to do something just before the video is started.
@@ -1376,6 +1403,25 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
 
   /**
+   * Notify all registered listeners that video output has become available.
+   */
+  private void notifyVideoOutputAvailable() {
+    Logger.debug("notifyVideoOutputAvailable()");
+    if(!eventListenerList.isEmpty()) {
+      for(int i = eventListenerList.size() - 1; i >= 0; i--) {
+        MediaPlayerEventListener listener = eventListenerList.get(i);
+        try {
+          listener.videoOutputAvailable(this);
+        }
+        catch(Throwable t) {
+          Logger.warn("Video output listener {} threw an exception", t, listener);
+          // Continue with the next listener...
+        }
+      }
+    }
+  }
+  
+  /**
    * Notify all registered listeners of a new meta data event.
    * 
    * @param videoMetaData video meta data
@@ -1409,6 +1455,7 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     
     if(isPlaying) {
       VideoMetaData videoMetaData = new VideoMetaData();
+
       videoMetaData.setVideoDimension(getVideoDimension());
   
       videoMetaData.setTitleCount(getTitleCount());
@@ -1517,13 +1564,29 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     @Override
     public void run() {
       Logger.trace("run()");
-      // TODO maybe this loop construct can be replaced by waiting for the new media parse changed event?
       for(;;) {
         try {
           Logger.trace("Waiting for video output...");
-          Thread.sleep(META_WAIT_PERIOD);
+          Thread.sleep(videoOutputWaitPeriod);
           Logger.trace("Checking for video output...");
 
+          // Notify listeners...
+          //
+          // Note that two separate notifications occur here at the same time.
+          //
+          //  1. video output available
+          //  2. meta data available
+          //
+          // It is implemented this way because some client applications may be 
+          // particularly interested when the video output is available
+          // irrespective of the meta data being available. Semantically it 
+          // makes sense to have a specific event rather than just piggy-
+          // backing on the meta data event.
+          
+          // Notify listeners that video output is available
+          notifyVideoOutputAvailable();
+          
+          // Notify listeners that meta data is available
           VideoMetaData videoMetaData = getVideoMetaData();
           if(videoMetaData != null) {
             notifyListeners(videoMetaData);
