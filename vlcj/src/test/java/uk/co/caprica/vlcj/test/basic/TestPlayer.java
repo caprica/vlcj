@@ -58,6 +58,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogHandler;
 import uk.co.caprica.vlcj.log.LogLevel;
@@ -505,8 +506,8 @@ public class TestPlayer extends VlcjTest {
     }
 
     @Override
-    public void mediaSubItemAdded(MediaPlayer mediaPlayer) {
-      Logger.info("mediaSubItemAdded(mediaPlayer={})", mediaPlayer);
+    public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
+      Logger.info("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
     }
 
     @Override
