@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+
 /**
  * Specification for a component that is interested in receiving event
  * notifications from the media player.
@@ -167,8 +169,9 @@ public interface MediaPlayerEventListener {
    * 
    * 
    * @param mediaPlayer
+   * @param subItem 
    */
-  void mediaSubItemAdded(MediaPlayer mediaPlayer);
+  void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem);
   
   /**
    * 

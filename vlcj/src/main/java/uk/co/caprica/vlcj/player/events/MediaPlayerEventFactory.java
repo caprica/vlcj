@@ -32,6 +32,7 @@ import uk.co.caprica.vlcj.binding.internal.media_player_snapshot_taken;
 import uk.co.caprica.vlcj.binding.internal.media_player_time_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_title_changed;
 import uk.co.caprica.vlcj.binding.internal.media_state_changed;
+import uk.co.caprica.vlcj.binding.internal.media_subitem_added;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 /**
@@ -186,7 +187,7 @@ public class MediaPlayerEventFactory {
 
       case libvlc_MediaSubItemAdded:
         if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_SUB_ITEM_ADDED)) {
-          result = new MediaSubItemAddedEvent(mediaPlayer);
+          result = new MediaSubItemAddedEvent(mediaPlayer, ((media_subitem_added)event.u.getTypedValue(media_subitem_added.class)).new_child);
         }
         break;
 
