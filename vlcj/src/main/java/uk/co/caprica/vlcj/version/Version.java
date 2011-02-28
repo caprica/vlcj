@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.version;
 
+import java.util.regex.Pattern;
+
 /**
  * Encapsulation of version information and related behaviours.
  * <p>
@@ -47,17 +49,27 @@ public final class Version implements Comparable<Version> {
   private final int revision;
 
   /**
+   * Extra.
+   */
+  private final String extra;
+  
+  /**
    * Create a new version.
    * 
    * @param version version string
    */
   public Version(final String version) {
     this.version = version;
-    
-    String[] parts = version.split("[-\\s]")[0].split("\\.");
+    String[] parts = Pattern.compile("[.-]").split(version);
     this.major = Integer.parseInt(parts[0]);
     this.minor = Integer.parseInt(parts[1]);
     this.revision = Integer.parseInt(parts[2]);
+    if(parts.length > 3) {
+      this.extra = parts[3];
+    }
+    else {
+      this.extra = null;
+    }
   }
 
   /**
@@ -96,6 +108,15 @@ public final class Version implements Comparable<Version> {
     return revision;
   }
  
+  /**
+   * Get the extra.
+   * 
+   * @return extra
+   */
+  public String extra() {
+    return extra;
+  }
+  
 //  @Override
   public int compareTo(Version o) {
     if(major == o.major) {
