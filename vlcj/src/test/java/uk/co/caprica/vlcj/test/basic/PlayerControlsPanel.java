@@ -52,6 +52,8 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 public class PlayerControlsPanel extends JPanel {
 
+  private static final long serialVersionUID = 1L;
+
   private static final int SKIP_TIME_MS = 10 * 1000;
   
   private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();

@@ -38,6 +38,8 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
 
 public class PlayerVideoAdjustPanel extends JPanel {
 
+  private static final long serialVersionUID = 1L;
+
   private final MediaPlayer mediaPlayer;
 
   private JCheckBox enableVideoAdjustCheckBox;
