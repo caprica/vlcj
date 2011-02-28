@@ -203,21 +203,4 @@ public interface MediaPlayerEventListener {
    * @param newState
    */
   void mediaStateChanged(MediaPlayer mediaPlayer, int newState);
-
-  // === Special/synthetic events =============================================
-
-  /**
-   * 
-   * 
-   * @param mediaPlayer
-   */
-  void videoOutputAvailable(MediaPlayer mediaPlayer);
-  
-  /**
-   * 
-   * 
-   * @param mediaPlayer
-   * @param videoMetaData
-   */
-  void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData);
 }
