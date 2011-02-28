@@ -67,13 +67,14 @@ import uk.co.caprica.vlcj.log.logger.DefaultLogMessageHandler;
 import uk.co.caprica.vlcj.log.matcher.MatcherCallback;
 import uk.co.caprica.vlcj.log.matcher.MatcherLogMessageHandler;
 import uk.co.caprica.vlcj.player.AudioOutput;
+import uk.co.caprica.vlcj.player.MediaMetaData;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.VideoMetaData;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsCanvas;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -310,6 +311,7 @@ public class TestPlayer extends VlcjTest {
     mainFrame.setVisible(true);
     
     mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
+    mediaPlayer.addVideoOutputEventListener(new TestPlayerVideoOutputListener());
     
     // Won't work with OpenJDK or JDK1.7, requires a Sun/Oracle JVM (currently)
     boolean transparentWindowsSupport = true;
@@ -324,6 +326,8 @@ public class TestPlayer extends VlcjTest {
     
     if(transparentWindowsSupport) {
       final Window test = new Window(null, WindowUtils.getAlphaCompatibleGraphicsConfiguration()) {
+        private static final long serialVersionUID = 1L;
+
         public void paint(Graphics g) {
           Graphics2D g2 = (Graphics2D)g;
   
@@ -436,6 +440,8 @@ public class TestPlayer extends VlcjTest {
     @Override
     public void playing(MediaPlayer mediaPlayer) {
       Logger.debug("playing(mediaPlayer={})", mediaPlayer);
+      MediaMetaData meta = mediaPlayer.getMediaMetaData();
+      Logger.info("meta={}", meta);
     }
 
     @Override
@@ -444,18 +450,51 @@ public class TestPlayer extends VlcjTest {
     }
 
     @Override
-    public void metaDataAvailable(MediaPlayer mediaPlayer, VideoMetaData videoMetaData) {
-      Logger.debug("metaDataAvailable(mediaPlayer={},videoMetaData={})", mediaPlayer, videoMetaData);
-      
-      Dimension dimension = videoMetaData.getVideoDimension();
+    public void error(MediaPlayer mediaPlayer) {
+      Logger.debug("error(mediaPlayer={})", mediaPlayer);
+    }
+
+    @Override
+    public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
+      Logger.debug("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
+    }
+
+    @Override
+    public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
+      Logger.debug("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
+    }
+
+    @Override
+    public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
+      Logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
+    }
+
+    @Override
+    public void mediaFreed(MediaPlayer mediaPlayer) {
+      Logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
+    }
+
+    @Override
+    public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
+      Logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
+    }
+
+    @Override
+    public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
+      Logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
+    }
+  }
+  
+  private final class TestPlayerVideoOutputListener implements VideoOutputEventListener {
+
+    @Override
+    public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
+      Logger.debug("videoOutputAvailable(mediaPlayer={},videoOutput={})", mediaPlayer, videoOutput);
+      Dimension dimension = mediaPlayer.getVideoDimension();
       Logger.debug("dimension={}", dimension);
       if(dimension != null) {
-        // FIXME with some videos this sometimes causes lots of errors and corrupted playback until the canvas is resized _again_ or movie is paused and played
-        videoSurface.setSize(videoMetaData.getVideoDimension());
+        videoSurface.setSize(dimension);
         mainFrame.pack();
-      }
-      else {
-        Logger.warn("Video size not available");
       }
       
       // You can set a logo like this if you like...
@@ -499,41 +538,6 @@ public class TestPlayer extends VlcjTest {
       
 //      mediaPlayer.setCropGeometry("4:3");
     }
-
-    @Override
-    public void error(MediaPlayer mediaPlayer) {
-      Logger.debug("error(mediaPlayer={})", mediaPlayer);
-    }
-
-    @Override
-    public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-      Logger.debug("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
-    }
-
-    @Override
-    public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-      Logger.debug("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
-    }
-
-    @Override
-    public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-      Logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
-    }
-
-    @Override
-    public void mediaFreed(MediaPlayer mediaPlayer) {
-      Logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
-    }
-
-    @Override
-    public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
-      Logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
-    }
-
-    @Override
-    public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
-      Logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
-    }
   }
   
   /**
@@ -541,6 +545,7 @@ public class TestPlayer extends VlcjTest {
    * 
    * @param enable
    */
+  @SuppressWarnings("unused")
   private void enableMousePointer(boolean enable) {
     Logger.debug("enableMousePointer(enable={})", enable);
     if(enable) {
