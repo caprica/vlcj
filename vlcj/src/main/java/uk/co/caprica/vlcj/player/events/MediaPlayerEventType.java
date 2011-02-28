@@ -30,9 +30,6 @@ public enum MediaPlayerEventType {
   MEDIA_FREED                    (0X00200000),
   MEDIA_STATE_CHANGED            (0X00400000),
   
-  VIDEO_OUTPUT_AVAILABLE         (0x40000000), // FIXME use this
-  VIDEO_CHARACTERISTICS_AVAILABLE(0x80000000), // FIXME use this
-
   ALL                            (0xffffffff);
   
   /**
