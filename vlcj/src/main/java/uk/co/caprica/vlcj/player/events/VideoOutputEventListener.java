@@ -31,6 +31,7 @@ public interface VideoOutputEventListener {
    * A video output has been created.
    * 
    * @param mediaPlayer media player that generated the event
+   * @param videoOutput <code>true</code> if a video output was started, <code>false</code> if the time-out expired (a video output might yet start) 
    */
-  void videoOutputAvailable(MediaPlayer mediaPlayer);
+  void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput);
 }
