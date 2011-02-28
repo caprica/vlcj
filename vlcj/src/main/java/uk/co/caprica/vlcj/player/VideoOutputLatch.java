@@ -74,8 +74,10 @@ public class VideoOutputLatch {
    * <p>
    * This method call will block until a video output is created (which may be
    * never) or the timeout expires.
+   * 
+   * @return <code>true</code> if a video output definitely started, <code>false</code> if the time-out expired (a video output might yet start)
    */
-  public void waitForVideoOutput() { 
+  public boolean waitForVideoOutput() { 
     Logger.debug("waitForVideoOutput()");
     long start = System.currentTimeMillis();
     for(;;) {
@@ -83,12 +85,12 @@ public class VideoOutputLatch {
       // Check if a video output has been created yet...
       if(mediaPlayer.getVideoOutputs() > 0) {
         Logger.trace("Got video output.");
-        break;
+        return true;
       }
       // Check for time-out...
       if((System.currentTimeMillis()-start) >= timeout) {
         Logger.warn("Timed out waiting for video output.");
-        break;
+        return false;
       }
       // Sleep for a while...
       try {
