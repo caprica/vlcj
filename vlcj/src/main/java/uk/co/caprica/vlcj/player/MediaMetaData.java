@@ -19,16 +19,15 @@
 
 package uk.co.caprica.vlcj.player;
 
-import java.awt.Dimension;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Basic video meta data.
+ * Media meta data.
  */
-public class VideoMetaData implements Serializable {
+public class MediaMetaData implements Serializable {
 
   /**
    * Serial version.
@@ -36,62 +35,49 @@ public class VideoMetaData implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Video width/height.
-   */
-  private Dimension videoDimension;
-  
-  /**
-   * 
+   * Number of titles.
    */
   private int titleCount;
   
   /**
-   * 
+   * Number of video tracks.
    */
   private int videoTrackCount;
   
   /**
-   * 
+   * Number of audio tracks.
    */
   private int audioTrackCount;
   
   /**
-   * Number of sub-picture/sub-titles.
+   * Number of sub-picture/sub-title tracks.
    */
   private int spuCount;
   
   /**
-   * 
+   * Collection of title descriptions.
    */
   private List<TrackDescription> titleDescriptions;
   
   /**
-   * 
+   * Collection of video track descriptions.
    */
   private List<TrackDescription> videoDescriptions;
   
   /**
-   * 
+   * Collection of audio track descriptions.
    */
   private List<TrackDescription> audioDescriptions;
   
   /**
-   * 
+   * Collection of sub-title track descriptions.
    */
   private List<TrackDescription> spuDescriptions;
   
   /**
-   * 
+   * Collection of chapter descriptions for each title.
    */
   private Map<Integer, List<String>> chapterDescriptions = new HashMap<Integer, List<String>>();
-  
-  public Dimension getVideoDimension() {
-    return videoDimension;
-  }
-
-  public void setVideoDimension(Dimension videoDimension) {
-    this.videoDimension = videoDimension;
-  }
   
   public int getTitleCount() {
     return titleCount;
@@ -169,7 +155,6 @@ public class VideoMetaData implements Serializable {
   public String toString() {
     StringBuilder sb = new StringBuilder(200);
     sb.append(getClass().getSimpleName()).append('[');
-    sb.append("videoDimension=").append(videoDimension).append(',');
     sb.append("titleCount=").append(titleCount).append(',');
     sb.append("videoTrackCount=").append(videoTrackCount).append(',');
     sb.append("audioTrackCount=").append(audioTrackCount).append(',');
