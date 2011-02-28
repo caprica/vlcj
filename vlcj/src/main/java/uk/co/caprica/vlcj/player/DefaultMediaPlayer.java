@@ -59,6 +59,7 @@ import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventFactory;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
+import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
@@ -70,11 +71,18 @@ import com.sun.jna.ptr.PointerByReference;
 public abstract class DefaultMediaPlayer implements MediaPlayer {
 
   /**
-   * Amount of time to wait when looping for media meta data.
+   * Amount of time to wait when looping for video output.
    * <p>
-   * This is a sensible default, but it can be overridden. 
+   * This is a reasonable default, but it can be overridden. 
    */
-  private static final int DEFAULT_VIDEO_OUTPUT_WAIT_PERIOD = 500;
+  private static final int DEFAULT_VIDEO_OUTPUT_WAIT_PERIOD = 50;
+  
+  /**
+   * Maximum amount of time to wait when checking for video output.
+   * <p>
+   * This is a reasonable default, but it can be overridden. 
+   */
+  private static final int DEFAULT_VIDEO_OUTPUT_TIMEOUT = 5000;
   
   /**
    * Native library interface.
@@ -87,6 +95,11 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   private final List<MediaPlayerEventListener> eventListenerList = new ArrayList<MediaPlayerEventListener>();
 
   /**
+   * Collection of video output event listeners.
+   */
+  private final List<VideoOutputEventListener> videoOutputEventListenerList = new ArrayList<VideoOutputEventListener>();
+  
+  /**
    * Factory to create media player events from native events.
    */
   private final MediaPlayerEventFactory eventFactory = new MediaPlayerEventFactory(this);
@@ -97,9 +110,9 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   private final ExecutorService listenersService = Executors.newSingleThreadExecutor();
 
   /**
-   * Background thread to handle meta data notifications.
+   * Background thread to handle video output notifications.
    */
-  private final ExecutorService metaService = Executors.newSingleThreadExecutor();
+  private final ExecutorService videoOutputService = Executors.newSingleThreadExecutor();
 
   /**
    * Libvlc instance.
@@ -168,6 +181,11 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   private int videoOutputWaitPeriod = DEFAULT_VIDEO_OUTPUT_WAIT_PERIOD;
   
   /**
+   * Maximum amount of time to wait when checking for video output availability.
+   */
+  private int videoOutputTimeout = DEFAULT_VIDEO_OUTPUT_TIMEOUT;
+  
+  /**
    * Set to true when the player has been released.
    */
   private AtomicBoolean released = new AtomicBoolean();
@@ -201,6 +219,18 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   public void enableEvents(int eventMask) {
     Logger.debug("enableEvents(eventMask={})", eventMask);
     this.eventMask = eventMask;
+  }
+
+//  @Override
+  public void addVideoOutputEventListener(VideoOutputEventListener listener) {
+    Logger.debug("addVideoOutputEventListener(listener={})", listener);
+    videoOutputEventListenerList.add(listener);
+  }
+
+//  @Override
+  public void removeVideoOutputEventListener(VideoOutputEventListener listener) {
+    Logger.debug("removeVideoOutputEventListener(listener={})", listener);
+    videoOutputEventListenerList.remove(listener);
   }
 
   // === Media Controls =======================================================
@@ -441,13 +471,47 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
 //  @Override
   public Dimension getVideoDimension() {
     Logger.debug("getVideoDimension()");
-    IntByReference px = new IntByReference();
-    IntByReference py = new IntByReference();
-    int result = libvlc.libvlc_video_get_size(mediaPlayerInstance, 0, px, py);
-    if(result == 0) {
-      return new Dimension(px.getValue(), py.getValue());
+    if(getVideoOutputs() > 0) {
+      IntByReference px = new IntByReference();
+      IntByReference py = new IntByReference();
+      int result = libvlc.libvlc_video_get_size(mediaPlayerInstance, 0, px, py);
+      if(result == 0) {
+        return new Dimension(px.getValue(), py.getValue());
+      }
+      else {
+        Logger.warn("Video size is not available");
+        return null;
+      }
     }
     else {
+      Logger.warn("Can't get video dimension if no video output has been started");
+      return null;
+    }
+  }
+
+//  @Override
+  public MediaMetaData getMediaMetaData() {
+    Logger.debug("getMediaMetaData()");
+    // The media must be playing to get this meta data...
+    if(isPlaying()) {
+      MediaMetaData mediaMetaData = new MediaMetaData();
+      mediaMetaData.setTitleCount(getTitleCount());
+      mediaMetaData.setVideoTrackCount(getVideoTrackCount());
+      mediaMetaData.setAudioTrackCount(getAudioTrackCount());
+      mediaMetaData.setSpuCount(getSpuCount());
+      mediaMetaData.setTitleDescriptions(getTitleDescriptions());
+      mediaMetaData.setVideoDescriptions(getVideoDescriptions());
+      mediaMetaData.setAudioDescriptions(getAudioDescriptions());
+      mediaMetaData.setSpuDescriptions(getSpuDescriptions());
+      Map<Integer, List<String>> allChapterDescriptions = new TreeMap<Integer, List<String>>();
+      for(int i = 0; i < getTitleCount(); i++) {
+        allChapterDescriptions.put(i, getChapterDescriptions(i));
+      }
+      mediaMetaData.setChapterDescriptions(allChapterDescriptions);
+      return mediaMetaData;
+    }
+    else {
+      Logger.warn("Can't get media meta data if media is not playing");
       return null;
     }
   }
@@ -1219,11 +1283,13 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
    * Most applications will not need to use this method, instead relying on the
    * sensible default wait period. 
    * 
-   * @param videoOutputWaitPeriod wait period, in milliseconds
+   * @param videoOutputWaitPeriod wait period, in milliseconds, or zero
+   * @param videoOutputTimeout maximum amount of time to wait for a video output to start
    */
-  public void setVideoOutputWaitPeriod(int videoOutputWaitPeriod) {
-    Logger.debug("setVideoOutputWaitPeriod(videoOutputWaitPeriod={})", videoOutputWaitPeriod);
+  public void setVideoOutputWaitPeriod(int videoOutputWaitPeriod, int videoOutputTimeout) {
+    Logger.debug("setVideoOutputWaitPeriod(videoOutputWaitPeriod={},videoOutputTimeout={})", videoOutputWaitPeriod, videoOutputTimeout);
     this.videoOutputWaitPeriod = videoOutputWaitPeriod;
+    this.videoOutputTimeout = videoOutputTimeout;
   }
   
   /**
@@ -1254,7 +1320,7 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   
     registerEventListener();
 
-    eventListenerList.add(new MetaDataEventHandler());
+    eventListenerList.add(new VideoOutputEventHandler());
     eventListenerList.add(new RepeatPlayEventHandler());
     eventListenerList.add(new SubItemEventHandler());
   }
@@ -1291,7 +1357,7 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     listenersService.shutdown();
     Logger.debug("Listeners shut down.");
     
-    metaService.shutdown();
+    videoOutputService.shutdown();
   }
 
   /**
@@ -1403,84 +1469,6 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
 
   /**
-   * Notify all registered listeners that video output has become available.
-   */
-  private void notifyVideoOutputAvailable() {
-    Logger.debug("notifyVideoOutputAvailable()");
-    if(!eventListenerList.isEmpty()) {
-      for(int i = eventListenerList.size() - 1; i >= 0; i--) {
-        MediaPlayerEventListener listener = eventListenerList.get(i);
-        try {
-          listener.videoOutputAvailable(this);
-        }
-        catch(Throwable t) {
-          Logger.warn("Video output listener {} threw an exception", t, listener);
-          // Continue with the next listener...
-        }
-      }
-    }
-  }
-  
-  /**
-   * Notify all registered listeners of a new meta data event.
-   * 
-   * @param videoMetaData video meta data
-   */
-  private void notifyListeners(VideoMetaData videoMetaData) {
-    Logger.trace("notifyListeners(videoMetaData={})", videoMetaData);
-    if(!eventListenerList.isEmpty()) {
-      for(int i = eventListenerList.size() - 1; i >= 0; i--) {
-        MediaPlayerEventListener listener = eventListenerList.get(i);
-        try {
-          listener.metaDataAvailable(this, videoMetaData);
-        }
-        catch(Throwable t) {
-          Logger.warn("Meta Data listener {} threw an exception", t, listener);
-          // Continue with the next listener...
-        }
-      }
-    }
-  }
-
-  /**
-   * Assemble the meta data for the current media item.
-   * 
-   * @return meta data, or <code>null</code> if no meta data is available (yet)
-   */
-  private VideoMetaData getVideoMetaData() {
-    Logger.debug("getVideoMetaData()");
-
-    boolean isPlaying = isPlaying();
-    Logger.debug("isPlaying={}", isPlaying);
-    
-    if(isPlaying) {
-      VideoMetaData videoMetaData = new VideoMetaData();
-
-      videoMetaData.setVideoDimension(getVideoDimension());
-  
-      videoMetaData.setTitleCount(getTitleCount());
-      videoMetaData.setVideoTrackCount(getVideoTrackCount());
-      videoMetaData.setAudioTrackCount(getAudioTrackCount());
-      videoMetaData.setSpuCount(getSpuCount());
-  
-      videoMetaData.setTitleDescriptions(getTitleDescriptions());
-      videoMetaData.setVideoDescriptions(getVideoDescriptions());
-      videoMetaData.setAudioDescriptions(getAudioDescriptions());
-      videoMetaData.setSpuDescriptions(getSpuDescriptions());
-  
-      Map<Integer, List<String>> allChapterDescriptions = new TreeMap<Integer, List<String>>();
-      for(int i = 0; i < getTitleCount(); i++) {
-        allChapterDescriptions.put(i, getChapterDescriptions(i));
-      }
-      videoMetaData.setChapterDescriptions(allChapterDescriptions);
-      return videoMetaData;
-    }
-    else {
-      return null;
-    }
-  }
-  
-  /**
    * A call-back to handle events from the native media player.
    * <p>
    * There are some important implementation details for this callback:
@@ -1507,28 +1495,31 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
         MediaPlayerEvent mediaPlayerEvent = eventFactory.newMediaPlayerEvent(event, eventMask);
         Logger.trace("mediaPlayerEvent={}", mediaPlayerEvent);
         if(mediaPlayerEvent != null) {
-          listenersService.submit(new NotifyListenersRunnable(mediaPlayerEvent));
+          listenersService.submit(new NotifyEventListenersRunnable(mediaPlayerEvent));
         }
       }
     }
   }
 
   /**
-   *
+   * A runnable task used to fire event notifications.
+   * <p>
+   * Care must be taken not to re-enter the native library during an event
+   * notification so the notifications are off-loaded to a separate thread.
    */
-  private final class NotifyListenersRunnable implements Runnable {
+  private final class NotifyEventListenersRunnable implements Runnable {
 
     /**
-     * 
+     * Event to notify.
      */
     private final MediaPlayerEvent mediaPlayerEvent;
 
     /**
+     * Create a runnable.
      * 
-     * 
-     * @param mediaPlayerEvent
+     * @param mediaPlayerEvent event to notify
      */
-    private NotifyListenersRunnable(MediaPlayerEvent mediaPlayerEvent) {
+    private NotifyEventListenersRunnable(MediaPlayerEvent mediaPlayerEvent) {
       this.mediaPlayerEvent = mediaPlayerEvent;
     }
 
@@ -1550,50 +1541,26 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
   
   /**
-   * With vlc, some meta data (such as the video dimension) is not available  
-   * until some short time after the video output has started.
+   * Background task to wait for a video output to start.
    * <p>
-   * Note that simply using the listener and waiting for the "playing" event 
-   * will <strong>not</strong> work.
-   * <p>
-   * This implementation loops, sleeping and checking, until the meta data is
-   * available.
+   * These tasks are only created if there is at least one video output 
+   * listener registered on the media player.
    */
-  private final class NotifyMetaRunnable implements Runnable {
+  private class WaitForVideoOutputRunnable implements Runnable {
 
     @Override
     public void run() {
       Logger.trace("run()");
-      for(;;) {
+      // Wait for a video output to be started
+      boolean videoOutput = new VideoOutputLatch(DefaultMediaPlayer.this, videoOutputWaitPeriod, videoOutputTimeout).waitForVideoOutput();
+      // Notify listeners...
+      for(int i = videoOutputEventListenerList.size()-1; i >= 0; i--) {
         try {
-          Logger.trace("Waiting for video output...");
-          Thread.sleep(videoOutputWaitPeriod);
-          Logger.trace("Checking for video output...");
-
-          // Notify listeners...
-          //
-          // Note that two separate notifications occur here at the same time.
-          //
-          //  1. video output available
-          //  2. meta data available
-          //
-          // It is implemented this way because some client applications may be 
-          // particularly interested when the video output is available
-          // irrespective of the meta data being available. Semantically it 
-          // makes sense to have a specific event rather than just piggy-
-          // backing on the meta data event.
-          
-          // Notify listeners that video output is available
-          notifyVideoOutputAvailable();
-          
-          // Notify listeners that meta data is available
-          VideoMetaData videoMetaData = getVideoMetaData();
-          if(videoMetaData != null) {
-            notifyListeners(videoMetaData);
-            break;
-          }
+          videoOutputEventListenerList.get(i).videoOutputAvailable(DefaultMediaPlayer.this, videoOutput);
         }
-        catch(InterruptedException e) {
+        catch(Throwable t) {
+          Logger.warn("Exception thrown by listener {}", videoOutputEventListenerList.get(i));
+          // Notify the remaining listeners...
         }
       }
       Logger.trace("runnable exits");
@@ -1601,17 +1568,18 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
 
   /**
-   * Event listener implementation that responds to video "playing" events to
-   * process media meta data.
+   * Event listener implementation that handles waiting for video output.
    */
-  private final class MetaDataEventHandler extends MediaPlayerEventAdapter {
+  private final class VideoOutputEventHandler extends MediaPlayerEventAdapter {
 
     @Override
     public void playing(MediaPlayer mediaPlayer) {
       Logger.trace("playing(mediaPlayer={})", mediaPlayer);
-      // Kick off an asynchronous task to obtain the video meta data (when
-      // available)
-      metaService.submit(new NotifyMetaRunnable());
+      // If there is at least one video output listener...
+      if(!videoOutputEventListenerList.isEmpty()) {
+        // Kick off an asynchronous task to wait for a video output
+        videoOutputService.execute(new WaitForVideoOutputRunnable());
+      }
     }
   }
   

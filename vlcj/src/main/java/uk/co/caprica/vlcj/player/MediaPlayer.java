@@ -32,6 +32,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
+import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
 
 /**
  * Specification for a media player component.
@@ -171,7 +172,22 @@ public interface MediaPlayer {
    * @param eventMask bit mask of events to enable
    */
   void enableEvents(int eventMask);
-  
+
+  /**
+   * Add a component to be notified of video output events. 
+   * 
+   * @param listener component to notify
+   */
+  void addVideoOutputEventListener(VideoOutputEventListener listener);
+
+  /**
+   * Remove a component that was previously interested in notifications of
+   * video output events.
+   * 
+   * @param listener component to stop notifying
+   */
+  void removeVideoOutputEventListener(VideoOutputEventListener listener);
+
   /**
    * Set standard media options for all media items subsequently played.
    * <p>
@@ -365,11 +381,21 @@ public interface MediaPlayer {
    * Get the video size.
    * <p>
    * The video dimensions are not available until after the video has started
-   * playing. 
+   * playing and a video output has been created.
    * 
    * @return video size if available, or <code>null</code>
    */
   Dimension getVideoDimension();
+
+  /**
+   * Get the media meta data.
+   * <p>
+   * The media meta data is available after the video has started playing,
+   * regardless of whether nor not a video output has been created.
+   * 
+   * @return video meta data, or <code>null</code> if the media meta data is not available
+   */
+  MediaMetaData getMediaMetaData();
 
   /**
    * Get the video aspect ratio.
