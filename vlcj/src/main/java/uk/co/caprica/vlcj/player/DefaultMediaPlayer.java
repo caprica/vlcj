@@ -1347,6 +1347,8 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
 
     eventListenerList.clear();
     
+    videoOutputEventListenerList.clear();
+    
     if(mediaPlayerInstance != null) {
       Logger.debug("Release media player...");
       libvlc.libvlc_media_player_release(mediaPlayerInstance);
