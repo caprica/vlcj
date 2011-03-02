@@ -72,6 +72,9 @@ import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
  *   // Add a component to be notified of player events
  *   mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {...add implementation here...});
  *   
+ *   // Add a component to be notified when a video output has been created
+ *   mediaPlayer.addVideoOutputEventListener(new VideoOutputEventListener() {...add implementation here...});
+ *   
  *   // Create and set a new component to display the rendered video (not shown: add the Canvas to a Frame)
  *   Canvas canvas = new Canvas();
  *   CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
@@ -79,7 +82,7 @@ import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
  *
  *   // Play a particular item, with options if necessary
  *   String mediaPath = "/path/to/some/movie.mpg";
- *   String[] mediaOptions = {};
+ *   String[] mediaOptions = {...add options here...};
  *   mediaPlayer.playMedia(mediaPath, mediaOptions);
  *   
  *   // Do some interesting things in the application
