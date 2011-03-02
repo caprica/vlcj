@@ -357,7 +357,7 @@ public class MediaPlayerFactory {
    * suitable for, amongst other things, rendering into a BufferedImage.
    * <p>
    * The pixel format used is "RV32" (a raw RGB format with padded alpha)
-   * and the pitch is (width*4).
+   * and the pitch is width*4.
    * 
    * @param width width for the video
    * @param height height for the video
