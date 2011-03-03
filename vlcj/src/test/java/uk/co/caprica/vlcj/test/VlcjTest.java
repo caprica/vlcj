@@ -43,7 +43,7 @@ public abstract class VlcjTest {
   /**
    * Log level.
    */
-  private static final String VLCJ_LOG_LEVEL = "INFO";
+  private static final String VLCJ_LOG_LEVEL = "DEBUG";
 
   /**
    * Change this to point to your own vlc installation, or comment out the code
@@ -62,8 +62,13 @@ public abstract class VlcjTest {
   static {
     System.setProperty("vlcj.log", VLCJ_LOG_LEVEL);
 
-//    Logger.info("Explicitly adding JNA native library search path: '{}'", NATIVE_LIBRARY_SEARCH_PATH);
-//    NativeLibrary.addSearchPath("vlc", NATIVE_LIBRARY_SEARCH_PATH);
+    Logger.info("Explicitly adding JNA native library search path: '{}'", NATIVE_LIBRARY_SEARCH_PATH);
+    
+    // For Linux...
+    NativeLibrary.addSearchPath("vlc", NATIVE_LIBRARY_SEARCH_PATH);
+    
+    // For Windows
+//    NativeLibrary.addSearchPath("libvlc", NATIVE_LIBRARY_SEARCH_PATH);
     
     System.setProperty("jna.dump_memory", DUMP_NATIVE_MEMORY);
   }
