@@ -70,7 +70,11 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
     DisplayMode displayMode = getDisplayMode(graphicsDevice.getDisplayModes());
     Logger.debug("displayMode={}", displayMode);
     if(displayMode != null) {
+      Logger.debug("Setting new display mode");
       graphicsDevice.setDisplayMode(displayMode);
+    }
+    else {
+      Logger.debug("Using default display mode");
     }
   }
 
