@@ -64,6 +64,8 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
     Logger.debug("enterFullScreenMode()");
     GraphicsDevice graphicsDevice = getScreenDevice();
     Logger.debug("graphicsDevice={}", graphicsDevice);
+    boolean fullScreenSupported = graphicsDevice.isFullScreenSupported();
+    Logger.debug("fullScreenSupported={}", fullScreenSupported);
     graphicsDevice.setFullScreenWindow(window);
     DisplayMode displayMode = getDisplayMode(graphicsDevice.getDisplayModes());
     Logger.debug("displayMode={}", displayMode);
