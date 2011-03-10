@@ -1016,22 +1016,24 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   // === Snapshot Controls ====================================================
 
 //  @Override
-  public void saveSnapshot() {
+  public boolean saveSnapshot() {
     Logger.debug("saveSnapshot()");
     File snapshotDirectory = new File(System.getProperty("user.home"));
     File snapshotFile = new File(snapshotDirectory, "vlcj-snapshot-" + System.currentTimeMillis() + ".png");
-    saveSnapshot(snapshotFile);
+    return saveSnapshot(snapshotFile);
   }
   
 //  @Override
-  public void saveSnapshot(File file) {
+  public boolean saveSnapshot(File file) {
     Logger.debug("saveSnapshot(file={})", file);
     File snapshotDirectory = file.getParentFile();
     if(!snapshotDirectory.exists()) {
       snapshotDirectory.mkdirs();
     }
     if(snapshotDirectory.exists()) {
-      libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), 0, 0);
+      boolean snapshotTaken = libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), 0, 0) == 0;
+      Logger.debug("snapshotTaken={}", snapshotTaken);
+      return snapshotTaken;
     }
     else {
       throw new RuntimeException("Directory does not exist and could not be created for '" + file.getAbsolutePath() + "'");
@@ -1044,11 +1046,15 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     try {
       File file = File.createTempFile("vlcj-snapshot-", ".png");
       Logger.debug("file={}", file.getAbsolutePath());
-      saveSnapshot(file);
-      BufferedImage snapshotImage = ImageIO.read(file);
-      boolean deleted = file.delete();
-      Logger.debug("deleted={}", deleted);
-      return snapshotImage;
+      if(saveSnapshot(file)) {
+        BufferedImage snapshotImage = ImageIO.read(file);
+        boolean deleted = file.delete();
+        Logger.debug("deleted={}", deleted);
+        return snapshotImage;
+      }
+      else {
+        return null;
+      }
     }
     catch(IOException e) {
       throw new RuntimeException("Failed to get snapshot image", e);

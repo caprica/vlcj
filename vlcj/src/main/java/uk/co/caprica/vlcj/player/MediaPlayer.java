@@ -867,8 +867,10 @@ public interface MediaPlayer {
    * <p>
    * The snapshot will be created in the user's home directory and be assigned
    * a filename based on the current time.
+   * 
+   * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
    */
-  void saveSnapshot();
+  boolean saveSnapshot();
 
   /**
    * Save a snapshot of the currently playing video.
@@ -876,8 +878,9 @@ public interface MediaPlayer {
    * Any missing directory path will be created if it does not exist.
    * 
    * @param file file to contain the snapshot
+   * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
    */
-  void saveSnapshot(File file);
+  boolean saveSnapshot(File file);
 
   /**
    * Get a snapshot of the currently playing video.
@@ -889,7 +892,7 @@ public interface MediaPlayer {
    * The size of the image will be that produced by the libvlc native snapshot
    * function.
    * 
-   * @return snapshot image
+   * @return snapshot image, or <code>null</code> if a snapshot could not be taken
    */
   BufferedImage getSnapshot();
 
