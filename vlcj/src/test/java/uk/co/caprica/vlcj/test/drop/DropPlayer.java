@@ -27,6 +27,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.net.URL;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -52,6 +55,8 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 public class DropPlayer {
 
   private final DataFlavor uriListFlavor;
+  private final DataFlavor javaUrlFlavor;
+  private final DataFlavor javaFileListFlavor;
   
   private final MediaPlayerFactory mediaPlayerFactory;
   private final MediaPlayer mediaPlayer;
@@ -75,6 +80,8 @@ public class DropPlayer {
 
   public DropPlayer() throws Exception {
     uriListFlavor = new DataFlavor("text/uri-list;class=java.lang.String");
+    javaUrlFlavor = new DataFlavor("application/x-java-url;class=java.net.URL");
+    javaFileListFlavor = DataFlavor.javaFileListFlavor;
     
     mediaPlayerFactory = new MediaPlayerFactory();
     mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
@@ -128,7 +135,6 @@ public class DropPlayer {
         try {
           Object transferData = support.getTransferable().getTransferData(flavor);
           if(transferData instanceof String) { 
-            System.out.println("DROPPED: " + transferData);
             String value = (String)transferData;
             String[] uris = value.split("\\r\\n");
             if(uris.length > 0) {
@@ -137,6 +143,20 @@ public class DropPlayer {
               mediaPlayer.playMedia(uri);
             }
             return true;
+          }
+          else if(transferData instanceof URL) {
+            URL value = (URL)transferData;
+            String uri = value.toExternalForm();
+            mediaPlayer.playMedia(uri);
+          }
+          else if(transferData instanceof List) {
+            List<?> value = (List<?>)transferData;
+            if(value.size() > 0) {
+              // Play the first MRL that was dropped (the others are discarded)
+              File file = (File)value.get(0);
+              String uri = file.getAbsolutePath();
+              mediaPlayer.playMedia(uri);
+            }
           }
         }
         catch(Exception e) {
@@ -150,7 +170,12 @@ public class DropPlayer {
       if(support.isDataFlavorSupported(uriListFlavor)) {
         return uriListFlavor;
       }
-      // TODO something else for Windows?
+      if(support.isDataFlavorSupported(javaUrlFlavor)) {
+        return javaUrlFlavor;
+      }
+      if(support.isDataFlavorSupported(javaFileListFlavor)) {
+        return javaFileListFlavor;
+      }
       return null;
     }
   }
