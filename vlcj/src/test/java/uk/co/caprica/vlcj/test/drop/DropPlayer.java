@@ -49,6 +49,8 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * link out of the browser and drop it on the application window and the radio
  * station will start playing.
  * <p>
+ * Another example, drop a folder to play all the files in the folder.
+ * <p>
  * The window itself is always-on-top and can be moved by clicking and dragging
  * in the window client area. 
  */
