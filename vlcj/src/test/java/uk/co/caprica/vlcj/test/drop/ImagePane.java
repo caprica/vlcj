@@ -34,6 +34,9 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
+/**
+ * A panel that paints a background image.
+ */
 public class ImagePane extends JComponent {
 
   private static final long serialVersionUID = 1L;
