@@ -85,7 +85,7 @@ public class LibVlcFactory {
     if(log) {
       instance = (LibVlc)Proxy.newProxyInstance(LibVlc.class.getClassLoader(), new Class<?>[] {LibVlc.class}, new LoggingProxy(instance));
     }
-    Logger.info("vlc {}", instance.libvlc_get_version());
+    Logger.info("vlc {}, changeset {}", instance.libvlc_get_version(), LibVlc.INSTANCE.libvlc_get_changeset());
     return instance;
   }
 }
