@@ -176,7 +176,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
     }
   }
 
-  //  @Override
+//  @Override
   public void toggleFullScreen() {
     Logger.debug("toggleFullScreen()");
     if(fullScreenStrategy != null) {
