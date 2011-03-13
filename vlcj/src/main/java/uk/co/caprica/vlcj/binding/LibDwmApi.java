@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.binding;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
+import com.sun.jna.platform.win32.WinNT.HRESULT;
+import com.sun.jna.ptr.IntByReference;
 
 /**
  * JNA interface to the native LibDwm (Desktop Window Manager) library.
@@ -50,11 +52,25 @@ public interface LibDwmApi extends Library {
    * Enable composition.
    */
   public static final int DWM_EC_ENABLECOMPOSITION = 1;
+
+  /**
+   * API success code.
+   */
+  public static final int S_OK = 0;
   
   /**
    * Enable/disable desktop window composition.
    * 
-   * @param enable enable/disable, i.e. DWM_EC_ENABLECOMPOSITION or DWM_EC_DISABLECOMPOSITION 
+   * @param uCompositionAction enable/disable, i.e. DWM_EC_ENABLECOMPOSITION or DWM_EC_DISABLECOMPOSITION
+   * @return S_OK or HRESULT error code
    */
-  void DwmEnableComposition(int enable);
+  HRESULT DwmEnableComposition(int uCompositionAction);
+  
+  /**
+   * Check whether or not desktop window composition is currently enabled. 
+   * 
+   * @param pfEnabled pointer to enabled/disabled flag.
+   * @return S_OK or HRESULT error code
+   */
+  HRESULT DwmIsCompositionEnabled(IntByReference pfEnabled);
 }

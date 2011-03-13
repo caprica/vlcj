@@ -30,6 +30,9 @@ import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.binding.LibDwmApi;
 
+import com.sun.jna.platform.win32.WinNT.HRESULT;
+import com.sun.jna.ptr.IntByReference;
+
 /**
  * Simple test to enable/disable desktop compositing on Windows.
  */
@@ -55,7 +58,10 @@ public class DwmTest {
     enableButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        LibDwmApi.INSTANCE.DwmEnableComposition(LibDwmApi.DWM_EC_ENABLECOMPOSITION);
+        HRESULT hResult;
+        hResult = LibDwmApi.INSTANCE.DwmEnableComposition(LibDwmApi.DWM_EC_ENABLECOMPOSITION);
+        System.out.println("DwmEnableComposition hResult=" + hResult.intValue());
+        dumpStatus();
       }
     });
     
@@ -64,7 +70,10 @@ public class DwmTest {
     disableButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        LibDwmApi.INSTANCE.DwmEnableComposition(LibDwmApi.DWM_EC_DISABLECOMPOSITION);
+        HRESULT hResult;
+        hResult = LibDwmApi.INSTANCE.DwmEnableComposition(LibDwmApi.DWM_EC_DISABLECOMPOSITION);
+        System.out.println("DwmEnableComposition hResult=" + hResult.intValue());
+        dumpStatus();
       }
     });
     
@@ -78,5 +87,14 @@ public class DwmTest {
     frame.pack();
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
+  }
+  
+  private void dumpStatus() {
+    IntByReference pfEnabled = new IntByReference();
+    HRESULT hResult = LibDwmApi.INSTANCE.DwmIsCompositionEnabled(pfEnabled);
+    System.out.println("DwmIsCompositionEnabled hResult=" + hResult.intValue());
+    if(hResult.intValue() == LibDwmApi.S_OK) {
+      System.out.println("Desktop composition is " + (pfEnabled.getValue() != 0 ? "enabled" : "disabled"));
+    }
   }
 }
