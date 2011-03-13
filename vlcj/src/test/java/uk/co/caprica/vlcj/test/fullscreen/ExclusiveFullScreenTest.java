@@ -29,7 +29,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -74,7 +73,7 @@ public class ExclusiveFullScreenTest extends VlcjTest {
     f.setSize(800, 600);
 
     MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
-    EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(new DefaultFullScreenStrategy(f));
+    EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
     mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(c));
 
     // Go directly to full-screen exclusive mode, do not use the media player
