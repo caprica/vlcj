@@ -34,7 +34,10 @@ import com.sun.jna.ptr.IntByReference;
  * idiosyncracies on Windows, some of which can be mitigated by ensuring that
  * desktop window composition is disabled. Disabling composition can be done at
  * the operating system level, but is more convenient for end-users if the
- * application itself does it. 
+ * application itself does it.
+ * <p>
+ * <strong>This class may be removed in future versions of vlcj due to it's
+ * uselessness.</strong>
  */
 public interface LibDwmApi extends Library {
 
