@@ -28,6 +28,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.sun.jna.NativeLibrary;
+
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -41,7 +43,10 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <p>
  * This may be useful on Windows platforms where there are many issues 
  * preventing proper operation of going in to and out of full-screen mode on
- * the fly. 
+ * the fly.
+ * <p>
+ * Equally it may make no difference on Windows platforms and you may still 
+ * have problems. Windows really does suck.
  */
 public class ExclusiveFullScreenTest extends VlcjTest {
 
