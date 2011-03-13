@@ -38,7 +38,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
@@ -122,8 +121,6 @@ public class DirectTestPlayer extends VlcjTest {
       System.out.println("Specify a single media URL");
       System.exit(1);
     }
-
-    LibX11.INSTANCE.XInitThreads();
 
     String[] vlcArgs = (args.length == 1) ? new String[] {} : Arrays.copyOfRange(args, 1, args.length);
 

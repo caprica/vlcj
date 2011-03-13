@@ -36,8 +36,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -65,12 +63,6 @@ public class TestMultiPlayer extends VlcjTest {
   private MediaPlayerFactory factory;
   
   public static void main(String[] args) {
-    // This seems very reliable
-    LibX11.INSTANCE.XInitThreads();
-
-    System.out.println(LibVlc.INSTANCE.libvlc_get_version());
-    System.out.println(LibVlc.INSTANCE.libvlc_get_changeset());
-    
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {

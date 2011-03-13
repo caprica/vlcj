@@ -25,7 +25,6 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -40,9 +39,6 @@ public class MinimalTestPlayer extends VlcjTest {
       System.out.println("Specify an MRL to play");
       System.exit(1);
     }
-
-    // This seems very reliable
-    LibX11.INSTANCE.XInitThreads();
 
     Frame f = new Frame("Test Player");
     f.setSize(800, 600);

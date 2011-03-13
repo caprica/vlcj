@@ -26,7 +26,6 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -44,8 +43,6 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class TestMediaListEmbeddedPlayer extends VlcjTest {
 
   public static void main(String[] args) throws Exception {
-    LibX11.INSTANCE.XInitThreads();
-    
     MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
 
     Canvas canvas = new Canvas();

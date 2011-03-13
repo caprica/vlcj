@@ -27,7 +27,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -43,8 +42,6 @@ public class FullScreenTest extends VlcjTest {
       System.err.println("Specify a single MRL");
       System.exit(1);
     }
-
-    LibX11.INSTANCE.XInitThreads();
 
     SwingUtilities.invokeLater(new Runnable() {
       @Override

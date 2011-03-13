@@ -19,9 +19,9 @@
 
 package uk.co.caprica.vlcj.test;
 
+import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.log.Logger;
-
-import com.sun.jna.NativeLibrary;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
  * Base class for tests.
@@ -41,15 +41,19 @@ import com.sun.jna.NativeLibrary;
 public abstract class VlcjTest {
   
   /**
-   * Log level.
+   * Log level, used only if the -Dvlcj.log= system property has not already 
+   * been set.
    */
   private static final String VLCJ_LOG_LEVEL = "DEBUG";
 
   /**
    * Change this to point to your own vlc installation, or comment out the code
    * if you want to use your system default installation.
+   * <p>
+   * This is a bit more explicit than using the -Djna.library.path= system 
+   * property.
    */
-  private static final String NATIVE_LIBRARY_SEARCH_PATH = "/home/linux/vlc/install/lib";
+//  private static final String NATIVE_LIBRARY_SEARCH_PATH = "/home/linux/vlc/install/lib";
   
   /**
    * Set to true to dump out native JNA memory structures.
@@ -60,12 +64,25 @@ public abstract class VlcjTest {
    * Static initialisation.
    */
   static {
-    System.setProperty("vlcj.log", VLCJ_LOG_LEVEL);
-
-    Logger.info("Explicitly adding JNA native library search path: '{}'", NATIVE_LIBRARY_SEARCH_PATH);
+    if(null == System.getProperty("vlcj.log")) {
+      System.setProperty("vlcj.log", VLCJ_LOG_LEVEL);
+    }
+    
+    // Safely try to initialise LibX11 to reduce the opportunity for native
+    // crashes - this will throw an Error on Windows that can safely be ignored
+    try {
+      LibX11.INSTANCE.XInitThreads();
+    }
+    catch(Throwable t) {
+      if(!RuntimeUtil.isWindows()) {
+        Logger.warn("Failed to initialise LibX11: {}", t.getMessage());
+      }
+    }
+    
+//    Logger.info("Explicitly adding JNA native library search path: '{}'", NATIVE_LIBRARY_SEARCH_PATH);
     
     // For Linux...
-    NativeLibrary.addSearchPath("vlc", NATIVE_LIBRARY_SEARCH_PATH);
+//    NativeLibrary.addSearchPath("vlc", NATIVE_LIBRARY_SEARCH_PATH);
     
     // For Windows
 //    NativeLibrary.addSearchPath("libvlc", NATIVE_LIBRARY_SEARCH_PATH);
