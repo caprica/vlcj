@@ -58,6 +58,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogHandler;
@@ -105,9 +106,11 @@ public class TestPlayer extends VlcjTest {
   private EmbeddedMediaPlayer mediaPlayer;
   
   public static void main(final String[] args) throws Exception {
-    Logger.info("  version: {}", LibVlc.INSTANCE.libvlc_get_version());
-    Logger.info(" compiler: {}", LibVlc.INSTANCE.libvlc_get_compiler());
-    Logger.info("changeset: {}", LibVlc.INSTANCE.libvlc_get_changeset());
+    LibVlc libVlc = LibVlcFactory.factory().create();
+    
+    Logger.info("  version: {}", libVlc.libvlc_get_version());
+    Logger.info(" compiler: {}", libVlc.libvlc_get_compiler());
+    Logger.info("changeset: {}", libVlc.libvlc_get_changeset());
     
     setLookAndFeel();
     
