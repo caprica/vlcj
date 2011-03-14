@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -38,6 +39,9 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -138,6 +142,14 @@ public class YouTubePlayer extends VlcjTest {
     mediaPlayer.setVideoSurface(factory.newVideoSurface(vs));
     
     mediaPlayer.setPlaySubItems(true); // <--- This is very important for YouTube media
+    
+    mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+      @Override
+      public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
+        List<String> items = mediaPlayer.subItems();
+        System.out.println(items);
+      }
+    });
   }
   
   private void start() {
