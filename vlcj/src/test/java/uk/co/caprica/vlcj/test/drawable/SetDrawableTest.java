@@ -206,7 +206,7 @@ public class SetDrawableTest extends VlcjTest {
     mainFrameContentPane.add(nsobjectButton);
     mainFrameContentPane.add(xwindowButton);
     
-    mainFrame = new JFrame("vlcj Mac Test");
+    mainFrame = new JFrame("vlcj Drawable Test");
     mainFrame.setLocation(50, 50);
     mainFrame.setContentPane(mainFrameContentPane);
     mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
