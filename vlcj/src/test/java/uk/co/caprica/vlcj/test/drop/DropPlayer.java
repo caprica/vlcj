@@ -51,6 +51,10 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * <p>
  * Another example, drop a folder to play all the files in the folder.
  * <p>
+ * This example is mainly intended for audio player applications since there is
+ * no embedded video window. However, if you drop a video file or a video URL
+ * (e.g. from YouTube) then a native video window will open and play the video.
+ * <p>
  * The window itself is always-on-top and can be moved by clicking and dragging
  * in the window client area. 
  */
