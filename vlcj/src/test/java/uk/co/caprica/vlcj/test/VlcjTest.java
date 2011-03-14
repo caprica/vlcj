@@ -69,13 +69,14 @@ public abstract class VlcjTest {
     }
     
     // Safely try to initialise LibX11 to reduce the opportunity for native
-    // crashes - this will throw an Error on Windows that can safely be ignored
+    // crashes - this will throw an Error on Windows (and maybe MacOS) that can 
+    // safely be ignored
     try {
       LibX11.INSTANCE.XInitThreads();
     }
     catch(Throwable t) {
       if(!RuntimeUtil.isWindows()) {
-        Logger.warn("Failed to initialise LibX11: {}", t.getMessage());
+        Logger.debug("Did not initialise LibX11: {}", t.getMessage());
       }
     }
     
