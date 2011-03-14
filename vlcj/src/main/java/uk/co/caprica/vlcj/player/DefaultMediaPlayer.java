@@ -354,6 +354,45 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
   
 //  @Override
+  public List<String> subItems() {
+    Logger.debug("subItems()");
+    // If there is a current media...
+    if(mediaInstance != null) {
+      // Get the list of sub-items
+      libvlc_media_list_t subItems = libvlc.libvlc_media_subitems(mediaInstance);
+      if(subItems != null) {
+        // Lock the sub-item list
+        libvlc.libvlc_media_list_lock(subItems);
+        // Count the items in the list
+        int count = libvlc.libvlc_media_list_count(subItems);
+        // Get each sub-item
+        List<String> result = new ArrayList<String>(count);
+        for(int i = 0; i < count; i++) {
+          libvlc_media_t subItemMedia = libvlc.libvlc_media_list_item_at_index(subItems, i);
+          if(subItemMedia != null) {
+            // Get the MRL for the sub-item
+            String subItemMrl = libvlc.libvlc_media_get_mrl(subItemMedia);
+            result.add(subItemMrl);
+            // Release the sub-item instance
+            libvlc.libvlc_media_release(subItemMedia);
+          }
+        }
+        // Clean up
+        libvlc.libvlc_media_list_unlock(subItems);
+        libvlc.libvlc_media_list_release(subItems);
+        // Return the list
+        return result;
+      }
+      else {
+        return null;
+      }
+    }
+    else {
+      return null;
+    }
+  }
+
+  //  @Override
   public boolean playNextSubItem(String... mediaOptions) {
     Logger.debug("playNextSubItem(mediaOptions={})", Arrays.toString(mediaOptions));
     // Assume a sub-item was not played

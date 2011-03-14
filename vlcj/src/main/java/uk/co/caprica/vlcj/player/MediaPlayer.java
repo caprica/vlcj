@@ -300,6 +300,13 @@ public interface MediaPlayer {
   int subItemCount();
   
   /**
+   * Get the list of sub-items (if any).
+   * 
+   * @return sub-item list, or <code>null</code> if there is no current media
+   */
+  List<String> subItems();
+  
+  /**
    * Play the next sub-item (if there is one).
    * <p>
    * If any standard media options have been set via {@link #setStandardMediaOptions(String...)}
