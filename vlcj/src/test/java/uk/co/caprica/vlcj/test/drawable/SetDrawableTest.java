@@ -238,6 +238,21 @@ public class SetDrawableTest extends VlcjTest {
     }
   }
   
+  /**
+   * The current libvlc API requires a 32-bit integer value for the drawable
+   * window handle - however, according to the JNA API it is possible that
+   * 64-bit integer values are used (since Native.getComponentId returns a long
+   * value).
+   * <p>
+   * Therefore there is a chance we are given a native window handle that we can
+   * not use with libvlc.
+   * <p>
+   * In practice, I have never seen this happen on Linux or Windows.
+   * 
+   * @param value long value
+   * @return int value
+   * @throws IllegalArgumentException if the long value can not be converted to an int without being truncated
+   */
   public int toInt(long value) {
     if(value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
       throw new IllegalArgumentException("long value " + value + " cannot be converted to an int without truncation.");
