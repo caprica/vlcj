@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.runtime;
 
+import uk.co.caprica.vlcj.log.Logger;
+
 /**
  * Crude heuristics to determine the current Operating System.
  * <p>
@@ -58,6 +60,34 @@ public class RuntimeUtil {
     return OS_NAME.indexOf("mac") != -1;
   }
   
+  /**
+   * Try to safely convert a long value to an int.
+   * 
+   * The current libvlc API requires a 32-bit integer value for the drawable
+   * window handle - however, according to the JNA API it is possible that
+   * 64-bit integer values are used (since Native.getComponentId returns a long
+   * value).
+   * <p>
+   * Therefore there is a chance that we are given a native window handle that
+   * we can not use with libvlc.
+   * <p>
+   * In practice, I have never seen this happen on Linux or Windows.
+   * 
+   * @param value long value
+   * @return int value
+   * @throws IllegalArgumentException if the long value can not be safely converted to an int
+   */
+  public static int safeLongToInt(long value) {
+    Logger.debug("nativeComponentId={}", value);
+    if(value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
+      Logger.warn("Native component id is too big for int");
+      throw new IllegalArgumentException("long value " + value + " cannot be safely converted to an int.");
+    }
+    else {
+      return (int)value;
+    }
+  }
+
   /**
    * Get the native library name.
    * 
