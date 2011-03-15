@@ -57,6 +57,10 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <pre>
  *   dshow://
  * </pre>
+ * Audio capture is achieved by setting a media option, for example:
+ * <pre>
+ *   :input-slave=alsa://hw:0,0
+ * </pre>
  * Each time this application is executed a new time-stamped video capture file
  * will be created in a directory called "Videos" under the user home directory.
  */
