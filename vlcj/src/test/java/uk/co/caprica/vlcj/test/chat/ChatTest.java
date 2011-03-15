@@ -48,9 +48,6 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 /**
  * An example showing a possible two-way video chat application.
  * <p>
- * <strong>This test is not yet fully working, regular media can be streamed
- * but video captured from a web-cam can not (yet) be streamed.</strong>
- * <p>
  * The local media source is expected to be an MRL for a local video capture 
  * device. This is displayed locally and streamed via RTP.
  * <p>
@@ -290,7 +287,7 @@ public class ChatTest extends VlcjTest {
 
   private static String formatRtpStream(String serverAddress, int serverPort) {
     StringBuilder sb = new StringBuilder(60);
-    sb.append(":sout=#duplicate{dst=display,dst=rtp{dst=");
+    sb.append(":sout=#transcode{vcodec=mp4v,vb=2048,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=display,dst=rtp{dst=");
     sb.append(serverAddress);
     sb.append(",port=");
     sb.append(serverPort);
