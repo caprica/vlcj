@@ -115,9 +115,11 @@ public class CaptureTest extends VlcjTest {
     DateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
     String fileName =  dir.getAbsolutePath() + "/Capture-" + df.format(new Date()) + ".mpg";
 
-    // Tweak the options depending on your encoding requirements
+    // Tweak the options depending on your encoding requirements and audio 
+    // capture device
     String[] options = {
-      ":sout=#transcode{vcodec=mp4v,vb=4096,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=file{dst=" + fileName + "},dst=display}"
+      ":sout=#transcode{vcodec=mp4v,vb=4096,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=file{dst=" + fileName + "},dst=display}",
+      ":input-slave=asla://hw:0,0"
     };
     
     mediaPlayer.playMedia(mrl, options);
