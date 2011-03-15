@@ -131,6 +131,7 @@ public class SetDrawableTest extends VlcjTest {
       @Override
       public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
         long aglDrawable = Native.getComponentID(aglCanvas);
+        System.out.println("aglDrawable:" + aglDrawable + " -> " + (int)aglDrawable);
         libvlc.libvlc_media_player_set_agl(aglMediaPlayer.mediaPlayerInstance(), toInt(aglDrawable));
       }
     });
@@ -139,6 +140,7 @@ public class SetDrawableTest extends VlcjTest {
       @Override
       public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
         Pointer nsObjectDrawable = Native.getComponentPointer(nsobjectCanvas);
+        System.out.println("nsObjectDrawable:" + nsObjectDrawable);
         libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), nsObjectDrawable);
       }
     });
@@ -147,6 +149,7 @@ public class SetDrawableTest extends VlcjTest {
       @Override
       public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
         long xwindowDrawable = Native.getComponentID(xwindowCanvas);
+        System.out.println("xwindowDrawable:" + xwindowDrawable + " -> " + (int)xwindowDrawable);
         libvlc.libvlc_media_player_set_xwindow(xwindowMediaPlayer.mediaPlayerInstance(), toInt(xwindowDrawable));
       }
     });
