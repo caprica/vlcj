@@ -119,7 +119,7 @@ public class CaptureTest extends VlcjTest {
     // capture device
     String[] options = {
       ":sout=#transcode{vcodec=mp4v,vb=4096,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=file{dst=" + fileName + "},dst=display}",
-      ":input-slave=asla://hw:0,0"
+      ":input-slave=alsa://hw:0,0"
     };
     
     mediaPlayer.playMedia(mrl, options);
