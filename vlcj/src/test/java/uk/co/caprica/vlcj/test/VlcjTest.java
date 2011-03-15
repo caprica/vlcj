@@ -81,12 +81,7 @@ public abstract class VlcjTest {
     }
     
 //    Logger.info("Explicitly adding JNA native library search path: '{}'", NATIVE_LIBRARY_SEARCH_PATH);
-    
-    // For Linux...
-//    NativeLibrary.addSearchPath("vlc", NATIVE_LIBRARY_SEARCH_PATH);
-    
-    // For Windows
-//    NativeLibrary.addSearchPath("libvlc", NATIVE_LIBRARY_SEARCH_PATH);
+//    NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
     
     System.setProperty("jna.dump_memory", DUMP_NATIVE_MEMORY);
   }
