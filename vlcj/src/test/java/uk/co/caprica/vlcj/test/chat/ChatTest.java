@@ -257,7 +257,7 @@ public class ChatTest extends VlcjTest {
       }
     }
     else {
-      JOptionPane.showMessageDialog(frame, "You must specify source media.", "Error", JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(frame, "You must specify source media, e.g. v4l2:///dev/video0 on Linux or dshow:// on Windows.", "Error", JOptionPane.ERROR_MESSAGE);
     }
   }
   
