@@ -103,8 +103,7 @@ public class TestMultiPlayer extends VlcjTest {
       }
     });
 
-    String[] args = {"--no-video-title-show"};
-    factory = new MediaPlayerFactory(args);
+    factory = new MediaPlayerFactory("--no-video-title-show");
     
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
     

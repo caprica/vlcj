@@ -55,7 +55,7 @@ public class VolumeTestPlayer extends VlcjTest {
     f.add(vs, BorderLayout.CENTER);
     f.setVisible(true);
     
-    MediaPlayerFactory factory = new MediaPlayerFactory(new String[] {});
+    MediaPlayerFactory factory = new MediaPlayerFactory();
     
     EmbeddedMediaPlayer mediaPlayer = factory.newEmbeddedMediaPlayer();
     mediaPlayer.setVideoSurface(factory.newVideoSurface(vs));

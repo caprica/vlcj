@@ -144,8 +144,8 @@ public class MediaPlayerFactory {
    * 
    * @param libvlcArgs initialisation arguments to pass to libvlc
    */
-  public MediaPlayerFactory(String[] libvlcArgs) {
-    this(libvlcArgs, LibVlcFactory.factory().create());
+  public MediaPlayerFactory(String... libvlcArgs) {
+    this(LibVlcFactory.factory().create(), libvlcArgs);
   }
 
   /**
@@ -156,19 +156,18 @@ public class MediaPlayerFactory {
    * @param libvlc interface to the native library
    */
   public MediaPlayerFactory(LibVlc libvlc) {
-    this(new String[] {}, libvlc);
+    this(libvlc, new String[] {});
   }
 
   /**
    * Create a new media player factory.
    * <p>
    * Use {@link LibVlcFactory} to get a reference to the native library.
-   * 
-   * @param libvlcArgs initialisation arguments to pass to libvlc
    * @param libvlc interface to the native library
+   * @param libvlcArgs initialisation arguments to pass to libvlc
    */
-  public MediaPlayerFactory(String[] libvlcArgs, LibVlc libvlc) {
-    Logger.debug("MediaPlayerFactory(libvlcArgs={},libvlc={})", Arrays.toString(libvlcArgs), libvlc);
+  public MediaPlayerFactory(LibVlc libvlc, String... libvlcArgs) {
+    Logger.debug("MediaPlayerFactory(libvlc={},libvlcArgs={})", libvlc, Arrays.toString(libvlcArgs));
 
     // JNA will look for the libvlc shared library here (and also libvlccore)...
     Logger.debug("jna.library.path={}", System.getProperty("jna.library.path"));

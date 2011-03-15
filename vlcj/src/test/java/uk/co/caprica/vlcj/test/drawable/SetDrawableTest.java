@@ -116,7 +116,7 @@ public class SetDrawableTest extends VlcjTest {
   public SetDrawableTest(String[] args) {
     final String mrl = args[0]; 
     
-    mediaPlayerFactory = new MediaPlayerFactory(new String[] {"--no-video-title-show"});
+    mediaPlayerFactory = new MediaPlayerFactory("--no-video-title-show");
     aglMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
     nsobjectMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
     xwindowMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
@@ -144,6 +144,9 @@ public class SetDrawableTest extends VlcjTest {
         Pointer nsObjectDrawable = Native.getComponentPointer(nsobjectCanvas);
         System.out.println("nsObjectDrawable:" + nsObjectDrawable);
         libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), nsObjectDrawable);
+        
+        
+        
       }
     });
 

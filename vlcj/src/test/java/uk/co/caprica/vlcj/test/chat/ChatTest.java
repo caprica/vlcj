@@ -119,7 +119,7 @@ public class ChatTest extends VlcjTest {
   }
 
   public ChatTest() {
-    mediaPlayerFactory = new MediaPlayerFactory(new String[] {"--no-video-title-show"});
+    mediaPlayerFactory = new MediaPlayerFactory("--no-video-title-show");
     localMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
     remoteMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
     
@@ -255,7 +255,7 @@ public class ChatTest extends VlcjTest {
           ":sout-all", 
           ":sout-keep",
         };
-      
+
         localMediaPlayer.playMedia(mrl, localOptions);
       }
       else {

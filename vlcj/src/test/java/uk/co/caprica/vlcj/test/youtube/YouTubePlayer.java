@@ -136,7 +136,7 @@ public class YouTubePlayer extends VlcjTest {
       }
     });
     
-    factory = new MediaPlayerFactory(new String[] {});
+    factory = new MediaPlayerFactory();
     
     mediaPlayer = factory.newEmbeddedMediaPlayer();
     mediaPlayer.setVideoSurface(factory.newVideoSurface(vs));

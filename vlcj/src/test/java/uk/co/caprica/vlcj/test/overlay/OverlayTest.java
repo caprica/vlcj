@@ -90,7 +90,7 @@ public class OverlayTest extends VlcjTest {
     f.add(vs, BorderLayout.CENTER);
     f.setVisible(true);
     
-    MediaPlayerFactory factory = new MediaPlayerFactory(new String[] {});
+    MediaPlayerFactory factory = new MediaPlayerFactory();
     
     final EmbeddedMediaPlayer mediaPlayer = factory.newEmbeddedMediaPlayer();
     mediaPlayer.setVideoSurface(factory.newVideoSurface(vs));

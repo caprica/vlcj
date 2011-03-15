@@ -102,7 +102,7 @@ public class CaptureTest extends VlcjTest {
     frame.setSize(800, 600);
     frame.pack();
     
-    factory = new MediaPlayerFactory(new String[] {"--no-video-title-show"});
+    factory = new MediaPlayerFactory("--no-video-title-show");
     mediaPlayer = factory.newEmbeddedMediaPlayer();
     
     videoSurface = factory.newVideoSurface(canvas);
