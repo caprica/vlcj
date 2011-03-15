@@ -112,7 +112,7 @@ public class CaptureTest extends VlcjTest {
     File dir = new File(System.getProperty("user.home"), "Videos");
     dir.mkdirs();
     
-    DateFormat df = new SimpleDateFormat("yyyyMMdd-HH:mm:ss");
+    DateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
     String fileName =  dir.getAbsolutePath() + "/Capture-" + df.format(new Date()) + ".mpg";
 
     // Tweak the options depending on your encoding requirements
