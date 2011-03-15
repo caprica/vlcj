@@ -38,8 +38,8 @@ public class FilterTest extends VlcjTest {
   public static void main(String[] args) throws Exception {
     String[] libvlcArgs = new String[] {};
     
-    MediaPlayerFactory factory = new MediaPlayerFactory(libvlcArgs, LibVlc.INSTANCE);
-
+    MediaPlayerFactory factory = new MediaPlayerFactory(libvlcArgs);
+    
     System.out.println("Audio Filters:");
     System.out.println();
     
