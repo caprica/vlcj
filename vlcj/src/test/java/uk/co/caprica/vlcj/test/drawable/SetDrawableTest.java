@@ -25,6 +25,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,6 +40,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import com.sun.jna.Native;
@@ -130,27 +133,24 @@ public class SetDrawableTest extends VlcjTest {
     aglVideoSurface = new CanvasVideoSurface(aglCanvas, new VideoSurfaceAdapter() {
       @Override
       public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-        long aglDrawable = Native.getComponentID(aglCanvas);
-        System.out.println("aglDrawable:" + aglDrawable + " -> " + (int)aglDrawable);
-        libvlc.libvlc_media_player_set_agl(aglMediaPlayer.mediaPlayerInstance(), toInt(aglDrawable));
+        libvlc.libvlc_media_player_set_agl(aglMediaPlayer.mediaPlayerInstance(), RuntimeUtil.safeLongToInt(componentId));
       }
     });
     
-    nsobjectVideoSurface = new CanvasVideoSurface(aglCanvas, new VideoSurfaceAdapter() {
+    nsobjectVideoSurface = new CanvasVideoSurface(nsobjectCanvas, new VideoSurfaceAdapter() {
       @Override
       public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+        // TODO shouldn't this component pointer be on the attach template method?
         Pointer nsObjectDrawable = Native.getComponentPointer(nsobjectCanvas);
         System.out.println("nsObjectDrawable:" + nsObjectDrawable);
         libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), nsObjectDrawable);
       }
     });
 
-    xwindowVideoSurface = new CanvasVideoSurface(aglCanvas, new VideoSurfaceAdapter() {
+    xwindowVideoSurface = new CanvasVideoSurface(xwindowCanvas, new VideoSurfaceAdapter() {
       @Override
       public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-        long xwindowDrawable = Native.getComponentID(xwindowCanvas);
-        System.out.println("xwindowDrawable:" + xwindowDrawable + " -> " + (int)xwindowDrawable);
-        libvlc.libvlc_media_player_set_xwindow(xwindowMediaPlayer.mediaPlayerInstance(), toInt(xwindowDrawable));
+        libvlc.libvlc_media_player_set_xwindow(xwindowMediaPlayer.mediaPlayerInstance(), RuntimeUtil.safeLongToInt(componentId));
       }
     });
     
@@ -221,7 +221,7 @@ public class SetDrawableTest extends VlcjTest {
     
     private static final long serialVersionUID = 1L;
 
-    private EmbeddedMediaPlayer mediaPlayer;
+    private final EmbeddedMediaPlayer mediaPlayer;
     
     private VideoFrame(String title, EmbeddedMediaPlayer mediaPlayer) {
       super(title);
@@ -229,36 +229,18 @@ public class SetDrawableTest extends VlcjTest {
       setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
       setSize(320, 180);
       pack();
+      addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) {
+          VideoFrame.this.mediaPlayer.stop();
+        }
+      });
     }
     
     private void start(final String mrl) {
       setVisible(true);
       toFront();
       mediaPlayer.playMedia(mrl);
-    }
-  }
-  
-  /**
-   * The current libvlc API requires a 32-bit integer value for the drawable
-   * window handle - however, according to the JNA API it is possible that
-   * 64-bit integer values are used (since Native.getComponentId returns a long
-   * value).
-   * <p>
-   * Therefore there is a chance we are given a native window handle that we can
-   * not use with libvlc.
-   * <p>
-   * In practice, I have never seen this happen on Linux or Windows.
-   * 
-   * @param value long value
-   * @return int value
-   * @throws IllegalArgumentException if the long value can not be converted to an int without being truncated
-   */
-  public int toInt(long value) {
-    if(value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
-      throw new IllegalArgumentException("long value " + value + " cannot be converted to an int without truncation.");
-    }
-    else {
-      return (int)value;
     }
   }
 }
