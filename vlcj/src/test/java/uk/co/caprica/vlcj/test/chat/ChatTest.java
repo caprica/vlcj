@@ -69,6 +69,12 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * stream however you like.
  * <p>
  * You should also be able to adapt this to use IPv6 addresses.
+ * <p>
+ * If you want to capture audio, you should a media option similar to the
+ * following:
+ * <pre>
+ *   :input-slave=alsa://hw:0,0
+ * </pre>
  */
 public class ChatTest extends VlcjTest {
 
@@ -247,7 +253,7 @@ public class ChatTest extends VlcjTest {
           ":no-sout-rtp-sap", 
           ":no-sout-standard-sap", 
           ":sout-all", 
-          ":sout-keep"
+          ":sout-keep",
         };
       
         localMediaPlayer.playMedia(mrl, localOptions);
