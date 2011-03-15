@@ -57,4 +57,73 @@ public class RuntimeUtil {
   public static boolean isMac() {
     return OS_NAME.indexOf("mac") != -1;
   }
+  
+  /**
+   * Get the native library name.
+   * 
+   * @return library name
+   */
+  public static String getLibVlcLibraryName() {
+    return isWindows() ? "libvlc" : "vlc";
+  }
+
+  /**
+   * Get the operating system file name for the libvlc shared object.
+   * <p>
+   * This is only used to generate help/error messages.
+   * 
+   * @return shared object file name
+   */
+  public static String getLibVlcName() {
+    if(RuntimeUtil.isNix()) {
+      return "libvlc.so";
+    }
+    else if(RuntimeUtil.isWindows()) {
+      return "libvlc.dll";
+    }
+    else if(RuntimeUtil.isMac()) {
+      return "libvlc.dylib";
+    }
+    else {
+      throw new RuntimeException("Unknown operating system");
+    }
+  }
+  
+  /**
+   * Get the operating system file name for the libvlc core shared object.
+   * <p>
+   * This is only used to generate help/error messages.
+   * 
+   * @return shared object file name
+   */
+  public static String getLibVlcCoreName() {
+    if(RuntimeUtil.isNix()) {
+      return "libvlccore.so";
+    }
+    else if(RuntimeUtil.isWindows()) {
+      return "libvlccore.dll";
+    }
+    else if(RuntimeUtil.isMac()) {
+      return "libvlccore.dylib";
+    }
+    else {
+      throw new RuntimeException("Unknown operating system");
+    }
+  }
+  
+  /**
+   * Get the default directory name for the vlc plugins directory.
+   * <p>
+   * This is only used to generate help/error messages.
+   * 
+   * @return plugin directory name
+   */
+  public static String getPluginsDirectoryName() {
+    if(!RuntimeUtil.isWindows()) {
+      return "vlc/plugins";
+    }
+    else {
+      return "plugins";
+    }
+  }
 }

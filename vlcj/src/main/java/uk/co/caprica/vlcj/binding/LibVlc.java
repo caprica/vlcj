@@ -39,10 +39,10 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
@@ -82,7 +82,7 @@ public interface LibVlc extends Library {
   /**
    * Native library instance.
    */
-  LibVlc INSTANCE = (LibVlc)Native.loadLibrary(Platform.isWindows() ? "libvlc" : "vlc", LibVlc.class);
+  LibVlc INSTANCE = (LibVlc)Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
 
   /**
    * Synchronised native library instance.
