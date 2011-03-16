@@ -41,6 +41,8 @@ public class WindowsRuntimeUtil {
   
   /**
    * Get the VLC installation directory.
+   * <p>
+   * If vlc is installed correctly, this should not be needed.
    * 
    * @return fully-qualified directory name, or <code>null</code> if the value could not be obtained
    */
