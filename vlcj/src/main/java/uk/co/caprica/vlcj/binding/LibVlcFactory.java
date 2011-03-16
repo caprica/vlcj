@@ -103,7 +103,8 @@ public class LibVlcFactory {
       if(log) {
         instance = (LibVlc)Proxy.newProxyInstance(LibVlc.class.getClassLoader(), new Class<?>[] {LibVlc.class}, new LoggingProxy(instance));
       }
-      Logger.info("vlc {}, changeset {}", instance.libvlc_get_version(), LibVlc.INSTANCE.libvlc_get_changeset());
+      Logger.info("vlc: {}, changeset {}", instance.libvlc_get_version(), LibVlc.INSTANCE.libvlc_get_changeset());
+      Logger.info("libvlc: {}", getNativeLibraryPath(instance));
       return instance;
     }
     catch(UnsatisfiedLinkError e) {
@@ -111,5 +112,28 @@ public class LibVlcFactory {
       String msg = MessageFormat.format(NATIVE_LIBRARY_HELP, new Object[] {e.getMessage(), RuntimeUtil.getLibVlcName(), RuntimeUtil.getLibVlcCoreName(), RuntimeUtil.getLibVlcLibraryName()});
       throw new RuntimeException(msg);
     }
+  }
+
+  /**
+   * Parse out the complete file path of the native library.
+   * <p>
+   * This depends on the format of the toString() of the JNA implementation
+   * class.
+   * 
+   * @param library native library instance
+   * @return native library path, or simply the toString of the instance if the path could not be parsed out
+   */
+  private static String getNativeLibraryPath(Object library) {
+    String s = library.toString();
+    int start = s.indexOf('<');
+    if(start != -1) {
+      start++;
+      int end = s.indexOf('@', start);
+      if(end != -1) {
+        s = s.substring(start, end);
+        return s;
+      }
+    }
+    return s;
   }
 }
