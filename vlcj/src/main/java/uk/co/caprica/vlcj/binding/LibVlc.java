@@ -772,7 +772,7 @@ public interface LibVlc extends Library {
    * @param drawable the drawable that is either an NSView or an object
    *          following the VLCOpenGLVideoViewEmbedding protocol.
    */
-  void libvlc_media_player_set_nsobject(libvlc_media_player_t p_mi, Pointer drawable);
+  void libvlc_media_player_set_nsobject(libvlc_media_player_t p_mi, long drawable);
 
   /**
    * Get the NSView handler previously set with

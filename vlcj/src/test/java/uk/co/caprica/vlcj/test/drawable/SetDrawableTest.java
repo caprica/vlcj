@@ -158,8 +158,7 @@ public class SetDrawableTest extends VlcjTest {
       public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
         dump("NSObject", nsobjectCanvas);
         // TODO shouldn't this component pointer be on the attach template method?
-        Pointer nsObjectDrawable = Native.getComponentPointer(nsobjectCanvas);
-        libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), nsObjectDrawable);
+        libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), componentId);
       }
     });
 
@@ -170,8 +169,7 @@ public class SetDrawableTest extends VlcjTest {
         // TODO shouldn't this component pointer be on the attach template method?
         try {
           long viewPtr = getViewPointer(nsviewCanvas);
-          Pointer p = Pointer.createConstant(viewPtr);
-          libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), p);
+          libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), viewPtr);
         }
         catch(Throwable t) {
           System.out.println("Failed to set nsobject view");
@@ -293,6 +291,7 @@ public class SetDrawableTest extends VlcjTest {
     }
   }
 
+  @SuppressWarnings("deprecation")
   private void dump(String s, Canvas c) {
     System.out.println();
     System.out.println(s);
