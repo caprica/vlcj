@@ -22,11 +22,14 @@ package uk.co.caprica.vlcj.test.drawable;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.peer.ComponentPeer;
+import java.lang.reflect.Method;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,6 +38,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -78,24 +82,29 @@ public class SetDrawableTest extends VlcjTest {
   private MediaPlayerFactory mediaPlayerFactory;
   private EmbeddedMediaPlayer aglMediaPlayer;
   private EmbeddedMediaPlayer nsobjectMediaPlayer;
+  private EmbeddedMediaPlayer nsviewMediaPlayer;
   private EmbeddedMediaPlayer xwindowMediaPlayer;
   
   private Canvas aglCanvas;
   private Canvas nsobjectCanvas;
+  private Canvas nsviewCanvas;
   private Canvas xwindowCanvas;
   
   private CanvasVideoSurface aglVideoSurface;
   private CanvasVideoSurface nsobjectVideoSurface;
+  private CanvasVideoSurface nsviewVideoSurface;
   private CanvasVideoSurface xwindowVideoSurface;
   
   private JPanel mainFrameContentPane;
   private JButton aglButton;
   private JButton nsobjectButton;
+  private JButton nsviewButton;
   private JButton xwindowButton;
   
   private JFrame mainFrame;
   private VideoFrame aglFrame;
   private VideoFrame nsobjectFrame;
+  private VideoFrame nsviewFrame;
   private VideoFrame xwindowFrame;
   
   public static void main(final String[] args) {
@@ -103,6 +112,8 @@ public class SetDrawableTest extends VlcjTest {
       System.out.println("Specify a single MRL");
       System.exit(1);
     }
+
+    Logger.setLevel(Logger.Level.INFO);
     
     SwingUtilities.invokeLater(new Runnable() {
       @Override
@@ -119,6 +130,7 @@ public class SetDrawableTest extends VlcjTest {
     mediaPlayerFactory = new MediaPlayerFactory("--no-video-title-show");
     aglMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
     nsobjectMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+    nsviewMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
     xwindowMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
     
     aglCanvas = new Canvas();
@@ -127,12 +139,16 @@ public class SetDrawableTest extends VlcjTest {
     nsobjectCanvas = new Canvas();
     nsobjectCanvas.setBackground(Color.black);
 
+    nsviewCanvas = new Canvas();
+    nsviewCanvas.setBackground(Color.black);
+
     xwindowCanvas = new Canvas();
     xwindowCanvas.setBackground(Color.black);
     
     aglVideoSurface = new CanvasVideoSurface(aglCanvas, new VideoSurfaceAdapter() {
       @Override
       public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+        dump("AGL", aglCanvas);
         libvlc.libvlc_media_player_set_agl(aglMediaPlayer.mediaPlayerInstance(), RuntimeUtil.safeLongToInt(componentId));
       }
     });
@@ -140,29 +156,45 @@ public class SetDrawableTest extends VlcjTest {
     nsobjectVideoSurface = new CanvasVideoSurface(nsobjectCanvas, new VideoSurfaceAdapter() {
       @Override
       public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+        dump("NSObject", nsobjectCanvas);
         // TODO shouldn't this component pointer be on the attach template method?
         Pointer nsObjectDrawable = Native.getComponentPointer(nsobjectCanvas);
-        System.out.println("nsObjectDrawable:" + nsObjectDrawable);
         libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), nsObjectDrawable);
-        
-        
-        
+      }
+    });
+
+    nsviewVideoSurface = new CanvasVideoSurface(nsviewCanvas, new VideoSurfaceAdapter() {
+      @Override
+      public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+        dump("NSView", nsviewCanvas);
+        // TODO shouldn't this component pointer be on the attach template method?
+        try {
+          long viewPtr = getViewPointer(nsviewCanvas);
+          Pointer p = Pointer.createConstant(viewPtr);
+          libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), p);
+        }
+        catch(Throwable t) {
+          System.out.println("Failed to set nsobject view");
+        }
       }
     });
 
     xwindowVideoSurface = new CanvasVideoSurface(xwindowCanvas, new VideoSurfaceAdapter() {
       @Override
       public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+        dump("XWindow", xwindowCanvas);
         libvlc.libvlc_media_player_set_xwindow(xwindowMediaPlayer.mediaPlayerInstance(), RuntimeUtil.safeLongToInt(componentId));
       }
     });
     
     aglMediaPlayer.setVideoSurface(aglVideoSurface);
     nsobjectMediaPlayer.setVideoSurface(nsobjectVideoSurface);
+    nsviewMediaPlayer.setVideoSurface(nsviewVideoSurface);
     xwindowMediaPlayer.setVideoSurface(xwindowVideoSurface);
     
     aglFrame = new VideoFrame("AGL", aglMediaPlayer);
     nsobjectFrame = new VideoFrame("NSObject", nsobjectMediaPlayer);
+    nsviewFrame = new VideoFrame("NSView", nsviewMediaPlayer);
     xwindowFrame = new VideoFrame("XWindow", xwindowMediaPlayer);
     
     aglFrame.getContentPane().setLayout(new BorderLayout());
@@ -171,12 +203,16 @@ public class SetDrawableTest extends VlcjTest {
     nsobjectFrame.getContentPane().setLayout(new BorderLayout());
     nsobjectFrame.getContentPane().add(nsobjectCanvas, BorderLayout.CENTER);
     
+    nsviewFrame.getContentPane().setLayout(new BorderLayout());
+    nsviewFrame.getContentPane().add(nsviewCanvas, BorderLayout.CENTER);
+    
     xwindowFrame.getContentPane().setLayout(new BorderLayout());
     xwindowFrame.getContentPane().add(xwindowCanvas, BorderLayout.CENTER);
     
     aglFrame.setLocation(50, 150);
     nsobjectFrame.setLocation(50, 350);
-    xwindowFrame.setLocation(50, 550);
+    nsviewFrame.setLocation(50, 550);
+    xwindowFrame.setLocation(50, 750);
     
     aglButton = new JButton("AGL");
     aglButton.setMnemonic('a');
@@ -196,6 +232,15 @@ public class SetDrawableTest extends VlcjTest {
       }
     });
 
+    nsviewButton = new JButton("NSView");
+    nsviewButton.setMnemonic('v');
+    nsviewButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        nsviewFrame.start(mrl);
+      }
+    });
+
     xwindowButton = new JButton("XWindow");
     xwindowButton.setMnemonic('x');
     xwindowButton.addActionListener(new ActionListener() {
@@ -210,6 +255,7 @@ public class SetDrawableTest extends VlcjTest {
     mainFrameContentPane.setLayout(new GridLayout(1, 3, 16, 0));
     mainFrameContentPane.add(aglButton);
     mainFrameContentPane.add(nsobjectButton);
+    mainFrameContentPane.add(nsviewButton);
     mainFrameContentPane.add(xwindowButton);
     
     mainFrame = new JFrame("vlcj Drawable Test");
@@ -244,6 +290,43 @@ public class SetDrawableTest extends VlcjTest {
       setVisible(true);
       toFront();
       mediaPlayer.playMedia(mrl);
+    }
+  }
+
+  private void dump(String s, Canvas c) {
+    System.out.println();
+    System.out.println(s);
+    System.out.println("        component: " + c);
+    System.out.println("   component peer: " + c.getPeer());
+    System.out.println("component pointer: " + Native.getComponentPointer(c));
+    System.out.println("   native pointer: " + Pointer.nativeValue(Native.getComponentPointer(c)));
+    System.out.println("     component id: " + Native.getComponentID(c));
+    try {
+      System.out.println("     view pointer: " + getViewPointer(c));
+    }
+    catch(Throwable t) {
+      System.out.println("     view pointer: " + t.getMessage());
+    }
+    System.out.println();
+  }
+
+  private long getViewPointer(Component component) {
+    try {
+      @SuppressWarnings("deprecation")
+      ComponentPeer peer = component.getPeer();
+      Method method = peer.getClass().getMethod("getViewPtr");
+      Object result = (Object)method.invoke(peer);
+      System.out.println("result: " + result);
+      if(result != null) {
+        System.out.println("class: " + result.getClass());
+        return Long.parseLong(result.toString());
+      }
+      else {
+        throw new RuntimeException("Failed to get view pointer for " + component);
+      }
+    }
+    catch(Throwable t) {
+      throw new RuntimeException(t);
     }
   }
 }
