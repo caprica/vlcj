@@ -262,6 +262,11 @@ public class SetDrawableTest extends VlcjTest {
     mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     mainFrame.pack();
     mainFrame.setVisible(true);
+
+    aglFrame.setVisible(true);
+    nsobjectFrame.setVisible(true);
+    nsviewFrame.setVisible(true);
+    xwindowFrame.setVisible(true);
   }
   
   private class VideoFrame extends JFrame {
@@ -273,13 +278,13 @@ public class SetDrawableTest extends VlcjTest {
     private VideoFrame(String title, EmbeddedMediaPlayer mediaPlayer) {
       super(title);
       this.mediaPlayer = mediaPlayer;
-      setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+      setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
       setSize(320, 180);
       pack();
       addWindowListener(new WindowAdapter() {
         @Override
         public void windowClosing(WindowEvent e) {
-          VideoFrame.this.mediaPlayer.stop();
+//          VideoFrame.this.mediaPlayer.stop();
         }
       });
     }
