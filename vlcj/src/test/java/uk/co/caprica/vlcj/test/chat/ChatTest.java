@@ -258,6 +258,8 @@ public class ChatTest extends VlcjTest {
   }
   
   private void start() {
+    mediaTextField.setText("v4l2:///dev/video0");
+    
     streamToTextField.setText("230.0.0.1:5555");
     streamFromTextField.setText("230.0.0.1:5555");
     
