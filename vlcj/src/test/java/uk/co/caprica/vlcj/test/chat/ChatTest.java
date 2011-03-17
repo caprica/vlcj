@@ -99,10 +99,12 @@ public class ChatTest extends VlcjTest {
   private JLabel streamToLabel;
   private JTextField streamToTextField;
   private JButton sendButton;
+  private JButton sendSnapshotButton;
   
   private JLabel streamFromLabel;
   private JTextField streamFromTextField;
   private JButton receiveButton;
+  private JButton receiveSnapshotButton;
   
   private CanvasVideoSurface localVideoSurface;
   private CanvasVideoSurface remoteVideoSurface;
@@ -161,11 +163,16 @@ public class ChatTest extends VlcjTest {
     
     streamToTextField = new JTextField();
     streamToTextField.setFocusAccelerator('t');
+    streamToTextField.setColumns(12);
     localStreamControls.add(streamToTextField);
     
     sendButton = new JButton("Send");
     sendButton.setMnemonic('s');
     localStreamControls.add(sendButton);
+    
+    sendSnapshotButton = new JButton("Snap");
+    sendSnapshotButton.setMnemonic('n');
+    localStreamControls.add(sendSnapshotButton);
     
     localVideoSurface = mediaPlayerFactory.newVideoSurface(localCanvas);
     localMediaPlayer.setVideoSurface(localVideoSurface);
@@ -191,11 +198,16 @@ public class ChatTest extends VlcjTest {
 
     streamFromTextField = new JTextField();
     streamFromTextField.setFocusAccelerator('f');
+    streamFromTextField.setColumns(12);
     remoteStreamControls.add(streamFromTextField);
     
     receiveButton = new JButton("Receive");
     receiveButton.setMnemonic('r');
     remoteStreamControls.add(receiveButton);
+
+    receiveSnapshotButton = new JButton("Snap");
+    receiveSnapshotButton.setMnemonic('a');
+    remoteStreamControls.add(receiveSnapshotButton);
     
     remoteVideoSurface = mediaPlayerFactory.newVideoSurface(remoteCanvas);
     remoteMediaPlayer.setVideoSurface(remoteVideoSurface);
@@ -223,10 +235,24 @@ public class ChatTest extends VlcjTest {
       }
     });
 
+    sendSnapshotButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        localMediaPlayer.saveSnapshot();
+      }
+    });
+    
     receiveButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         receive();
+      }
+    });
+
+    receiveSnapshotButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        remoteMediaPlayer.saveSnapshot();
       }
     });
   }
