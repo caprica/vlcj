@@ -639,9 +639,9 @@ public interface MediaPlayer {
    * </ul>
    * For example:
    * <pre>
-   *   mediaPlayer.setCropGeometry("4:3");
-   *   mediaPlayer.setCropGeometry("719x575+0+0");
-   *   mediaPlayer.setCropGeometry("6:10:6:10");
+   *   mediaPlayer.setCropGeometry("4:3");         // W:H
+   *   mediaPlayer.setCropGeometry("719x575+0+0"); // WxH+L+T
+   *   mediaPlayer.setCropGeometry("6+10+6+10");   // L+T+R+B
    * </pre>
    * 
    * @param cropGeometry formatted string describing the desired crop geometry
