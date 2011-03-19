@@ -104,7 +104,7 @@ public class MediaPlayerFactory {
     "In the descriptions below <libvlc-path> represents the name of the directory containing \"{0}\" and \"{1}\" and <plugins-path> represents the name of the directory containing the vlc plugins.\n\n" +
     "For libvlc to function correctly the vlc plugins must be available, there are a number of different ways to achieve this:\n" +
     " 1. Make sure the plugins are installed in the \"<libvlc-path>/{2}\" directory, this should be the case with a normal vlc installation.\n" +
-    " 2. If using vlc 1.2.x, inculde System.setProperty(\"VLC_PLUGIN_PATH\", \"<plugins-path>\"); at the start of your application code.\n" +
+    " 2. If using vlc 1.2.x, include System.setProperty(\"VLC_PLUGIN_PATH\", \"<plugins-path>\"); at the start of your application code.\n" +
     " 3. If using vlc 1.2.x, specify -DVLC_PLUGIN_PATH=<plugins-path> on the command-line when starting your application.\n" +
     " 4. If using vlc 1.1.x, pass \"--plugin-path=<plugins-path>\" as parameters in your application code when you create a MediaPlayerFactory.\n" + 
     "More information may be available in the log, specify -Dvlcj.log=DEBUG on the command-line when starting your application.\n\n";
