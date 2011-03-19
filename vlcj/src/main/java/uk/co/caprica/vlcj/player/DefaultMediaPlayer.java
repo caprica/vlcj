@@ -558,7 +558,7 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
 //  @Override
   public String getAspectRatio() {
     Logger.debug("getAspectRatio()");
-    return libvlc.libvlc_video_get_aspect_ratio(mediaPlayerInstance);
+    return getNativeString(libvlc.libvlc_video_get_aspect_ratio(mediaPlayerInstance));
   }
   
 //  @Override
@@ -570,7 +570,7 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
 //  @Override
   public String getCropGeometry() {
     Logger.debug("getCropGeometry()");
-    return libvlc.libvlc_video_get_crop_geometry(mediaPlayerInstance);
+    return getNativeString(libvlc.libvlc_video_get_crop_geometry(mediaPlayerInstance));
   }
 
 //  @Override
@@ -1527,6 +1527,26 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     return mediaInstance != null;
   }
 
+  /**
+   * Get a String from a native string pointer, freeing the native string 
+   * pointer when done.
+   * <p>
+   * If the native string pointer is not freed then a memory leak will occur.
+   * 
+   * @param pointer pointer to native string, may be <code>null</code>
+   * @return string, or <code>null</code> if the pointer was <code>null</code>
+   */
+  private String getNativeString(Pointer pointer) {
+    if(pointer != null) {
+      String result = pointer.getString(0, false);
+      libvlc.libvlc_free(pointer);
+      return result;
+    }
+    else {
+      return null;
+    }
+  }
+  
   /**
    * A call-back to handle events from the native media player.
    * <p>

@@ -1189,7 +1189,7 @@ public interface LibVlc extends Library {
    * @return the video aspect ratio or NULL if unspecified (the result must be
    *         released with free()).
    */
-  String libvlc_video_get_aspect_ratio(libvlc_media_player_t p_mi);
+  Pointer libvlc_video_get_aspect_ratio(libvlc_media_player_t p_mi);
 
   /**
    * Set new video aspect ratio.
@@ -1265,7 +1265,7 @@ public interface LibVlc extends Library {
    * @param p_mi the media player
    * @return the crop filter geometry or NULL if unset
    */
-  String libvlc_video_get_crop_geometry(libvlc_media_player_t p_mi);
+  Pointer libvlc_video_get_crop_geometry(libvlc_media_player_t p_mi);
 
   /**
    * Set new crop filter geometry.
