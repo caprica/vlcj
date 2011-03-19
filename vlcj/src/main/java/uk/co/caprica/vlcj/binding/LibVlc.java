@@ -1505,7 +1505,7 @@ public interface LibVlc extends Library {
    * @param i_device device index
    * @return long name of device
    */
-  String libvlc_audio_output_device_longname(libvlc_instance_t p_instance, String psz_audio_output, int i_device);
+  Pointer libvlc_audio_output_device_longname(libvlc_instance_t p_instance, String psz_audio_output, int i_device);
 
   /**
    * Get id name of device
@@ -1516,7 +1516,7 @@ public interface LibVlc extends Library {
    * @return id name of device, use for setting device, need to be free after
    *         use
    */
-  String libvlc_audio_output_device_id(libvlc_instance_t p_instance, String psz_audio_output, int i_device);
+  Pointer libvlc_audio_output_device_id(libvlc_instance_t p_instance, String psz_audio_output, int i_device);
 
   /**
    * Set audio output device. Changes are only effective after stop and play.

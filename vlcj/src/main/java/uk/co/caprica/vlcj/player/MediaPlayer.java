@@ -650,13 +650,16 @@ public interface MediaPlayer {
 
   /**
    * Set the desired audio output.
-   * 
+   * <p>
    * The change will not be applied until the media player has been stopped and
    * then played again.
+   * <p>
+   * The id comes from the {@link AudioDevice#getDeviceId()} returned by 
+   * {@link MediaPlayerFactory#getAudioOutputs()}.
    * 
-   * @param outputName name of the desired audio output
+   * @param outputDeviceId id of the desired audio output device
    */
-  void selectAudioOutput(String outputName);
+  void selectAudioOutputDevice(String outputDeviceId);
 
   /**
    * Toggle volume mute.

@@ -52,6 +52,8 @@ import uk.co.caprica.vlcj.player.list.MediaList;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
+import com.sun.jna.Pointer;
+
 /**
  * Factory for media player instances.
  * <p>
@@ -264,6 +266,10 @@ public class MediaPlayerFactory {
 
   /**
    * Get the available audio outputs.
+   * <p>
+   * Each audio output has zero or more audio devices, each device having it's
+   * own unique identifier that can be used on a media player to set the select
+   * the required output device.
    * 
    * @return collection of audio outputs
    */
@@ -271,13 +277,40 @@ public class MediaPlayerFactory {
     Logger.debug("getAudioOutputs()");
     List<AudioOutput> result = new ArrayList<AudioOutput>();
     libvlc_audio_output_t audioOutput = libvlc.libvlc_audio_output_list_get(instance);
-    int i = 0;
     while(audioOutput != null) {
-      String longName = libvlc.libvlc_audio_output_device_longname(instance, audioOutput.psz_name, i++);
-      result.add(new AudioOutput(audioOutput.psz_name, audioOutput.psz_description, longName));
+      result.add(new AudioOutput(audioOutput.psz_name, audioOutput.psz_description, getAudioOutputDevices(audioOutput.psz_name)));
       audioOutput = audioOutput.p_next;
     }
     libvlc.libvlc_audio_output_list_release(audioOutput);
+    return result;
+  }
+
+  /**
+   * Get the devices associated with an audio output.
+   * 
+   * @param outputName output
+   * @return collection of audio output devices
+   */
+  private List<AudioDevice> getAudioOutputDevices(String outputName) {
+    Logger.debug("getAudioOutputDevices(outputName={})", outputName);
+    int deviceCount = libvlc.libvlc_audio_output_device_count(instance, outputName);
+    Logger.debug("deviceCount={}", deviceCount);
+    List<AudioDevice> result = new ArrayList<AudioDevice>(deviceCount);
+    for(int i = 0; i < deviceCount; i++) {
+      String deviceId = null;
+      Pointer deviceIdPtr = libvlc.libvlc_audio_output_device_id(instance, outputName, i);
+      if(deviceIdPtr != null) {
+        deviceId = deviceIdPtr.getString(0, false);
+        libvlc.libvlc_free(deviceIdPtr);
+      }
+      String longName = null;
+      Pointer longNamePtr = libvlc.libvlc_audio_output_device_longname(instance, outputName, i);
+      if(longNamePtr != null) {
+        longName = longNamePtr.getString(0, false);
+        libvlc.libvlc_free(longNamePtr);
+      }
+      result.add(new AudioDevice(deviceId, longName));
+    }
     return result;
   }
 

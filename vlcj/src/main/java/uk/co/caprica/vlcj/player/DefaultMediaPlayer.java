@@ -757,9 +757,9 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   // === Audio Controls =======================================================
 
 //  @Override
-  public void selectAudioOutput(String outputName) {
-    Logger.debug("selectAudioOutput(outputName={})", outputName);
-    libvlc.libvlc_audio_output_set(mediaPlayerInstance, outputName);
+  public void selectAudioOutputDevice(String outputDeviceId) {
+    Logger.debug("selectAudioOutputDevice(outputDeviceId={})", outputDeviceId);
+    libvlc.libvlc_audio_output_set(mediaPlayerInstance, outputDeviceId);
   }
   
 //  @Override

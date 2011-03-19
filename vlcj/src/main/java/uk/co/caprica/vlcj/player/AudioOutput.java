@@ -19,8 +19,14 @@
 
 package uk.co.caprica.vlcj.player;
 
+import java.util.List;
+
 /**
  * Description of an audio output.
+ * <p>
+ * An audio output has zero or more associated audio devices. Each device has
+ * a unique identifier than can be used to select the required output device 
+ * for a media player.
  */
 public class AudioOutput {
 
@@ -37,19 +43,19 @@ public class AudioOutput {
   /**
    * Long name.
    */
-  private final String longName;
+  private final List<AudioDevice> devices;
 
   /**
    * Create an audio output.
    * 
    * @param name name
    * @param description description
-   * @param longName long name
+   * @param devices collection of audio devices for this output
    */
-  public AudioOutput(String name, String description, String longName) {
+  public AudioOutput(String name, String description, List<AudioDevice> devices) {
     this.name = name;
     this.description = description;
-    this.longName = longName;
+    this.devices = devices;
   }
 
   /**
@@ -69,14 +75,14 @@ public class AudioOutput {
   public String getDescription() {
     return description;
   }
-  
+
   /**
-   * Get the long name.
+   * Get the collection of audio devices for this output.
    * 
-   * @return long name
+   * @return audio devices
    */
-  public String getLongName() {
-    return longName;
+  public List<AudioDevice> getDevices() {
+    return devices;
   }
   
   @Override
@@ -85,7 +91,7 @@ public class AudioOutput {
     sb.append(getClass().getSimpleName()).append('[');
     sb.append("name=").append(name).append(',');
     sb.append("description=").append(description).append(',');
-    sb.append("longName=").append(longName).append(']');
+    sb.append("devices=").append(devices).append(']');
     return sb.toString();
   }
 }

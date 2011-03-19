@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.test.factory;
 
 import java.util.List;
 
+import uk.co.caprica.vlcj.player.AudioDevice;
 import uk.co.caprica.vlcj.player.AudioOutput;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -30,7 +31,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class AudioOutputsTest extends VlcjTest {
 
-  private static final String FORMAT_PATTERN = "%3s %-12s %-40s %s\n";
+  private static final String FORMAT_PATTERN = "%3s %-12s %-40s %-30s %s\n";
 
   public static void main(String[] args) throws Exception {
     MediaPlayerFactory factory = new MediaPlayerFactory();
@@ -40,14 +41,19 @@ public class AudioOutputsTest extends VlcjTest {
     System.out.println("Audio Outputs:");
     System.out.println();
     
-    System.out.printf(FORMAT_PATTERN , "#", "Name", "Description", "Long Name");
-    System.out.printf(FORMAT_PATTERN , "=", "====", "===========", "=========");
+    System.out.printf(FORMAT_PATTERN , "#", "Name", "Description", "Devices", "Long Name");
+    System.out.printf(FORMAT_PATTERN , "=", "====", "===========", "=======", "=========");
     for(int i = 0; i < audioOutputs.size(); i++) {
       dump(i, audioOutputs.get(i));
     }
   }
 
   private static void dump(int i, AudioOutput audioOutput) {
-    System.out.printf(FORMAT_PATTERN , String.valueOf(i+1), audioOutput.getName(), audioOutput.getDescription(), audioOutput.getLongName());
+    List<AudioDevice> audioDevices = audioOutput.getDevices(); 
+    System.out.printf(FORMAT_PATTERN , String.valueOf(i+1), audioOutput.getName(), audioOutput.getDescription(), "(" + audioDevices.size() + ")", "");
+    for(int j = 0; j < audioDevices.size(); j++) {
+      AudioDevice audioDevice = audioOutput.getDevices().get(j);
+      System.out.printf(FORMAT_PATTERN, "", "", "", audioDevice.getDeviceId(), audioDevice.getLongName());
+    }
   }
 }
