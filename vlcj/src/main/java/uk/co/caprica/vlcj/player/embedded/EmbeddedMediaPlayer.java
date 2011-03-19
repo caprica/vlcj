@@ -52,7 +52,7 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
    * <p>
    * This deferring behaviour is usually a good thing because when setting a
    * video surface component on the native media player the video surface
-   * component must be a visible component and this is often not the case 
+   * component must be a displayable component and this is often not the case 
    * during the construction and initialisation of the application.
    * <p>
    * Most applications will not need to call this method.
