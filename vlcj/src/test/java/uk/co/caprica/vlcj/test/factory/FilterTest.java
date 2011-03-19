@@ -35,13 +35,11 @@ public class FilterTest extends VlcjTest {
   private static final String FORMAT_PATTERN = "%3s %-24s %-24s %-80s %s\n";
 
   public static void main(String[] args) throws Exception {
-    String[] libvlcArgs = new String[] {};
-    
-    MediaPlayerFactory factory = new MediaPlayerFactory(libvlcArgs);
+    MediaPlayerFactory factory = new MediaPlayerFactory();
     
     System.out.println("Audio Filters:");
     System.out.println();
-    
+
     System.out.printf(FORMAT_PATTERN , "#", "Name", "Short Name", "Long Name", "Help");
     System.out.printf(FORMAT_PATTERN , "=", "====", "==========", "=========", "====");
     List<ModuleDescription> audioFilters = factory.getAudioFilters();
