@@ -35,14 +35,21 @@ public class AudioOutput {
   private final String description;
 
   /**
+   * Long name.
+   */
+  private final String longName;
+
+  /**
    * Create an audio output.
    * 
    * @param name name
    * @param description description
+   * @param longName long name
    */
-  public AudioOutput(String name, String description) {
+  public AudioOutput(String name, String description, String longName) {
     this.name = name;
     this.description = description;
+    this.longName = longName;
   }
 
   /**
@@ -63,12 +70,22 @@ public class AudioOutput {
     return description;
   }
   
+  /**
+   * Get the long name.
+   * 
+   * @return long name
+   */
+  public String getLongName() {
+    return longName;
+  }
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(60);
     sb.append(getClass().getSimpleName()).append('[');
     sb.append("name=").append(name).append(',');
-    sb.append("description=").append(description).append(']');
+    sb.append("description=").append(description).append(',');
+    sb.append("longName=").append(longName).append(']');
     return sb.toString();
   }
 }

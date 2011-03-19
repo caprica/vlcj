@@ -271,8 +271,10 @@ public class MediaPlayerFactory {
     Logger.debug("getAudioOutputs()");
     List<AudioOutput> result = new ArrayList<AudioOutput>();
     libvlc_audio_output_t audioOutput = libvlc.libvlc_audio_output_list_get(instance);
+    int i = 0;
     while(audioOutput != null) {
-      result.add(new AudioOutput(audioOutput.psz_name, audioOutput.psz_description));
+      String longName = libvlc.libvlc_audio_output_device_longname(instance, audioOutput.psz_name, i++);
+      result.add(new AudioOutput(audioOutput.psz_name, audioOutput.psz_description, longName));
       audioOutput = audioOutput.p_next;
     }
     libvlc.libvlc_audio_output_list_release(audioOutput);
