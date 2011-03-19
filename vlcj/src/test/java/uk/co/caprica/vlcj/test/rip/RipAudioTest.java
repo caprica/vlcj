@@ -17,7 +17,7 @@
  * Copyright 2009, 2010, 2011 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.test.ripaudio;
+package uk.co.caprica.vlcj.test.rip;
 
 import java.util.concurrent.CountDownLatch;
 
