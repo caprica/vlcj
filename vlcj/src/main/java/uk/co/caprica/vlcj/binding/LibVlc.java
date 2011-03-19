@@ -462,7 +462,7 @@ public interface LibVlc extends Library {
    * @param e_meta the meta to read
    * @return the media's meta
    */
-  String libvlc_media_get_meta(libvlc_media_t p_md, int e_meta);
+  Pointer libvlc_media_get_meta(libvlc_media_t p_md, int e_meta);
 
   /**
    * Set the meta of the media (this function will not save the meta, call

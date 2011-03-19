@@ -291,7 +291,7 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   public String getMeta(MediaMetaType metaType) {
     Logger.debug("getMeta(metaType={})", metaType);
     if(mediaInstance != null) {
-      return libvlc.libvlc_media_get_meta(mediaInstance, metaType.intValue());
+      return getNativeString(libvlc.libvlc_media_get_meta(mediaInstance, metaType.intValue()));
     }
     else {
       throw new RuntimeException("Attempt to get media meta when there is no media");
