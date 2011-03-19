@@ -54,6 +54,11 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class MetaTest extends VlcjTest {
 
   public static void main(String[] args) {
+    if(args.length != 1) {
+      System.out.println("Specify a single MRL");
+      System.exit(1);
+    }
+
     // Create a media player
     MediaPlayerFactory factory = new MediaPlayerFactory();
     MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
