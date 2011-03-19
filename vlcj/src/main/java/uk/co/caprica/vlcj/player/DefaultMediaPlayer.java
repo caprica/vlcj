@@ -763,6 +763,18 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
   
 //  @Override
+  public void setAudioOutputDeviceType(AudioOutputDeviceType deviceType) {
+    Logger.debug("setAudioOutputDeviceType(deviceType={})");
+    libvlc.libvlc_audio_output_set_device_type(mediaPlayerInstance, deviceType.intValue());
+  }
+  
+//  @Override
+  public AudioOutputDeviceType getAudioOutputDeviceType() {
+    Logger.debug("audioOutputDeviceType()");
+    return AudioOutputDeviceType.valueOf(libvlc.libvlc_audio_output_get_device_type(mediaPlayerInstance));
+  }
+  
+//  @Override
   public void mute() {
     Logger.debug("mute()");
     libvlc.libvlc_audio_toggle_mute(mediaPlayerInstance);
