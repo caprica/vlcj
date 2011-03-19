@@ -50,24 +50,25 @@ import com.sun.jna.ptr.PointerByReference;
 /**
  * JNA interface to the libvlc native library.
  * <p>
- * This is <strong>not a complete</strong> interface to libvlc.
+ * This is <strong>not a complete</strong> interface to libvlc, although most
+ * functions are present.
  * <p>
  * This interface specifies the exposed methods only, the types and structures
  * are all factored out separately in the "internal" sub-package.
  * <p>
  * This code and that in the internal sub-package is structured out of necessity
- * to interoperate with the libvlc native library. This code was derived from
- * the original JVLC source code, the copyright of which belongs to the VideoLAN
- * team, which was distributed under GPL version 2 or later.
+ * to interoperate with the libvlc native library. This code was originally 
+ * derived from the original JVLC source code, the copyright of which belongs to
+ * the VideoLAN team, which was distributed under GPL version 2 or later.
  * <p>
- * This binding is for version 1.1 of vlc. Earlier versions of vlc are radically
- * different and will not work with these bindings.
+ * This binding is for version 1.1 and later of vlc. Earlier versions of vlc are
+ * radically different and will not work with these bindings.
  * <p>
  * Some functions are only available <em>after</em> version 1.1.0 of libvlc.
  * <p>
  * Some functions are only available <em>after</em> version 1.2.0 of libvlc.
  * <p>
- * This flag may be useful:
+ * This system property may be useful for debugging:
  * <pre>
  * -Djna.dump_memory=true
  * </pre>
