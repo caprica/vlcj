@@ -615,16 +615,16 @@ public interface MediaPlayer {
   int setRate(float rate);
 
   /**
+   * Set the video aspect ratio
    * 
-   * 
-   * @param aspectRatio
+   * @param aspectRatio aspect ratio
    */
   void setAspectRatio(String aspectRatio);
 
   /**
+   * Set the video scaling factor.
    * 
-   * 
-   * @param factor
+   * @param factor scaling factor, or zero to scale the video the size of the container
    */
   void setScale(float factor);
 
@@ -783,35 +783,35 @@ public interface MediaPlayer {
   void previousChapter();
 
   /**
-   * 
+   * Activate a DVD menu.
    * 
    * <strong>Requires vlc 1.2.0 or later.</strong>
    */
   void menuActivate();
 
   /**
-   * 
+   * Navigate up a DVD menu.
    * 
    * <strong>Requires vlc 1.2.0 or later.</strong>
    */
   void menuUp();
 
   /**
-   * 
+   * Navigate down a DVD menu.
    * 
    * <strong>Requires vlc 1.2.0 or later.</strong>
    */
   void menuDown();
 
   /**
-   * 
+   * Navigate left a DVD menu.
    * 
    * <strong>Requires vlc 1.2.0 or later.</strong>
    */
   void menuLeft();
 
   /**
-   * 
+   * Navigate right a DVD menu.
    * 
    * <strong>Requires vlc 1.2.0 or later.</strong>
    */
