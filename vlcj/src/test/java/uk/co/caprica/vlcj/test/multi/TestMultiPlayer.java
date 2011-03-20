@@ -44,6 +44,15 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * Example multi-instance player.
+ * <p>
+ * This approach to multi-instance players is not really recommended due to
+ * potential concurrency/re-entrancy problems with the long list of native
+ * libraries that vlc uses. The more player instances you have in one 
+ * application, the more likely you are to say fatal crashes in those native
+ * libraries.
+ * <p>
+ * Out of process media players are reliable, but a lot more difficult and
+ * intricate to implement.
  */
 public class TestMultiPlayer extends VlcjTest {
 
