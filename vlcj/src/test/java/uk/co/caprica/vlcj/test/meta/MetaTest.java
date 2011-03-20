@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.test.meta;
 
+import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.MediaMetaType;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -50,6 +51,9 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  *   ARTWORKURL -> 
  *      TRACKID -> 
  * </pre>
+ * An interesting feature of vlc is that if the media contains embedded art-
+ * work, the ARTWORKURL meta data field will point to a valid local file for 
+ * the extracted art-work.  
  */
 public class MetaTest extends VlcjTest {
 
@@ -59,6 +63,8 @@ public class MetaTest extends VlcjTest {
       System.exit(1);
     }
 
+    Logger.setLevel(Logger.Level.INFO);
+    
     // Create a media player
     MediaPlayerFactory factory = new MediaPlayerFactory();
     MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
@@ -72,6 +78,7 @@ public class MetaTest extends VlcjTest {
     mediaPlayer.parseMedia();
     
     // Dump out the enumerated values...
+    System.out.println();
     for(MediaMetaType metaType : MediaMetaType.values()) {
       String val = mediaPlayer.getMeta(metaType);
       System.out.printf("%12s -> %s\n", metaType, val != null ? val : "");
