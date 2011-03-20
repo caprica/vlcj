@@ -37,12 +37,14 @@ public class FilterTest extends VlcjTest {
   public static void main(String[] args) throws Exception {
     MediaPlayerFactory factory = new MediaPlayerFactory();
     
+    List<ModuleDescription> audioFilters = factory.getAudioFilters();
+    List<ModuleDescription> videoFilters = factory.getVideoFilters();
+
     System.out.println("Audio Filters:");
     System.out.println();
 
     System.out.printf(FORMAT_PATTERN , "#", "Name", "Short Name", "Long Name", "Help");
     System.out.printf(FORMAT_PATTERN , "=", "====", "==========", "=========", "====");
-    List<ModuleDescription> audioFilters = factory.getAudioFilters();
     for(int i = 0; i < audioFilters.size(); i++) {
       dump(i, audioFilters.get(i));
     }
@@ -54,7 +56,6 @@ public class FilterTest extends VlcjTest {
 
     System.out.printf(FORMAT_PATTERN , "#", "Name", "Short Name", "Long Name", "Help");
     System.out.printf(FORMAT_PATTERN , "=", "====", "==========", "=========", "====");
-    List<ModuleDescription> videoFilters = factory.getVideoFilters();
     for(int i = 0; i < videoFilters.size(); i++) {
       dump(i, videoFilters.get(i));
     }
