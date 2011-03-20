@@ -41,7 +41,6 @@ public class VcdMrl implements Mrl {
 
   private String value;
   
-  
   public VcdMrl device(String device) {
     this.device = device;
     return this;
