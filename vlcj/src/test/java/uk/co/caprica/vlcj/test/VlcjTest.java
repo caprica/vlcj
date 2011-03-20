@@ -37,6 +37,8 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * <p>
  * If you do not explicitly set the search path, the system search path will be
  * used.
+ * <p>
+ * You can also set the log level here.
  */
 public abstract class VlcjTest {
   
