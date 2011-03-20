@@ -31,7 +31,12 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class StreamRtp extends VlcjTest {
 
   public static void main(String[] args) throws Exception {
-    String media = "/home/movies/test.mp4";
+    if(args.length != 1) {
+      System.out.println("Specify a single MRL to stream");
+      System.exit(1);
+    }
+    
+    String media = args[0];
     String options = formatRtpStream("230.0.0.1", 5555);
 
     System.out.println("Streaming '" + media + "' to '" + options + "'");
