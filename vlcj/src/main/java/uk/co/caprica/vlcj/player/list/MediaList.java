@@ -19,8 +19,10 @@
 
 package uk.co.caprica.vlcj.player.list;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -192,6 +194,28 @@ public class MediaList {
     Logger.debug("isReadOnly()");
     boolean readOnly = libvlc.libvlc_media_list_is_readonly(mediaListInstance) == 0;
     return readOnly;
+  }
+  
+  /**
+   * Get the media resource locators for all of the items in the list.
+   * 
+   * @return list of media resource locators
+   */
+  public List<String> mrls() {
+    Logger.debug("mrls()");
+    try {
+      lock();
+      int count = libvlc.libvlc_media_list_count(mediaListInstance);
+      List<String> result = new ArrayList<String>(count);
+      for(int i = 0; i < count; i++) {
+        libvlc_media_t mediaInstance = libvlc.libvlc_media_list_item_at_index(mediaListInstance, i);
+        result.add(mrl(mediaInstance));
+      }
+      return result;
+    }
+    finally {
+      unlock();
+    }
   }
   
   /**
