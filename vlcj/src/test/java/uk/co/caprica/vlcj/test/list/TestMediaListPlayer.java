@@ -29,6 +29,9 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * A simple example showing how to use a media list player.
+ * <p>
+ * This test does not embed a video window so a new native video window will be
+ * created for each movie in the play-list.
  */
 public class TestMediaListPlayer extends VlcjTest {
 
