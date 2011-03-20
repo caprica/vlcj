@@ -29,6 +29,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -80,12 +81,12 @@ public class CropTest extends VlcjTest {
   };
 
   private static final String HELP_TEXT = 
-    "<html>Select a standard crop geometry from the list box, or enter a custom geometry.<br/><br/>" +
+    "<html>Select a standard crop geometry from the list box, or enter a custom geometry and press enter/return.<br/><br/>" +
   	"For the custom geometry, use:<ul>" +
   	"<li>W:H, e.g. 16:9 and the values must be integers</li>" +
   	"<li>WxH+L+T, e.g. 720x511+0+73</li>" +
   	"<li>L+T+R+B, e.g. 10+20+10+20</li>" +
-  	"</ul>Enter a custom geometry and press enter/return.</html>";
+  	"</ul></html>";
   
   private MediaPlayerFactory factory;
   private EmbeddedMediaPlayer mediaPlayer;
@@ -100,6 +101,7 @@ public class CropTest extends VlcjTest {
   private JComboBox standardCropComboBox;
   private JLabel customCropLabel;
   private JTextField customCropTextField;
+  private JButton pauseButton;
   private JLabel helpText;
   
   public static void main(String[] args) throws Exception {
@@ -162,6 +164,9 @@ public class CropTest extends VlcjTest {
     customCropTextField = new JTextField(10);
     customCropTextField.setFocusAccelerator('c');
     
+    pauseButton = new JButton("Pause");
+    pauseButton.setMnemonic('p');
+    
     controlsPane = new JPanel();
     controlsPane.setLayout(new BoxLayout(controlsPane, BoxLayout.X_AXIS));
     controlsPane.add(standardCropLabel);
@@ -171,6 +176,8 @@ public class CropTest extends VlcjTest {
     controlsPane.add(customCropLabel);
     controlsPane.add(Box.createHorizontalStrut(4));
     controlsPane.add(customCropTextField);
+    controlsPane.add(Box.createHorizontalStrut(4));
+    controlsPane.add(pauseButton);
     
     helpText = new JLabel(HELP_TEXT);
     
@@ -196,12 +203,19 @@ public class CropTest extends VlcjTest {
         }
       }
     });
-    
+
     customCropTextField.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         String value = customCropTextField.getText();
         mediaPlayer.setCropGeometry(value);
+      }
+    });
+    
+    pauseButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        mediaPlayer.pause();
       }
     });
   }
