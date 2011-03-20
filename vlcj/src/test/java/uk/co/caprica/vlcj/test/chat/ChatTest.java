@@ -71,7 +71,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * You should also be able to adapt this to use IPv6 addresses.
  * <p>
  * If you want to capture audio, you should a media option similar to the
- * following:
+ * following (on Linux at least):
  * <pre>
  *   :input-slave=alsa://hw:0,0
  * </pre>
