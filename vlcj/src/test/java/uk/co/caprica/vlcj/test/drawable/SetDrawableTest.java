@@ -76,6 +76,11 @@ import com.sun.jna.Pointer;
  * <p>
  * The Windows implementation is excluded from this since it works and is 
  * irrelevant.
+ * <p>
+ * Setting a Canvas for the video surface does not work on MacOS because a
+ * standard java.awt.Canvas knows nothing about the VLC view embedding 
+ * protocol. The solution is to provide a CococaComponent implementation and a
+ * native NSView implementation (similar to that in vlc's VLCVideoView.m).
  */
 public class SetDrawableTest extends VlcjTest {
 
@@ -157,7 +162,6 @@ public class SetDrawableTest extends VlcjTest {
       @Override
       public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
         dump("NSObject", nsobjectCanvas);
-        // TODO shouldn't this component pointer be on the attach template method?
         libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), componentId);
       }
     });
@@ -167,6 +171,7 @@ public class SetDrawableTest extends VlcjTest {
       public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
         dump("NSView", nsviewCanvas);
         // TODO shouldn't this component pointer be on the attach template method?
+        //      (that may be moot since it returns the same value anyway)
         try {
           long viewPtr = getViewPointer(nsviewCanvas);
           libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), viewPtr);
@@ -314,6 +319,20 @@ public class SetDrawableTest extends VlcjTest {
     System.out.println();
   }
 
+  /**
+   * Get the component's peer handle.
+   * <p>
+   * Note that this does in fact return the same value as the JNA 
+   * Native.componentID() method, so is actually redundant.
+   * <p>
+   * It exists here for the sake of investigation.
+   * <p>
+   * On MacOS, the peer's getViewPtr() method returns a handle for an NSView
+   * object instance.
+   * 
+   * @param component component
+   * @return peer
+   */
   private long getViewPointer(Component component) {
     try {
       @SuppressWarnings("deprecation")
