@@ -85,7 +85,7 @@ public class DirectTestPlayer extends VlcjTest {
 
       @Override
       public void run() {
-        JFrame frame = new JFrame("VLCJ 1.2.0 Direct Video Test");
+        JFrame frame = new JFrame("VLCJ Direct Video Test");
         imagePane = new ImagePane(image);
         imagePane.setSize(width, height);
         imagePane.setMinimumSize(new Dimension(width, height));
