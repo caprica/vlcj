@@ -39,8 +39,9 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * appropriate DVD decoding libraries installed.
  * <p>
  * Specify three things on the command-line:
- *   <dvd-device> <output-file> <preset>
- *   
+ * <pre>
+ *   [dvd-device] [output-file] [preset]
+ * </pre>  
  * For example:
  * <pre>
  *   simpledvd:///dev/dvd /home/rip.webm WEBM_LOW
