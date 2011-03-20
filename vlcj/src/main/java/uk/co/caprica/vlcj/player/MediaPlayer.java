@@ -658,8 +658,9 @@ public interface MediaPlayer {
    * {@link MediaPlayerFactory#getAudioOutputs()}.
    * 
    * @param outputDeviceId id of the desired audio output device
+   * @return <code>true</code> if the device was successfully selected, otherwise <code>false</code> 
    */
-  void selectAudioOutputDevice(String outputDeviceId);
+  boolean selectAudioOutputDevice(String outputDeviceId);
 
   /**
    * Set the audio output device type.
