@@ -38,6 +38,9 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <p>
  * This test scans a directory recursively for ".iso" media files and plays
  * each one for a short period.
+ * <p>
+ * This test is mainly used so that a profiler can connect to the JVM to help
+ * detect any Java heap memory leaks.
  */
 public class VolumeTestPlayer extends VlcjTest {
 
