@@ -57,7 +57,8 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <pre>
  *   dshow://
  * </pre>
- * Audio capture is achieved by setting a media option, for example:
+ * Audio capture is achieved by setting a media option, for example (on Linux
+ * at least):
  * <pre>
  *   :input-slave=alsa://hw:0,0
  * </pre>
@@ -120,7 +121,7 @@ public class CaptureTest extends VlcjTest {
     String fileName =  dir.getAbsolutePath() + "/Capture-" + df.format(new Date()) + ".mpg";
 
     // Tweak the options depending on your encoding requirements and audio 
-    // capture device
+    // capture device (ALSA is not likely to work on Windows of course)
     String[] options = {
       ":sout=#transcode{vcodec=mp4v,vb=4096,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=file{dst=" + fileName + "},dst=display}",
       ":input-slave=alsa://hw:0,0"
