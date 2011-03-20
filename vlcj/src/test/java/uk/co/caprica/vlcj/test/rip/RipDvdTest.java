@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.test.rip;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 /**
  * The basics of DVD encoding.
  * <p>
- * This example is very unsophisticated, there isn't even a progress indicator, 
+ * This example is very unsophisticated, there is a minimal progress indicator,
  * but it does show working DVD encoding.
  * <p>
  * Note that you must use a DVD that has no encryption, or you must have the
@@ -46,6 +47,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * </pre>
  * It is recommended to try the WEBM_LOW preset first.
  * <p>
+ * Encoding a full DVD is going to be slow.
  */
 public class RipDvdTest extends VlcjTest {
 
@@ -103,13 +105,24 @@ public class RipDvdTest extends VlcjTest {
     final MediaPlayerFactory factory = new MediaPlayerFactory();
     final HeadlessMediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
     mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+      DecimalFormat df = new DecimalFormat("0.00");
+      
       @Override
       public void playing(MediaPlayer mediaPlayer) {
         System.out.println("Playing...");
       }
+      
+      @Override
+      public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
+        // This escape sequence to reset the terminal window cursor back to 
+        // column zero will not work in the Eclipse console window and most 
+        // likely not work on Windows at all
+        System.out.print(df.format(newPosition*100.0f) + "%" + "\u001b[0G");
+      }
 
       @Override
       public void finished(MediaPlayer mediaPlayer) {
+        System.out.println();
         System.out.println("Finished.");
         mediaPlayer.release();
         factory.release();
@@ -125,6 +138,7 @@ public class RipDvdTest extends VlcjTest {
 
       @Override
       public void error(MediaPlayer mediaPlayer) {
+        System.out.println();
         System.out.println("Error.");
         mediaPlayer.release();
         factory.release();
