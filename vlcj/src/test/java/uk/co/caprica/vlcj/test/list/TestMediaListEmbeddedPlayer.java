@@ -84,6 +84,8 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
 
     mediaListPlayer.play();
 
+    // This looping is just for purposes of demonstration, ordinarily you would
+    // not do this of course
     for(;;) {
       Thread.sleep(500);
       mediaPlayer.setChapter(3);
