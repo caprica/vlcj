@@ -451,6 +451,12 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   //  @Override
   public boolean playNextSubItem(String... mediaOptions) {
     Logger.debug("playNextSubItem(mediaOptions={})", Arrays.toString(mediaOptions));
+    return playSubItem(subItemIndex+1, mediaOptions);
+  }
+
+//  @Override
+  public boolean playSubItem(int index, String... mediaOptions) {
+    Logger.debug("playSubItem(index={},mediaOptions={})", index, Arrays.toString(mediaOptions));
     // Assume a sub-item was not played
     boolean subItemPlayed = false;
     // If there is a current media...
@@ -466,7 +472,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         // Advance the current sub-item (initially it will be -1)
         int subItemCount = libvlc.libvlc_media_list_count(subItems);
         Logger.debug("subItemCount={}", subItemCount);
-        subItemIndex++;
+        subItemIndex = index;
         Logger.debug("subItemIndex={}", subItemIndex);
         // If the last sub-item already been played...
         if(subItemIndex >= subItemCount) {
@@ -520,7 +526,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   
   // === Status Controls ======================================================
 
-//  @Override
+  //  @Override
   public boolean isPlayable() {
     Logger.trace("isPlayable()");
     return libvlc.libvlc_media_player_will_play(mediaPlayerInstance) == 1;

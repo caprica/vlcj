@@ -334,12 +334,31 @@ public interface MediaPlayer {
    * <p>
    * If any standard media options have been set via {@link #setStandardMediaOptions(String...)}
    * then those options will be applied to the sub-item.
+   * <p>
+   * If the media player has been set to automatically repeat, then the sub-
+   * items will be repeated once the last one has been played.
    * 
    * @param mediaOptions zero or more media options for the sub-item
    * @return <code>true</code> if there is a sub-item, otherwise <code>false</code>
    */
   boolean playNextSubItem(String... mediaOptions);
 
+  /**
+   * Play a particular sub-item (if there is one).
+   * <p>
+   * If any standard media options have been set via {@link #setStandardMediaOptions(String...)}
+   * then those options will be applied to the sub-item.
+   * <p>
+   * If the media player has been set to automatically repeat, then the sub-
+   * items will be repeated once the last one has been played, or if the 
+   * requested sub-item index exceeds the currently available sub-items.
+   * <p>
+   * @param index sub-item index
+   * @param mediaOptions zero or more media options for the sub-item
+   * @return <code>true</code> if there is a sub-item, otherwise <code>false</code>
+   */
+  boolean playSubItem(int index, String... mediaOptions);
+  
   /**
    * Is the current media playable?
    * 
