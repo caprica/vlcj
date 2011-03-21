@@ -35,7 +35,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
 import uk.co.caprica.vlcj.log.Logger;
-import uk.co.caprica.vlcj.player.MediaMetaType;
+import uk.co.caprica.vlcj.player.AbstractMediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEvent;
@@ -49,12 +49,7 @@ import com.sun.jna.Pointer;
  * <p> 
  * Note that the per-media events are not currently implemented.
  */
-public class DefaultMediaListPlayer implements MediaListPlayer {
-
-  /**
-   * Native library interface.
-   */
-  private final LibVlc libvlc;
+public class DefaultMediaListPlayer extends AbstractMediaPlayer implements MediaListPlayer {
 
   /**
    * Collection of event listeners.
@@ -70,11 +65,6 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
    * Background service to notify event listeners.
    */
   private final ExecutorService listenersService = Executors.newSingleThreadExecutor();
-
-  /**
-   * Native libvlc instance.
-   */
-  private libvlc_instance_t instance;
 
   /**
    * Native media player instance.
@@ -127,9 +117,8 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
    * @param instance libvlc instance
    */
   public DefaultMediaListPlayer(LibVlc libvlc, libvlc_instance_t instance) {
-    this.libvlc = libvlc;
-    this.instance = instance;
-    
+    super(libvlc, instance);
+    Logger.debug("DefaultMediaListPlayer(libvlc={}, instance={})", libvlc, instance);
     createInstance();
   }
 
@@ -242,17 +231,6 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
   }
   
 //  @Override
-  public String getMeta(MediaMetaType metaType, libvlc_media_t media) {
-    Logger.debug("getMeta(metaType={},media={})", metaType, media);
-    if(media != null) {
-      return getNativeString(libvlc.libvlc_media_get_meta(media, metaType.intValue()));
-    }
-    else {
-      throw new RuntimeException("Attempt to get media meta when there is no media");
-    }
-  }
-  
-//  @Override
   public String mrl(libvlc_media_t mediaInstance) {
     Logger.debug("mrl(mediaInstance={})", mediaInstance);
     return libvlc.libvlc_media_get_mrl(mediaInstance);
@@ -344,26 +322,6 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
         }
       }
       callback = null;
-    }
-  }
-  
-  /**
-   * Get a String from a native string pointer, freeing the native string 
-   * pointer when done.
-   * <p>
-   * If the native string pointer is not freed then a memory leak will occur.
-   * 
-   * @param pointer pointer to native string, may be <code>null</code>
-   * @return string, or <code>null</code> if the pointer was <code>null</code>
-   */
-  private String getNativeString(Pointer pointer) {
-    if(pointer != null) {
-      String result = pointer.getString(0, false);
-      libvlc.libvlc_free(pointer);
-      return result;
-    }
-    else {
-      return null;
     }
   }
   
