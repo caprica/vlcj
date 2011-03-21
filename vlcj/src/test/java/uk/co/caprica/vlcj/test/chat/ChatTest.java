@@ -43,6 +43,7 @@ import javax.swing.border.TitledBorder;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -258,8 +259,8 @@ public class ChatTest extends VlcjTest {
   }
   
   private void start() {
-    mediaTextField.setText("v4l2:///dev/video0");
-    
+    mediaTextField.setText(!RuntimeUtil.isWindows() ? "v4l2:///dev/video0" : "dshow://");
+
     streamToTextField.setText("230.0.0.1:5555");
     streamFromTextField.setText("230.0.0.1:5555");
     
