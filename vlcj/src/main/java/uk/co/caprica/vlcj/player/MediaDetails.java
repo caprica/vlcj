@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Media meta data.
  */
-public class MediaMetaData implements Serializable {
+public class MediaDetails implements Serializable {
 
   /**
    * Serial version.

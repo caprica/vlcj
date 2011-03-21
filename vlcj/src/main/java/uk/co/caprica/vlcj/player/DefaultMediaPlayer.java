@@ -535,25 +535,25 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
 
 //  @Override
-  public MediaMetaData getMediaMetaData() {
-    Logger.debug("getMediaMetaData()");
+  public MediaDetails getMediaDetails() {
+    Logger.debug("getMediaDetails()");
     // The media must be playing to get this meta data...
     if(isPlaying()) {
-      MediaMetaData mediaMetaData = new MediaMetaData();
-      mediaMetaData.setTitleCount(getTitleCount());
-      mediaMetaData.setVideoTrackCount(getVideoTrackCount());
-      mediaMetaData.setAudioTrackCount(getAudioTrackCount());
-      mediaMetaData.setSpuCount(getSpuCount());
-      mediaMetaData.setTitleDescriptions(getTitleDescriptions());
-      mediaMetaData.setVideoDescriptions(getVideoDescriptions());
-      mediaMetaData.setAudioDescriptions(getAudioDescriptions());
-      mediaMetaData.setSpuDescriptions(getSpuDescriptions());
+      MediaDetails mediaDetails = new MediaDetails();
+      mediaDetails.setTitleCount(getTitleCount());
+      mediaDetails.setVideoTrackCount(getVideoTrackCount());
+      mediaDetails.setAudioTrackCount(getAudioTrackCount());
+      mediaDetails.setSpuCount(getSpuCount());
+      mediaDetails.setTitleDescriptions(getTitleDescriptions());
+      mediaDetails.setVideoDescriptions(getVideoDescriptions());
+      mediaDetails.setAudioDescriptions(getAudioDescriptions());
+      mediaDetails.setSpuDescriptions(getSpuDescriptions());
       Map<Integer, List<String>> allChapterDescriptions = new TreeMap<Integer, List<String>>();
       for(int i = 0; i < getTitleCount(); i++) {
         allChapterDescriptions.put(i, getChapterDescriptions(i));
       }
-      mediaMetaData.setChapterDescriptions(allChapterDescriptions);
-      return mediaMetaData;
+      mediaDetails.setChapterDescriptions(allChapterDescriptions);
+      return mediaDetails;
     }
     else {
       Logger.warn("Can't get media meta data if media is not playing");

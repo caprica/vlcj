@@ -68,7 +68,7 @@ import uk.co.caprica.vlcj.log.logger.DefaultLogMessageHandler;
 import uk.co.caprica.vlcj.log.matcher.MatcherCallback;
 import uk.co.caprica.vlcj.log.matcher.MatcherLogMessageHandler;
 import uk.co.caprica.vlcj.player.AudioOutput;
-import uk.co.caprica.vlcj.player.MediaMetaData;
+import uk.co.caprica.vlcj.player.MediaDetails;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -443,7 +443,7 @@ public class TestPlayer extends VlcjTest {
     @Override
     public void playing(MediaPlayer mediaPlayer) {
       Logger.debug("playing(mediaPlayer={})", mediaPlayer);
-      MediaMetaData meta = mediaPlayer.getMediaMetaData();
+      MediaDetails meta = mediaPlayer.getMediaDetails();
       Logger.info("meta={}", meta);
     }
 

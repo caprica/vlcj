@@ -409,14 +409,14 @@ public interface MediaPlayer {
   Dimension getVideoDimension();
 
   /**
-   * Get the media meta data.
+   * Get the media details.
    * <p>
-   * The media meta data is available after the video has started playing,
+   * The details are available after the video has started playing,
    * regardless of whether nor not a video output has been created.
    * 
    * @return video meta data, or <code>null</code> if the media meta data is not available
    */
-  MediaMetaData getMediaMetaData();
+  MediaDetails getMediaDetails();
 
   /**
    * Get the video aspect ratio.
