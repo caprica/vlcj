@@ -36,6 +36,11 @@ import uk.co.caprica.vlcj.log.Logger;
  * <p>
  * Client applications may wish to explicitly set the DisplayMode - extend this
  * class and override {@link #getDisplayMode(DisplayMode[])} to do so.
+ * <p>
+ * Client applications may also have other requirements such as hiding other 
+ * on-screen controls when in full screen mode - extend this class and over-
+ * ride {@link #onBeforeEnterFullScreenMode} and {@link #onAfterExitFullScreenMode()}
+ * to do so.
  */
 public class DefaultFullScreenStrategy implements FullScreenStrategy {
 
@@ -66,6 +71,7 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
     Logger.debug("graphicsDevice={}", graphicsDevice);
     boolean fullScreenSupported = graphicsDevice.isFullScreenSupported();
     Logger.debug("fullScreenSupported={}", fullScreenSupported);
+    onBeforeEnterFullScreenMode();
     graphicsDevice.setFullScreenWindow(window);
     DisplayMode displayMode = getDisplayMode(graphicsDevice.getDisplayModes());
     Logger.debug("displayMode={}", displayMode);
@@ -82,6 +88,7 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
   public void exitFullScreenMode() {
     Logger.debug("exitFullScreenMode()");
     getScreenDevice().setFullScreenWindow(null);
+    onAfterExitFullScreenMode();
   }
 
 //  @Override
@@ -114,5 +121,24 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
   protected DisplayMode getDisplayMode(DisplayMode[] displayModes) {
     Logger.debug("getDisplayMode()", Arrays.toString(displayModes));
     return null;
+  }
+  
+  /**
+   * Template method invoked before full-screen mode is entered.
+   * <p>
+   * An application can override this method to provide custom code when 
+   * entering full-screen mode for example to hide other on-screen components.
+   */
+  protected void onBeforeEnterFullScreenMode() {
+  }
+  
+  /**
+   * Template method invoked after exiting full-screen mode.
+   * <p>
+   * An application can override this method to provide custom code when 
+   * entering full-screen mode for example to restore other on-screen 
+   * components.
+   */
+  protected void onAfterExitFullScreenMode() {
   }
 }
