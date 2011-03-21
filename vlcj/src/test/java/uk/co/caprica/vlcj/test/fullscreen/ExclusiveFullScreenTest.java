@@ -50,6 +50,8 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <p>
  * Equally it may make no difference on Windows platforms and you may still 
  * have problems. Windows really does suck.
+ * <p>
+ * Press the SPACE key to toggle play-back.
  */
 public class ExclusiveFullScreenTest extends VlcjTest {
 
