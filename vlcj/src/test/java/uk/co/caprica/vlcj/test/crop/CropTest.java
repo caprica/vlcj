@@ -122,6 +122,7 @@ public class CropTest extends VlcjTest {
     });
   }
   
+  @SuppressWarnings("serial")
   public CropTest() {
     factory = new MediaPlayerFactory("--no-video-title-show");
     mediaPlayer = factory.newEmbeddedMediaPlayer();

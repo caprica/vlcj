@@ -86,6 +86,7 @@ public class ExclusiveFullScreenTest extends VlcjTest {
     });
   }
   
+  @SuppressWarnings("serial")
   public ExclusiveFullScreenTest(String[] args) {
     Canvas c = new Canvas();
     c.setBackground(Color.red);
