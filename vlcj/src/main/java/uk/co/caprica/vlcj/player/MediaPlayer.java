@@ -254,29 +254,39 @@ public interface MediaPlayer {
   void requestParseMedia();
 
   /**
-   * Get a local meta data value for the current media.
+   * Get local meta data for the current media.
    * <p>
    * The meta data <em>should</em> be parsed before making this call. If not,
    * <code>null</code> will be returned and the underlying native library will
    * asynchronously parse the meta data ultimately raising a media meta changed 
    * event.  
    * 
-   * @param metaType type of meta
    * @return meta data value, or <code>null</code> if the media has not been parsed
    */
-  String getMeta(MediaMetaType metaType);
+  MediaMeta getMediaMeta();
   
   /**
-   * Get a local meta data value for a media instance.
+   * Get local meta data for all of the current media sub-items (if there are
+   * any).
    * <p>
-   * See {@link #getMeta(MediaMetaType)}.
+   * See {@link #getMediaMeta()}, the same notes with regard to parsing hold 
+   * here.
    * 
-   * @param metaType type of meta
+   * @return collection of meta data for the media sub-items, or <code>null</code> if the media has not been parsed 
+   */
+  List<MediaMeta> getSubItemMediaMeta();
+  
+  /**
+   * Get local meta data for a media instance.
+   * <p>
+   * See {@link #getMediaMeta()}, the same notes with regard to parsing hold 
+   * here.
+   * 
    * @param mediaInstance media instance, may be a sub-item
    * @return meta data value, or <code>null</code> if the media has not been parsed
    */
-  String getMeta(MediaMetaType metaType, libvlc_media_t mediaInstance);
-
+  MediaMeta getMediaMeta(libvlc_media_t mediaInstance);
+  
   /**
    * Add options to the current media. 
    * 

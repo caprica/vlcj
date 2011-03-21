@@ -68,7 +68,7 @@ import com.sun.jna.ptr.PointerByReference;
 /**
  * Media player implementation.
  */
-public abstract class DefaultMediaPlayer implements MediaPlayer {
+public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements MediaPlayer {
 
   /**
    * Amount of time to wait when looping for video output.
@@ -83,11 +83,6 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
    * This is a reasonable default, but it can be overridden. 
    */
   private static final int DEFAULT_VIDEO_OUTPUT_TIMEOUT = 5000;
-  
-  /**
-   * Native library interface.
-   */
-  protected final LibVlc libvlc;
   
   /**
    * Collection of media player event listeners.
@@ -113,11 +108,6 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
    * Background thread to handle video output notifications.
    */
   private final ExecutorService videoOutputService = Executors.newSingleThreadExecutor();
-
-  /**
-   * Libvlc instance.
-   */
-  private libvlc_instance_t instance;
   
   /**
    * Native media player instance.
@@ -197,9 +187,8 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
    * @param instance libvlc instance
    */
   public DefaultMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
-    Logger.debug("MediaPlayer(libvlc={}, instance={})", libvlc, instance);
-    this.libvlc = libvlc;
-    this.instance = instance;
+    super(libvlc, instance);
+    Logger.debug("DefaultMediaPlayer(libvlc={}, instance={})", libvlc, instance);
     createInstance();
   }
   
@@ -288,19 +277,75 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
   
 //  @Override
-  public String getMeta(MediaMetaType metaType) {
-    Logger.debug("getMeta(metaType={})", metaType);
-    return getMeta(metaType, mediaInstance);
+  public MediaMeta getMediaMeta() {
+    Logger.debug("getMediaMeta()");
+    return getMediaMeta(mediaInstance);
   }
-
+  
 //  @Override
-  public String getMeta(MediaMetaType metaType, libvlc_media_t media) {
-    Logger.debug("getMeta(metaType={},media={})", metaType, media);
-    if(media != null) {
-      return getNativeString(libvlc.libvlc_media_get_meta(media, metaType.intValue()));
+  public List<MediaMeta> getSubItemMediaMeta() {
+    Logger.debug("getSubItemMediaMeta()");
+    // If there is a current media...
+    if(mediaInstance != null) {
+      // Get the list of sub-items
+      libvlc_media_list_t subItems = libvlc.libvlc_media_subitems(mediaInstance);
+      if(subItems != null) {
+        // Lock the sub-item list
+        libvlc.libvlc_media_list_lock(subItems);
+        // Count the items in the list
+        int count = libvlc.libvlc_media_list_count(subItems);
+        // Get each sub-item
+        List<MediaMeta> result = new ArrayList<MediaMeta>(count);
+        for(int i = 0; i < count; i++) {
+          libvlc_media_t subItemMedia = libvlc.libvlc_media_list_item_at_index(subItems, i);
+          if(subItemMedia != null) {
+            // Get the MRL for the sub-item
+            result.add(getMediaMeta(subItemMedia));
+            // Release the sub-item instance
+            libvlc.libvlc_media_release(subItemMedia);
+          }
+        }
+        // Clean up
+        libvlc.libvlc_media_list_unlock(subItems);
+        libvlc.libvlc_media_list_release(subItems);
+        // Return the list
+        return result;
+      }
+      else {
+        return null;
+      }
     }
     else {
-      throw new RuntimeException("Attempt to get media meta when there is no media");
+      return null;
+    }
+  }
+
+  //  @Override
+  public MediaMeta getMediaMeta(libvlc_media_t media) {
+    Logger.debug("getMediaMeta(media={})", media);
+    if(media != null) {
+      MediaMeta mediaMeta = new MediaMeta();
+      mediaMeta.setTitle(getMeta(MediaMetaType.TITLE, media));
+      mediaMeta.setArtist(getMeta(MediaMetaType.ARTIST, media));
+      mediaMeta.setGenre(getMeta(MediaMetaType.GENRE, media));
+      mediaMeta.setCopyright(getMeta(MediaMetaType.COPYRIGHT, media));
+      mediaMeta.setAlbum(getMeta(MediaMetaType.ALBUM, media));
+      mediaMeta.setTrackNumber(getMeta(MediaMetaType.TRACKNUMBER, media));
+      mediaMeta.setDescription(getMeta(MediaMetaType.DESCRIPTION, media));
+      mediaMeta.setRating(getMeta(MediaMetaType.RATING, media));
+      mediaMeta.setDate(getMeta(MediaMetaType.DATE, media));
+      mediaMeta.setSetting(getMeta(MediaMetaType.SETTING, media));
+      mediaMeta.setUrl(getMeta(MediaMetaType.URL, media));
+      mediaMeta.setLanguage(getMeta(MediaMetaType.LANGUAGE, media));
+      mediaMeta.setNowPlaying(getMeta(MediaMetaType.NOWPLAYING, media));
+      mediaMeta.setPublisher(getMeta(MediaMetaType.PUBLISHER, media));
+      mediaMeta.setEncodedBy(getMeta(MediaMetaType.ENCODEDBY, media));
+      mediaMeta.setArtworkUrl(getMeta(MediaMetaType.ARTWORKURL, media));
+      mediaMeta.setTrackId(getMeta(MediaMetaType.TRACKID, media));
+      return mediaMeta;
+    }
+    else {
+      return null;
     }
   }
 
@@ -1534,25 +1579,22 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
   }
 
   /**
-   * Get a String from a native string pointer, freeing the native string 
-   * pointer when done.
-   * <p>
-   * If the native string pointer is not freed then a memory leak will occur.
+   * Get a local meta data value for a media instance.
    * 
-   * @param pointer pointer to native string, may be <code>null</code>
-   * @return string, or <code>null</code> if the pointer was <code>null</code>
+   * @param metaType type of meta data
+   * @param media media instance
+   * @return meta data value
    */
-  private String getNativeString(Pointer pointer) {
-    if(pointer != null) {
-      String result = pointer.getString(0, false);
-      libvlc.libvlc_free(pointer);
-      return result;
+  private String getMeta(MediaMetaType metaType, libvlc_media_t media) {
+    Logger.trace("getMeta(metaType={},media={})", metaType, media);
+    if(media != null) {
+      return getNativeString(libvlc.libvlc_media_get_meta(media, metaType.intValue()));
     }
     else {
-      return null;
+      throw new RuntimeException("Attempt to get media meta when there is no media");
     }
   }
-  
+
   /**
    * A call-back to handle events from the native media player.
    * <p>

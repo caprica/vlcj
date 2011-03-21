@@ -19,8 +19,10 @@
 
 package uk.co.caprica.vlcj.test.meta;
 
+import java.awt.image.BufferedImage;
+
 import uk.co.caprica.vlcj.log.Logger;
-import uk.co.caprica.vlcj.player.MediaMetaType;
+import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -31,26 +33,6 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * Specify a single local media file as the first (and only) command-line
  * argument. 
  * <p>
- * An example of the output of a local mp3 file:
- * <pre>
- *        TITLE -> Find Yourself (Radio Edit)
- *       ARTIST -> John Ocallaghan Feat Sarah Howells
- *        GENRE -> Trance
- *    COPYRIGHT -> 
- *        ALBUM -> 40 Summer Trance Hits 2010
- *  TRACKNUMBER -> 16
- *  DESCRIPTION -> 
- *       RATING -> 
- *         DATE -> 2010
- *      SETTING -> 
- *          URL -> 
- *     LANGUAGE -> English
- *   NOWPLAYING -> 
- *    PUBLISHER -> 
- *    ENCODEDBY -> Lame 3.97
- *   ARTWORKURL -> 
- *      TRACKID -> 
- * </pre>
  * An interesting feature of vlc is that if the media contains embedded art-
  * work, the ARTWORKURL meta data field will point to a valid local file for 
  * the extracted art-work.  
@@ -77,12 +59,13 @@ public class MetaTest extends VlcjTest {
     // method to parse asynchronously and be notified via events
     mediaPlayer.parseMedia();
     
-    // Dump out the enumerated values...
-    System.out.println();
-    for(MediaMetaType metaType : MediaMetaType.values()) {
-      String val = mediaPlayer.getMeta(metaType);
-      System.out.printf("%12s -> %s\n", metaType, val != null ? val : "");
-    }
+    // Get the meta data and dump it out
+    MediaMeta mediaMeta = mediaPlayer.getMediaMeta();
+    System.out.println(mediaMeta);
+    
+    // Load the artwork into a buffered image (if available)
+    BufferedImage artwork = mediaMeta.getArtwork();
+    System.out.println(artwork);
     
     // Orderly clean-up
     mediaPlayer.release();
