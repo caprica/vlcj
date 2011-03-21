@@ -1707,7 +1707,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
     @Override
     public void run() {
-      Logger.trace("run()");
+      Logger.debug("run()");
       // Wait for a video output to be started
       boolean videoOutput = new VideoOutputLatch(DefaultMediaPlayer.this, videoOutputWaitPeriod, videoOutputTimeout).waitForVideoOutput();
       // Notify listeners...
@@ -1731,7 +1731,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
     @Override
     public void playing(MediaPlayer mediaPlayer) {
-      Logger.trace("playing(mediaPlayer={})", mediaPlayer);
+      Logger.debug("playing(mediaPlayer={})", mediaPlayer);
       // If there is at least one video output listener...
       if(!videoOutputEventListenerList.isEmpty()) {
         // Kick off an asynchronous task to wait for a video output
@@ -1747,7 +1747,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
     @Override
     public void finished(MediaPlayer mediaPlayer) {
-      Logger.trace("finished(mediaPlayer={})", mediaPlayer);
+      Logger.debug("finished(mediaPlayer={})", mediaPlayer);
       if(repeat && mediaInstance != null) {
         int subItemCount = subItemCount();
         Logger.debug("subitemCount={}", subItemCount);
@@ -1786,7 +1786,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   private final class SubItemEventHandler extends MediaPlayerEventAdapter {
     @Override
     public void finished(MediaPlayer mediaPlayer) {
-      Logger.trace("finished(mediaPlayer={})", mediaPlayer);
+      Logger.debug("finished(mediaPlayer={})", mediaPlayer);
       if(playSubItems) {
         playNextSubItem();
       }
