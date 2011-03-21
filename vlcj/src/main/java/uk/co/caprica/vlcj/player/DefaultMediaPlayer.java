@@ -1780,9 +1780,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
    * getting the current media from the player and automatically playing the
    * first sub-item (if there is one).
    * <p>
-   * Some access modules actually raise an "error" event rather than a 
-   * "finished" event, even though there's no error.
-   * <p>
    * If there is more than one sub-item, then they will simply be played in
    * order, and repeated depending on the value of the "repeat" property.
    */
@@ -1790,14 +1787,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public void finished(MediaPlayer mediaPlayer) {
       Logger.trace("finished(mediaPlayer={})", mediaPlayer);
-      if(playSubItems) {
-        playNextSubItem();
-      }
-    }
-
-    @Override
-    public void error(MediaPlayer mediaPlayer) {
-      Logger.trace("error(mediaPlayer={})", mediaPlayer);
       if(playSubItems) {
         playNextSubItem();
       }
