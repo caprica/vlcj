@@ -159,6 +159,11 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   private boolean playSubItems;
 
   /**
+   * Index of the current sub-item, or -1.
+   */
+  private int subItemIndex;
+  
+  /**
    * Opaque reference to user/application-specific data associated with this 
    * media player.
    */
@@ -458,34 +463,51 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         Logger.debug("Handling media sub-item...");
         // Lock the sub-item list
         libvlc.libvlc_media_list_lock(subItems);
-        // Get the first item in the list
-        libvlc_media_t subItem = libvlc.libvlc_media_list_item_at_index(subItems, 0);
-        // If there is an item to play...
-        if(subItem != null) {
-          // Remove this item from the list
-          libvlc.libvlc_media_list_remove_index(subItems, 0);
-          // Set the sub-item as the new media for the media player
-          libvlc.libvlc_media_player_set_media(mediaPlayerInstance, subItem);
-          // Set any standard media options
-          if(standardMediaOptions != null) {
-            for(String standardMediaOption : standardMediaOptions) {
-              Logger.debug("standardMediaOption={}", standardMediaOption);
-              libvlc.libvlc_media_add_option(subItem, standardMediaOption);
-            }
+        // Advance the current sub-item (initially it will be -1)
+        int subItemCount = libvlc.libvlc_media_list_count(subItems);
+        Logger.debug("subItemCount={}", subItemCount);
+        subItemIndex++;
+        Logger.debug("subItemIndex={}", subItemIndex);
+        // If the last sub-item already been played...
+        if(subItemIndex >= subItemCount) {
+          Logger.debug("End of sub-items reached");
+          if(!repeat) {
+            Logger.debug("Do not repeat sub-items");
+            subItemIndex = -1;
           }
-          // Set any media options
-          if(mediaOptions != null) {
-            for(String mediaOption : mediaOptions) {
-              Logger.debug("mediaOption={}", mediaOption);
-              libvlc.libvlc_media_add_option(subItem, mediaOption);
-            }
+          else {
+            Logger.debug("Repeating sub-items");
+            subItemIndex = 0;
           }
-          // Play the media
-          libvlc.libvlc_media_player_play(mediaPlayerInstance);
-          // Release the sub-item
-          libvlc.libvlc_media_release(subItem);
-          // Record the fact a sub-item was played
-          subItemPlayed = true;
+        }
+        if(subItemIndex != -1) {
+          // Get the required sub item from the list
+          libvlc_media_t subItem = libvlc.libvlc_media_list_item_at_index(subItems, subItemIndex);
+          // If there is an item to play...
+          if(subItem != null) {
+            // Set the sub-item as the new media for the media player
+            libvlc.libvlc_media_player_set_media(mediaPlayerInstance, subItem);
+            // Set any standard media options
+            if(standardMediaOptions != null) {
+              for(String standardMediaOption : standardMediaOptions) {
+                Logger.debug("standardMediaOption={}", standardMediaOption);
+                libvlc.libvlc_media_add_option(subItem, standardMediaOption);
+              }
+            }
+            // Set any media options
+            if(mediaOptions != null) {
+              for(String mediaOption : mediaOptions) {
+                Logger.debug("mediaOption={}", mediaOption);
+                libvlc.libvlc_media_add_option(subItem, mediaOption);
+              }
+            }
+            // Play the media
+            libvlc.libvlc_media_player_play(mediaPlayerInstance);
+            // Release the sub-item
+            libvlc.libvlc_media_release(subItem);
+            // Record the fact a sub-item was played
+            subItemPlayed = true;
+          }
         }
         // Unlock and release the sub-item list
         libvlc.libvlc_media_list_unlock(subItems);
@@ -1550,6 +1572,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       deregisterMediaEventListener();
       mediaInstance = null;
     }
+    // Reset sub-items
+    subItemIndex = -1;
     // Create new media...
     mediaInstance = libvlc.libvlc_media_new_path(instance, media);
     Logger.debug("mediaInstance={}", mediaInstance);
@@ -1719,12 +1743,22 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public void finished(MediaPlayer mediaPlayer) {
       Logger.trace("finished(mediaPlayer={})", mediaPlayer);
       if(repeat && mediaInstance != null) {
-        String mrl = libvlc.libvlc_media_get_mrl(mediaInstance);
-        Logger.debug("auto repeat mrl={}", mrl);
-        // It is not sufficient to simply call play(), the MRL must explicitly
-        // be played again - this is the reason why the repeat play might not
-        // be seamless
-        mediaPlayer.playMedia(mrl);
+        int subItemCount = subItemCount();
+        Logger.debug("subitemCount={}", subItemCount);
+        if(subItemCount == 0) {
+          String mrl = libvlc.libvlc_media_get_mrl(mediaInstance);
+          Logger.debug("auto repeat mrl={}", mrl);
+          // It is not sufficient to simply call play(), the MRL must explicitly
+          // be played again - this is the reason why the repeat play might not
+          // be seamless
+          mediaPlayer.playMedia(mrl);
+        }
+        else {
+          Logger.debug("Sub-items handling repeat");
+        }
+      }
+      else {
+        Logger.debug("No repeat");
       }
     }
   }
@@ -1743,12 +1777,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
    * Some access modules actually raise an "error" event rather than a 
    * "finished" event, even though there's no error.
    * <p>
-   * Note that the sub-item will be automatically 'consumed' after it has
-   * finished playing so even though this listener will be called back at the 
-   * end of the sub-item, it will not loop playing that same sub-item forever. 
-   * <p>
-   * If there is more than one sub-item, then they will simply be played and
-   * consumed in order.
+   * If there is more than one sub-item, then they will simply be played in
+   * order, and repeated depending on the value of the "repeat" property.
    */
   private final class SubItemEventHandler extends MediaPlayerEventAdapter {
     @Override
