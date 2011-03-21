@@ -32,6 +32,9 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
  * not possible to serialize the Canvas component to the remote process to get
  * the proper component ID (the copied Canvas component would have a different
  * native ID).
+ * <p>
+ * It is also not possible to get a native component ID if the component is not
+ * displayable.
  */
 public class ComponentIdVideoSurface extends VideoSurface {
 
