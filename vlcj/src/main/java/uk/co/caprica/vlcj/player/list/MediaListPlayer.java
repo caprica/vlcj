@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.list;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.player.MediaMetaType;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
 
@@ -126,6 +127,17 @@ public interface MediaListPlayer {
    * @param mode mode
    */
   void setMode(MediaListPlayerMode mode);
+
+  /**
+   * Get a local meta data value for a media instance.
+   * <p>
+   * See {@link uk.co.caprica.vlcj.player.MediaPlayer#getMeta(MediaMetaType)}.
+   * 
+   * @param metaType type of meta
+   * @param mediaInstance media instance, may be a sub-item
+   * @return meta data value, or <code>null</code> if the media has not been parsed
+   */
+  String getMeta(MediaMetaType metaType, libvlc_media_t mediaInstance);
 
   /**
    * Get the media resource locator for a media instance.

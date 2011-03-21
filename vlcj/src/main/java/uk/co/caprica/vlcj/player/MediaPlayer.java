@@ -254,7 +254,7 @@ public interface MediaPlayer {
   void requestParseMedia();
 
   /**
-   * Get a local meta data value.
+   * Get a local meta data value for the current media.
    * <p>
    * The meta data <em>should</em> be parsed before making this call. If not,
    * <code>null</code> will be returned and the underlying native library will
@@ -266,6 +266,17 @@ public interface MediaPlayer {
    */
   String getMeta(MediaMetaType metaType);
   
+  /**
+   * Get a local meta data value for a media instance.
+   * <p>
+   * See {@link #getMeta(MediaMetaType)}.
+   * 
+   * @param metaType type of meta
+   * @param mediaInstance media instance, may be a sub-item
+   * @return meta data value, or <code>null</code> if the media has not been parsed
+   */
+  String getMeta(MediaMetaType metaType, libvlc_media_t mediaInstance);
+
   /**
    * Add options to the current media. 
    * 
