@@ -1692,6 +1692,9 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
    * getting the current media from the player and automatically playing the
    * first sub-item (if there is one).
    * <p>
+   * Some access modules actually raise an "error" event rather than a 
+   * "finished" event, even though there's no error.
+   * <p>
    * Note that the sub-item will be automatically 'consumed' after it has
    * finished playing so even though this listener will be called back at the 
    * end of the sub-item, it will not loop playing that same sub-item forever. 
@@ -1700,10 +1703,17 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
    * consumed in order.
    */
   private final class SubItemEventHandler extends MediaPlayerEventAdapter {
-
     @Override
     public void finished(MediaPlayer mediaPlayer) {
       Logger.trace("finished(mediaPlayer={})", mediaPlayer);
+      if(playSubItems) {
+        playNextSubItem();
+      }
+    }
+
+    @Override
+    public void error(MediaPlayer mediaPlayer) {
+      Logger.trace("error(mediaPlayer={})", mediaPlayer);
       if(playSubItems) {
         playNextSubItem();
       }
