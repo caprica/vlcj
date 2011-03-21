@@ -300,7 +300,9 @@ public interface MediaPlayer {
    * <p>
    * There is <em>no</em> guarantee of seamless play-back when using this 
    * method - see instead {@link uk.co.caprica.vlcj.player.list.MediaListPlayer MediaListPlayer}.
-   *  
+   * <p>
+   * If the media has sub-items, then it is the sub-items that are repeated.
+   *   
    * @param repeat <code>true</code> to automatically replay the media, otherwise <code>false</code>
    */
   void setRepeat(boolean repeat);
