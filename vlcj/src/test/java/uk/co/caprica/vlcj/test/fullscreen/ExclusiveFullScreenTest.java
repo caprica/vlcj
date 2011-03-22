@@ -51,7 +51,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * Equally it may make no difference on Windows platforms and you may still 
  * have problems. Windows really does suck.
  * <p>
- * Press the SPACE key to toggle play-back.
+ * Press the SPACE key to start play-back.
  */
 public class ExclusiveFullScreenTest extends VlcjTest {
 
@@ -100,20 +100,19 @@ public class ExclusiveFullScreenTest extends VlcjTest {
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     f.setSize(800, 600);
     
-    final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+    final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory("--no-video-title-show");
     final EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
     
     mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(c));
 
-    p.getActionMap().put("pause", new AbstractAction() {
+    p.getActionMap().put("start", new AbstractAction() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        mediaPlayer.stop();
         mediaPlayer.play();
       }
     });
 
-    p.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("SPACE"), "pause");
+    p.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("SPACE"), "start");
     
     // Go directly to full-screen exclusive mode, do not use the media player
     // full screen strategy to do it. If you have multiple screens then you
