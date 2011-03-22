@@ -1638,7 +1638,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       return getNativeString(libvlc.libvlc_media_get_meta(media, metaType.intValue()));
     }
     else {
-      throw new RuntimeException("Attempt to get media meta when there is no media");
+      throw new RuntimeException("No media");
     }
   }
 
