@@ -49,6 +49,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_audio_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_video_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_meta_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
@@ -346,23 +347,23 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         parseMedia();
       }
       MediaMeta mediaMeta = new MediaMeta();
-      mediaMeta.setTitle(getMeta(MediaMetaType.TITLE, media));
-      mediaMeta.setArtist(getMeta(MediaMetaType.ARTIST, media));
-      mediaMeta.setGenre(getMeta(MediaMetaType.GENRE, media));
-      mediaMeta.setCopyright(getMeta(MediaMetaType.COPYRIGHT, media));
-      mediaMeta.setAlbum(getMeta(MediaMetaType.ALBUM, media));
-      mediaMeta.setTrackNumber(getMeta(MediaMetaType.TRACKNUMBER, media));
-      mediaMeta.setDescription(getMeta(MediaMetaType.DESCRIPTION, media));
-      mediaMeta.setRating(getMeta(MediaMetaType.RATING, media));
-      mediaMeta.setDate(getMeta(MediaMetaType.DATE, media));
-      mediaMeta.setSetting(getMeta(MediaMetaType.SETTING, media));
-      mediaMeta.setUrl(getMeta(MediaMetaType.URL, media));
-      mediaMeta.setLanguage(getMeta(MediaMetaType.LANGUAGE, media));
-      mediaMeta.setNowPlaying(getMeta(MediaMetaType.NOWPLAYING, media));
-      mediaMeta.setPublisher(getMeta(MediaMetaType.PUBLISHER, media));
-      mediaMeta.setEncodedBy(getMeta(MediaMetaType.ENCODEDBY, media));
-      mediaMeta.setArtworkUrl(getMeta(MediaMetaType.ARTWORKURL, media));
-      mediaMeta.setTrackId(getMeta(MediaMetaType.TRACKID, media));
+      mediaMeta.setTitle(getMeta(libvlc_meta_t.libvlc_meta_Title, media));
+      mediaMeta.setArtist(getMeta(libvlc_meta_t.libvlc_meta_Artist, media));
+      mediaMeta.setGenre(getMeta(libvlc_meta_t.libvlc_meta_Genre, media));
+      mediaMeta.setCopyright(getMeta(libvlc_meta_t.libvlc_meta_Copyright, media));
+      mediaMeta.setAlbum(getMeta(libvlc_meta_t.libvlc_meta_Album, media));
+      mediaMeta.setTrackNumber(getMeta(libvlc_meta_t.libvlc_meta_TrackNumber, media));
+      mediaMeta.setDescription(getMeta(libvlc_meta_t.libvlc_meta_Description, media));
+      mediaMeta.setRating(getMeta(libvlc_meta_t.libvlc_meta_Rating, media));
+      mediaMeta.setDate(getMeta(libvlc_meta_t.libvlc_meta_Date, media));
+      mediaMeta.setSetting(getMeta(libvlc_meta_t.libvlc_meta_Setting, media));
+      mediaMeta.setUrl(getMeta(libvlc_meta_t.libvlc_meta_URL, media));
+      mediaMeta.setLanguage(getMeta(libvlc_meta_t.libvlc_meta_Language, media));
+      mediaMeta.setNowPlaying(getMeta(libvlc_meta_t.libvlc_meta_NowPlaying, media));
+      mediaMeta.setPublisher(getMeta(libvlc_meta_t.libvlc_meta_Publisher, media));
+      mediaMeta.setEncodedBy(getMeta(libvlc_meta_t.libvlc_meta_EncodedBy, media));
+      mediaMeta.setArtworkUrl(getMeta(libvlc_meta_t.libvlc_meta_ArtworkURL, media));
+      mediaMeta.setTrackId(getMeta(libvlc_meta_t.libvlc_meta_TrackID, media));
       return mediaMeta;
     }
     else {
@@ -1631,7 +1632,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
    * @param media media instance
    * @return meta data value
    */
-  private String getMeta(MediaMetaType metaType, libvlc_media_t media) {
+  private String getMeta(libvlc_meta_t metaType, libvlc_media_t media) {
     Logger.trace("getMeta(metaType={},media={})", metaType, media);
     if(media != null) {
       return getNativeString(libvlc.libvlc_media_get_meta(media, metaType.intValue()));
