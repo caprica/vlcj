@@ -254,14 +254,19 @@ public interface MediaPlayer {
   void requestParseMedia();
 
   /**
+   * Test whether or not the current media has been parsed.
+   * 
+   * @return <code>true</code> if the current media has been parsed, otherwise <code>false</code>
+   */
+  boolean isMediaParsed();
+  
+  /**
    * Get local meta data for the current media.
    * <p>
-   * The meta data <em>should</em> be parsed before making this call. If not,
-   * <code>null</code> will be returned and the underlying native library will
-   * asynchronously parse the meta data ultimately raising a media meta changed 
-   * event.  
+   * If the media has not yet been parsed, then it will be synchronously
+   * parsed during this method.
    * 
-   * @return meta data value, or <code>null</code> if the media has not been parsed
+   * @return meta data
    */
   MediaMeta getMediaMeta();
   
@@ -272,7 +277,7 @@ public interface MediaPlayer {
    * See {@link #getMediaMeta()}, the same notes with regard to parsing hold 
    * here.
    * 
-   * @return collection of meta data for the media sub-items, or <code>null</code> if the media has not been parsed 
+   * @return collection of meta data for the media sub-items 
    */
   List<MediaMeta> getSubItemMediaMeta();
   
@@ -283,7 +288,7 @@ public interface MediaPlayer {
    * here.
    * 
    * @param mediaInstance media instance, may be a sub-item
-   * @return meta data value, or <code>null</code> if the media has not been parsed
+   * @return meta data
    */
   MediaMeta getMediaMeta(libvlc_media_t mediaInstance);
   

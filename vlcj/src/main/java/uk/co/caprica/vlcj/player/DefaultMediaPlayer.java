@@ -280,6 +280,17 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       throw new RuntimeException("Attempt to parse media when there is no media");
     }
   }
+
+//  @Override
+  public boolean isMediaParsed() {
+    Logger.debug("isMediaParsed()");
+    if(mediaInstance != null) {
+      return 0 != libvlc.libvlc_media_is_parsed(mediaInstance);
+    }
+    else {
+      throw new RuntimeException("No media");
+    }
+  }
   
 //  @Override
   public MediaMeta getMediaMeta() {
@@ -329,6 +340,11 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   public MediaMeta getMediaMeta(libvlc_media_t media) {
     Logger.debug("getMediaMeta(media={})", media);
     if(media != null) {
+      // If the media is not yet parsed...
+      if(!isMediaParsed()) {
+        // ...synchronously parse the media
+        parseMedia();
+      }
       MediaMeta mediaMeta = new MediaMeta();
       mediaMeta.setTitle(getMeta(MediaMetaType.TITLE, media));
       mediaMeta.setArtist(getMeta(MediaMetaType.ARTIST, media));
@@ -350,7 +366,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       return mediaMeta;
     }
     else {
-      return null;
+      throw new RuntimeException("No media");
     }
   }
 
