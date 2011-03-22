@@ -71,9 +71,7 @@ public class SearchMetaTest extends VlcjTest {
 
     for(File file : files) {
       String mrl = file.getAbsolutePath();
-      mediaPlayer.prepareMedia(mrl); // <--- You do not need to actually play the media
-      mediaPlayer.parseMedia(); // <--- Very important, you MUST parse the media before meta data is available
-      MediaMeta meta = mediaPlayer.getMediaMeta();
+      MediaMeta meta = mediaPlayer.getMediaMeta(mrl);
       System.out.printf("%s -> %s\n", mrl, meta);
     }
     

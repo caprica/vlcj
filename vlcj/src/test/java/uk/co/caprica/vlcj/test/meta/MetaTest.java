@@ -61,12 +61,8 @@ public class MetaTest extends VlcjTest {
     MediaPlayerFactory factory = new MediaPlayerFactory();
     MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
     
-    // You do not need to "play" the media, simply "preparing" it is enough
-    // (so long as it exists)
-    mediaPlayer.prepareMedia(args[0]);
-    
     // Get the meta data and dump it out
-    MediaMeta mediaMeta = mediaPlayer.getMediaMeta();
+    MediaMeta mediaMeta = mediaPlayer.getMediaMeta(args[0]);
     System.out.println(mediaMeta);
     
     // Orderly clean-up
