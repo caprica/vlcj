@@ -63,10 +63,6 @@ public class MetaTest extends VlcjTest {
     // You do not need to "play" the media, simply "preparing" it is enough
     // (so long as it exists)
     mediaPlayer.prepareMedia(args[0]);
-
-    // Parse the media - this is the synchronous version, there is also a 
-    // method to parse asynchronously and be notified via events
-    mediaPlayer.parseMedia();
     
     // Get the meta data and dump it out
     MediaMeta mediaMeta = mediaPlayer.getMediaMeta();
