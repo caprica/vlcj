@@ -98,7 +98,7 @@ import com.sun.jna.Pointer;
 public class MediaPlayerFactory {
 
   /**
-   * Help text if the plugins failed to load.
+   * Help text if libvlc failed to load and initialise.
    */
   private static final String PLUGIN_PATH_HELP =
     "Failed to initialise libvlc.\n\n" +
