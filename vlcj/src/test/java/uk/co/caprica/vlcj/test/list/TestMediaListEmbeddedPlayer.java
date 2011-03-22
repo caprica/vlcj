@@ -61,7 +61,7 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
       }
     });
     
-    mediaListPlayer.setMediaPlayer(mediaPlayer);
+    mediaListPlayer.setMediaPlayer(mediaPlayer); // <--- Important, associate the media player with the media list player
     
     JPanel cp = new JPanel();
     cp.setBackground(Color.black);
