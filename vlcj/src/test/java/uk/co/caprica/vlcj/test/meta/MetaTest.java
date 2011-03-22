@@ -44,7 +44,8 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <p>
  * An interesting feature of vlc is that if the media contains embedded art-
  * work, the ARTWORKURL meta data field will point to a valid local file for 
- * the extracted art-work.  
+ * the extracted art-work. If the artwork is available, a frame is opened to
+ * display it. 
  */
 public class MetaTest extends VlcjTest {
 
