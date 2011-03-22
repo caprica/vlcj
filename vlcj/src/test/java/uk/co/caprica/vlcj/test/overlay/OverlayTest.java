@@ -62,19 +62,26 @@ import com.sun.jna.platform.WindowUtils;
  * Full-Screen Exclusive Mode. If you want to use an overlay and you need full-
  * screen, then you have to emulate full-screen by changing your window bounds
  * rather than using FSEM.
+ * <p>
+ * Specify a single MRL to play on the command-line.
  */
 public class OverlayTest extends VlcjTest {
   
-  public static void main(String[] args) throws Exception {
+  public static void main(final String[] args) throws Exception {
+    if(args.length != 1) {
+      System.out.println("Specify a single MRL");
+      System.exit(1);
+    }
+    
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
-        new OverlayTest();
+        new OverlayTest(args[0]);
       }
     });
   }
   
-  public OverlayTest() {
+  public OverlayTest(String mrl) {
     Frame f = new Frame("Test Player");
     f.setSize(800, 600);
     f.setBackground(Color.black);
@@ -113,7 +120,7 @@ public class OverlayTest extends VlcjTest {
     mediaPlayer.setOverlay(new Overlay(f));
     mediaPlayer.enableOverlay(true);
     
-    mediaPlayer.playMedia("whatever.mp4"); // <--- change this!
+    mediaPlayer.playMedia(mrl);
   }
   
   private class Overlay extends Window {
