@@ -19,7 +19,16 @@
 
 package uk.co.caprica.vlcj.test.meta;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.player.MediaMeta;
@@ -63,12 +72,38 @@ public class MetaTest extends VlcjTest {
     MediaMeta mediaMeta = mediaPlayer.getMediaMeta();
     System.out.println(mediaMeta);
     
-    // Load the artwork into a buffered image (if available)
-    BufferedImage artwork = mediaMeta.getArtwork();
-    System.out.println(artwork);
-    
     // Orderly clean-up
     mediaPlayer.release();
     factory.release();
+
+    // Load the artwork into a buffered image (if available)
+    final BufferedImage artwork = mediaMeta.getArtwork();
+    System.out.println(artwork);
+    if(artwork != null) {
+      JPanel cp = new JPanel() {
+        private static final long serialVersionUID = 1L;
+        @Override
+        protected void paintComponent(Graphics g) {
+          Graphics2D g2 = (Graphics2D)g;
+          g2.setPaint(Color.black);
+          g2.fillRect(0, 0, getWidth(), getHeight());
+          double sx  = (double)getWidth() / (double)artwork.getWidth();
+          double sy  = (double)getHeight() / (double)artwork.getHeight();
+          sx = Math.min(sx, sy);
+          sy = Math.min(sx, sy);
+          AffineTransform tx = AffineTransform.getScaleInstance(sx, sy);
+          g2.drawImage(artwork, new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR), 0, 0);
+        }
+        @Override
+        public Dimension getPreferredSize() {
+          return new Dimension(artwork.getWidth(), artwork.getHeight());
+        }
+      };
+      JFrame f = new JFrame("vlcj meta artwork");
+      f.setContentPane(cp);
+      f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      f.pack();
+      f.setVisible(true);
+    }
   }
 }
