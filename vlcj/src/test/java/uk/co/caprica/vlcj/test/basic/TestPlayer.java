@@ -510,12 +510,12 @@ public class TestPlayer extends VlcjTest {
       }
 
       // Demo the marquee      
-      mediaPlayer.setMarqueeText("VLCJ 1.1.5");
+      mediaPlayer.setMarqueeText("vlcj java bindings for vlc");
       mediaPlayer.setMarqueeSize(40);
       mediaPlayer.setMarqueeOpacity(95);
       mediaPlayer.setMarqueeColour(Color.white);
-      mediaPlayer.setMarqueeTimeout(3000);
-      mediaPlayer.setMarqueeLocation(50, 100);
+      mediaPlayer.setMarqueeTimeout(5000);
+      mediaPlayer.setMarqueeLocation(50, 120);
       mediaPlayer.enableMarquee(true);
 
       // Not quite sure how crop geometry is supposed to work...
