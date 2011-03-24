@@ -100,12 +100,6 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
    * Component to render the video to.
    */
   private CanvasVideoSurface videoSurface;
-  
-  /**
-   * Setting the video surface is deferred, this flag tracks whether or not the
-   * video surface has been set for the native player.
-   */
-  private boolean videoSurfaceSet;
 
   /**
    * Optional overlay component.
@@ -156,23 +150,27 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
     Logger.debug("setVideoSurface(videoSurface={})", videoSurface);
     // Keep a hard reference to the video surface component
     this.videoSurface = videoSurface;
-    // Defer setting the video surface until later
-    this.videoSurfaceSet = false;
+    // The video surface is not actually attached to the media player until the
+    // media is played
   }
 
 //  @Override
   public void attachVideoSurface() {
     Logger.debug("attachVideoSurface()");
     if(videoSurface != null) {
+      // The canvas component must be visible at this point otherwise the call
+      // to the native library will fail
       if(videoSurface.canvas().isVisible()) {
-        onBeforePlay();
+        videoSurface.attach(libvlc, this);
       }
       else {
+        // This is an error
         throw new IllegalStateException("The video surface is not visible");
       }
     }
     else {
-      throw new IllegalStateException("No video surface has been set");
+      // This is not necessarily an error
+      Logger.debug("Can't attach video surface since no video surface has been set");
     }
   }
 
@@ -316,13 +314,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
   @Override
   protected void onBeforePlay() {
     Logger.debug("onBeforePlay()");
-    Logger.debug("videoSurfaceSet={}", videoSurfaceSet);
-    if(!videoSurfaceSet && videoSurface != null) {
-      // Delegate to the template method in the OS-specific implementation 
-      // class to actually set the video surface
-      videoSurface.attach(libvlc, this);
-      videoSurfaceSet = true;
-    }
+    attachVideoSurface();
   }
   
   /**
