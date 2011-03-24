@@ -41,8 +41,4 @@ public interface VideoSurfaceAdapter extends Serializable {
    * @param componentId native id of the video surface component
    */
   void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId);
-  
-  // TODO this API may not be compatible with the solution required for Mac 
-  //      support but as there is no Mac solution currently available, tough
-  //      luck
 }
