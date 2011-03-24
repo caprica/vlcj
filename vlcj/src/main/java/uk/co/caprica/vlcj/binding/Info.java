@@ -66,5 +66,7 @@ class Info {
     Logger.info("vlcj: 1.2.0");
     Logger.info("java: {}", System.getProperty("java.version"));
     Logger.info("java home: {}", System.getProperty("java.home"));
+    Logger.info("os: {} {}", System.getProperty("os.name"), System.getProperty("os.version"));
+    Logger.info("arch: {}", System.getProperty("os.arch"));
   }
 }
