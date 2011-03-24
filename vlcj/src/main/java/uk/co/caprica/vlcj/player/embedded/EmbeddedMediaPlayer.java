@@ -37,6 +37,12 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
    * Setting the video surface on the native component is actually deferred so
    * the component used as the video surface need <em>not</em> be visible and
    * fully realised before calling this method.
+   * <p>
+   * The video surface will not be associated with the native media player
+   * until the media is played.
+   * <p>
+   * It is possible to change the video surface after it has been set, but the
+   * change will not take effect until the media is played.
    * 
    * @param videoSurface component to render video to
    */
