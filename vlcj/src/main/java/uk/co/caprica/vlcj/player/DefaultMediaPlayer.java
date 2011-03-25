@@ -344,6 +344,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       // If the media is not yet parsed...
       if(0 == libvlc.libvlc_media_is_parsed(media)) {
         // ...synchronously parse the media
+        // WARNING: it is possible that this call might never return (e.g. when
+        //          getting meta from CDDA)
         libvlc.libvlc_media_parse(media);
       }
       MediaMeta mediaMeta = new MediaMeta();
