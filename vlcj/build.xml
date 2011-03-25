@@ -119,13 +119,13 @@
     <copy todir="package/${ant.project.name}-${build.version}">
       <fileset dir="dist" excludes="**/*.log"/>
     </copy>
-    <tar tarfile="package/${ant.project.name}-${build.version}-dist.tgz" basedir="package" includes="${ant.project.name}-${build.version}/**/*" compression="gzip"/>
-    <zip zipfile="package/${ant.project.name}-${build.version}-dist.zip" basedir="package" includes="${ant.project.name}-${build.version}/**/*"/>
+    <tar tarfile="package/${ant.project.name}-${build.version}.tgz" basedir="package" includes="${ant.project.name}-${build.version}/**/vlcj*.jar" compression="gzip"/>
+    <zip zipfile="package/${ant.project.name}-${build.version}.zip" basedir="package" includes="${ant.project.name}-${build.version}/**/vlcj*.jar"/>
     <delete dir="package/${ant.project.name}-${build.version}"/>
   </target>
 	
   <target name="rebuild" depends="clean, jar" description="Perform a clean build to produce a new jar file"/>
 	
-  <target name="all" depends="clean, dist" description="Perform a full clean build and produce distribution jar files"/>
+  <target name="all" depends="clean, package" description="Perform a full clean build and produce distribution jar files"/>
   
 </project>
