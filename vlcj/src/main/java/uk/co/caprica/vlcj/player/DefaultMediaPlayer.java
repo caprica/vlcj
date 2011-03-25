@@ -780,7 +780,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   }
 
 //  @Override
-  public boolean playAndWait() {
+  public boolean start() {
     return new MediaPlayerLatch(this).play();
   }
 

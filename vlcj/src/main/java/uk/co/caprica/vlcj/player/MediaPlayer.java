@@ -599,7 +599,7 @@ public interface MediaPlayer {
    * @return <code>true</code> if the media started playing, <code>false</code>
    *         if the media failed to start because of an error 
    */
-  boolean playAndWait();
+  boolean start();
   
   /**
    * Stop play-back.

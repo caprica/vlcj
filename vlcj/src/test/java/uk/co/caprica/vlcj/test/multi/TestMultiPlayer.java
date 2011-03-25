@@ -157,7 +157,7 @@ public class TestMultiPlayer extends VlcjTest {
         // does not occur
         for(int i = 0; i < medias.length; i++) {
           EmbeddedMediaPlayer mediaPlayer = players.get(i).mediaPlayer();
-          mediaPlayer.playAndWait();
+          mediaPlayer.start();
         }
       }
     });
