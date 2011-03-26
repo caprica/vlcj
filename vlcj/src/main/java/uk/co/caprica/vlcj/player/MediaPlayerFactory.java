@@ -438,8 +438,9 @@ public class MediaPlayerFactory {
   /**
    * Create a new head-less media player.
    * <p>
-   * The head-less player may spawn a native video player window unless you set
-   * proper media options when playing media.
+   * The head-less player is intended for audio media players or streaming 
+   * server media players and may spawn a native video player window unless
+   * you set proper media options when playing media.
    * 
    * @return media player instance
    */
