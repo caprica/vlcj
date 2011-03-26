@@ -869,12 +869,18 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   // === Audio Controls =======================================================
 
 //  @Override
-  public boolean selectAudioOutputDevice(String outputDeviceId) {
-    Logger.debug("selectAudioOutputDevice(outputDeviceId={})", outputDeviceId);
-    return 0 != libvlc.libvlc_audio_output_set(mediaPlayerInstance, outputDeviceId);
+  public boolean setAudioOutput(String output) {
+    Logger.debug("setAudioOutput(output={})", output);
+    return 0 != libvlc.libvlc_audio_output_set(mediaPlayerInstance, output);
   }
   
 //  @Override
+  public void setAudioOutputDevice(String output, String outputDeviceId) {
+    Logger.debug("setAudioOutputDevice(output={},outputDeviceId={})", output, outputDeviceId);
+    libvlc.libvlc_audio_output_device_set(mediaPlayerInstance, output, outputDeviceId);
+  }
+  
+  //  @Override
   public void setAudioOutputDeviceType(AudioOutputDeviceType deviceType) {
     Logger.debug("setAudioOutputDeviceType(deviceType={})");
     libvlc.libvlc_audio_output_set_device_type(mediaPlayerInstance, deviceType.intValue());

@@ -711,13 +711,28 @@ public interface MediaPlayer {
    * The change will not be applied until the media player has been stopped and
    * then played again.
    * <p>
-   * The id comes from the {@link AudioDevice#getDeviceId()} returned by 
+   * The output name comes from {@link MediaPlayerFactory#getAudioOutputs()}.
+   * 
+   * @param output name of the desired audio output
+   * @return <code>true</code> if the output was successfully set, otherwise <code>false</code> 
+   */
+  boolean setAudioOutput(String output);
+  
+  /**
+   * Set the desired audio output device.
+   * <p>
+   * The change will not be applied until the media player has been stopped and
+   * then played again.
+   * <p>
+   * The output name comes from {@link MediaPlayerFactory#getAudioOutputs()}.
+   * <p>
+   * The device id comes from the {@link AudioDevice#getDeviceId()} returned by 
    * {@link MediaPlayerFactory#getAudioOutputs()}.
    * 
+   * @param output name of the desired audio output
    * @param outputDeviceId id of the desired audio output device
-   * @return <code>true</code> if the device was successfully selected, otherwise <code>false</code> 
    */
-  boolean selectAudioOutputDevice(String outputDeviceId);
+  void setAudioOutputDevice(String output, String outputDeviceId);
 
   /**
    * Set the audio output device type.
