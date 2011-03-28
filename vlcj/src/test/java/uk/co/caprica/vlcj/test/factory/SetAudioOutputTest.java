@@ -56,6 +56,9 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * Specify a single MRL on the command-line.
  * <p>
  * Select an audio output from the menu and play the media.
+ * <p>
+ * <strong>This does NOT work because of a bug or incomplete implementation in
+ * libvlc currently.</strong>
  */
 public class SetAudioOutputTest extends VlcjTest {
   
