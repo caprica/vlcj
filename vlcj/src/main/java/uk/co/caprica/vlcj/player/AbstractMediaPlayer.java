@@ -54,7 +54,8 @@ public class AbstractMediaPlayer {
    * Get a String from a native string pointer, freeing the native string 
    * pointer when done.
    * <p>
-   * If the native string pointer is not freed then a memory leak will occur.
+   * If the native string pointer is not freed then a native memory leak will
+   * occur.
    * 
    * @param pointer pointer to native string, may be <code>null</code>
    * @return string, or <code>null</code> if the pointer was <code>null</code>
