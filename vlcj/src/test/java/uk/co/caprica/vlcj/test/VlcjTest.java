@@ -23,6 +23,8 @@ import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
+import com.sun.jna.NativeLibrary;
+
 /**
  * Base class for tests.
  * <p>
@@ -55,7 +57,7 @@ public abstract class VlcjTest {
    * This is a bit more explicit than using the -Djna.library.path= system 
    * property.
    */
-//  private static final String NATIVE_LIBRARY_SEARCH_PATH = "/home/linux/vlc/install/lib";
+  private static final String NATIVE_LIBRARY_SEARCH_PATH = null;
   
   /**
    * Set to true to dump out native JNA memory structures.
@@ -82,8 +84,10 @@ public abstract class VlcjTest {
       }
     }
     
-//    Logger.info("Explicitly adding JNA native library search path: '{}'", NATIVE_LIBRARY_SEARCH_PATH);
-//    NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
+    if(null != NATIVE_LIBRARY_SEARCH_PATH) {
+      Logger.info("Explicitly adding JNA native library search path: '{}'", NATIVE_LIBRARY_SEARCH_PATH);
+      NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
+    }
     
     System.setProperty("jna.dump_memory", DUMP_NATIVE_MEMORY);
   }
