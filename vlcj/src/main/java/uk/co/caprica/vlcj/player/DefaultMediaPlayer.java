@@ -1148,38 +1148,40 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       PointerByReference tracks = new PointerByReference();
       int numberOfTracks = libvlc.libvlc_media_get_tracks_info(mediaInstance, tracks);
       Logger.trace("numberOfTracks={}", numberOfTracks);
-      libvlc_media_track_info_t trackInfos = new libvlc_media_track_info_t(tracks.getValue());
-      libvlc_media_track_info_t[] trackInfoArray = (libvlc_media_track_info_t[])trackInfos.toArray(numberOfTracks);
-      List<TrackInfo> result = new ArrayList<TrackInfo>();
-      for(libvlc_media_track_info_t trackInfo : trackInfoArray) {
-        // i_type values are from vlc/vlc_es.h
-        switch(trackInfo.i_type) {
-          // UNKNOWN_ES
-          case 0:
-            result.add(new UnknownTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level));
-            break;
-            
-          // VIDEO_ES
-          case 1:
-            libvlc_media_track_info_video_t videoInfo = (libvlc_media_track_info_video_t)trackInfos.u.getTypedValue(libvlc_media_track_info_video_t.class);
-            result.add(new VideoTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level, videoInfo.i_width, videoInfo.i_height));
-            break;
-            
-          // AUDIO_ES
-          case 2:
-            libvlc_media_track_info_audio_t audioInfo = (libvlc_media_track_info_audio_t)trackInfos.u.getTypedValue(libvlc_media_track_info_audio_t.class);
-            result.add(new AudioTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level, audioInfo.i_channels, audioInfo.i_rate));
-            break;
-
-          // SPU_ES
-          case 3:
-            result.add(new SpuTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level));
-            break;
-            
-          // NAV_ES
-          case 4:
-            // Unused
-            break;
+      List<TrackInfo> result = new ArrayList<TrackInfo>(numberOfTracks);
+      if(numberOfTracks > 0) {
+        libvlc_media_track_info_t trackInfos = new libvlc_media_track_info_t(tracks.getValue());
+        libvlc_media_track_info_t[] trackInfoArray = (libvlc_media_track_info_t[])trackInfos.toArray(numberOfTracks);
+        for(libvlc_media_track_info_t trackInfo : trackInfoArray) {
+          // i_type values are from vlc/vlc_es.h
+          switch(trackInfo.i_type) {
+            // UNKNOWN_ES
+            case 0:
+              result.add(new UnknownTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level));
+              break;
+              
+            // VIDEO_ES
+            case 1:
+              libvlc_media_track_info_video_t videoInfo = (libvlc_media_track_info_video_t)trackInfos.u.getTypedValue(libvlc_media_track_info_video_t.class);
+              result.add(new VideoTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level, videoInfo.i_width, videoInfo.i_height));
+              break;
+              
+            // AUDIO_ES
+            case 2:
+              libvlc_media_track_info_audio_t audioInfo = (libvlc_media_track_info_audio_t)trackInfos.u.getTypedValue(libvlc_media_track_info_audio_t.class);
+              result.add(new AudioTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level, audioInfo.i_channels, audioInfo.i_rate));
+              break;
+  
+            // SPU_ES
+            case 3:
+              result.add(new SpuTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level));
+              break;
+              
+            // NAV_ES
+            case 4:
+              // Unused
+              break;
+          }
         }
       }
       libvlc.libvlc_free(tracks.getValue());
