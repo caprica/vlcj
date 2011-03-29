@@ -960,10 +960,23 @@ public interface MediaPlayer {
   List<TrackInfo> getTrackInfo();
 
   /**
+   * Set the directory into which snapshots of the video are saved.
+   * <p>
+   * If the specified directory path does not yet exist, it will be created. 
+   * 
+   * @param snapshotDirectoryName name of the directory to save snapshots to
+   */
+  void setSnapshotDirectory(String snapshotDirectoryName);
+  
+  /**
    * Save a snapshot of the currently playing video.
    * <p>
-   * The snapshot will be created in the user's home directory and be assigned
-   * a filename based on the current time.
+   * The snapshot will be created in the directory set via 
+   * {@link #setSnapshotDirectory(String)}, unless that directory has not been
+   * set in which case the snapshot will be created in the user's home 
+   * directory, obtained via the "user.home" system property.
+   * <p>
+   * The snapshot will be assigned a filename based on the current time.
    * 
    * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
    */

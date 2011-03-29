@@ -165,6 +165,14 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   private int subItemIndex;
   
   /**
+   * Optional name of the directory to save video snapshots to.
+   * <p>
+   * If this is not set then snapshots will be saved to the user home 
+   * directory.
+   */
+  private String snapshotDirectoryName;
+  
+  /**
    * Opaque reference to user/application-specific data associated with this 
    * media player.
    */
@@ -1185,9 +1193,15 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   // === Snapshot Controls ====================================================
 
 //  @Override
+  public void setSnapshotDirectory(String snapshotDirectoryName) {
+    Logger.debug("setSnapshotDirectory(snapshotDirectoryName={})", snapshotDirectoryName);
+    this.snapshotDirectoryName = snapshotDirectoryName;
+  }
+  
+//  @Override
   public boolean saveSnapshot() {
     Logger.debug("saveSnapshot()");
-    File snapshotDirectory = new File(System.getProperty("user.home"));
+    File snapshotDirectory = new File(snapshotDirectoryName == null ? System.getProperty("user.home") : snapshotDirectoryName);
     File snapshotFile = new File(snapshotDirectory, "vlcj-snapshot-" + System.currentTimeMillis() + ".png");
     return saveSnapshot(snapshotFile);
   }
