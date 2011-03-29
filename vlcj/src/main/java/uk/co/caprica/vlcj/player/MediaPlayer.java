@@ -918,6 +918,8 @@ public interface MediaPlayer {
 
   /**
    * Get the title descriptions. 
+   * <p>
+   * The media must be playing before this information to be available.
    * 
    * @return list of descriptions
    */
@@ -925,6 +927,8 @@ public interface MediaPlayer {
 
   /**
    * Get the video (i.e. "title") track descriptions.
+   * <p>
+   * The media must be playing before this information to be available.
    * 
    * @return list of descriptions
    */
@@ -932,6 +936,8 @@ public interface MediaPlayer {
 
   /**
    * Get the audio track descriptions. 
+   * <p>
+   * The media must be playing before this information to be available.
    * 
    * @return list of descriptions
    */
@@ -939,6 +945,8 @@ public interface MediaPlayer {
 
   /**
    * Get the sub-title track descriptions. 
+   * <p>
+   * The media must be playing before this information to be available.
    * 
    * @return list of descriptions
    */
@@ -946,6 +954,8 @@ public interface MediaPlayer {
 
   /**
    * Get the chapter descriptions for a title.
+   * <p>
+   * The media must be playing before this information to be available.
    * 
    * @param title title number
    * @return list of descriptions
@@ -954,6 +964,12 @@ public interface MediaPlayer {
 
   /**
    * Get the track (i.e. "elementary streams") information.
+   * <p>
+   * The media must first be parsed, see {@link #parseMedia()}.
+   * <p>
+   * In the case of DVD media (for example ".iso" files) the media must be 
+   * played and video output must be available before valid track information 
+   * becomes available. 
    * 
    * @return collection of track information, or <code>null</code> if there is no current media
    */
