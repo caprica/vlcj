@@ -919,7 +919,7 @@ public interface MediaPlayer {
   /**
    * Get the title descriptions. 
    * <p>
-   * The media must be playing before this information to be available.
+   * The media must be playing before this information is available.
    * 
    * @return list of descriptions
    */
@@ -928,7 +928,7 @@ public interface MediaPlayer {
   /**
    * Get the video (i.e. "title") track descriptions.
    * <p>
-   * The media must be playing before this information to be available.
+   * The media must be playing before this information is available.
    * 
    * @return list of descriptions
    */
@@ -937,7 +937,7 @@ public interface MediaPlayer {
   /**
    * Get the audio track descriptions. 
    * <p>
-   * The media must be playing before this information to be available.
+   * The media must be playing before this information is available.
    * 
    * @return list of descriptions
    */
@@ -946,7 +946,7 @@ public interface MediaPlayer {
   /**
    * Get the sub-title track descriptions. 
    * <p>
-   * The media must be playing before this information to be available.
+   * The media must be playing before this information is available.
    * 
    * @return list of descriptions
    */
@@ -955,7 +955,7 @@ public interface MediaPlayer {
   /**
    * Get the chapter descriptions for a title.
    * <p>
-   * The media must be playing before this information to be available.
+   * The media must be playing before this information is available.
    * 
    * @param title title number
    * @return list of descriptions
