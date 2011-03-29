@@ -236,6 +236,9 @@ public interface MediaPlayer {
    * <p>
    * This method is synchronous.
    * <p>
+   * Parsing media may cause an HTTP request to be made to search for cover-
+   * art.
+   * <p>
    * <strong>Invoking this method on a stream may cause a hang.</strong>
    */
   void parseMedia();
@@ -245,6 +248,9 @@ public interface MediaPlayer {
    * <p>
    * This method is asynchronous and a media player event will be raised when
    * the parsed status changes.
+   * <p>
+   * Parsing media may cause an HTTP request to be made to search for cover-
+   * art.
    * <p>
    * If the media has already been parsed when this function calls then <em>no</em>
    * event will be raised.
