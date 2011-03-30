@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.player;
 
 /**
  * Enumeration of deinterlace modes.
+ * <p>
+ * These are defined in "modules/video_filter/deinterlace.c".
  */
 public enum DeinterlaceMode {
 
@@ -62,7 +64,12 @@ public enum DeinterlaceMode {
   /**
    * 
    */
-  YADIF2X("yadif2x");
+  YADIF2X("yadif2x"),
+  
+  /**
+   * 
+   */
+  PHOSPHOR("phosphor");
   
   /**
    * Native mode value.
