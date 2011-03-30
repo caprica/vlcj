@@ -969,6 +969,15 @@ public interface MediaPlayer {
   List<String> getChapterDescriptions(int title);
 
   /**
+   * Get all of the chapter descriptions for all available titles.
+   * <p>
+   * The media must be playing before this information is available.
+   * 
+   * @return a collection of chapter description lists, one list for each title 
+   */
+  List<List<String>> getAllChapterDescriptions();
+
+  /**
    * Get the track (i.e. "elementary streams") information.
    * <p>
    * The media must first be parsed, see {@link #parseMedia()}.
