@@ -306,21 +306,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   }
   
 //  @Override
-  public List<MediaMeta> getSubItemMediaMeta() {
-    Logger.debug("getSubItemMediaMeta()");
-    return handleSubItems(new SubItemsHandler<List<MediaMeta>>() {
-//      @Override
-      public List<MediaMeta> subItems(int count, libvlc_media_list_t subItems) {
-        List<MediaMeta> result = new ArrayList<MediaMeta>(count);
-        for(libvlc_media_t subItem : new LibVlcMediaListIterator(libvlc, subItems)) {
-          result.add(getMediaMeta(subItem));
-        }
-        return result;
-      }
-    });
-  }
-
-//  @Override
   public MediaMeta getMediaMeta(libvlc_media_t media) {
     Logger.debug("getMediaMeta(media={})", media);
     if(media != null) {
@@ -370,6 +355,21 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
   }
 
+//  @Override
+  public List<MediaMeta> getSubItemMediaMeta() {
+    Logger.debug("getSubItemMediaMeta()");
+    return handleSubItems(new SubItemsHandler<List<MediaMeta>>() {
+//      @Override
+      public List<MediaMeta> subItems(int count, libvlc_media_list_t subItems) {
+        List<MediaMeta> result = new ArrayList<MediaMeta>(count);
+        for(libvlc_media_t subItem : new LibVlcMediaListIterator(libvlc, subItems)) {
+          result.add(getMediaMeta(subItem));
+        }
+        return result;
+      }
+    });
+  }
+  
 //  @Override
   public void addMediaOptions(String... mediaOptions) {
     Logger.debug("addMediaOptions(mediaOptions={})", Arrays.toString(mediaOptions));
@@ -424,7 +424,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     });
   }
 
-  //  @Override
+//  @Override
   public boolean playNextSubItem(String... mediaOptions) {
     Logger.debug("playNextSubItem(mediaOptions={})", Arrays.toString(mediaOptions));
     return playSubItem(subItemIndex+1, mediaOptions);
@@ -1073,12 +1073,18 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     return result;
   }
 
-  //  @Override
+//  @Override
   public List<TrackInfo> getTrackInfo() {
     Logger.debug("getTrackInfo()");
-    if(mediaInstance != null) {
+    return getTrackInfo(mediaInstance);
+  }
+  
+//  @Override
+  public List<TrackInfo> getTrackInfo(libvlc_media_t media) {
+    Logger.debug("getTrackInfo(media={})", media);
+    if(media != null) {
       PointerByReference tracks = new PointerByReference();
-      int numberOfTracks = libvlc.libvlc_media_get_tracks_info(mediaInstance, tracks);
+      int numberOfTracks = libvlc.libvlc_media_get_tracks_info(media, tracks);
       Logger.trace("numberOfTracks={}", numberOfTracks);
       List<TrackInfo> result = new ArrayList<TrackInfo>(numberOfTracks);
       if(numberOfTracks > 0) {
@@ -1123,7 +1129,22 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       return null;
     }
   }
-  
+
+//  @Override
+  public List<List<TrackInfo>> getSubItemTrackInfo() {
+    Logger.debug("getSubItemTrackInfo()");
+    return handleSubItems(new SubItemsHandler<List<List<TrackInfo>>>() {
+  //    @Override
+      public List<List<TrackInfo>> subItems(int count, libvlc_media_list_t subItems) {
+        List<List<TrackInfo>> result = new ArrayList<List<TrackInfo>>(count);
+        for(libvlc_media_t subItem : new LibVlcMediaListIterator(libvlc, subItems)) {
+          result.add(getTrackInfo(subItem));
+        }
+        return result;
+      }
+    });
+  }
+
   // === Snapshot Controls ====================================================
 
 //  @Override

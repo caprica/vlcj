@@ -280,17 +280,6 @@ public interface MediaPlayer {
   MediaMeta getMediaMeta();
   
   /**
-   * Get local meta data for all of the current media sub-items (if there are
-   * any).
-   * <p>
-   * See {@link #getMediaMeta()}, the same notes with regard to parsing hold 
-   * here.
-   * 
-   * @return collection of meta data for the media sub-items 
-   */
-  List<MediaMeta> getSubItemMediaMeta();
-  
-  /**
    * Get local meta data for a media instance.
    * <p>
    * See {@link #getMediaMeta()}, the same notes with regard to parsing hold 
@@ -313,6 +302,17 @@ public interface MediaPlayer {
    * @return meta data, or <code>null</code> if not available (e.g. error or invalid path)
    */
   MediaMeta getMediaMeta(String mediaPath);
+  
+  /**
+   * Get local meta data for all of the current media sub-items (if there are
+   * any).
+   * <p>
+   * See {@link #getMediaMeta()}, the same notes with regard to parsing hold 
+   * here.
+   * 
+   * @return collection of meta data for the media sub-items 
+   */
+  List<MediaMeta> getSubItemMediaMeta();
   
   /**
    * Add options to the current media. 
@@ -986,17 +986,39 @@ public interface MediaPlayer {
   List<List<String>> getAllChapterDescriptions();
 
   /**
-   * Get the track (i.e. "elementary streams") information.
+   * Get the track (i.e. "elementary streams") information for the current media.
    * <p>
-   * The media must first be parsed, see {@link #parseMedia()}.
+   * The media (if local) should first be parsed, see {@link #parseMedia()}, or
+   * be already playing.
+   * 
    * <p>
-   * In the case of DVD media (for example ".iso" files) the media must be 
-   * played and video output must be available before valid track information 
-   * becomes available. 
+   * In the case of DVD media (for example ".iso" files) and streams the media 
+   * must be played and video output must be available before valid track 
+   * information becomes available. 
    * 
    * @return collection of track information, or <code>null</code> if there is no current media
    */
   List<TrackInfo> getTrackInfo();
+
+  /**
+   * Get track (i.e. "elementary streams") information for a media item.
+   * <p>
+   * See {@link #getTrackInfo()}.
+   *
+   * @param media media item
+   * @return collection of track information, or <code>null</code> if there is no current media
+   */
+  List<TrackInfo> getTrackInfo(libvlc_media_t media);
+  
+  /**
+   * Get the track (i.e. "elementary streams") information for all sub-items if
+   * there are any.
+   * <p>
+   * See {@link #getTrackInfo()}.
+   * 
+   * @return collection of track information for each sub-item, or <code>null</code> if there is no current media
+   */
+  List<List<TrackInfo>> getSubItemTrackInfo();
 
   /**
    * Set the directory into which snapshots of the video are saved.
