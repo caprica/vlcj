@@ -20,9 +20,8 @@
 package uk.co.caprica.vlcj.player;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Media meta data.
@@ -77,7 +76,7 @@ public class MediaDetails implements Serializable {
   /**
    * Collection of chapter descriptions for each title.
    */
-  private Map<Integer, List<String>> chapterDescriptions = new HashMap<Integer, List<String>>();
+  private List<List<String>> chapterDescriptions = new ArrayList<List<String>>();
   
   public int getTitleCount() {
     return titleCount;
@@ -143,11 +142,11 @@ public class MediaDetails implements Serializable {
     this.spuDescriptions = spuDescriptions;
   }
 
-  public Map<Integer, List<String>> getChapterDescriptions() {
+  public List<List<String>> getChapterDescriptions() {
     return chapterDescriptions;
   }
 
-  public void setChapterDescriptions(Map<Integer, List<String>> chapterDescriptions) {
+  public void setChapterDescriptions(List<List<String>> chapterDescriptions) {
     this.chapterDescriptions = chapterDescriptions;
   }
   
