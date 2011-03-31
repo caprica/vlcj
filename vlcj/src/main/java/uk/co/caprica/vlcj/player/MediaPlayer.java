@@ -271,6 +271,9 @@ public interface MediaPlayer {
    * <p>
    * If the media has not yet been parsed, then it will be synchronously
    * parsed during this method.
+   * <p>
+   * This method should only be used on <strong>local</strong> media otherwise
+   * a hang may occur (e.g. do not use this for web streams).
    * 
    * @return meta data
    */
@@ -302,6 +305,9 @@ public interface MediaPlayer {
    * Get local meta data for a media path.
    * <p>
    * The media will be synchronously parsed to get the meta data.
+   * <p>
+   * This method should only be used on <strong>local</strong> media otherwise
+   * a hang may occur (e.g. do not use this for web streams).
    * 
    * @param mediaPath path to the media
    * @return meta data, or <code>null</code> if not available (e.g. error or invalid path)
