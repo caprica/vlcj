@@ -67,4 +67,14 @@ public class AudioTrackInfo extends TrackInfo {
   public int rate() {
     return rate;
   }
+
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder(200);
+    sb.append(super.toString()).append('[');
+    sb.append("channels=").append(channels).append(',');
+    sb.append("rate=").append(rate).append(']');
+    return sb.toString();
+  }
 }

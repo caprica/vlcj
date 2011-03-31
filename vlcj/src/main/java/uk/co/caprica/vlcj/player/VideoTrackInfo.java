@@ -67,4 +67,13 @@ public class VideoTrackInfo extends TrackInfo {
   public int height() {
     return height;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder(200);
+    sb.append(super.toString()).append('[');
+    sb.append("width=").append(width).append(',');
+    sb.append("height=").append(height).append(']');
+    return sb.toString();
+  }
 }
