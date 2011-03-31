@@ -275,7 +275,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       libvlc.libvlc_media_parse(mediaInstance);
     }
     else {
-      throw new RuntimeException("Attempt to parse media when there is no media");
+      throw new IllegalStateException("No media");
     }
   }
 
@@ -286,7 +286,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       libvlc.libvlc_media_parse_async(mediaInstance);
     }
     else {
-      throw new RuntimeException("Attempt to parse media when there is no media");
+      throw new IllegalStateException("No media");
     }
   }
 
@@ -297,7 +297,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       return 0 != libvlc.libvlc_media_is_parsed(mediaInstance);
     }
     else {
-      throw new RuntimeException("No media");
+      throw new IllegalStateException("No media");
     }
   }
   
@@ -310,30 +310,16 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 //  @Override
   public List<MediaMeta> getSubItemMediaMeta() {
     Logger.debug("getSubItemMediaMeta()");
-    // Lock the list of sub-items
-    libvlc_media_list_t subItems = lockSubItemList();
-    if(subItems != null) {
-      // Count the items in the list
-      int count = libvlc.libvlc_media_list_count(subItems);
-      // Get each sub-item
-      List<MediaMeta> result = new ArrayList<MediaMeta>(count);
-      for(int i = 0; i < count; i++) {
-        libvlc_media_t subItemMedia = libvlc.libvlc_media_list_item_at_index(subItems, i);
-        if(subItemMedia != null) {
-          // Get the media meta for the sub-item
-          result.add(getMediaMeta(subItemMedia));
-          // Release the sub-item instance
-          libvlc.libvlc_media_release(subItemMedia);
+    return handleSubItems(new SubItemsHandler<List<MediaMeta>>() {
+//      @Override
+      public List<MediaMeta> subItems(int count, libvlc_media_list_t subItems) {
+        List<MediaMeta> result = new ArrayList<MediaMeta>(count);
+        for(libvlc_media_t subItem : new LibVlcMediaListIterator(libvlc, subItems)) {
+          result.add(getMediaMeta(subItem));
         }
+        return result;
       }
-      // Clean up
-      unlockSubItemList(subItems);
-      // Return the list
-      return result;
-    }
-    else {
-      return null;
-    }
+    });
   }
 
 //  @Override
@@ -344,7 +330,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       if(0 == libvlc.libvlc_media_is_parsed(media)) {
         // ...synchronously parse the media
         // WARNING: it is possible that this call might never return (e.g. when
-        //          getting meta from CDDA)
+        //          getting meta from CDDA or from a remote stream (e.g. HTTP)
         libvlc.libvlc_media_parse(media);
       }
       MediaMeta mediaMeta = new MediaMeta();
@@ -368,7 +354,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       return mediaMeta;
     }
     else {
-      throw new RuntimeException("No media");
+      throw new IllegalStateException("No media");
     }
   }
 
@@ -396,7 +382,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       }
     }
     else {
-      throw new RuntimeException("No media");
+      throw new IllegalStateException("No media");
     }
   }
   
@@ -417,49 +403,27 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 //  @Override
   public int subItemCount() {
     Logger.debug("subItemCount()");
-    // Lock the list of sub-items
-    libvlc_media_list_t subItems = lockSubItemList();
-    if(subItems != null) {
-      // Count the items in the list
-      int count = libvlc.libvlc_media_list_count(subItems);
-      // Clean up
-      unlockSubItemList(subItems);
-      // Return the count
-      return count;
-    }
-    else {
-      return -1;
-    }
+    return handleSubItems(new SubItemsHandler<Integer>() {
+//      @Override
+      public Integer subItems(int count, libvlc_media_list_t subItems) {
+        return count;
+      }
+    });
   }
   
 //  @Override
   public List<String> subItems() {
     Logger.debug("subItems()");
-    // Lock the list of sub-items
-    libvlc_media_list_t subItems = lockSubItemList();
-    if(subItems != null) {
-      // Count the items in the list
-      int count = libvlc.libvlc_media_list_count(subItems);
-      // Get each sub-item
-      List<String> result = new ArrayList<String>(count);
-      for(int i = 0; i < count; i++) {
-        libvlc_media_t subItemMedia = libvlc.libvlc_media_list_item_at_index(subItems, i);
-        if(subItemMedia != null) {
-          // Get the MRL for the sub-item
-          String subItemMrl = libvlc.libvlc_media_get_mrl(subItemMedia);
-          result.add(subItemMrl);
-          // Release the sub-item instance
-          libvlc.libvlc_media_release(subItemMedia);
+    return handleSubItems(new SubItemsHandler<List<String>>() {
+      @Override
+      public List<String> subItems(int count, libvlc_media_list_t subItems) {
+        List<String> result = new ArrayList<String>(count);
+        for(libvlc_media_t subItem : new LibVlcMediaListIterator(libvlc, subItems)) {
+          result.add(libvlc.libvlc_media_get_mrl(subItem));
         }
+        return result;
       }
-      // Clean up
-      unlockSubItemList(subItems);
-      // Return the list
-      return result;
-    }
-    else {
-      return null;
-    }
+    });
   }
 
   //  @Override
@@ -469,65 +433,63 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   }
 
 //  @Override
-  public boolean playSubItem(int index, String... mediaOptions) {
+  public boolean playSubItem(final int index, final String... mediaOptions) {
     Logger.debug("playSubItem(index={},mediaOptions={})", index, Arrays.toString(mediaOptions));
-    // Assume a sub-item was not played
-    boolean subItemPlayed = false;
-    // Lock the list of sub-items
-    libvlc_media_list_t subItems = lockSubItemList();
-    if(subItems != null) {
-      Logger.debug("Handling media sub-item...");
-      // Advance the current sub-item (initially it will be -1)
-      int subItemCount = libvlc.libvlc_media_list_count(subItems);
-      Logger.debug("subItemCount={}", subItemCount);
-      subItemIndex = index;
-      Logger.debug("subItemIndex={}", subItemIndex);
-      // If the last sub-item already been played...
-      if(subItemIndex >= subItemCount) {
-        Logger.debug("End of sub-items reached");
-        if(!repeat) {
-          Logger.debug("Do not repeat sub-items");
-          subItemIndex = -1;
-        }
-        else {
-          Logger.debug("Repeating sub-items");
-          subItemIndex = 0;
-        }
-      }
-      if(subItemIndex != -1) {
-        // Get the required sub item from the list
-        libvlc_media_t subItem = libvlc.libvlc_media_list_item_at_index(subItems, subItemIndex);
-        // If there is an item to play...
-        if(subItem != null) {
-          // Set the sub-item as the new media for the media player
-          libvlc.libvlc_media_player_set_media(mediaPlayerInstance, subItem);
-          // Set any standard media options
-          if(standardMediaOptions != null) {
-            for(String standardMediaOption : standardMediaOptions) {
-              Logger.debug("standardMediaOption={}", standardMediaOption);
-              libvlc.libvlc_media_add_option(subItem, standardMediaOption);
+    return handleSubItems(new SubItemsHandler<Boolean>() {
+//      @Override
+      public Boolean subItems(int count, libvlc_media_list_t subItems) {
+        if(subItems != null) {
+          Logger.debug("Handling media sub-item...");
+          // Advance the current sub-item (initially it will be -1)...
+          Logger.debug("count={}", count);
+          subItemIndex = index;
+          Logger.debug("subItemIndex={}", subItemIndex);
+          // If the last sub-item already been played...
+          if(subItemIndex >= count) {
+            Logger.debug("End of sub-items reached");
+            if(!repeat) {
+              Logger.debug("Do not repeat sub-items");
+              subItemIndex = -1;
+            }
+            else {
+              Logger.debug("Repeating sub-items");
+              subItemIndex = 0;
             }
           }
-          // Set any media options
-          if(mediaOptions != null) {
-            for(String mediaOption : mediaOptions) {
-              Logger.debug("mediaOption={}", mediaOption);
-              libvlc.libvlc_media_add_option(subItem, mediaOption);
+          if(subItemIndex != -1) {
+            // Get the required sub item from the list
+            libvlc_media_t subItem = libvlc.libvlc_media_list_item_at_index(subItems, subItemIndex);
+            // If there is an item to play...
+            if(subItem != null) {
+              // Set the sub-item as the new media for the media player
+              libvlc.libvlc_media_player_set_media(mediaPlayerInstance, subItem);
+              // Set any standard media options
+              if(standardMediaOptions != null) {
+                for(String standardMediaOption : standardMediaOptions) {
+                  Logger.debug("standardMediaOption={}", standardMediaOption);
+                  libvlc.libvlc_media_add_option(subItem, standardMediaOption);
+                }
+              }
+              // Set any media options
+              if(mediaOptions != null) {
+                for(String mediaOption : mediaOptions) {
+                  Logger.debug("mediaOption={}", mediaOption);
+                  libvlc.libvlc_media_add_option(subItem, mediaOption);
+                }
+              }
+              // Play the media
+              libvlc.libvlc_media_player_play(mediaPlayerInstance);
+              // Release the sub-item
+              libvlc.libvlc_media_release(subItem);
+              // A sub-item was played
+              return true;
             }
           }
-          // Play the media
-          libvlc.libvlc_media_player_play(mediaPlayerInstance);
-          // Release the sub-item
-          libvlc.libvlc_media_release(subItem);
-          // Record the fact a sub-item was played
-          subItemPlayed = true;
         }
+        // A sub-item was not played
+        return false;
       }
-      // Clean up
-      unlockSubItemList(subItems);
-    }
-    Logger.debug("subItemPlayed={}", subItemPlayed);
-    return subItemPlayed;
+    });
   }
   
   // === Status Controls ======================================================
@@ -1652,43 +1614,41 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       return getNativeString(libvlc.libvlc_media_get_meta(media, metaType.intValue()));
     }
     else {
-      throw new RuntimeException("No media");
+      throw new IllegalStateException("No media");
     }
   }
 
   /**
-   * Get and lock the list of sub items for the current media.
+   * Handle sub-items.
    * 
-   * @return list of sub items, or <code>null</code>
+   * @param <T> type of result
+   * @param subItemsHandler handler implementation
+   * @return result
    */
-  private libvlc_media_list_t lockSubItemList() {
-    Logger.debug("lockSubItemList()");
-    // If there is a current media...
-    if(mediaInstance != null) {
-      // Get the list of sub-items
-      libvlc_media_list_t subItems = libvlc.libvlc_media_subitems(mediaInstance);
-      Logger.debug("subItems={}", subItems);
-      if(subItems != null) {
-        // Lock the sub-item list
-        libvlc.libvlc_media_list_lock(subItems);
-        // Return the list
-        return subItems;
+  private <T> T handleSubItems(SubItemsHandler<T> subItemsHandler) {
+    Logger.debug("handleSubItems()");
+    libvlc_media_list_t subItemList = null;
+    try {
+      if(mediaInstance != null) {
+        // Get the list of sub-items
+        subItemList = libvlc.libvlc_media_subitems(mediaInstance);
+        Logger.debug("subItemList={}", subItemList);
+        if(subItemList != null) {
+          // Lock the sub-item list
+          libvlc.libvlc_media_list_lock(subItemList);
+        }
+        // Invoke the handler
+        return subItemsHandler.subItems(subItemList != null ? libvlc.libvlc_media_list_count(subItemList) : 0, subItemList);
+      }
+      else {
+        throw new IllegalStateException("No media");
       }
     }
-    return null;
-  }
-  
-  /**
-   * Unlock and release the list of sub items for the current media.
-   * 
-   * @param subItems list of sub items, may be <code>null</code>
-   */
-  private void unlockSubItemList(libvlc_media_list_t subItemList) {
-    Logger.debug("unlockSubItemList(subItems={})", subItemList);
-    if(subItemList != null) {
-      // Clean up
-      libvlc.libvlc_media_list_unlock(subItemList);
-      libvlc.libvlc_media_list_release(subItemList);
+    finally {
+      if(subItemList != null) {
+        libvlc.libvlc_media_list_unlock(subItemList);
+        libvlc.libvlc_media_list_release(subItemList);
+      }
     }
   }
   
@@ -1858,5 +1818,22 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         playNextSubItem();
       }
     }
+  }
+
+  /**
+   * Specification for a component that handles media list sub-items.
+   *
+   * @param <T> desired result type
+   */
+  private interface SubItemsHandler<T> {
+    
+    /**
+     * Handle sub-items.
+     * 
+     * @param count number of sub-items in the list, will always be zero or greater
+     * @param subItems sub-item list, may be <code>null</code>
+     * @return result of processing the sub-items
+     */
+    T subItems(int count, libvlc_media_list_t subItems);
   }
 }
