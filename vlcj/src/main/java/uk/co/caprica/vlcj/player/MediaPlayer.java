@@ -345,6 +345,8 @@ public interface MediaPlayer {
   
   /**
    * Get the list of sub-items (if any).
+   * <p>
+   * The MRL of each sub-item is returned in the list.
    * 
    * @return sub-item list, or <code>null</code> if there is no current media
    */
