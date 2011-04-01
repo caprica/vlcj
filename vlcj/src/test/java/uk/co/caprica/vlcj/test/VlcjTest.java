@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.test;
 import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.x.LibXUtil;
 
 import com.sun.jna.NativeLibrary;
 
@@ -73,16 +74,9 @@ public abstract class VlcjTest {
     }
     
     // Safely try to initialise LibX11 to reduce the opportunity for native
-    // crashes - this will throw an Error on Windows (and maybe MacOS) that can 
-    // safely be ignored
-    try {
-      LibX11.INSTANCE.XInitThreads();
-    }
-    catch(Throwable t) {
-      if(!RuntimeUtil.isWindows()) {
-        Logger.debug("Did not initialise LibX11: {}", t.getMessage());
-      }
-    }
+    // crashes - this will silently throw an Error on Windows (and maybe MacOS)
+    // that can safely be ignored
+    LibXUtil.initialise();
     
     if(null != NATIVE_LIBRARY_SEARCH_PATH) {
       Logger.info("Explicitly adding JNA native library search path: '{}'", NATIVE_LIBRARY_SEARCH_PATH);
