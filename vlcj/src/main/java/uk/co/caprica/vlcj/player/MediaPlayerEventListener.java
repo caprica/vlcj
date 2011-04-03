@@ -203,4 +203,22 @@ public interface MediaPlayerEventListener {
    * @param newState
    */
   void mediaStateChanged(MediaPlayer mediaPlayer, int newState);
+
+  // === Synthetic/semantic events ============================================
+  
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   * @param subItemIndex
+   */
+  void subItemPlayed(MediaPlayer mediaPlayer, int subItemIndex);
+  
+  /**
+   *
+   *
+   * @param mediaPlayer
+   * @param subItemIndex
+   */
+  void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex);
 }

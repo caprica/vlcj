@@ -37,7 +37,11 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
 
 /**
  * A factory that creates a media player event instance for a native media
- * player event.
+ * player event or a semantic event.
+ * <p>
+ * A "semantic" event is one that has no directly associated native event, but
+ * is instead a higher level event (like "sub-item finished", there is no such
+ * native event but it can be inferred and is a useful event).
  */
 public class MediaPlayerEventFactory {
 
@@ -216,5 +220,34 @@ public class MediaPlayerEventFactory {
         break;
     }
     return result;
+  }
+
+  /**
+   * Create a new semantic media player event.
+   * 
+   * @param subItemIndex index of the sub-item that was played
+   * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
+   * @return media player event, or <code>null</code> if the event type is not enabled
+   */
+  public MediaPlayerEvent newMediaSubItemPlayedMediaPlayerEvent(int subItemIndex, int eventMask) {
+    if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.SUB_ITEM_PLAYED)) {
+      return new MediaSubItemPlayedEvent(mediaPlayer, subItemIndex);
+    }
+    return null;
+  }
+
+
+  /**
+   * Create a new semantic media player event.
+   * 
+   * @param subItemIndex index of the sub-item that finished playing
+   * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
+   * @return media player event, or <code>null</code> if the event type is not enabled
+   */
+  public MediaPlayerEvent newMediaSubItemFinishedMediaPlayerEvent(int subItemIndex, int eventMask) {
+    if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.SUB_ITEM_FINISHED)) {
+      return new MediaSubItemFinishedEvent(mediaPlayer, subItemIndex);
+    }
+    return null;
   }
 }

@@ -30,6 +30,9 @@ public enum MediaPlayerEventType {
   MEDIA_FREED                    (0X00200000),
   MEDIA_STATE_CHANGED            (0X00400000),
   
+  SUB_ITEM_PLAYED                (0x00800000),
+  SUB_ITEM_FINISHED              (0x01000000),
+  
   ALL                            (0xffffffff);
   
   /**

@@ -350,6 +350,13 @@ public interface MediaPlayer {
   int subItemCount();
   
   /**
+   * Get the index of the current sub-item.
+   * 
+   * @return sub-item index, or -1 if no sub-items or no current sub-item
+   */
+  int subItemIndex();
+  
+  /**
    * Get the list of sub-items (if any).
    * <p>
    * The MRL of each sub-item is returned in the list.

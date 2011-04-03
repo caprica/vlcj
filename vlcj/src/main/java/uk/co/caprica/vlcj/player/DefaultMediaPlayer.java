@@ -99,12 +99,20 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   private final MediaPlayerEventFactory eventFactory = new MediaPlayerEventFactory(this);
   
   /**
-   * Background thread to event notifications. 
+   * Background thread to event notifications.
+   * <p>
+   * The single-threaded nature of this executor service ensures that events
+   * are delivered to listeners in a thread-safe manner and in their proper
+   * sequence. 
    */
   private final ExecutorService listenersService = Executors.newSingleThreadExecutor();
 
   /**
    * Background thread to handle video output notifications.
+   * <p>
+   * The single-threaded nature of this executor service ensures that events
+   * are delivered to listeners in a thread-safe manner and in their proper
+   * sequence. 
    */
   private final ExecutorService videoOutputService = Executors.newSingleThreadExecutor();
   
@@ -410,6 +418,11 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   }
   
 //  @Override
+  public int subItemIndex() {
+    return subItemIndex;
+  }
+
+//  @Override
   public List<String> subItems() {
     Logger.debug("subItems()");
     return handleSubItems(new SubItemsHandler<List<String>>() {
@@ -479,6 +492,13 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
               libvlc.libvlc_media_player_play(mediaPlayerInstance);
               // Release the sub-item
               libvlc.libvlc_media_release(subItem);
+              // Raise a semantic event to announce the sub-item was played
+              Logger.debug("Raising played event for sub-item {}", subItemIndex);
+              MediaPlayerEvent event = eventFactory.newMediaSubItemPlayedMediaPlayerEvent(subItemIndex, eventMask);
+              Logger.debug("event={}", event);
+              if(event != null) {
+                listenersService.submit(new NotifyEventListenersRunnable(event));
+              }
               // A sub-item was played
               return true;
             }
@@ -1464,6 +1484,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   
     registerEventListener();
 
+    // The order these handlers execute in is important for proper operation
     eventListenerList.add(new VideoOutputEventHandler());
     eventListenerList.add(new RepeatPlayEventHandler());
     eventListenerList.add(new SubItemEventHandler());
@@ -1829,7 +1850,19 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public void finished(MediaPlayer mediaPlayer) {
       Logger.debug("finished(mediaPlayer={})", mediaPlayer);
+      // If a sub-item being played...
+      if(subItemIndex != -1) {
+        // Raise a semantic event to announce the sub-item was finished
+        Logger.debug("Raising finished event for sub-item {}", subItemIndex);
+        MediaPlayerEvent event = eventFactory.newMediaSubItemFinishedMediaPlayerEvent(subItemIndex, eventMask);
+        Logger.debug("event={}", event);
+        if(event != null) {
+          listenersService.submit(new NotifyEventListenersRunnable(event));
+        }
+      }
+      // If set to automatically play sub-items...
       if(playSubItems) {
+        // ...play the next sub-item
         playNextSubItem();
       }
     }
