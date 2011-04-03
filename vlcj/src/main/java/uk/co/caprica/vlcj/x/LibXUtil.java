@@ -40,6 +40,9 @@ public class LibXUtil {
    * <p>
    * It is safe to invoke this on any operating system and it will silently
    * fail if X is not supported.
+   * <p>
+   * This <strong>should not</strong> be required, but in practice it may be
+   * useful.
    */
   public static void initialise() {
     try {
