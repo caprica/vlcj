@@ -392,14 +392,20 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
   }
   
-  // === Sub-Item Controls ====================================================
-  
 //  @Override
   public void setRepeat(boolean repeat) {
     Logger.debug("setRepeat(repeat={})", repeat);
     this.repeat = repeat;
   }
 
+//  @Override
+  public boolean getRepeat() {
+    Logger.debug("getRepeat()");
+    return repeat;
+  }
+
+  // === Sub-Item Controls ====================================================
+  
   //  @Override
   public void setPlaySubItems(boolean playSubItems) {
     Logger.debug("setPlaySubItems(playSubItems={})", playSubItems);

@@ -335,6 +335,14 @@ public interface MediaPlayer {
   void setRepeat(boolean repeat);
   
   /**
+   * Test whether or not the media player will automatically repeat playing the
+   * media when it has finished playing.
+   * 
+   * @return <code>true</code> if the media will be automatically replayed, otherwise <code>false</code>
+   */
+  boolean getRepeat();
+  
+  /**
    * Set whether or not the media player should automatically play media sub-
    * items.
    * 
