@@ -175,6 +175,11 @@ public class MediaPlayerFactory {
     // JNA will look for the libvlc shared library here (and also libvlccore)...
     Logger.debug("jna.library.path={}", System.getProperty("jna.library.path"));
 
+    // Convenience
+    if(libvlcArgs == null) {
+      libvlcArgs = new String[0];
+    }
+    
     // Ordinarily libvlc will look for it's plugins in a directory named 
     // "vlc/plugins" relative to the directory where libvlccore is loaded from,
     // this can be overridden by explicitly specifying the "--plugin-path"
