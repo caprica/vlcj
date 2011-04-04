@@ -500,11 +500,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
               libvlc.libvlc_media_release(subItem);
               // Raise a semantic event to announce the sub-item was played
               Logger.debug("Raising played event for sub-item {}", subItemIndex);
-              MediaPlayerEvent event = eventFactory.newMediaSubItemPlayedMediaPlayerEvent(subItemIndex, eventMask);
-              Logger.debug("event={}", event);
-              if(event != null) {
-                listenersService.submit(new NotifyEventListenersRunnable(event));
-              }
+              raiseEvent(eventFactory.createMediaSubItemPlayedEvent(subItemIndex, eventMask));
               // A sub-item was played
               return true;
             }
@@ -1492,6 +1488,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
     // The order these handlers execute in is important for proper operation
     eventListenerList.add(new VideoOutputEventHandler());
+    eventListenerList.add(new NewMediaEventHandler());
     eventListenerList.add(new RepeatPlayEventHandler());
     eventListenerList.add(new SubItemEventHandler());
   }
@@ -1601,10 +1598,25 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   }
 
   /**
+   * Raise an event.
    * 
+   * @param mediaPlayerEvent event to raise, may be <code>null</code>
+   */
+  private void raiseEvent(MediaPlayerEvent mediaPlayerEvent) {
+    Logger.trace("raiseEvent(mediaPlayerEvent={}", mediaPlayerEvent);
+    if(mediaPlayerEvent != null) {
+      listenersService.submit(new NotifyEventListenersRunnable(mediaPlayerEvent));
+    }
+  }
+  
+  /**
+   * Set new media for the native media player.
+   * <p>
+   * This method cleans up the previous media if there was one before 
+   * associating new media with the media player. 
    * 
-   * @param media
-   * @param mediaOptions
+   * @param media media
+   * @param mediaOptions zero or more media options
    */
   private boolean setMedia(String media, String... mediaOptions) {
     Logger.debug("setMedia(media={},mediaOptions={})" , media, Arrays.toString(mediaOptions));
@@ -1718,11 +1730,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       Logger.trace("callback(event={},userData={})", event, userData);
       if(!eventListenerList.isEmpty()) {
         // Create a new media player event for the native event
-        MediaPlayerEvent mediaPlayerEvent = eventFactory.newMediaPlayerEvent(event, eventMask);
-        Logger.trace("mediaPlayerEvent={}", mediaPlayerEvent);
-        if(mediaPlayerEvent != null) {
-          listenersService.submit(new NotifyEventListenersRunnable(mediaPlayerEvent));
-        }
+        raiseEvent(eventFactory.createEvent(event, eventMask));
       }
     }
   }
@@ -1810,6 +1818,25 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   }
   
   /**
+   * Event listener implementation that handles a new item being played.
+   * <p>
+   * This is not for sub-items.
+   */
+  private final class NewMediaEventHandler extends MediaPlayerEventAdapter {
+
+    @Override
+    public void mediaChanged(MediaPlayer mediaPlayer) {
+      Logger.debug("mediaChanged(mediaPlayer={})", mediaPlayer);
+      // If this is not a sub-item...
+      if(subItemIndex() == -1) {
+        // Raise a semantic event to announce the media was changed
+        Logger.debug("Raising event for new media");
+        raiseEvent(eventFactory.createMediaNewEvent(eventMask));
+      }
+    }
+  }
+  
+  /**
    * Event listener implementation that handles auto-repeat.
    */
   private final class RepeatPlayEventHandler extends MediaPlayerEventAdapter {
@@ -1860,11 +1887,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       if(subItemIndex != -1) {
         // Raise a semantic event to announce the sub-item was finished
         Logger.debug("Raising finished event for sub-item {}", subItemIndex);
-        MediaPlayerEvent event = eventFactory.newMediaSubItemFinishedMediaPlayerEvent(subItemIndex, eventMask);
-        Logger.debug("event={}", event);
-        if(event != null) {
-          listenersService.submit(new NotifyEventListenersRunnable(event));
-        }
+        raiseEvent(eventFactory.createMediaSubItemFinishedEvent(subItemIndex, eventMask));
       }
       // If set to automatically play sub-items...
       if(playSubItems) {

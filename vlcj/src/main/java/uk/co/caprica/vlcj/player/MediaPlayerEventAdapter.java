@@ -125,6 +125,10 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
   }
 
   // === Synthetic/semantic events ============================================
+
+//  @Override
+  public void newMedia(MediaPlayer mediaPlayer) {
+  }
   
 //  @Override
   public void subItemPlayed(MediaPlayer mediaPlayer, int subItemIndex) {

@@ -205,6 +205,13 @@ public interface MediaPlayerEventListener {
   void mediaStateChanged(MediaPlayer mediaPlayer, int newState);
 
   // === Synthetic/semantic events ============================================
+
+  /**
+   * 
+   * 
+   * @param mediaPlayer
+   */
+  void newMedia(MediaPlayer mediaPlayer);
   
   /**
    * 
