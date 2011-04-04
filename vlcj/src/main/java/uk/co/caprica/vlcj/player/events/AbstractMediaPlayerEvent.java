@@ -41,4 +41,9 @@ abstract class AbstractMediaPlayerEvent implements MediaPlayerEvent {
   protected AbstractMediaPlayerEvent(MediaPlayer mediaPlayer) {
     this.mediaPlayer = mediaPlayer;
   }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName();
+  }
 }
