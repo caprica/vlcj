@@ -83,7 +83,7 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
   }
 
 //  @Override
-  public void titleChanged(MediaPlayer mediaPlayer, int newSeekable) {
+  public void titleChanged(MediaPlayer mediaPlayer, int newTitle) {
   }
 
 //  @Override
