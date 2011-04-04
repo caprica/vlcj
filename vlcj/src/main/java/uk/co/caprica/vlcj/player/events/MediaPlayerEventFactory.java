@@ -249,7 +249,6 @@ public class MediaPlayerEventFactory {
     return null;
   }
 
-
   /**
    * Create a new semantic event for a finished sub-item.
    * 
@@ -260,6 +259,19 @@ public class MediaPlayerEventFactory {
   public MediaPlayerEvent createMediaSubItemFinishedEvent(int subItemIndex, int eventMask) {
     if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.SUB_ITEM_FINISHED)) {
       return new MediaSubItemFinishedEvent(mediaPlayer, subItemIndex);
+    }
+    return null;
+  }
+
+  /**
+   * Create a new semantic event for the end of the sub-items being reached.
+   * 
+   * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
+   * @return media player event, or <code>null</code> if the event type is not enabled
+   */
+  public MediaPlayerEvent createMediaEndOfSubItemsEvent(int eventMask) {
+    if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.END_OF_SUB_ITEMS)) {
+      return new MediaEndOfSubItemsEvent(mediaPlayer);
     }
     return null;
   }

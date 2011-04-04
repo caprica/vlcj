@@ -33,6 +33,7 @@ public enum MediaPlayerEventType {
   NEW_MEDIA                      (0x00800000),
   SUB_ITEM_PLAYED                (0x01000000),
   SUB_ITEM_FINISHED              (0x02000000),
+  END_OF_SUB_ITEMS               (0x04000000),
   
   ALL                            (0xffffffff);
   

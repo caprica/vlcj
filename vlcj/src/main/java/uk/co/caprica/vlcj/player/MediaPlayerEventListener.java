@@ -239,4 +239,13 @@ public interface MediaPlayerEventListener {
    * @param subItemIndex index of the sub-item that finished playing
    */
   void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex);
+  
+  /**
+   * The end of the media sub-items was reached.
+   * <p>
+   * This event will not be raised if the sub-items are being repeated.
+   * 
+   * @param mediaPlayer media player that raised the event
+   */
+  void endOfSubItems(MediaPlayer mediaPlayer);
 }

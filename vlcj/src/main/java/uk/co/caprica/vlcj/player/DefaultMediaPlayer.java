@@ -467,6 +467,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             if(!repeat) {
               Logger.debug("Do not repeat sub-items");
               subItemIndex = -1;
+              Logger.debug("Raising events for end of sub-items");
+              raiseEvent(eventFactory.createMediaEndOfSubItemsEvent(eventMask));
             }
             else {
               Logger.debug("Repeating sub-items");

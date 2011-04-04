@@ -137,4 +137,8 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
 //  @Override
   public void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex) {
   }
+
+//  @Override
+  public void endOfSubItems(MediaPlayer mediaPlayer) {
+  }
 }
