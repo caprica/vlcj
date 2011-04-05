@@ -131,8 +131,8 @@
   <target name="all" depends="clean, package" description="Perform a full clean build and produce distribution jar files"/>
   
   <taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" classpath="tools/ant-googlecode-0.0.2.jar" name="gcupload"/>
-
-  <target name="upload" depends="dist">
+	
+  <target name="upload.dist" depends="dist">
     <gcupload 
       username="${gc.username}" 
       password="${gc.password}" 
@@ -179,5 +179,28 @@
       labels="Featured, Type-Executable, OpSys-All"
     />
   </target>
+	
+  <target name="upload.package" depends="package">
+    <gcupload 
+      username="${gc.username}" 
+      password="${gc.password}" 
+      projectname="${gc.project.name}" 
+      filename="package/${ant.project.name}-${build.version}.tgz" 
+      targetfilename="${ant.project.name}-${build.version}.tgz"
+      summary="{ant.project.name}-${build.version} package distribution for libvlc-1.1.x and libvlc-1.2.x"
+      labels="Featured, Type-Package, OpSys-All"
+    /> 
+    <gcupload 
+      username="${gc.username}" 
+      password="${gc.password}" 
+      projectname="${gc.project.name}" 
+      filename="package/${ant.project.name}-${build.version}.zip" 
+      targetfilename="${ant.project.name}-${build.version}.zip"
+      summary="{ant.project.name}-${build.version} package distribution for libvlc-1.1.x and libvlc-1.2.x"
+      labels="Featured, Type-Package, OpSys-All"
+    /> 
+  </target>
+  	
+	<target name="upload" depends="upload.dist, upload.package"/>
 	
 </project>
