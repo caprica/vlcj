@@ -34,6 +34,8 @@
   <property name="compile.debug"    value="yes"/> <!-- Core library jar file size will be reduced by about 20k if you set debug to "no" -->
   <property name="compile.optimize" value="yes"/>
 	
+  <property file="build.credentials.properties"/> <!-- gc.project.name, gc.username, gc.password -->
+	
   <path id="project.classes">
     <pathelement location="lib/jna.jar"/>
     <pathelement location="lib/platform.jar"/>
@@ -128,4 +130,54 @@
 	
   <target name="all" depends="clean, package" description="Perform a full clean build and produce distribution jar files"/>
   
+  <taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" classpath="tools/ant-googlecode-0.0.2.jar" name="gcupload"/>
+
+  <target name="upload" depends="dist">
+    <gcupload 
+      username="${gc.username}" 
+      password="${gc.password}" 
+      projectname="${gc.project.name}" 
+      filename="dist/${ant.project.name}-${build.version}.jar" 
+      targetfilename="{ant.project.name}-${build.version}.jar"
+      summary="{ant.project.name}-${build.version} binaries for libvlc-1.1.x and libvlc-1.2.x"
+      labels="Featured, Type-Archive, OpSys-All"
+    /> 
+    <gcupload 
+      username="${gc.username}" 
+      password="${gc.password}" 
+      projectname="${gc.project.name}" 
+      filename="dist/${ant.project.name}-${build.version}-sources.jar" 
+      targetfilename="{ant.project.name}-${build.version}-sources.jar"
+      summary="{ant.project.name}-${build.version} sources for libvlc-1.1.x and libvlc-1.2.x"
+      labels="Featured, Type-Source, OpSys-All"
+    /> 
+    <gcupload 
+      username="${gc.username}" 
+      password="${gc.password}" 
+      projectname="${project.name}" 
+      filename="dist/${ant.project.name}-${build.version}-javadoc.jar" 
+      targetfilename="{ant.project.name}-${build.version}-javadoc.jar"
+      summary="{ant.project.name}-${build.version} javadoc for libvlc-1.1.x and libvlc-1.2.x"
+      labels="Featured, Type-Docs, OpSys-All"
+    /> 
+    <gcupload 
+      username="${gc.username}" 
+      password="${gc.password}" 
+      projectname="${gc.project.name}" 
+      filename="dist/${ant.project.name}-${build.version}-test.jar" 
+      targetfilename="{ant.project.name}-${build.version}-test.jar"
+      summary="{ant.project.name}-${build.version} test video player for libvlc-1.1.x and libvlc-1.2.x"
+      labels="Featured, Type-Executable, OpSys-All"
+    /> 
+    <gcupload 
+      username="${gc.username}" 
+      password="${gc.password}" 
+      projectname="${gc.project.name}" 
+      filename="dist/${ant.project.name}-${build.version}-test-sources.jar" 
+      targetfilename="{ant.project.name}-${build.version}-test-sources.jar"
+      summary="{ant.project.name}-${build.version} test video player sources for libvlc-1.1.x and libvlc-1.2.x"
+      labels="Featured, Type-Executable, OpSys-All"
+    />
+  </target>
+	
 </project>
