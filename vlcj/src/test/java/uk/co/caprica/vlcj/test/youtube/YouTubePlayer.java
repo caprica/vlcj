@@ -60,6 +60,12 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * </pre>
  * Note that it is also possible to programmatically play the sub-item in 
  * response to events - this is slightly more complex but more flexible.
+ * <p>
+ * The YouTube web page format changes from time to time. This means that the
+ * lua scripts that vlc provides to parse the YouTube web pages when looking
+ * for the media to stream may not work. If you get errors, especially errors
+ * alluding to malformed urls, then you may need to update your vlc version to
+ * get newer lua scripts.
  */
 public class YouTubePlayer extends VlcjTest {
 
