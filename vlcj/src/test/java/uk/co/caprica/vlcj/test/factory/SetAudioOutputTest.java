@@ -187,7 +187,7 @@ public class SetAudioOutputTest extends VlcjTest {
       else {
         JMenu audioOutputMenuItem = new JMenu(audioOutput.getDescription());
         for(AudioDevice audioDevice : audioOutput.getDevices()) {
-          JMenuItem audioDeviceMenuItem = new JMenuItem("<html><b>" + audioDevice.getDeviceId() + "</b>&nbsp;<i>" + audioDevice.getLongName() + "</i></html>");
+          JMenuItem audioDeviceMenuItem = new JMenuItem("<html><b>" + audioDevice.getDeviceId() + "</b>&nbsp;&nbsp;<i>" + audioDevice.getLongName() + "</i></html>");
           audioDeviceMenuItem.putClientProperty("AudioOutputName", audioOutput.getName());
           audioDeviceMenuItem.putClientProperty("AudioDeviceId", audioDevice.getDeviceId());
           audioOutputMenuItem.add(audioDeviceMenuItem);
