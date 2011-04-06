@@ -53,7 +53,11 @@ public class AudioOutputsTest extends VlcjTest {
     System.out.printf(FORMAT_PATTERN , String.valueOf(i+1), audioOutput.getName(), audioOutput.getDescription(), "(" + audioDevices.size() + ")", "");
     for(int j = 0; j < audioDevices.size(); j++) {
       AudioDevice audioDevice = audioOutput.getDevices().get(j);
-      System.out.printf(FORMAT_PATTERN, "", "", "", audioDevice.getDeviceId(), audioDevice.getLongName());
+      System.out.printf(FORMAT_PATTERN, "", "", "", audioDevice.getDeviceId(), formatLongName(audioDevice.getLongName()));
     }
+  }
+
+  private static String formatLongName(String longName) {
+    return longName != null ? longName.replaceAll("\\n", " ") : "";
   }
 }
