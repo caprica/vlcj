@@ -211,6 +211,33 @@ public class MediaPlayerFactory {
   }
 
   /**
+   * Create a new media player factory.
+   * <p>
+   * This is simply an alternate constructor for convenience, see 
+   * {@link #MediaPlayerFactory(String...)}.
+   * 
+   * @param libvlcArgs initialisation arguments to pass to libvlc, may be empty but must not be <code>null</code>
+   */
+  public MediaPlayerFactory(List<String> libvlcArgs) {
+    this(libvlcArgs.toArray(new String[libvlcArgs.size()]));
+  }
+
+  /**
+   * Create a new media player factory.
+   * <p>
+   * Use {@link LibVlcFactory} to get a reference to the native library.
+   * <p>
+   * This is simply an alternate constructor for convenience, see 
+   * {@link #MediaPlayerFactory(LibVlc, String...)}.
+   * 
+   * @param libvlc interface to the native library
+   * @param libvlcArgs initialisation arguments to pass to libvlc, may be empty but must not be <code>null</code>
+   */
+  public MediaPlayerFactory(LibVlc libvlc, List<String> libvlcArgs) {
+    this(libvlc, libvlcArgs.toArray(new String[libvlcArgs.size()]));
+  }
+  
+  /**
    * Release the native resources associated with this factory.
    */
   public void release() {
