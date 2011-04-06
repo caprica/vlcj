@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
@@ -87,7 +88,7 @@ public class TestMultiPlayer extends VlcjTest {
     contentPane.setBorder(new EmptyBorder(16, 16, 16, 16));
     
     mainFrame = new Frame("VLCJ Test Multi Player for VLC 1.2.x");
-    
+    mainFrame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
     mainFrame.setLayout(new BorderLayout());
     mainFrame.setBackground(Color.black);
     mainFrame.add(contentPane, BorderLayout.CENTER);

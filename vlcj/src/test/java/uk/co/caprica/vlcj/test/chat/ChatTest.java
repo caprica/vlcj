@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -225,6 +226,7 @@ public class ChatTest extends VlcjTest {
     contentPane.add(videoPanel, BorderLayout.CENTER);
     
     frame = new JFrame("vlcj video chat");
+    frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
     frame.setContentPane(contentPane);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.pack();

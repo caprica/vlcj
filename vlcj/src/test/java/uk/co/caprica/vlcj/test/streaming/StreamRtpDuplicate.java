@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.test.streaming;
 import java.awt.Canvas;
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -60,6 +61,7 @@ public class StreamRtpDuplicate extends VlcjTest {
     mediaPlayer.setVideoSurface(videoSurface);
     
     JFrame f = new JFrame("vlcj duplicate output test");
+    f.setIconImage(new ImageIcon(StreamRtpDuplicate.class.getResource("/icons/vlcj-logo.png")).getImage());
     f.add(canvas);
     f.setSize(800, 600);
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

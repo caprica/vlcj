@@ -27,6 +27,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -94,6 +95,7 @@ public class MetaTest extends VlcjTest {
         }
       };
       JFrame f = new JFrame("vlcj meta artwork");
+      f.setIconImage(new ImageIcon(MetaTest.class.getResource("/icons/vlcj-logo.png")).getImage());
       f.setContentPane(cp);
       f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       f.pack();

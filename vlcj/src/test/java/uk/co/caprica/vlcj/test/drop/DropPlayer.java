@@ -31,6 +31,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -105,6 +106,7 @@ public class DropPlayer {
     contentPane.addMouseMotionListener(mouseAdapter);
     
     frame = new JFrame("vlcj");
+    frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
     frame.setContentPane(contentPane);
     frame.setAlwaysOnTop(true);
     frame.setSize(120, 78);

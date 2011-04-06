@@ -25,6 +25,8 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
+
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -41,6 +43,7 @@ public class MinimalTestPlayer extends VlcjTest {
     }
 
     Frame f = new Frame("Test Player");
+    f.setIconImage(new ImageIcon(MinimalTestPlayer.class.getResource("/icons/vlcj-logo.png")).getImage());
     f.setSize(800, 600);
     f.addWindowListener(new WindowAdapter() {
       @Override

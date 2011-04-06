@@ -30,6 +30,7 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -200,6 +201,7 @@ public class SetAudioOutputTest extends VlcjTest {
     menuBar.add(audioOutputMenu);
     
     frame = new JFrame("Audio Outputs Test");
+    frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
     frame.setJMenuBar(menuBar);
     frame.setContentPane(contentPane);
     frame.setSize(800, 600);

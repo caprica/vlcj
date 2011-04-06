@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -178,8 +179,9 @@ public class TestPlayer extends VlcjTest {
     
   	Logger.debug("vlcArgs={}", vlcArgs);
   	
-    mainFrame = new JFrame("VLCJ Test Player for VLC 1.2.x");
-  
+    mainFrame = new JFrame("VLCJ Test Player");
+    mainFrame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
+    
     FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
   
     mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));

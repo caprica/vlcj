@@ -34,6 +34,7 @@ import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -86,6 +87,7 @@ public class DirectTestPlayer extends VlcjTest {
       @Override
       public void run() {
         JFrame frame = new JFrame("VLCJ Direct Video Test");
+        frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
         imagePane = new ImagePane(image);
         imagePane.setSize(width, height);
         imagePane.setMinimumSize(new Dimension(width, height));

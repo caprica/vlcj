@@ -29,6 +29,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -139,6 +140,7 @@ public class VisualisationPlayer extends VlcjTest {
     contentPane.add(controlsPane, BorderLayout.SOUTH);
     
     frame = new JFrame("vlcj audio visualisation");
+    frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
     frame.setContentPane(contentPane);
     frame.setSize(850, 300);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

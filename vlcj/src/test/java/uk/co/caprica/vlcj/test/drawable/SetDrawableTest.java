@@ -31,6 +31,7 @@ import java.awt.event.WindowEvent;
 import java.awt.peer.ComponentPeer;
 import java.lang.reflect.Method;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -262,6 +263,7 @@ public class SetDrawableTest extends VlcjTest {
     mainFrameContentPane.add(xwindowButton);
     
     mainFrame = new JFrame("vlcj Drawable Test");
+    mainFrame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
     mainFrame.setLocation(50, 50);
     mainFrame.setContentPane(mainFrameContentPane);
     mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

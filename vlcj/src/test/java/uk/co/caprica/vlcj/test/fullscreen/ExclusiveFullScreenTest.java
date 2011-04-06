@@ -26,6 +26,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -96,6 +97,7 @@ public class ExclusiveFullScreenTest extends VlcjTest {
     p.add(c, BorderLayout.CENTER);
     
     JFrame f = new JFrame();
+    f.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
     f.setContentPane(p);
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     f.setSize(800, 600);

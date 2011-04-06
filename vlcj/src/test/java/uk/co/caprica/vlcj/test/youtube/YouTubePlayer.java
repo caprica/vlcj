@@ -30,6 +30,7 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -90,6 +91,7 @@ public class YouTubePlayer extends VlcjTest {
 
   public YouTubePlayer() {
     mainFrame = new Frame("vlcj YouTube Test");
+    mainFrame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
     mainFrame.setSize(800, 600);
     mainFrame.addWindowListener(new WindowAdapter() {
       @Override

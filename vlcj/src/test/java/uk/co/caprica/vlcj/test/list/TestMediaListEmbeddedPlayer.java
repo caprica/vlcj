@@ -23,6 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -69,6 +70,7 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
     cp.add(canvas, BorderLayout.CENTER);
     
     JFrame f = new JFrame("vlcj embedded media list player test");
+    f.setIconImage(new ImageIcon(TestMediaListEmbeddedPlayer.class.getResource("/icons/vlcj-logo.png")).getImage());
     f.setContentPane(cp);
     f.setSize(800, 600);
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

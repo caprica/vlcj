@@ -34,6 +34,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
@@ -83,6 +84,7 @@ public class OverlayTest extends VlcjTest {
   
   public OverlayTest(String mrl) {
     Frame f = new Frame("Test Player");
+    f.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
     f.setSize(800, 600);
     f.setBackground(Color.black);
     f.addWindowListener(new WindowAdapter() {

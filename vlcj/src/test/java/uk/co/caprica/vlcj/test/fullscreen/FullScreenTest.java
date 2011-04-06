@@ -23,13 +23,14 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -59,13 +60,43 @@ public class FullScreenTest extends VlcjTest {
     p.setLayout(new BorderLayout());
     p.add(c, BorderLayout.CENTER);
     
-    JFrame f = new JFrame();
+    final JFrame f = new JFrame("VLCJ");
+    f.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
     f.setContentPane(p);
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     f.setSize(800, 600);
+//    f.setUndecorated(true);
 
+    
     MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
-    EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(new DefaultFullScreenStrategy(f));
+    EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(new FullScreenStrategy() {
+
+      @Override
+      public void enterFullScreenMode() {
+        SwingUtilities.invokeLater(new Runnable() {
+          public void run() {
+//        f.dispose();
+//        f.setUndecorated(true);
+//        f.setBounds(0, 0, 1920, 1080);
+        f.toFront();
+        f.setVisible(true);
+          }
+        });
+      }
+
+      @Override
+      public void exitFullScreenMode() {
+        // TODO Auto-generated method stub
+        
+      }
+
+      @Override
+      public boolean isFullScreenMode() {
+        // TODO Auto-generated method stub
+        return false;
+      }
+    });
+    
     mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(c));
 
     f.setVisible(true);
