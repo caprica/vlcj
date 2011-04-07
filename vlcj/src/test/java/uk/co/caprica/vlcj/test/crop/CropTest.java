@@ -65,7 +65,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class CropTest extends VlcjTest {
 
   /**
-   * The standard crop geometries
+   * The standard crop geometries.
    */
   private static final String[][] CROP_GEOMETRIES = {
     {"<choose...>",     null },
