@@ -46,8 +46,6 @@ import com.sun.jna.Pointer;
 
 /**
  * Implementation of a media list player.
- * <p> 
- * Note that the per-media events are not currently implemented.
  */
 public class DefaultMediaListPlayer extends AbstractMediaPlayer implements MediaListPlayer {
 
