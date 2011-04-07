@@ -43,6 +43,16 @@ import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
  *   
  *   // Important: associate the media player with the media list player
  *   mediaListPlayer.setMediaPlayer(mediaPlayer);
+ *   
+ *   MediaList mediaList = mediaPlayerFactory.newMediaList();
+ *   mediaList.addMedia("/movies/1.mp4");
+ *   mediaList.addMedia("/movies/2.mp4");
+ *   mediaList.addMedia("/movies/3.mp4");
+ *   
+ *   mediaListPlayer.setMediaList(mediaList);
+ *   mediaListPlayer.setMode(MediaListPlayerMode.LOOP);
+ *
+ *   mediaListPlayer.play();
  * </pre>
  */
 public interface MediaListPlayer {
