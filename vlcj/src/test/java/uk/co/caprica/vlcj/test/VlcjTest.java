@@ -19,10 +19,9 @@
 
 package uk.co.caprica.vlcj.test;
 
-import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.log.Logger;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-import uk.co.caprica.vlcj.x.LibXUtil;
+import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 
 import com.sun.jna.NativeLibrary;
 
