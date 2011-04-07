@@ -946,6 +946,20 @@ public interface MediaPlayer {
   void cycleSpu();
 
   /**
+   * Set the sub-title file to use.
+   * 
+   * @param subTitleFileName name of the file containing the sub-titles
+   */
+  void setSubTitleFile(String subTitleFileName);
+
+  /**
+   * Set the sub-title file to use.
+   * 
+   * @param subTitleFile file containing the sub-titles
+   */
+  void setSubTitleFile(File subTitleFile);
+
+  /**
    * Get the title descriptions. 
    * <p>
    * The media must be playing before this information is available.

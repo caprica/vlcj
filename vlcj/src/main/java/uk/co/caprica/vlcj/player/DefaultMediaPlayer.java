@@ -1004,6 +1004,18 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     setSpu(spu);
   }
   
+//  @Override
+  public void setSubTitleFile(String subTitleFileName) {
+    Logger.debug("setSubTitleFile(subTitleFileName={})", subTitleFileName);
+    libvlc.libvlc_video_set_subtitle_file(mediaPlayerInstance, subTitleFileName);
+  }
+  
+//  @Override
+  public void setSubTitleFile(File subTitleFile) {
+    Logger.debug("setSubTitleFile(subTitleFile={})", subTitleFile);
+    setSubTitleFile(subTitleFile.getAbsolutePath());
+  }
+  
   // === Description Controls =================================================
   
 //  @Override
