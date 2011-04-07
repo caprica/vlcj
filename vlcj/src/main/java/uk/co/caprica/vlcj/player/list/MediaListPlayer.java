@@ -25,6 +25,25 @@ import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
 
 /**
  * Specification for a media list player component.
+ * <p>
+ * A media list player can be used with an embedded media player (without
+ * this a native video window will be opened when video is played). For 
+ * example:
+ * <pre>
+ *   MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+ *
+ *   Canvas canvas = new Canvas();
+ *   canvas.setBackground(Color.black);
+ *   CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
+ *   
+ *   EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+ *   mediaPlayer.setVideoSurface(videoSurface);
+ *   
+ *   MediaListPlayer mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
+ *   
+ *   // Important: associate the media player with the media list player
+ *   mediaListPlayer.setMediaPlayer(mediaPlayer);
+ * </pre>
  */
 public interface MediaListPlayer {
 
