@@ -30,7 +30,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.logger.Logger;
 
 /**
  * A media list (i.e. a play-list).

@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test;
 
-import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 

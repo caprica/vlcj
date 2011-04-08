@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.runtime;
 
-import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.logger.Logger;
 
 /**
  * Crude heuristics to determine the current Operating System.

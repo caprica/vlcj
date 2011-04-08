@@ -32,7 +32,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
 import uk.co.caprica.vlcj.log.Log;
 import uk.co.caprica.vlcj.log.LogLevel;
-import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;

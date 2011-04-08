@@ -31,7 +31,7 @@ import java.awt.event.MouseWheelListener;
 import javax.swing.SwingUtilities;
 import javax.swing.event.EventListenerList;
 
-import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.runtime.windows.internal.LowLevelMouseProc;
 import uk.co.caprica.vlcj.runtime.windows.internal.MSLLHOOKSTRUCT;
 

@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player;
 
-import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.logger.Logger;
 
 /**
  * Wait for a video output to be created.

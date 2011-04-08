@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.logger.Logger;
 
 /**
  * This class implements a mechanism to play a media item and wait for it to

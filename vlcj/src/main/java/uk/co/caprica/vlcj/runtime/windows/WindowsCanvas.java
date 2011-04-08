@@ -31,7 +31,7 @@ import java.awt.event.MouseWheelListener;
 
 import javax.swing.event.EventListenerList;
 
-import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.logger.Logger;
 
 /**
  * Implementation of a Canvas that uses a native windows message hook to

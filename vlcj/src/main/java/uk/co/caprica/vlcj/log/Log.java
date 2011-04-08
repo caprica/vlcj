@@ -27,6 +27,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_iterator_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_message_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
+import uk.co.caprica.vlcj.logger.Logger;
 
 /**
  * Native log support.

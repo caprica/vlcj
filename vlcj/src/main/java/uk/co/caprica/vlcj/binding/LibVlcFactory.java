@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.binding;
 import java.lang.reflect.Proxy;
 import java.text.MessageFormat;
 
-import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**

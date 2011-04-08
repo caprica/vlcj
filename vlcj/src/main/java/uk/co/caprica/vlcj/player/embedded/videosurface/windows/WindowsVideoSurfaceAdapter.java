@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface.windows;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
 

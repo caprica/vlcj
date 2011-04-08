@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.binding;
 
-import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.logger.Logger;
 
 /**
  * Application information banner.

@@ -25,6 +25,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import uk.co.caprica.vlcj.logger.Logger;
+
 /**
  * Consumer for the native log.
  * <p>

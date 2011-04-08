@@ -25,7 +25,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 import java.util.Arrays;
 
-import uk.co.caprica.vlcj.log.Logger;
+import uk.co.caprica.vlcj.logger.Logger;
 
 /**
  * Default implementation of a full screen strategy that attempts to use the

@@ -17,13 +17,12 @@
  * Copyright 2009, 2010, 2011 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.log.logger;
+package uk.co.caprica.vlcj.logger;
 
 import java.util.List;
 
 import uk.co.caprica.vlcj.log.LogMessage;
 import uk.co.caprica.vlcj.log.LogMessageHandler;
-import uk.co.caprica.vlcj.log.Logger;
 
 /**
  * Basic implementation of a log message handler that simply sends the native
