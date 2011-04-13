@@ -48,7 +48,7 @@ public abstract class VlcjTest {
    * Log level, used only if the -Dvlcj.log= system property has not already 
    * been set.
    */
-  private static final String VLCJ_LOG_LEVEL = "DEBUG";
+  private static final String VLCJ_LOG_LEVEL = "INFO";
 
   /**
    * Change this to point to your own vlc installation, or comment out the code
