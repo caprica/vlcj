@@ -34,8 +34,10 @@ licensed.
 
 == VLC Compatibility ==
 
-Note that the current versions of these bindings require VLC 1.1.x, they will
-NOT work with VLC 1.0.x.
+Note that the current versions of these bindings require at least VLC 1.1.x,
+they will NOT work at all with VLC 1.0.x.
+
+Some features of these bindings require at least VLC 1.2.x.
 
 If you have previously used VLCJ you may well need to make changes in your own 
 code to make use of the new bindings - this is unavoidable because the new 
@@ -77,11 +79,8 @@ vlc-<version>.jar, the JNA platform.jar and jna.jar files.
 The application may be started like this for example (assuming a "$" command-
 line prompt):
 
-$java -jar vlc-1.1.5-test.jar
+$java -jar vlc-1.2.0-rc1-test.jar
 
-For the test player you can specify a logo file name on the command-line.
-
-$java -jar vlc-1.1.5-test.jar /some/directory/vlcj-logo.png
 
 == Known Issues ==
 
@@ -105,8 +104,8 @@ It should be simple to add the missing implementation for the other operating
 systems but I can not do this myself due to lack of suitable testing 
 environments.
 
-The test video player attempts to work out the runtime operating system and
-create the appropriate video player instance.
+The bindings attempt to work out the runtime operating system and create the
+appropriate video player instance.
 
 
 == Feedback and Contact Details ==
