@@ -154,7 +154,7 @@
     <gcupload 
       username="${gc.username}" 
       password="${gc.password}" 
-      projectname="${project.name}" 
+      projectname="${gc.project.name}" 
       filename="dist/${ant.project.name}-${build.version}-javadoc.jar" 
       targetfilename="${ant.project.name}-${build.version}-javadoc.jar"
       summary="${ant.project.name}-${build.version} javadoc for libvlc-1.2.x"
