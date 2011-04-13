@@ -21,7 +21,7 @@
 
 <project name="vlcj" default="all">
 
-  <property name="build.version" value="1.2.0"/>
+  <property name="build.version" value="1.2.0-rc1"/>
 
   <buildnumber/>
 
@@ -139,7 +139,7 @@
       projectname="${gc.project.name}" 
       filename="dist/${ant.project.name}-${build.version}.jar" 
       targetfilename="{ant.project.name}-${build.version}.jar"
-      summary="{ant.project.name}-${build.version} binaries for libvlc-1.1.x and libvlc-1.2.x"
+      summary="{ant.project.name}-${build.version} binaries for libvlc-1.2.x"
       labels="Featured, Type-Archive, OpSys-All"
     /> 
     <gcupload 
@@ -148,7 +148,7 @@
       projectname="${gc.project.name}" 
       filename="dist/${ant.project.name}-${build.version}-sources.jar" 
       targetfilename="{ant.project.name}-${build.version}-sources.jar"
-      summary="{ant.project.name}-${build.version} sources for libvlc-1.1.x and libvlc-1.2.x"
+      summary="{ant.project.name}-${build.version} sources for libvlc-1.2.x"
       labels="Featured, Type-Source, OpSys-All"
     /> 
     <gcupload 
@@ -157,7 +157,7 @@
       projectname="${project.name}" 
       filename="dist/${ant.project.name}-${build.version}-javadoc.jar" 
       targetfilename="{ant.project.name}-${build.version}-javadoc.jar"
-      summary="{ant.project.name}-${build.version} javadoc for libvlc-1.1.x and libvlc-1.2.x"
+      summary="{ant.project.name}-${build.version} javadoc for libvlc-1.2.x"
       labels="Featured, Type-Docs, OpSys-All"
     /> 
     <gcupload 
@@ -166,7 +166,7 @@
       projectname="${gc.project.name}" 
       filename="dist/${ant.project.name}-${build.version}-test.jar" 
       targetfilename="{ant.project.name}-${build.version}-test.jar"
-      summary="{ant.project.name}-${build.version} test video player for libvlc-1.1.x and libvlc-1.2.x"
+      summary="{ant.project.name}-${build.version} test video player for libvlc-1.2.x"
       labels="Featured, Type-Executable, OpSys-All"
     /> 
     <gcupload 
@@ -175,7 +175,7 @@
       projectname="${gc.project.name}" 
       filename="dist/${ant.project.name}-${build.version}-test-sources.jar" 
       targetfilename="{ant.project.name}-${build.version}-test-sources.jar"
-      summary="{ant.project.name}-${build.version} test video player sources for libvlc-1.1.x and libvlc-1.2.x"
+      summary="{ant.project.name}-${build.version} test video player sources for libvlc-1.2.x"
       labels="Featured, Type-Executable, OpSys-All"
     />
   </target>
@@ -187,7 +187,7 @@
       projectname="${gc.project.name}" 
       filename="package/${ant.project.name}-${build.version}.tgz" 
       targetfilename="${ant.project.name}-${build.version}.tgz"
-      summary="{ant.project.name}-${build.version} package distribution for libvlc-1.1.x and libvlc-1.2.x"
+      summary="{ant.project.name}-${build.version} package distribution for libvlc-1.2.x"
       labels="Featured, Type-Package, OpSys-All"
     /> 
     <gcupload 
@@ -196,7 +196,7 @@
       projectname="${gc.project.name}" 
       filename="package/${ant.project.name}-${build.version}.zip" 
       targetfilename="${ant.project.name}-${build.version}.zip"
-      summary="{ant.project.name}-${build.version} package distribution for libvlc-1.1.x and libvlc-1.2.x"
+      summary="{ant.project.name}-${build.version} package distribution for libvlc-1.2.x"
       labels="Featured, Type-Package, OpSys-All"
     /> 
   </target>
