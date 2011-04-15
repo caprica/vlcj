@@ -442,8 +442,23 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       }
     });
   }
-
+  
 //  @Override
+  public List<libvlc_media_t> subItemsMedia() {
+    Logger.debug("subItemsMedia()");
+    return handleSubItems(new SubItemsHandler<List<libvlc_media_t>>() {
+      @Override
+      public List<libvlc_media_t> subItems(int count, libvlc_media_list_t subItems) {
+        List<libvlc_media_t> result = new ArrayList<libvlc_media_t>(count);
+        for(libvlc_media_t subItem : new LibVlcMediaListIterator(libvlc, subItems)) {
+          result.add(subItem);
+        }
+        return result;
+      }
+    });
+  }
+
+  //  @Override
   public boolean playNextSubItem(String... mediaOptions) {
     Logger.debug("playNextSubItem(mediaOptions={})", Arrays.toString(mediaOptions));
     return playSubItem(subItemIndex+1, mediaOptions);

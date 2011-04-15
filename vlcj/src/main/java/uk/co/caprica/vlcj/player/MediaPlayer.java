@@ -374,6 +374,15 @@ public interface MediaPlayer {
   List<String> subItems();
   
   /**
+   * Get the list of sub-item media instances (if any).
+   * <p>
+   * The native media instance of each sub-item is returned in the list.
+   * 
+   * @return sub-item list, or <code>null</code> if there is no current media
+   */
+  List<libvlc_media_t> subItemsMedia();
+  
+  /**
    * Play the next sub-item (if there is one).
    * <p>
    * If any standard media options have been set via {@link #setStandardMediaOptions(String...)}
