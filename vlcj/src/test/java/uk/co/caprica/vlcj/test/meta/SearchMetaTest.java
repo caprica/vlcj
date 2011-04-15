@@ -71,7 +71,7 @@ public class SearchMetaTest extends VlcjTest {
 
     for(File file : files) {
       String mrl = file.getAbsolutePath();
-      MediaMeta meta = mediaPlayer.getMediaMeta(mrl);
+      MediaMeta meta = mediaPlayer.getMediaMeta(mrl, true);
       System.out.printf("%s -> %s\n", mrl, meta);
     }
     
