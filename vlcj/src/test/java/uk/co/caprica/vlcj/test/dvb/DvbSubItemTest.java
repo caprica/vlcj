@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.test.dvb;
 
 import java.util.List;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -56,6 +58,14 @@ public class DvbSubItemTest extends VlcjTest {
           System.out.println(subItem);
         }
         
+        System.out.println("Getting sub-item meta data...");
+        
+        List<libvlc_media_t> medias = mediaPlayer.subItemsMedia();
+        for(libvlc_media_t media : medias) {
+          MediaMeta meta = mediaPlayer.getMediaMeta(media);
+          System.out.println("title -> " + meta.getTitle());
+        }
+
         System.out.println("Done.");
         
         mediaPlayer.release();
