@@ -273,7 +273,7 @@ public interface MediaPlayer {
    * <p>
    * Some media types require that the media be parsed before accessing meta
    * data - it is the responsibility of the client application to parse the
-   * media if required. 
+   * media if required, see {@link #parseMedia()}.
    * 
    * @return meta data
    */
