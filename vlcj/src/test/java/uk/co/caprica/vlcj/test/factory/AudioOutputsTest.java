@@ -31,7 +31,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class AudioOutputsTest extends VlcjTest {
 
-  private static final String FORMAT_PATTERN = "%3s %-12s %-40s %-30s %s\n";
+  private static final String FORMAT_PATTERN = "%3s %-12s %-40s %-40s %s\n";
 
   public static void main(String[] args) throws Exception {
     MediaPlayerFactory factory = new MediaPlayerFactory();
@@ -40,7 +40,7 @@ public class AudioOutputsTest extends VlcjTest {
 
     System.out.println("Audio Outputs:");
     System.out.println();
-    
+
     System.out.printf(FORMAT_PATTERN , "#", "Name", "Description", "Devices", "Long Name");
     System.out.printf(FORMAT_PATTERN , "=", "====", "===========", "=======", "=========");
     for(int i = 0; i < audioOutputs.size(); i++) {
