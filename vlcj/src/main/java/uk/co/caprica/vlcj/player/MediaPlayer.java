@@ -239,7 +239,8 @@ public interface MediaPlayer {
    * Parsing media may cause an HTTP request to be made to search for cover-
    * art.
    * <p>
-   * <strong>Invoking this method on a stream may cause a hang.</strong>
+   * <strong>Invoking this method on a stream or DVB channel may cause a 
+   * hang.</strong>
    */
   void parseMedia();
 
@@ -255,7 +256,8 @@ public interface MediaPlayer {
    * If the media has already been parsed when this function calls then <em>no</em>
    * event will be raised.
    * <p>
-   * <strong>Invoking this method on a stream may cause a hang.</strong>
+   * <strong>Invoking this method on a stream or DVB channel may cause a 
+   * hang.</strong>
    */
   void requestParseMedia();
 
@@ -269,11 +271,9 @@ public interface MediaPlayer {
   /**
    * Get local meta data for the current media.
    * <p>
-   * If the media has not yet been parsed, then it will be synchronously
-   * parsed during this method.
-   * <p>
-   * This method should only be used on <strong>local</strong> media otherwise
-   * a hang may occur (e.g. do not use this for web streams).
+   * Some media types require that the media be parsed before accessing meta
+   * data - it is the responsibility of the client application to parse the
+   * media if required. 
    * 
    * @return meta data
    */
@@ -293,15 +293,14 @@ public interface MediaPlayer {
   /**
    * Get local meta data for a media path.
    * <p>
-   * The media will be synchronously parsed to get the meta data.
-   * <p>
-   * This method should only be used on <strong>local</strong> media otherwise
-   * a hang may occur (e.g. do not use this for web streams).
+   * See {@link #getMediaMeta()}, the same notes with regard to parsing hold 
+   * here.
    * 
    * @param mediaPath path to the media
+   * @param parse flag whether or not to parse the media before getting the meta data
    * @return meta data, or <code>null</code> if not available (e.g. error or invalid path)
    */
-  MediaMeta getMediaMeta(String mediaPath);
+  MediaMeta getMediaMeta(String mediaPath, boolean parse);
   
   /**
    * Get local meta data for all of the current media sub-items (if there are

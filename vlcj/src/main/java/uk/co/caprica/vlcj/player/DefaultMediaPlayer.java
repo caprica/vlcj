@@ -317,13 +317,10 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   public MediaMeta getMediaMeta(libvlc_media_t media) {
     Logger.debug("getMediaMeta(media={})", media);
     if(media != null) {
-      // If the media is not yet parsed...
-      if(0 == libvlc.libvlc_media_is_parsed(media)) {
-        // ...synchronously parse the media
-        // WARNING: it is possible that this call might never return (e.g. when
-        //          getting meta from CDDA or from a remote stream (e.g. HTTP)
-        libvlc.libvlc_media_parse(media);
-      }
+      // Some media types must be parsed before meta data is available, but
+      // equally some media types when parsed would cause a hang - therefore it
+      // is the responsibility of the client application to parse or not parse
+      // before getting media meta data
       MediaMeta mediaMeta = new MediaMeta();
       mediaMeta.setTitle(getMeta(libvlc_meta_t.libvlc_meta_Title, media));
       mediaMeta.setArtist(getMeta(libvlc_meta_t.libvlc_meta_Artist, media));
@@ -350,10 +347,15 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   }
 
 //  @Override
-  public MediaMeta getMediaMeta(String mediaPath) {
-    Logger.debug("getMediaMeta(mediaPath={})", mediaPath);
+  public MediaMeta getMediaMeta(String mediaPath, boolean parse) {
+    Logger.debug("getMediaMeta(mediaPath={},parse={})", mediaPath, parse);
     libvlc_media_t media = libvlc.libvlc_media_new_path(instance, mediaPath);
     if(media != null) {
+      if(parse) {
+        Logger.debug("Parsing media...");
+        libvlc.libvlc_media_parse(media);
+        Logger.debug("Media parsed.");
+      }
       MediaMeta mediaMeta = getMediaMeta(media);
       libvlc.libvlc_media_release(media);
       return mediaMeta;
