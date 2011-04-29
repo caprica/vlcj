@@ -75,6 +75,6 @@ public class AbstractMediaPlayer {
   @Override
   protected void finalize() throws Throwable {
     Logger.debug("finalize()");
-    Logger.info("Media player has been garbage collected");
+    Logger.debug("Media player has been garbage collected");
   }
 }
