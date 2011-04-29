@@ -79,7 +79,7 @@ vlc-<version>.jar, the JNA platform.jar and jna.jar files.
 The application may be started like this for example (assuming a "$" command-
 line prompt):
 
-$java -jar vlc-1.2.0-rc1-test.jar
+$java -jar vlc-1.2.0-rc2-test.jar
 
 
 == Known Issues ==
