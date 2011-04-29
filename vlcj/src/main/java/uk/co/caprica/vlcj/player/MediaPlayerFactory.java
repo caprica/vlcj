@@ -94,6 +94,11 @@ import com.sun.jna.Pointer;
  *   // Release the factory
  *   factory.release();
  * </pre>
+ * You <em>must</em> make sure you keep a hard reference to the media player 
+ * (and possibly other) objects created by this factory. If you allow a media 
+ * player object to go out of scope, then unpredictable behaviour will occur 
+ * (such as events no longer seeming to fire) even though the video playback 
+ * continues (since that happens via native code).
  */
 public class MediaPlayerFactory {
 
