@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.logger.Logger;
 
 import com.sun.jna.Pointer;
 
@@ -69,5 +70,11 @@ public class AbstractMediaPlayer {
     else {
       return null;
     }
+  }
+
+  @Override
+  protected void finalize() throws Throwable {
+    Logger.debug("finalize()");
+    Logger.info("Media player has been garbage collected");
   }
 }
