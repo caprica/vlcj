@@ -69,7 +69,12 @@ public enum DeinterlaceMode {
   /**
    * 
    */
-  PHOSPHOR("phosphor");
+  PHOSPHOR("phosphor"),
+  
+  /**
+   * 
+   */
+  IVTC("ivtc");
   
   /**
    * Native mode value.
