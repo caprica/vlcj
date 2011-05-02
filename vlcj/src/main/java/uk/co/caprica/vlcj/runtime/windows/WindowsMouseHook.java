@@ -73,6 +73,10 @@ import com.sun.jna.platform.win32.WinUser.POINT;
  * The hook must be started after it has been created.
  * <p>
  * <strong>This class is experimental, unsupported and unstable in operation.</strong>
+ * <p>
+ * FIXME: There is probably a whole bunch more synchronisation should be going 
+ * on in here, for example during release() the listeners should be removed and
+ * the call-back should be protected.
  */
 public class WindowsMouseHook implements LowLevelMouseProc {
 
