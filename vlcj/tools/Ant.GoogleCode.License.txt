@@ -1,0 +1,3 @@
+The ant-googlecode project is distributed under the terms of the "New BSD License".
+
+http://www.opensource.org/licenses/bsd-license.php
