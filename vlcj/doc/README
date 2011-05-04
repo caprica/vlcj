@@ -79,7 +79,7 @@ vlc-<version>.jar, the JNA platform.jar and jna.jar files.
 The application may be started like this for example (assuming a "$" command-
 line prompt):
 
-$java -jar vlc-1.2.0-rc1-test.jar
+$java -jar vlc-1.2.0-test.jar
 
 
 == Known Issues ==
@@ -89,13 +89,6 @@ have no access whatsoever to Mac hardware, and I very rarely use Windows.
 
 That being said, there is no reason why these bindings will not work on those
 operating systems.
-
-One thing that changed in libvlc 1.0 as compared to libvlc 1.1 is that there
-are now multiple methods provided to set the video rendering surface - this is
-operating-system dependant.
-
-This means at run-time you need to detect which operating system you are 
-running on and call the appropriate method.
 
 At the moment the implementations provided out-of-the-box by VLCJ are for
 Linux and Windows. There is no Mac version yet.
