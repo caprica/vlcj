@@ -31,7 +31,7 @@ import com.sun.jna.ptr.IntByReference;
  * <p>
  * The functionality provided by this library may be helpful especially when
  * working with full-screen exclusive mode in Java which suffers from numerous
- * idiosyncracies on Windows, some of which can be mitigated by ensuring that
+ * idiosyncrasies on Windows, some of which can be mitigated by ensuring that
  * desktop window composition is disabled. Disabling composition can be done at
  * the operating system level, but is more convenient for end-users if the
  * application itself does it.
