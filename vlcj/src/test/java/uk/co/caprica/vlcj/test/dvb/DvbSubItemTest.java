@@ -59,10 +59,9 @@ public class DvbSubItemTest extends VlcjTest {
         }
         
         System.out.println("Getting sub-item meta data...");
-        
-        List<libvlc_media_t> medias = mediaPlayer.subItemsMedia();
-        for(libvlc_media_t media : medias) {
-          MediaMeta meta = mediaPlayer.getMediaMeta(media);
+
+        List<MediaMeta> metas = mediaPlayer.getSubItemMediaMeta();
+        for(MediaMeta meta : metas) {
           System.out.println("title -> " + meta.getTitle());
         }
 
