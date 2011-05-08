@@ -61,7 +61,6 @@ public class MinimalTestPlayer extends VlcjTest {
     EmbeddedMediaPlayer mediaPlayer = factory.newEmbeddedMediaPlayer();
     mediaPlayer.setVideoSurface(factory.newVideoSurface(vs));
 
-    mediaPlayer.setRepeat(true);
     mediaPlayer.playMedia(args[0]);
     Thread.currentThread().join();
   }
