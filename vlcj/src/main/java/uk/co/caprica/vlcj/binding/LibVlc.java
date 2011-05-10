@@ -860,6 +860,7 @@ public interface LibVlc extends Library {
 
   /**
    * Set callbacks and private data for decoded audio.
+   * <p>
    * Use libvlc_audio_set_format() or libvlc_audio_set_format_callbacks()
    * to configure the decoded audio format.
    *
@@ -884,6 +885,7 @@ public interface LibVlc extends Library {
 
   /**
    * Set decoded audio format.
+   * <p>
    * This only works in combination with libvlc_audio_set_callbacks(),
    * and is mutually exclusive with libvlc_audio_set_format_callbacks().
    *
