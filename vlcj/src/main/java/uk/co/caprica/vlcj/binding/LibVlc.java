@@ -19,7 +19,11 @@
 
 package uk.co.caprica.vlcj.binding;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_play_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_set_volume_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_setup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
@@ -355,6 +359,16 @@ public interface LibVlc extends Library {
    * @see libvlc_module_description_list_release
    */
   libvlc_module_description_t libvlc_video_filter_list_get(libvlc_instance_t p_instance);
+
+  /**
+   * Return the current time as defined by LibVLC. The unit is the microsecond.
+   * Time increases monotonically (regardless of time zone changes and RTC
+   * adjustements).
+   * The origin is arbitrary but consistent across the whole system
+   * (e.g. the system uptim, the time since the system was booted).
+   * \note On systems that support it, the POSIX monotonic clock is used.
+   */
+  long libvlc_clock();
   
   // === libvlc.h =============================================================
 
@@ -843,6 +857,44 @@ public interface LibVlc extends Library {
    * @return a window handle or NULL if there are none.
    */
   Pointer libvlc_media_player_get_hwnd(libvlc_media_player_t p_mi);
+
+  /**
+   * Set callbacks and private data for decoded audio.
+   * Use libvlc_audio_set_format() or libvlc_audio_set_format_callbacks()
+   * to configure the decoded audio format.
+   *
+   * @param mp the media player
+   * @param play callback to play audio samples (must not be NULL)
+   * @param set_volume callback to set audio volume, or NULL for software volume
+   * @param opaque private pointer for the two callbacks (as first parameter)
+   * @version LibVLC 1.2.0 or later
+   */
+  void libvlc_audio_set_callbacks(libvlc_media_player_t mp, libvlc_audio_play_cb play, libvlc_audio_set_volume_cb set_volume, Pointer opaque);
+
+  /**
+   * Set decoded audio format. This only works in combination with
+   * libvlc_audio_set_callbacks().
+   *
+   * @param mp the media player
+   * @param setup callback to select the audio format (cannot be NULL)
+   * @param cleanup callback to release any allocated resources (or NULL)
+   * @version LibVLC 1.2.0 or later
+   */
+  void libvlc_audio_set_format_callbacks(libvlc_media_player_t mp, libvlc_audio_setup_cb setup, libvlc_audio_cleanup_cb cleanup);
+
+  /**
+   * Set decoded audio format.
+   * This only works in combination with libvlc_audio_set_callbacks(),
+   * and is mutually exclusive with libvlc_audio_set_format_callbacks().
+   *
+   * @param mp the media player
+   * @param fourcc a four-characters string identifying the sample format
+   *               (e.g. "S16N" or "FL32")
+   * @param rate sample rate (expressed in Hz)
+   * @param channels channels count
+   * @version LibVLC 1.2.0 or later
+   */
+  void libvlc_audio_set_format(libvlc_media_player_t mp, String format, int rate, int channels);
 
   /** \bug This might go away ... to be replaced by a broader system */
 
