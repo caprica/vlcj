@@ -33,7 +33,7 @@ public interface libvlc_audio_play_cb extends Callback {
    * @param data data pointer as passed to libvlc_audio_set_callbacks()
    * @param samples pointer to the first audio sample to play back
    * @param count number of audio samples to play back
-   * @param pts expected play time stamp (see libvlc_delay())
+   * @param pts expected play time stamp
    */
   void play(Pointer data, String samples, int count, long pts);
 }
