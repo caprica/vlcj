@@ -46,6 +46,11 @@ version of libvlc has changed a lot.
 Versions of the bindings that do work with 1.0.x are available in the project
 Downloads section.
 
+The bindings now check at run-time for the minimum required version of libvlc
+and if that check fails a fatal run-time exception will be thrown. This 
+exception can be suppressed by specifying -Dvlcj.check=no when launching your
+vlcj application.
+
 
 == Distribution Contents ==
 
@@ -79,7 +84,7 @@ vlc-<version>.jar, the JNA platform.jar and jna.jar files.
 The application may be started like this for example (assuming a "$" command-
 line prompt):
 
-$java -jar vlc-1.2.0-test.jar
+$java -jar vlc-1.2.1-test.jar
 
 
 == Known Issues ==
