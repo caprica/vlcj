@@ -24,6 +24,7 @@ import java.text.MessageFormat;
 
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.version.Version;
 
 /**
  * A factory that creates interfaces to the libvlc native library.
@@ -54,6 +55,11 @@ public class LibVlcFactory {
    * True if the access to the native library should be logged.
    */
   private boolean log;
+  
+  /**
+   * At least this native library version is required.
+   */
+  private Version requiredVersion;
   
   /**
    * Private constructor prevents direct instantiation by others.
@@ -91,9 +97,27 @@ public class LibVlcFactory {
   }
   
   /**
+   * Request that the libvlc native library be of at least a particular version.
+   * <p>
+   * The version check can be disabled by specifying the following system 
+   * property:
+   * <pre>
+   *   -Dvlcj.check=no
+   * </pre>
+   * 
+   * @param version required version
+   * @return factory
+   */
+  public LibVlcFactory atLeast(String version) {
+    this.requiredVersion = new Version(version);
+    return this;
+  }
+  
+  /**
    * Create a new libvlc native library instance.
    * 
    * @return native library instance
+   * @throws RuntimeException if a minimum version check was specified and failed 
    */
   public LibVlc create() {
     // Synchronised or not...
@@ -103,8 +127,21 @@ public class LibVlcFactory {
       if(log) {
         instance = (LibVlc)Proxy.newProxyInstance(LibVlc.class.getClassLoader(), new Class<?>[] {LibVlc.class}, new LoggingProxy(instance));
       }
-      Logger.info("vlc: {}, changeset {}", instance.libvlc_get_version(), LibVlc.INSTANCE.libvlc_get_changeset());
+      String nativeVersion = instance.libvlc_get_version();
+      Logger.info("vlc: {}, changeset {}", nativeVersion, LibVlc.INSTANCE.libvlc_get_changeset());
       Logger.info("libvlc: {}", getNativeLibraryPath(instance));
+      if(requiredVersion != null) {
+        Version actualVersion = new Version(nativeVersion);
+        if(!actualVersion.atLeast(requiredVersion)) {
+          if(!"no".equalsIgnoreCase(System.getProperty("vlcj.check"))) {
+            Logger.fatal("This version of vlcj requires version {} or later of libvlc, found too old version {}", requiredVersion, actualVersion);
+            throw new RuntimeException("This version of vlcj requires version " + requiredVersion + " or later of libvlc, found too old version " + actualVersion);
+          }
+          else {
+            Logger.warn("This version of vlcj requires version {} or later of libvlc, found too old version {}", requiredVersion, actualVersion);
+          }
+        }
+      }
       return instance;
     }
     catch(UnsatisfiedLinkError e) {
