@@ -35,4 +35,13 @@ public enum libvlc_track_type_t {
   public int intValue() {
     return intValue;
   }
+  
+  public static libvlc_track_type_t valueOf(int intValue) {
+    for(libvlc_track_type_t type : values()) {
+      if(type.intValue == intValue) {
+        return type;
+      }
+    }
+    throw new IllegalArgumentException("No such value " + intValue);
+  }
 }
