@@ -131,14 +131,27 @@ public class LibVlcFactory {
       Logger.info("vlc: {}, changeset {}", nativeVersion, LibVlc.INSTANCE.libvlc_get_changeset());
       Logger.info("libvlc: {}", getNativeLibraryPath(instance));
       if(requiredVersion != null) {
-        Version actualVersion = new Version(nativeVersion);
-        if(!actualVersion.atLeast(requiredVersion)) {
+        try {
+          Version actualVersion = new Version(nativeVersion);
+          if(!actualVersion.atLeast(requiredVersion)) {
+            if(!"no".equalsIgnoreCase(System.getProperty("vlcj.check"))) {
+              Logger.fatal("This version of vlcj requires version {} or later of libvlc, found too old version {}", requiredVersion, actualVersion);
+              Logger.fatal("You can suppress this check by specifying -Dvlcj.check=no but some functionality will be unavailable and cause failures.");
+              throw new RuntimeException("This version of vlcj requires version " + requiredVersion + " or later of libvlc, found too old version " + actualVersion);
+            }
+            else {
+              Logger.warn("This version of vlcj requires version {} or later of libvlc, found too old version {}. Fatal run-time failures may occur.", requiredVersion, actualVersion);
+            }
+          }
+        }
+        catch(Throwable t) {
           if(!"no".equalsIgnoreCase(System.getProperty("vlcj.check"))) {
-            Logger.fatal("This version of vlcj requires version {} or later of libvlc, found too old version {}", requiredVersion, actualVersion);
-            throw new RuntimeException("This version of vlcj requires version " + requiredVersion + " or later of libvlc, found too old version " + actualVersion);
+            Logger.fatal("Unable to check the native library version '{}' because of {}", nativeVersion, t);
+            Logger.fatal("You can suppress this check by specifying -Dvlcj.check=no but some functionality will be unavailable and cause failures.");
+            throw new RuntimeException("Unable to check the native library version " + nativeVersion, t);
           }
           else {
-            Logger.warn("This version of vlcj requires version {} or later of libvlc, found too old version {}", requiredVersion, actualVersion);
+            Logger.warn("Unable to check the native library version '{}'. Fatal run-time failures may occur.", nativeVersion);
           }
         }
       }
