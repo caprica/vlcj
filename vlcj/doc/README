@@ -46,6 +46,11 @@ version of libvlc has changed a lot.
 Versions of the bindings that do work with 1.0.x are available in the project
 Downloads section.
 
+The bindings now check at run-time for the minimum required version of libvlc
+and if that check fails a fatal run-time exception will be thrown. This 
+exception can be suppressed by specifying -Dvlcj.check=no when launching your
+vlcj application.
+
 
 == Distribution Contents ==
 
