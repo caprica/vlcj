@@ -138,6 +138,20 @@ public class MediaPlayerFactory {
    * If you want to enable logging or synchronisation of the native library
    * interface you must use {@link #MediaPlayerFactory(LibVlc)} and
    * {@link LibVlcFactory}.
+   * <p>
+   * This factory constructor will enforce a minimum required native library
+   * version check - if a suitable native library version is not found a 
+   * RuntimeException will be thrown.
+   * <p>
+   * If you do not want to enforce this version check, use one of the other
+   * constructors that accepts a LibVlc instance that you obtain from the
+   * {@link LibVlcFactory}.
+   * <p>
+   * The version check can be disabled by specifying the following system 
+   * property:
+   * <pre>
+   *   -Dvlcj.check=no
+   * </pre>
    */
   public MediaPlayerFactory() {
     this(new String[] {});
@@ -149,11 +163,25 @@ public class MediaPlayerFactory {
    * If you want to enable logging or synchronisation of the native library
    * interface you must use {@link #MediaPlayerFactory(LibVlc)} and
    * {@link LibVlcFactory}.
+   * <p>
+   * This factory constructor will enforce a minimum required native library
+   * version check - if a suitable native library version is not found, a
+   * RuntimeException will be thrown.
+   * <p>
+   * If you do not want to enforce this version check, use one of the other
+   * constructors that accepts a LibVlc instance that you obtain from the
+   * {@link LibVlcFactory}.
+   * <p>
+   * The version check can be disabled by specifying the following system 
+   * property:
+   * <pre>
+   *   -Dvlcj.check=no
+   * </pre>
    * 
    * @param libvlcArgs initialisation arguments to pass to libvlc
    */
   public MediaPlayerFactory(String... libvlcArgs) {
-    this(LibVlcFactory.factory().create(), libvlcArgs);
+    this(LibVlcFactory.factory().atLeast("1.2.0").create(), libvlcArgs);
   }
 
   /**
