@@ -51,6 +51,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_meta_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
@@ -1144,33 +1145,25 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         libvlc_media_track_info_t trackInfos = new libvlc_media_track_info_t(tracks.getValue());
         libvlc_media_track_info_t[] trackInfoArray = (libvlc_media_track_info_t[])trackInfos.toArray(numberOfTracks);
         for(libvlc_media_track_info_t trackInfo : trackInfoArray) {
-          // i_type values are from vlc/vlc_es.h
-          switch(trackInfo.i_type) {
-            // UNKNOWN_ES
-            case 0:
+          switch(libvlc_track_type_t.valueOf(trackInfo.i_type)) {
+            case libvlc_track_unknown:
               result.add(new UnknownTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level));
               break;
               
-            // VIDEO_ES
-            case 1:
-              libvlc_media_track_info_video_t videoInfo = (libvlc_media_track_info_video_t)trackInfos.u.getTypedValue(libvlc_media_track_info_video_t.class);
-              result.add(new VideoTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level, videoInfo.i_width, videoInfo.i_height));
+            case libvlc_track_video:
+              trackInfo.u.setType(libvlc_media_track_info_video_t.ByValue.class);
+              trackInfo.u.read();
+              result.add(new VideoTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level, trackInfo.u.video.i_width, trackInfo.u.video.i_height));
               break;
               
-            // AUDIO_ES
-            case 2:
-              libvlc_media_track_info_audio_t audioInfo = (libvlc_media_track_info_audio_t)trackInfos.u.getTypedValue(libvlc_media_track_info_audio_t.class);
-              result.add(new AudioTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level, audioInfo.i_channels, audioInfo.i_rate));
+            case libvlc_track_audio:
+              trackInfo.u.setType(libvlc_media_track_info_audio_t.ByValue.class);
+              trackInfo.u.read();
+              result.add(new AudioTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level, trackInfo.u.audio.i_channels, trackInfo.u.audio.i_rate));
               break;
   
-            // SPU_ES
-            case 3:
+            case libvlc_track_text:
               result.add(new SpuTrackInfo(trackInfo.i_codec, trackInfo.i_id, trackInfo.i_profile, trackInfo.i_level));
-              break;
-              
-            // NAV_ES
-            case 4:
-              // Unused
               break;
           }
         }
