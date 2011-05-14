@@ -26,6 +26,8 @@ import com.sun.jna.Structure;
  */
 public class libvlc_media_track_info_video_t extends Structure {
 
+  public static class ByValue extends libvlc_media_track_info_video_t implements Structure.ByValue {}
+
   /* Video specific */
   public int i_height;
   public int i_width;
