@@ -116,7 +116,17 @@ public final class Version implements Comparable<Version> {
   public String extra() {
     return extra;
   }
-  
+
+  /**
+   * Test whether or not this version is at least the required version.
+   * 
+   * @param required required version
+   * @return <code>true</code> if this version is at least (equal to or greater than) the required version
+   */
+  public boolean atLeast(Version required) {
+    return compareTo(required) >= 0;
+  }
+
 //  @Override
   public int compareTo(Version o) {
     if(major == o.major) {
@@ -136,7 +146,7 @@ public final class Version implements Comparable<Version> {
       return major - o.major;
     }
   }
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(20);
