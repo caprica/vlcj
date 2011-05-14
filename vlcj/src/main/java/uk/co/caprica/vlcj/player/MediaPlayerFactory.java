@@ -109,7 +109,7 @@ public class MediaPlayerFactory {
     "Failed to initialise libvlc.\n\n" +
     "This is most often caused either by an invalid vlc option begin passed when creating a MediaPlayerFactory or by libvlc being unable to locate the required plugins.\n\n" +
     "If libvlc is unable to locate the required plugins the instructions below may help:\n\n" +
-    "In the text below <libvlc-path> represents the name of the directory containing \"{0}\" and \"{1}\" and <plugins-path> represents the name of the directory containing the vlc plugins.\n\n" +
+    "In the text below <libvlc-path> represents the name of the directory containing \"{0}\" and \"{1}\" and <plugins-path> represents the name of the directory containing the vlc plugins...\n\n" +
     "For libvlc to function correctly the vlc plugins must be available, there are a number of different ways to achieve this:\n" +
     " 1. Make sure the plugins are installed in the \"<libvlc-path>/{2}\" directory, this should be the case with a normal vlc installation.\n" +
     " 2. If using vlc 1.2.x, include System.setProperty(\"VLC_PLUGIN_PATH\", \"<plugins-path>\"); at the start of your application code.\n" +
