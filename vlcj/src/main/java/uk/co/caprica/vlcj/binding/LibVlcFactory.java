@@ -38,7 +38,7 @@ public class LibVlcFactory {
     "Failed to load the native library.\n\n" +
     "The error was \"{0}\".\n\n" +
   	"The required native libraries are named \"{1}\" and \"{2}\".\n\n" +
-  	"In the text below <libvlc-path> represents the name of the directory containing \"{1}\" and \"{2}\".\n\n" +
+  	"In the text below <libvlc-path> represents the name of the directory containing \"{1}\" and \"{2}\"...\n\n" +
   	"There are a number of different ways to specify where to find the native libraries:\n" +
   	" 1. Include NativeLibrary.addSearchPath(\"{3}\", \"<libvlc-path>\"); at the start of your application code.\n" +
     " 2. Include System.setProperty(\"jna.library.path\", \"<libvlc-path>\"); at the start of your application code.\n" +
