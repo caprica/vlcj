@@ -50,6 +50,7 @@ public class Logger {
   
   public enum Level {
     NONE,
+    FATAL,
     ERROR,
     WARN,
     INFO,
@@ -129,6 +130,18 @@ public class Logger {
   public static void error(String msg, Throwable t, Object... args) {
     if(Level.ERROR.compareTo(INSTANCE.threshold) <= 0) {
       out("ERROR", msg, t, args);
+    }
+  }
+  
+  public static void fatal(String msg, Object... args) {
+    if(Level.FATAL.compareTo(INSTANCE.threshold) <= 0) {
+      out("FATAL", msg, null, args);
+    }
+  }
+  
+  public static void fatal(String msg, Throwable t, Object... args) {
+    if(Level.FATAL.compareTo(INSTANCE.threshold) <= 0) {
+      out("FATAL", msg, t, args);
     }
   }
   
