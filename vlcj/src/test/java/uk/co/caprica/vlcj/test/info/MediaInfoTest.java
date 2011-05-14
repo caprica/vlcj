@@ -32,7 +32,8 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <p>
  * For DVD media files (like ".iso" files) the track information is not 
  * available after the media has been parsed, a video output must have been
- * created.
+ * created, and even then the video track width/height might not be available
+ * until a short time later.
  * <p>
  * In all cases, the other functions for title, video, audio and chapter
  * descriptions require that a video output has been created before they return
@@ -65,8 +66,6 @@ public class MediaInfoTest extends VlcjTest {
     mediaPlayer.prepareMedia(args[0]);
     
     mediaPlayer.parseMedia();
-
-    System.out.println("Track Information after parse(): " + mediaPlayer.getTrackInfo());
     
     mediaPlayer.start();
     
@@ -75,6 +74,8 @@ public class MediaInfoTest extends VlcjTest {
     }
     catch(InterruptedException e) {
     }
+
+    System.out.println("Track Information before end: " + mediaPlayer.getTrackInfo());
     
     mediaPlayer.stop();
     
