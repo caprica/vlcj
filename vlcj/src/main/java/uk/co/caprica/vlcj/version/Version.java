@@ -60,7 +60,7 @@ public final class Version implements Comparable<Version> {
    */
   public Version(final String version) {
     this.version = version;
-    String[] parts = Pattern.compile("[.-]").split(version);
+    String[] parts = Pattern.compile("[.-]|\\s").split(version);
     this.major = Integer.parseInt(parts[0]);
     this.minor = Integer.parseInt(parts[1]);
     this.revision = Integer.parseInt(parts[2]);
