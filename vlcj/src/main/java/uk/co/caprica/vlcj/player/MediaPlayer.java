@@ -1027,11 +1027,11 @@ public interface MediaPlayer {
    * <p>
    * The media (if local) should first be parsed, see {@link #parseMedia()}, or
    * be already playing.
-   * 
    * <p>
    * In the case of DVD media (for example ".iso" files) and streams the media 
    * must be played and video output must be available before valid track 
-   * information becomes available. 
+   * information becomes available, and even then it is not always available
+   * immediately so polling may be required. 
    * 
    * @return collection of track information, or <code>null</code> if there is no current media
    */
