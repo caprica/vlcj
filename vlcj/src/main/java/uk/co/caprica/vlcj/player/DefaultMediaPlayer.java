@@ -1202,20 +1202,36 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 //  @Override
   public boolean saveSnapshot() {
     Logger.debug("saveSnapshot()");
+    return saveSnapshot(0, 0);
+  }
+
+//  @Override
+  public boolean saveSnapshot(int width, int height) {
+    Logger.debug("saveSnapshot(width={},height={})", width, height);
     File snapshotDirectory = new File(snapshotDirectoryName == null ? System.getProperty("user.home") : snapshotDirectoryName);
     File snapshotFile = new File(snapshotDirectory, "vlcj-snapshot-" + System.currentTimeMillis() + ".png");
-    return saveSnapshot(snapshotFile);
+    return saveSnapshot(snapshotFile, width, height);
   }
   
 //  @Override
   public boolean saveSnapshot(File file) {
     Logger.debug("saveSnapshot(file={})", file);
+    return saveSnapshot(file, 0, 0);
+  }
+
+//  @Override
+  public boolean saveSnapshot(File file, int width, int height) {
+    Logger.debug("saveSnapshot(file={},width={},height={})", file, width, height);
     File snapshotDirectory = file.getParentFile();
+    if(snapshotDirectory == null) {
+      snapshotDirectory = new File(".");
+      Logger.debug("No directory specified for snapshot, snapshot will be saved to {}", snapshotDirectory.getAbsolutePath());
+    }
     if(!snapshotDirectory.exists()) {
       snapshotDirectory.mkdirs();
     }
     if(snapshotDirectory.exists()) {
-      boolean snapshotTaken = libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), 0, 0) == 0;
+      boolean snapshotTaken = libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), width, height) == 0;
       Logger.debug("snapshotTaken={}", snapshotTaken);
       return snapshotTaken;
     }
@@ -1224,13 +1240,19 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
   }
 
-//  @Override
+  //  @Override
   public BufferedImage getSnapshot() {
     Logger.debug("getSnapshot()");
+    return getSnapshot(0, 0);
+  }
+  
+  @Override
+  public BufferedImage getSnapshot(int width, int height) {
+    Logger.debug("getSnapshot(width={},height={})", width, height);
     try {
       File file = File.createTempFile("vlcj-snapshot-", ".png");
       Logger.debug("file={}", file.getAbsolutePath());
-      if(saveSnapshot(file)) {
+      if(saveSnapshot(file, width, height)) {
         BufferedImage snapshotImage = ImageIO.read(file);
         boolean deleted = file.delete();
         Logger.debug("deleted={}", deleted);
@@ -1244,10 +1266,10 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       throw new RuntimeException("Failed to get snapshot image", e);
     }
   }
-  
+
   // === Logo Controls ========================================================
 
-//  @Override
+  //  @Override
   public void enableLogo(boolean enable) {
     Logger.debug("enableLogo(enable={})", enable);
     libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_enable.intValue(), enable ? 1 : 0);

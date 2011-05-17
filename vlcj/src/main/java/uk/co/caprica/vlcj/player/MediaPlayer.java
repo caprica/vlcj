@@ -1069,12 +1069,18 @@ public interface MediaPlayer {
   /**
    * Save a snapshot of the currently playing video.
    * <p>
+   * The size of the image will be that produced by the libvlc native snapshot
+   * function, i.e. the size of the media itself.
+   * <p>
    * The snapshot will be created in the directory set via 
    * {@link #setSnapshotDirectory(String)}, unless that directory has not been
    * set in which case the snapshot will be created in the user's home 
    * directory, obtained via the "user.home" system property.
    * <p>
    * The snapshot will be assigned a filename based on the current time.
+   * <p>
+   * The size of the image will be that produced by the libvlc native snapshot
+   * function.
    * 
    * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
    */
@@ -1082,6 +1088,31 @@ public interface MediaPlayer {
 
   /**
    * Save a snapshot of the currently playing video.
+   * <p>
+   * The snapshot will be created in the directory set via 
+   * {@link #setSnapshotDirectory(String)}, unless that directory has not been
+   * set in which case the snapshot will be created in the user's home 
+   * directory, obtained via the "user.home" system property.
+   * <p>
+   * The snapshot will be assigned a filename based on the current time.
+   * <p>
+   * If one of width or height is zero the original image aspect ratio will be 
+   * preserved.
+   * <p>
+   * If both width and height are zero, the original image size will be used,
+   * see {@link #saveSnapshot()}. 
+   * 
+   * @param width desired image width
+   * @param height desired image height
+   * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
+   */
+  boolean saveSnapshot(int width, int height);
+  
+  /**
+   * Save a snapshot of the currently playing video.
+   * <p>
+   * The size of the image will be that produced by the libvlc native snapshot
+   * function, i.e. the size of the media itself.
    * <p>
    * Any missing directory path will be created if it does not exist.
    * 
@@ -1091,19 +1122,56 @@ public interface MediaPlayer {
   boolean saveSnapshot(File file);
 
   /**
+   * Save a snapshot of the currently playing video.
+   * <p>
+   * Any missing directory path will be created if it does not exist.
+   * <p>
+   * If one of width or height is zero the original image aspect ratio will be 
+   * preserved.
+   * <p>
+   * If both width and height are zero, the original image size will be used,
+   * see {@link #saveSnapshot(File))}. 
+   * 
+   * @param file file to contain the snapshot
+   * @param width desired image width
+   * @param height desired image height
+   * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
+   */
+  boolean saveSnapshot(File file, int width, int height);
+  
+  /**
+   * Get a snapshot of the currently playing video.
+   * <p>
+   * The size of the image will be that produced by the libvlc native snapshot
+   * function, i.e. the size of the media itself.
+   * <p>
+   * This implementation uses the native libvlc method to save a snapshot of
+   * the currently playing video. This snapshot is saved to a temporary file
+   * and then the resultant image is loaded from the file.
+   * 
+   * @return snapshot image, or <code>null</code> if a snapshot could not be taken
+   */
+  BufferedImage getSnapshot();
+
+  /**
    * Get a snapshot of the currently playing video.
    * <p>
    * This implementation uses the native libvlc method to save a snapshot of
    * the currently playing video. This snapshot is saved to a temporary file
    * and then the resultant image is loaded from the file.
    * <p>
-   * The size of the image will be that produced by the libvlc native snapshot
-   * function.
-   * 
+   * If one of width or height is zero the original image aspect ratio will be 
+   * preserved.
+   * <p>
+   * If both width and height are zero, the original image size will be used,
+   * see {@link #getSnapshot()}
+   *
+   * @param width desired image width
+   * @param height desired image height
    * @return snapshot image, or <code>null</code> if a snapshot could not be taken
    */
-  BufferedImage getSnapshot();
-
+  BufferedImage getSnapshot(int width, int height);
+  
   /**
    * Enable/disable the logo.
    * <p>
