@@ -35,7 +35,7 @@ class Info {
     "\\ \\ / / |/ __|| |" + "\n" +
     " \\ V /| | (__ | |"  + "\n" +
     "  \\_/ |_|\\___|/ | 1.2.1" + "\n" +
-    "            |__/"   + "\n";
+    "            |__/  www.capricasoftware.co.uk" + "\n";
 
   /**
    * Application license (GPL3) text.
@@ -55,7 +55,7 @@ class Info {
     "along with VLCJ.  If not, see <http://www.gnu.org/licenses/>."        + "\n" +
     ""                                                                     + "\n" +
     "Copyright 2009, 2010, 2011 Caprica Software Limited."                 + "\n";
-  
+      
   /**
    * Package-private constructor.
    */
