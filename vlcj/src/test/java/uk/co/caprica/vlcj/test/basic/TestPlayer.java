@@ -166,6 +166,8 @@ public class TestPlayer extends VlcjTest {
     vlcArgs.add("--no-plugins-cache");
     vlcArgs.add("--no-video-title-show");
     vlcArgs.add("--no-snapshot-preview");
+    vlcArgs.add("--quiet");
+    vlcArgs.add("--quiet-synchro");
 	
     // Special case to help out users on Windows (supposedly this is not actually needed)...
 //    if(RuntimeUtil.isWindows()) {
