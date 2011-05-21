@@ -35,6 +35,8 @@ import java.util.jar.JarFile;
 
 import uk.co.caprica.vlcj.logger.Logger;
 
+// FIXME this is not 100% working yet due to my incomplete understanding of shared libraries on Linux
+
 /**
  * Implementation of a native library manager.
  * <p>
