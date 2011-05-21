@@ -78,6 +78,9 @@ import uk.co.caprica.vlcj.logger.Logger;
  * Underneath "plugins" is the regular vlc plug-ins directory structure with
  * multiple nested directories.
  * <p>
+ * Note that these system properties are converted to lower case, so "Linux"
+ * becomes "linux". 
+ * <p>
  * When unpacked, the structure underneath the "install to" directory will be
  * (in part):
  * <pre>
@@ -91,7 +94,6 @@ import uk.co.caprica.vlcj.logger.Logger;
  * <p>
  * Also as stated above, underneath "plugins" will be the regular vlc plug-in
  * directory structure.
- * <p>
  * The native library search path should therefore be set to the "install to"
  * directory of this native library manager. This is the responsibility of the
  * <em>client</em> application, just because this native library manager
@@ -116,6 +118,36 @@ import uk.co.caprica.vlcj.logger.Logger;
  * <p>
  * Users of this class should expect that {@link RuntimeException} will be 
  * thrown if an error occurs.
+ * <p>
+ * Here is a partial example showing the structure required for a native 
+ * library package jar file:
+ * <pre>
+ *   vlc/
+ *   vlc/linux-amd64/
+ *   vlc/linux-amd64/libvlc.la
+ *   vlc/linux-amd64/libvlc.so
+ *   vlc/linux-amd64/libvlc.so.5
+ *   vlc/linux-amd64/libvlc.so.5.1.0
+ *   vlc/linux-amd64/libvlccore.so.5
+ *   vlc/linux-amd64/libvlccore.la
+ *   vlc/linux-amd64/libvlccore.so
+ *   vlc/linux-amd64/libvlccore.so.5.0.0
+ *   vlc/linux-amd64/vlc/
+ *   vlc/linux-amd64/vlc/lua/
+ *   vlc/linux-amd64/vlc/lua/meta/
+ *   vlc/linux-amd64/vlc/lua/meta/fetcher/
+ *   vlc/linux-amd64/vlc/lua/meta/fetcher/tvrage.luac
+ *   vlc/linux-amd64/vlc/lua/meta/reader/
+ *   vlc/linux-amd64/vlc/lua/meta/reader/filename.luac
+ *   vlc/linux-amd64/vlc/plugins/
+ *   vlc/linux-amd64/vlc/plugins/access/
+ *   vlc/linux-amd64/vlc/plugins/access/libaccess_http_plugin.la
+ *   vlc/linux-amd64/vlc/plugins/access/libaccess_imem_plugin.so
+ *   vlc/linux-amd64/vlc/plugins/access/libaccess_imem_plugin.la
+ *   vlc/linux-amd64/vlc/plugins/access/libaccess_mms_plugin.la
+ *   vlc/linux-amd64/vlc/plugins/access/libaccess_rar_plugin.so
+ *   vlc/linux-amd64/vlc/plugins/access/libaccess_rar_plugin.la
+ * </pre>
  */
 public class NativeLibraryManager {
 
