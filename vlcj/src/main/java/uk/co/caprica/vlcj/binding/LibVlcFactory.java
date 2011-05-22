@@ -28,6 +28,15 @@ import uk.co.caprica.vlcj.version.Version;
 
 /**
  * A factory that creates interfaces to the libvlc native library.
+ * <p>
+ * For example:
+ * <pre>
+ *   LibVlc libvlc = LibVlcFactory.factory().create();
+ * </pre>
+ * Or:
+ * <pre>
+ *   LibVlc libvlc = LibVlcFactory.factory().atLeast("1.2.0").log().create();
+ * </pre>
  */
 public class LibVlcFactory {
 
