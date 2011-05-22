@@ -44,6 +44,10 @@ public class LibVlcFactory {
     " 2. Include System.setProperty(\"jna.library.path\", \"<libvlc-path>\"); at the start of your application code.\n" +
   	" 3. Specify -Djna.library.path=<libvlc-path> on the command-line when starting your application.\n" +
   	" 4. Add <libvlc-path> to the system search path (and reboot).\n\n" +
+  	"If this still does not work, then it may be necessary to explicitly add the native library directory to the operating\n" +
+  	"system configuration - e.g. on Linux this might mean setting the LD_LIBRARY_PATH environment variable, or adding\n" +
+  	"configuration to the \"/etc/ld.so.conf\" file or the \"/etc/ld.so.conf.d\" directory. Of these options, setting\n" +
+  	"LD_LIBRARY_PATH is the only one that would not require root privileges.\n\n" +
   	"More information may be available in the log, specify -Dvlcj.log=DEBUG on the command-line when starting your application.\n";
   
   /**
