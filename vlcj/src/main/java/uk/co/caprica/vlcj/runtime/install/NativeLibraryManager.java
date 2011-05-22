@@ -35,8 +35,6 @@ import java.util.jar.JarFile;
 
 import uk.co.caprica.vlcj.logger.Logger;
 
-// FIXME this is not 100% working yet due to my incomplete understanding of shared libraries on Linux
-
 /**
  * Implementation of a native library manager.
  * <p>
@@ -96,11 +94,29 @@ import uk.co.caprica.vlcj.logger.Logger;
  * <p>
  * Also as stated above, underneath "plugins" will be the regular vlc plug-in
  * directory structure.
+ * <p>
  * The native library search path should therefore be set to the "install to"
  * directory of this native library manager. This is the responsibility of the
  * <em>client</em> application, just because this native library manager
  * unpacks the native libraries does not ensure that they will be picked up and
  * used at run-time.
+ * <p>
+ * On Linux at least, this is still not yet quite enough - the "install to"
+ * directory must be made known by one of the usual mechanisms for setting
+ * operating system shared library paths, this includes either:
+ * <ul>
+ *   <li>Setting the LD_LIBRARY_PATH environment variable to the "install to"
+ *       directory;</li>
+ *   <li>Adding the "install to" directory to the "/etc/ld.so.conf" file;</li>
+ *   <li>Adding a new file to "/etc/ld.so.conf.d" that specifies the "install 
+ *       to" directory;</li>
+ *   <li>Install the libraries to an already well-known directory such as
+ *       "/usr/lib".</li> 
+ * </ul>
+ * Of these options, only the first one would not require root privileges.
+ * <p>
+ * As before, setting the operating system shared library path in this way 
+ * would be the responsibility of the <em>client</em> application.
  * <p>
  * It is possible to register an event listener to receive progress updates -
  * this could be useful to display during a splash-screen or a dialog box
