@@ -88,6 +88,7 @@ public class SnapshotTest extends VlcjTest {
     mediaPlayer.stop();
   }
   
+  @SuppressWarnings("serial")
   private static void show(String title, final BufferedImage img, int i) {
     JFrame f = new JFrame(title);
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
