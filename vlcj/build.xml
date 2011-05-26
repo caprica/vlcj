@@ -111,6 +111,11 @@
     	<fileset dir="lib" includes="*.jar"/>
       <fileset dir="doc" includes="gpl.txt,README.LICENSE,README"/>
     </copy>
+    <checksum algorithm="sha1">
+      <fileset dir="dist">
+        <include name="vlcj-*.jar"/>
+      </fileset>
+    </checksum>
   </target>
   
   <target name="package" depends="dist" description="Build full distribution archives">
