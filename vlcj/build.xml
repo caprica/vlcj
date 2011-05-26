@@ -85,9 +85,11 @@
 	</target>
 	
   <target name="javadoc" depends="prepare">
-  	<!--
-    <delete dir="javadoc"/>
-    --> 
+  	<delete>
+  	  <fileset dir="javadoc">
+  	  	<exclude name="**/.svn/*.*"/>
+  	  </fileset>
+  	</delete>
     <javadoc sourcepath="src/main/java" destdir="build/javadoc" classpathref="project.classes" access="public" author="yes" windowtitle="VLCJ ${build.version} Documentation" footer="(C)2011 Caprica Software Limited"/>
   	<copy todir="javadoc">
   	  <fileset dir="build/javadoc"/>
@@ -101,11 +103,31 @@
   <target name="clean" description="Clean transient build artefacts - this does NOT delete the contents of the 'dist' folder">
     <delete dir="build"/>
   </target>
-  
+
+	<target name="clean-all" description="Clean all build artefacts, but leave .svn directories intact">
+    <delete>
+      <fileset dir="javadoc">
+        <exclude name="**/.svn/*.*"/>
+      </fileset>
+    </delete>
+    <delete>
+      <fileset dir="dist">
+        <exclude name="**/.svn/*.*"/>
+      </fileset>
+    </delete>
+    <delete>
+      <fileset dir="package">
+        <exclude name="**/.svn/*.*"/>
+      </fileset>
+    </delete>
+	</target>
+	
   <target name="dist" depends="jar, srcjar, docjar, jar.test, srcjar.test">
-  	<!--
-  	<delete dir="dist"/>
-  	-->
+    <delete>
+      <fileset dir="dist">
+        <exclude name="**/.svn/*.*"/>
+      </fileset>
+    </delete>
     <copy todir="dist">
       <fileset dir="build" includes="*.jar"/>
     	<fileset dir="lib" includes="*.jar"/>
@@ -119,9 +141,11 @@
   </target>
   
   <target name="package" depends="dist" description="Build full distribution archives">
-    <!--
-    <delete dir="package"/>
-    -->
+    <delete>
+      <fileset dir="package">
+        <exclude name="**/.svn/*.*"/>
+      </fileset>
+    </delete>
     <mkdir dir="package/${ant.project.name}-${build.version}"/>
     <copy todir="package/${ant.project.name}-${build.version}">
       <fileset dir="dist" excludes="**/*.log"/>
@@ -207,5 +231,5 @@
   </target>
   	
 	<target name="upload" depends="upload.dist, upload.package"/>
-	
+
 </project>
