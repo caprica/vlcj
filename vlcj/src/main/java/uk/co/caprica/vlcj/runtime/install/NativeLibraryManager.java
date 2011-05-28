@@ -276,9 +276,10 @@ public class NativeLibraryManager {
     int n = 0;
     while(jarEntries.hasMoreElements()) {
       JarEntry jarEntry = jarEntries.nextElement();
-      // Only install files contained in the PACKAGE_RESOURCE_DIRECTORY folder
-      // inside the jar this will ensure that directories like "META-INF" and
-      // files like MANIFEST.MF are excluded...
+      // Only install files contained in the run-time operating-system name/
+      // architecture directory inside the PACKAGE_RESOURCE_DIRECTORY folder
+      // inside the jar - this will also ensure that directories like META-INF
+      // and files like MANIFEST.MF are excluded...
       if(!jarEntry.isDirectory() && jarEntry.getName().startsWith(platformResources)) {
         // Trim off the un-needed part of the file path
         String entryName = jarEntry.getName().substring(platformResources.length());
