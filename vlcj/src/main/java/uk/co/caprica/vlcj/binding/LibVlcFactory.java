@@ -156,8 +156,11 @@ public class LibVlcFactory {
           if(!actualVersion.atLeast(requiredVersion)) {
             if(!"no".equalsIgnoreCase(System.getProperty("vlcj.check"))) {
               Logger.fatal("This version of vlcj requires version {} or later of libvlc, found too old version {}", requiredVersion, actualVersion);
-              Logger.fatal("You can suppress this check by specifying -Dvlcj.check=no but some functionality will be unavailable and cause failures");
-              throw new RuntimeException("This version of vlcj requires version " + requiredVersion + " or later of libvlc, found too old version " + actualVersion);
+              Logger.fatal("You can suppress this version check by specifying -Dvlcj.check=no but some functionality will be unavailable and may cause failures");
+              throw new RuntimeException(
+                "This version of vlcj requires version " + requiredVersion + " or later of libvlc, found too old version " + actualVersion + ". " + 
+                "You can suppress this version check by specifying -Dvlcj.check=no but some functionality will be unavailable and may cause failures."
+              );
             }
             else {
               Logger.warn("This version of vlcj requires version {} or later of libvlc, found too old version {}. Fatal run-time failures may occur.", requiredVersion, actualVersion);
