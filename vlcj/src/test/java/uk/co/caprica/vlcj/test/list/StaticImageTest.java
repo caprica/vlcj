@@ -37,7 +37,10 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <p>
  * You can also add for example vlc://pause:30 to "play" a delay of 30 (or 
  * whatever you want) seconds. This is not to be confused with the media option 
- * for image-durations previously described. 
+ * for image-durations previously described.
+ * <p>
+ * Note that you can "play" images from any source that vlc can play - not just
+ * local files, but things like http: too. 
  */
 public class StaticImageTest extends VlcjTest {
 
