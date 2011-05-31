@@ -114,7 +114,7 @@ public class MediaPlayerFactory {
     " 1. Make sure the plugins are installed in the \"<libvlc-path>/{2}\" directory, this should be the case with a normal vlc installation.\n" +
     " 2. If using vlc 1.2.x, include System.setProperty(\"VLC_PLUGIN_PATH\", \"<plugins-path>\"); at the start of your application code.\n" +
     " 3. If using vlc 1.2.x, specify -DVLC_PLUGIN_PATH=<plugins-path> on the command-line when starting your application.\n" +
-    " 4. If using vlc 1.1.x, pass \"--plugin-path=<plugins-path>\" as parameters in your application code when you create a MediaPlayerFactory.\n" + 
+    " 4. If using vlc 1.1.x, pass \"--plugin-path=<plugins-path>\" as parameters in your application code when you create a MediaPlayerFactory.\n\n" + 
     "More information may be available in the log, specify -Dvlcj.log=DEBUG on the command-line when starting your application.\n\n";
   
   /**
@@ -612,5 +612,20 @@ public class MediaPlayerFactory {
     Log log = new Log(libvlc, instance);
     log.open();
     return log;
+  }
+
+  // === Clock ================================================================
+  
+  /**
+   * Get the time as defined by LibVLC.
+   * <p>
+   * The time is not meaningful in the sense of what time is it, rather it is
+   * a monotonic clock with an arbitrary starting value.
+   * 
+   * @return current clock time value, in microseconds
+   */
+  public long clock() {
+    Logger.trace("clock()");
+    return libvlc.libvlc_clock();
   }
 }
