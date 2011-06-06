@@ -57,6 +57,8 @@ public class LibVlcFactory {
   	"system configuration - e.g. on Linux this might mean setting the LD_LIBRARY_PATH environment variable, or adding\n" +
   	"configuration to the \"/etc/ld.so.conf\" file or the \"/etc/ld.so.conf.d\" directory. Of these options, setting\n" +
   	"LD_LIBRARY_PATH is the only one that would not require root privileges.\n\n" +
+  	"Finally, it is not possible to mix CPU architectures - it is not possible for a 64-bit Java Virtual Machine to load\n" +
+  	"32-bit shared libraries.\n\n" +
   	"More information may be available in the log, specify -Dvlcj.log=DEBUG on the command-line when starting your application.\n";
   
   /**
