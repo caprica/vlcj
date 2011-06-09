@@ -628,4 +628,36 @@ public class MediaPlayerFactory {
     Logger.trace("clock()");
     return libvlc.libvlc_clock();
   }
+  
+  // === Build Information ====================================================
+
+  /**
+   * Get the libvlc version. 
+   * 
+   * @return native library version
+   */
+  public String version() {
+    Logger.debug("version()");
+    return libvlc.libvlc_get_version();
+  }
+  
+  /**
+   * Get the compiler used to build libvlc. 
+   * 
+   * @return compiler
+   */
+  public String compiler() {
+    Logger.debug("compiler()");
+    return libvlc.libvlc_get_compiler();
+  }
+
+  /**
+   * Get the source code change-set id used to build libvlc. 
+   * 
+   * @return change-set
+   */
+  public String changeset() {
+    Logger.debug("changeset()");
+    return libvlc.libvlc_get_changeset();
+  }
 }
