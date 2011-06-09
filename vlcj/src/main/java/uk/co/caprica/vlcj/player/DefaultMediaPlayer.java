@@ -1668,7 +1668,10 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     Logger.debug("setMedia(media={},mediaOptions={})" , media, Arrays.toString(mediaOptions));
     // If there is a current media, clean it up
     if(mediaInstance != null) {
+      // Release the media event listener
       deregisterMediaEventListener();
+      // Release the native resource
+      libvlc.libvlc_media_release(mediaInstance);
       mediaInstance = null;
     }
     // Reset sub-items
