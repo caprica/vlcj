@@ -137,17 +137,15 @@ import uk.co.caprica.vlcj.logger.Logger;
  * Users of this class should expect that {@link RuntimeException} will be 
  * thrown if an error occurs.
  * <p>
- * Here is a partial example showing the structure required for a native 
- * library package jar file:
+ * Here is a <em>partial</em> example showing the structure required for a 
+ * native library package jar file:
  * <pre>
  *   vlc/
  *   vlc/linux-amd64/
- *   vlc/linux-amd64/libvlc.la
  *   vlc/linux-amd64/libvlc.so
  *   vlc/linux-amd64/libvlc.so.5
  *   vlc/linux-amd64/libvlc.so.5.1.0
  *   vlc/linux-amd64/libvlccore.so.5
- *   vlc/linux-amd64/libvlccore.la
  *   vlc/linux-amd64/libvlccore.so
  *   vlc/linux-amd64/libvlccore.so.5.0.0
  *   vlc/linux-amd64/vlc/
@@ -159,12 +157,9 @@ import uk.co.caprica.vlcj.logger.Logger;
  *   vlc/linux-amd64/vlc/lua/meta/reader/filename.luac
  *   vlc/linux-amd64/vlc/plugins/
  *   vlc/linux-amd64/vlc/plugins/access/
- *   vlc/linux-amd64/vlc/plugins/access/libaccess_http_plugin.la
  *   vlc/linux-amd64/vlc/plugins/access/libaccess_imem_plugin.so
- *   vlc/linux-amd64/vlc/plugins/access/libaccess_imem_plugin.la
- *   vlc/linux-amd64/vlc/plugins/access/libaccess_mms_plugin.la
  *   vlc/linux-amd64/vlc/plugins/access/libaccess_rar_plugin.so
- *   vlc/linux-amd64/vlc/plugins/access/libaccess_rar_plugin.la
+ *   ...
  * </pre>
  */
 public class NativeLibraryManager {
