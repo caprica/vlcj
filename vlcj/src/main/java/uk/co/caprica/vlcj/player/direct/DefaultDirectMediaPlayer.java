@@ -35,6 +35,20 @@ import com.sun.jna.Pointer;
 /**
  * Media player implementation that provides direct access to the video frame
  * data.
+ * <p>
+ * For the pixel format you can use any format that is supported by the vlc 
+ * video output, for example:
+ * </ul>
+ *   <li>I420: planar 4:2:0, order YUV</li>
+ *   <li>YV12: planar 4:2:0, order YVU</li>
+ *   <li>YUY2: packed 4:2:2, order YUYV</li>
+ *   <li>UYVY: packed 4:2:2, order UYVY</li>
+ *   <li>RV32: 24-bits depth with 8-bits padding</li>
+ *   <li>RV24: 24-bits depth (like HTML colors)</li>
+ *   <li>RV16: 16-bits depth</li>
+ *   <li>RV15: 15-bits depth (5 per component), 1 bit padding</li>
+ * </ul>
+ * This list may not be exhaustive.
  */
 public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements DirectMediaPlayer {
 
