@@ -44,7 +44,7 @@ import com.sun.jna.Pointer;
  *   <li>YUY2: packed 4:2:2, order YUYV</li>
  *   <li>UYVY: packed 4:2:2, order UYVY</li>
  *   <li>RV32: 24-bits depth with 8-bits padding</li>
- *   <li>RV24: 24-bits depth (like HTML colors)</li>
+ *   <li>RV24: 24-bits depth (like HTML colours)</li>
  *   <li>RV16: 16-bits depth</li>
  *   <li>RV15: 15-bits depth (5 per component), 1 bit padding</li>
  * </ul>
