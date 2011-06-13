@@ -28,7 +28,7 @@ import java.util.Arrays;
 import uk.co.caprica.vlcj.logger.Logger;
 
 /**
- * Default implementation of a full screen strategy that attempts to use the
+ * Default implementation of a full-screen strategy that attempts to use the
  * JDK full-screen exclusive mode support.
  * <p>
  * Client applications may wish to select a screen device other than the 
@@ -38,7 +38,7 @@ import uk.co.caprica.vlcj.logger.Logger;
  * class and override {@link #getDisplayMode(DisplayMode[])} to do so.
  * <p>
  * Client applications may also have other requirements such as hiding other 
- * on-screen controls when in full screen mode - extend this class and over-
+ * on-screen controls when in full-screen mode - extend this class and over-
  * ride {@link #onBeforeEnterFullScreenMode} and {@link #onAfterExitFullScreenMode()}
  * to do so.
  */
