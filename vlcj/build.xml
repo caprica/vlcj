@@ -41,6 +41,11 @@
     <pathelement location="lib/platform.jar"/>
   </path>
   
+  <pathconvert property="manifest.classpath" pathsep=" ">
+    <path refid="project.classes"/>
+    <flattenmapper/>
+  </pathconvert>
+  
   <target name="prepare">
     <mkdir dir="build"/>
   </target>
@@ -65,10 +70,11 @@
         <attribute name="Implementation-Vendor" value="Caprica Software Limited"/>
         <attribute name="Implementation-URL" value="http://code.google.com/p/vlcj/"/>
         <attribute name="Implementation-Version" value="${build.version}.${build.number} (${build.timestamp})"/>
+        <attribute name="Class-Path" value="${manifest.classpath}"/>
     	</manifest>
     </jar>
   </target>
-  
+	
   <target name="jar.test" depends="compile.test">
     <jar jarfile="build/${ant.project.name}-${build.version}-test.jar" basedir="build/test-classes" manifest="etc/test-manifest.txt">
     	<fileset dir="src/test/resources"/>
