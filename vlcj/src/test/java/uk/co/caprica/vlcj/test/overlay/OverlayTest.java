@@ -41,6 +41,7 @@ import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import com.sun.awt.AWTUtilities;
@@ -63,6 +64,16 @@ import com.sun.jna.platform.WindowUtils;
  * Full-Screen Exclusive Mode. If you want to use an overlay and you need full-
  * screen, then you have to emulate full-screen by changing your window bounds
  * rather than using FSEM.
+ * <p>
+ * This approach <em>does</em> work in full-screen mode if you use your desktop
+ * window manager to put your application into full-screen rather than using
+ * the Java FSEM.
+ * <p>
+ * If you want to provide an overlay that dynamically updates, e.g. if you want
+ * some animation, then your overlay should sub-class <code>JWindow</code> 
+ * rather than <code>Window</code> since you will get double-buffering and
+ * eliminate flickering. Since the overlay is transparent you must take care to 
+ * erase the overlay background properly.  
  * <p>
  * Specify a single MRL to play on the command-line.
  */
@@ -123,6 +134,8 @@ public class OverlayTest extends VlcjTest {
     mediaPlayer.enableOverlay(true);
     
     mediaPlayer.playMedia(mrl);
+    
+    LibXUtil.setFullScreenWindow(f, true);
   }
   
   private class Overlay extends Window {
