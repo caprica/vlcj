@@ -22,12 +22,16 @@ package uk.co.caprica.vlcj.player.embedded.x;
 import java.awt.Window;
 
 import uk.co.caprica.vlcj.logger.Logger;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 
 /**
  * Implementation of a full-screen strategy that attempts to use the native X11
  * window manager.
+ * <p>
+ * With this full-screen strategy, a full-screen transparent overlay 
+ * <em>will</em> work correctly, see {@link EmbeddedMediaPlayer#setOverlay(Window)}.
  */
 public class XFullScreenStrategy implements FullScreenStrategy {
 
