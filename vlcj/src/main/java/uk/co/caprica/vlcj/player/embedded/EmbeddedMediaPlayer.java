@@ -76,11 +76,19 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
   
   /**
    * Toggle whether the video display is in full-screen or not.
+   * <p>
+   * Setting the display into or out of full-screen mode is delegate to the
+   * {@link FullScreenStrategy} that was used when the media player was 
+   * created.
    */
   void toggleFullScreen();
   
   /**
    * Set full-screen mode. 
+   * <p>
+   * Setting the display into or out of full-screen mode is delegate to the
+   * {@link FullScreenStrategy} that was used when the media player was 
+   * created.
    * 
    * @param fullScreen true for full-screen, otherwise false
    */
@@ -88,6 +96,10 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
   
   /**
    * Check whether the full-screen mode is currently active or not.
+   * <p>
+   * Testing whether or not the display is in full-screen mode is delegate to 
+   * the {@link FullScreenStrategy} that was used when the media player was 
+   * created.
    * 
    * @return true if full-screen is active, otherwise false
    */
