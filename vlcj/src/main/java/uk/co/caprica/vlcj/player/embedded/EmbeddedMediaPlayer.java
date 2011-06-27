@@ -123,6 +123,14 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
    * The existing overlay if there is one will be disabled.
    * <p>
    * The new overlay will <strong>not</strong> automatically be enabled.
+   * <p>
+   * The overlay should be a sub-class of <code>Window</code> or 
+   * <code>JWindow</code>. If your overlay contains dynamically updated content
+   * such as a timer or animated graphics, then you should use 
+   * <code>JWindow</code> so that your updates will be double-buffered and 
+   * there will be no tearing or flickering when you paint the overlay. If you 
+   * do this, you must take care to erase the overlay background before you 
+   * paint it.
    * 
    * @param overlay overlay component
    */
