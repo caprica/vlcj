@@ -533,6 +533,17 @@ public interface MediaPlayer {
   libvlc_media_stats_t getMediaStatistics();
 
   /**
+   * Get the current media statistics for a media item (e.g. a sub-item). 
+   * <p>
+   * Statistics are only updated if the video is playing.
+   * 
+   * @param media media item
+   * @return media statistics
+   */
+  // FIXME For now I'll simply return the internal binding structure but I don't really want to do that do I?
+  libvlc_media_stats_t getMediaStatistics(libvlc_media_t media);
+  
+  /**
    * Get the current media state.
    * 
    * @return state

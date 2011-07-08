@@ -659,11 +659,18 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 //  @Override
   public libvlc_media_stats_t getMediaStatistics() {
     Logger.debug("getMediaStatistics()");
+    return getMediaStatistics(mediaInstance);
+  }
+
+//  @Override
+  public libvlc_media_stats_t getMediaStatistics(libvlc_media_t media) {
+    Logger.debug("getMediaStatistics(media={})", media);
     // Must first check that the media is playing otherwise a fatal JVM crash
-    // will occur
+    // will occur - potentially this could still cause a fatal crash if the
+    // media item supplied is not the one actually playing right now
     if(isPlaying()) {
-      if(mediaInstance != null) {
-        libvlc.libvlc_media_get_stats(mediaInstance, libvlcMediaStats);
+      if(media != null) {
+        libvlc.libvlc_media_get_stats(media, libvlcMediaStats);
       }
     }
     return libvlcMediaStats;
