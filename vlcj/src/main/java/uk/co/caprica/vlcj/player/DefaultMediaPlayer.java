@@ -849,7 +849,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 //  @Override
   public boolean setAudioOutput(String output) {
     Logger.debug("setAudioOutput(output={})", output);
-    return 0 != libvlc.libvlc_audio_output_set(mediaPlayerInstance, output);
+    return 0 == libvlc.libvlc_audio_output_set(mediaPlayerInstance, output);
   }
   
 //  @Override
