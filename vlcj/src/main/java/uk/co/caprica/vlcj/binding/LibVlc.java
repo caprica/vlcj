@@ -1537,7 +1537,7 @@ public interface LibVlc extends Library {
    * 
    * @param p_mi media player
    * @param psz_name name of audio output, use psz_name of @see libvlc_audio_output_t
-   * @return true if function succeded
+   * @return 0 if function succeded, -1 on error
    */
   int libvlc_audio_output_set(libvlc_media_player_t p_mi, String psz_name);
 
