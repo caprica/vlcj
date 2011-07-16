@@ -338,7 +338,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       mediaMeta.setNowPlaying(getMeta(libvlc_meta_t.libvlc_meta_NowPlaying, media));
       mediaMeta.setPublisher(getMeta(libvlc_meta_t.libvlc_meta_Publisher, media));
       mediaMeta.setEncodedBy(getMeta(libvlc_meta_t.libvlc_meta_EncodedBy, media));
-      mediaMeta.setArtworkUrl(getMeta(libvlc_meta_t.libvlc_meta_ArtworkURL, media));
+      mediaMeta.setArtworkUrl(getMeta(libvlc_meta_t.libvlc_meta_ArtworkURL, media)); // FIXME this triggers the HTTP download request, should really make that optional
       mediaMeta.setTrackId(getMeta(libvlc_meta_t.libvlc_meta_TrackID, media));
       return mediaMeta;
     }
@@ -1730,6 +1730,11 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
   /**
    * Handle sub-items.
+   * <p>
+   * This method contains the common code that is required when iterating over
+   * the media sub-items - the sub-items are obtained from the media player,
+   * the list is locked, the sub-items are processed by a {@link SubItemsHandler}
+   * implementation, then the list is unlocked and released.
    * 
    * @param <T> type of result
    * @param subItemsHandler handler implementation
