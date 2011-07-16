@@ -86,11 +86,14 @@ public class SearchMetaTest extends VlcjTest {
   }
   
   private static void scan(File root, List<File> result) {
-    for(File file : root.listFiles(AUDIO_FILE_FILTER)) {
-      result.add(file);
-    }
-    for(File dir : root.listFiles(DIR_FILTER)) {
-      scan(dir, result);
+    File[] files = root.listFiles(AUDIO_FILE_FILTER);
+    if(files != null) {
+      for(File file : files) {
+        result.add(file);
+      }
+      for(File dir : root.listFiles(DIR_FILTER)) {
+        scan(dir, result);
+      }
     }
   }
 }
