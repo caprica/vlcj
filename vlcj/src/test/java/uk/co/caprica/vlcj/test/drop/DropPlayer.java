@@ -40,6 +40,7 @@ import javax.swing.border.LineBorder;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * Simple demo application that opens up an undecorated window onto which MRLs 
@@ -59,7 +60,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * The window itself is always-on-top and can be moved by clicking and dragging
  * in the window client area. 
  */
-public class DropPlayer {
+public class DropPlayer extends VlcjTest {
 
   private final DataFlavor uriListFlavor;
   private final DataFlavor javaUrlFlavor;
