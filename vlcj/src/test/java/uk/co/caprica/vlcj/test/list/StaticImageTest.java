@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.test.list;
 
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.MediaList;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
@@ -40,7 +41,13 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * for image-durations previously described.
  * <p>
  * Note that you can "play" images from any source that vlc can play - not just
- * local files, but things like http: too. 
+ * local files, but things like http: too.
+ * <p>
+ * Large images can cause problems for vlc when it tries to create the video 
+ * output - for this reason it is usually better to use an {@link EmbeddedMediaPlayer}
+ * linked with the {@link MediaListPlayer}. That way the size of the video
+ * surface can be controller. If this is not done, fatal application crashes
+ * due to vlc choking on the image file can occur.
  */
 public class StaticImageTest extends VlcjTest {
 
