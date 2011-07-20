@@ -26,6 +26,9 @@ import com.sun.jna.Memory;
  * data for an entire video frame.
  * <p>
  * The media player must be sending pixels in the RV32 format.
+ * <p>
+ * If you simply want access to the native memory buffer you should consider
+ * sub-classing {@link RenderCallback} directly rather than using this class.
  */
 public abstract class RenderCallbackAdapter implements RenderCallback {
 
