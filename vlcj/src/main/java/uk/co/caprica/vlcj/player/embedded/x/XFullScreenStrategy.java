@@ -63,6 +63,7 @@ public class XFullScreenStrategy implements FullScreenStrategy {
   @Override
   public void enterFullScreenMode() {
     Logger.debug("enterFullScreenMode()");
+    onBeforeEnterFullScreenMode();
     LibXUtil.setFullScreenWindow(window, true);
     isFullScreenMode = true;
   }
@@ -72,11 +73,31 @@ public class XFullScreenStrategy implements FullScreenStrategy {
     Logger.debug("exitFullScreenMode()");
     LibXUtil.setFullScreenWindow(window, false);
     isFullScreenMode = false;
+    onAfterExitFullScreenMode();
   }
 
   @Override
   public boolean isFullScreenMode() {
     Logger.debug("isFullScreenMode()");
     return isFullScreenMode;
+  }
+
+  /**
+   * Template method invoked before full-screen mode is entered.
+   * <p>
+   * An application can override this method to provide custom code when 
+   * entering full-screen mode for example to hide other on-screen components.
+   */
+  protected void onBeforeEnterFullScreenMode() {
+  }
+  
+  /**
+   * Template method invoked after exiting full-screen mode.
+   * <p>
+   * An application can override this method to provide custom code when 
+   * entering full-screen mode for example to restore other on-screen 
+   * components.
+   */
+  protected void onAfterExitFullScreenMode() {
   }
 }
