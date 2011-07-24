@@ -210,10 +210,12 @@ public class DropVideoPlayer extends VlcjTest {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-      Point mouseDragPoint = e.getLocationOnScreen();
-      int x = mouseDownScreenPoint.x + (mouseDragPoint.x - mouseDownScreenPoint.x) - mouseDownPoint.x;
-      int y = mouseDownScreenPoint.y + (mouseDragPoint.y - mouseDownScreenPoint.y) - mouseDownPoint.y;
-      frame.setLocation(x, y);
+      if(SwingUtilities.isLeftMouseButton(e)) {
+        Point mouseDragPoint = e.getLocationOnScreen();
+        int x = mouseDownScreenPoint.x + (mouseDragPoint.x - mouseDownScreenPoint.x) - mouseDownPoint.x;
+        int y = mouseDownScreenPoint.y + (mouseDragPoint.y - mouseDownScreenPoint.y) - mouseDownPoint.y;
+        frame.setLocation(x, y);
+      }
     }
   }
 }
