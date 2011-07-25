@@ -37,6 +37,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.runtime.x.LibXUtil;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * This example shows how to create simple overlays if you do not want per-
@@ -58,7 +59,7 @@ import uk.co.caprica.vlcj.runtime.x.LibXUtil;
  * <p>
  * Press 'q', 'w', 'e' or 'r' to toggle an overlay.
  */
-public class NonTransparentOverlayTest {
+public class NonTransparentOverlayTest extends VlcjTest {
 
   private Frame f;
   private Canvas c;
@@ -71,6 +72,11 @@ public class NonTransparentOverlayTest {
   private EmbeddedMediaPlayer mediaPlayer;
   
   public static void main(final String[] args) {
+    if(args.length != 1) {
+      System.err.println("Specify an MRL");
+      System.exit(1);
+    }
+    
     LibXUtil.initialise();
     
     SwingUtilities.invokeLater(new Runnable() {
