@@ -103,7 +103,6 @@ public class CaptureTest extends VlcjTest {
     frame.setContentPane(contentPane);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(800, 600);
-    frame.pack();
     
     factory = new MediaPlayerFactory("--no-video-title-show");
     mediaPlayer = factory.newEmbeddedMediaPlayer();
@@ -114,7 +113,9 @@ public class CaptureTest extends VlcjTest {
   }
   
   private void start(String mrl) {
-    GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
+    frame.setVisible(true);
+    
+//    GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
     
     File dir = new File(System.getProperty("user.home"), "Videos");
     dir.mkdirs();
