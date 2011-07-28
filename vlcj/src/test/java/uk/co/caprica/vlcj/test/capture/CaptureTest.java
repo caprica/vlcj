@@ -44,8 +44,8 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * of video data. These raw frames must be transcoded before the video can be
  * saved or streamed.
  * <p>
- * This class creates a full-screen media player that captures, displays, 
- * transcodes and saves video from a video capture device.
+ * This class creates a media player that captures, displays, transcodes and 
+ * saves video from a video capture device.
  * <p>
  * Specify the MRL of the capture device as a command-line argument...
  * <p>
