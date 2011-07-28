@@ -22,7 +22,6 @@ package uk.co.caprica.vlcj.test.capture;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -102,6 +101,7 @@ public class CaptureTest extends VlcjTest {
     frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
     frame.setContentPane(contentPane);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setLocation(50, 50);
     frame.setSize(800, 600);
     
     factory = new MediaPlayerFactory("--no-video-title-show");
