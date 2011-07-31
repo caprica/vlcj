@@ -52,6 +52,10 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * application, the more likely you are to say fatal crashes in those native
  * libraries.
  * <p>
+ * Also, a current limitation of vlc is that all in-process media players
+ * will share the same audio controls - there is no independent audio control
+ * available.
+ * <p>
  * Out of process media players are reliable, but a lot more difficult and
  * intricate to implement.
  */
