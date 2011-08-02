@@ -98,7 +98,8 @@ import com.sun.jna.Pointer;
  * (and possibly other) objects created by this factory. If you allow a media 
  * player object to go out of scope, then unpredictable behaviour will occur 
  * (such as events no longer seeming to fire) even though the video playback 
- * continues (since that happens via native code).
+ * continues (since that happens via native code). You may also likely suffer
+ * fatal JVM crashes.
  */
 public class MediaPlayerFactory {
 
