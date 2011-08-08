@@ -28,7 +28,7 @@ import com.sun.jna.Pointer;
 /**
  * Base implementation for media players sharing common behaviours.
  */
-public class AbstractMediaPlayer {
+public abstract class AbstractMediaPlayer {
 
   /**
    * Native library interface.
@@ -46,7 +46,7 @@ public class AbstractMediaPlayer {
    * @param libvlc native library interface
    * @param instance libvlc instance
    */
-  public AbstractMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
+  protected AbstractMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
     this.libvlc = libvlc;
     this.instance = instance;
   }
