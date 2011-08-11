@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.player;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -1256,13 +1257,12 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   @Override
   public BufferedImage getSnapshot(int width, int height) {
     Logger.debug("getSnapshot(width={},height={})", width, height);
+    File file = null;
     try {
-      File file = File.createTempFile("vlcj-snapshot-", ".png");
+      file = File.createTempFile("vlcj-snapshot-", ".png");
       Logger.debug("file={}", file.getAbsolutePath());
       if(saveSnapshot(file, width, height)) {
         BufferedImage snapshotImage = ImageIO.read(file);
-        boolean deleted = file.delete();
-        Logger.debug("deleted={}", deleted);
         return snapshotImage;
       }
       else {
@@ -1271,6 +1271,12 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
     catch(IOException e) {
       throw new RuntimeException("Failed to get snapshot image", e);
+    }
+    finally {
+      if(file != null) {
+        boolean deleted = file.delete();
+        Logger.debug("deleted={}", deleted);
+      }
     }
   }
 
@@ -1315,9 +1321,31 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     libvlc.libvlc_video_set_logo_string(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_file.intValue(), logoFile);
   }
   
+//  @Override
+  public void setLogoImage(RenderedImage logoImage) {
+    Logger.debug("setLogoImage(logoImage={})", logoImage);
+    File file = null;
+    try {
+      // Create a temporary file for the logo...
+      file = File.createTempFile("vlcj-logo-", ".png");
+      ImageIO.write(logoImage, "png", file);
+      // ...then set the logo as normal
+      setLogoFile(file.getAbsolutePath());
+    }
+    catch(IOException e) {
+      throw new RuntimeException("Failed to set logo image", e);
+    }
+    finally {
+      if(file != null) {
+        boolean deleted = file.delete();
+        Logger.debug("deleted={}", deleted);
+      }
+    }
+  }
+  
   // === Marquee Controls =====================================================
 
-//  @Override
+  //  @Override
   public void enableMarquee(boolean enable) {
     Logger.debug("enableMarquee(enable={})", enable);
     libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Enable.intValue(), enable ? 1 : 0);

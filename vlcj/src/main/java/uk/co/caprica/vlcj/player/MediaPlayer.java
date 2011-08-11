@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.player;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.util.List;
 
@@ -1228,6 +1229,17 @@ public interface MediaPlayer {
    */
   void setLogoFile(String logoFile);
 
+  /**
+   * Set the logo image.
+   * <p>
+   * The image will first be written to a temporary file, before invoking
+   * {@link #setLogoFile(String)}. This is not optimal, but creating a 
+   * temporary file for the logo in this way is unavoidable.
+   * 
+   * @param logoImage logo image
+   */
+  void setLogoImage(RenderedImage logoImage);
+  
   /**
    * Enable/disable the marquee.
    * <p>
