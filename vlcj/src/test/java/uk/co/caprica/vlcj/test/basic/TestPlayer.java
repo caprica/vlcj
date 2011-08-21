@@ -158,7 +158,9 @@ public class TestPlayer extends VlcjTest {
     vlcArgs.add("--no-snapshot-preview");
     vlcArgs.add("--quiet");
     vlcArgs.add("--quiet-synchro");
-	
+    vlcArgs.add("--intf");
+    vlcArgs.add("dummy");
+
     // Special case to help out users on Windows (supposedly this is not actually needed)...
 //    if(RuntimeUtil.isWindows()) {
 //      vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
@@ -459,6 +461,11 @@ public class TestPlayer extends VlcjTest {
     @Override
     public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
       Logger.debug("videoOutputAvailable(mediaPlayer={},videoOutput={})", mediaPlayer, videoOutput);
+
+      if(!videoOutput) {
+        return;
+      }
+
       Dimension dimension = mediaPlayer.getVideoDimension();
       Logger.debug("dimension={}", dimension);
       if(dimension != null) {
