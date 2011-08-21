@@ -1449,8 +1449,8 @@ public interface LibVlc extends Library {
    * 
    * @param p_instance libvlc instance
    * @return list of available audio outputs. It must be freed it with
-   * @see libvlc_audio_output_list_release @see libvlc_audio_output_t . In case
-   *      of error, NULL is returned.
+   * {@link #libvlc_audio_output_list_release(libvlc_audio_output_t)}. In case
+   * of error, NULL is returned.
    */
   libvlc_audio_output_t libvlc_audio_output_list_get(libvlc_instance_t p_instance);
 
