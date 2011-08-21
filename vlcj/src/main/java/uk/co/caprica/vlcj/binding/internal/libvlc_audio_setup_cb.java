@@ -24,7 +24,7 @@ import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
 
 /**
- *
+ * Callback prototype to setup the audio playback.
  */
 public interface libvlc_audio_setup_cb extends Callback {
 
@@ -33,7 +33,7 @@ public interface libvlc_audio_setup_cb extends Callback {
    * <p>
    * This is called when the media player needs to create a new audio output.
    * 
-   * @param opaque pointer to the data pointer passed to libvlc_audio_set_callbacks()
+   * @param data pointer to the data pointer passed to libvlc_audio_set_callbacks()
    * @param format 4 bytes sample format
    * @param rate sample rate
    * @param channels channels count
