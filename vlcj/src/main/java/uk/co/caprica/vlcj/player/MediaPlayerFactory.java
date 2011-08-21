@@ -30,8 +30,6 @@ import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
-import uk.co.caprica.vlcj.log.Log;
-import uk.co.caprica.vlcj.log.LogLevel;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
@@ -308,30 +306,6 @@ public class MediaPlayerFactory {
   }
 
   /**
-   * Get the current log verbosity level.
-   * 
-   * @return log level
-   */
-  public int getLogVerbosity() {
-    Logger.debug("getLogVerbosity()");
-    return libvlc.libvlc_get_log_verbosity(instance);
-  }
-
-  /**
-   * Set the log verbosity level.
-   * <p>
-   * The log verbosity level <em>must</em> be set before opening the native
-   * log otherwise it will be ignored (at least until the log is closed and
-   * then opened again).
-   * 
-   * @param level log level
-   */
-  public void setLogLevel(LogLevel level) {
-    Logger.debug("setLogVerbosity(level={})", level);
-    libvlc.libvlc_set_log_verbosity(instance, level.intValue());
-  }
-
-  /**
    * Get the available audio outputs.
    * <p>
    * Each audio output has zero or more audio devices, each device having it's
@@ -597,22 +571,6 @@ public class MediaPlayerFactory {
   public MediaList newMediaList() {
     Logger.debug("newMediaList()");
     return new MediaList(libvlc, instance);
-  }
-
-  // === Log ==================================================================
-
-  /**
-   * Get a new message Logger.
-   * <p>
-   * The log will be opened.
-   * 
-   * @return new log instance
-   */
-  public Log newLog() {
-    Logger.debug("newLog()");
-    Log log = new Log(libvlc, instance);
-    log.open();
-    return log;
   }
 
   // === Clock ================================================================

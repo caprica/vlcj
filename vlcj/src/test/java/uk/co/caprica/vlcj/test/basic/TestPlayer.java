@@ -44,7 +44,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -61,12 +60,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.log.Log;
-import uk.co.caprica.vlcj.log.LogHandler;
-import uk.co.caprica.vlcj.log.LogLevel;
-import uk.co.caprica.vlcj.log.matcher.MatcherCallback;
-import uk.co.caprica.vlcj.log.matcher.MatcherLogMessageHandler;
-import uk.co.caprica.vlcj.logger.DefaultLogMessageHandler;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.AudioOutput;
 import uk.co.caprica.vlcj.player.MediaDetails;
@@ -101,9 +94,6 @@ public class TestPlayer extends VlcjTest {
   
   private MediaPlayerFactory mediaPlayerFactory;
 
-  private Log log;
-  private LogHandler logHandler;
-  
   private EmbeddedMediaPlayer mediaPlayer;
   
   public static void main(final String[] args) throws Exception {
@@ -188,24 +178,6 @@ public class TestPlayer extends VlcjTest {
   
     mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));
     mediaPlayerFactory.setUserAgent("vlcj test player");
-    
-    mediaPlayerFactory.setLogLevel(LogLevel.ERR);
-
-    // Create a new log handler to display the native libvlc log
-    log = mediaPlayerFactory.newLog();
-    log.setThreshold(LogLevel.DBG);
-    logHandler = new LogHandler(log, 1000)
-      // Add a log message handler to send the native log messages to the local log
-      .addLogMessageHandler(new DefaultLogMessageHandler())
-      // Add a log message handler to search for media opening error messages in the native log
-      .addLogMessageHandler(new MatcherLogMessageHandler("^VLC is unable to open the MRL '(.+?)'.*$", new MatcherCallback() {
-        @Override
-        public void matched(Matcher matcher) {
-          Logger.error("failed to open filename {}", matcher.group(1));
-        }
-      })
-    );
-    logHandler.start();
 
     List<AudioOutput> audioOutputs = mediaPlayerFactory.getAudioOutputs();
     Logger.debug("audioOutputs={}", audioOutputs);
@@ -230,16 +202,6 @@ public class TestPlayer extends VlcjTest {
     mainFrame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent evt) {
         Logger.debug("windowClosing(evt={})", evt);
-
-        if(logHandler != null) {
-          logHandler.release();
-          logHandler = null;
-        }
-        
-        if(log != null) {
-          log.close();
-          log = null;
-        }
 
         if(videoSurface instanceof WindowsCanvas) {
           ((WindowsCanvas)videoSurface).release();
