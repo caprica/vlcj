@@ -1141,8 +1141,9 @@ public interface MediaPlayer {
    * If one of width or height is zero the original image aspect ratio will be 
    * preserved.
    * <p>
+   * 
    * If both width and height are zero, the original image size will be used,
-   * see {@link #saveSnapshot(File))}. 
+   * see {@link #saveSnapshot(File)}. 
    * 
    * @param file file to contain the snapshot
    * @param width desired image width
