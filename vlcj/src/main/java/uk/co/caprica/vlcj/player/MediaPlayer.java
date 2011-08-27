@@ -28,6 +28,7 @@ import java.util.List;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_channel_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -1306,6 +1307,13 @@ public interface MediaPlayer {
    * @param y y co-ordinate for the top left of the marquee
    */
   void setMarqueeLocation(int x, int y);
+
+  /**
+   * Set the marquee position.
+   * 
+   * @param position position
+   */
+  void setMarqueePosition(libvlc_marquee_position_e position);
 
   /**
    * Set the de-interlace filter to use.
