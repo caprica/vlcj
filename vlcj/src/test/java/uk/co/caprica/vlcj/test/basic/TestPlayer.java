@@ -84,6 +84,9 @@ import com.sun.jna.platform.WindowUtils;
  * a media player.
  * <p>
  * In case you didn't realise, you can press F12 to toggle the visibility of the player controls.
+ * <p>
+ * Java7 provides -Dsun.java2d.xrender=True or -Dsun.java2d.xrender=true, might give some general
+ * performance improvements in graphics rendering.
  */
 public class TestPlayer extends VlcjTest {
   
@@ -201,9 +204,10 @@ public class TestPlayer extends VlcjTest {
     mainFrame.add(videoAdjustPanel, BorderLayout.EAST);
     mainFrame.setJMenuBar(buildMenuBar());
     mainFrame.pack();
+    mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     mainFrame.addWindowListener(new WindowAdapter() {
-      public void windowClosing(WindowEvent evt) {
-        Logger.debug("windowClosing(evt={})", evt);
+      public void windowClosed(WindowEvent evt) {
+        Logger.debug("windowClosed(evt={})", evt);
 
         if(videoSurface instanceof WindowsCanvas) {
           ((WindowsCanvas)videoSurface).release();
@@ -218,8 +222,6 @@ public class TestPlayer extends VlcjTest {
           mediaPlayerFactory.release();
           mediaPlayerFactory = null;
         }
-
-        System.exit(0);
       }
     });
     
@@ -465,12 +467,17 @@ public class TestPlayer extends VlcjTest {
       if(!videoOutput) {
         return;
       }
-
-      Dimension dimension = mediaPlayer.getVideoDimension();
+      
+      final Dimension dimension = mediaPlayer.getVideoDimension();
       Logger.debug("dimension={}", dimension);
       if(dimension != null) {
-        videoSurface.setSize(dimension);
-        mainFrame.pack();
+        SwingUtilities.invokeLater(new Runnable() {
+          @Override
+          public void run() {
+            videoSurface.setSize(dimension);
+            mainFrame.pack();
+          }
+        });
       }
       
       // You can set a logo like this if you like...
