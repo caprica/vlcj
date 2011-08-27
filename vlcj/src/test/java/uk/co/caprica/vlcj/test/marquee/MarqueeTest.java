@@ -124,6 +124,7 @@ public class MarqueeTest extends VlcjTest {
     mediaPlayer.playMedia(mrl);
   }
 
+  @SuppressWarnings("serial")
   private class ControlsPanel extends JPanel {
     
     JTextField xTextField = new JTextField(4);
@@ -210,6 +211,7 @@ public class MarqueeTest extends VlcjTest {
     }
   }
 
+  @SuppressWarnings("serial")
   private class PositionComboModel extends DefaultComboBoxModel {
     
     private PositionComboModel() {
