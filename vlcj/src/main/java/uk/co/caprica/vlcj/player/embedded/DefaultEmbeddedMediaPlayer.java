@@ -291,9 +291,15 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
   private void addOverlay(Window overlay) {
     Logger.debug("addOverlay(overlay={})", overlay);
     if(overlay != null) {
-      Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface.canvas());
-      window.addWindowListener(overlayWindowAdapter);
       this.overlay = overlay;
+      Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface.canvas());
+      if(window != null) {
+        window.addWindowListener(overlayWindowAdapter);
+      }
+      else {
+        // This should not be possible
+        Logger.warn("Failed to find a Window ancestor for the video surface Canvas");
+      }
     }
   }
   
