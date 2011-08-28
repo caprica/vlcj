@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.headless;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 
 /**
  * Specification for a media player component that is not intended to display
@@ -29,7 +30,11 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
  * stream media.
  * <p>
  * Note that client applications must still set proper media options otherwise
- * a native video window may still appear.
+ * a native video window may still appear, for example the following media
+ * options could be used when creating the {@link MediaPlayerFactory}.
+ * <pre>
+ *   String[] args = {"--vout", "dummy"};
+ * </pre>
  */
 public interface HeadlessMediaPlayer extends MediaPlayer {
   // Nothing extra
