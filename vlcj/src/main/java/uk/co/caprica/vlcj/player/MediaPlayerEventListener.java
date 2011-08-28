@@ -27,7 +27,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
  * <p>
  * In most cases any event that fires for a media item will also fire for any
  * sub-item, so for example mediaChanged() will fire for the "main" media item
- * and each subsequent sub-item. 
+ * and each subsequent sub-item.
+ * <p>
+ * @see MediaPlayerEventAdapter 
  */
 public interface MediaPlayerEventListener {
 
