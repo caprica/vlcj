@@ -34,7 +34,7 @@ public class MacVideoSurfaceAdapter implements VideoSurfaceAdapter {
    */
   private static final long serialVersionUID = 1L;
 
-  @Override
+//  @Override
   public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
     Logger.debug("attach(componentId={})", componentId);
     libvlc.libvlc_media_player_set_nsobject(mediaPlayer.mediaPlayerInstance(), componentId);
