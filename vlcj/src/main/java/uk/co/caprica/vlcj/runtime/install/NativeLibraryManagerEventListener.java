@@ -22,6 +22,8 @@ package uk.co.caprica.vlcj.runtime.install;
 /**
  * Specification for a component interested in receiving event notifications
  * from the {@link NativeLibraryManager}.
+ * 
+ * @see NativeLibraryManagerEventAdapter
  */
 public interface NativeLibraryManagerEventListener {
 
