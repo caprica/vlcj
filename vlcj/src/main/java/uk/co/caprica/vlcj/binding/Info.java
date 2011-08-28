@@ -38,7 +38,7 @@ class Info {
     "            |__/  www.capricasoftware.co.uk" + "\n";
 
   /**
-   * Application license (GPL3) text.
+   * Application license (GPL3) summary text.
    */
   private static final String LICENSE_MSG =
     "VLCJ is free software: you can redistribute it and/or modify"         + "\n" + 
