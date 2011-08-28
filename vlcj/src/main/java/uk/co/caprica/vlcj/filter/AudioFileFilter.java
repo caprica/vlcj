@@ -39,6 +39,8 @@ public class AudioFileFilter extends ExtensionFileFilter {
     "amr",
     "aob",
     "ape",
+    "awb",
+    "caf",
     "cda",
     "dts",
     "flac",

@@ -41,7 +41,12 @@ public class SubTitleFileFilter extends ExtensionFileFilter {
     "rt",
     "smi",
     "txt",
-    "smil"
+    "smil",
+    "stl",
+    "usf",
+    "dks",
+    "pjs",
+    "mpl2"
   };
 
   /**

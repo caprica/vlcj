@@ -30,6 +30,7 @@ public class PlayListFileFilter extends ExtensionFileFilter {
   private static final String[] EXTENSIONS_PLAYLIST = {
     "asx",
     "b4s",
+    "cue",
     "ifo",
     "m3u",
     "m3u8",

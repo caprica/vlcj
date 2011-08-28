@@ -25,7 +25,7 @@ package uk.co.caprica.vlcj.filter;
 public class VideoFileFilter extends ExtensionFileFilter {
 
   /**
-   * From the vlc_interfaces.h include file.
+   * From the vlc_interface.h include file.
    */
   private static final String[] EXTENSIONS_VIDEO = {
     "3g2",
@@ -36,9 +36,9 @@ public class VideoFileFilter extends ExtensionFileFilter {
     "asf",
     "avi",
     "bin",
-    "cue",
     "divx",
     "dv",
+    "f4v",
     "flv",
     "gxf",
     "iso",
@@ -62,6 +62,7 @@ public class VideoFileFilter extends ExtensionFileFilter {
     "mpg",
     "mpv2",
     "mts",
+    "mtv",
     "mxf",
     "nsv",
     "nuv",
