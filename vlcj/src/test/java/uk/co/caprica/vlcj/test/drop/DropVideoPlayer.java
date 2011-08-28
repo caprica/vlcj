@@ -48,6 +48,8 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * Simple demo application that opens up an undecorated window onto which MRLs 
  * can be dropped.
  * <p>
+ * For example you can drop local video files or YouTube video links.
+ * <p>
  * The window is always-on-top and can be moved by clicking and dragging in the
  * window client area (at least this is possible on Linux).
  */
