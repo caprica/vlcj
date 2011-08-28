@@ -41,8 +41,6 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -221,19 +219,5 @@ public class LogoTest extends VlcjTest {
       insertElementAt(null, 0);
       setSelectedItem(null);
     }
-  }
-  
-  private static void setLookAndFeel() throws Exception {
-    String lookAndFeelClassName = null;
-    LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
-    for(LookAndFeelInfo lookAndFeel : lookAndFeelInfos) {
-      if("Nimbus".equals(lookAndFeel.getName())) {
-        lookAndFeelClassName = lookAndFeel.getClassName();
-      }
-    }
-    if(lookAndFeelClassName == null) {
-      lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
-    }
-    UIManager.setLookAndFeel(lookAndFeelClassName);
   }
 }

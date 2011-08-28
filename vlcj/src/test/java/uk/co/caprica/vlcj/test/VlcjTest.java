@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.test;
 
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.x.LibXUtil;
@@ -83,5 +86,27 @@ public abstract class VlcjTest {
     }
     
     System.setProperty("jna.dump_memory", DUMP_NATIVE_MEMORY);
+  }
+
+  /**
+   * Set the standard look and feel.
+   */
+  protected static final void setLookAndFeel() {
+    String lookAndFeelClassName = null;
+    LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
+    for(LookAndFeelInfo lookAndFeel : lookAndFeelInfos) {
+      if("Nimbus".equals(lookAndFeel.getName())) {
+        lookAndFeelClassName = lookAndFeel.getClassName();
+      }
+    }
+    if(lookAndFeelClassName == null) {
+      lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
+    }
+    try {
+      UIManager.setLookAndFeel(lookAndFeelClassName);
+    }
+    catch(Exception e) {
+      // Silently fail, it doesn't matter
+    }
   }
 }

@@ -36,8 +36,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
@@ -303,25 +301,6 @@ public class ChatTest extends VlcjTest {
     remoteMediaPlayer.playMedia("rtp://@" + mrl);
   }
   
-  /**
-   * Set the cross platform look and feel.
-   * 
-   * @throws Exception if an error occurs
-   */
-  private static void setLookAndFeel() throws Exception {
-    String lookAndFeelClassName = null;
-    LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
-    for(LookAndFeelInfo lookAndFeel : lookAndFeelInfos) {
-      if("Nimbus".equals(lookAndFeel.getName())) {
-        lookAndFeelClassName = lookAndFeel.getClassName();
-      }
-    }
-    if(lookAndFeelClassName == null) {
-      lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
-    }
-    UIManager.setLookAndFeel(lookAndFeelClassName);
-  }
-
   private static String formatRtpStream(String serverAddress, int serverPort) {
     StringBuilder sb = new StringBuilder(60);
     sb.append(":sout=#transcode{vcodec=mp4v,vb=2048,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=display,dst=rtp{dst=");

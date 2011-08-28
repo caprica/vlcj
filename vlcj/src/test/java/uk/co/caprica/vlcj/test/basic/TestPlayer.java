@@ -54,8 +54,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
@@ -116,20 +114,6 @@ public class TestPlayer extends VlcjTest {
     });
   }
   
-  private static void setLookAndFeel() throws Exception {
-    String lookAndFeelClassName = null;
-    LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
-    for(LookAndFeelInfo lookAndFeel : lookAndFeelInfos) {
-      if("Nimbus".equals(lookAndFeel.getName())) {
-        lookAndFeelClassName = lookAndFeel.getClassName();
-      }
-    }
-    if(lookAndFeelClassName == null) {
-      lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
-    }
-    UIManager.setLookAndFeel(lookAndFeelClassName);
-  }
-   
   public TestPlayer(String[] args) {
     if(RuntimeUtil.isWindows()) {
       // If running on Windows and you want the mouse/keyboard event hack...
@@ -467,6 +451,9 @@ public class TestPlayer extends VlcjTest {
       if(!videoOutput) {
         return;
       }
+    
+      MediaDetails meta = mediaPlayer.getMediaDetails();
+      Logger.info("meta={}", meta);
       
       final Dimension dimension = mediaPlayer.getVideoDimension();
       Logger.debug("dimension={}", dimension);
