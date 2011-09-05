@@ -101,7 +101,7 @@ public final class Logo {
   /**
    * Apply a logo opacity.
    * 
-   * @param opacity, from 0 to 255, where 255 is fully opaque
+   * @param opacity opacity, from 0 to 255, where 255 is fully opaque
    * @return this
    */
   public Logo opacity(int opacity) {
