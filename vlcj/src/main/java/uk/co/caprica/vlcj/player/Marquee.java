@@ -42,16 +42,61 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
  */
 public final class Marquee {
 
+  /**
+   * Text.
+   */
   private String text;
+  
+  /**
+   * Text colour.
+   */
   private Color colour;
+  
+  /**
+   * Text colour expressed as RGB components.
+   */
   private Integer rgb;
+  
+  /**
+   * Opacity expressed as an integer, 0 to 255, where 255 is fully opaque.
+   */
   private Integer intOpacity;
+  
+  /**
+   * Opacity expressed as a fraction, 0.0 to 1.0, where 1.0 is fully opaque.
+   */
   private Float floatOpacity;
+
+  /**
+   * Text size.
+   */
   private Integer size;
+  
+  /**
+   * Timeout, in milliseconds.
+   * <p>
+   * The marquee will be removed after this timeout has expired.
+   */
   private Integer timeout;
+  
+  /**
+   * Text X position, in video co-ordinates.
+   */
   private Integer x;
+  
+  /**
+   * Text Y position, in video co-ordinates.
+   */
   private Integer y;
+  
+  /**
+   * Predefined text position.
+   */
   private libvlc_marquee_position_e position;
+  
+  /**
+   * Enabled/disabled state.
+   */
   private boolean enable;
   
   /**
@@ -63,65 +108,141 @@ public final class Marquee {
     return new Marquee();
   }
 
+  /**
+   * Private constructor prevents direct instantiation by others.
+   */
   private Marquee() {
   }
   
+  /**
+   * Apply the text.
+   * 
+   * @param text text
+   * @return this
+   */
   public Marquee text(String text) {
     this.text = text;
     return this;
   }
   
+  /**
+   * Apply the text colour.
+   * 
+   * @param colour text colour
+   * @return this
+   */
   public Marquee colour(Color colour) {
     this.colour = colour;
     return this;
   }
   
+  /**
+   * Apply the text colour as RGB components.
+   * 
+   * @param rgb integer encoded red, green, blue colour components
+   * @return this
+   */
   public Marquee colour(int rgb) {
     this.rgb = rgb;
     return this;
   }
   
+  /**
+   * Apply the text opacity.
+   * 
+   * @param opacity opacity, 0 to 255, where 255 is fully opaque
+   * @return this
+   */
   public Marquee opacity(int opacity) {
     this.intOpacity = opacity;
     return this;
   }
   
+  /**
+   * Apply the text opacity.
+   * 
+   * @param opacity opacity, 0.0 to 1.0, where 1.0 is fully opaque
+   * @return this
+   */
   public Marquee opacity(float opacity) {
     this.floatOpacity = opacity;
     return this;
   }
-  
+
+  /**
+   * Apply the text size.
+   * 
+   * @param size text size
+   * @return this
+   */
   public Marquee size(int size) {
     this.size = size;
     return this;
   }
   
+  /**
+   * Apply the timeout.
+   * <p>
+   * The marquee will be removed when the timeout expires.
+   * 
+   * @param timeout timeout, in milliseconds
+   * @return this
+   */
   public Marquee timeout(int timeout) {
     this.timeout = timeout;
     return this;
   }
   
+  /**
+   * Apply the text location in video co-ordinates.
+   * 
+   * @param x x ordinate
+   * @param y y ordinate
+   * @return this
+   */
   public Marquee location(int x, int y) {
     this.x = x;
     this.y = y;
     return this;
   }
   
+  /**
+   * Apply the text position.
+   * 
+   * @param position predefined text position
+   * @return this
+   */
   public Marquee position(libvlc_marquee_position_e position) {
     this.position = position;
     return this;
   }
 
+  /**
+   * Apply the initial enabled/disabled state.
+   * 
+   * @param enable <code>true</code> to enable the marquee; <code>false</code> to disable it
+   * @return this
+   */
   public Marquee enable(boolean enable) {
     this.enable = enable;
     return this;
   }
   
+  /**
+   * Enable the marquee.
+   * 
+   * @return this
+   */
   public Marquee enable() {
     this.enable = true;
     return this;
   }
 
+  /**
+   * Disable the marquee.
+   * 
+   * @return this
+   */
   public Marquee disable() {
     this.enable = false;
     return this;
