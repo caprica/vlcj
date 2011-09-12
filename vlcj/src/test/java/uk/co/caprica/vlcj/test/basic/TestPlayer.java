@@ -61,6 +61,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.AudioOutput;
 import uk.co.caprica.vlcj.player.MediaDetails;
+import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -397,8 +398,8 @@ public class TestPlayer extends VlcjTest {
     @Override
     public void playing(MediaPlayer mediaPlayer) {
       Logger.debug("playing(mediaPlayer={})", mediaPlayer);
-      MediaDetails meta = mediaPlayer.getMediaDetails();
-      Logger.info("meta={}", meta);
+      MediaDetails mediaDetails = mediaPlayer.getMediaDetails();
+      Logger.info("mediaDetails={}", mediaDetails);
     }
 
     @Override
@@ -452,8 +453,11 @@ public class TestPlayer extends VlcjTest {
         return;
       }
     
-      MediaDetails meta = mediaPlayer.getMediaDetails();
-      Logger.info("meta={}", meta);
+      MediaDetails mediaDetails = mediaPlayer.getMediaDetails();
+      Logger.info("mediaDetails={}", mediaDetails);
+      
+      MediaMeta mediaMeta = mediaPlayer.getMediaMeta();
+      Logger.info("mediaMeta={}", mediaMeta);
       
       final Dimension dimension = mediaPlayer.getVideoDimension();
       Logger.debug("dimension={}", dimension);
