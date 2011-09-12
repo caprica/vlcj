@@ -1124,7 +1124,13 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
     return trackDescriptionList;
   }  
-  
+
+//  @Override
+  public List<String> getChapterDescriptions() {
+    Logger.debug("getChapterDescriptions()");
+    return getChapterDescriptions(getTitle());
+  }  
+
 //  @Override
   public List<List<String>> getAllChapterDescriptions() {
     Logger.debug("getAllChapterDescriptions()");

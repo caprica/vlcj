@@ -1027,6 +1027,15 @@ public interface MediaPlayer {
   List<String> getChapterDescriptions(int title);
 
   /**
+   * Get the chapter descriptions for the current title.
+   * <p>
+   * The media must be playing before this information is available.
+   * 
+   * @return list of descriptions
+   */
+  List<String> getChapterDescriptions();
+
+  /**
    * Get all of the chapter descriptions for all available titles.
    * <p>
    * The media must be playing before this information is available.
