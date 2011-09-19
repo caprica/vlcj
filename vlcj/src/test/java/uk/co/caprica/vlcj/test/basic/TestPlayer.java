@@ -141,6 +141,7 @@ public class TestPlayer extends VlcjTest {
 	
     List<String> vlcArgs = new ArrayList<String>();
 
+//    vlcArgs.add("--ffmpeg-hw"); // <--- if your system supports it, this might be useful
     vlcArgs.add("--no-plugins-cache");
     vlcArgs.add("--no-video-title-show");
     vlcArgs.add("--no-snapshot-preview");
