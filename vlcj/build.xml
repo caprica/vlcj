@@ -63,7 +63,7 @@
   </target>
   
   <target name="jar" depends="compile">
-    <jar jarfile="build/${ant.project.name}-${build.version}.jar" basedir="build/classes" excludes="**/package-info.*">
+    <jar jarfile="build/${ant.project.name}-${build.version}.jar" basedir="build/classes" excludes="**/package-info.*,**/*.html">
       <fileset dir="doc" includes="gpl.txt,README.LICENSE,README,README.status,README.windows"/>
     	<manifest>
     		<attribute name="Implementation-Title" value="${ant.project.name}"/>
@@ -96,7 +96,7 @@
   	  	<exclude name="**/.svn/*.*"/>
   	  </fileset>
   	</delete>
-    <javadoc sourcepath="src/main/java" destdir="build/javadoc" classpathref="project.classes" access="public" author="yes" windowtitle="vlcj ${build.version} Documentation" footer="(C)2011 Caprica Software Limited"/>
+    <javadoc sourcepath="src/main/java" destdir="build/javadoc" classpathref="project.classes" access="public" author="yes" windowtitle="vlcj ${build.version} Documentation" footer="(C)2011 Caprica Software Limited" overview="src/main/java/overview.html"/>
   	<copy todir="javadoc">
   	  <fileset dir="build/javadoc"/>
   	</copy>
