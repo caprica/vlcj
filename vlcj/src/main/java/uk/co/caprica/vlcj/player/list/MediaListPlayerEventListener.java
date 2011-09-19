@@ -22,7 +22,8 @@ package uk.co.caprica.vlcj.player.list;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 
 /**
- *
+ * Specification for a component that is interested in receiving event
+ * notifications from the media list player.
  */
 public interface MediaListPlayerEventListener {
 
@@ -34,14 +35,14 @@ public interface MediaListPlayerEventListener {
    * <strong>Warning: the native media list player event manager reports that 
    * it does not support this event.</strong>
    * 
-   * @param mediaListPlayer
+   * @param mediaListPlayer media list player that raised the event
    */
   void played(MediaListPlayer mediaListPlayer);
 
   /**
    * The media list player started playing the next item in the list.
    * 
-   * @param mediaListPlayer media list player
+   * @param mediaListPlayer media list player that raised the event
    * @param item next item instance
    * @param itemMrl MRL of the next item
    */
@@ -51,9 +52,9 @@ public interface MediaListPlayerEventListener {
    * Place-holder, do not use.
    * 
    * <strong>Warning: the native media list player event manager reports that 
-   * it does not support this event.</strong>
+   * it does <em>not</em> support this event.</strong>
    * 
-   * @param mediaListPlayer
+   * @param mediaListPlayer media list player that raised the event
    */
   void stopped(MediaListPlayer mediaListPlayer);
   
@@ -62,23 +63,23 @@ public interface MediaListPlayerEventListener {
   /**
    * 
    * 
-   * @param mediaListPlayer
-   * @param metaType 
+   * @param mediaListPlayer media list player that raised the event
+   * @param metaType meta data type 
    */
   void mediaMetaChanged(MediaListPlayer mediaListPlayer, int metaType);
   
   /**
    * 
    * 
-   * @param mediaListPlayer
-   * @param subItem
+   * @param mediaListPlayer media list player that raised the event
+   * @param subItem media sub-item instance handle
    */
   void mediaSubItemAdded(MediaListPlayer mediaListPlayer, libvlc_media_t subItem);
   
   /**
    * 
    * 
-   * @param mediaListPlayer
+   * @param mediaListPlayer media list player that raised the event
    * @param newDuration
    */
   void mediaDurationChanged(MediaListPlayer mediaListPlayer, long newDuration);
@@ -86,7 +87,7 @@ public interface MediaListPlayerEventListener {
   /**
    * 
    * 
-   * @param mediaListPlayer
+   * @param mediaListPlayer media list player that raised the event
    * @param newStatus
    */
   void mediaParsedChanged(MediaListPlayer mediaListPlayer, int newStatus);
@@ -94,14 +95,14 @@ public interface MediaListPlayerEventListener {
   /**
    * 
    * 
-   * @param mediaListPlayer
+   * @param mediaListPlayer media list player that raised the event
    */
   void mediaFreed(MediaListPlayer mediaListPlayer);
 
   /**
    * 
    * 
-   * @param mediaListPlayer
+   * @param mediaListPlayer media list player that raised the event
    * @param newState
    */
   void mediaStateChanged(MediaListPlayer mediaListPlayer, int newState);
