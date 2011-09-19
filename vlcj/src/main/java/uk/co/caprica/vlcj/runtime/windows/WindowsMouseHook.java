@@ -68,7 +68,8 @@ import com.sun.jna.platform.win32.WinUser.POINT;
  *   <li>Modifiers are not passed along with the event</li>
  *   <li>The semantic events like DRAGGED and CLICKED are not implemented</li>
  *   <li>Perhaps the events should be notified asynchronously via an executor so as not to hold up the hook</li>
- *   <li>The thread-safetiness issues are unclear especially wrt creating the hook in the thread</li> 
+ *   <li>The thread-safetiness issues are unclear especially wrt creating the hook in the thread</li>
+ *   <li>There are random fatal crashes during release()</li> 
  * </ul>
  * The hook must be started after it has been created.
  * <p>
