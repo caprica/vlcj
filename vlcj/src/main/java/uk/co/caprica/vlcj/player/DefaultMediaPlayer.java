@@ -324,7 +324,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       // equally some media types when parsed would cause a hang - therefore it
       // is the responsibility of the client application to parse or not parse
       // before getting media meta data
-      MediaMeta mediaMeta = new MediaMeta();
+      DefaultMediaMeta mediaMeta = new DefaultMediaMeta();
       mediaMeta.setTitle(getMeta(libvlc_meta_t.libvlc_meta_Title, media));
       mediaMeta.setArtist(getMeta(libvlc_meta_t.libvlc_meta_Artist, media));
       mediaMeta.setGenre(getMeta(libvlc_meta_t.libvlc_meta_Genre, media));

@@ -20,204 +20,45 @@
 package uk.co.caprica.vlcj.player;
 
 import java.awt.image.BufferedImage;
-import java.net.URL;
-
-import javax.imageio.ImageIO;
 
 /**
- * Representation of all available media meta data.
+ * Specification for media meta data.
  */
-public class MediaMeta {
+public interface MediaMeta {
 
-  private String title;
-  private String artist;
-  private String genre;
-  private String copyright;
-  private String album;
-  private String trackNumber;
-  private String description;
-  private String rating;
-  private String date;
-  private String setting;
-  private String url;
-  private String language;
-  private String nowPlaying;
-  private String publisher;
-  private String encodedBy;
-  private String artworkUrl;
-  private String trackId;
+  String getTitle();
 
-  private BufferedImage artwork;
-  
-  public String getTitle() {
-    return title;
-  }
+  String getArtist();
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+  String getGenre();
 
-  public String getArtist() {
-    return artist;
-  }
+  String getCopyright();
 
-  public void setArtist(String artist) {
-    this.artist = artist;
-  }
+  String getAlbum();
 
-  public String getGenre() {
-    return genre;
-  }
+  String getTrackNumber();
 
-  public void setGenre(String genre) {
-    this.genre = genre;
-  }
+  String getDescription();
 
-  public String getCopyright() {
-    return copyright;
-  }
+  String getRating();
 
-  public void setCopyright(String copyright) {
-    this.copyright = copyright;
-  }
+  String getDate();
 
-  public String getAlbum() {
-    return album;
-  }
+  String getSetting();
 
-  public void setAlbum(String album) {
-    this.album = album;
-  }
+  String getUrl();
 
-  public String getTrackNumber() {
-    return trackNumber;
-  }
+  String getLanguage();
 
-  public void setTrackNumber(String trackNumber) {
-    this.trackNumber = trackNumber;
-  }
+  String getNowPlaying();
 
-  public String getDescription() {
-    return description;
-  }
+  String getPublisher();
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+  String getEncodedby();
 
-  public String getRating() {
-    return rating;
-  }
+  String getArtworkUrl();
 
-  public void setRating(String rating) {
-    this.rating = rating;
-  }
+  String getTrackId();
 
-  public String getDate() {
-    return date;
-  }
-
-  public void setDate(String date) {
-    this.date = date;
-  }
-
-  public String getSetting() {
-    return setting;
-  }
-
-  public void setSetting(String setting) {
-    this.setting = setting;
-  }
-
-  public String getUrl() {
-    return url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
-
-  public String getLanguage() {
-    return language;
-  }
-
-  public void setLanguage(String language) {
-    this.language = language;
-  }
-
-  public String getNowPlaying() {
-    return nowPlaying;
-  }
-
-  public void setNowPlaying(String nowPlaying) {
-    this.nowPlaying = nowPlaying;
-  }
-
-  public String getPublisher() {
-    return publisher;
-  }
-
-  public void setPublisher(String publisher) {
-    this.publisher = publisher;
-  }
-
-  public String getEncodedby() {
-    return encodedBy;
-  }
-
-  public void setEncodedBy(String encodedBy) {
-    this.encodedBy = encodedBy;
-  }
-
-  public String getArtworkUrl() {
-    return artworkUrl;
-  }
-
-  public void setArtworkUrl(String artworkUrl) {
-    this.artworkUrl = artworkUrl;
-  }
-
-  public String getTrackId() {
-    return trackId;
-  }
-
-  public void setTrackId(String trackId) {
-    this.trackId = trackId;
-  }
-
-  public BufferedImage getArtwork() {
-    if(artwork == null && artworkUrl != null) {
-      try {
-        artwork = ImageIO.read(new URL(artworkUrl));
-      }
-      catch(Exception e) {
-        throw new RuntimeException("Failed to load artwork", e);
-      }
-    }
-    return artwork;
-  }
-  
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder(200);
-    sb.append(getClass().getSimpleName()).append('[');
-    sb.append("title=").append(title).append(',');
-    sb.append("artist=").append(artist).append(',');
-    sb.append("genre=").append(genre).append(',');
-    sb.append("copyright=").append(copyright).append(',');
-    sb.append("album=").append(album).append(',');
-    sb.append("trackNumber=").append(trackNumber).append(',');
-    sb.append("description=").append(description).append(',');
-    sb.append("rating=").append(rating).append(',');
-    sb.append("date=").append(date).append(',');
-    sb.append("setting=").append(setting).append(',');
-    sb.append("url=").append(url).append(',');
-    sb.append("language=").append(language).append(',');
-    sb.append("nowPlaying=").append(nowPlaying).append(',');
-    sb.append("publisher=").append(publisher).append(',');
-    sb.append("encodedBy=").append(encodedBy).append(',');
-    sb.append("artworkUrl=").append(artworkUrl).append(',');
-    sb.append("trackId=").append(trackId).append(']');
-    return sb.toString();
-  }
+  BufferedImage getArtwork();
 }
