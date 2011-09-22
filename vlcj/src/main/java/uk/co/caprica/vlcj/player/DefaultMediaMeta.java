@@ -27,7 +27,7 @@ import javax.imageio.ImageIO;
 /**
  * Representation of all available media meta data.
  */
-public class DefaultMediaMeta implements MediaMeta {
+class DefaultMediaMeta implements MediaMeta {
 
   private String title;
   private String artist;
@@ -48,6 +48,9 @@ public class DefaultMediaMeta implements MediaMeta {
   private String trackId;
 
   private BufferedImage artwork;
+  
+  DefaultMediaMeta() {
+  }
   
 //  @Override
   public String getTitle() {
