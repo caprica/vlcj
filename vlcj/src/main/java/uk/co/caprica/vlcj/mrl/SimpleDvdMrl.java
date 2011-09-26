@@ -25,7 +25,6 @@ package uk.co.caprica.vlcj.mrl;
  * This class provides a fluent API for initialising the MRL, e.g.
  * <pre>
  * String mrl = new SimpleDvdMrl().device("/media/dvd")
- *                                .rawDevice("/dev/cdrom0")
  *                                .title(0)
  *                                .chapter(3)
  *                                .angle(1)

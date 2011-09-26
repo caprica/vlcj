@@ -26,7 +26,6 @@ package uk.co.caprica.vlcj.mrl;
  * <pre>
  * String mrl = new BaseDvdMrl().type("dvdsimple").
  *                              .device("/media/dvd")
- *                              .rawDevice("/dev/cdrom0")
  *                              .title(0)
  *                              .chapter(3)
  *                              .angle(1)
@@ -38,7 +37,6 @@ public class BaseDvdMrl implements Mrl {
 
   private String type;
   private String device;
-  private String rawDevice;
   private int title = -1;
   private int chapter = -1;
   private int angle = -1;
@@ -55,11 +53,6 @@ public class BaseDvdMrl implements Mrl {
     return this;
   }
 
-  public BaseDvdMrl rawDevice(String rawDevice) {
-    this.rawDevice = rawDevice;
-    return this;
-  }
-  
   public BaseDvdMrl title(int title) {
     this.title = title;
     return this;
@@ -93,8 +86,6 @@ public class BaseDvdMrl implements Mrl {
     sb.append(type);
     sb.append("://");
     sb.append(device);
-    sb.append('@');
-    sb.append(rawDevice);
     if(title != -1) {
       sb.append('@');
       sb.append(title);
