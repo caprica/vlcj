@@ -86,7 +86,7 @@ public class LibXUtil {
    * <p>
    * This method should only be called on platforms where X is supported.
    * <p>
-   * The implementations makes use of the JNA X11 platform binding.
+   * The implementation makes use of the JNA X11 platform binding.
    * 
    * @param w window to make full-screen
    * @param fullScreen <code>true</code> to make the window full-screen; <code>false</code> to restore the window to it's original size and position
