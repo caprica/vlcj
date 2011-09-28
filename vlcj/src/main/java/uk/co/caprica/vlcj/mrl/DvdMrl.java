@@ -31,7 +31,7 @@ package uk.co.caprica.vlcj.mrl;
  *                          .value();
  * </pre>
  * 
- * This will generate <code>"dvd:///media/dvd/@dev/cdrom@0:3:1"</code>.
+ * This will generate <code>"dvd:///media/dvd/@0:3:1"</code>.
  */
 public class DvdMrl extends BaseDvdMrl {
 
