@@ -167,7 +167,7 @@
   
   <taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" classpath="tools/ant-googlecode-0.0.2.jar" name="gcupload"/>
 	
-  <target name="upload.dist" depends="dist">
+  <target name="upload.dist" depends="dist" description="Upload distribution artefacts to the googlecode project">
     <gcupload 
       username="${gc.username}" 
       password="${gc.password}" 
