@@ -84,7 +84,7 @@ public class VideoOutputLatch {
       Logger.trace("Checking for video output...");
       // Check if a video output has been created yet...
       if(mediaPlayer.getVideoOutputs() > 0) {
-        Logger.trace("Got video output.");
+        Logger.debug("Got video output.");
         return true;
       }
       // Check for time-out...
