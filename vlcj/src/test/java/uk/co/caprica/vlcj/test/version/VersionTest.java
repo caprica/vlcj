@@ -34,7 +34,7 @@ public class VersionTest {
   public static void main(String[] args) {
     test("1.2.0", "2.0.0");
     test("1.2.0", "1.2.1");
-    test("1.2.0", "1.2.1");
+    test("1.2.0", "1.2.1-b1");
     test("1.2.0", "1.2.0");
     test("1.2.0", "1.1.9");
     test("1.2.0", "0.9.8");
