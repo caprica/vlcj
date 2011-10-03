@@ -49,7 +49,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * This approach to multi-instance players is not really recommended due to
  * potential concurrency/re-entrancy problems with the long list of native
  * libraries that vlc uses. The more player instances you have in one 
- * application, the more likely you are to say fatal crashes in those native
+ * application, the more likely you are to see fatal crashes in those native
  * libraries.
  * <p>
  * Also, a current limitation of vlc is that all in-process media players
