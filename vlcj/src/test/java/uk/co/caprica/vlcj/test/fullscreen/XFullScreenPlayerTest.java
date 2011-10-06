@@ -55,6 +55,7 @@ public class XFullScreenPlayerTest extends VlcjTest {
     });
   }
   
+  @SuppressWarnings("serial")
   public XFullScreenPlayerTest() {
     frame = new JFrame("LibX11 Full Screen Strategy");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
