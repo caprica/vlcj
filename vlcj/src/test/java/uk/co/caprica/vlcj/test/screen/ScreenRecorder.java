@@ -48,12 +48,13 @@ public class ScreenRecorder extends VlcjTest {
   };
   
   private static final String MRL     = "screen://";
-  private static final String SOUT    = ":sout=#transcode{vcodec=FLV1,vb=4096,scale=%f}:duplicate{dst=file{dst=%s}}"; 
+  private static final String SOUT    = ":sout=#transcode{vcodec=FLV1,vb=%d,scale=%f}:duplicate{dst=file{dst=%s}}"; 
   private static final String FPS     = ":screen-fps=%d";
   private static final String CACHING = ":screen-caching=%d";
 
-  private static final int    fps     = 30;
+  private static final int    fps     = 20;
   private static final int    caching = 500;
+  private static final int    bits    = 4096;
   private static final float  scale   = 0.5f;
   
   private final MediaPlayerFactory mediaPlayerFactory;
@@ -116,7 +117,7 @@ public class ScreenRecorder extends VlcjTest {
   
   private String[] getMediaOptions(String destination) {
     return new String[] {
-      String.format(SOUT, scale, destination),
+      String.format(SOUT, bits, scale, destination),
       String.format(FPS, fps),
       String.format(CACHING, caching)
     };
