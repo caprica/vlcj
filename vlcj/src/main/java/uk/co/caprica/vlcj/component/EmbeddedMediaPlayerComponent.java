@@ -135,6 +135,15 @@ public class EmbeddedMediaPlayerComponent extends Panel {
   }
   
   /**
+   * Get the media player factory reference.
+   * 
+   * @return media player factory
+   */
+  public final MediaPlayerFactory getMediaPlayerFactory() {
+    return mediaPlayerFactory;
+  }
+  
+  /**
    * Get the embedded media player reference.
    * <p>
    * An application uses this handle to control the media player, add listeners
