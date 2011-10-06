@@ -33,6 +33,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
+import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
 import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
 
@@ -147,6 +148,8 @@ import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
  * automatically play these sub-items via {@link #setPlaySubItems(boolean)}, 
  * otherwise {@link #playNextSubItem(String...)} can be invoked in response to a
  * {@link MediaPlayerEventListener#finished(MediaPlayer)} event.
+ * 
+ * @see EmbeddedMediaPlayerComponent
  */
 public interface MediaPlayer {
 
