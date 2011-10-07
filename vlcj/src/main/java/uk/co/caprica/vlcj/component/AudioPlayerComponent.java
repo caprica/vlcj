@@ -53,7 +53,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * mediaPlayerComponent.getMediaPlayer().playMedia(mrl); // <--- 2
  * </pre>
  * This is not quite as useful as the {@link EmbeddedMediaPlayerComponent} as
- * audio players are generally quite simple to create anyway. 
+ * audio players are generally quite simple to create anyway.
  */
 public class AudioPlayerComponent extends MediaPlayerEventAdapter {
 
