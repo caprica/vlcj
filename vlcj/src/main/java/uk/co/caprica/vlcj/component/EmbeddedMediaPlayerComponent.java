@@ -303,115 +303,115 @@ public class EmbeddedMediaPlayerComponent extends Panel implements VideoOutputEv
   protected void onAfterRelease() {
   }
 
-  @Override
+//  @Override
   public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
   }
 
-  @Override
+//  @Override
   public void mediaChanged(MediaPlayer mediaPlayer) {
   }
 
-  @Override
+//  @Override
   public void opening(MediaPlayer mediaPlayer) {
   }
 
-  @Override
+//  @Override
   public void buffering(MediaPlayer mediaPlayer) {
   }
 
-  @Override
+//  @Override
   public void playing(MediaPlayer mediaPlayer) {
   }
 
-  @Override
+//  @Override
   public void paused(MediaPlayer mediaPlayer) {
   }
 
-  @Override
+//  @Override
   public void stopped(MediaPlayer mediaPlayer) {
   }
 
-  @Override
+//  @Override
   public void forward(MediaPlayer mediaPlayer) {
   }
 
-  @Override
+//  @Override
   public void backward(MediaPlayer mediaPlayer) {
   }
 
-  @Override
+//  @Override
   public void finished(MediaPlayer mediaPlayer) {
   }
 
-  @Override
+//  @Override
   public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
   }
 
-  @Override
+//  @Override
   public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
   }
 
-  @Override
+//  @Override
   public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
   }
 
-  @Override
+//  @Override
   public void pausableChanged(MediaPlayer mediaPlayer, int newSeekable) {
   }
 
-  @Override
+//  @Override
   public void titleChanged(MediaPlayer mediaPlayer, int newTitle) {
   }
 
-  @Override
+//  @Override
   public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
   }
 
-  @Override
+//  @Override
   public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
   }
 
-  @Override
+//  @Override
   public void error(MediaPlayer mediaPlayer) {
   }
 
-  @Override
+//  @Override
   public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
   }
 
-  @Override
+//  @Override
   public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
   }
 
-  @Override
+//  @Override
   public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
   }
 
-  @Override
+//  @Override
   public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
   }
 
-  @Override
+//  @Override
   public void mediaFreed(MediaPlayer mediaPlayer) {
   }
 
-  @Override
+//  @Override
   public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
   }
 
-  @Override
+//  @Override
   public void newMedia(MediaPlayer mediaPlayer) {
   }
 
-  @Override
+//  @Override
   public void subItemPlayed(MediaPlayer mediaPlayer, int subItemIndex) {
   }
 
-  @Override
+//  @Override
   public void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex) {
   }
 
-  @Override
+//  @Override
   public void endOfSubItems(MediaPlayer mediaPlayer) {
   }
 }
