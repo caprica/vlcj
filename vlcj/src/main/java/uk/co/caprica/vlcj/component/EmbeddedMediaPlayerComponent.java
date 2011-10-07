@@ -85,7 +85,6 @@ import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
  * An example of a sub-class to tailor behaviours and override event handlers:
  * <pre>
  * mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
- *
  *   protected String[] onGetMediaPlayerFactoryArgs() {
  *     return new String[] {"--no-video-title-show", "--ffmpeg-hw"};
  *   }
