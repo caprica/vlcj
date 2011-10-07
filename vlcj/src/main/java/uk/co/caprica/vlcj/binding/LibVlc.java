@@ -1114,20 +1114,20 @@ public interface LibVlc extends Library {
   int libvlc_video_get_size(libvlc_media_player_t p_mi, int num, IntByReference px, IntByReference py);
 
   /**
-   * Get current video height. You should use libvlc_video_get_size() instead.
+   * Get current video height.
    * 
    * @param p_mi the media player
    * @return the video pixel height or 0 if not applicable
-   * @deprecated
+   * @deprecated Use {@link #libvlc_video_get_size(libvlc_media_player_t, int, IntByReference, IntByReference)} instead
    */
   int libvlc_video_get_height(libvlc_media_player_t p_mi);
 
   /**
-   * Get current video width. You should use libvlc_video_get_size() instead.
+   * Get current video width.
    * 
    * @param p_mi the media player
    * @return the video pixel width or 0 if not applicable
-   * @deprecated
+   * @deprecated Use {@link #libvlc_video_get_size(libvlc_media_player_t, int, IntByReference, IntByReference)} instead
    */
   int libvlc_video_get_width(libvlc_media_player_t p_mi);
 
