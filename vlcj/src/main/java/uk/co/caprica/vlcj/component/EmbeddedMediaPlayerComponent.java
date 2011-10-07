@@ -33,10 +33,14 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
 
 /**
  * Encapsulation of an embedded media player.
@@ -56,6 +60,10 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  * with the vlcj framework. More advanced applications are free to directly use
  * the {@link MediaPlayerFactory} as has always been the case. 
  * <p>
+ * This component also adds implements the various media player listener 
+ * interfaces, consequently an implementation sub-class can simply override 
+ * those listener methods to handle events.  
+ * <p>
  * Applications can get a handle to the underlying media player object by
  * invoking {@link #getMediaPlayer()}. 
  * <p>
@@ -74,9 +82,31 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  * frame.setVisible(true);
  * mediaPlayerComponent.getMediaPlayer().playMedia(mrl); // <--- 2
  * </pre>
+ * An example of a sub-class to tailor behaviours and override event handlers:
+ * <pre>
+ * mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
+ *
+ *   protected String[] onGetMediaPlayerFactoryArgs() {
+ *     return new String[] {"--no-video-title-show", "--ffmpeg-hw"};
+ *   }
+ * 
+ *   protected FullScreenStrategy onGetFullScreenStrategy() {
+ *     return new XFullScreenStrategy(frame);
+ *   }
+ *   
+ *   public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
+ *   }
+ *
+ *   public void error(MediaPlayer mediaPlayer) {
+ *   }
+ *   
+ *   public void finished(MediaPlayer mediaPlayer) {
+ *   }
+ * };
+ * </pre>
  */
 @SuppressWarnings("serial")
-public class EmbeddedMediaPlayerComponent extends Panel {
+public class EmbeddedMediaPlayerComponent extends Panel implements VideoOutputEventListener, MediaPlayerEventListener {
   
   /**
    * Default factory initialisation arguments.
@@ -124,14 +154,19 @@ public class EmbeddedMediaPlayerComponent extends Panel {
    * Construct a media player component.
    */
   public EmbeddedMediaPlayerComponent() {
+    // Create the native resources
     mediaPlayerFactory = onGetMediaPlayerFactory();
     mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(onGetFullScreenStrategy());
     canvas = onGetCanvas();
     videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
     mediaPlayer.setVideoSurface(videoSurface);
+    // Prepare the user interface
     setBackground(Color.black);
     setLayout(new BorderLayout());
     add(canvas, BorderLayout.CENTER);
+    // Register listeners
+    mediaPlayer.addVideoOutputEventListener(this);
+    mediaPlayer.addMediaPlayerEventListener(this);
   }
   
   /**
@@ -259,7 +294,6 @@ public class EmbeddedMediaPlayerComponent extends Panel {
    * and media player factory instances.
    */
   protected void onBeforeRelease() {
-    // Default implementation does nothing
   }
 
   /**
@@ -267,6 +301,117 @@ public class EmbeddedMediaPlayerComponent extends Panel {
    * media player factory instances.
    */
   protected void onAfterRelease() {
-    // Default implementation does nothing
+  }
+
+  @Override
+  public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
+  }
+
+  @Override
+  public void mediaChanged(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void opening(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void buffering(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void playing(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void paused(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void stopped(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void forward(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void backward(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void finished(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
+  }
+
+  @Override
+  public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
+  }
+
+  @Override
+  public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
+  }
+
+  @Override
+  public void pausableChanged(MediaPlayer mediaPlayer, int newSeekable) {
+  }
+
+  @Override
+  public void titleChanged(MediaPlayer mediaPlayer, int newTitle) {
+  }
+
+  @Override
+  public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
+  }
+
+  @Override
+  public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
+  }
+
+  @Override
+  public void error(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
+  }
+
+  @Override
+  public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
+  }
+
+  @Override
+  public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
+  }
+
+  @Override
+  public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
+  }
+
+  @Override
+  public void mediaFreed(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
+  }
+
+  @Override
+  public void newMedia(MediaPlayer mediaPlayer) {
+  }
+
+  @Override
+  public void subItemPlayed(MediaPlayer mediaPlayer, int subItemIndex) {
+  }
+
+  @Override
+  public void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex) {
+  }
+
+  @Override
+  public void endOfSubItems(MediaPlayer mediaPlayer) {
   }
 }
