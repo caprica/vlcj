@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 
 /**
@@ -36,6 +37,10 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * framework. More advanced applications are free to directly use the 
  * {@link MediaPlayerFactory} as has always been the case. 
  * <p>
+ * This component also adds implements the various media player listener 
+ * interfaces, consequently an implementation sub-class can simply override 
+ * those listener methods to handle events.  
+ * <p>
  * Applications can get a handle to the underlying media player object by
  * invoking {@link #getMediaPlayer()}. 
  * <p>
@@ -50,7 +55,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * This is not quite as useful as the {@link EmbeddedMediaPlayerComponent} as
  * audio players are generally quite simple to create anyway. 
  */
-public class AudioPlayerComponent {
+public class AudioPlayerComponent extends MediaPlayerEventAdapter {
 
   /**
    * Default factory initialisation arguments.
@@ -149,7 +154,6 @@ public class AudioPlayerComponent {
    * and media player factory instances.
    */
   protected void onBeforeRelease() {
-    // Default implementation does nothing
   }
 
   /**
@@ -157,6 +161,5 @@ public class AudioPlayerComponent {
    * media player factory instances.
    */
   protected void onAfterRelease() {
-    // Default implementation does nothing
   }
 }
