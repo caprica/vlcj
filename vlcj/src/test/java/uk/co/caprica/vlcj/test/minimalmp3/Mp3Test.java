@@ -19,9 +19,8 @@
 
 package uk.co.caprica.vlcj.test.minimalmp3;
 
+import uk.co.caprica.vlcj.component.AudioPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -38,9 +37,7 @@ public class Mp3Test extends VlcjTest {
       System.exit(1);
     }
 
-    MediaPlayerFactory factory = new MediaPlayerFactory();
-    MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
-    mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+    AudioPlayerComponent audioPlayer = new AudioPlayerComponent() {
       @Override
       public void finished(MediaPlayer mediaPlayer) {
         System.exit(0);
@@ -50,9 +47,10 @@ public class Mp3Test extends VlcjTest {
         System.out.println("Failed to play media");
         System.exit(1);
       }
-    });
+    };
+    
     // Play the MRL specified by the first command-line argument
-    mediaPlayer.playMedia(args[0]);
+    audioPlayer.getMediaPlayer().playMedia(args[0]);
     // Wait forever
     Thread.currentThread().join();
   }
