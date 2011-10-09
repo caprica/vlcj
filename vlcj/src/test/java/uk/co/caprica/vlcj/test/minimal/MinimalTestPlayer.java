@@ -19,49 +19,43 @@
 
 package uk.co.caprica.vlcj.test.minimal;
 
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * An absolute minimum test player.
  */
 public class MinimalTestPlayer extends VlcjTest {
-
+  
   public static void main(String[] args) throws Exception {
     if(args.length != 1) {
       System.out.println("Specify an MRL to play");
       System.exit(1);
     }
 
-    Frame f = new Frame("Test Player");
+    final EmbeddedMediaPlayerComponent mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
+    
+    JFrame f = new JFrame("Test Player");
     f.setIconImage(new ImageIcon(MinimalTestPlayer.class.getResource("/icons/vlcj-logo.png")).getImage());
     f.setSize(800, 600);
+    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     f.addWindowListener(new WindowAdapter() {
       @Override
-      public void windowClosing(WindowEvent e) {
-        System.exit(0);
+      public void windowClosed(WindowEvent e) {
+        mediaPlayerComponent.release();
       }
     });
-    f.setLayout(new BorderLayout());
-    Canvas vs = new Canvas();
-    f.add(vs, BorderLayout.CENTER);
+    f.setContentPane(mediaPlayerComponent);
     f.setVisible(true);
-    
-    MediaPlayerFactory factory = new MediaPlayerFactory();
-    
-    EmbeddedMediaPlayer mediaPlayer = factory.newEmbeddedMediaPlayer();
-    mediaPlayer.setVideoSurface(factory.newVideoSurface(vs));
 
-    mediaPlayer.playMedia(args[0]);
+    mediaPlayerComponent.getMediaPlayer().playMedia(args[0]);
+
     Thread.currentThread().join();
   }
 }
