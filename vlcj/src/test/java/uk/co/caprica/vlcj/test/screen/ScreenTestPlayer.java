@@ -36,7 +36,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 /**
  * An example of "playing" the screen/desktop.
  * <p>
- * How to transcode and save or stream this is currently not known.
+ * See {@link ScreenRecorder} if you want to encode and save the video.
  * <p>
  * Additional media options that can be set are:
  * <pre>
