@@ -35,7 +35,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * This class implements the most the most common use-case for an audio player
  * and is intended to enable a developer to get quickly started with the vlcj 
  * framework. More advanced applications are free to directly use the 
- * {@link MediaPlayerFactory} as has always been the case. 
+ * {@link MediaPlayerFactory}, if required, as has always been the case. 
  * <p>
  * This component also adds implements the various media player listener 
  * interfaces, consequently an implementation sub-class can simply override 
