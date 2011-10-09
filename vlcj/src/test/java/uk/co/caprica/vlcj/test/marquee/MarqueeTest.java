@@ -22,8 +22,6 @@ package uk.co.caprica.vlcj.test.marquee;
 import static uk.co.caprica.vlcj.player.Marquee.marquee;
 
 import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,9 +44,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -59,14 +55,10 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class MarqueeTest extends VlcjTest {
 
-  private MediaPlayerFactory factory;
-  private EmbeddedMediaPlayer mediaPlayer;
-  private CanvasVideoSurface videoSurface;
+  private EmbeddedMediaPlayerComponent mediaPlayerComponent;
   
   private JFrame frame;
   private JPanel cp;
-  private Canvas canvas;
-
   private JPanel controlsPanel;
   
   public static void main(final String[] args) throws Exception {
@@ -86,19 +78,11 @@ public class MarqueeTest extends VlcjTest {
   }
   
   public MarqueeTest() {
-    factory = new MediaPlayerFactory("--no-video-title-show", "--quiet");
-    mediaPlayer = factory.newEmbeddedMediaPlayer();
-    
-    canvas = new Canvas();
-    canvas.setBackground(Color.black);
-    
-    videoSurface = factory.newVideoSurface(canvas);
-    
-    mediaPlayer.setVideoSurface(videoSurface);
+    mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
     
     cp = new JPanel();
     cp.setLayout(new BorderLayout());
-    cp.add(canvas, BorderLayout.CENTER);
+    cp.add(mediaPlayerComponent, BorderLayout.CENTER);
     
     controlsPanel = new ControlsPanel();
     cp.add(controlsPanel, BorderLayout.SOUTH);
@@ -110,16 +94,14 @@ public class MarqueeTest extends VlcjTest {
     frame.addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosed(WindowEvent e) {
-        mediaPlayer.stop();
-        mediaPlayer.release();
-        factory.release();
+        mediaPlayerComponent.release();
       }
     });
   }
   
   public void start(String mrl) {
     frame.setVisible(true);
-    mediaPlayer.playMedia(mrl);
+    mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
   }
 
   @SuppressWarnings("serial")
@@ -189,21 +171,21 @@ public class MarqueeTest extends VlcjTest {
                    .position((libvlc_marquee_position_e)positionCombo.getSelectedItem())
                    .opacity(opacitySlider.getValue())
                    .enable(enableCheckBox.isSelected())
-                   .apply(mediaPlayer);
+                   .apply(mediaPlayerComponent.getMediaPlayer());
         }
       });
 
       enableButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          mediaPlayer.enableMarquee(true);
+          mediaPlayerComponent.getMediaPlayer().enableMarquee(true);
         }
       });
       
       disableButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          mediaPlayer.enableMarquee(false);
+          mediaPlayerComponent.getMediaPlayer().enableMarquee(false);
         }
       });
     }
