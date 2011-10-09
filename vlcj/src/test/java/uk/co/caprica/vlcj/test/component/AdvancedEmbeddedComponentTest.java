@@ -26,10 +26,8 @@ import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
-import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -108,17 +106,24 @@ public class AdvancedEmbeddedComponentTest extends VlcjTest {
       protected void onAfterRelease() {
         super.onAfterRelease();
       }
-    };
-    
-    mediaPlayerComponent.getMediaPlayer().addVideoOutputEventListener(new VideoOutputEventListener() {
+
+      // Override whatever listener methods you're interested in...
+      
       @Override
       public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
+        super.videoOutputAvailable(mediaPlayer, videoOutput);
       }
-    });
-    
-    mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-      // Override whatever listener methods you're interested in...
-    });
+
+      @Override
+      public void playing(MediaPlayer mediaPlayer) {
+        super.playing(mediaPlayer);
+      }
+
+      @Override
+      public void error(MediaPlayer mediaPlayer) {
+        super.error(mediaPlayer);
+      }
+    };
     
     frame.setContentPane(mediaPlayerComponent);
     
