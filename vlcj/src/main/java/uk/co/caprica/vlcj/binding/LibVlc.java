@@ -33,6 +33,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
@@ -77,6 +78,8 @@ import com.sun.jna.ptr.PointerByReference;
  * <pre>
  * -Djna.dump_memory=true
  * </pre>
+ * In the native header file, generally "char*" types must be freed, but 
+ * "const char*" need (must) not.
  */
 public interface LibVlc extends Library {
 
@@ -1925,4 +1928,58 @@ public interface LibVlc extends Library {
   void libvlc_media_list_player_set_playback_mode(libvlc_media_list_player_t p_mlp, int e_mode);
 
   // === libvlc_media_list_player.h ===========================================
+
+  // === libvlc_media_discoverer.h ============================================
+
+  /**
+   * Discover media service by name.
+   *
+   * @param p_inst libvlc instance
+   * @param psz_name service name
+   * @return media discover object or NULL in case of error
+   */
+  libvlc_media_discoverer_t libvlc_media_discoverer_new_from_name(libvlc_instance_t p_inst, String psz_name);
+
+  /**
+   * Release media discover object. If the reference count reaches 0, then
+   * the object will be released.
+   *
+   * @param p_mdis media service discover object
+   */
+  void  libvlc_media_discoverer_release(libvlc_media_discoverer_t p_mdis);
+
+  /**
+   * Get media service discover object its localized name.
+   *
+   * @param p_mdis media discover object
+   * @return localized name
+   */
+  // WARN: has to be free'd?
+  String libvlc_media_discoverer_localized_name(libvlc_media_discoverer_t p_mdis);
+
+  /**
+   * Get media service discover media list.
+   *
+   * @param p_mdis media service discover object
+   * @return list of media items
+   */
+  libvlc_media_list_t libvlc_media_discoverer_media_list(libvlc_media_discoverer_t p_mdis);
+
+  /**
+   * Get event manager from media service discover object.
+   *
+   * @param p_mdis media service discover object
+   * @return event manager object
+   */
+  libvlc_event_manager_t libvlc_media_discoverer_event_manager(libvlc_media_discoverer_t p_mdis);
+
+  /**
+   * Query if media service discover object is running.
+   *
+   * @param p_mdis media service discover object
+   * @return true if running, false if not
+   */
+  int libvlc_media_discoverer_is_running(libvlc_media_discoverer_t p_mdis);
+
+  // === libvlc_media_discoverer.h ============================================
 }
