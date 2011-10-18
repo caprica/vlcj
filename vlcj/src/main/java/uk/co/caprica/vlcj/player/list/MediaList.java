@@ -53,7 +53,7 @@ public class MediaList {
   private libvlc_media_list_t mediaListInstance;
   
   /**
-   * Set to true when the player has been released.
+   * Set to true when the media list has been released.
    */
   private AtomicBoolean released = new AtomicBoolean();
 
