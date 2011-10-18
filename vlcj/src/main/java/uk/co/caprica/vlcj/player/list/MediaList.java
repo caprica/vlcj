@@ -34,6 +34,9 @@ import uk.co.caprica.vlcj.logger.Logger;
 
 /**
  * A media list (i.e. a play-list).
+ * <p>
+ * To do anything more advanced than the functionality provided by this class, 
+ * the underlying native media list instance is accessible via {@link #mediaListInstance}.
  */
 public class MediaList {
 
@@ -88,6 +91,20 @@ public class MediaList {
     createInstance();
   }
 
+  /**
+   * Create a new media list.
+   * 
+   * @param libvlc native interface
+   * @param instance native library instance
+   * @param mediaListInstance native media list instance
+   */
+  public MediaList(LibVlc libvlc, libvlc_instance_t instance, libvlc_media_list_t mediaListInstance) {
+    this.libvlc = libvlc;
+    this.instance = instance;
+
+    this.mediaListInstance = mediaListInstance;
+  }
+  
   /**
    * Set standard media options for all media items subsequently played.
    * <p>
