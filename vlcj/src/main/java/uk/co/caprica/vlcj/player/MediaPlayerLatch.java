@@ -111,7 +111,7 @@ public class MediaPlayerLatch {
     /**
      * True if the media started, otherwise false.
      */
-    private AtomicBoolean playing = new AtomicBoolean();
+    private final AtomicBoolean playing = new AtomicBoolean();
     
     /**
      * Create a new listener.

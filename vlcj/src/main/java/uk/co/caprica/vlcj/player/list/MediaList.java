@@ -55,7 +55,7 @@ public class MediaList {
   /**
    * Set to true when the media list has been released.
    */
-  private AtomicBoolean released = new AtomicBoolean();
+  private final AtomicBoolean released = new AtomicBoolean();
 
   /**
    * Standard media options to be applied to each media item that is played.

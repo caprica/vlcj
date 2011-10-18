@@ -201,7 +201,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   /**
    * Set to true when the player has been released.
    */
-  private AtomicBoolean released = new AtomicBoolean();
+  private final AtomicBoolean released = new AtomicBoolean();
   
   /**
    * Create a new media player.
