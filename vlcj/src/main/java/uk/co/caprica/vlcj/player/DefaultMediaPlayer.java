@@ -441,7 +441,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       public List<String> subItems(int count, libvlc_media_list_t subItems) {
         List<String> result = new ArrayList<String>(count);
         for(libvlc_media_t subItem : new LibVlcMediaListIterator(libvlc, subItems)) {
-          result.add(libvlc.libvlc_media_get_mrl(subItem));
+          result.add(getNativeString(libvlc.libvlc_media_get_mrl(subItem)));
         }
         return result;
       }
@@ -1500,9 +1500,20 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   // === Implementation =======================================================
 
 //  @Override
+  public String mrl() {
+    Logger.debug("mrl()");
+    if(mediaInstance != null) {
+      return getNativeString(libvlc.libvlc_media_get_mrl(mediaInstance));
+    }
+    else {
+      throw new IllegalStateException("No media");
+    }
+  }
+  
+//  @Override
   public String mrl(libvlc_media_t mediaInstance) {
     Logger.debug("mrl(mediaInstance={})", mediaInstance);
-    return libvlc.libvlc_media_get_mrl(mediaInstance);
+    return getNativeString(libvlc.libvlc_media_get_mrl(mediaInstance));
   }
 
 //  @Override
@@ -1950,7 +1961,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         int subItemCount = subItemCount();
         Logger.debug("subitemCount={}", subItemCount);
         if(subItemCount == 0) {
-          String mrl = libvlc.libvlc_media_get_mrl(mediaInstance);
+          String mrl = getNativeString(libvlc.libvlc_media_get_mrl(mediaInstance));
           Logger.debug("auto repeat mrl={}", mrl);
           // It is not sufficient to simply call play(), the MRL must explicitly
           // be played again - this is the reason why the repeat play might not

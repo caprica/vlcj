@@ -1456,6 +1456,15 @@ public interface MediaPlayer {
   void setGamma(float gamma);
 
   /**
+   * Get the media resource locator for the current media instance.
+   * <p>
+   * The native media instance may be an automatically/scripted added sub-item.
+   * 
+   * @return URL-encoded media resource locator
+   */
+  String mrl();  
+
+  /**
    * Get the media resource locator for a media instance.
    * <p>
    * The native media instance may be an automatically/scripted added sub-item.
