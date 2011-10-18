@@ -231,7 +231,7 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
 //  @Override
   public String mrl(libvlc_media_t mediaInstance) {
     Logger.debug("mrl(mediaInstance={})", mediaInstance);
-    return libvlc.libvlc_media_get_mrl(mediaInstance);
+    return getNativeString(libvlc.libvlc_media_get_mrl(mediaInstance));
   }
 
 // @Override
