@@ -372,7 +372,7 @@ public interface LibVlc extends Library {
    * @param p_md a media descriptor object
    * @return string with mrl of media descriptor object
    */
-  String libvlc_media_get_mrl(libvlc_media_t p_md);
+  Pointer libvlc_media_get_mrl(libvlc_media_t p_md);
 
   /**
    * Duplicate a media descriptor object.
