@@ -698,7 +698,7 @@ public interface MediaPlayer {
    * 
    * @param delta
    */
-  void skip(float delta);
+  void skipPosition(float delta);
 
   /**
    * Jump to a specific moment.

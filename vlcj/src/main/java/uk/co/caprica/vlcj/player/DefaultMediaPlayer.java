@@ -801,8 +801,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   }
   
 //  @Override
-  public void skip(float delta) {
-    Logger.debug("skip(delta={})", delta);
+  public void skipPosition(float delta) {
+    Logger.debug("skipPosition(delta={})", delta);
     float current = getPosition();
     Logger.debug("current={}", current);
     if(current != -1) {
