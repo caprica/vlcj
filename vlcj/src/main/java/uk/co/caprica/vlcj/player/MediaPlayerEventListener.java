@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player;
 
+import javax.swing.SwingUtilities;
+
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 
 /**
@@ -29,6 +31,10 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
  * sub-item, so for example mediaChanged() will fire for the "main" media item
  * and each subsequent sub-item.
  * <p>
+ * Events are likely <em>not</em> raised on the Swing Event Dispatch thread so
+ * if updating user interface components in response to these events care must
+ * be taken to use {@link SwingUtilities#invokeLater(Runnable)}.
+ *  
  * @see MediaPlayerEventAdapter 
  */
 public interface MediaPlayerEventListener {
