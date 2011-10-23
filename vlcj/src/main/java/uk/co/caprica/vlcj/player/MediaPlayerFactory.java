@@ -372,8 +372,8 @@ public class MediaPlayerFactory {
 
     // Without disabling auto synch on this JNA structure a fatal crash will 
     // intermittently occur when the release call is made - this is the only 
-    // time in all of the vlcj bindings that this is required and I do not 
-    // understand why it is needed only in this case
+    // time (filters) in all of the vlcj bindings that this is required and I
+    // do not understand why it is needed only in this case
     moduleDescriptions.setAutoSynch(false);
 
     List<ModuleDescription> result = getModuleDescriptions(moduleDescriptions);
@@ -395,8 +395,8 @@ public class MediaPlayerFactory {
 
     // Without disabling auto synch on this JNA structure a fatal crash will 
     // intermittently occur when the release call is made - this is the only 
-    // time in all of the vlcj bindings that this is required and I do not 
-    // understand why it is needed only in this case
+    // time (filters) in all of the vlcj bindings that this is required and I
+    // do not understand why it is needed only in this case
     moduleDescriptions.setAutoSynch(false);
 
     List<ModuleDescription> result = getModuleDescriptions(moduleDescriptions);
