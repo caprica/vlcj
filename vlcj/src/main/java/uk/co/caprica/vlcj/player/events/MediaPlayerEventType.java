@@ -2,6 +2,9 @@ package uk.co.caprica.vlcj.player.events;
 
 /**
  * Enumeration of media player event bit-masks.
+ * <p>
+ * <strong>The event flag masks should be considered private implementation
+ * and are subject to change.</strong>
  */
 public enum MediaPlayerEventType {
 
