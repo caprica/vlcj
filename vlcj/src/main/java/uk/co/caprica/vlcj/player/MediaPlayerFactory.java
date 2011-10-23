@@ -176,6 +176,9 @@ public class MediaPlayerFactory {
    * <pre>
    *   -Dvlcj.check=no
    * </pre>
+   * <p>
+   * Most initialisation arguments may be gleaned by invoking 
+   * <code>"vlc -H"</code>.
    * 
    * @param libvlcArgs initialisation arguments to pass to libvlc
    */
