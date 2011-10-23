@@ -318,7 +318,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
   }
   
   @Override
-  protected void onBeforePlay() {
+  protected final void onBeforePlay() {
     Logger.debug("onBeforePlay()");
     attachVideoSurface();
   }
