@@ -513,7 +513,6 @@ public class MediaPlayerFactory {
    */
   public CanvasVideoSurface newVideoSurface(Canvas canvas) {
     Logger.debug("newVideoSurface(canvas={})", canvas);
-
     VideoSurfaceAdapter videoSurfaceAdapter;
     if(RuntimeUtil.isNix()) {
       videoSurfaceAdapter = new LinuxVideoSurfaceAdapter();
@@ -527,10 +526,8 @@ public class MediaPlayerFactory {
     else {
       throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
     }
-
     CanvasVideoSurface videoSurface = new CanvasVideoSurface(canvas, videoSurfaceAdapter);
     Logger.debug("videoSurface={}", videoSurface);
-
     return videoSurface;
   }
 
@@ -542,9 +539,7 @@ public class MediaPlayerFactory {
    */
   public ComponentIdVideoSurface newVideoSurface(long componentId) {
     Logger.debug("newVideoSurface(componentId={})", componentId);
-
     VideoSurfaceAdapter videoSurfaceAdapter;
-
     if(RuntimeUtil.isNix()) {
       videoSurfaceAdapter = new LinuxVideoSurfaceAdapter();
     }
@@ -557,11 +552,8 @@ public class MediaPlayerFactory {
     else {
       throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
     }
-
     ComponentIdVideoSurface videoSurface = new ComponentIdVideoSurface(componentId, videoSurfaceAdapter);
-
     Logger.debug("videoSurface={}", videoSurface);
-
     return videoSurface;
   }
 
