@@ -1853,6 +1853,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
    * <p>
    * Care must be taken not to re-enter the native library during an event
    * notification so the notifications are off-loaded to a separate thread.
+   * <p>
+   * These events therefore do <em>not</em> run on the Event Dispatch Thread.
    */
   private final class NotifyEventListenersRunnable implements Runnable {
 
