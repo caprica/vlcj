@@ -32,7 +32,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <em>two</em> lines of vlcj code required to create a media player and play
  * a video.
  */
-public class BasicEmbeddedComponentTest extends VlcjTest {
+public class BasicEmbeddedMediaPlayerComponentTest extends VlcjTest {
 
   /**
    * Media player component.
@@ -57,7 +57,7 @@ public class BasicEmbeddedComponentTest extends VlcjTest {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
-        new BasicEmbeddedComponentTest().start(mrl);
+        new BasicEmbeddedMediaPlayerComponentTest().start(mrl);
       }
     });
   }
@@ -65,7 +65,7 @@ public class BasicEmbeddedComponentTest extends VlcjTest {
   /**
    * Create a new test. 
    */
-  private BasicEmbeddedComponentTest() {
+  private BasicEmbeddedMediaPlayerComponentTest() {
     JFrame frame = new JFrame("vlcj Media Player Component Test");
     
     mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
