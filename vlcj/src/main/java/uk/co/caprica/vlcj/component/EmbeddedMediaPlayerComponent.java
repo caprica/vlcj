@@ -302,9 +302,13 @@ public class EmbeddedMediaPlayerComponent extends Panel implements VideoOutputEv
   protected void onAfterRelease() {
   }
 
+  // === VideoOutputEventListener =============================================
+
 //  @Override
   public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
   }
+
+  // === MediaPlayerEventListener =============================================
 
 //  @Override
   public void mediaChanged(MediaPlayer mediaPlayer) {
