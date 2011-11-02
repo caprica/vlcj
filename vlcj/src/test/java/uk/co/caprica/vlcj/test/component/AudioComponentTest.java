@@ -88,7 +88,7 @@ public class AudioComponentTest extends VlcjTest {
   }
 
   /**
-   * Start playing a movie.
+   * Start playing media.
    * 
    * @param mrl mrl
    */
