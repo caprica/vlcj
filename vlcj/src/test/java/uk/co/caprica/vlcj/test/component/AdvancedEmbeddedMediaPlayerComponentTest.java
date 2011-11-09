@@ -35,7 +35,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * it by sub-classing and overriding template methods.
  */
 @SuppressWarnings("serial")
-public class AdvancedEmbeddedComponentTest extends VlcjTest {
+public class AdvancedEmbeddedMediaPlayerComponentTest extends VlcjTest {
 
   /**
    * Media player component.
@@ -60,7 +60,7 @@ public class AdvancedEmbeddedComponentTest extends VlcjTest {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
-        new AdvancedEmbeddedComponentTest().start(mrl);;
+        new AdvancedEmbeddedMediaPlayerComponentTest().start(mrl);;
       }
     });
   }
@@ -68,7 +68,7 @@ public class AdvancedEmbeddedComponentTest extends VlcjTest {
   /**
    * Create a new test. 
    */
-  private AdvancedEmbeddedComponentTest() {
+  private AdvancedEmbeddedMediaPlayerComponentTest() {
     JFrame frame = new JFrame("vlcj Media Player Component Test");
 
     // Create a sub-class of the embedded media player component (it does not 
