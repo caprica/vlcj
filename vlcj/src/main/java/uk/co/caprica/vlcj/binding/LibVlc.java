@@ -1982,7 +1982,7 @@ public interface LibVlc extends Library {
   int libvlc_media_discoverer_is_running(libvlc_media_discoverer_t p_mdis);
 
   // === libvlc_media_discoverer.h ============================================
-  
+
   // === libvlc_vlm.h =========================================================
 
   /**
