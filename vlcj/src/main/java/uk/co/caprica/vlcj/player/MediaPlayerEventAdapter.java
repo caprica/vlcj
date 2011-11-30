@@ -101,6 +101,10 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
   }
   
 //  @Override
+  public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
+  }
+
+//  @Override
   public void error(MediaPlayer mediaPlayer) {
   }
   

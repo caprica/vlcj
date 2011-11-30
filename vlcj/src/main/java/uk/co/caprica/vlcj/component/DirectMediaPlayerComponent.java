@@ -270,6 +270,10 @@ public class DirectMediaPlayerComponent implements VideoOutputEventListener, Med
   }
 
 //  @Override
+  public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
+  }
+
+//  @Override
   public void error(MediaPlayer mediaPlayer) {
   }
 

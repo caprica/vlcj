@@ -163,6 +163,14 @@ public interface MediaPlayerEventListener {
   void lengthChanged(MediaPlayer mediaPlayer, long newLength);
 
   /**
+   * The number of video outputs changed.
+   * 
+   * @param mediaPlayer media player that raised the event
+   * @param newCount new number of video outputs
+   */
+  void videoOutput(MediaPlayer mediaPlayer, int newCount);
+
+  /**
    * An error occurred.
    * 
    * @param mediaPlayer media player that raised the event

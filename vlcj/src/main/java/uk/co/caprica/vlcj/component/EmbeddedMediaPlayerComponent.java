@@ -375,6 +375,10 @@ public class EmbeddedMediaPlayerComponent extends Panel implements VideoOutputEv
   }
 
 //  @Override
+  public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
+  }
+
+//  @Override
   public void error(MediaPlayer mediaPlayer) {
   }
 
