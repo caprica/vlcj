@@ -36,6 +36,7 @@ public class libvlc_event_u extends Union {
   public media_player_title_changed      media_player_title_changed;
   public media_player_seekable_changed   media_player_seekable_changed;
   public media_player_pausable_changed   media_player_pausable_changed;
+  public media_player_vout               media_player_vout;
   public media_list_item_added           media_list_item_added;
   public media_list_will_add_item        media_list_will_add_item;
   public media_list_item_deleted         media_list_item_deleted;
