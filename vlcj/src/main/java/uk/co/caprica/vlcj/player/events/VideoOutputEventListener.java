@@ -20,10 +20,13 @@
 package uk.co.caprica.vlcj.player.events;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
 /**
  * Specification for a component that is interested in receiving video output 
  * event notifications from the media player.
+ * 
+ * @deprecated use {@link MediaPlayerEventListener#videoOutput(MediaPlayer, int)} instead, this class will be removed in vlcj 1.3.0
  */
 public interface VideoOutputEventListener {
 

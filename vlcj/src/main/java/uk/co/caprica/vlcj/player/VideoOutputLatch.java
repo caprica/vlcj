@@ -38,6 +38,8 @@ import uk.co.caprica.vlcj.logger.Logger;
  * <p>
  * Most applications are not expected to use this class and instead use
  * {@link uk.co.caprica.vlcj.player.events.VideoOutputEventListener VideoOutputListener}.
+ * 
+ * @deprecated
  */
 public class VideoOutputLatch {
 
