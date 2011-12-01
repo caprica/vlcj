@@ -17,6 +17,7 @@ uk.co.caprica.vlcj.player.events
 uk.co.caprica.vlcj.player.headless
 uk.co.caprica.vlcj.player.list
 uk.co.caprica.vlcj.player.list.events
+uk.co.caprica.vlcj.player.manager
 uk.co.caprica.vlcj.runtime
 uk.co.caprica.vlcj.runtime.install
 uk.co.caprica.vlcj.runtime.windows
