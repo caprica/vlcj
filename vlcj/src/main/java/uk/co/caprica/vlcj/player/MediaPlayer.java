@@ -185,6 +185,7 @@ public interface MediaPlayer {
    * Add a component to be notified of video output events. 
    * 
    * @param listener component to notify
+   * @deprecated use {@link MediaPlayerEventListener#videoOutput(MediaPlayer, int)} instead, this function will be removed in vlcj 1.3.0
    */
   void addVideoOutputEventListener(VideoOutputEventListener listener);
 
@@ -193,6 +194,7 @@ public interface MediaPlayer {
    * video output events.
    * 
    * @param listener component to stop notifying
+   * @deprecated use {@link MediaPlayerEventListener#videoOutput(MediaPlayer, int)} instead, this function will be removed in vlcj 1.3.0
    */
   void removeVideoOutputEventListener(VideoOutputEventListener listener);
 
