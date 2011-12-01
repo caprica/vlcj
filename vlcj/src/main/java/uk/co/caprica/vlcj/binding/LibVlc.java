@@ -1237,6 +1237,30 @@ public interface LibVlc extends Library {
   int libvlc_video_set_subtitle_file(libvlc_media_player_t p_mi, String psz_subtitle);
 
   /**
+   * Get the current subtitle delay. Positive values means subtitles are being
+   * displayed later, negative values earlier.
+   *
+   * @param p_mi media player
+   * @return time (in microseconds) the display of subtitles is being delayed
+   * @version LibVLC 1.2.0 or later
+   */
+  long libvlc_video_get_spu_delay(libvlc_media_player_t p_mi);
+  
+  /**
+   * Set the subtitle delay. This affects the timing of when the subtitle will
+   * be displayed. Positive values result in subtitles being displayed later,
+   * while negative values will result in subtitles being displayed earlier.
+   *
+   * The subtitle delay will be reset to zero each time the media changes.
+   *
+   * @param p_mi media player
+   * @param i_delay time (in microseconds) the display of subtitles should be delayed
+   * @return 0 on success, -1 on error
+   * @version LibVLC 1.2.0 or later
+   */
+  int libvlc_video_set_spu_delay(libvlc_media_player_t p_mi, long i_delay);
+  
+  /**
    * Get the description of available titles.
    * 
    * @param p_mi the media player
