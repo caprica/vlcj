@@ -972,6 +972,23 @@ public interface MediaPlayer {
   void cycleSpu();
 
   /**
+   * Get the sub-title delay.
+   * 
+   * @return sub-title delay, in microseconds
+   */
+  long getSpuDelay();
+
+  /**
+   * Set the sub-title delay.
+   * <p>
+   * The sub-title delay is set for the current item only and will be reset to 
+   * zero each time the media changes.
+   * 
+   * @param delay desired sub-title delay, in microseconds
+   */
+  void setSpuDelay(long delay);
+
+  /**
    * Set the sub-title file to use.
    * 
    * @param subTitleFileName name of the file containing the sub-titles
