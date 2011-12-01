@@ -1032,6 +1032,18 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   }
   
 //  @Override
+  public long getSpuDelay() {
+    Logger.debug("getSpuDelay()");
+    return libvlc.libvlc_video_get_spu_delay(mediaPlayerInstance);
+  }
+  
+//  @Override
+  public void setSpuDelay(long delay) {
+    Logger.debug("setSpuDelay(delay={})", delay);
+    libvlc.libvlc_video_set_spu_delay(mediaPlayerInstance, delay);
+  }
+
+//  @Override
   public void setSubTitleFile(String subTitleFileName) {
     Logger.debug("setSubTitleFile(subTitleFileName={})", subTitleFileName);
     libvlc.libvlc_video_set_subtitle_file(mediaPlayerInstance, subTitleFileName);
