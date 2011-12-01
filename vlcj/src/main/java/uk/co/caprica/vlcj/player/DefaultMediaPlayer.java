@@ -1642,7 +1642,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     Logger.debug("registerEventListener()");
     callback = new VlcVideoPlayerCallback();
     for(libvlc_event_e event : libvlc_event_e.values()) {
-      if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaPlayerLengthChanged.intValue()) {
+      if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaPlayerVout.intValue()) {
         Logger.debug("event={}", event);
         int result = libvlc.libvlc_event_attach(mediaPlayerEventManager, event.intValue(), callback, null);
         Logger.debug("result={}", result);
@@ -1657,7 +1657,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     Logger.debug("deregisterEventListener()");
     if(callback != null) {
       for(libvlc_event_e event : libvlc_event_e.values()) {
-        if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaPlayerLengthChanged.intValue()) {
+        if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaPlayerVout.intValue()) {
           Logger.debug("event={}", event);
           libvlc.libvlc_event_detach(mediaPlayerEventManager, event.intValue(), callback, null);
         }
