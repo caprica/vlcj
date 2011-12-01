@@ -409,6 +409,11 @@ public class TestPlayer extends VlcjTest {
     }
 
     @Override
+    public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
+      Logger.debug("videoOutput(mediaPlayer={},newCount={})", mediaPlayer, newCount);
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
       Logger.debug("error(mediaPlayer={})", mediaPlayer);
     }
