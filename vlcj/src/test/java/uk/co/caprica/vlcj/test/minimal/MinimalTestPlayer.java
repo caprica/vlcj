@@ -47,7 +47,7 @@ public class MinimalTestPlayer extends VlcjTest {
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     f.addWindowListener(new WindowAdapter() {
       @Override
-      public void windowClosed(WindowEvent e) {
+      public void windowClosing(WindowEvent e) {
         mediaPlayerComponent.release();
       }
     });
