@@ -91,15 +91,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   private final ExecutorService listenersService = Executors.newSingleThreadExecutor();
 
   /**
-   * Background thread to handle video output notifications.
-   * <p>
-   * The single-threaded nature of this executor service ensures that events
-   * are delivered to listeners in a thread-safe manner and in their proper
-   * sequence. 
-   */
-  private final ExecutorService videoOutputService = Executors.newSingleThreadExecutor();
-  
-  /**
    * Native media player instance.
    */
   private libvlc_media_player_t mediaPlayerInstance;
@@ -1576,8 +1567,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     Logger.debug("Shut down listeners...");
     listenersService.shutdown();
     Logger.debug("Listeners shut down.");
-    
-    videoOutputService.shutdown();
   }
 
   /**
