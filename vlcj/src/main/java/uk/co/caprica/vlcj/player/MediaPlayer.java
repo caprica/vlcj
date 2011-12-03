@@ -35,7 +35,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
-import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
 
 /**
  * Specification for a media player component.
@@ -74,9 +73,6 @@ import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
  *
  *   // Add a component to be notified of player events
  *   mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {...add implementation here...});
- *   
- *   // Add a component to be notified when a video output has been created
- *   mediaPlayer.addVideoOutputEventListener(new VideoOutputEventListener() {...add implementation here...});
  *   
  *   // Create and set a new component to display the rendered video (not shown: add the Canvas to a Frame)
  *   Canvas canvas = new Canvas();
@@ -180,23 +176,6 @@ public interface MediaPlayer {
    * @param eventMask bit mask of events to enable
    */
   void enableEvents(int eventMask);
-
-  /**
-   * Add a component to be notified of video output events. 
-   * 
-   * @param listener component to notify
-   * @deprecated use {@link MediaPlayerEventListener#videoOutput(MediaPlayer, int)} instead, this function will be removed in vlcj 1.3.0
-   */
-  void addVideoOutputEventListener(VideoOutputEventListener listener);
-
-  /**
-   * Remove a component that was previously interested in notifications of
-   * video output events.
-   * 
-   * @param listener component to stop notifying
-   * @deprecated use {@link MediaPlayerEventListener#videoOutput(MediaPlayer, int)} instead, this function will be removed in vlcj 1.3.0
-   */
-  void removeVideoOutputEventListener(VideoOutputEventListener listener);
 
   /**
    * Set standard media options for all media items subsequently played.

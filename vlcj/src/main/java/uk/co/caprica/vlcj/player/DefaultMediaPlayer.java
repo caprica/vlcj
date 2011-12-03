@@ -61,7 +61,6 @@ import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventFactory;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
-import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
@@ -73,29 +72,10 @@ import com.sun.jna.ptr.PointerByReference;
 public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements MediaPlayer {
 
   /**
-   * Amount of time to wait when looping for video output.
-   * <p>
-   * This is a reasonable default, but it can be overridden. 
-   */
-  private static final int DEFAULT_VIDEO_OUTPUT_WAIT_PERIOD = 50;
-  
-  /**
-   * Maximum amount of time to wait when checking for video output.
-   * <p>
-   * This is a reasonable default, but it can be overridden. 
-   */
-  private static final int DEFAULT_VIDEO_OUTPUT_TIMEOUT = 5000;
-  
-  /**
    * Collection of media player event listeners.
    */
   private final List<MediaPlayerEventListener> eventListenerList = new ArrayList<MediaPlayerEventListener>();
 
-  /**
-   * Collection of video output event listeners.
-   */
-  private final List<VideoOutputEventListener> videoOutputEventListenerList = new ArrayList<VideoOutputEventListener>();
-  
   /**
    * Factory to create media player events from native events.
    */
@@ -188,17 +168,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   private Object userData;
   
   /**
-   * Rate at which to check the native media player to determine if video 
-   * output is available yet or not.
-   */
-  private int videoOutputWaitPeriod = DEFAULT_VIDEO_OUTPUT_WAIT_PERIOD;
-  
-  /**
-   * Maximum amount of time to wait when checking for video output availability.
-   */
-  private int videoOutputTimeout = DEFAULT_VIDEO_OUTPUT_TIMEOUT;
-  
-  /**
    * Set to true when the player has been released.
    */
   private final AtomicBoolean released = new AtomicBoolean();
@@ -231,18 +200,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   public void enableEvents(int eventMask) {
     Logger.debug("enableEvents(eventMask={})", eventMask);
     this.eventMask = eventMask;
-  }
-
-//  @Override
-  public void addVideoOutputEventListener(VideoOutputEventListener listener) {
-    Logger.debug("addVideoOutputEventListener(listener={})", listener);
-    videoOutputEventListenerList.add(listener);
-  }
-
-//  @Override
-  public void removeVideoOutputEventListener(VideoOutputEventListener listener) {
-    Logger.debug("removeVideoOutputEventListener(listener={})", listener);
-    videoOutputEventListenerList.remove(listener);
   }
 
   // === Media Controls =======================================================
@@ -1068,7 +1025,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       trackDescription = trackDescription.p_next;      
     }   
     if(trackDescriptions != null) {
-      libvlc.libvlc_track_description_release(trackDescriptions.getPointer());
+      libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
     }
     return trackDescriptionList;
   }  
@@ -1084,7 +1041,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       trackDescription = trackDescription.p_next;      
     }   
     if(trackDescriptions != null) {
-      libvlc.libvlc_track_description_release(trackDescriptions.getPointer());
+      libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
     }
     return trackDescriptionList;
   }
@@ -1100,7 +1057,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       trackDescription = trackDescription.p_next;      
     }   
     if(trackDescriptions != null) {
-      libvlc.libvlc_track_description_release(trackDescriptions.getPointer());
+      libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
     }
     return trackDescriptionList;
   }  
@@ -1116,7 +1073,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       trackDescription = trackDescription.p_next;      
     }   
     if(trackDescriptions != null) {
-      libvlc.libvlc_track_description_release(trackDescriptions.getPointer());
+      libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
     }
     return trackDescriptionList;
   }  
@@ -1132,7 +1089,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
       trackDescription = trackDescription.p_next;      
     }
     if(trackDescriptions != null) {
-      libvlc.libvlc_track_description_release(trackDescriptions.getPointer());
+      libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
     }
     return trackDescriptionList;
   }  
@@ -1555,27 +1512,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
   }
 
   /**
-   * Override the default video output test wait period.
-   * <p>
-   * The native media player will be repeatedly polled according to this period
-   * in order to check if video output has started playing or not.
-   * <p> 
-   * This is not part of the MediaPlayer API (it an an implementation detail
-   * and so does not appear on the interface).
-   * <p>
-   * Most applications will not need to use this method, instead relying on the
-   * sensible default wait period. 
-   * 
-   * @param videoOutputWaitPeriod wait period, in milliseconds, or zero
-   * @param videoOutputTimeout maximum amount of time to wait for a video output to start
-   */
-  public void setVideoOutputWaitPeriod(int videoOutputWaitPeriod, int videoOutputTimeout) {
-    Logger.debug("setVideoOutputWaitPeriod(videoOutputWaitPeriod={},videoOutputTimeout={})", videoOutputWaitPeriod, videoOutputTimeout);
-    this.videoOutputWaitPeriod = videoOutputWaitPeriod;
-    this.videoOutputTimeout = videoOutputTimeout;
-  }
-  
-  /**
    * Allow sub-classes to do something just before the video is started.
    */
   protected void onBeforePlay() {
@@ -1604,7 +1540,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     registerEventListener();
 
     // The order these handlers execute in is important for proper operation
-    eventListenerList.add(new VideoOutputEventHandler());
     eventListenerList.add(new NewMediaEventHandler());
     eventListenerList.add(new RepeatPlayEventHandler());
     eventListenerList.add(new SubItemEventHandler());
@@ -1631,8 +1566,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     Logger.debug("Media player events detached.");
 
     eventListenerList.clear();
-    
-    videoOutputEventListenerList.clear();
     
     if(mediaPlayerInstance != null) {
       Logger.debug("Release media player...");
@@ -1898,49 +1831,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         }
       }
       Logger.trace("runnable exits");
-    }
-  }
-  
-  /**
-   * Background task to wait for a video output to start.
-   * <p>
-   * These tasks are only created if there is at least one video output 
-   * listener registered on the media player.
-   */
-  private class WaitForVideoOutputRunnable implements Runnable {
-
-    @Override
-    public void run() {
-      Logger.debug("run()");
-      // Wait for a video output to be started
-      boolean videoOutput = new VideoOutputLatch(DefaultMediaPlayer.this, videoOutputWaitPeriod, videoOutputTimeout).waitForVideoOutput();
-      // Notify listeners...
-      for(int i = videoOutputEventListenerList.size()-1; i >= 0; i--) {
-        try {
-          videoOutputEventListenerList.get(i).videoOutputAvailable(DefaultMediaPlayer.this, videoOutput);
-        }
-        catch(Throwable t) {
-          Logger.warn("Exception thrown by listener {}", videoOutputEventListenerList.get(i));
-          // Notify the remaining listeners...
-        }
-      }
-      Logger.trace("runnable exits");
-    }
-  }
-
-  /**
-   * Event listener implementation that handles waiting for video output.
-   */
-  private final class VideoOutputEventHandler extends MediaPlayerEventAdapter {
-
-    @Override
-    public void playing(MediaPlayer mediaPlayer) {
-      Logger.debug("playing(mediaPlayer={})", mediaPlayer);
-      // If there is at least one video output listener...
-      if(!videoOutputEventListenerList.isEmpty()) {
-        // Kick off an asynchronous task to wait for a video output
-        videoOutputService.execute(new WaitForVideoOutputRunnable());
-      }
     }
   }
   
