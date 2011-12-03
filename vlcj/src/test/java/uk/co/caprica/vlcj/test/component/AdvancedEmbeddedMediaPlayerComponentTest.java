@@ -110,8 +110,8 @@ public class AdvancedEmbeddedMediaPlayerComponentTest extends VlcjTest {
       // Override whatever listener methods you're interested in...
       
       @Override
-      public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
-        super.videoOutputAvailable(mediaPlayer, videoOutput);
+      public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
+        super.videoOutput(mediaPlayer, newCount);
       }
 
       @Override
