@@ -113,12 +113,6 @@ public class LibVlcFactory {
   
   /**
    * Request that the libvlc native library be of at least a particular version.
-   * <p>
-   * The version check can be disabled by specifying the following system 
-   * property:
-   * <pre>
-   *   -Dvlcj.check=no
-   * </pre>
    * 
    * @param version required version
    * @return factory
@@ -127,7 +121,7 @@ public class LibVlcFactory {
     this.requiredVersion = new Version(version);
     return this;
   }
-  
+
   /**
    * Create a new libvlc native library instance.
    * 
@@ -156,28 +150,15 @@ public class LibVlcFactory {
         }
         if(actualVersion != null) {
           if(!actualVersion.atLeast(requiredVersion)) {
-            if(!"no".equalsIgnoreCase(System.getProperty("vlcj.check"))) {
-              Logger.fatal("This version of vlcj requires version {} or later of libvlc, found too old version {}", requiredVersion, actualVersion);
-              Logger.fatal("You can suppress this version check by specifying -Dvlcj.check=no but some functionality will be unavailable and may cause failures");
-              throw new RuntimeException(
-                "This version of vlcj requires version " + requiredVersion + " or later of libvlc, found too old version " + actualVersion + ". " + 
-                "You can suppress this version check by specifying -Dvlcj.check=no but some functionality will be unavailable and may cause failures."
-              );
-            }
-            else {
-              Logger.warn("This version of vlcj requires version {} or later of libvlc, found too old version {}. Fatal run-time failures may occur.", requiredVersion, actualVersion);
-            }
+            Logger.fatal("This version of vlcj requires version {} or later of libvlc, found too old version {}", requiredVersion, actualVersion);
+            throw new RuntimeException(
+              "This version of vlcj requires version " + requiredVersion + " or later of libvlc, found too old version " + actualVersion + "." 
+            );
           }
         }
         else {
-          if(!"no".equalsIgnoreCase(System.getProperty("vlcj.check"))) {
             Logger.fatal("Unable to check the native library version '{}'", nativeVersion);
-            Logger.fatal("You can suppress this check by specifying -Dvlcj.check=no but some functionality will be unavailable and cause failures");
             throw new RuntimeException("Unable to check the native library version " + nativeVersion);
-          }
-          else {
-            Logger.warn("Unable to check the native library version '{}'. Fatal run-time failures may occur.", nativeVersion);
-          }
         }
       }
       return instance;
