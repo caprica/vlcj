@@ -68,7 +68,6 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
-import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsCanvas;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -270,7 +269,6 @@ public class TestPlayer extends VlcjTest {
     mainFrame.setVisible(true);
     
     mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
-    mediaPlayer.addVideoOutputEventListener(new TestPlayerVideoOutputListener());
     
     // Won't work with OpenJDK or JDK1.7, requires a Sun/Oracle JVM (currently)
     boolean transparentWindowsSupport = true;
@@ -411,51 +409,7 @@ public class TestPlayer extends VlcjTest {
     @Override
     public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
       Logger.debug("videoOutput(mediaPlayer={},newCount={})", mediaPlayer, newCount);
-    }
-
-    @Override
-    public void error(MediaPlayer mediaPlayer) {
-      Logger.debug("error(mediaPlayer={})", mediaPlayer);
-    }
-
-    @Override
-    public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-      Logger.debug("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
-    }
-
-    @Override
-    public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-      Logger.debug("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
-    }
-
-    @Override
-    public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-      Logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
-    }
-
-    @Override
-    public void mediaFreed(MediaPlayer mediaPlayer) {
-      Logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
-    }
-
-    @Override
-    public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
-      Logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
-    }
-
-    @Override
-    public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
-      Logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
-    }
-  }
-  
-  private final class TestPlayerVideoOutputListener implements VideoOutputEventListener {
-
-    @Override
-    public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
-      Logger.debug("videoOutputAvailable(mediaPlayer={},videoOutput={})", mediaPlayer, videoOutput);
-
-      if(!videoOutput) {
+      if(newCount == 0) {
         return;
       }
     
@@ -517,6 +471,41 @@ public class TestPlayer extends VlcjTest {
       // allow 720x576) to me
       
 //      mediaPlayer.setCropGeometry("4:3");
+    }
+
+    @Override
+    public void error(MediaPlayer mediaPlayer) {
+      Logger.debug("error(mediaPlayer={})", mediaPlayer);
+    }
+
+    @Override
+    public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
+      Logger.debug("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
+    }
+
+    @Override
+    public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
+      Logger.debug("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
+    }
+
+    @Override
+    public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
+      Logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
+    }
+
+    @Override
+    public void mediaFreed(MediaPlayer mediaPlayer) {
+      Logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
+    }
+
+    @Override
+    public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
+      Logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
+    }
+
+    @Override
+    public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
+      Logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
     }
   }
   
