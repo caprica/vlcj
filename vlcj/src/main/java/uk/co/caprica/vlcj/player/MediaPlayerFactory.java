@@ -147,12 +147,6 @@ public class MediaPlayerFactory {
    * If you do not want to enforce this version check, use one of the other
    * constructors that accepts a LibVlc instance that you obtain from the
    * {@link LibVlcFactory}.
-   * <p>
-   * The version check can be disabled by specifying the following system 
-   * property:
-   * <pre>
-   *   -Dvlcj.check=no
-   * </pre>
    */
   public MediaPlayerFactory() {
     this(new String[] {});
@@ -172,12 +166,6 @@ public class MediaPlayerFactory {
    * If you do not want to enforce this version check, use one of the other
    * constructors that accepts a LibVlc instance that you obtain from the
    * {@link LibVlcFactory}.
-   * <p>
-   * The version check can be disabled by specifying the following system 
-   * property:
-   * <pre>
-   *   -Dvlcj.check=no
-   * </pre>
    * <p>
    * Most initialisation arguments may be gleaned by invoking 
    * <code>"vlc -H"</code>.
