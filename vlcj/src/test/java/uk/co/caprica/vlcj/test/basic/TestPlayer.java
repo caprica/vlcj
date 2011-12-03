@@ -191,8 +191,8 @@ public class TestPlayer extends VlcjTest {
     mainFrame.pack();
     mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     mainFrame.addWindowListener(new WindowAdapter() {
-      public void windowClosed(WindowEvent evt) {
-        Logger.debug("windowClosed(evt={})", evt);
+      public void windowClosing(WindowEvent evt) {
+        Logger.debug("windowClosing(evt={})", evt);
 
         if(videoSurface instanceof WindowsCanvas) {
           ((WindowsCanvas)videoSurface).release();
