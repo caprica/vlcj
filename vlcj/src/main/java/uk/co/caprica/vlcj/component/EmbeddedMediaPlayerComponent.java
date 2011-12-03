@@ -40,7 +40,6 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
-import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
 
 /**
  * Encapsulation of an embedded media player.
@@ -105,7 +104,7 @@ import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
  * </pre>
  */
 @SuppressWarnings("serial")
-public class EmbeddedMediaPlayerComponent extends Panel implements VideoOutputEventListener, MediaPlayerEventListener {
+public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEventListener {
   
   /**
    * Default factory initialisation arguments.
@@ -164,7 +163,6 @@ public class EmbeddedMediaPlayerComponent extends Panel implements VideoOutputEv
     setLayout(new BorderLayout());
     add(canvas, BorderLayout.CENTER);
     // Register listeners
-    mediaPlayer.addVideoOutputEventListener(this);
     mediaPlayer.addMediaPlayerEventListener(this);
   }
   
@@ -300,12 +298,6 @@ public class EmbeddedMediaPlayerComponent extends Panel implements VideoOutputEv
    * media player factory instances.
    */
   protected void onAfterRelease() {
-  }
-
-  // === VideoOutputEventListener =============================================
-
-//  @Override
-  public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
   }
 
   // === MediaPlayerEventListener =============================================

@@ -26,7 +26,6 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
 import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
-import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
 
 import com.sun.jna.Memory;
 
@@ -61,7 +60,7 @@ import com.sun.jna.Memory;
  * };
  * </pre>
  */
-public class DirectMediaPlayerComponent implements VideoOutputEventListener, MediaPlayerEventListener, RenderCallback {
+public class DirectMediaPlayerComponent implements MediaPlayerEventListener, RenderCallback {
   
   /**
    * Default factory initialisation arguments.
@@ -103,7 +102,6 @@ public class DirectMediaPlayerComponent implements VideoOutputEventListener, Med
     mediaPlayerFactory = onGetMediaPlayerFactory();
     mediaPlayer = mediaPlayerFactory.newDirectMediaPlayer(format, width, height, pitch, onGetRenderCallback());
     // Register listeners
-    mediaPlayer.addVideoOutputEventListener(this);
     mediaPlayer.addMediaPlayerEventListener(this);
   }
   
@@ -195,12 +193,6 @@ public class DirectMediaPlayerComponent implements VideoOutputEventListener, Med
    * media player factory instances.
    */
   protected void onAfterRelease() {
-  }
-
-  // === VideoOutputEventListener =============================================
-
-//  @Override
-  public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
   }
 
   // === MediaPlayerEventListener =============================================
