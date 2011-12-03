@@ -20,8 +20,8 @@
 package uk.co.caprica.vlcj.test.info;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.events.VideoOutputEventListener;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -50,9 +50,9 @@ public class MediaInfoTest extends VlcjTest {
     MediaPlayerFactory factory = new MediaPlayerFactory();
     MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
     
-    mediaPlayer.addVideoOutputEventListener(new VideoOutputEventListener() {
+    mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
       @Override
-      public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
+      public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
         System.out.println("     Track Information: " + mediaPlayer.getTrackInfo());
         System.out.println("    Title Descriptions: " + mediaPlayer.getTitleDescriptions());
         System.out.println("    Video Descriptions: " + mediaPlayer.getVideoDescriptions());
