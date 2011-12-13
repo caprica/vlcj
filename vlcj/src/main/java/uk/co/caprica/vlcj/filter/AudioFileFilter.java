@@ -61,6 +61,7 @@ public class AudioFileFilter extends ExtensionFileFilter {
     "rmi",
     "s3m",
     "spx",
+    "thd",
     "tta",
     "voc",
     "vqf",
