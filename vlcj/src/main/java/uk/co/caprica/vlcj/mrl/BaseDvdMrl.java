@@ -87,7 +87,7 @@ public class BaseDvdMrl implements Mrl {
     sb.append("://");
     sb.append(device);
     if(title != -1) {
-      sb.append('@');
+      sb.append('#');
       sb.append(title);
       if(chapter != -1) {
         sb.append(':');
