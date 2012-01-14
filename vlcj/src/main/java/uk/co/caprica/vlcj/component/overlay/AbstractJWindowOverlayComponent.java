@@ -20,11 +20,16 @@
 package uk.co.caprica.vlcj.component.overlay;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.image.BufferedImage;
 import java.lang.reflect.Method;
 
 import javax.swing.JWindow;
@@ -91,6 +96,9 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
     }
     onSetWindowTransparency();
     onCreateOverlay();
+    if(onHideCursor()) {
+      setCursor(getBlankCursor());
+    }
   }
 
   /**
@@ -129,6 +137,18 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
    */
   protected void onCreateOverlay() {
     // Default implementation does nothing.
+  }
+
+  /**
+   * Template method to determine whether or not the mouse pointer should be
+   * hidden when the overlay is active.
+   * <p>
+   * The default behaviour is to hide the mouse pointer.
+   * 
+   * @return <code>true</code> to hide the mouse pointer; otherwise <code>false</code>
+   */
+  protected boolean onHideCursor() {
+    return true;
   }
   
   @Override
@@ -172,5 +192,15 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
    */
   protected void onPaintOverlay(Graphics2D g2) {
     // Default implementation does nothing
+  }
+
+  /**
+   * Get a blank cursor to use for the mouse pointer.
+   *
+   * @return blank cursor
+   */
+  private Cursor getBlankCursor() {
+    Image blankImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+    return Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(0, 0), "");
   }
 }
