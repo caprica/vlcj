@@ -144,7 +144,7 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
    * do this, you must take care to erase the overlay background before you 
    * paint it.
    * 
-   * @param overlay overlay component
+   * @param overlay overlay component, may be <code>null</code>
    */
   void setOverlay(Window overlay);
   
