@@ -28,10 +28,12 @@ import java.awt.Image;
 import java.awt.Panel;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JWindow;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -164,6 +166,8 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     add(canvas, BorderLayout.CENTER);
     // Register listeners
     mediaPlayer.addMediaPlayerEventListener(this);
+    // Set the overlay
+    mediaPlayer.setOverlay(onGetOverlay());
   }
   
   /**
@@ -284,6 +288,20 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     Canvas canvas = new Canvas();
     canvas.setBackground(Color.black);
     return canvas;
+  }
+  
+  /**
+   * Template method to obtain an overlay component.
+   * <p>
+   * The default implementation does not provide an overlay.
+   * <p>
+   * The overlay component may be a {@link Window} or a <code>Window</code> sub-class 
+   * such as {@link JWindow}.
+   * 
+   * @return overlay component
+   */
+  protected Window onGetOverlay() {
+    return null;
   }
   
   /**
