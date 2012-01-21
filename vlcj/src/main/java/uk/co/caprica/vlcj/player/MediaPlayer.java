@@ -982,6 +982,25 @@ public interface MediaPlayer {
   void setSubTitleFile(File subTitleFile);
 
   /**
+   * Get the current teletext page.
+   * 
+   * @return page number
+   */
+  int getTeletextPage();
+  
+  /**
+   * Set the new teletext page to retrieve.
+   * 
+   * @param pageNumber page number
+   */
+  void setTeletextPage(int pageNumber);
+  
+  /**
+   * Toggle teletext status.
+   */
+  void toggleTeletext();
+  
+  /**
    * Get the title descriptions. 
    * <p>
    * The media must be playing before this information is available.

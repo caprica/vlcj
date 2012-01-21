@@ -1003,6 +1003,26 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     setSubTitleFile(subTitleFile.getAbsolutePath());
   }
   
+  // === Teletext Controls ====================================================
+
+//  @Override
+  public int getTeletextPage() {
+    Logger.debug("getTeletextPage()");
+    return libvlc.libvlc_video_get_teletext(mediaPlayerInstance);
+  }
+
+//  @Override
+  public void setTeletextPage(int pageNumber) {
+    Logger.debug("setTeletextPage(pageNumber={})", pageNumber);
+    libvlc.libvlc_video_set_teletext(mediaPlayerInstance, pageNumber);
+  }
+
+//  @Override
+  public void toggleTeletext() {
+    Logger.debug("toggleTeletext()");
+    libvlc.libvlc_toggle_teletext(mediaPlayerInstance);
+  }
+
   // === Description Controls =================================================
   
 //  @Override
@@ -1021,7 +1041,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     return trackDescriptionList;
   }  
   
-//  @Override
+  //  @Override
   public List<TrackDescription> getVideoDescriptions() {
     Logger.debug("getVideoDescriptions()");
     List<TrackDescription> trackDescriptionList = new ArrayList<TrackDescription>();
