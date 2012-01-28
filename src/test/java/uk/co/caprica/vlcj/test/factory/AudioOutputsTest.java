@@ -31,33 +31,33 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class AudioOutputsTest extends VlcjTest {
 
-  private static final String FORMAT_PATTERN = "%3s %-12s %-40s %-40s %s\n";
+    private static final String FORMAT_PATTERN = "%3s %-12s %-40s %-40s %s\n";
 
-  public static void main(String[] args) throws Exception {
-    MediaPlayerFactory factory = new MediaPlayerFactory();
-    
-    List<AudioOutput> audioOutputs = factory.getAudioOutputs();
+    public static void main(String[] args) throws Exception {
+        MediaPlayerFactory factory = new MediaPlayerFactory();
 
-    System.out.println("Audio Outputs:");
-    System.out.println();
+        List<AudioOutput> audioOutputs = factory.getAudioOutputs();
 
-    System.out.printf(FORMAT_PATTERN , "#", "Name", "Description", "Devices", "Long Name");
-    System.out.printf(FORMAT_PATTERN , "=", "====", "===========", "=======", "=========");
-    for(int i = 0; i < audioOutputs.size(); i++) {
-      dump(i, audioOutputs.get(i));
+        System.out.println("Audio Outputs:");
+        System.out.println();
+
+        System.out.printf(FORMAT_PATTERN, "#", "Name", "Description", "Devices", "Long Name");
+        System.out.printf(FORMAT_PATTERN, "=", "====", "===========", "=======", "=========");
+        for(int i = 0; i < audioOutputs.size(); i ++ ) {
+            dump(i, audioOutputs.get(i));
+        }
     }
-  }
 
-  private static void dump(int i, AudioOutput audioOutput) {
-    List<AudioDevice> audioDevices = audioOutput.getDevices(); 
-    System.out.printf(FORMAT_PATTERN , String.valueOf(i+1), audioOutput.getName(), audioOutput.getDescription(), "(" + audioDevices.size() + ")", "");
-    for(int j = 0; j < audioDevices.size(); j++) {
-      AudioDevice audioDevice = audioOutput.getDevices().get(j);
-      System.out.printf(FORMAT_PATTERN, "", "", "", audioDevice.getDeviceId(), formatLongName(audioDevice.getLongName()));
+    private static void dump(int i, AudioOutput audioOutput) {
+        List<AudioDevice> audioDevices = audioOutput.getDevices();
+        System.out.printf(FORMAT_PATTERN, String.valueOf(i + 1), audioOutput.getName(), audioOutput.getDescription(), "(" + audioDevices.size() + ")", "");
+        for(int j = 0; j < audioDevices.size(); j ++ ) {
+            AudioDevice audioDevice = audioOutput.getDevices().get(j);
+            System.out.printf(FORMAT_PATTERN, "", "", "", audioDevice.getDeviceId(), formatLongName(audioDevice.getLongName()));
+        }
     }
-  }
 
-  private static String formatLongName(String longName) {
-    return longName != null ? longName.replaceAll("\\n", " ") : "";
-  }
+    private static String formatLongName(String longName) {
+        return longName != null ? longName.replaceAll("\\n", " ") : "";
+    }
 }

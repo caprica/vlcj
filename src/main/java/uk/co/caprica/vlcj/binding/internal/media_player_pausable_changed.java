@@ -26,5 +26,8 @@ import com.sun.jna.Structure;
  */
 public class media_player_pausable_changed extends Structure {
 
-  public int new_pausable;
+    /**
+     * 
+     */
+    public int new_pausable;
 }

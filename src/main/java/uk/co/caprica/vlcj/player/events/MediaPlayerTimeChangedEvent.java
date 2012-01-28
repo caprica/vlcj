@@ -27,24 +27,24 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  */
 class MediaPlayerTimeChangedEvent extends AbstractMediaPlayerEvent {
 
-  /**
+    /**
    * 
    */
-  private final long newTime;
-  
-  /**
-   * Create a media player event.
-   * 
-   * @param mediaPlayer media player the event relates to
-   * @param newTime
-   */
-  MediaPlayerTimeChangedEvent(MediaPlayer mediaPlayer, long newTime) {
-    super(mediaPlayer);
-    this.newTime = newTime;
-  }
-  
-  @Override
-  public void notify(MediaPlayerEventListener listener) {
-    listener.timeChanged(mediaPlayer, newTime);
-  }
+    private final long newTime;
+
+    /**
+     * Create a media player event.
+     * 
+     * @param mediaPlayer media player the event relates to
+     * @param newTime
+     */
+    MediaPlayerTimeChangedEvent(MediaPlayer mediaPlayer, long newTime) {
+        super(mediaPlayer);
+        this.newTime = newTime;
+    }
+
+    @Override
+    public void notify(MediaPlayerEventListener listener) {
+        listener.timeChanged(mediaPlayer, newTime);
+    }
 }

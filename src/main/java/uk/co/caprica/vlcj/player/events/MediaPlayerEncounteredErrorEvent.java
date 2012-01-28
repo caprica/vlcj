@@ -26,18 +26,18 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  *
  */
 class MediaPlayerEncounteredErrorEvent extends AbstractMediaPlayerEvent {
-  
-  /**
-   * Create a media player event.
-   * 
-   * @param mediaPlayer media player the event relates to
-   */
-  MediaPlayerEncounteredErrorEvent(MediaPlayer mediaPlayer) {
-    super(mediaPlayer);
-  }
-  
-  @Override
-  public void notify(MediaPlayerEventListener listener) {
-    listener.error(mediaPlayer);
-  }
+
+    /**
+     * Create a media player event.
+     * 
+     * @param mediaPlayer media player the event relates to
+     */
+    MediaPlayerEncounteredErrorEvent(MediaPlayer mediaPlayer) {
+        super(mediaPlayer);
+    }
+
+    @Override
+    public void notify(MediaPlayerEventListener listener) {
+        listener.error(mediaPlayer);
+    }
 }

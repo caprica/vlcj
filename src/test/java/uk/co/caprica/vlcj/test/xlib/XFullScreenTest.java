@@ -27,18 +27,18 @@ import uk.co.caprica.vlcj.runtime.x.LibXUtil;
  * Basic test to use the native X-Windows API to set a full-screen window.
  */
 public class XFullScreenTest {
-  
-  public static void main(String[] args) throws Exception {
-    JFrame f = new JFrame("LibX Display Test");
-    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    f.setLocation(100, 100);
-    f.setSize(400, 200);
-    f.setVisible(true);
 
-    Thread.sleep(3000);
-    LibXUtil.setFullScreenWindow(f, true);
-    
-    Thread.sleep(3000);
-    LibXUtil.setFullScreenWindow(f, false);
-  }
+    public static void main(String[] args) throws Exception {
+        JFrame f = new JFrame("LibX Display Test");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setLocation(100, 100);
+        f.setSize(400, 200);
+        f.setVisible(true);
+
+        Thread.sleep(3000);
+        LibXUtil.setFullScreenWindow(f, true);
+
+        Thread.sleep(3000);
+        LibXUtil.setFullScreenWindow(f, false);
+    }
 }

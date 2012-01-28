@@ -26,10 +26,10 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
  */
 public interface MediaListPlayerEvent {
 
-  /**
-   * Notify a listener of the event.
-   * 
-   * @param listener event listener to notify
-   */
-  void notify(MediaListPlayerEventListener listener);
+    /**
+     * Notify a listener of the event.
+     * 
+     * @param listener event listener to notify
+     */
+    void notify(MediaListPlayerEventListener listener);
 }

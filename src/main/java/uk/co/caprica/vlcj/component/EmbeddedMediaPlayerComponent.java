@@ -46,389 +46,383 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 /**
  * Encapsulation of an embedded media player.
  * <p>
- * This component encapsulates a media player and an associated video surface
- * suitable for embedding inside a graphical user interface.
+ * This component encapsulates a media player and an associated video surface suitable for embedding
+ * inside a graphical user interface.
  * <p>
- * Most implementation details, like creating a factory and connecting the
- * various objects together, are encapsulated.
+ * Most implementation details, like creating a factory and connecting the various objects together,
+ * are encapsulated.
  * <p>
- * The default implementation will work out-of-the-box, but there are various
- * template methods available to sub-classes to tailor the behaviour of the
- * component.
+ * The default implementation will work out-of-the-box, but there are various template methods
+ * available to sub-classes to tailor the behaviour of the component.
  * <p>
- * This class implements the most the most common use-case for an embedded
- * media player and is intended to enable a developer to get quickly started
- * with the vlcj framework. More advanced applications are free to directly use
- * the {@link MediaPlayerFactory}, if required, as has always been the case. 
+ * This class implements the most the most common use-case for an embedded media player and is
+ * intended to enable a developer to get quickly started with the vlcj framework. More advanced
+ * applications are free to directly use the {@link MediaPlayerFactory}, if required, as has always
+ * been the case.
  * <p>
- * This component also adds implements the various media player listener 
- * interfaces, consequently an implementation sub-class can simply override 
- * those listener methods to handle events.  
+ * This component also adds implements the various media player listener interfaces, consequently an
+ * implementation sub-class can simply override those listener methods to handle events.
  * <p>
- * Applications can get a handle to the underlying media player object by
- * invoking {@link #getMediaPlayer()}. 
+ * Applications can get a handle to the underlying media player object by invoking
+ * {@link #getMediaPlayer()}.
  * <p>
- * To use, simply create an instance of this class and add it to a visual
- * container component like a {@link JPanel} (or any other {@link Container}).
+ * To use, simply create an instance of this class and add it to a visual container component like a
+ * {@link JPanel} (or any other {@link Container}).
  * <p>
- * For example, here a media player component is used directly as the content
- * pane of a {@link JFrame}, and only two lines of code that use vlcj are
- * required:
+ * For example, here a media player component is used directly as the content pane of a
+ * {@link JFrame}, and only two lines of code that use vlcj are required:
+ * 
  * <pre>
  * frame = new JFrame();
- * mediaPlayerComponent = new EmbeddedMediaPlayerComponent(); // <--- 1
+ * mediaPlayerComponent = new EmbeddedMediaPlayerComponent(); // &lt;--- 1
  * frame.setContentPane(mediaPlayerComponent);
  * frame.setSize(1050, 600);
  * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  * frame.setVisible(true);
- * mediaPlayerComponent.getMediaPlayer().playMedia(mrl); // <--- 2
+ * mediaPlayerComponent.getMediaPlayer().playMedia(mrl); // &lt;--- 2
  * </pre>
+ * 
  * An example of a sub-class to tailor behaviours and override event handlers:
+ * 
  * <pre>
  * mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
- *   protected String[] onGetMediaPlayerFactoryArgs() {
- *     return new String[] {"--no-video-title-show", "--ffmpeg-hw"};
- *   }
+ *     protected String[] onGetMediaPlayerFactoryArgs() {
+ *         return new String[] {&quot;--no-video-title-show&quot;, &quot;--ffmpeg-hw&quot;};
+ *     }
  * 
- *   protected FullScreenStrategy onGetFullScreenStrategy() {
- *     return new XFullScreenStrategy(frame);
- *   }
- *   
- *   public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
- *   }
- *
- *   public void error(MediaPlayer mediaPlayer) {
- *   }
- *   
- *   public void finished(MediaPlayer mediaPlayer) {
- *   }
+ *     protected FullScreenStrategy onGetFullScreenStrategy() {
+ *         return new XFullScreenStrategy(frame);
+ *     }
+ * 
+ *     public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
+ *     }
+ * 
+ *     public void error(MediaPlayer mediaPlayer) {
+ *     }
+ * 
+ *     public void finished(MediaPlayer mediaPlayer) {
+ *     }
  * };
  * </pre>
  */
 @SuppressWarnings("serial")
 public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEventListener {
-  
-  /**
-   * Default factory initialisation arguments.
-   * <p>
-   * Sub-classes may totally disregard these arguments and provide their own -
-   * for example to enable ffmpeg hardware decoding via "--ffmpeg-hw" if
-   * supported by the OS and the GPU.
-   */
-  protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
-    "--no-plugins-cache",
-    "--no-video-title-show",
-    "--no-snapshot-preview",
-    "--quiet",
-    "--quiet-synchro",
-    "--intf",
-    "dummy"
-  };
-  
-  /**
-   * Media player factory.
-   */
-  private final MediaPlayerFactory mediaPlayerFactory;
-  
-  /**
-   * Media player.
-   */
-  private final EmbeddedMediaPlayer mediaPlayer;
-  
-  /**
-   * Video surface canvas.
-   */
-  private final Canvas canvas;
-  
-  /**
-   * Video surface encapsulation.
-   */
-  private final CanvasVideoSurface videoSurface;
-  
-  /**
-   * Blank cursor to use when the cursor is disabled.
-   */
-  private Cursor blankCursor;
-  
-  /**
-   * Construct a media player component.
-   */
-  public EmbeddedMediaPlayerComponent() {
-    // Create the native resources
-    mediaPlayerFactory = onGetMediaPlayerFactory();
-    mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(onGetFullScreenStrategy());
-    canvas = onGetCanvas();
-    videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
-    mediaPlayer.setVideoSurface(videoSurface);
-    // Prepare the user interface
-    setBackground(Color.black);
-    setLayout(new BorderLayout());
-    add(canvas, BorderLayout.CENTER);
-    // Register listeners
-    mediaPlayer.addMediaPlayerEventListener(this);
-    // Set the overlay
-    mediaPlayer.setOverlay(onGetOverlay());
-  }
-  
-  /**
-   * Get the media player factory reference.
-   * 
-   * @return media player factory
-   */
-  public final MediaPlayerFactory getMediaPlayerFactory() {
-    return mediaPlayerFactory;
-  }
-  
-  /**
-   * Get the embedded media player reference.
-   * <p>
-   * An application uses this handle to control the media player, add listeners
-   * and so on.
-   * 
-   * @return media player
-   */
-  public final EmbeddedMediaPlayer getMediaPlayer() {
-    return mediaPlayer;
-  }
-  
-  /**
-   * Get the video surface {@link Canvas} component.
-   * <p>
-   * An application may want to add key/mouse listeners to the video surface
-   * component.
-   * 
-   * @return video surface component
-   */
-  public final Canvas getVideoSurface() {
-    return canvas;
-  }
-  
-  /**
-   * Enable or disable the mouse cursor when it is over the component. 
-   * 
-   * @param enabled <code>true</code> to enable (show) the cursor; <code>false</code> to disable (hide) it
-   */
-  public final void setCursorEnabled(boolean enabled) {
-    setCursor(enabled ? null : getBlankCursor());
-  }
-  
-  /**
-   * Release the media player component and the associated native media player
-   * resources.
-   */
-  public final void release() {
-    onBeforeRelease();
-    mediaPlayer.release();
-    mediaPlayerFactory.release();
-    onAfterRelease();
-  }
-  
-  /**
-   * Create a blank 1x1 image to use when the cursor is disabled.
-   * 
-   * @return cursor
-   */
-  private Cursor getBlankCursor() {
-    if(blankCursor == null) {
-      Image blankImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-      blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(0, 0), "");
+
+    /**
+     * Default factory initialisation arguments.
+     * <p>
+     * Sub-classes may totally disregard these arguments and provide their own - for example to
+     * enable ffmpeg hardware decoding via "--ffmpeg-hw" if supported by the OS and the GPU.
+     */
+    protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
+        "--no-plugins-cache", 
+        "--no-video-title-show", 
+        "--no-snapshot-preview", 
+        "--quiet", 
+        "--quiet-synchro", 
+        "--intf", 
+        "dummy"
+    };
+
+    /**
+     * Media player factory.
+     */
+    private final MediaPlayerFactory mediaPlayerFactory;
+
+    /**
+     * Media player.
+     */
+    private final EmbeddedMediaPlayer mediaPlayer;
+
+    /**
+     * Video surface canvas.
+     */
+    private final Canvas canvas;
+
+    /**
+     * Video surface encapsulation.
+     */
+    private final CanvasVideoSurface videoSurface;
+
+    /**
+     * Blank cursor to use when the cursor is disabled.
+     */
+    private Cursor blankCursor;
+
+    /**
+     * Construct a media player component.
+     */
+    public EmbeddedMediaPlayerComponent() {
+        // Create the native resources
+        mediaPlayerFactory = onGetMediaPlayerFactory();
+        mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(onGetFullScreenStrategy());
+        canvas = onGetCanvas();
+        videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
+        mediaPlayer.setVideoSurface(videoSurface);
+        // Prepare the user interface
+        setBackground(Color.black);
+        setLayout(new BorderLayout());
+        add(canvas, BorderLayout.CENTER);
+        // Register listeners
+        mediaPlayer.addMediaPlayerEventListener(this);
+        // Set the overlay
+        mediaPlayer.setOverlay(onGetOverlay());
     }
-    return blankCursor;
-  }
-  
-  /**
-   * Template method to create a media player factory.
-   * <p>
-   * The default implementation will invoke the {@link #onGetMediaPlayerFactoryArgs()}
-   * template method.
-   * <p>
-   * When this component is released via {@link #release()} the factory
-   * instance returned by this method will also be released.
-   * 
-   * @return media player factory
-   */
-  protected MediaPlayerFactory onGetMediaPlayerFactory() {
-    return new MediaPlayerFactory(onGetMediaPlayerFactoryArgs());
-  }
-  
-  /**
-   * Template method to obtain the initialisation arguments used to create the
-   * media player factory instance.
-   * <p>
-   * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template
-   * method there is no guarantee that {@link #onGetMediaPlayerFactoryArgs()}
-   * will be called.
-   * 
-   * @return media player factory initialisation arguments
-   */
-  protected String[] onGetMediaPlayerFactoryArgs() {
-    return DEFAULT_FACTORY_ARGUMENTS;
-  }
-  
-  /**
-   * Template method to obtain a full-screen strategy implementation.
-   * <p>
-   * The default implementation does not provide any full-screen strategy.
-   * 
-   * @return full-screen strategy implementation
-   */
-  protected FullScreenStrategy onGetFullScreenStrategy() {
-    return null;
-  }
-  
-  /**
-   * Template method to obtain a video surface {@link Canvas} component.
-   * <p>
-   * The default implementation simply returns an ordinary Canvas with a black
-   * background.
-   * 
-   * @return video surface component
-   */
-  protected Canvas onGetCanvas() {
-    Canvas canvas = new Canvas();
-    canvas.setBackground(Color.black);
-    return canvas;
-  }
-  
-  /**
-   * Template method to obtain an overlay component.
-   * <p>
-   * The default implementation does not provide an overlay.
-   * <p>
-   * The overlay component may be a {@link Window} or a <code>Window</code> sub-class 
-   * such as {@link JWindow}.
-   * 
-   * @return overlay component
-   */
-  protected Window onGetOverlay() {
-    return null;
-  }
-  
-  /**
-   * Template method invoked immediately prior to releasing the media player
-   * and media player factory instances.
-   */
-  protected void onBeforeRelease() {
-  }
 
-  /**
-   * Template method invoked immediately after releasing the media player and
-   * media player factory instances.
-   */
-  protected void onAfterRelease() {
-  }
+    /**
+     * Get the media player factory reference.
+     * 
+     * @return media player factory
+     */
+    public final MediaPlayerFactory getMediaPlayerFactory() {
+        return mediaPlayerFactory;
+    }
 
-  // === MediaPlayerEventListener =============================================
+    /**
+     * Get the embedded media player reference.
+     * <p>
+     * An application uses this handle to control the media player, add listeners and so on.
+     * 
+     * @return media player
+     */
+    public final EmbeddedMediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
 
-//  @Override
-  public void mediaChanged(MediaPlayer mediaPlayer) {
-  }
+    /**
+     * Get the video surface {@link Canvas} component.
+     * <p>
+     * An application may want to add key/mouse listeners to the video surface component.
+     * 
+     * @return video surface component
+     */
+    public final Canvas getVideoSurface() {
+        return canvas;
+    }
 
-//  @Override
-  public void opening(MediaPlayer mediaPlayer) {
-  }
+    /**
+     * Enable or disable the mouse cursor when it is over the component.
+     * 
+     * @param enabled <code>true</code> to enable (show) the cursor; <code>false</code> to disable (hide) it
+     */
+    public final void setCursorEnabled(boolean enabled) {
+        setCursor(enabled ? null : getBlankCursor());
+    }
 
-//  @Override
-  public void buffering(MediaPlayer mediaPlayer) {
-  }
+    /**
+     * Release the media player component and the associated native media player resources.
+     */
+    public final void release() {
+        onBeforeRelease();
+        mediaPlayer.release();
+        mediaPlayerFactory.release();
+        onAfterRelease();
+    }
 
-//  @Override
-  public void playing(MediaPlayer mediaPlayer) {
-  }
+    /**
+     * Create a blank 1x1 image to use when the cursor is disabled.
+     * 
+     * @return cursor
+     */
+    private Cursor getBlankCursor() {
+        if(blankCursor == null) {
+            Image blankImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+            blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(0, 0), "");
+        }
+        return blankCursor;
+    }
 
-//  @Override
-  public void paused(MediaPlayer mediaPlayer) {
-  }
+    /**
+     * Template method to create a media player factory.
+     * <p>
+     * The default implementation will invoke the {@link #onGetMediaPlayerFactoryArgs()} template
+     * method.
+     * <p>
+     * When this component is released via {@link #release()} the factory instance returned by this
+     * method will also be released.
+     * 
+     * @return media player factory
+     */
+    protected MediaPlayerFactory onGetMediaPlayerFactory() {
+        return new MediaPlayerFactory(onGetMediaPlayerFactoryArgs());
+    }
 
-//  @Override
-  public void stopped(MediaPlayer mediaPlayer) {
-  }
+    /**
+     * Template method to obtain the initialisation arguments used to create the media player
+     * factory instance.
+     * <p>
+     * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
+     * guarantee that {@link #onGetMediaPlayerFactoryArgs()} will be called.
+     * 
+     * @return media player factory initialisation arguments
+     */
+    protected String[] onGetMediaPlayerFactoryArgs() {
+        return DEFAULT_FACTORY_ARGUMENTS;
+    }
 
-//  @Override
-  public void forward(MediaPlayer mediaPlayer) {
-  }
+    /**
+     * Template method to obtain a full-screen strategy implementation.
+     * <p>
+     * The default implementation does not provide any full-screen strategy.
+     * 
+     * @return full-screen strategy implementation
+     */
+    protected FullScreenStrategy onGetFullScreenStrategy() {
+        return null;
+    }
 
-//  @Override
-  public void backward(MediaPlayer mediaPlayer) {
-  }
+    /**
+     * Template method to obtain a video surface {@link Canvas} component.
+     * <p>
+     * The default implementation simply returns an ordinary Canvas with a black background.
+     * 
+     * @return video surface component
+     */
+    protected Canvas onGetCanvas() {
+        Canvas canvas = new Canvas();
+        canvas.setBackground(Color.black);
+        return canvas;
+    }
 
-//  @Override
-  public void finished(MediaPlayer mediaPlayer) {
-  }
+    /**
+     * Template method to obtain an overlay component.
+     * <p>
+     * The default implementation does not provide an overlay.
+     * <p>
+     * The overlay component may be a {@link Window} or a <code>Window</code> sub-class such as
+     * {@link JWindow}.
+     * 
+     * @return overlay component
+     */
+    protected Window onGetOverlay() {
+        return null;
+    }
 
-//  @Override
-  public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-  }
+    /**
+     * Template method invoked immediately prior to releasing the media player and media player
+     * factory instances.
+     */
+    protected void onBeforeRelease() {
+    }
 
-//  @Override
-  public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
-  }
+    /**
+     * Template method invoked immediately after releasing the media player and media player factory
+     * instances.
+     */
+    protected void onAfterRelease() {
+    }
 
-//  @Override
-  public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-  }
+    // === MediaPlayerEventListener =============================================
 
-//  @Override
-  public void pausableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-  }
+    // @Override
+    public void mediaChanged(MediaPlayer mediaPlayer) {
+    }
 
-//  @Override
-  public void titleChanged(MediaPlayer mediaPlayer, int newTitle) {
-  }
+    // @Override
+    public void opening(MediaPlayer mediaPlayer) {
+    }
 
-//  @Override
-  public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
-  }
+    // @Override
+    public void buffering(MediaPlayer mediaPlayer) {
+    }
 
-//  @Override
-  public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
-  }
+    // @Override
+    public void playing(MediaPlayer mediaPlayer) {
+    }
 
-//  @Override
-  public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-  }
+    // @Override
+    public void paused(MediaPlayer mediaPlayer) {
+    }
 
-//  @Override
-  public void error(MediaPlayer mediaPlayer) {
-  }
+    // @Override
+    public void stopped(MediaPlayer mediaPlayer) {
+    }
 
-//  @Override
-  public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
-  }
+    // @Override
+    public void forward(MediaPlayer mediaPlayer) {
+    }
 
-//  @Override
-  public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-  }
+    // @Override
+    public void backward(MediaPlayer mediaPlayer) {
+    }
 
-//  @Override
-  public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-  }
+    // @Override
+    public void finished(MediaPlayer mediaPlayer) {
+    }
 
-//  @Override
-  public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-  }
+    // @Override
+    public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
+    }
 
-//  @Override
-  public void mediaFreed(MediaPlayer mediaPlayer) {
-  }
+    // @Override
+    public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
+    }
 
-//  @Override
-  public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
-  }
+    // @Override
+    public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
+    }
 
-//  @Override
-  public void newMedia(MediaPlayer mediaPlayer) {
-  }
+    // @Override
+    public void pausableChanged(MediaPlayer mediaPlayer, int newSeekable) {
+    }
 
-//  @Override
-  public void subItemPlayed(MediaPlayer mediaPlayer, int subItemIndex) {
-  }
+    // @Override
+    public void titleChanged(MediaPlayer mediaPlayer, int newTitle) {
+    }
 
-//  @Override
-  public void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex) {
-  }
+    // @Override
+    public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
+    }
 
-//  @Override
-  public void endOfSubItems(MediaPlayer mediaPlayer) {
-  }
+    // @Override
+    public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
+    }
+
+    // @Override
+    public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
+    }
+
+    // @Override
+    public void error(MediaPlayer mediaPlayer) {
+    }
+
+    // @Override
+    public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
+    }
+
+    // @Override
+    public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
+    }
+
+    // @Override
+    public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
+    }
+
+    // @Override
+    public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
+    }
+
+    // @Override
+    public void mediaFreed(MediaPlayer mediaPlayer) {
+    }
+
+    // @Override
+    public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
+    }
+
+    // @Override
+    public void newMedia(MediaPlayer mediaPlayer) {
+    }
+
+    // @Override
+    public void subItemPlayed(MediaPlayer mediaPlayer, int subItemIndex) {
+    }
+
+    // @Override
+    public void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex) {
+    }
+
+    // @Override
+    public void endOfSubItems(MediaPlayer mediaPlayer) {
+    }
 }

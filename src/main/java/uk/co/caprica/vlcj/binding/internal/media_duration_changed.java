@@ -26,5 +26,8 @@ import com.sun.jna.Structure;
  */
 public class media_duration_changed extends Structure {
 
-  public long new_duration;
+    /**
+     * 
+     */
+    public long new_duration;
 }

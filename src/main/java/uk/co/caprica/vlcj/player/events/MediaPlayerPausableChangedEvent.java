@@ -27,24 +27,24 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  */
 class MediaPlayerPausableChangedEvent extends AbstractMediaPlayerEvent {
 
-  /**
+    /**
    * 
    */
-  private final int newPausable;
-  
-  /**
-   * Create a media player event.
-   * 
-   * @param mediaPlayer media player the event relates to
-   * @param newPausable
-   */
-  MediaPlayerPausableChangedEvent(MediaPlayer mediaPlayer, int newPausable) {
-    super(mediaPlayer);
-    this.newPausable = newPausable;
-  }
-  
-  @Override
-  public void notify(MediaPlayerEventListener listener) {
-    listener.pausableChanged(mediaPlayer, newPausable);
-  }
+    private final int newPausable;
+
+    /**
+     * Create a media player event.
+     * 
+     * @param mediaPlayer media player the event relates to
+     * @param newPausable
+     */
+    MediaPlayerPausableChangedEvent(MediaPlayer mediaPlayer, int newPausable) {
+        super(mediaPlayer);
+        this.newPausable = newPausable;
+    }
+
+    @Override
+    public void notify(MediaPlayerEventListener listener) {
+        listener.pausableChanged(mediaPlayer, newPausable);
+    }
 }

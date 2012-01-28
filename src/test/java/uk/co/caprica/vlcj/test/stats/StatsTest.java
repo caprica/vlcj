@@ -39,186 +39,185 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class StatsTest extends VlcjTest {
 
-  private JFrame frame;
-  private EmbeddedMediaPlayerComponent mediaPlayerComponent;
+    private JFrame frame;
+    private EmbeddedMediaPlayerComponent mediaPlayerComponent;
   
-  private JLabel readBytesLabel;
-  private JLabel inputBitrateLabel;
-  private JLabel demuxReadBytesLabel;
-  private JLabel demuxBitrateLabel;
-  private JLabel demuxCorruptedLabel;
-  private JLabel demuxDiscontinuityLabel;
-  private JLabel decodedVideoLabel;
-  private JLabel decodedAudioLabel;
-  private JLabel displayedPicturesLabel;
-  private JLabel lostPicturesLabel;
-  private JLabel playedABuffersLabel;
-  private JLabel lostABuffersLabel;
-  private JLabel sentPacketsLabel;
-  private JLabel sentBytesLabel;
-  private JLabel sendBitRateLabel;
+    private JLabel readBytesLabel;
+    private JLabel inputBitrateLabel;
+    private JLabel demuxReadBytesLabel;
+    private JLabel demuxBitrateLabel;
+    private JLabel demuxCorruptedLabel;
+    private JLabel demuxDiscontinuityLabel;
+    private JLabel decodedVideoLabel;
+    private JLabel decodedAudioLabel;
+    private JLabel displayedPicturesLabel;
+    private JLabel lostPicturesLabel;
+    private JLabel playedABuffersLabel;
+    private JLabel lostABuffersLabel;
+    private JLabel sentPacketsLabel;
+    private JLabel sentBytesLabel;
+    private JLabel sendBitRateLabel;
 
-  private JLabel readBytesValueLabel;
-  private JLabel inputBitrateValueLabel;
-  private JLabel demuxReadBytesValueLabel;
-  private JLabel demuxBitrateValueLabel;
-  private JLabel demuxCorruptedValueLabel;
-  private JLabel demuxDiscontinuityValueLabel;
-  private JLabel decodedVideoValueLabel;
-  private JLabel decodedAudioValueLabel;
-  private JLabel displayedPicturesValueLabel;
-  private JLabel lostPicturesValueLabel;
-  private JLabel playedABuffersValueLabel;
-  private JLabel lostABuffersValueLabel;
-  private JLabel sentPacketsValueLabel;
-  private JLabel sentBytesValueLabel;
-  private JLabel sendBitRateValueLabel;
+    private JLabel readBytesValueLabel;
+    private JLabel inputBitrateValueLabel;
+    private JLabel demuxReadBytesValueLabel;
+    private JLabel demuxBitrateValueLabel;
+    private JLabel demuxCorruptedValueLabel;
+    private JLabel demuxDiscontinuityValueLabel;
+    private JLabel decodedVideoValueLabel;
+    private JLabel decodedAudioValueLabel;
+    private JLabel displayedPicturesValueLabel;
+    private JLabel lostPicturesValueLabel;
+    private JLabel playedABuffersValueLabel;
+    private JLabel lostABuffersValueLabel;
+    private JLabel sentPacketsValueLabel;
+    private JLabel sentBytesValueLabel;
+    private JLabel sendBitRateValueLabel;
 
-  private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-  public static void main(String[] args) {
-    if(args.length != 1) {
-      System.err.println("Specify an mrl");
-      System.exit(1);
-    }
-    
-    setLookAndFeel();
-    
-    final String mrl = args[0];
-    
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        new StatsTest().start(mrl);
-      }
-    });
-  }
-  
-  public StatsTest() {
-    mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
-
-    readBytesLabel = new JLabel("Read Bytes:");
-    inputBitrateLabel = new JLabel("Input Bitrate:");
-    demuxReadBytesLabel = new JLabel("Deumx Read Bytes:");
-    demuxBitrateLabel = new JLabel("Demux Bitrate:");
-    demuxCorruptedLabel = new JLabel("Demux Corrupted:");
-    demuxDiscontinuityLabel = new JLabel("Demux Discontinuity:");
-    decodedVideoLabel = new JLabel("Decoded Video:");
-    decodedAudioLabel = new JLabel("Decoded Audio:");
-    displayedPicturesLabel = new JLabel("Displayed Pictures:");
-    lostPicturesLabel = new JLabel("Lost Pictures:");
-    playedABuffersLabel = new JLabel("Played ABuffers:");
-    lostABuffersLabel = new JLabel("Lost ABuffers");
-    sentPacketsLabel = new JLabel("Sent Packets");
-    sentBytesLabel = new JLabel("Sent Bytes");
-    sendBitRateLabel = new JLabel("Send Bitrate");
-    
-    readBytesValueLabel = new JLabel();
-    inputBitrateValueLabel = new JLabel();
-    demuxReadBytesValueLabel = new JLabel();
-    demuxBitrateValueLabel = new JLabel();
-    demuxCorruptedValueLabel = new JLabel();
-    demuxDiscontinuityValueLabel = new JLabel();
-    decodedVideoValueLabel = new JLabel();
-    decodedAudioValueLabel = new JLabel();
-    displayedPicturesValueLabel = new JLabel();
-    lostPicturesValueLabel = new JLabel();
-    playedABuffersValueLabel = new JLabel();
-    lostABuffersValueLabel = new JLabel();
-    sentPacketsValueLabel = new JLabel();
-    sentBytesValueLabel = new JLabel();
-    sendBitRateValueLabel = new JLabel();
-    
-    JPanel statsComponent = new JPanel();
-    statsComponent.setLayout(new GridLayout(0, 2, 8, 8));
-    
-    statsComponent.add(readBytesLabel);
-    statsComponent.add(readBytesValueLabel);
-    statsComponent.add(inputBitrateLabel);
-    statsComponent.add(inputBitrateValueLabel);
-    statsComponent.add(demuxReadBytesLabel);
-    statsComponent.add(demuxReadBytesValueLabel);
-    statsComponent.add(demuxBitrateLabel);
-    statsComponent.add(demuxBitrateValueLabel);
-    statsComponent.add(demuxCorruptedLabel);
-    statsComponent.add(demuxCorruptedValueLabel);
-    statsComponent.add(demuxDiscontinuityLabel);
-    statsComponent.add(demuxDiscontinuityValueLabel);
-    statsComponent.add(decodedVideoLabel);
-    statsComponent.add(decodedVideoValueLabel);
-    statsComponent.add(decodedAudioLabel);
-    statsComponent.add(decodedAudioValueLabel);
-    statsComponent.add(displayedPicturesLabel);
-    statsComponent.add(displayedPicturesValueLabel);
-    statsComponent.add(lostPicturesLabel);
-    statsComponent.add(lostPicturesValueLabel);
-    statsComponent.add(playedABuffersLabel);
-    statsComponent.add(playedABuffersValueLabel);
-    statsComponent.add(lostABuffersLabel);
-    statsComponent.add(lostABuffersValueLabel);
-    statsComponent.add(sentPacketsLabel);
-    statsComponent.add(sentPacketsValueLabel);
-    statsComponent.add(sentBytesLabel);
-    statsComponent.add(sentBytesValueLabel);
-    statsComponent.add(sendBitRateLabel);
-    statsComponent.add(sendBitRateValueLabel);
-    
-    JPanel statsPanel = new JPanel();
-    statsPanel.setLayout(new BorderLayout());
-    statsPanel.add(statsComponent, BorderLayout.NORTH);
-    
-    statsPanel.setBorder(new EmptyBorder(8, 8, 8, 8));
-    
-    JPanel cp = new JPanel();
-    cp.setLayout(new BorderLayout());
-    cp.add(mediaPlayerComponent, BorderLayout.CENTER);
-    cp.add(statsPanel, BorderLayout.EAST);
-    
-    frame = new JFrame("vlcj Media Statistics");
-    frame.setLocation(100, 100);
-    frame.setSize(1000, 400);
-    frame.setContentPane(cp);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setVisible(true);
-    
-    executorService.submit(new Runnable() {
-      @Override
-      public void run() {
-        for(;;) {
-          if(mediaPlayerComponent.getMediaPlayer().isPlaying()) {
-            updateStats(mediaPlayerComponent.getMediaPlayer().getMediaStatistics());
-          }
-          
-          try {
-            // Update statistics every second, choose more/less if you want
-            Thread.sleep(1000);
-          }
-          catch(InterruptedException e) {
-          }
+    public static void main(String[] args) {
+        if(args.length != 1) {
+            System.err.println("Specify an mrl");
+            System.exit(1);
         }
-      }
-    });
-  }
-  
-  private void start(String mrl) {
-    mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
-  }
 
-  private void updateStats(libvlc_media_stats_t stats) {
-    readBytesValueLabel.setText(String.valueOf(stats.i_read_bytes));
-    inputBitrateValueLabel.setText(String.valueOf(stats.f_input_bitrate));
-    demuxReadBytesValueLabel.setText(String.valueOf(stats.i_demux_read_bytes));
-    demuxBitrateValueLabel.setText(String.valueOf(stats.f_demux_bitrate));
-    demuxCorruptedValueLabel.setText(String.valueOf(stats.i_demux_corrupted));
-    demuxDiscontinuityValueLabel.setText(String.valueOf(stats.i_demux_discontinuity));
-    decodedVideoValueLabel.setText(String.valueOf(stats.i_decoded_video));
-    decodedAudioValueLabel.setText(String.valueOf(stats.i_decoded_audio));
-    displayedPicturesValueLabel.setText(String.valueOf(stats.i_displayed_pictures));
-    lostPicturesValueLabel.setText(String.valueOf(stats.i_lost_pictures));
-    playedABuffersValueLabel.setText(String.valueOf(stats.i_played_abuffers));
-    lostABuffersValueLabel.setText(String.valueOf(stats.i_lost_abuffers));
-    sentPacketsValueLabel.setText(String.valueOf(stats.i_sent_packets));
-    sentBytesValueLabel.setText(String.valueOf(stats.i_sent_bytes));
-    sendBitRateValueLabel.setText(String.valueOf(stats.f_send_bitrate));
-  }
+        setLookAndFeel();
+
+        final String mrl = args[0];
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new StatsTest().start(mrl);
+            }
+        });
+    }
+
+    public StatsTest() {
+        mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
+
+        readBytesLabel = new JLabel("Read Bytes:");
+        inputBitrateLabel = new JLabel("Input Bitrate:");
+        demuxReadBytesLabel = new JLabel("Deumx Read Bytes:");
+        demuxBitrateLabel = new JLabel("Demux Bitrate:");
+        demuxCorruptedLabel = new JLabel("Demux Corrupted:");
+        demuxDiscontinuityLabel = new JLabel("Demux Discontinuity:");
+        decodedVideoLabel = new JLabel("Decoded Video:");
+        decodedAudioLabel = new JLabel("Decoded Audio:");
+        displayedPicturesLabel = new JLabel("Displayed Pictures:");
+        lostPicturesLabel = new JLabel("Lost Pictures:");
+        playedABuffersLabel = new JLabel("Played ABuffers:");
+        lostABuffersLabel = new JLabel("Lost ABuffers");
+        sentPacketsLabel = new JLabel("Sent Packets");
+        sentBytesLabel = new JLabel("Sent Bytes");
+        sendBitRateLabel = new JLabel("Send Bitrate");
+
+        readBytesValueLabel = new JLabel();
+        inputBitrateValueLabel = new JLabel();
+        demuxReadBytesValueLabel = new JLabel();
+        demuxBitrateValueLabel = new JLabel();
+        demuxCorruptedValueLabel = new JLabel();
+        demuxDiscontinuityValueLabel = new JLabel();
+        decodedVideoValueLabel = new JLabel();
+        decodedAudioValueLabel = new JLabel();
+        displayedPicturesValueLabel = new JLabel();
+        lostPicturesValueLabel = new JLabel();
+        playedABuffersValueLabel = new JLabel();
+        lostABuffersValueLabel = new JLabel();
+        sentPacketsValueLabel = new JLabel();
+        sentBytesValueLabel = new JLabel();
+        sendBitRateValueLabel = new JLabel();
+
+        JPanel statsComponent = new JPanel();
+        statsComponent.setLayout(new GridLayout(0, 2, 8, 8));
+
+        statsComponent.add(readBytesLabel);
+        statsComponent.add(readBytesValueLabel);
+        statsComponent.add(inputBitrateLabel);
+        statsComponent.add(inputBitrateValueLabel);
+        statsComponent.add(demuxReadBytesLabel);
+        statsComponent.add(demuxReadBytesValueLabel);
+        statsComponent.add(demuxBitrateLabel);
+        statsComponent.add(demuxBitrateValueLabel);
+        statsComponent.add(demuxCorruptedLabel);
+        statsComponent.add(demuxCorruptedValueLabel);
+        statsComponent.add(demuxDiscontinuityLabel);
+        statsComponent.add(demuxDiscontinuityValueLabel);
+        statsComponent.add(decodedVideoLabel);
+        statsComponent.add(decodedVideoValueLabel);
+        statsComponent.add(decodedAudioLabel);
+        statsComponent.add(decodedAudioValueLabel);
+        statsComponent.add(displayedPicturesLabel);
+        statsComponent.add(displayedPicturesValueLabel);
+        statsComponent.add(lostPicturesLabel);
+        statsComponent.add(lostPicturesValueLabel);
+        statsComponent.add(playedABuffersLabel);
+        statsComponent.add(playedABuffersValueLabel);
+        statsComponent.add(lostABuffersLabel);
+        statsComponent.add(lostABuffersValueLabel);
+        statsComponent.add(sentPacketsLabel);
+        statsComponent.add(sentPacketsValueLabel);
+        statsComponent.add(sentBytesLabel);
+        statsComponent.add(sentBytesValueLabel);
+        statsComponent.add(sendBitRateLabel);
+        statsComponent.add(sendBitRateValueLabel);
+
+        JPanel statsPanel = new JPanel();
+        statsPanel.setLayout(new BorderLayout());
+        statsPanel.add(statsComponent, BorderLayout.NORTH);
+
+        statsPanel.setBorder(new EmptyBorder(8, 8, 8, 8));
+
+        JPanel cp = new JPanel();
+        cp.setLayout(new BorderLayout());
+        cp.add(mediaPlayerComponent, BorderLayout.CENTER);
+        cp.add(statsPanel, BorderLayout.EAST);
+
+        frame = new JFrame("vlcj Media Statistics");
+        frame.setLocation(100, 100);
+        frame.setSize(1000, 400);
+        frame.setContentPane(cp);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
+        executorService.submit(new Runnable() {
+            @Override
+            public void run() {
+                for(;;) {
+                    if(mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+                        updateStats(mediaPlayerComponent.getMediaPlayer().getMediaStatistics());
+                    }
+                    try {
+                        // Update statistics every second, choose more/less if you want
+                        Thread.sleep(1000);
+                    }
+                    catch(InterruptedException e) {
+                    }
+                }
+            }
+        });
+    }
+
+    private void start(String mrl) {
+        mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
+    }
+
+    private void updateStats(libvlc_media_stats_t stats) {
+        readBytesValueLabel.setText(String.valueOf(stats.i_read_bytes));
+        inputBitrateValueLabel.setText(String.valueOf(stats.f_input_bitrate));
+        demuxReadBytesValueLabel.setText(String.valueOf(stats.i_demux_read_bytes));
+        demuxBitrateValueLabel.setText(String.valueOf(stats.f_demux_bitrate));
+        demuxCorruptedValueLabel.setText(String.valueOf(stats.i_demux_corrupted));
+        demuxDiscontinuityValueLabel.setText(String.valueOf(stats.i_demux_discontinuity));
+        decodedVideoValueLabel.setText(String.valueOf(stats.i_decoded_video));
+        decodedAudioValueLabel.setText(String.valueOf(stats.i_decoded_audio));
+        displayedPicturesValueLabel.setText(String.valueOf(stats.i_displayed_pictures));
+        lostPicturesValueLabel.setText(String.valueOf(stats.i_lost_pictures));
+        playedABuffersValueLabel.setText(String.valueOf(stats.i_played_abuffers));
+        lostABuffersValueLabel.setText(String.valueOf(stats.i_lost_abuffers));
+        sentPacketsValueLabel.setText(String.valueOf(stats.i_sent_packets));
+        sentBytesValueLabel.setText(String.valueOf(stats.i_sent_bytes));
+        sendBitRateValueLabel.setText(String.valueOf(stats.f_send_bitrate));
+    }
 }

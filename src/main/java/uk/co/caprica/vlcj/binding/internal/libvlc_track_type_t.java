@@ -21,27 +21,27 @@ package uk.co.caprica.vlcj.binding.internal;
 
 public enum libvlc_track_type_t {
 
-  libvlc_track_unknown(-1),
-  libvlc_track_audio  ( 0),
-  libvlc_track_video  ( 1),
-  libvlc_track_text   ( 2);
+    libvlc_track_unknown(-1),
+    libvlc_track_audio  ( 0),
+    libvlc_track_video  ( 1),
+    libvlc_track_text   ( 2);
 
-  private final int intValue;
-  
-  private libvlc_track_type_t(int intValue) {
-    this.intValue = intValue;
-  }
-  
-  public int intValue() {
-    return intValue;
-  }
-  
-  public static libvlc_track_type_t valueOf(int intValue) {
-    for(libvlc_track_type_t type : values()) {
-      if(type.intValue == intValue) {
-        return type;
-      }
+    private final int intValue;
+
+    private libvlc_track_type_t(int intValue) {
+        this.intValue = intValue;
     }
-    throw new IllegalArgumentException("No such value " + intValue);
-  }
+
+    public int intValue() {
+        return intValue;
+    }
+
+    public static libvlc_track_type_t valueOf(int intValue) {
+        for(libvlc_track_type_t type : values()) {
+            if(type.intValue == intValue) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("No such value " + intValue);
+    }
 }

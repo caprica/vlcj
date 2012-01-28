@@ -39,66 +39,73 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * See {@link ScreenRecorder} if you want to encode and save the video.
  * <p>
  * Additional media options that can be set are:
+ * 
  * <pre>
  *   :screen-top=
  *   :screen-left=
  *   :screen-width=
- *   :screen-height= 
- * </pre> 
+ *   :screen-height=
+ * </pre>
+ * 
  * See <a href="http://wiki.videolan.org/Documentation:Modules/screen">Screen Module</a>.
  */
 public class ScreenTestPlayer extends VlcjTest {
 
-  private JFrame frame;
-  private JPanel contentPane;
-  private Canvas canvas;
-  private MediaPlayerFactory factory;
-  private EmbeddedMediaPlayer mediaPlayer;
-  private CanvasVideoSurface videoSurface;
-  
-  public static void main(final String[] args) {
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        new ScreenTestPlayer().start();
-      }
-    });
-  }
+    private JFrame frame;
 
-  public ScreenTestPlayer() {
-    canvas = new Canvas();
-    canvas.setBackground(Color.black);
-    canvas.setSize(550, 300);
-    
-    contentPane = new JPanel();
-    contentPane.setBackground(Color.black);
-    contentPane.setLayout(new BorderLayout());
-    contentPane.add(canvas, BorderLayout.CENTER);
-    
-    frame = new JFrame("vlcj desktop capture");
-    frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
-    frame.setContentPane(contentPane);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.pack();
-    
-    factory = new MediaPlayerFactory("--no-video-title-show");
-    mediaPlayer = factory.newEmbeddedMediaPlayer();
-    
-    videoSurface = factory.newVideoSurface(canvas);
-    
-    mediaPlayer.setVideoSurface(videoSurface);
-  }
-  
-  private void start() {
-    frame.setVisible(true);
+    private JPanel contentPane;
 
-    String mrl = "screen://";
-    
-    String[] options = {
-      ":screen-fps=30",
-      ":screen-caching=100",
-    };
-    
-    mediaPlayer.playMedia(mrl, options);
-  }
+    private Canvas canvas;
+
+    private MediaPlayerFactory factory;
+
+    private EmbeddedMediaPlayer mediaPlayer;
+
+    private CanvasVideoSurface videoSurface;
+
+    public static void main(final String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new ScreenTestPlayer().start();
+            }
+        });
+    }
+
+    public ScreenTestPlayer() {
+        canvas = new Canvas();
+        canvas.setBackground(Color.black);
+        canvas.setSize(550, 300);
+
+        contentPane = new JPanel();
+        contentPane.setBackground(Color.black);
+        contentPane.setLayout(new BorderLayout());
+        contentPane.add(canvas, BorderLayout.CENTER);
+
+        frame = new JFrame("vlcj desktop capture");
+        frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
+        frame.setContentPane(contentPane);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+
+        factory = new MediaPlayerFactory("--no-video-title-show");
+        mediaPlayer = factory.newEmbeddedMediaPlayer();
+
+        videoSurface = factory.newVideoSurface(canvas);
+
+        mediaPlayer.setVideoSurface(videoSurface);
+    }
+
+    private void start() {
+        frame.setVisible(true);
+
+        String mrl = "screen://";
+
+        String[] options = {
+            ":screen-fps=30", 
+            ":screen-caching=100"
+        };
+
+        mediaPlayer.playMedia(mrl, options);
+    }
 }

@@ -38,71 +38,69 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class FullScreenTest extends VlcjTest {
 
-  public static void main(final String[] args) {
-    if(args.length != 1) {
-      System.err.println("Specify a single MRL");
-      System.exit(1);
+    public static void main(final String[] args) {
+        if(args.length != 1) {
+            System.err.println("Specify a single MRL");
+            System.exit(1);
+        }
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new FullScreenTest(args);
+            }
+        });
     }
 
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        new FullScreenTest(args);
-      }
-    });
-  }
-  
-  public FullScreenTest(String[] args) {
-    Canvas c = new Canvas();
-    c.setBackground(Color.black);
+    public FullScreenTest(String[] args) {
+        Canvas c = new Canvas();
+        c.setBackground(Color.black);
 
-    JPanel p = new JPanel();
-    p.setLayout(new BorderLayout());
-    p.add(c, BorderLayout.CENTER);
-    
-    final JFrame f = new JFrame("VLCJ");
-    f.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
-    f.setContentPane(p);
-    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    f.setSize(800, 600);
-//    f.setUndecorated(true);
+        JPanel p = new JPanel();
+        p.setLayout(new BorderLayout());
+        p.add(c, BorderLayout.CENTER);
 
-    
-    MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
-    EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(new FullScreenStrategy() {
+        final JFrame f = new JFrame("VLCJ");
+        f.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
+        f.setContentPane(p);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setSize(800, 600);
+        // f.setUndecorated(true);
 
-      @Override
-      public void enterFullScreenMode() {
-        SwingUtilities.invokeLater(new Runnable() {
-          public void run() {
-//        f.dispose();
-//        f.setUndecorated(true);
-//        f.setBounds(0, 0, 1920, 1080);
-        f.toFront();
-        f.setVisible(true);
-          }
+        MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+        EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(new FullScreenStrategy() {
+
+            @Override
+            public void enterFullScreenMode() {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        // f.dispose();
+                        // f.setUndecorated(true);
+                        // f.setBounds(0, 0, 1920, 1080);
+                        f.toFront();
+                        f.setVisible(true);
+                    }
+                });
+            }
+
+            @Override
+            public void exitFullScreenMode() {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public boolean isFullScreenMode() {
+                // TODO Auto-generated method stub
+                return false;
+            }
         });
-      }
 
-      @Override
-      public void exitFullScreenMode() {
-        // TODO Auto-generated method stub
-        
-      }
+        mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(c));
 
-      @Override
-      public boolean isFullScreenMode() {
-        // TODO Auto-generated method stub
-        return false;
-      }
-    });
-    
-    mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(c));
+        f.setVisible(true);
 
-    f.setVisible(true);
-    
-    mediaPlayer.setFullScreen(true);
-    mediaPlayer.startMedia(args[0]);
-  }
+        mediaPlayer.setFullScreen(true);
+        mediaPlayer.startMedia(args[0]);
+    }
 }
-

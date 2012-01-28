@@ -32,44 +32,44 @@ import com.sun.jna.Native;
  */
 public class CanvasVideoSurface extends VideoSurface {
 
-  /**
-   * Serial version.
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     * Serial version.
+     */
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * Video surface component.
-   */
-  private final Canvas canvas;
-  
-  /**
-   * Create a new video surface.
-   * 
-   * @param canvas video surface component
-   * @param videoSurfaceAdapter adapter to attach a video surface to a native media player
-   */
-  public CanvasVideoSurface(Canvas canvas, VideoSurfaceAdapter videoSurfaceAdapter) {
-    super(videoSurfaceAdapter);
-    this.canvas = canvas;
-  }
+    /**
+     * Video surface component.
+     */
+    private final Canvas canvas;
 
-  /**
-   * Get the canvas.
-   * 
-   * @return canvas
-   */
-  public final Canvas canvas() {
-    return canvas;
-  }
-
-  @Override
-  public void attach(LibVlc libvlc, MediaPlayer mediaPlayer) {
-    Logger.debug("attach()");
-    if(canvas.isDisplayable()) {
-      videoSurfaceAdapter.attach(libvlc, mediaPlayer, Native.getComponentID(canvas));
+    /**
+     * Create a new video surface.
+     * 
+     * @param canvas video surface component
+     * @param videoSurfaceAdapter adapter to attach a video surface to a native media player
+     */
+    public CanvasVideoSurface(Canvas canvas, VideoSurfaceAdapter videoSurfaceAdapter) {
+        super(videoSurfaceAdapter);
+        this.canvas = canvas;
     }
-    else {
-      throw new IllegalStateException("The video surface component must be displayable");
+
+    /**
+     * Get the canvas.
+     * 
+     * @return canvas
+     */
+    public final Canvas canvas() {
+        return canvas;
     }
-  }
+
+    @Override
+    public void attach(LibVlc libvlc, MediaPlayer mediaPlayer) {
+        Logger.debug("attach()");
+        if(canvas.isDisplayable()) {
+            videoSurfaceAdapter.attach(libvlc, mediaPlayer, Native.getComponentID(canvas));
+        }
+        else {
+            throw new IllegalStateException("The video surface component must be displayable");
+        }
+    }
 }

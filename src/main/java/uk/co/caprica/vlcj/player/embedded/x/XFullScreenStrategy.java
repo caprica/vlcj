@@ -27,77 +27,75 @@ import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 
 /**
- * Implementation of a full-screen strategy that attempts to use the native X11
- * window manager.
+ * Implementation of a full-screen strategy that attempts to use the native X11 window manager.
  * <p>
- * With this full-screen strategy, a full-screen transparent overlay 
- * <em>will</em> work correctly, see {@link EmbeddedMediaPlayer#setOverlay(Window)}.
+ * With this full-screen strategy, a full-screen transparent overlay <em>will</em> work correctly,
+ * see {@link EmbeddedMediaPlayer#setOverlay(Window)}.
  */
 public class XFullScreenStrategy implements FullScreenStrategy {
 
-  /**
-   * The component that will be made full-screen. 
-   */
-  private final Window window;
-  
-  /**
-   * Is the window currently in full-screen mode? 
-   */
-  private boolean isFullScreenMode;
+    /**
+     * The component that will be made full-screen.
+     */
+    private final Window window;
 
-  /**
-   * Create a new full-screen strategy.
-   * 
-   * @param window component that will be made full-screen
-   */
-  public XFullScreenStrategy(Window window) {
-    Logger.debug("DefaultFullScreenStrategy(window={})", window);
-    if(window != null) {
-      this.window = window;
+    /**
+     * Is the window currently in full-screen mode?
+     */
+    private boolean isFullScreenMode;
+
+    /**
+     * Create a new full-screen strategy.
+     * 
+     * @param window component that will be made full-screen
+     */
+    public XFullScreenStrategy(Window window) {
+        Logger.debug("DefaultFullScreenStrategy(window={})", window);
+        if(window != null) {
+            this.window = window;
+        }
+        else {
+            throw new IllegalArgumentException("Window must not be null");
+        }
     }
-    else {
-      throw new IllegalArgumentException("Window must not be null");
+
+    @Override
+    public void enterFullScreenMode() {
+        Logger.debug("enterFullScreenMode()");
+        onBeforeEnterFullScreenMode();
+        LibXUtil.setFullScreenWindow(window, true);
+        isFullScreenMode = true;
     }
-  }
 
-  @Override
-  public void enterFullScreenMode() {
-    Logger.debug("enterFullScreenMode()");
-    onBeforeEnterFullScreenMode();
-    LibXUtil.setFullScreenWindow(window, true);
-    isFullScreenMode = true;
-  }
+    @Override
+    public void exitFullScreenMode() {
+        Logger.debug("exitFullScreenMode()");
+        LibXUtil.setFullScreenWindow(window, false);
+        isFullScreenMode = false;
+        onAfterExitFullScreenMode();
+    }
 
-  @Override
-  public void exitFullScreenMode() {
-    Logger.debug("exitFullScreenMode()");
-    LibXUtil.setFullScreenWindow(window, false);
-    isFullScreenMode = false;
-    onAfterExitFullScreenMode();
-  }
+    @Override
+    public boolean isFullScreenMode() {
+        Logger.debug("isFullScreenMode()");
+        return isFullScreenMode;
+    }
 
-  @Override
-  public boolean isFullScreenMode() {
-    Logger.debug("isFullScreenMode()");
-    return isFullScreenMode;
-  }
+    /**
+     * Template method invoked before full-screen mode is entered.
+     * <p>
+     * An application can override this method to provide custom code when entering full-screen mode
+     * for example to hide other on-screen components.
+     */
+    protected void onBeforeEnterFullScreenMode() {
+    }
 
-  /**
-   * Template method invoked before full-screen mode is entered.
-   * <p>
-   * An application can override this method to provide custom code when 
-   * entering full-screen mode for example to hide other on-screen components.
-   */
-  protected void onBeforeEnterFullScreenMode() {
-  }
-  
-  /**
-   * Template method invoked after exiting full-screen mode.
-   * <p>
-   * An application can override this method to provide custom code when 
-   * entering full-screen mode for example to restore other on-screen 
-   * components.
-   */
-  protected void onAfterExitFullScreenMode() {
-  }
+    /**
+     * Template method invoked after exiting full-screen mode.
+     * <p>
+     * An application can override this method to provide custom code when entering full-screen mode
+     * for example to restore other on-screen components.
+     */
+    protected void onAfterExitFullScreenMode() {
+    }
 }

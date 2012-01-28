@@ -56,178 +56,178 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <p>
  * Select an audio output from the menu and play the media.
  * <p>
- * <strong>This does NOT work because of a bug or incomplete implementation in
- * libvlc currently.</strong>
+ * <strong>This does NOT work because of a bug or incomplete implementation in libvlc
+ * currently.</strong>
  */
 public class SetAudioOutputTest extends VlcjTest {
   
-  private MediaPlayerFactory factory;
-  private EmbeddedMediaPlayer mediaPlayer;
-  private CanvasVideoSurface videoSurface;
-  private List<AudioOutput> audioOutputs;
+    private MediaPlayerFactory factory;
+    private EmbeddedMediaPlayer mediaPlayer;
+    private CanvasVideoSurface videoSurface;
+    private List<AudioOutput> audioOutputs;
 
-  private JFrame frame;
-  private JPanel contentPane;
-  private Canvas canvas;
-  private JPanel controlsPanel;
-  private JLabel audioOutputLabel;
-  private JTextField audioOutputTextField;
-  private JLabel audioDeviceLabel;
-  private JTextField audioDeviceTextField;
-  private JButton stopButton;
-  private JButton playButton;
+    private JFrame frame;
+    private JPanel contentPane;
+    private Canvas canvas;
+    private JPanel controlsPanel;
+    private JLabel audioOutputLabel;
+    private JTextField audioOutputTextField;
+    private JLabel audioDeviceLabel;
+    private JTextField audioDeviceTextField;
+    private JButton stopButton;
+    private JButton playButton;
   
-  private JMenuBar menuBar;
-  
-  public static void main(final String[] args) throws Exception {
-    if(args.length != 1) {
-      System.out.println("Specify a single MRL");
-      System.exit(1);
-    }
-    
-    setLookAndFeel();
-    
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        new SetAudioOutputTest(args[0]).start();
-      }
-    });
-  }
-   
-  public SetAudioOutputTest(final String mrl) {
-    factory = new MediaPlayerFactory();
-    mediaPlayer = factory.newEmbeddedMediaPlayer();
-    audioOutputs = factory.getAudioOutputs();
-    
-    canvas = new Canvas();
-    canvas.setBackground(Color.black);
+    private JMenuBar menuBar;
 
-    controlsPanel = new JPanel();
-    controlsPanel.setBorder(new EmptyBorder(8, 8, 8, 8));
-    controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.X_AXIS));
+    public static void main(final String[] args) throws Exception {
+        if(args.length != 1) {
+            System.out.println("Specify a single MRL");
+            System.exit(1);
+        }
 
-    audioOutputLabel = new JLabel("Audio Output Name:");
-    audioOutputLabel.setDisplayedMnemonic('n');
-    audioOutputTextField = new JTextField(10);
-    audioOutputTextField.setFocusAccelerator('n');
-    audioOutputTextField.setEditable(false);
-    audioOutputLabel.setLabelFor(audioOutputTextField);
-    
-    audioDeviceLabel = new JLabel("Audio Device ID:");
-    audioDeviceLabel.setDisplayedMnemonic('d');
-    audioDeviceLabel.setDisplayedMnemonicIndex(6);
-    audioDeviceTextField = new JTextField(10);
-    audioDeviceTextField.setFocusAccelerator('d');
-    audioDeviceTextField.setEditable(false);
-    audioDeviceLabel.setLabelFor(audioDeviceTextField);
-    
-    stopButton = new JButton("Stop");
-    stopButton.setMnemonic('s');
-    playButton = new JButton("Play");
-    playButton.setMnemonic('p');
-    
-    controlsPanel.add(audioOutputLabel);
-    controlsPanel.add(Box.createHorizontalStrut(4));
-    controlsPanel.add(audioOutputTextField);
-    controlsPanel.add(Box.createHorizontalStrut(8));
-    controlsPanel.add(audioDeviceLabel);
-    controlsPanel.add(Box.createHorizontalStrut(4));
-    controlsPanel.add(audioDeviceTextField);
-    controlsPanel.add(Box.createHorizontalStrut(8));
-    controlsPanel.add(stopButton);
-    controlsPanel.add(Box.createHorizontalStrut(8));
-    controlsPanel.add(playButton);
-    
-    contentPane = new JPanel();
-    contentPane.setBorder(new EmptyBorder(8, 8, 8, 8));
-    contentPane.setLayout(new BorderLayout(8, 8));
-    contentPane.setBackground(Color.black);
-    contentPane.add(canvas, BorderLayout.CENTER);
-    contentPane.add(controlsPanel, BorderLayout.SOUTH);
-    
-    videoSurface = factory.newVideoSurface(canvas);
-    mediaPlayer.setVideoSurface(videoSurface);
-    
-    menuBar = new JMenuBar();
-    
-    JMenu audioOutputMenu = new JMenu("Audio");
-    audioOutputMenu.setMnemonic('a');
-    
-    ActionListener audioMenuListener = new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        JMenuItem source = (JMenuItem)e.getSource();
-        String audioOutputName = (String)source.getClientProperty("AudioOutputName");
-        String audioDeviceId = (String)source.getClientProperty("AudioDeviceId");
-        
-        mediaPlayer.setAudioOutput(audioOutputName);
-        if(audioDeviceId != null) {
-          mediaPlayer.setAudioOutputDevice(audioOutputName, audioDeviceId);
-        }
-        
-        audioOutputTextField.setText(audioOutputName);
-        audioDeviceTextField.setText(audioDeviceId);
-        
-        // If you do not revalidate after setting the text, bizarrely the menu
-        // appears behind the heavy-weight Canvas
-        controlsPanel.revalidate();
-      }
-    };
-    
-    for(AudioOutput audioOutput : audioOutputs) {
-      List<AudioDevice> devices = audioOutput.getDevices();
-      if(devices.isEmpty()) {
-        JMenuItem audioOutputMenuItem = new JMenuItem(audioOutput.getDescription());
-        audioOutputMenuItem.putClientProperty("AudioOutputName", audioOutput.getName());
-        audioOutputMenu.add(audioOutputMenuItem);
-        audioOutputMenuItem.addActionListener(audioMenuListener);
-      }
-      else {
-        JMenu audioOutputMenuItem = new JMenu(audioOutput.getDescription());
-        for(AudioDevice audioDevice : audioOutput.getDevices()) {
-          JMenuItem audioDeviceMenuItem = new JMenuItem("<html><b>" + audioDevice.getDeviceId() + "</b>&nbsp;&nbsp;<i>" + audioDevice.getLongName() + "</i></html>");
-          audioDeviceMenuItem.putClientProperty("AudioOutputName", audioOutput.getName());
-          audioDeviceMenuItem.putClientProperty("AudioDeviceId", audioDevice.getDeviceId());
-          audioOutputMenuItem.add(audioDeviceMenuItem);
-          audioDeviceMenuItem.addActionListener(audioMenuListener);
-        }
-        audioOutputMenu.add(audioOutputMenuItem);
-      }
+        setLookAndFeel();
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new SetAudioOutputTest(args[0]).start();
+            }
+        });
     }
 
-    menuBar.add(audioOutputMenu);
-    
-    frame = new JFrame("Audio Outputs Test");
-    frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
-    frame.setJMenuBar(menuBar);
-    frame.setContentPane(contentPane);
-    frame.setSize(800, 600);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.addWindowListener(new WindowAdapter() {
-      @Override
-      public void windowClosing(WindowEvent e) {
-        mediaPlayer.release();
-        factory.release();
-      }
-    });
-    
-    stopButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        mediaPlayer.stop();
-      }
-    });
+    public SetAudioOutputTest(final String mrl) {
+        factory = new MediaPlayerFactory();
+        mediaPlayer = factory.newEmbeddedMediaPlayer();
+        audioOutputs = factory.getAudioOutputs();
 
-    playButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        mediaPlayer.playMedia(mrl);
-      }
-    });
-  }
+        canvas = new Canvas();
+        canvas.setBackground(Color.black);
 
-  private void start() {
-    frame.setVisible(true);
-  }
+        controlsPanel = new JPanel();
+        controlsPanel.setBorder(new EmptyBorder(8, 8, 8, 8));
+        controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.X_AXIS));
+
+        audioOutputLabel = new JLabel("Audio Output Name:");
+        audioOutputLabel.setDisplayedMnemonic('n');
+        audioOutputTextField = new JTextField(10);
+        audioOutputTextField.setFocusAccelerator('n');
+        audioOutputTextField.setEditable(false);
+        audioOutputLabel.setLabelFor(audioOutputTextField);
+
+        audioDeviceLabel = new JLabel("Audio Device ID:");
+        audioDeviceLabel.setDisplayedMnemonic('d');
+        audioDeviceLabel.setDisplayedMnemonicIndex(6);
+        audioDeviceTextField = new JTextField(10);
+        audioDeviceTextField.setFocusAccelerator('d');
+        audioDeviceTextField.setEditable(false);
+        audioDeviceLabel.setLabelFor(audioDeviceTextField);
+
+        stopButton = new JButton("Stop");
+        stopButton.setMnemonic('s');
+        playButton = new JButton("Play");
+        playButton.setMnemonic('p');
+
+        controlsPanel.add(audioOutputLabel);
+        controlsPanel.add(Box.createHorizontalStrut(4));
+        controlsPanel.add(audioOutputTextField);
+        controlsPanel.add(Box.createHorizontalStrut(8));
+        controlsPanel.add(audioDeviceLabel);
+        controlsPanel.add(Box.createHorizontalStrut(4));
+        controlsPanel.add(audioDeviceTextField);
+        controlsPanel.add(Box.createHorizontalStrut(8));
+        controlsPanel.add(stopButton);
+        controlsPanel.add(Box.createHorizontalStrut(8));
+        controlsPanel.add(playButton);
+
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(8, 8, 8, 8));
+        contentPane.setLayout(new BorderLayout(8, 8));
+        contentPane.setBackground(Color.black);
+        contentPane.add(canvas, BorderLayout.CENTER);
+        contentPane.add(controlsPanel, BorderLayout.SOUTH);
+
+        videoSurface = factory.newVideoSurface(canvas);
+        mediaPlayer.setVideoSurface(videoSurface);
+
+        menuBar = new JMenuBar();
+
+        JMenu audioOutputMenu = new JMenu("Audio");
+        audioOutputMenu.setMnemonic('a');
+
+        ActionListener audioMenuListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JMenuItem source = (JMenuItem)e.getSource();
+                String audioOutputName = (String)source.getClientProperty("AudioOutputName");
+                String audioDeviceId = (String)source.getClientProperty("AudioDeviceId");
+
+                mediaPlayer.setAudioOutput(audioOutputName);
+                if(audioDeviceId != null) {
+                    mediaPlayer.setAudioOutputDevice(audioOutputName, audioDeviceId);
+                }
+
+                audioOutputTextField.setText(audioOutputName);
+                audioDeviceTextField.setText(audioDeviceId);
+
+                // If you do not revalidate after setting the text, bizarrely the menu
+                // appears behind the heavy-weight Canvas
+                controlsPanel.revalidate();
+            }
+        };
+
+        for(AudioOutput audioOutput : audioOutputs) {
+            List<AudioDevice> devices = audioOutput.getDevices();
+            if(devices.isEmpty()) {
+                JMenuItem audioOutputMenuItem = new JMenuItem(audioOutput.getDescription());
+                audioOutputMenuItem.putClientProperty("AudioOutputName", audioOutput.getName());
+                audioOutputMenu.add(audioOutputMenuItem);
+                audioOutputMenuItem.addActionListener(audioMenuListener);
+            }
+            else {
+                JMenu audioOutputMenuItem = new JMenu(audioOutput.getDescription());
+                for(AudioDevice audioDevice : audioOutput.getDevices()) {
+                    JMenuItem audioDeviceMenuItem = new JMenuItem("<html><b>" + audioDevice.getDeviceId() + "</b>&nbsp;&nbsp;<i>" + audioDevice.getLongName() + "</i></html>");
+                    audioDeviceMenuItem.putClientProperty("AudioOutputName", audioOutput.getName());
+                    audioDeviceMenuItem.putClientProperty("AudioDeviceId", audioDevice.getDeviceId());
+                    audioOutputMenuItem.add(audioDeviceMenuItem);
+                    audioDeviceMenuItem.addActionListener(audioMenuListener);
+                }
+                audioOutputMenu.add(audioOutputMenuItem);
+            }
+        }
+
+        menuBar.add(audioOutputMenu);
+
+        frame = new JFrame("Audio Outputs Test");
+        frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
+        frame.setJMenuBar(menuBar);
+        frame.setContentPane(contentPane);
+        frame.setSize(800, 600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mediaPlayer.release();
+                factory.release();
+            }
+        });
+
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mediaPlayer.stop();
+            }
+        });
+
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mediaPlayer.playMedia(mrl);
+            }
+        });
+    }
+
+    private void start() {
+        frame.setVisible(true);
+    }
 }

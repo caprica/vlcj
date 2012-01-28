@@ -26,34 +26,33 @@ import uk.co.caprica.vlcj.version.Version;
  */
 public class VersionFormatTest {
 
-  /**
-   * Execute the test.
-   * <p>
-   * This will throw a RuntimeException if the libvlc native library version is
-   * too old.
-   * 
-   * @param args command-line arguments
-   */
-  public static void main(String[] args) {
-    test("1.2.0");
-    test("1.2.0-b1");
-    test("1.1.10 The Luggage");
-  }
+    /**
+     * Execute the test.
+     * <p>
+     * This will throw a RuntimeException if the libvlc native library version is too old.
+     * 
+     * @param args command-line arguments
+     */
+    public static void main(String[] args) {
+        test("1.2.0");
+        test("1.2.0-b1");
+        test("1.1.10 The Luggage");
+    }
 
-  /**
-   * Execute a test case.
-   * 
-   * @param v version string
-   */
-  private static void test(String v) {
-    System.out.print(v);
-    System.out.print(" -> ");
-    try {
-      new Version(v);
-      System.out.println("OK!");
+    /**
+     * Execute a test case.
+     * 
+     * @param v version string
+     */
+    private static void test(String v) {
+        System.out.print(v);
+        System.out.print(" -> ");
+        try {
+            new Version(v);
+            System.out.println("OK!");
+        }
+        catch(Throwable t) {
+            System.out.println("ERROR: " + t.getMessage());
+        }
     }
-    catch(Throwable t) {
-      System.out.println("ERROR: " + t.getMessage());
-    }
-  }
 }

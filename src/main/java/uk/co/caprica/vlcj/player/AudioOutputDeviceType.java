@@ -23,39 +23,39 @@ package uk.co.caprica.vlcj.player;
  * Enumeration of audio output device types.
  */
 public enum AudioOutputDeviceType {
-  
-  AUDIO_ERROR (-1),
-  AUDIO_MONO  ( 1),
-  AUDIO_STEREO( 2),
-  AUDIO_2F2R  ( 4),
-  AUDIO_3F2R  ( 5),
-  AUDIO_5_1   ( 6),
-  AUDIO_6_1   ( 7),
-  AUDIO_7_1   ( 8),
-  AUDIO_SPDIF (10);
 
-  private final int intValue;
-  
-  private AudioOutputDeviceType(int intValue) {
-    this.intValue = intValue;
-  }
-  
-  public int intValue() {
-    return intValue;
-  }
-  
-  /**
-   * Get an enumerated value for a native value.
-   * 
-   * @param intValue native value
-   * @return enumerated value, or <code>null</code> if the native value is not recognised
-   */
-  public static AudioOutputDeviceType valueOf(int intValue) {
-    for(AudioOutputDeviceType val : AudioOutputDeviceType.values()) {
-      if(val.intValue == intValue) {
-        return val;
-      }
+    AUDIO_ERROR(-1),
+    AUDIO_MONO(1), 
+    AUDIO_STEREO(2),
+    AUDIO_2F2R(4), 
+    AUDIO_3F2R(5), 
+    AUDIO_5_1(6), 
+    AUDIO_6_1(7), 
+    AUDIO_7_1(8), 
+    AUDIO_SPDIF(10);
+
+    private final int intValue;
+
+    private AudioOutputDeviceType(int intValue) {
+        this.intValue = intValue;
     }
-    return null;
-  }
+
+    public int intValue() {
+        return intValue;
+    }
+
+    /**
+     * Get an enumerated value for a native value.
+     * 
+     * @param intValue native value
+     * @return enumerated value, or <code>null</code> if the native value is not recognised
+     */
+    public static AudioOutputDeviceType valueOf(int intValue) {
+        for(AudioOutputDeviceType val : AudioOutputDeviceType.values()) {
+            if(val.intValue == intValue) {
+                return val;
+            }
+        }
+        return null;
+    }
 }

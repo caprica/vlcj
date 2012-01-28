@@ -30,51 +30,49 @@ import com.sun.jna.Pointer;
  */
 public abstract class AbstractMediaPlayer {
 
-  /**
-   * Native library interface.
-   */
-  protected final LibVlc libvlc;
-  
-  /**
-   * Libvlc instance.
-   */
-  protected final libvlc_instance_t instance;
+    /**
+     * Native library interface.
+     */
+    protected final LibVlc libvlc;
 
-  /**
-   * Create a media player.
-   * 
-   * @param libvlc native library interface
-   * @param instance libvlc instance
-   */
-  protected AbstractMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
-    this.libvlc = libvlc;
-    this.instance = instance;
-  }
+    /**
+     * Libvlc instance.
+     */
+    protected final libvlc_instance_t instance;
 
-  /**
-   * Get a String from a native string pointer, freeing the native string 
-   * pointer when done.
-   * <p>
-   * If the native string pointer is not freed then a native memory leak will
-   * occur.
-   * 
-   * @param pointer pointer to native string, may be <code>null</code>
-   * @return string, or <code>null</code> if the pointer was <code>null</code>
-   */
-  protected final String getNativeString(Pointer pointer) {
-    if(pointer != null) {
-      String result = pointer.getString(0, false);
-      libvlc.libvlc_free(pointer);
-      return result;
+    /**
+     * Create a media player.
+     * 
+     * @param libvlc native library interface
+     * @param instance libvlc instance
+     */
+    protected AbstractMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
+        this.libvlc = libvlc;
+        this.instance = instance;
     }
-    else {
-      return null;
-    }
-  }
 
-  @Override
-  protected void finalize() throws Throwable {
-    Logger.debug("finalize()");
-    Logger.debug("Media player has been garbage collected");
-  }
+    /**
+     * Get a String from a native string pointer, freeing the native string pointer when done.
+     * <p>
+     * If the native string pointer is not freed then a native memory leak will occur.
+     * 
+     * @param pointer pointer to native string, may be <code>null</code>
+     * @return string, or <code>null</code> if the pointer was <code>null</code>
+     */
+    protected final String getNativeString(Pointer pointer) {
+        if(pointer != null) {
+            String result = pointer.getString(0, false);
+            libvlc.libvlc_free(pointer);
+            return result;
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        Logger.debug("finalize()");
+        Logger.debug("Media player has been garbage collected");
+    }
 }

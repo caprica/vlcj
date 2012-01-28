@@ -26,23 +26,23 @@ package uk.co.caprica.vlcj.runtime.install;
  */
 public class NativeLibraryManagerEventAdapter implements NativeLibraryManagerEventListener {
 
-  @Override
-  public void start(String installTo, int installCount) {
-  }
+    @Override
+    public void start(String installTo, int installCount) {
+    }
 
-  @Override
-  public void install(int number, String name) {
-  }
+    @Override
+    public void install(int number, String name) {
+    }
 
-  @Override
-  public void end() {
-  }
+    @Override
+    public void end() {
+    }
 
-  @Override
-  public void purge(String installTo) {
-  }
+    @Override
+    public void purge(String installTo) {
+    }
 
-  @Override
-  public void purged(boolean result) {
-  }
+    @Override
+    public void purged(boolean result) {
+    }
 }

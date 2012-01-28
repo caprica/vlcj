@@ -31,14 +31,14 @@ import com.sun.jna.Pointer;
  */
 public class WindowsVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
-  /**
-   * Serial version.
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     * Serial version.
+     */
+    private static final long serialVersionUID = 1L;
 
-//  @Override
-  public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-    Logger.debug("attach(componentId={})", componentId);
-    libvlc.libvlc_media_player_set_hwnd(mediaPlayer.mediaPlayerInstance(), Pointer.createConstant(componentId));
-  }
+    // @Override
+    public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+        Logger.debug("attach(componentId={})", componentId);
+        libvlc.libvlc_media_player_set_hwnd(mediaPlayer.mediaPlayerInstance(), Pointer.createConstant(componentId));
+    }
 }

@@ -26,162 +26,161 @@ import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
 /**
  * Specification for a media list player component.
  * <p>
- * A media list player can be used with an embedded media player (without
- * this a native video window will be opened when video is played). For 
- * example:
+ * A media list player can be used with an embedded media player (without this a native video window
+ * will be opened when video is played). For example:
+ * 
  * <pre>
- *   MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
- *
- *   Canvas canvas = new Canvas();
- *   canvas.setBackground(Color.black);
- *   CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
- *   
- *   EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
- *   mediaPlayer.setVideoSurface(videoSurface);
- *   
- *   MediaListPlayer mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
- *   
- *   // Important: associate the media player with the media list player
- *   mediaListPlayer.setMediaPlayer(mediaPlayer);
- *   
- *   MediaList mediaList = mediaPlayerFactory.newMediaList();
- *   mediaList.addMedia("/movies/1.mp4");
- *   mediaList.addMedia("/movies/2.mp4");
- *   mediaList.addMedia("/movies/3.mp4");
- *   
- *   mediaListPlayer.setMediaList(mediaList);
- *   mediaListPlayer.setMode(MediaListPlayerMode.LOOP);
- *
- *   mediaListPlayer.play();
+ * MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+ * 
+ * Canvas canvas = new Canvas();
+ * canvas.setBackground(Color.black);
+ * CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
+ * 
+ * EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+ * mediaPlayer.setVideoSurface(videoSurface);
+ * 
+ * MediaListPlayer mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
+ * 
+ * // Important: associate the media player with the media list player
+ * mediaListPlayer.setMediaPlayer(mediaPlayer);
+ * 
+ * MediaList mediaList = mediaPlayerFactory.newMediaList();
+ * mediaList.addMedia(&quot;/movies/1.mp4&quot;);
+ * mediaList.addMedia(&quot;/movies/2.mp4&quot;);
+ * mediaList.addMedia(&quot;/movies/3.mp4&quot;);
+ * 
+ * mediaListPlayer.setMediaList(mediaList);
+ * mediaListPlayer.setMode(MediaListPlayerMode.LOOP);
+ * 
+ * mediaListPlayer.play();
  * </pre>
  */
 public interface MediaListPlayer {
 
-  /**
-   * Add a component to be notified of media list player events.
-   * 
-   * @param listener component to notify
-   */
-  void addMediaListPlayerEventListener(MediaListPlayerEventListener listener);
+    /**
+     * Add a component to be notified of media list player events.
+     * 
+     * @param listener component to notify
+     */
+    void addMediaListPlayerEventListener(MediaListPlayerEventListener listener);
 
-  /**
-   * Remove a component that was previously interested in notifications of
-   * media list player events.
-   * 
-   * @param listener component to stop notifying
-   */
-  void removeMediaListPlayerEventListener(MediaListPlayerEventListener listener);
+    /**
+     * Remove a component that was previously interested in notifications of media list player
+     * events.
+     * 
+     * @param listener component to stop notifying
+     */
+    void removeMediaListPlayerEventListener(MediaListPlayerEventListener listener);
 
-  /**
-   * Restrict the set of media list player events that generate event 
-   * notifications to listeners.
-   * <p>
-   * If a set of events is not explicitly enabled, then it is expected that 
-   * <strong>all</strong> events be enabled.
-   * <p>
-   * See {@link MediaListPlayerEventType}.
-   * 
-   * @param eventMask bit mask of events to enable
-   */
-  void enableEvents(int eventMask);
-  
-  /**
-   * Associate an actual media player with the media list player.
-   * 
-   * @param mediaPlayer media player
-   */
-  void setMediaPlayer(MediaPlayer mediaPlayer);
+    /**
+     * Restrict the set of media list player events that generate event notifications to listeners.
+     * <p>
+     * If a set of events is not explicitly enabled, then it is expected that <strong>all</strong>
+     * events be enabled.
+     * <p>
+     * See {@link MediaListPlayerEventType}.
+     * 
+     * @param eventMask bit mask of events to enable
+     */
+    void enableEvents(int eventMask);
 
-  /**
-   * Set the media list (i.e. the "play" list).
-   * 
-   * @param mediaList media list
-   */
-  void setMediaList(MediaList mediaList);
+    /**
+     * Associate an actual media player with the media list player.
+     * 
+     * @param mediaPlayer media player
+     */
+    void setMediaPlayer(MediaPlayer mediaPlayer);
 
-  /**
-   * Get the media list.
-   * 
-   * @return media list
-   */
-  MediaList getMediaList();
-  
-  /**
-   * Play the media list.
-   */
-  void play();
+    /**
+     * Set the media list (i.e. the "play" list).
+     * 
+     * @param mediaList media list
+     */
+    void setMediaList(MediaList mediaList);
 
-  /**
-   * Pause the media list.
-   */
-  void pause();
+    /**
+     * Get the media list.
+     * 
+     * @return media list
+     */
+    MediaList getMediaList();
 
-  /**
-   * Stop the media list.
-   */
-  void stop();
+    /**
+     * Play the media list.
+     */
+    void play();
 
-  /**
-   * Play a particular item on the media list.
-   * 
-   * @param itemIndex index of the item to play
-   * @return <code>true</code> if the item could be played, otherwise <code>false</code>
-   */
-  boolean playItem(int itemIndex);
+    /**
+     * Pause the media list.
+     */
+    void pause();
 
-  /**
-   * Play the next item in the media list.
-   */
-  void playNext();
+    /**
+     * Stop the media list.
+     */
+    void stop();
 
-  /**
-   * Play the previous item in the media list.
-   */
-  void playPrevious();
+    /**
+     * Play a particular item on the media list.
+     * 
+     * @param itemIndex index of the item to play
+     * @return <code>true</code> if the item could be played, otherwise <code>false</code>
+     */
+    boolean playItem(int itemIndex);
 
-  /**
-   * Determine whether or not the media list is playing.
-   * 
-   * @return <code>true</code> if playing, otherwise <code>false</code>
-   */
-  boolean isPlaying();
+    /**
+     * Play the next item in the media list.
+     */
+    void playNext();
 
-  /**
-   * Set the media list play mode.
-   * <p>
-   * Note that if you set the play mode to REPEAT before you have played any
-   * media then play-back will never start.
-   * 
-   * @param mode mode
-   */
-  void setMode(MediaListPlayerMode mode);
+    /**
+     * Play the previous item in the media list.
+     */
+    void playPrevious();
 
-  /**
-   * Get the media resource locator for a media instance.
-   * <p>
-   * The native media instance may be an automatically/scripted added sub-item.
-   * 
-   * @param mediaInstance native media instance
-   * @return URL-encoded media resource locator
-   */
-  String mrl(libvlc_media_t mediaInstance);
-  
-  /**
-   * Get the user data associated with the media player. 
-   * 
-   * @return user data
-   */
-  Object userData();
-  
-  /**
-   * Set user data to associate with the media player.
-   * 
-   * @param userData user data
-   */
-  void userData(Object userData);
+    /**
+     * Determine whether or not the media list is playing.
+     * 
+     * @return <code>true</code> if playing, otherwise <code>false</code>
+     */
+    boolean isPlaying();
 
-  /**
-   * Release the media list player resources.
-   */
-  void release();
+    /**
+     * Set the media list play mode.
+     * <p>
+     * Note that if you set the play mode to REPEAT before you have played any media then play-back
+     * will never start.
+     * 
+     * @param mode mode
+     */
+    void setMode(MediaListPlayerMode mode);
+
+    /**
+     * Get the media resource locator for a media instance.
+     * <p>
+     * The native media instance may be an automatically/scripted added sub-item.
+     * 
+     * @param mediaInstance native media instance
+     * @return URL-encoded media resource locator
+     */
+    String mrl(libvlc_media_t mediaInstance);
+
+    /**
+     * Get the user data associated with the media player.
+     * 
+     * @return user data
+     */
+    Object userData();
+
+    /**
+     * Set user data to associate with the media player.
+     * 
+     * @param userData user data
+     */
+    void userData(Object userData);
+
+    /**
+     * Release the media list player resources.
+     */
+    void release();
 }

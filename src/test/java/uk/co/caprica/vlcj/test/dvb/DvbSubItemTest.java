@@ -30,50 +30,49 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 /**
  * A simple test to dump out a DVB play-list from a channels.conf file.
  * <p>
- * This test is not actually constrained to DVB, it will work for any play-list
- * file.
+ * This test is not actually constrained to DVB, it will work for any play-list file.
  */
 public class DvbSubItemTest extends VlcjTest {
 
-  public static void main(String[] args) throws Exception {
-    if(args.length != 1) {
-      System.out.println("Specify a channels.conf file");
-      System.exit(1);
+    public static void main(String[] args) throws Exception {
+        if(args.length != 1) {
+            System.out.println("Specify a channels.conf file");
+            System.exit(1);
+        }
+
+        final MediaPlayerFactory factory = new MediaPlayerFactory();
+        final MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
+
+        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+            @Override
+            public void finished(MediaPlayer mediaPlayer) {
+                int subItemCount = mediaPlayer.subItemCount();
+                System.out.println("subItemCount=" + subItemCount);
+
+                System.out.println("Getting sub-items...");
+
+                List<String> subItems = mediaPlayer.subItems();
+                for(String subItem : subItems) {
+                    System.out.println(subItem);
+                }
+
+                System.out.println("Getting sub-item meta data...");
+
+                List<MediaMeta> metas = mediaPlayer.getSubItemMediaMeta();
+                for(MediaMeta meta : metas) {
+                    System.out.println("title -> " + meta.getTitle());
+                }
+
+                System.out.println("Done.");
+
+                mediaPlayer.release();
+                factory.release();
+                System.exit(0);
+            }
+        });
+
+        mediaPlayer.playMedia(args[0]);
+
+        Thread.currentThread().join();
     }
-    
-    final MediaPlayerFactory factory = new MediaPlayerFactory();
-    final MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
-    
-    mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-      @Override
-      public void finished(MediaPlayer mediaPlayer) {
-        int subItemCount = mediaPlayer.subItemCount();
-        System.out.println("subItemCount=" + subItemCount);
-        
-        System.out.println("Getting sub-items...");
-        
-        List<String> subItems = mediaPlayer.subItems();
-        for(String subItem : subItems) {
-          System.out.println(subItem);
-        }
-        
-        System.out.println("Getting sub-item meta data...");
-
-        List<MediaMeta> metas = mediaPlayer.getSubItemMediaMeta();
-        for(MediaMeta meta : metas) {
-          System.out.println("title -> " + meta.getTitle());
-        }
-
-        System.out.println("Done.");
-        
-        mediaPlayer.release();
-        factory.release();
-        System.exit(0);
-      }
-    });
-    
-    mediaPlayer.playMedia(args[0]);
-    
-    Thread.currentThread().join();
-  }
 }

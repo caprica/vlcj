@@ -20,12 +20,15 @@
 package uk.co.caprica.vlcj.player.manager;
 
 // FIXME might have an encapsulation for Broadcast and VOD
-// FIXME don't know where instanceId params come from - maybe show()'s returned JSON? - i think this is right,  one instance for each collected client - opens up the possibility for more api e.g. get list of client instances??? depends how much useful info is there i suppose
+// FIXME don't know where instanceId params come from - maybe show()'s returned JSON? - i think this
+// is right, one instance for each collected client - opens up the possibility for more api e.g. get
+// list of client instances??? depends how much useful info is there i suppose
 
 /**
  * Specification for a media manager component.
  * <p>
  * The basic life-cycle is:
+ * 
  * <pre>
  *   // Set some options for libvlc
  *   String[] libvlcArgs = {...add options here...};
@@ -45,48 +48,49 @@ package uk.co.caprica.vlcj.player.manager;
  *   // Cleanly dispose of the media player factory and any associated native resources
  *   mediaPlayerFactory.release();
  * </pre>
- * <strong>All of the MediaManager API is experimental and is subject to change
- * or removal at any time.</strong>
+ * 
+ * <strong>All of the MediaManager API is experimental and is subject to change or removal at any
+ * time.</strong>
  */
 public interface MediaManager {
 
-  boolean addBroadcast(String name, String inputMrl, String outputMrl, boolean enable, boolean loop, String... options);
+    boolean addBroadcast(String name, String inputMrl, String outputMrl, boolean enable, boolean loop, String... options);
 
-  boolean addVideoOnDemand(String name, String inputMrl, boolean enable, String mux, String... options);
-  
-  boolean removeMedia(String name);
-  
-  boolean enableMedia(String name, boolean enable);
-  
-  boolean setOutput(String name, String outputMrl);
+    boolean addVideoOnDemand(String name, String inputMrl, boolean enable, String mux, String... options);
 
-  boolean setInput(String name, String inputMrl);
+    boolean removeMedia(String name);
 
-  boolean addInput(String name, String inputMrl);
+    boolean enableMedia(String name, boolean enable);
 
-  boolean setLoop(String name, boolean loop);
+    boolean setOutput(String name, String outputMrl);
 
-  boolean setMux(String name, String mux);
-  
-  boolean changeMedia(String name, String inputMrl, String outputMrl, boolean enable, boolean loop, String... options);
+    boolean setInput(String name, String inputMrl);
 
-  boolean play(String name);
+    boolean addInput(String name, String inputMrl);
 
-  boolean stop(String name);
-  
-  boolean pause(String name);
+    boolean setLoop(String name, boolean loop);
 
-  boolean seek(String name, float percentage);
+    boolean setMux(String name, String mux);
 
-  String show(String name);
-  
-  float getPosition(String name, int instanceId);
+    boolean changeMedia(String name, String inputMrl, String outputMrl, boolean enable, boolean loop, String... options);
 
-  int getTime(String name, int instanceId);
+    boolean play(String name);
 
-  int getLength(String name, int instanceId);
+    boolean stop(String name);
 
-  int getRate(String name, int instanceId);
+    boolean pause(String name);
 
-  void release();
+    boolean seek(String name, float percentage);
+
+    String show(String name);
+
+    float getPosition(String name, int instanceId);
+
+    int getTime(String name, int instanceId);
+
+    int getLength(String name, int instanceId);
+
+    int getRate(String name, int instanceId);
+
+    void release();
 }

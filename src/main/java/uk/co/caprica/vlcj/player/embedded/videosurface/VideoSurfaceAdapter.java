@@ -25,20 +25,19 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 /**
- * Specification for a component that can attach a video surface to a native
- * media player instance.
+ * Specification for a component that can attach a video surface to a native media player instance.
  * <p>
- * An adapter is needed since attaching a video surface uses an operating 
- * system-specific implementation.
+ * An adapter is needed since attaching a video surface uses an operating system-specific
+ * implementation.
  */
 public interface VideoSurfaceAdapter extends Serializable {
 
-  /**
-   * Attach a video surface to a media player.
-   * 
-   * @param libvlc native interface
-   * @param mediaPlayer media player instance
-   * @param componentId native id of the video surface component
-   */
-  void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId);
+    /**
+     * Attach a video surface to a media player.
+     * 
+     * @param libvlc native interface
+     * @param mediaPlayer media player instance
+     * @param componentId native id of the video surface component
+     */
+    void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId);
 }

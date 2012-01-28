@@ -26,56 +26,56 @@ import java.io.Serializable;
  */
 public class TrackDescription implements Serializable {
 
-  /**
-   * Serial version.
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     * Serial version.
+     */
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * Identifier.
-   */
-  private final int id;
-  
-  /**
-   * Description.
-   */
-  private final String description;
-  
-  /**
-   * Create a track description.
-   * 
-   * @param id track identifier
-   * @param description track description
-   */
-  public TrackDescription(int id, String description) {
-    this.id = id;
-    this.description = description;
-  }
+    /**
+     * Identifier.
+     */
+    private final int id;
 
-  /**
-   * Get the track identifier
-   * 
-   * @return identifier
-   */
-  public int id() {
-    return id;
-  }
-  
-  /**
-   * Get the track description
-   * 
-   * @return description
-   */
-  public String description() {
-    return description;
-  }
-  
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder(60);
-    sb.append(getClass().getSimpleName()).append('[');
-    sb.append("id=").append(id).append(',');
-    sb.append("description=").append(description).append(']');
-    return sb.toString();
-  }
+    /**
+     * Description.
+     */
+    private final String description;
+
+    /**
+     * Create a track description.
+     * 
+     * @param id track identifier
+     * @param description track description
+     */
+    public TrackDescription(int id, String description) {
+        this.id = id;
+        this.description = description;
+    }
+
+    /**
+     * Get the track identifier
+     * 
+     * @return identifier
+     */
+    public int id() {
+        return id;
+    }
+
+    /**
+     * Get the track description
+     * 
+     * @return description
+     */
+    public String description() {
+        return description;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(60);
+        sb.append(getClass().getSimpleName()).append('[');
+        sb.append("id=").append(id).append(',');
+        sb.append("description=").append(description).append(']');
+        return sb.toString();
+    }
 }

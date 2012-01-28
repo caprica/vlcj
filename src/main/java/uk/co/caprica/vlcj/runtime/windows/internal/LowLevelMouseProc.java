@@ -28,25 +28,25 @@ import com.sun.jna.platform.win32.WinUser.HOOKPROC;
  */
 public interface LowLevelMouseProc extends HOOKPROC {
 
-  /**
-   * Windows message codes.
-   */
-  public static final int WM_MOUSEMOVE = 512;
-  public static final int WM_LBUTTONDOWN = 513;
-  public static final int WM_LBUTTONUP = 514;
-  public static final int WM_RBUTTONDOWN = 516;
-  public static final int WM_RBUTTONUP = 517;
-  public static final int WM_MBUTTONDOWN = 519;
-  public static final int WM_MBUTTONUP = 520;
-  public static final int WM_MOUSEWHEEL = 522;
-  
-  /**
-   * Call-back.
-   * 
-   * @param nCode message code
-   * @param wParam message parameter
-   * @param lParam message parameter
-   * @return call-back result
-   */
-  LRESULT callback(int nCode, WPARAM wParam, MSLLHOOKSTRUCT lParam);
+    /**
+     * Windows message codes.
+     */
+    public static final int WM_MOUSEMOVE = 512;
+    public static final int WM_LBUTTONDOWN = 513;
+    public static final int WM_LBUTTONUP = 514;
+    public static final int WM_RBUTTONDOWN = 516;
+    public static final int WM_RBUTTONUP = 517;
+    public static final int WM_MBUTTONDOWN = 519;
+    public static final int WM_MBUTTONUP = 520;
+    public static final int WM_MOUSEWHEEL = 522;
+
+    /**
+     * Call-back.
+     * 
+     * @param nCode message code
+     * @param wParam message parameter
+     * @param lParam message parameter
+     * @return call-back result
+     */
+    LRESULT callback(int nCode, WPARAM wParam, MSLLHOOKSTRUCT lParam);
 }

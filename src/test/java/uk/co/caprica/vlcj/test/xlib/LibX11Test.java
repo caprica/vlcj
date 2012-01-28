@@ -22,26 +22,24 @@ package uk.co.caprica.vlcj.test.xlib;
 import uk.co.caprica.vlcj.binding.LibX11;
 
 /**
- * Simple test to get a reference to the Xlib native library and initialise
- * threads.
+ * Simple test to get a reference to the Xlib native library and initialise threads.
  * <p>
- * Applications can be made more reliable (i.e. reduce the opportunity for fatal
- * crashes in native libraries) by explicitly invoking the LibX11 XInitThreads()
- * method.
+ * Applications can be made more reliable (i.e. reduce the opportunity for fatal crashes in native
+ * libraries) by explicitly invoking the LibX11 XInitThreads() method.
  * <p>
- * Only useful on platforms that use X of course. 
+ * Only useful on platforms that use X of course.
  */
 public class LibX11Test {
 
-  /**
-   * Application entry point.
-   * 
-   * @param args command-line arguments
-   */
-  public static void main(String[] args) {
-    LibX11 x = LibX11.INSTANCE;
-    System.out.println(x);
-    int result = x.XInitThreads();
-    System.out.println("XInitThreadsResult=" + result + " => " + (result != 0 ? "OK" : "FAILED"));
-  }
+    /**
+     * Application entry point.
+     * 
+     * @param args command-line arguments
+     */
+    public static void main(String[] args) {
+        LibX11 x = LibX11.INSTANCE;
+        System.out.println(x);
+        int result = x.XInitThreads();
+        System.out.println("XInitThreadsResult=" + result + " => " + (result != 0 ? "OK" : "FAILED"));
+    }
 }

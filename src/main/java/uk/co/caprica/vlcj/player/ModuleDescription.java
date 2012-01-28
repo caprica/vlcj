@@ -24,85 +24,85 @@ package uk.co.caprica.vlcj.player;
  */
 public class ModuleDescription {
 
-  /**
-   * Name.
-   */
-  private final String name;
-  
-  /**
-   * Short name.
-   */
-  private final String shortName;
-  
-  /**
-   * Long name.
-   */
-  private final String longName;
-  
-  /**
-   * Help text.
-   */
-  private final String help;
+    /**
+     * Name.
+     */
+    private final String name;
 
-  /**
-   * Create a new module description
-   * 
-   * @param name name
-   * @param shortName short name
-   * @param longName long name
-   * @param help help text
-   */
-  public ModuleDescription(String name, String shortName, String longName, String help) {
-    this.name = name;
-    this.shortName = shortName;
-    this.longName = longName;
-    this.help = help;
-  }
-  
-  /**
-   * Get the module name.
-   * 
-   * @return name
-   */
-  public String name() {
-    return name;
-  }
-  
-  /**
-   * Get the module short name.
-   * 
-   * @return short name
-   */
-  public String shortName() {
-    return shortName;
-  }
-  
-  /**
-   * Get the module long name.
-   * 
-   * @return long name
-   */
-  public String longName() {
-    return longName;
-  }
-  
-  /**
-   * Get the module help text.
-   * 
-   * @return help text
-   */
-  public String help() {
-    return help;
-  }
-  
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder(200);
-    sb.append(getClass().getSimpleName()).append('[');
-    sb.append("name=").append(name).append(',');
-    sb.append("shortName=").append(shortName).append(',');
-    sb.append("longName=").append(longName).append(',');
-    sb.append("help=").append(help).append(']');
-    return sb.toString();
-  }
+    /**
+     * Short name.
+     */
+    private final String shortName;
+
+    /**
+     * Long name.
+     */
+    private final String longName;
+
+    /**
+     * Help text.
+     */
+    private final String help;
+
+    /**
+     * Create a new module description
+     * 
+     * @param name name
+     * @param shortName short name
+     * @param longName long name
+     * @param help help text
+     */
+    public ModuleDescription(String name, String shortName, String longName, String help) {
+        this.name = name;
+        this.shortName = shortName;
+        this.longName = longName;
+        this.help = help;
+    }
+
+    /**
+     * Get the module name.
+     * 
+     * @return name
+     */
+    public String name() {
+        return name;
+    }
+
+    /**
+     * Get the module short name.
+     * 
+     * @return short name
+     */
+    public String shortName() {
+        return shortName;
+    }
+
+    /**
+     * Get the module long name.
+     * 
+     * @return long name
+     */
+    public String longName() {
+        return longName;
+    }
+
+    /**
+     * Get the module help text.
+     * 
+     * @return help text
+     */
+    public String help() {
+        return help;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(200);
+        sb.append(getClass().getSimpleName()).append('[');
+        sb.append("name=").append(name).append(',');
+        sb.append("shortName=").append(shortName).append(',');
+        sb.append("longName=").append(longName).append(',');
+        sb.append("help=").append(help).append(']');
+        return sb.toString();
+    }
 }

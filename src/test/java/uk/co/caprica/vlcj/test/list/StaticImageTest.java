@@ -29,37 +29,36 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 /**
  * Bare bones showing how to "play" static images in a play-list.
  * <p>
- * A proper application would embed a video player and so on, the points to
- * illustrate here are a) playing an image is just like playing any other file,
- * and b) you specify the image duration using a media option.
+ * A proper application would embed a video player and so on, the points to illustrate here are a)
+ * playing an image is just like playing any other file, and b) you specify the image duration using
+ * a media option.
  * <p>
- * If you do not specify an "image-duration=" media option, you will get a
- * default length of ten seconds.
+ * If you do not specify an "image-duration=" media option, you will get a default length of ten
+ * seconds.
  * <p>
- * You can also add for example vlc://pause:30 to "play" a delay of 30 (or 
- * whatever you want) seconds. This is not to be confused with the media option 
- * for image-durations previously described.
+ * You can also add for example vlc://pause:30 to "play" a delay of 30 (or whatever you want)
+ * seconds. This is not to be confused with the media option for image-durations previously
+ * described.
  * <p>
- * Note that you can "play" images from any source that vlc can play - not just
- * local files, but things like http: too.
+ * Note that you can "play" images from any source that vlc can play - not just local files, but
+ * things like http: too.
  * <p>
- * Large images can cause problems for vlc when it tries to create the video 
- * output - for this reason it is usually better to use an {@link EmbeddedMediaPlayer}
- * linked with the {@link MediaListPlayer}. That way the size of the video
- * surface can be controller. If this is not done, fatal application crashes
- * due to vlc choking on the image file can occur.
+ * Large images can cause problems for vlc when it tries to create the video output - for this
+ * reason it is usually better to use an {@link EmbeddedMediaPlayer} linked with the
+ * {@link MediaListPlayer}. That way the size of the video surface can be controller. If this is not
+ * done, fatal application crashes due to vlc choking on the image file can occur.
  */
 public class StaticImageTest extends VlcjTest {
 
-  public static void main(String[] args) throws Exception {
-    MediaPlayerFactory factory = new MediaPlayerFactory();
-    MediaList playlist = factory.newMediaList();
-    playlist.addMedia("/home/mark/1.jpg", "image-duration=5"); // Play picture for 5 seconds
-    playlist.addMedia("/home/mark/2.jpg", "image-duration=5");
-    MediaListPlayer player = factory.newMediaListPlayer();
-    player.setMediaList(playlist);
-    player.setMode(MediaListPlayerMode.LOOP);
-    player.play();
-    Thread.currentThread().join();
-  }
+    public static void main(String[] args) throws Exception {
+        MediaPlayerFactory factory = new MediaPlayerFactory();
+        MediaList playlist = factory.newMediaList();
+        playlist.addMedia("/home/mark/1.jpg", "image-duration=5"); // Play picture for 5 seconds
+        playlist.addMedia("/home/mark/2.jpg", "image-duration=5");
+        MediaListPlayer player = factory.newMediaListPlayer();
+        player.setMediaList(playlist);
+        player.setMode(MediaListPlayerMode.LOOP);
+        player.play();
+        Thread.currentThread().join();
+    }
 }

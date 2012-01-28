@@ -28,62 +28,61 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 /**
  * Test demonstrating the {@link EmbeddedMediaPlayerComponent}.
  * <p>
- * Leaving aside the standard Swing initialisation code, there are only 
- * <em>two</em> lines of vlcj code required to create a media player and play
- * a video.
+ * Leaving aside the standard Swing initialisation code, there are only <em>two</em> lines of vlcj
+ * code required to create a media player and play a video.
  */
 public class BasicEmbeddedMediaPlayerComponentTest extends VlcjTest {
 
-  /**
-   * Media player component.
-   */
-  private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
-  
-  /**
-   * Application entry point.
-   * 
-   * @param args
-   */
-  public static void main(String[] args) {
-    if(args.length != 1) {
-      System.out.println("Specify an mrl");
-      System.exit(1);
-    }
-    
-    final String mrl = args[0];
-    
-    setLookAndFeel();
-    
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        new BasicEmbeddedMediaPlayerComponentTest().start(mrl);
-      }
-    });
-  }
-  
-  /**
-   * Create a new test. 
-   */
-  private BasicEmbeddedMediaPlayerComponentTest() {
-    JFrame frame = new JFrame("vlcj Media Player Component Test");
-    
-    mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
-    frame.setContentPane(mediaPlayerComponent);
-    
-    frame.setLocation(100, 100);
-    frame.setSize(1050, 600);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setVisible(true);
-  }
+    /**
+     * Media player component.
+     */
+    private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 
-  /**
-   * Start playing a movie.
-   * 
-   * @param mrl mrl
-   */
-  private void start(String mrl) {
-    // One line of vlcj code to play the media...
-    mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
-  }
+    /**
+     * Application entry point.
+     * 
+     * @param args
+     */
+    public static void main(String[] args) {
+        if(args.length != 1) {
+            System.out.println("Specify an mrl");
+            System.exit(1);
+        }
+
+        final String mrl = args[0];
+
+        setLookAndFeel();
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new BasicEmbeddedMediaPlayerComponentTest().start(mrl);
+            }
+        });
+    }
+
+    /**
+     * Create a new test.
+     */
+    private BasicEmbeddedMediaPlayerComponentTest() {
+        JFrame frame = new JFrame("vlcj Media Player Component Test");
+
+        mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
+        frame.setContentPane(mediaPlayerComponent);
+
+        frame.setLocation(100, 100);
+        frame.setSize(1050, 600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
+    /**
+     * Start playing a movie.
+     * 
+     * @param mrl mrl
+     */
+    private void start(String mrl) {
+        // One line of vlcj code to play the media...
+        mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
+    }
 }

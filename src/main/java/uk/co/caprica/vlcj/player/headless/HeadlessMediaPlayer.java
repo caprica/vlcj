@@ -23,19 +23,18 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 
 /**
- * Specification for a media player component that is not intended to display
- * the media.
+ * Specification for a media player component that is not intended to display the media.
  * <p>
- * This is useful, for example, when a media player component is being used to
- * stream media.
+ * This is useful, for example, when a media player component is being used to stream media.
  * <p>
- * Note that client applications must still set proper media options otherwise
- * a native video window may still appear, for example the following media
- * options could be used when creating the {@link MediaPlayerFactory}.
+ * Note that client applications must still set proper media options otherwise a native video window
+ * may still appear, for example the following media options could be used when creating the
+ * {@link MediaPlayerFactory}.
+ * 
  * <pre>
- *   String[] args = {"--vout", "dummy"};
+ * String[] args = {&quot;--vout&quot;, &quot;dummy&quot;};
  * </pre>
  */
 public interface HeadlessMediaPlayer extends MediaPlayer {
-  // Nothing extra
+    // Nothing extra
 }

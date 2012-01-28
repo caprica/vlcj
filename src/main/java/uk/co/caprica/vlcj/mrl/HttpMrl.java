@@ -23,6 +23,7 @@ package uk.co.caprica.vlcj.mrl;
  * Implementation of an HTTP media resource locator.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
+ * 
  * <pre>
  * String mrl = new HttpMrl().host("www.myhost.com")
  *                           .port("8080")
@@ -33,9 +34,9 @@ package uk.co.caprica.vlcj.mrl;
  */
 public class HttpMrl extends WebMrl {
 
-  private static final String HTTP_TYPE = "http";
-  
-  public HttpMrl() {
-    type(HTTP_TYPE);
-  }
+    private static final String HTTP_TYPE = "http";
+
+    public HttpMrl() {
+        type(HTTP_TYPE);
+    }
 }

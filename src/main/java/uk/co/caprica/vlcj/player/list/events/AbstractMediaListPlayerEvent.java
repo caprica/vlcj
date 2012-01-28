@@ -28,17 +28,17 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
  */
 abstract class AbstractMediaListPlayerEvent implements MediaListPlayerEvent {
 
-  /**
-   * The media list player the event relates to.
-   */
-  protected final MediaListPlayer mediaListPlayer;
-  
-  /**
-   * Create a media player event.
-   * 
-   * @param mediaListPlayer media player that the event relates to
-   */
-  protected AbstractMediaListPlayerEvent(MediaListPlayer mediaListPlayer) {
-    this.mediaListPlayer = mediaListPlayer;
-  }
+    /**
+     * The media list player the event relates to.
+     */
+    protected final MediaListPlayer mediaListPlayer;
+
+    /**
+     * Create a media player event.
+     * 
+     * @param mediaListPlayer media player that the event relates to
+     */
+    protected AbstractMediaListPlayerEvent(MediaListPlayer mediaListPlayer) {
+        this.mediaListPlayer = mediaListPlayer;
+    }
 }

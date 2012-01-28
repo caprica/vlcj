@@ -28,132 +28,131 @@ import uk.co.caprica.vlcj.logger.Logger;
  */
 public class RuntimeUtil {
 
-  /**
-   * Operating System Name system property.
-   */
-  private static final String OS_NAME = System.getProperty("os.name").toLowerCase();
+    /**
+     * Operating System Name system property.
+     */
+    private static final String OS_NAME = System.getProperty("os.name").toLowerCase();
 
-  /**
-   * Test whether the runtime operating system is "unix-like".
-   * 
-   * @return true if the runtime OS is unix-like, Linux, Unix, FreeBSD etc
-   */
-  public static boolean isNix() {
-    return OS_NAME.indexOf("nux") != -1 || OS_NAME.indexOf("nix") != -1 || OS_NAME.indexOf("freebsd") != -1;
-  }
-  
-  /**
-   * Test whether the runtime operating system is a Windows variant. 
-   * 
-   * @return true if the runtime OS is Windows
-   */
-  public static boolean isWindows() {
-    return OS_NAME.indexOf("win") != -1;
-  }
+    /**
+     * Test whether the runtime operating system is "unix-like".
+     * 
+     * @return true if the runtime OS is unix-like, Linux, Unix, FreeBSD etc
+     */
+    public static boolean isNix() {
+        return OS_NAME.indexOf("nux") != -1 || OS_NAME.indexOf("nix") != -1 || OS_NAME.indexOf("freebsd") != -1;
+    }
 
-  /**
-   * Test whether the runtime operating system is a Mac variant.
-   * 
-   * @return true if the runtime OS is Mac
-   */
-  public static boolean isMac() {
-    return OS_NAME.indexOf("mac") != -1;
-  }
-  
-  /**
-   * Try to safely convert a long value to an int.
-   * 
-   * The current libvlc API requires a 32-bit integer value for the drawable
-   * window handle - however, according to the JNA API it is possible that
-   * 64-bit integer values are used (since Native.getComponentId returns a long
-   * value).
-   * <p>
-   * Therefore there is a chance that we are given a native window handle that
-   * we can not use with libvlc.
-   * <p>
-   * In practice, I have never seen this happen on Linux or Windows.
-   * 
-   * @param value long value
-   * @return int value
-   * @throws IllegalArgumentException if the long value can not be safely converted to an int
-   */
-  public static int safeLongToInt(long value) {
-    Logger.debug("nativeComponentId={}", value);
-    if(value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
-      Logger.warn("Native component id is too big for int");
-      throw new IllegalArgumentException("long value " + value + " cannot be safely converted to an int.");
+    /**
+     * Test whether the runtime operating system is a Windows variant.
+     * 
+     * @return true if the runtime OS is Windows
+     */
+    public static boolean isWindows() {
+        return OS_NAME.indexOf("win") != -1;
     }
-    else {
-      return (int)value;
-    }
-  }
 
-  /**
-   * Get the native library name.
-   * 
-   * @return library name
-   */
-  public static String getLibVlcLibraryName() {
-    return isWindows() ? "libvlc" : "vlc";
-  }
+    /**
+     * Test whether the runtime operating system is a Mac variant.
+     * 
+     * @return true if the runtime OS is Mac
+     */
+    public static boolean isMac() {
+        return OS_NAME.indexOf("mac") != -1;
+    }
 
-  /**
-   * Get the operating system file name for the libvlc shared object.
-   * <p>
-   * This is only used to generate help/error messages.
-   * 
-   * @return shared object file name
-   */
-  public static String getLibVlcName() {
-    if(RuntimeUtil.isNix()) {
-      return "libvlc.so";
+    /**
+     * Try to safely convert a long value to an int.
+     * 
+     * The current libvlc API requires a 32-bit integer value for the drawable window handle -
+     * however, according to the JNA API it is possible that 64-bit integer values are used (since
+     * Native.getComponentId returns a long value).
+     * <p>
+     * Therefore there is a chance that we are given a native window handle that we can not use with
+     * libvlc.
+     * <p>
+     * In practice, I have never seen this happen on Linux or Windows.
+     * 
+     * @param value long value
+     * @return int value
+     * @throws IllegalArgumentException if the long value can not be safely converted to an int
+     */
+    public static int safeLongToInt(long value) {
+        Logger.debug("nativeComponentId={}", value);
+        if(value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
+            Logger.warn("Native component id is too big for int");
+            throw new IllegalArgumentException("long value " + value + " cannot be safely converted to an int.");
+        }
+        else {
+            return (int)value;
+        }
     }
-    else if(RuntimeUtil.isWindows()) {
-      return "libvlc.dll";
+
+    /**
+     * Get the native library name.
+     * 
+     * @return library name
+     */
+    public static String getLibVlcLibraryName() {
+        return isWindows() ? "libvlc" : "vlc";
     }
-    else if(RuntimeUtil.isMac()) {
-      return "libvlc.dylib";
+
+    /**
+     * Get the operating system file name for the libvlc shared object.
+     * <p>
+     * This is only used to generate help/error messages.
+     * 
+     * @return shared object file name
+     */
+    public static String getLibVlcName() {
+        if(RuntimeUtil.isNix()) {
+            return "libvlc.so";
+        }
+        else if(RuntimeUtil.isWindows()) {
+            return "libvlc.dll";
+        }
+        else if(RuntimeUtil.isMac()) {
+            return "libvlc.dylib";
+        }
+        else {
+            throw new RuntimeException("Unknown operating system");
+        }
     }
-    else {
-      throw new RuntimeException("Unknown operating system");
+
+    /**
+     * Get the operating system file name for the libvlc core shared object.
+     * <p>
+     * This is only used to generate help/error messages.
+     * 
+     * @return shared object file name
+     */
+    public static String getLibVlcCoreName() {
+        if(RuntimeUtil.isNix()) {
+            return "libvlccore.so";
+        }
+        else if(RuntimeUtil.isWindows()) {
+            return "libvlccore.dll";
+        }
+        else if(RuntimeUtil.isMac()) {
+            return "libvlccore.dylib";
+        }
+        else {
+            throw new RuntimeException("Unknown operating system");
+        }
     }
-  }
-  
-  /**
-   * Get the operating system file name for the libvlc core shared object.
-   * <p>
-   * This is only used to generate help/error messages.
-   * 
-   * @return shared object file name
-   */
-  public static String getLibVlcCoreName() {
-    if(RuntimeUtil.isNix()) {
-      return "libvlccore.so";
+
+    /**
+     * Get the default directory name for the vlc plugins directory.
+     * <p>
+     * This is only used to generate help/error messages.
+     * 
+     * @return plugin directory name
+     */
+    public static String getPluginsDirectoryName() {
+        if(!RuntimeUtil.isWindows()) {
+            return "vlc/plugins";
+        }
+        else {
+            return "plugins";
+        }
     }
-    else if(RuntimeUtil.isWindows()) {
-      return "libvlccore.dll";
-    }
-    else if(RuntimeUtil.isMac()) {
-      return "libvlccore.dylib";
-    }
-    else {
-      throw new RuntimeException("Unknown operating system");
-    }
-  }
-  
-  /**
-   * Get the default directory name for the vlc plugins directory.
-   * <p>
-   * This is only used to generate help/error messages.
-   * 
-   * @return plugin directory name
-   */
-  public static String getPluginsDirectoryName() {
-    if(!RuntimeUtil.isWindows()) {
-      return "vlc/plugins";
-    }
-    else {
-      return "plugins";
-    }
-  }
 }

@@ -26,34 +26,34 @@ import uk.co.caprica.vlcj.version.Version;
  */
 public class VersionTest {
 
-  /**
-   * Execute the test. 
-   * 
-   * @param args command-line arguments
-   */
-  public static void main(String[] args) {
-    test("1.2.0", "2.0.0");
-    test("1.2.0", "1.2.1");
-    test("1.2.0", "1.2.1-b1");
-    test("1.2.0", "1.2.0");
-    test("1.2.0", "1.1.9");
-    test("1.2.0", "0.9.8");
-    test("1.2.0", "1.1.10 The Luggage");
-    test("1.1.11", "1.1.10 The Luggage");
-    test("1.1.10", "1.1.10 The Luggage");
-    test("1.1.9", "1.1.10 The Luggage");
-  }
-  
-  /**
-   * Execute a test case.
-   * 
-   * @param required required version
-   * @param actual actual version
-   */
-  private static void test(String required, String actual) {
-    Version requiredVersion = new Version(required);
-    Version actualVersion = new Version(actual);
-    String result = actualVersion.atLeast(requiredVersion) ? "OK" : "Too Old!";
-    System.out.println("Required: " + requiredVersion + ", Actual: " + actualVersion + ", Result: " + result);
-  }
+    /**
+     * Execute the test.
+     * 
+     * @param args command-line arguments
+     */
+    public static void main(String[] args) {
+        test("1.2.0", "2.0.0");
+        test("1.2.0", "1.2.1");
+        test("1.2.0", "1.2.1-b1");
+        test("1.2.0", "1.2.0");
+        test("1.2.0", "1.1.9");
+        test("1.2.0", "0.9.8");
+        test("1.2.0", "1.1.10 The Luggage");
+        test("1.1.11", "1.1.10 The Luggage");
+        test("1.1.10", "1.1.10 The Luggage");
+        test("1.1.9", "1.1.10 The Luggage");
+    }
+
+    /**
+     * Execute a test case.
+     * 
+     * @param required required version
+     * @param actual actual version
+     */
+    private static void test(String required, String actual) {
+        Version requiredVersion = new Version(required);
+        Version actualVersion = new Version(actual);
+        String result = actualVersion.atLeast(requiredVersion) ? "OK" : "Too Old!";
+        System.out.println("Required: " + requiredVersion + ", Actual: " + actualVersion + ", Result: " + result);
+    }
 }

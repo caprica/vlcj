@@ -24,37 +24,37 @@ import java.util.Map;
 
 public enum libvlc_marquee_position_e {
 
-  centre      ( 0),
-  left        ( 1),
-  right       ( 2),
+    centre      ( 0),
+    left        ( 1),
+    right       ( 2),
   
-  top         ( 4),
-  top_left    ( 5),
-  top_right   ( 6),
+    top         ( 4),
+    top_left    ( 5),
+    top_right   ( 6),
   
-  bottom      ( 8),
-  bottom_left ( 9),
-  bottom_right(10);
+    bottom      ( 8),
+    bottom_left ( 9),
+    bottom_right(10);
   
-  private static final Map<Integer, libvlc_marquee_position_e> INT_MAP = new HashMap<Integer, libvlc_marquee_position_e>(); 
+    private static final Map<Integer, libvlc_marquee_position_e> INT_MAP = new HashMap<Integer, libvlc_marquee_position_e>();
 
-  static {
-    for(libvlc_marquee_position_e value : libvlc_marquee_position_e.values()) {
-      INT_MAP.put(value.intValue, value);
+    static {
+        for(libvlc_marquee_position_e value : libvlc_marquee_position_e.values()) {
+            INT_MAP.put(value.intValue, value);
+        }
     }
-  }
 
-  public static libvlc_marquee_position_e position(int intValue) {
-    return INT_MAP.get(intValue);
-  }
-  
-  private final int intValue;
+    public static libvlc_marquee_position_e position(int intValue) {
+        return INT_MAP.get(intValue);
+    }
 
-  private libvlc_marquee_position_e(int intValue) {
-    this.intValue = intValue;
-  }
-  
-  public int intValue() {
-    return intValue;
-  }
+    private final int intValue;
+
+    private libvlc_marquee_position_e(int intValue) {
+        this.intValue = intValue;
+    }
+
+    public int intValue() {
+        return intValue;
+    }
 }

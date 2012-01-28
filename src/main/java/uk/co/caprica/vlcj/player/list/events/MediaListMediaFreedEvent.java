@@ -27,17 +27,17 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
  */
 class MediaListMediaFreedEvent extends AbstractMediaListPlayerEvent {
 
-  /**
-   * Create a media list player event.
-   * 
-   * @param mediaListPlayer media list player the event relates to
-   */
-  MediaListMediaFreedEvent(MediaListPlayer mediaListPlayer) {
-    super(mediaListPlayer);
-  }
-  
-  @Override
-  public void notify(MediaListPlayerEventListener listener) {
-    listener.mediaFreed(mediaListPlayer);
-  }
+    /**
+     * Create a media list player event.
+     * 
+     * @param mediaListPlayer media list player the event relates to
+     */
+    MediaListMediaFreedEvent(MediaListPlayer mediaListPlayer) {
+        super(mediaListPlayer);
+    }
+
+    @Override
+    public void notify(MediaListPlayerEventListener listener) {
+        listener.mediaFreed(mediaListPlayer);
+    }
 }

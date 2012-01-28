@@ -31,69 +31,68 @@ import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
- * Search one or more directories for audio files to extract mp3 tags (exposed
- * as meta data).
+ * Search one or more directories for audio files to extract mp3 tags (exposed as meta data).
  * <p>
- * Specify one or more directory names on the command line and they will be
- * scanned for mp3 files and the mp3 tags displayed.
+ * Specify one or more directory names on the command line and they will be scanned for mp3 files
+ * and the mp3 tags displayed.
  */
 public class SearchMetaTest extends VlcjTest {
 
-  private static final FileFilter AUDIO_FILE_FILTER = new FileFilter() {
-    @Override
-    public boolean accept(File pathname) {
-      return pathname.isFile() && pathname.getName().endsWith(".mp3");
-    }
-  };
-  
-  private static final FileFilter DIR_FILTER = new FileFilter() {
-    @Override
-    public boolean accept(File pathname) {
-      return pathname.isDirectory();
-    }
-  };
-  
-  public static void main(String[] args) {
-    if(args.length == 0) {
-      System.out.println("Specify at least one directory");
-      System.exit(1);
+    private static final FileFilter AUDIO_FILE_FILTER = new FileFilter() {
+        @Override
+        public boolean accept(File pathname) {
+            return pathname.isFile() && pathname.getName().endsWith(".mp3");
+        }
+    };
+
+    private static final FileFilter DIR_FILTER = new FileFilter() {
+        @Override
+        public boolean accept(File pathname) {
+            return pathname.isDirectory();
+        }
+    };
+
+    public static void main(String[] args) {
+        if(args.length == 0) {
+            System.out.println("Specify at least one directory");
+            System.exit(1);
+        }
+
+        Logger.setLevel(Logger.Level.INFO);
+
+        MediaPlayerFactory factory = new MediaPlayerFactory();
+        HeadlessMediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
+
+        List<File> files = new ArrayList<File>(400);
+        for(String arg : args) {
+            files.addAll(scan(new File(arg)));
+        }
+
+        for(File file : files) {
+            String mrl = file.getAbsolutePath();
+            MediaMeta meta = mediaPlayer.getMediaMeta(mrl, true);
+            System.out.printf("%s -> %s\n", mrl, meta);
+        }
+
+        mediaPlayer.release();
+        factory.release();
     }
 
-    Logger.setLevel(Logger.Level.INFO);
-    
-    MediaPlayerFactory factory = new MediaPlayerFactory();
-    HeadlessMediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
-    
-    List<File> files = new ArrayList<File>(400);
-    for(String arg : args) {
-      files.addAll(scan(new File(arg)));
+    private static List<File> scan(File root) {
+        List<File> result = new ArrayList<File>(200);
+        scan(root, result);
+        return result;
     }
 
-    for(File file : files) {
-      String mrl = file.getAbsolutePath();
-      MediaMeta meta = mediaPlayer.getMediaMeta(mrl, true);
-      System.out.printf("%s -> %s\n", mrl, meta);
+    private static void scan(File root, List<File> result) {
+        File[] files = root.listFiles(AUDIO_FILE_FILTER);
+        if(files != null) {
+            for(File file : files) {
+                result.add(file);
+            }
+            for(File dir : root.listFiles(DIR_FILTER)) {
+                scan(dir, result);
+            }
+        }
     }
-    
-    mediaPlayer.release();
-    factory.release();
-  }
-  
-  private static List<File> scan(File root) {
-    List<File> result = new ArrayList<File>(200);
-    scan(root, result);
-    return result;
-  }
-  
-  private static void scan(File root, List<File> result) {
-    File[] files = root.listFiles(AUDIO_FILE_FILTER);
-    if(files != null) {
-      for(File file : files) {
-        result.add(file);
-      }
-      for(File dir : root.listFiles(DIR_FILTER)) {
-        scan(dir, result);
-      }
-    }
-  }
 }

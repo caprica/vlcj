@@ -26,9 +26,9 @@ import com.sun.jna.Structure;
  */
 public class media_subitem_added extends Structure {
 
-  /**
-   *
-   */
-  public libvlc_media_t new_child;
+    /**
+     *
+     */
+    public libvlc_media_t new_child;
 }
 

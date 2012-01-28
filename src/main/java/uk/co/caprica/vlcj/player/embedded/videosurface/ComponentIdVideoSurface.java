@@ -24,44 +24,42 @@ import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 /**
- * Encapsulation of a video surface that wraps the native component id of the
- * video surface component.
+ * Encapsulation of a video surface that wraps the native component id of the video surface
+ * component.
  * <p>
- * This is required for example when using remote out-of-process media players
- * but with video rendering in a local application. In these scenarios, it is
- * not possible to serialize the Canvas component to the remote process to get
- * the proper component ID (the copied Canvas component would have a different
- * native ID).
+ * This is required for example when using remote out-of-process media players but with video
+ * rendering in a local application. In these scenarios, it is not possible to serialize the Canvas
+ * component to the remote process to get the proper component ID (the copied Canvas component would
+ * have a different native ID).
  * <p>
- * It is also not possible to get a native component ID if the component is not
- * displayable.
+ * It is also not possible to get a native component ID if the component is not displayable.
  */
 public class ComponentIdVideoSurface extends VideoSurface {
 
-  /**
-   * Serial version.
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     * Serial version.
+     */
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * Native component identifier for the video surface.
-   */
-  private final long componentId;
-  
-  /**
-   * Create a new video surface.
-   * 
-   * @param componentId native component identifier for the video surface
-   * @param videoSurfaceAdapter adapter to attach a video surface to a native media player
-   */
-  public ComponentIdVideoSurface(long componentId, VideoSurfaceAdapter videoSurfaceAdapter) {
-    super(videoSurfaceAdapter);
-    this.componentId = componentId;
-  }
+    /**
+     * Native component identifier for the video surface.
+     */
+    private final long componentId;
 
-  @Override
-  public void attach(LibVlc libvlc, MediaPlayer mediaPlayer) {
-    Logger.debug("attach()");
-    videoSurfaceAdapter.attach(libvlc, mediaPlayer, componentId);
-  }
+    /**
+     * Create a new video surface.
+     * 
+     * @param componentId native component identifier for the video surface
+     * @param videoSurfaceAdapter adapter to attach a video surface to a native media player
+     */
+    public ComponentIdVideoSurface(long componentId, VideoSurfaceAdapter videoSurfaceAdapter) {
+        super(videoSurfaceAdapter);
+        this.componentId = componentId;
+    }
+
+    @Override
+    public void attach(LibVlc libvlc, MediaPlayer mediaPlayer) {
+        Logger.debug("attach()");
+        videoSurfaceAdapter.attach(libvlc, mediaPlayer, componentId);
+    }
 }

@@ -27,15 +27,14 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class MediaPlayerFactoryVersionTest extends VlcjTest {
 
-  /**
-   * Execute the test.
-   * <p>
-   * This will throw a RuntimeException if the libvlc native library version is
-   * too old.
-   * 
-   * @param args command-line arguments
-   */
-  public static void main(String[] args) {
-    new MediaPlayerFactory();
-  }
+    /**
+     * Execute the test.
+     * <p>
+     * This will throw a RuntimeException if the libvlc native library version is too old.
+     * 
+     * @param args command-line arguments
+     */
+    public static void main(String[] args) {
+        new MediaPlayerFactory();
+    }
 }

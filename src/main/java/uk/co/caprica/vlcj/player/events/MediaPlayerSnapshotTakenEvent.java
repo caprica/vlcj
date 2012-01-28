@@ -27,24 +27,24 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  */
 class MediaPlayerSnapshotTakenEvent extends AbstractMediaPlayerEvent {
 
-  /**
-   * Snapshot filename.
-   */
-  private final String filename;
-  
-  /**
-   * Create a media player event.
-   * 
-   * @param mediaPlayer media player the event relates to
-   * @param filename snapshot filename
-   */
-  MediaPlayerSnapshotTakenEvent(MediaPlayer mediaPlayer, String filename) {
-    super(mediaPlayer);
-    this.filename = filename;
-  }
-  
-  @Override
-  public void notify(MediaPlayerEventListener listener) {
-    listener.snapshotTaken(mediaPlayer, filename);
-  }
+    /**
+     * Snapshot filename.
+     */
+    private final String filename;
+
+    /**
+     * Create a media player event.
+     * 
+     * @param mediaPlayer media player the event relates to
+     * @param filename snapshot filename
+     */
+    MediaPlayerSnapshotTakenEvent(MediaPlayer mediaPlayer, String filename) {
+        super(mediaPlayer);
+        this.filename = filename;
+    }
+
+    @Override
+    public void notify(MediaPlayerEventListener listener) {
+        listener.snapshotTaken(mediaPlayer, filename);
+    }
 }

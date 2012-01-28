@@ -29,14 +29,14 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
  */
 public class LinuxVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
-  /**
-   * Serial version.
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     * Serial version.
+     */
+    private static final long serialVersionUID = 1L;
 
-//  @Override
-  public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-    Logger.debug("attach(componentId={})", componentId);
-    libvlc.libvlc_media_player_set_xwindow(mediaPlayer.mediaPlayerInstance(), (int)componentId);
-  }
+    // @Override
+    public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+        Logger.debug("attach(componentId={})", componentId);
+        libvlc.libvlc_media_player_set_xwindow(mediaPlayer.mediaPlayerInstance(), (int)componentId);
+    }
 }

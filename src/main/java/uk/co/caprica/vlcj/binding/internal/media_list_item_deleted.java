@@ -26,6 +26,6 @@ import com.sun.jna.Structure;
  */
 public class media_list_item_deleted extends Structure {
 
-  public libvlc_media_t item;
-  public int index;
+    public libvlc_media_t item;
+    public int index;
 }

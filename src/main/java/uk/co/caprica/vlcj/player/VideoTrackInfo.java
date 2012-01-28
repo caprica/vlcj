@@ -24,56 +24,56 @@ package uk.co.caprica.vlcj.player;
  */
 public class VideoTrackInfo extends TrackInfo {
 
-  /**
-   * Video width.
-   */
-  private final int width;
-  
-  /**
-   * Video height.
-   */
-  private final int height;
-  
-  /**
-   * Create a new video track info.
-   * 
-   * @param codec video codec
-   * @param id track id
-   * @param profile profile
-   * @param level level
-   * @param width width 
-   * @param height height
-   */
-  protected VideoTrackInfo(int codec, int id, int profile, int level, int width, int height) {
-    super(codec, id, profile, level);
-    this.width = width;
-    this.height = height;
-  }
-  
-  /**
-   * Get the video width.
-   * 
-   * @return width
-   */
-  public int width() {
-    return width;
-  }
+    /**
+     * Video width.
+     */
+    private final int width;
 
-  /**
-   * Get the video height.
-   * 
-   * @return height
-   */
-  public int height() {
-    return height;
-  }
+    /**
+     * Video height.
+     */
+    private final int height;
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder(200);
-    sb.append(super.toString()).append('[');
-    sb.append("width=").append(width).append(',');
-    sb.append("height=").append(height).append(']');
-    return sb.toString();
-  }
+    /**
+     * Create a new video track info.
+     * 
+     * @param codec video codec
+     * @param id track id
+     * @param profile profile
+     * @param level level
+     * @param width width
+     * @param height height
+     */
+    protected VideoTrackInfo(int codec, int id, int profile, int level, int width, int height) {
+        super(codec, id, profile, level);
+        this.width = width;
+        this.height = height;
+    }
+
+    /**
+     * Get the video width.
+     * 
+     * @return width
+     */
+    public int width() {
+        return width;
+    }
+
+    /**
+     * Get the video height.
+     * 
+     * @return height
+     */
+    public int height() {
+        return height;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(200);
+        sb.append(super.toString()).append('[');
+        sb.append("width=").append(width).append(',');
+        sb.append("height=").append(height).append(']');
+        return sb.toString();
+    }
 }

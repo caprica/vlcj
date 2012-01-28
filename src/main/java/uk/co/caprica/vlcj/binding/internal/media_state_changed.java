@@ -26,8 +26,8 @@ import com.sun.jna.Structure;
  */
 public class media_state_changed extends Structure {
 
-  /**
-   * 
-   */
-  public int new_state;
+    /**
+     * 
+     */
+    public int new_state;
 }

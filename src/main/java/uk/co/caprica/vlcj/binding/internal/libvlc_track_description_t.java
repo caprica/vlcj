@@ -26,9 +26,9 @@ import com.sun.jna.Structure;
  */
 public class libvlc_track_description_t extends Structure {
 
-  public static class ByReference extends libvlc_track_description_t implements Structure.ByReference {}
+    public static class ByReference extends libvlc_track_description_t implements Structure.ByReference {}
   
-  public int i_id;
-  public String psz_name;
-  public libvlc_track_description_t.ByReference p_next;  
+    public int i_id;
+    public String psz_name;
+    public libvlc_track_description_t.ByReference p_next;  
 }

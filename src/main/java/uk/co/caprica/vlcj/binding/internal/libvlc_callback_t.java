@@ -27,11 +27,11 @@ import com.sun.jna.Pointer;
  */
 public interface libvlc_callback_t extends Callback {
 
-  /**
-   * 
-   * 
-   * @param event
-   * @param userData
-   */
-  void callback(libvlc_event_t event, Pointer userData);
+    /**
+     * 
+     * 
+     * @param event
+     * @param userData
+     */
+    void callback(libvlc_event_t event, Pointer userData);
 }

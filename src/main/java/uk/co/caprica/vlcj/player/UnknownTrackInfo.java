@@ -24,15 +24,15 @@ package uk.co.caprica.vlcj.player;
  */
 public class UnknownTrackInfo extends TrackInfo {
 
-  /**
-   * 
-   * 
-   * @param codec
-   * @param id
-   * @param profile
-   * @param level
-   */
-  protected UnknownTrackInfo(int codec, int id, int profile, int level) {
-    super(codec, id, profile, level);
-  }
+    /**
+     * 
+     * 
+     * @param codec
+     * @param id
+     * @param profile
+     * @param level
+     */
+    protected UnknownTrackInfo(int codec, int id, int profile, int level) {
+        super(codec, id, profile, level);
+    }
 }

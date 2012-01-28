@@ -22,19 +22,17 @@ package uk.co.caprica.vlcj.player.direct;
 import com.sun.jna.Memory;
 
 /**
- * Specification for a component that wishes to be called back to process video
- * frames.
+ * Specification for a component that wishes to be called back to process video frames.
  * <p>
- * The render call-back provides access to the native memory buffer, if instead
- * the full RGB integer data is required for the full video frame then consider
- * using {@link RenderCallbackAdapter}.
+ * The render call-back provides access to the native memory buffer, if instead the full RGB integer
+ * data is required for the full video frame then consider using {@link RenderCallbackAdapter}.
  */
 public interface RenderCallback {
 
-  /**
-   * Call-back when ready to display a video frame.
-   * 
-   * @param nativeBuffer video data for one frame
-   */
-  public void display(Memory nativeBuffer);
+    /**
+     * Call-back when ready to display a video frame.
+     * 
+     * @param nativeBuffer video data for one frame
+     */
+    public void display(Memory nativeBuffer);
 }

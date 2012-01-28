@@ -28,29 +28,28 @@ import uk.co.caprica.vlcj.version.Version;
  */
 public class LibVlcVersionTest extends VlcjTest {
 
-  /**
-   * Execute the test.
-   * <p>
-   * This will throw a RuntimeException if the libvlc native library version is
-   * too old.
-   * 
-   * @param args command-line arguments
-   */
-  public static void main(String[] args) {
-    String version = LibVlc.INSTANCE.libvlc_get_version();
-    test("1.2.0", version);
-  }
+    /**
+     * Execute the test.
+     * <p>
+     * This will throw a RuntimeException if the libvlc native library version is too old.
+     * 
+     * @param args command-line arguments
+     */
+    public static void main(String[] args) {
+        String version = LibVlc.INSTANCE.libvlc_get_version();
+        test("1.2.0", version);
+    }
 
-  /**
-   * Execute a test case.
-   * 
-   * @param required required version
-   * @param actual actual version
-   */
-  private static void test(String required, String actual) {
-    Version requiredVersion = new Version(required);
-    Version actualVersion = new Version(actual);
-    String result = actualVersion.atLeast(requiredVersion) ? "OK" : "Too Old!";
-    System.out.println("Required: " + requiredVersion + ", Actual: " + actualVersion + ", Result: " + result);
-  }
+    /**
+     * Execute a test case.
+     * 
+     * @param required required version
+     * @param actual actual version
+     */
+    private static void test(String required, String actual) {
+        Version requiredVersion = new Version(required);
+        Version actualVersion = new Version(actual);
+        String result = actualVersion.atLeast(requiredVersion) ? "OK" : "Too Old!";
+        System.out.println("Required: " + requiredVersion + ", Actual: " + actualVersion + ", Result: " + result);
+    }
 }

@@ -23,8 +23,7 @@ import java.io.File;
 import java.io.FileFilter;
 
 /**
- * Composite file filter implementation for all media files recognised by 
- * libvlc.
+ * Composite file filter implementation for all media files recognised by libvlc.
  * <p>
  * A media file is one of:
  * <ul>
@@ -35,28 +34,28 @@ import java.io.FileFilter;
  */
 public class MediaFileFilter implements FileFilter {
 
-  /**
-   * Filter for video files.
-   */
-  private final VideoFileFilter videoFileFilter = new VideoFileFilter();
-  
-  /**
-   * Filter for audio files. 
-   */
-  private final AudioFileFilter audioFileFilter = new AudioFileFilter();
+    /**
+     * Filter for video files.
+     */
+    private final VideoFileFilter videoFileFilter = new VideoFileFilter();
 
-  /**
-   * Filter for play-list files.
-   */
-  private final PlayListFileFilter playlistFileFilter = new PlayListFileFilter();
+    /**
+     * Filter for audio files.
+     */
+    private final AudioFileFilter audioFileFilter = new AudioFileFilter();
 
-  /**
-   * Single instance.
-   */
-  public static final MediaFileFilter INSTANCE = new MediaFileFilter();
-  
-//  @Override
-  public boolean accept(File pathname) {
-    return videoFileFilter.accept(pathname) || audioFileFilter.accept(pathname) || playlistFileFilter.accept(pathname);
-  }
+    /**
+     * Filter for play-list files.
+     */
+    private final PlayListFileFilter playlistFileFilter = new PlayListFileFilter();
+
+    /**
+     * Single instance.
+     */
+    public static final MediaFileFilter INSTANCE = new MediaFileFilter();
+
+    // @Override
+    public boolean accept(File pathname) {
+        return videoFileFilter.accept(pathname) || audioFileFilter.accept(pathname) || playlistFileFilter.accept(pathname);
+    }
 }

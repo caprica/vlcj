@@ -27,24 +27,24 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  */
 class MediaPlayerVoutEvent extends AbstractMediaPlayerEvent {
 
-  /**
-   * Count of video outputs.
-   */
-  private final int newCount;
-  
-  /**
-   * Create a media player event.
-   * 
-   * @param mediaPlayer media player the event relates to
-   * @param newCount
-   */
-  MediaPlayerVoutEvent(MediaPlayer mediaPlayer, int newCount) {
-    super(mediaPlayer);
-    this.newCount = newCount;
-  }
-  
-  @Override
-  public void notify(MediaPlayerEventListener listener) {
-    listener.videoOutput(mediaPlayer, newCount);
-  }
+    /**
+     * Count of video outputs.
+     */
+    private final int newCount;
+
+    /**
+     * Create a media player event.
+     * 
+     * @param mediaPlayer media player the event relates to
+     * @param newCount
+     */
+    MediaPlayerVoutEvent(MediaPlayer mediaPlayer, int newCount) {
+        super(mediaPlayer);
+        this.newCount = newCount;
+    }
+
+    @Override
+    public void notify(MediaPlayerEventListener listener) {
+        listener.videoOutput(mediaPlayer, newCount);
+    }
 }

@@ -22,16 +22,14 @@ package uk.co.caprica.vlcj.player.direct;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 /**
- * Specification for a media player that provides direct access to the video 
- * frame data.
+ * Specification for a media player that provides direct access to the video frame data.
  * <p>
- * Such a media player is useful for user interface toolkits that do not 
- * support the embedding of an AWT Canvas, like JavaFX or an OpenGL toolkit
- * like jMonkeyEngine.
+ * Such a media player is useful for user interface toolkits that do not support the embedding of an
+ * AWT Canvas, like JavaFX or an OpenGL toolkit like jMonkeyEngine.
  * <p>
- * A direct media player is also useful for applications that need access to
- * the video frame data to process it in some way. 
+ * A direct media player is also useful for applications that need access to the video frame data to
+ * process it in some way.
  */
 public interface DirectMediaPlayer extends MediaPlayer {
-  // Nothing extra
+    // Nothing extra
 }

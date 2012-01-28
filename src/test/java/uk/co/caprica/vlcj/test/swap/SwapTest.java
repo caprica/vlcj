@@ -44,160 +44,158 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
- * This test demonstrates the problems associated with attempting to change the
- * video surface component while a video is playing.
+ * This test demonstrates the problems associated with attempting to change the video surface
+ * component while a video is playing.
  * <p>
- * In short any change to the video surface only takes effect if the video is
- * stopped and started again.
+ * In short any change to the video surface only takes effect if the video is stopped and started
+ * again.
  * <p>
- * Consequently this test is only useful to demonstrate that something does NOT
- * work.
+ * Consequently this test is only useful to demonstrate that something does NOT work.
  * <p>
- * This behaviour is a result of the libvlc/vlc implementation, not the 
- * bindings. 
+ * This behaviour is a result of the libvlc/vlc implementation, not the bindings.
  */
 public class SwapTest extends VlcjTest {
 
-  private JFrame frame;
-  private JPanel contentPane;
-  private Canvas previewCanvas;
-  private Canvas mainCanvas;
-  private JPanel controlsPanel;
-  private JButton showMainButton;
-  private JButton showPreviewButton;
-  private JButton playButton;
-  private JButton pauseButton;
-  private JButton stopButton;
+    private JFrame frame;
+    private JPanel contentPane;
+    private Canvas previewCanvas;
+    private Canvas mainCanvas;
+    private JPanel controlsPanel;
+    private JButton showMainButton;
+    private JButton showPreviewButton;
+    private JButton playButton;
+    private JButton pauseButton;
+    private JButton stopButton;
   
-  private MediaPlayerFactory factory;
-  private EmbeddedMediaPlayer mediaPlayer;
-  private CanvasVideoSurface previewVideoSurface;
-  private CanvasVideoSurface mainVideoSurface;
-  
-  public static void main(final String[] args) throws Exception {
-    if(args.length != 1) {
-      System.out.println("Specify an MRL");
-      System.exit(1);
+    private MediaPlayerFactory factory;
+    private EmbeddedMediaPlayer mediaPlayer;
+    private CanvasVideoSurface previewVideoSurface;
+    private CanvasVideoSurface mainVideoSurface;
+
+    public static void main(final String[] args) throws Exception {
+        if(args.length != 1) {
+            System.out.println("Specify an MRL");
+            System.exit(1);
+        }
+
+        setLookAndFeel();
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new SwapTest().start(args[0]);
+            }
+        });
     }
-    
-    setLookAndFeel();
-    
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        new SwapTest().start(args[0]);
-      }
-    });
-  }
 
-  public SwapTest() {
-    previewCanvas = new Canvas();
-    previewCanvas.setBackground(Color.black);
-    previewCanvas.setPreferredSize(new Dimension(400, 250));
-    
-    mainCanvas = new Canvas();
-    mainCanvas.setBackground(Color.black);
-    mainCanvas.setPreferredSize(new Dimension(800, 500));
-    
-    showMainButton = new JButton("Main");
-    showMainButton.setMnemonic('m');
-    
-    showPreviewButton = new JButton("Preview");
-    showPreviewButton.setMnemonic('v');
-    
-    playButton = new JButton("Play");
-    playButton.setMnemonic('p');
+    public SwapTest() {
+        previewCanvas = new Canvas();
+        previewCanvas.setBackground(Color.black);
+        previewCanvas.setPreferredSize(new Dimension(400, 250));
 
-    pauseButton = new JButton("Pause");
-    pauseButton.setMnemonic('s');
-    
-    stopButton = new JButton("Stop");
-    stopButton.setMnemonic('t');
-    
-    controlsPanel = new JPanel();
-    controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.X_AXIS));
-    controlsPanel.add(Box.createHorizontalGlue());
-    controlsPanel.add(showPreviewButton);
-    controlsPanel.add(Box.createHorizontalStrut(8));
-    controlsPanel.add(showMainButton);
-    controlsPanel.add(Box.createHorizontalStrut(32));
-    controlsPanel.add(playButton);
-    controlsPanel.add(Box.createHorizontalStrut(8));
-    controlsPanel.add(stopButton);
-    controlsPanel.add(Box.createHorizontalStrut(8));
-    controlsPanel.add(pauseButton);
-    controlsPanel.add(Box.createHorizontalGlue());
-    
-    contentPane = new JPanel();
-    contentPane.setBorder(new EmptyBorder(16, 16, 16, 16));
-    contentPane.setLayout(new BorderLayout(16, 16));
-    
-    contentPane.add(previewCanvas, BorderLayout.WEST);
-    contentPane.add(mainCanvas, BorderLayout.CENTER);
-    contentPane.add(controlsPanel, BorderLayout.SOUTH);
-    
-    contentPane.add(new JLabel("<html>This test shows that it is <b>not</b> possible to update a video surface on-the-fly, you must <b>stop</b> and <b>play</b> the video again to effect the change.</hrml>"), BorderLayout.NORTH);
-    
-    frame = new JFrame("vlcj switch video test");
-    frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setContentPane(contentPane);
-    frame.setSize(1100, 400);
-    frame.addWindowListener(new WindowAdapter() {
-      @Override
-      public void windowClosing(WindowEvent e) {
-        mediaPlayer.release();
-        factory.release();
-      }
-    });
-    
-    showPreviewButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        mediaPlayer.setVideoSurface(previewVideoSurface);
-        mediaPlayer.attachVideoSurface();
-      }
-    });
-    
-    showMainButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        mediaPlayer.setVideoSurface(mainVideoSurface);
-        mediaPlayer.attachVideoSurface();
-      }
-    });
-    
-    playButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        mediaPlayer.play();
-      }
-    });
-    
-    stopButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        mediaPlayer.stop();
-      }
-    });
-    
-    pauseButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        mediaPlayer.pause();
-      }
-    });
+        mainCanvas = new Canvas();
+        mainCanvas.setBackground(Color.black);
+        mainCanvas.setPreferredSize(new Dimension(800, 500));
 
-    factory = new MediaPlayerFactory("--no-video-title-show");
+        showMainButton = new JButton("Main");
+        showMainButton.setMnemonic('m');
 
-    mediaPlayer = factory.newEmbeddedMediaPlayer();
-    
-    previewVideoSurface = factory.newVideoSurface(previewCanvas);
-    mainVideoSurface = factory.newVideoSurface(mainCanvas);
-  }
-  
-  private void start(String mrl) {
-    frame.setVisible(true);
-    mediaPlayer.prepareMedia(mrl);
-  }
+        showPreviewButton = new JButton("Preview");
+        showPreviewButton.setMnemonic('v');
+
+        playButton = new JButton("Play");
+        playButton.setMnemonic('p');
+
+        pauseButton = new JButton("Pause");
+        pauseButton.setMnemonic('s');
+
+        stopButton = new JButton("Stop");
+        stopButton.setMnemonic('t');
+
+        controlsPanel = new JPanel();
+        controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.X_AXIS));
+        controlsPanel.add(Box.createHorizontalGlue());
+        controlsPanel.add(showPreviewButton);
+        controlsPanel.add(Box.createHorizontalStrut(8));
+        controlsPanel.add(showMainButton);
+        controlsPanel.add(Box.createHorizontalStrut(32));
+        controlsPanel.add(playButton);
+        controlsPanel.add(Box.createHorizontalStrut(8));
+        controlsPanel.add(stopButton);
+        controlsPanel.add(Box.createHorizontalStrut(8));
+        controlsPanel.add(pauseButton);
+        controlsPanel.add(Box.createHorizontalGlue());
+
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(16, 16, 16, 16));
+        contentPane.setLayout(new BorderLayout(16, 16));
+
+        contentPane.add(previewCanvas, BorderLayout.WEST);
+        contentPane.add(mainCanvas, BorderLayout.CENTER);
+        contentPane.add(controlsPanel, BorderLayout.SOUTH);
+
+        contentPane.add(new JLabel("<html>This test shows that it is <b>not</b> possible to update a video surface on-the-fly, you must <b>stop</b> and <b>play</b> the video again to effect the change.</hrml>"), BorderLayout.NORTH);
+
+        frame = new JFrame("vlcj switch video test");
+        frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(contentPane);
+        frame.setSize(1100, 400);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mediaPlayer.release();
+                factory.release();
+            }
+        });
+
+        showPreviewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mediaPlayer.setVideoSurface(previewVideoSurface);
+                mediaPlayer.attachVideoSurface();
+            }
+        });
+
+        showMainButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mediaPlayer.setVideoSurface(mainVideoSurface);
+                mediaPlayer.attachVideoSurface();
+            }
+        });
+
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mediaPlayer.play();
+            }
+        });
+
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mediaPlayer.stop();
+            }
+        });
+
+        pauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mediaPlayer.pause();
+            }
+        });
+
+        factory = new MediaPlayerFactory("--no-video-title-show");
+
+        mediaPlayer = factory.newEmbeddedMediaPlayer();
+
+        previewVideoSurface = factory.newVideoSurface(previewCanvas);
+        mainVideoSurface = factory.newVideoSurface(mainCanvas);
+    }
+
+    private void start(String mrl) {
+        frame.setVisible(true);
+        mediaPlayer.prepareMedia(mrl);
+    }
 }

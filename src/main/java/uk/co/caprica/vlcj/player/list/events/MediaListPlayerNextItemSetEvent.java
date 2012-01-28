@@ -28,24 +28,24 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
  */
 class MediaListPlayerNextItemSetEvent extends AbstractMediaListPlayerEvent {
 
-  /**
-   * Media instance.
-   */
-  private final libvlc_media_t item;
-  
-  /**
-   * Create a media player event.
-   * 
-   * @param mediaListPlayer media player the event relates to
-   * @param metaType meta data type
-   */
-  MediaListPlayerNextItemSetEvent(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
-    super(mediaListPlayer);
-    this.item = item;
-  }
-  
-  @Override
-  public void notify(MediaListPlayerEventListener listener) {
-    listener.nextItem(mediaListPlayer, item, mediaListPlayer.getMediaList().mrl(item));
-  }
+    /**
+     * Media instance.
+     */
+    private final libvlc_media_t item;
+
+    /**
+     * Create a media player event.
+     * 
+     * @param mediaListPlayer media player the event relates to
+     * @param metaType meta data type
+     */
+    MediaListPlayerNextItemSetEvent(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
+        super(mediaListPlayer);
+        this.item = item;
+    }
+
+    @Override
+    public void notify(MediaListPlayerEventListener listener) {
+        listener.nextItem(mediaListPlayer, item, mediaListPlayer.getMediaList().mrl(item));
+    }
 }

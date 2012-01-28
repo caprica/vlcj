@@ -27,11 +27,11 @@ import com.sun.jna.Pointer;
  */
 public interface libvlc_display_callback_t extends Callback {
 
-  /**
-   * 
-   * 
-   * @param opaque
-   * @param picture
-   */
-  void display(Pointer opaque, Pointer picture);
+    /**
+     * 
+     * 
+     * @param opaque
+     * @param picture
+     */
+    void display(Pointer opaque, Pointer picture);
 }

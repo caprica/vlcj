@@ -24,35 +24,35 @@ package uk.co.caprica.vlcj.filter;
  */
 public class PlayListFileFilter extends ExtensionFileFilter {
 
-  /**
-   * From the vlc_interfaces.h include file.
-   */
-  private static final String[] EXTENSIONS_PLAYLIST = {
-    "asx",
-    "b4s",
-    "cue",
-    "conf",
-    "ifo",
-    "m3u",
-    "m3u8",
-    "pls",
-    "ram",
-    "rar",
-    "sdp",
-    "vlc",
-    "xspf",
-    "zip"
-  };
+    /**
+     * From the vlc_interfaces.h include file.
+     */
+    private static final String[] EXTENSIONS_PLAYLIST = {
+        "asx",
+        "b4s",
+        "cue",
+        "conf",
+        "ifo",
+        "m3u",
+        "m3u8",
+        "pls",
+        "ram",
+        "rar",
+        "sdp",
+        "vlc",
+        "xspf",
+        "zip"
+    };
 
-  /**
-   * Single instance.
-   */
-  public static PlayListFileFilter INSTANCE = new PlayListFileFilter();
-  
-  /**
-   * Create a new file filter.
-   */
-  public PlayListFileFilter() {
-    super(EXTENSIONS_PLAYLIST);
-  }
+    /**
+     * Single instance.
+     */
+    public static PlayListFileFilter INSTANCE = new PlayListFileFilter();
+
+    /**
+     * Create a new file filter.
+     */
+    public PlayListFileFilter() {
+        super(EXTENSIONS_PLAYLIST);
+    }
 }

@@ -32,14 +32,15 @@ import uk.co.caprica.vlcj.filter.VideoFileFilter;
  * configured with the recognised vlc file-types.
  * <p>
  * Use this factory to help initialise a {@link javax.swing.JFileChooser}, for example:
+ * 
  * <pre>
- *  fileChooser = new JFileChooser();
- *  fileChooser.setApproveButtonText("Play");
- *  fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newVideoFileFilter());
- *  fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newAudioFileFilter());
- *  fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newPlayListFileFilter());
- *  fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newMediaFileFilter());
- *  fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newSubTitleFileFilter());
+ * fileChooser = new JFileChooser();
+ * fileChooser.setApproveButtonText(&quot;Play&quot;);
+ * fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newVideoFileFilter());
+ * fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newAudioFileFilter());
+ * fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newPlayListFileFilter());
+ * fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newMediaFileFilter());
+ * fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newSubTitleFileFilter());
  * </pre>
  * 
  * @see javax.swing.filechooser.FileNameExtensionFilter
@@ -47,81 +48,80 @@ import uk.co.caprica.vlcj.filter.VideoFileFilter;
  */
 public class SwingFileFilterFactory {
 
-  /**
-   * Description for the video file filter.
-   */
-  private static final String VIDEO_FILTER_DESCRIPTION = "Video Files";
-  
-  /**
-   * Description for the audio file filter.
-   */
-  private static final String AUDIO_FILTER_DESCRIPTION = "Audio Files";
-  
-  /**
-   * Description for the play-list file filter.
-   */
-  private static final String PLAYLIST_FILTER_DESCRIPTION = "Playlist Files";
-  
-  /**
-   * Description for the media file filter.
-   */
-  private static final String MEDIA_FILTER_DESCRIPTION = "Media Files";
+    /**
+     * Description for the video file filter.
+     */
+    private static final String VIDEO_FILTER_DESCRIPTION = "Video Files";
 
-  /**
-   * Description for the sub-title file filter.
-   */
-  private static final String SUBTITLE_FILTER_DESCRIPTION = "Subtitle Files";
-  
-  /**
-   * Create a new file name extension filter that accepts video files.
-   * 
-   * @return filter
-   */
-  public static FileFilter newVideoFileFilter() {
-    return new SwingFileFilter(VIDEO_FILTER_DESCRIPTION, new VideoFileFilter());
-  }
-  
-  /**
-   * Create a new file name extension filter that accepts audio files.
-   * 
-   * @return filter
-   */
-  public static FileFilter newAudioFileFilter() {
-    return new SwingFileFilter(AUDIO_FILTER_DESCRIPTION, new AudioFileFilter());
-  }
-  
-  /**
-   * Create a new file name extension filter that accepts play-list files.
-   * 
-   * @return filter
-   */
-  public static FileFilter newPlayListFileFilter() {
-    return new SwingFileFilter(PLAYLIST_FILTER_DESCRIPTION, new PlayListFileFilter());
-  }
-  
-  /**
-   * Create a new file name extension filter that accepts all recognised media 
-   * files.
-   * <p>
-   * A media file is one of:
-   * <ul>
-   *   <li>Video</li>
-   *   <li>Audio</li>
-   *   <li>Play-list</li>
-   * </ul>
-   * 
-   * @return filter
-   */
-  public static FileFilter newMediaFileFilter() {
-    return new SwingFileFilter(MEDIA_FILTER_DESCRIPTION, new MediaFileFilter()); 
-  }
+    /**
+     * Description for the audio file filter.
+     */
+    private static final String AUDIO_FILTER_DESCRIPTION = "Audio Files";
 
-  /**
-   * Create a new file name extension filter that accepts sub-title files.
-   * 
-   * @return filter
-   */
-  public static FileFilter newSubtitleFileFilter() {
-    return new SwingFileFilter(SUBTITLE_FILTER_DESCRIPTION, new SubTitleFileFilter());
-  }
+    /**
+     * Description for the play-list file filter.
+     */
+    private static final String PLAYLIST_FILTER_DESCRIPTION = "Playlist Files";
+
+    /**
+     * Description for the media file filter.
+     */
+    private static final String MEDIA_FILTER_DESCRIPTION = "Media Files";
+
+    /**
+     * Description for the sub-title file filter.
+     */
+    private static final String SUBTITLE_FILTER_DESCRIPTION = "Subtitle Files";
+
+    /**
+     * Create a new file name extension filter that accepts video files.
+     * 
+     * @return filter
+     */
+    public static FileFilter newVideoFileFilter() {
+        return new SwingFileFilter(VIDEO_FILTER_DESCRIPTION, new VideoFileFilter());
+    }
+
+    /**
+     * Create a new file name extension filter that accepts audio files.
+     * 
+     * @return filter
+     */
+    public static FileFilter newAudioFileFilter() {
+        return new SwingFileFilter(AUDIO_FILTER_DESCRIPTION, new AudioFileFilter());
+    }
+
+    /**
+     * Create a new file name extension filter that accepts play-list files.
+     * 
+     * @return filter
+     */
+    public static FileFilter newPlayListFileFilter() {
+        return new SwingFileFilter(PLAYLIST_FILTER_DESCRIPTION, new PlayListFileFilter());
+    }
+
+    /**
+     * Create a new file name extension filter that accepts all recognised media files.
+     * <p>
+     * A media file is one of:
+     * <ul>
+     * <li>Video</li>
+     * <li>Audio</li>
+     * <li>Play-list</li>
+     * </ul>
+     * 
+     * @return filter
+     */
+    public static FileFilter newMediaFileFilter() {
+        return new SwingFileFilter(MEDIA_FILTER_DESCRIPTION, new MediaFileFilter());
+    }
+
+    /**
+     * Create a new file name extension filter that accepts sub-title files.
+     * 
+     * @return filter
+     */
+    public static FileFilter newSubtitleFileFilter() {
+        return new SwingFileFilter(SUBTITLE_FILTER_DESCRIPTION, new SubTitleFileFilter());
+    }
 }

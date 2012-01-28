@@ -20,45 +20,45 @@
 package uk.co.caprica.vlcj.runtime.install;
 
 /**
- * Specification for a component interested in receiving event notifications
- * from the {@link NativeLibraryManager}.
+ * Specification for a component interested in receiving event notifications from the
+ * {@link NativeLibraryManager}.
  * 
  * @see NativeLibraryManagerEventAdapter
  */
 public interface NativeLibraryManagerEventListener {
 
-  /**
-   * Unpacking has started.
-   * 
-   * @param installTo name of the directory files are being unpacked to
-   * @param installCount total number of files being unpacked
-   */
-  void start(String installTo, int installCount);
-  
-  /**
-   * A file is being installed.
-   * 
-   * @param number number (not index) of the file currently being installed
-   * @param name name of the file currently being installed
-   */
-  void install(int number, String name);
+    /**
+     * Unpacking has started.
+     * 
+     * @param installTo name of the directory files are being unpacked to
+     * @param installCount total number of files being unpacked
+     */
+    void start(String installTo, int installCount);
 
-  /**
-   * Unpacking has completed.
-   */
-  void end();
-  
-  /**
-   * Purging of the installation directory has started.
-   * 
-   * @param installTo name of the installation directory being purged
-   */
-  void purge(String installTo);
+    /**
+     * A file is being installed.
+     * 
+     * @param number number (not index) of the file currently being installed
+     * @param name name of the file currently being installed
+     */
+    void install(int number, String name);
 
-  /**
-   * Purging of the installation directory has completed.
-   * 
-   * @param result <code>true</code> if all files and directories were deleted, otherwise <code>false</code> 
-   */
-  void purged(boolean result);
+    /**
+     * Unpacking has completed.
+     */
+    void end();
+
+    /**
+     * Purging of the installation directory has started.
+     * 
+     * @param installTo name of the installation directory being purged
+     */
+    void purge(String installTo);
+
+    /**
+     * Purging of the installation directory has completed.
+     * 
+     * @param result <code>true</code> if all files and directories were deleted, otherwise <code>false</code>
+     */
+    void purged(boolean result);
 }

@@ -40,128 +40,129 @@ import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
- * This example shows how to create simple overlays if you do not want per-
- * pixel translucency or full transparency in your overlays.
+ * This example shows how to create simple overlays if you do not want per- pixel translucency or
+ * full transparency in your overlays.
  * <p>
- * The key trick is to make sure that the video surface Canvas is added to the
- * container <strong>last</strong>, i.e. after all of the overlay components
- * have been added. It does not matter if the components are visible or not.
+ * The key trick is to make sure that the video surface Canvas is added to the container
+ * <strong>last</strong>, i.e. after all of the overlay components have been added. It does not
+ * matter if the components are visible or not.
  * <p>
- * The only clunky thing in here is the null layout manager and the absolute
- * positioning of components. This is a feature of this example code only, it
- * is not an inherent part of the solution.
+ * The only clunky thing in here is the null layout manager and the absolute positioning of
+ * components. This is a feature of this example code only, it is not an inherent part of the
+ * solution.
  * <p>
- * This situation can be improved by using a transparent overlaid JPanel 
- * together with AWTUtilities.setComponentMixingCutoutShape(comp, new Rectangle()).
- * <p> 
- * By using such a transparent JPanel if you want to add lightweight components
- * (you still will not get any transparency).
+ * This situation can be improved by using a transparent overlaid JPanel together with
+ * AWTUtilities.setComponentMixingCutoutShape(comp, new Rectangle()).
+ * <p>
+ * By using such a transparent JPanel if you want to add lightweight components (you still will not
+ * get any transparency).
  * <p>
  * Press 'q', 'w', 'e' or 'r' to toggle an overlay.
  */
 public class NonTransparentOverlayTest extends VlcjTest {
 
-  private Frame f;
-  private Canvas c;
-  private Canvas o1;
-  private Canvas o2;
-  private Canvas o3;
-  private Label o4;
+    private Frame f;
+    private Canvas c;
+    private Canvas o1;
+    private Canvas o2;
+    private Canvas o3;
+    private Label o4;
   
-  private MediaPlayerFactory factory;
-  private EmbeddedMediaPlayer mediaPlayer;
+    private MediaPlayerFactory factory;
+    private EmbeddedMediaPlayer mediaPlayer;
   
-  public static void main(final String[] args) {
-    if(args.length != 1) {
-      System.err.println("Specify an MRL");
-      System.exit(1);
-    }
-    
-    LibXUtil.initialise();
-    
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        new NonTransparentOverlayTest().start(args[0]);
-      }
-    });
-  }
-
-  public NonTransparentOverlayTest() {
-    Panel p = new Panel();
-    p.setBackground(Color.orange); // The label "transparent" background will actually get this background colour
-    p.setLayout(null);
-    
-    c = new Canvas();
-    c.setBackground(Color.black);
-    c.setBounds(0, 0, 1000, 900);
-    
-    o1 = new Canvas();
-    o1.setBackground(Color.green);
-    o1.setBounds(100, 60, 200, 300);
-
-    o2 = new Canvas();
-    o2.setBackground(Color.red);
-    o2.setBounds(400, 200, 150, 150);
-    
-    o3 = new Canvas();
-    o3.setBackground(Color.blue);
-    o3.setBounds(50, 500, 200, 200);
-    
-    o4 = new Label("I am a label");
-    o4.setForeground(Color.red);
-    o4.setFont(new Font("Sansserif", Font.BOLD, 48));
-    o4.setBounds(400, 600, 400, 50);
-    
-    p.add(o1);
-    p.add(o2);
-    p.add(o3);
-    p.add(o4);
-    
-    p.add(c); // <--- must be added LAST to appear underneath the other components
-    
-    f = new Frame("Heavyweight Overlay Test");
-    f.setLayout(new BorderLayout());
-    f.setSize(1000, 900);
-    f.add(p, BorderLayout.CENTER);
-    f.addWindowListener(new WindowAdapter() {
-      @Override
-      public void windowClosing(WindowEvent e) {
-        mediaPlayer.release();
-        factory.release();
-        System.exit(0);
-      }
-    });
-    
-    f.addKeyListener(new KeyAdapter() {
-      @Override
-      public void keyPressed(KeyEvent e) {
-        switch(e.getKeyChar()) {
-          case 'q':
-            o1.setVisible(!o1.isVisible());
-            break;
-          case 'w':
-            o2.setVisible(!o2.isVisible());
-            break;
-          case 'e':
-            o3.setVisible(!o3.isVisible());
-            break;
-          case 'r':
-            o4.setVisible(!o4.isVisible());
-            break;
+    public static void main(final String[] args) {
+        if(args.length != 1) {
+            System.err.println("Specify an MRL");
+            System.exit(1);
         }
-      }
-    });
-    
-    factory = new MediaPlayerFactory();
-    mediaPlayer = factory.newEmbeddedMediaPlayer();
-    
-    CanvasVideoSurface cvs = factory.newVideoSurface(c);
-    mediaPlayer.setVideoSurface(cvs);
-  }
-  
-  private void start(String mrl) {
-    f.setVisible(true);
-    mediaPlayer.playMedia(mrl);
-  }
+
+        LibXUtil.initialise();
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new NonTransparentOverlayTest().start(args[0]);
+            }
+        });
+    }
+
+    public NonTransparentOverlayTest() {
+        Panel p = new Panel();
+        p.setBackground(Color.orange); // The label "transparent" background will actually get this
+                                       // background colour
+        p.setLayout(null);
+
+        c = new Canvas();
+        c.setBackground(Color.black);
+        c.setBounds(0, 0, 1000, 900);
+
+        o1 = new Canvas();
+        o1.setBackground(Color.green);
+        o1.setBounds(100, 60, 200, 300);
+
+        o2 = new Canvas();
+        o2.setBackground(Color.red);
+        o2.setBounds(400, 200, 150, 150);
+
+        o3 = new Canvas();
+        o3.setBackground(Color.blue);
+        o3.setBounds(50, 500, 200, 200);
+
+        o4 = new Label("I am a label");
+        o4.setForeground(Color.red);
+        o4.setFont(new Font("Sansserif", Font.BOLD, 48));
+        o4.setBounds(400, 600, 400, 50);
+
+        p.add(o1);
+        p.add(o2);
+        p.add(o3);
+        p.add(o4);
+
+        p.add(c); // <--- must be added LAST to appear underneath the other components
+
+        f = new Frame("Heavyweight Overlay Test");
+        f.setLayout(new BorderLayout());
+        f.setSize(1000, 900);
+        f.add(p, BorderLayout.CENTER);
+        f.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mediaPlayer.release();
+                factory.release();
+                System.exit(0);
+            }
+        });
+
+        f.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch(e.getKeyChar()) {
+                    case 'q':
+                        o1.setVisible(!o1.isVisible());
+                        break;
+                    case 'w':
+                        o2.setVisible(!o2.isVisible());
+                        break;
+                    case 'e':
+                        o3.setVisible(!o3.isVisible());
+                        break;
+                    case 'r':
+                        o4.setVisible(!o4.isVisible());
+                        break;
+                }
+            }
+        });
+
+        factory = new MediaPlayerFactory();
+        mediaPlayer = factory.newEmbeddedMediaPlayer();
+
+        CanvasVideoSurface cvs = factory.newVideoSurface(c);
+        mediaPlayer.setVideoSurface(cvs);
+    }
+
+    private void start(String mrl) {
+        f.setVisible(true);
+        mediaPlayer.playMedia(mrl);
+    }
 }

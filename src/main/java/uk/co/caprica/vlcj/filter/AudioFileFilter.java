@@ -24,64 +24,64 @@ package uk.co.caprica.vlcj.filter;
  */
 public class AudioFileFilter extends ExtensionFileFilter {
 
-  /**
-   * From the vlc_interfaces.h include file.
-   */
-  private static final String[] EXTENSIONS_AUDIO = {
-    "a52",
-    "aac",
-    "ac3",
-    "adt",
-    "adts",
-    "aif",
-    "aifc",
-    "aiff",
-    "amr",
-    "aob",
-    "ape",
-    "awb",
-    "caf",
-    "cda",
-    "dts",
-    "flac",
-    "it",
-    "m4a",
-    "m4p",
-    "mid",
-    "mka",
-    "mlp",
-    "mod",
-    "mp1",
-    "mp2",
-    "mp3",
-    "mpc",
-    "oga",
-    "ogg",
-    "oma",
-    "rmi",
-    "s3m",
-    "spx",
-    "thd",
-    "tta",
-    "voc",
-    "vqf",
-    "w64",
-    "wav",
-    "wma",
-    "wv",
-    "xa",
-    "xm"
-  };
+    /**
+     * From the vlc_interfaces.h include file.
+     */
+    private static final String[] EXTENSIONS_AUDIO = {
+        "a52",
+        "aac",
+        "ac3",
+        "adt",
+        "adts",
+        "aif",
+        "aifc",
+        "aiff",
+        "amr",
+        "aob",
+        "ape",
+        "awb",
+        "caf",
+        "cda",
+        "dts",
+        "flac",
+        "it",
+        "m4a",
+        "m4p",
+        "mid",
+        "mka",
+        "mlp",
+        "mod",
+        "mp1",
+        "mp2",
+        "mp3",
+        "mpc",
+        "oga",
+        "ogg",
+        "oma",
+        "rmi",
+        "s3m",
+        "spx",
+        "thd",
+        "tta",
+        "voc",
+        "vqf",
+        "w64",
+        "wav",
+        "wma",
+        "wv",
+        "xa",
+        "xm"
+    };
 
-  /**
-   * Single instance.
-   */
-  public static final AudioFileFilter INSTANCE = new AudioFileFilter();
-  
-  /**
-   * Create a new file filter.
-   */
-  public AudioFileFilter() {
-    super(EXTENSIONS_AUDIO);
-  }
+    /**
+     * Single instance.
+     */
+    public static final AudioFileFilter INSTANCE = new AudioFileFilter();
+
+    /**
+     * Create a new file filter.
+     */
+    public AudioFileFilter() {
+        super(EXTENSIONS_AUDIO);
+    }
 }

@@ -31,57 +31,58 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
  */
 public class PlayerInstance extends MediaPlayerEventAdapter {
 
-  private final EmbeddedMediaPlayer mediaPlayer;
-  private final Canvas videoSurface;
-  
-  public PlayerInstance(EmbeddedMediaPlayer mediaPlayer) {
-    this.mediaPlayer = mediaPlayer;
-    this.videoSurface = new Canvas();
-    this.videoSurface.setBackground(Color.black);
-    
-    mediaPlayer.addMediaPlayerEventListener(this);
-  }
-  
-  public EmbeddedMediaPlayer mediaPlayer() {
-    return mediaPlayer;
-  }
- 
-  public Canvas videoSurface() {
-    return videoSurface;
-  }
+    private final EmbeddedMediaPlayer mediaPlayer;
 
-  @Override
-  public void mediaChanged(MediaPlayer mediaPlayer) {
-    System.out.println("mediaChanged");
-  }
+    private final Canvas videoSurface;
 
-  @Override
-  public void playing(MediaPlayer mediaPlayer) {
-    System.out.println("playing");
-  }
+    public PlayerInstance(EmbeddedMediaPlayer mediaPlayer) {
+        this.mediaPlayer = mediaPlayer;
+        this.videoSurface = new Canvas();
+        this.videoSurface.setBackground(Color.black);
 
-  @Override
-  public void paused(MediaPlayer mediaPlayer) {
-    System.out.println("paused");
-  }
+        mediaPlayer.addMediaPlayerEventListener(this);
+    }
 
-  @Override
-  public void stopped(MediaPlayer mediaPlayer) {
-    System.out.println("stopped");
-  }
+    public EmbeddedMediaPlayer mediaPlayer() {
+        return mediaPlayer;
+    }
 
-  @Override
-  public void finished(MediaPlayer mediaPlayer) {
-    System.out.println("finished");
-  }
+    public Canvas videoSurface() {
+        return videoSurface;
+    }
 
-  @Override
-  public void error(MediaPlayer mediaPlayer) {
-    System.out.println("error");
-  }
-  
-  @Override
-  public void opening(MediaPlayer mediaPlayer) {
-    System.out.println("opening");
-  }
+    @Override
+    public void mediaChanged(MediaPlayer mediaPlayer) {
+        System.out.println("mediaChanged");
+    }
+
+    @Override
+    public void playing(MediaPlayer mediaPlayer) {
+        System.out.println("playing");
+    }
+
+    @Override
+    public void paused(MediaPlayer mediaPlayer) {
+        System.out.println("paused");
+    }
+
+    @Override
+    public void stopped(MediaPlayer mediaPlayer) {
+        System.out.println("stopped");
+    }
+
+    @Override
+    public void finished(MediaPlayer mediaPlayer) {
+        System.out.println("finished");
+    }
+
+    @Override
+    public void error(MediaPlayer mediaPlayer) {
+        System.out.println("error");
+    }
+
+    @Override
+    public void opening(MediaPlayer mediaPlayer) {
+        System.out.println("opening");
+    }
 }

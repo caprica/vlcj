@@ -26,5 +26,8 @@ import com.sun.jna.Structure;
  */
 public class media_player_seekable_changed extends Structure {
 
-  public int new_seekable;
+    /**
+     * 
+     */
+    public int new_seekable;
 }

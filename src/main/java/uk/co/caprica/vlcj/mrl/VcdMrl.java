@@ -23,6 +23,7 @@ package uk.co.caprica.vlcj.mrl;
  * Implementation of a media resource locator for Video CDs.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
+ * 
  * <pre>
  * String mrl = new VcdMrl().device("/media/dvd")
  *                          .startingPosition("S")
@@ -33,51 +34,53 @@ package uk.co.caprica.vlcj.mrl;
  */
 public class VcdMrl implements Mrl {
 
-  private static final String VCD_TYPE = "vcd";
-  
-  private String device;
-  private String startingPosition;
-  private int number = -1;
+    private static final String VCD_TYPE = "vcd";
 
-  private String value;
-  
-  public VcdMrl device(String device) {
-    this.device = device;
-    return this;
-  }
+    private String device;
 
-  public VcdMrl startingPosition(String startingPosition) {
-    this.startingPosition = startingPosition;
-    return this;
-  }
+    private String startingPosition;
 
-  public VcdMrl number(int number) {
-    this.number = number;
-    return this;
-  }
+    private int number = -1;
 
-  public String value() {
-    if(value == null) {
-      value = constructValue();
+    private String value;
+
+    public VcdMrl device(String device) {
+        this.device = device;
+        return this;
     }
-    return value;
-  }
-  
-  /**
-   * Construct the MRL from the internal state.
-   * 
-   * @return media resource locator
-   */
-  private String constructValue() {
-    StringBuilder sb = new StringBuilder(40);
-    sb.append(VCD_TYPE);
-    sb.append("://");
-    sb.append(device);
-    sb.append('@');
-    sb.append(startingPosition);
-    if(number != -1) {
-      sb.append(number);
+
+    public VcdMrl startingPosition(String startingPosition) {
+        this.startingPosition = startingPosition;
+        return this;
     }
-    return sb.toString();
-  }
+
+    public VcdMrl number(int number) {
+        this.number = number;
+        return this;
+    }
+
+    public String value() {
+        if(value == null) {
+            value = constructValue();
+        }
+        return value;
+    }
+
+    /**
+     * Construct the MRL from the internal state.
+     * 
+     * @return media resource locator
+     */
+    private String constructValue() {
+        StringBuilder sb = new StringBuilder(40);
+        sb.append(VCD_TYPE);
+        sb.append("://");
+        sb.append(device);
+        sb.append('@');
+        sb.append(startingPosition);
+        if(number != -1) {
+            sb.append(number);
+        }
+        return sb.toString();
+    }
 }

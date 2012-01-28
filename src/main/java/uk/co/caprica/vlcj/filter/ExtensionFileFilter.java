@@ -31,68 +31,66 @@ import java.util.TreeSet;
  */
 public abstract class ExtensionFileFilter implements FileFilter {
 
-  /**
-   * The recognised file extensions.
-   */
-  private final String[] extensions;
-  
-  /**
-   * Set of recognised file extensions. 
-   */
-  private final Set<String> extensionsSet = new HashSet<String>();
-  
-  /**
-   * Create a new file filter. 
-   * 
-   * @param extensions file extensions to accept
-   */
-  protected ExtensionFileFilter(String[] extensions) {
-//    this.extensions = Arrays.copyOf(extensions, extensions.length);
-    // Maintain JDK 1.5 compatibility
-    this.extensions = Arrays.asList(extensions).toArray(new String[extensions.length]);
+    /**
+     * The recognised file extensions.
+     */
+    private final String[] extensions;
 
-    Arrays.sort(this.extensions);
+    /**
+     * Set of recognised file extensions.
+     */
+    private final Set<String> extensionsSet = new HashSet<String>();
 
-    // Make a hash-set for faster look-up 
-    for(String extension : extensions) {
-      extensionsSet.add(extension);
+    /**
+     * Create a new file filter.
+     * 
+     * @param extensions file extensions to accept
+     */
+    protected ExtensionFileFilter(String[] extensions) {
+        // this.extensions = Arrays.copyOf(extensions, extensions.length);
+        // Maintain JDK 1.5 compatibility
+        this.extensions = Arrays.asList(extensions).toArray(new String[extensions.length]);
+        Arrays.sort(this.extensions);
+        // Make a hash-set for faster look-up
+        for(String extension : extensions) {
+            extensionsSet.add(extension);
+        }
     }
-  }
-  
-  /**
-   * Get the recognised file extensions.
-   * <p>
-   * A sorted copy of the array of file extensions is returned.
-   * 
-   * @return file extensions accepted by the filter
-   */
-  public String[] getExtensions() {
-//    return Arrays.copyOf(extensions, extensions.length);
-    // Maintain JDK 1.5 compatibility
-    return Arrays.asList(extensions).toArray(new String[extensions.length]);
-  }
-  
-  /**
-   * Get the set of recognised file extensions.
-   * <p>
-   * A new (copy) sorted set of file extensions is returned.
-   * 
-   * @return set of file extensions accepted by the filter
-   */
-  public Set<String> getExtensionSet() {
-    return new TreeSet<String>(extensionsSet);
-  }
-  
-//  @Override
-  public boolean accept(File pathname) {
-    if(pathname.isFile()) {
-      String name = pathname.getName();
-      int dot = name.lastIndexOf('.');
-      if(dot != -1 && dot+1 < name.length()) {
-        String extension = name.substring(dot+1);
-        return extensionsSet.contains(extension);
-      }
+
+    /**
+     * Get the recognised file extensions.
+     * <p>
+     * A sorted copy of the array of file extensions is returned.
+     * 
+     * @return file extensions accepted by the filter
+     */
+    public String[] getExtensions() {
+        // return Arrays.copyOf(extensions, extensions.length);
+        // Maintain JDK 1.5 compatibility
+        return Arrays.asList(extensions).toArray(new String[extensions.length]);
     }
-    return false;
-  }
+
+    /**
+     * Get the set of recognised file extensions.
+     * <p>
+     * A new (copy) sorted set of file extensions is returned.
+     * 
+     * @return set of file extensions accepted by the filter
+     */
+    public Set<String> getExtensionSet() {
+        return new TreeSet<String>(extensionsSet);
+    }
+
+    // @Override
+    public boolean accept(File pathname) {
+        if(pathname.isFile()) {
+            String name = pathname.getName();
+            int dot = name.lastIndexOf('.');
+            if(dot != -1 && dot + 1 < name.length()) {
+                String extension = name.substring(dot + 1);
+                return extensionsSet.contains(extension);
+            }
+        }
+        return false;
+    }
 }

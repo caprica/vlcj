@@ -26,5 +26,8 @@ import com.sun.jna.Structure;
  */
 public class media_parsed_changed extends Structure {
 
-  public int new_status;
+    /**
+     * 
+     */
+    public int new_status;
 }

@@ -26,6 +26,6 @@ import com.sun.jna.Structure;
  */
 public class vlm_media_event extends Structure {
 
-  public String psz_media_name;
-  public String psz_instance_name;
+    public String psz_media_name;
+    public String psz_instance_name;
 }

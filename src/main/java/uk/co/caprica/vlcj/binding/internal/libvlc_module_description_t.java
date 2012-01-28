@@ -26,11 +26,11 @@ import com.sun.jna.Structure;
  */
 public class libvlc_module_description_t extends Structure {
 
-  public static class ByReference extends libvlc_module_description_t implements Structure.ByReference {}
+    public static class ByReference extends libvlc_module_description_t implements Structure.ByReference {}
 
-  public String psz_name;
-  public String psz_shortname;
-  public String psz_longname;
-  public String psz_help;
-  public libvlc_module_description_t.ByReference p_next;
+    public String psz_name;
+    public String psz_shortname;
+    public String psz_longname;
+    public String psz_help;
+    public libvlc_module_description_t.ByReference p_next;
 }

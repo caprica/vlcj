@@ -30,52 +30,52 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 /**
  * An example of using the "X" full-screen strategy.
  * <p>
- * This is without doubt the recommended strategy to use for full-screen media
- * players - at least it is on Linux.
+ * This is without doubt the recommended strategy to use for full-screen media players - at least it
+ * is on Linux.
  */
 public class XFullScreenPlayerTest extends VlcjTest {
 
-  private JFrame frame; 
-  
-  private EmbeddedMediaPlayerComponent mediaPlayerComponent;
+    private JFrame frame;
 
-  public static void main(String[] args) {
-    if(args.length != 1) {
-      System.err.println("Specify an MRL to play");
-      System.exit(1);
+    private EmbeddedMediaPlayerComponent mediaPlayerComponent;
+
+    public static void main(String[] args) {
+        if(args.length != 1) {
+            System.err.println("Specify an MRL to play");
+            System.exit(1);
+        }
+
+        final String mrl = args[0];
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new XFullScreenPlayerTest().start(mrl);
+            }
+        });
     }
-    
-    final String mrl = args[0];
-    
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        new XFullScreenPlayerTest().start(mrl);
-      }
-    });
-  }
-  
-  @SuppressWarnings("serial")
-  public XFullScreenPlayerTest() {
-    frame = new JFrame("LibX11 Full Screen Strategy");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setLocation(100, 100);
-    frame.setSize(1200, 800);
-    
-    mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
-      @Override
-      protected FullScreenStrategy onGetFullScreenStrategy() {
-        return new XFullScreenStrategy(frame);
-      }
-    };
 
-    frame.setContentPane(mediaPlayerComponent);
-    
-    frame.setVisible(true);
-  }
+    @SuppressWarnings("serial")
+    public XFullScreenPlayerTest() {
+        frame = new JFrame("LibX11 Full Screen Strategy");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocation(100, 100);
+        frame.setSize(1200, 800);
 
-  protected void start(String mrl) {
-    mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
-    mediaPlayerComponent.getMediaPlayer().setFullScreen(true);
-  }
+        mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
+            @Override
+            protected FullScreenStrategy onGetFullScreenStrategy() {
+                return new XFullScreenStrategy(frame);
+            }
+        };
+
+        frame.setContentPane(mediaPlayerComponent);
+
+        frame.setVisible(true);
+    }
+
+    protected void start(String mrl) {
+        mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().setFullScreen(true);
+    }
 }

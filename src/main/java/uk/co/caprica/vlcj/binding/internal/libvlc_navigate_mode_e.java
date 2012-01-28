@@ -27,31 +27,31 @@ import java.util.Map;
  */
 public enum libvlc_navigate_mode_e {
 
-  libvlc_navigate_activate(0),
-  libvlc_navigate_up      (1),
-  libvlc_navigate_down    (2),
-  libvlc_navigate_left    (3),
-  libvlc_navigate_right   (4);
+    libvlc_navigate_activate(0),
+    libvlc_navigate_up      (1),
+    libvlc_navigate_down    (2),
+    libvlc_navigate_left    (3),
+    libvlc_navigate_right   (4);
 
-  private static final Map<Integer, libvlc_navigate_mode_e> INT_MAP = new HashMap<Integer, libvlc_navigate_mode_e>(); 
+    private static final Map<Integer, libvlc_navigate_mode_e> INT_MAP = new HashMap<Integer, libvlc_navigate_mode_e>();
 
-  static {
-    for(libvlc_navigate_mode_e value: libvlc_navigate_mode_e.values()) {
-      INT_MAP.put(value.intValue, value);
+    static {
+        for(libvlc_navigate_mode_e value : libvlc_navigate_mode_e.values()) {
+            INT_MAP.put(value.intValue, value);
+        }
     }
-  }
 
-  public static libvlc_navigate_mode_e event(int intValue) {
-    return INT_MAP.get(intValue);
-  }
-  
-  private final int intValue;
+    public static libvlc_navigate_mode_e event(int intValue) {
+        return INT_MAP.get(intValue);
+    }
 
-  private libvlc_navigate_mode_e(int intValue) {
-    this.intValue = intValue;
-  }
-  
-  public int intValue() {
-    return intValue;
-  }
+    private final int intValue;
+
+    private libvlc_navigate_mode_e(int intValue) {
+        this.intValue = intValue;
+    }
+
+    public int intValue() {
+        return intValue;
+    }
 }

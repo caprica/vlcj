@@ -27,35 +27,35 @@ import java.io.File;
  * This file filter always accepts directories.
  */
 public class SwingFileFilter extends javax.swing.filechooser.FileFilter {
-  
-  /**
-   * Description of the filter. 
-   */
-  private final String description;
 
-  /**
-   * The regular file filter implementation.
-   */
-  private final java.io.FileFilter delegate;
+    /**
+     * Description of the filter.
+     */
+    private final String description;
 
-  /**
-   * Create a Swing file filter.
-   * 
-   * @param description
-   * @param delegate
-   */
-  public SwingFileFilter(String description, java.io.FileFilter delegate) {
-    this.description = description;
-    this.delegate = delegate;
-  }
-  
-  @Override
-  public boolean accept(File f) {
-    return f.isDirectory() || delegate.accept(f);
-  }
+    /**
+     * The regular file filter implementation.
+     */
+    private final java.io.FileFilter delegate;
 
-  @Override
-  public String getDescription() {
-    return description;
-  }
+    /**
+     * Create a Swing file filter.
+     * 
+     * @param description
+     * @param delegate
+     */
+    public SwingFileFilter(String description, java.io.FileFilter delegate) {
+        this.description = description;
+        this.delegate = delegate;
+    }
+
+    @Override
+    public boolean accept(File f) {
+        return f.isDirectory() || delegate.accept(f);
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
 }

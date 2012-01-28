@@ -54,304 +54,299 @@ import com.sun.jna.Pointer;
 /**
  * Test the behaviour of the various set drawable methods.
  * <p>
- * This application creates a launcher for three frames, each with an embedded
- * media player. Clicking a button launches a frame and plays a video.
+ * This application creates a launcher for three frames, each with an embedded media player.
+ * Clicking a button launches a frame and plays a video.
  * <p>
- * Any particular test only works if the video is played correctly embedded 
- * inside the frame and no native video window is opened.
+ * Any particular test only works if the video is played correctly embedded inside the frame and no
+ * native video window is opened.
  * <p>
  * The three available methods to set the video surface are:
  * <ul>
- *   <li>libvlc_media_player_set_agl</li>
- *   <li>libvlc_media_player_set_nsobject</li>
- *   <li>libvlc_media_player_set_xwindow, this is what is used on Linux</li>
+ * <li>libvlc_media_player_set_agl</li>
+ * <li>libvlc_media_player_set_nsobject</li>
+ * <li>libvlc_media_player_set_xwindow, this is what is used on Linux</li>
  * </ul>
  * <p>
- * You must pass an MRL for a media file to play as the only command-line
- * argument.
+ * You must pass an MRL for a media file to play as the only command-line argument.
  * <p>
- * This is used primarily to test behaviour on MacOS platforms. If this test
- * does not work (which is likely the case on MacOS), then you simply can not 
- * have a media player embedded in your application. There is no other way
- * provided by libvlc to make this work.
+ * This is used primarily to test behaviour on MacOS platforms. If this test does not work (which is
+ * likely the case on MacOS), then you simply can not have a media player embedded in your
+ * application. There is no other way provided by libvlc to make this work.
  * <p>
- * The Windows implementation is excluded from this since it works and is 
- * irrelevant.
+ * The Windows implementation is excluded from this since it works and is irrelevant.
  * <p>
- * Setting a Canvas for the video surface does not work on MacOS because a
- * standard java.awt.Canvas knows nothing about the VLC view embedding 
- * protocol. The solution is to provide a CococaComponent implementation and a
- * native NSView implementation (similar to that in vlc's VLCVideoView.m).
+ * Setting a Canvas for the video surface does not work on MacOS because a standard java.awt.Canvas
+ * knows nothing about the VLC view embedding protocol. The solution is to provide a CococaComponent
+ * implementation and a native NSView implementation (similar to that in vlc's VLCVideoView.m).
  */
 public class SetDrawableTest extends VlcjTest {
 
-  private MediaPlayerFactory mediaPlayerFactory;
-  private EmbeddedMediaPlayer aglMediaPlayer;
-  private EmbeddedMediaPlayer nsobjectMediaPlayer;
-  private EmbeddedMediaPlayer nsviewMediaPlayer;
-  private EmbeddedMediaPlayer xwindowMediaPlayer;
+    private MediaPlayerFactory mediaPlayerFactory;
+    private EmbeddedMediaPlayer aglMediaPlayer;
+    private EmbeddedMediaPlayer nsobjectMediaPlayer;
+    private EmbeddedMediaPlayer nsviewMediaPlayer;
+    private EmbeddedMediaPlayer xwindowMediaPlayer;
   
-  private Canvas aglCanvas;
-  private Canvas nsobjectCanvas;
-  private Canvas nsviewCanvas;
-  private Canvas xwindowCanvas;
+    private Canvas aglCanvas;
+    private Canvas nsobjectCanvas;
+    private Canvas nsviewCanvas;
+    private Canvas xwindowCanvas;
   
-  private CanvasVideoSurface aglVideoSurface;
-  private CanvasVideoSurface nsobjectVideoSurface;
-  private CanvasVideoSurface nsviewVideoSurface;
-  private CanvasVideoSurface xwindowVideoSurface;
+    private CanvasVideoSurface aglVideoSurface;
+    private CanvasVideoSurface nsobjectVideoSurface;
+    private CanvasVideoSurface nsviewVideoSurface;
+    private CanvasVideoSurface xwindowVideoSurface;
   
-  private JPanel mainFrameContentPane;
-  private JButton aglButton;
-  private JButton nsobjectButton;
-  private JButton nsviewButton;
-  private JButton xwindowButton;
+    private JPanel mainFrameContentPane;
+    private JButton aglButton;
+    private JButton nsobjectButton;
+    private JButton nsviewButton;
+    private JButton xwindowButton;
   
-  private JFrame mainFrame;
-  private VideoFrame aglFrame;
-  private VideoFrame nsobjectFrame;
-  private VideoFrame nsviewFrame;
-  private VideoFrame xwindowFrame;
+    private JFrame mainFrame;
+    private VideoFrame aglFrame;
+    private VideoFrame nsobjectFrame;
+    private VideoFrame nsviewFrame;
+    private VideoFrame xwindowFrame;
   
-  public static void main(final String[] args) {
-    if(args.length != 1) {
-      System.out.println("Specify a single MRL");
-      System.exit(1);
+    public static void main(final String[] args) {
+        if(args.length != 1) {
+            System.out.println("Specify a single MRL");
+            System.exit(1);
+        }
+
+        Logger.setLevel(Logger.Level.INFO);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new SetDrawableTest(args);
+            }
+        });
     }
 
-    Logger.setLevel(Logger.Level.INFO);
-    
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        new SetDrawableTest(args);
-      }
-    });
-  }
+    @SuppressWarnings("serial")
+    public SetDrawableTest(String[] args) {
+        final String mrl = args[0];
 
-  @SuppressWarnings("serial")
-  public SetDrawableTest(String[] args) {
-    final String mrl = args[0]; 
-    
-    mediaPlayerFactory = new MediaPlayerFactory("--no-video-title-show");
-    aglMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
-    nsobjectMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
-    nsviewMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
-    xwindowMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
-    
-    aglCanvas = new Canvas();
-    aglCanvas.setBackground(Color.black);
-    
-    nsobjectCanvas = new Canvas();
-    nsobjectCanvas.setBackground(Color.black);
+        mediaPlayerFactory = new MediaPlayerFactory("--no-video-title-show");
+        aglMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+        nsobjectMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+        nsviewMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+        xwindowMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
 
-    nsviewCanvas = new Canvas();
-    nsviewCanvas.setBackground(Color.black);
+        aglCanvas = new Canvas();
+        aglCanvas.setBackground(Color.black);
 
-    xwindowCanvas = new Canvas();
-    xwindowCanvas.setBackground(Color.black);
-    
-    aglVideoSurface = new CanvasVideoSurface(aglCanvas, new VideoSurfaceAdapter() {
-      @Override
-      public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-        dump("AGL", aglCanvas);
-        libvlc.libvlc_media_player_set_agl(aglMediaPlayer.mediaPlayerInstance(), RuntimeUtil.safeLongToInt(componentId));
-      }
-    });
-    
-    nsobjectVideoSurface = new CanvasVideoSurface(nsobjectCanvas, new VideoSurfaceAdapter() {
-      @Override
-      public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-        dump("NSObject", nsobjectCanvas);
-        libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), componentId);
-      }
-    });
+        nsobjectCanvas = new Canvas();
+        nsobjectCanvas.setBackground(Color.black);
 
-    nsviewVideoSurface = new CanvasVideoSurface(nsviewCanvas, new VideoSurfaceAdapter() {
-      @Override
-      public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-        dump("NSView", nsviewCanvas);
-        // TODO shouldn't this component pointer be on the attach template method?
-        //      (that may be moot since it returns the same value anyway)
+        nsviewCanvas = new Canvas();
+        nsviewCanvas.setBackground(Color.black);
+
+        xwindowCanvas = new Canvas();
+        xwindowCanvas.setBackground(Color.black);
+
+        aglVideoSurface = new CanvasVideoSurface(aglCanvas, new VideoSurfaceAdapter() {
+            @Override
+            public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+                dump("AGL", aglCanvas);
+                libvlc.libvlc_media_player_set_agl(aglMediaPlayer.mediaPlayerInstance(), RuntimeUtil.safeLongToInt(componentId));
+            }
+        });
+
+        nsobjectVideoSurface = new CanvasVideoSurface(nsobjectCanvas, new VideoSurfaceAdapter() {
+            @Override
+            public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+                dump("NSObject", nsobjectCanvas);
+                libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), componentId);
+            }
+        });
+
+        nsviewVideoSurface = new CanvasVideoSurface(nsviewCanvas, new VideoSurfaceAdapter() {
+            @Override
+            public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+                dump("NSView", nsviewCanvas);
+                // TODO shouldn't this component pointer be on the attach template method?
+                // (that may be moot since it returns the same value anyway)
+                try {
+                    long viewPtr = getViewPointer(nsviewCanvas);
+                    libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), viewPtr);
+                }
+                catch(Throwable t) {
+                    System.out.println("Failed to set nsobject view");
+                }
+            }
+        });
+
+        xwindowVideoSurface = new CanvasVideoSurface(xwindowCanvas, new VideoSurfaceAdapter() {
+            @Override
+            public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
+                dump("XWindow", xwindowCanvas);
+                libvlc.libvlc_media_player_set_xwindow(xwindowMediaPlayer.mediaPlayerInstance(), RuntimeUtil.safeLongToInt(componentId));
+            }
+        });
+
+        aglMediaPlayer.setVideoSurface(aglVideoSurface);
+        nsobjectMediaPlayer.setVideoSurface(nsobjectVideoSurface);
+        nsviewMediaPlayer.setVideoSurface(nsviewVideoSurface);
+        xwindowMediaPlayer.setVideoSurface(xwindowVideoSurface);
+
+        aglFrame = new VideoFrame("AGL", aglMediaPlayer);
+        nsobjectFrame = new VideoFrame("NSObject", nsobjectMediaPlayer);
+        nsviewFrame = new VideoFrame("NSView", nsviewMediaPlayer);
+        xwindowFrame = new VideoFrame("XWindow", xwindowMediaPlayer);
+
+        aglFrame.getContentPane().setLayout(new BorderLayout());
+        aglFrame.getContentPane().add(aglCanvas, BorderLayout.CENTER);
+
+        nsobjectFrame.getContentPane().setLayout(new BorderLayout());
+        nsobjectFrame.getContentPane().add(nsobjectCanvas, BorderLayout.CENTER);
+
+        nsviewFrame.getContentPane().setLayout(new BorderLayout());
+        nsviewFrame.getContentPane().add(nsviewCanvas, BorderLayout.CENTER);
+
+        xwindowFrame.getContentPane().setLayout(new BorderLayout());
+        xwindowFrame.getContentPane().add(xwindowCanvas, BorderLayout.CENTER);
+
+        aglFrame.setLocation(50, 150);
+        nsobjectFrame.setLocation(50, 350);
+        nsviewFrame.setLocation(50, 550);
+        xwindowFrame.setLocation(50, 750);
+
+        aglButton = new JButton("AGL");
+        aglButton.setMnemonic('a');
+        aglButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aglFrame.start(mrl);
+            }
+        });
+
+        nsobjectButton = new JButton("NSObject");
+        nsobjectButton.setMnemonic('n');
+        nsobjectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nsobjectFrame.start(mrl);
+            }
+        });
+
+        nsviewButton = new JButton("NSView");
+        nsviewButton.setMnemonic('v');
+        nsviewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nsviewFrame.start(mrl);
+            }
+        });
+
+        xwindowButton = new JButton("XWindow");
+        xwindowButton.setMnemonic('x');
+        xwindowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                xwindowFrame.start(mrl);
+            }
+        });
+
+        mainFrameContentPane = new JPanel();
+        mainFrameContentPane.setBorder(new EmptyBorder(16, 16, 16, 16));
+        mainFrameContentPane.setLayout(new GridLayout(1, 3, 16, 0));
+        mainFrameContentPane.add(aglButton);
+        mainFrameContentPane.add(nsobjectButton);
+        mainFrameContentPane.add(nsviewButton);
+        mainFrameContentPane.add(xwindowButton);
+
+        mainFrame = new JFrame("vlcj Drawable Test");
+        mainFrame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
+        mainFrame.setLocation(50, 50);
+        mainFrame.setContentPane(mainFrameContentPane);
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.pack();
+        mainFrame.setVisible(true);
+
+        aglFrame.setVisible(true);
+        nsobjectFrame.setVisible(true);
+        nsviewFrame.setVisible(true);
+        xwindowFrame.setVisible(true);
+    }
+
+    private class VideoFrame extends JFrame {
+
+        private static final long serialVersionUID = 1L;
+
+        private final EmbeddedMediaPlayer mediaPlayer;
+
+        private VideoFrame(String title, EmbeddedMediaPlayer mediaPlayer) {
+            super(title);
+            this.mediaPlayer = mediaPlayer;
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            setSize(320, 180);
+            pack();
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    // VideoFrame.this.mediaPlayer.stop();
+                }
+            });
+        }
+
+        private void start(final String mrl) {
+            setVisible(true);
+            toFront();
+            mediaPlayer.playMedia(mrl);
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private void dump(String s, Canvas c) {
+        System.out.println();
+        System.out.println(s);
+        System.out.println("        component: " + c);
+        System.out.println("   component peer: " + c.getPeer());
+        System.out.println("component pointer: " + Native.getComponentPointer(c));
+        System.out.println("   native pointer: " + Pointer.nativeValue(Native.getComponentPointer(c)));
+        System.out.println("     component id: " + Native.getComponentID(c));
         try {
-          long viewPtr = getViewPointer(nsviewCanvas);
-          libvlc.libvlc_media_player_set_nsobject(nsobjectMediaPlayer.mediaPlayerInstance(), viewPtr);
+            System.out.println("     view pointer: " + getViewPointer(c));
         }
         catch(Throwable t) {
-          System.out.println("Failed to set nsobject view");
+            System.out.println("     view pointer: " + t.getMessage());
         }
-      }
-    });
+        System.out.println();
+    }
 
-    xwindowVideoSurface = new CanvasVideoSurface(xwindowCanvas, new VideoSurfaceAdapter() {
-      @Override
-      public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-        dump("XWindow", xwindowCanvas);
-        libvlc.libvlc_media_player_set_xwindow(xwindowMediaPlayer.mediaPlayerInstance(), RuntimeUtil.safeLongToInt(componentId));
-      }
-    });
-    
-    aglMediaPlayer.setVideoSurface(aglVideoSurface);
-    nsobjectMediaPlayer.setVideoSurface(nsobjectVideoSurface);
-    nsviewMediaPlayer.setVideoSurface(nsviewVideoSurface);
-    xwindowMediaPlayer.setVideoSurface(xwindowVideoSurface);
-    
-    aglFrame = new VideoFrame("AGL", aglMediaPlayer);
-    nsobjectFrame = new VideoFrame("NSObject", nsobjectMediaPlayer);
-    nsviewFrame = new VideoFrame("NSView", nsviewMediaPlayer);
-    xwindowFrame = new VideoFrame("XWindow", xwindowMediaPlayer);
-    
-    aglFrame.getContentPane().setLayout(new BorderLayout());
-    aglFrame.getContentPane().add(aglCanvas, BorderLayout.CENTER);
-    
-    nsobjectFrame.getContentPane().setLayout(new BorderLayout());
-    nsobjectFrame.getContentPane().add(nsobjectCanvas, BorderLayout.CENTER);
-    
-    nsviewFrame.getContentPane().setLayout(new BorderLayout());
-    nsviewFrame.getContentPane().add(nsviewCanvas, BorderLayout.CENTER);
-    
-    xwindowFrame.getContentPane().setLayout(new BorderLayout());
-    xwindowFrame.getContentPane().add(xwindowCanvas, BorderLayout.CENTER);
-    
-    aglFrame.setLocation(50, 150);
-    nsobjectFrame.setLocation(50, 350);
-    nsviewFrame.setLocation(50, 550);
-    xwindowFrame.setLocation(50, 750);
-    
-    aglButton = new JButton("AGL");
-    aglButton.setMnemonic('a');
-    aglButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        aglFrame.start(mrl);
-      }
-    });
-    
-    nsobjectButton = new JButton("NSObject");
-    nsobjectButton.setMnemonic('n');
-    nsobjectButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        nsobjectFrame.start(mrl);
-      }
-    });
-
-    nsviewButton = new JButton("NSView");
-    nsviewButton.setMnemonic('v');
-    nsviewButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        nsviewFrame.start(mrl);
-      }
-    });
-
-    xwindowButton = new JButton("XWindow");
-    xwindowButton.setMnemonic('x');
-    xwindowButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        xwindowFrame.start(mrl);
-      }
-    });
-    
-    mainFrameContentPane = new JPanel();
-    mainFrameContentPane.setBorder(new EmptyBorder(16, 16, 16, 16));
-    mainFrameContentPane.setLayout(new GridLayout(1, 3, 16, 0));
-    mainFrameContentPane.add(aglButton);
-    mainFrameContentPane.add(nsobjectButton);
-    mainFrameContentPane.add(nsviewButton);
-    mainFrameContentPane.add(xwindowButton);
-    
-    mainFrame = new JFrame("vlcj Drawable Test");
-    mainFrame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
-    mainFrame.setLocation(50, 50);
-    mainFrame.setContentPane(mainFrameContentPane);
-    mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    mainFrame.pack();
-    mainFrame.setVisible(true);
-
-    aglFrame.setVisible(true);
-    nsobjectFrame.setVisible(true);
-    nsviewFrame.setVisible(true);
-    xwindowFrame.setVisible(true);
-  }
-  
-  private class VideoFrame extends JFrame {
-    
-    private static final long serialVersionUID = 1L;
-
-    private final EmbeddedMediaPlayer mediaPlayer;
-    
-    private VideoFrame(String title, EmbeddedMediaPlayer mediaPlayer) {
-      super(title);
-      this.mediaPlayer = mediaPlayer;
-      setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-      setSize(320, 180);
-      pack();
-      addWindowListener(new WindowAdapter() {
-        @Override
-        public void windowClosing(WindowEvent e) {
-//          VideoFrame.this.mediaPlayer.stop();
+    /**
+     * Get the component's peer handle.
+     * <p>
+     * Note that this does in fact return the same value as the JNA Native.componentID() method, so
+     * is actually redundant.
+     * <p>
+     * It exists here for the sake of investigation.
+     * <p>
+     * On MacOS, the peer's getViewPtr() method returns a handle for an NSView object instance.
+     * 
+     * @param component component
+     * @return peer
+     */
+    private long getViewPointer(Component component) {
+        try {
+            @SuppressWarnings("deprecation")
+            ComponentPeer peer = component.getPeer();
+            Method method = peer.getClass().getMethod("getViewPtr");
+            Object result = (Object)method.invoke(peer);
+            System.out.println("result: " + result);
+            if(result != null) {
+                System.out.println("class: " + result.getClass());
+                return Long.parseLong(result.toString());
+            }
+            else {
+                throw new RuntimeException("Failed to get view pointer for " + component);
+            }
         }
-      });
+        catch(Throwable t) {
+            throw new RuntimeException(t);
+        }
     }
-    
-    private void start(final String mrl) {
-      setVisible(true);
-      toFront();
-      mediaPlayer.playMedia(mrl);
-    }
-  }
-
-  @SuppressWarnings("deprecation")
-  private void dump(String s, Canvas c) {
-    System.out.println();
-    System.out.println(s);
-    System.out.println("        component: " + c);
-    System.out.println("   component peer: " + c.getPeer());
-    System.out.println("component pointer: " + Native.getComponentPointer(c));
-    System.out.println("   native pointer: " + Pointer.nativeValue(Native.getComponentPointer(c)));
-    System.out.println("     component id: " + Native.getComponentID(c));
-    try {
-      System.out.println("     view pointer: " + getViewPointer(c));
-    }
-    catch(Throwable t) {
-      System.out.println("     view pointer: " + t.getMessage());
-    }
-    System.out.println();
-  }
-
-  /**
-   * Get the component's peer handle.
-   * <p>
-   * Note that this does in fact return the same value as the JNA 
-   * Native.componentID() method, so is actually redundant.
-   * <p>
-   * It exists here for the sake of investigation.
-   * <p>
-   * On MacOS, the peer's getViewPtr() method returns a handle for an NSView
-   * object instance.
-   * 
-   * @param component component
-   * @return peer
-   */
-  private long getViewPointer(Component component) {
-    try {
-      @SuppressWarnings("deprecation")
-      ComponentPeer peer = component.getPeer();
-      Method method = peer.getClass().getMethod("getViewPtr");
-      Object result = (Object)method.invoke(peer);
-      System.out.println("result: " + result);
-      if(result != null) {
-        System.out.println("class: " + result.getClass());
-        return Long.parseLong(result.toString());
-      }
-      else {
-        throw new RuntimeException("Failed to get view pointer for " + component);
-      }
-    }
-    catch(Throwable t) {
-      throw new RuntimeException(t);
-    }
-  }
 }

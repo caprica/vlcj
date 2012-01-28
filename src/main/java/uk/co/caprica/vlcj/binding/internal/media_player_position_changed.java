@@ -26,5 +26,8 @@ import com.sun.jna.Structure;
  */
 public class media_player_position_changed extends Structure {
 
-  public float new_position;
+    /**
+     * 
+     */
+    public float new_position;
 }

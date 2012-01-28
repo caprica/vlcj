@@ -24,101 +24,101 @@ package uk.co.caprica.vlcj.player;
  */
 public abstract class TrackInfo {
 
-  /**
-   * Codec (fourcc).
-   */
-  private final int codec;
-  
-  /**
-   * Codec name.
-   */
-  private final String codecName;
+    /**
+     * Codec (fourcc).
+     */
+    private final int codec;
 
-  /**
-   * Track id.
-   */
-  private final int id;
-  
-  /**
-   * Profile.
-   */
-  private final int profile;
-  
-  /**
-   * Level.
-   */
-  private final int level;
-  
-  /**
-   * Create a new track info.
-   * 
-   * @param codec codec
-   * @param id track id
-   * @param profile profile
-   * @param level level
-   */
-  protected TrackInfo(int codec, int id, int profile, int level) {
-    this.codec = codec;
-    this.codecName = codec != 0 ? new String(new byte[] {(byte)(codec >>> 24), (byte)(codec >>> 16), (byte)(codec >>> 8), (byte)codec}).trim() : null;
-    this.id = id;
-    this.profile = profile;
-    this.level = level;
-  }
-  
-  /**
-   * Get the codec (fourcc).
-   * 
-   * @return codec
-   */
-  public int codec() {
-    return codec;
-  }
-  
-  /**
-   * Get the codec name.
-   * 
-   * @return codec name
-   */
-  public String codecName() {
-    return codecName;
-  }
-  
-  /**
-   * Get the track id.
-   * 
-   * @return track id
-   */
-  public int id() {
-    return id;
-  }
-  
-  /**
-   * Get the profile.
-   * 
-   * @return profile
-   */
-  public int profile() {
-    return profile;
-  }
-  
-  /**
-   * Get the level.
-   * 
-   * @return level
-   */
-  public int level() {
-    return level;
-  }
+    /**
+     * Codec name.
+     */
+    private final String codecName;
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder(100);
-    sb.append(getClass().getSimpleName()).append('[');
-    sb.append("codec=").append(codec).append(',');
-    sb.append("codecName=").append(codecName).append(',');
-    sb.append("id=").append(id).append(',');
-    sb.append("profile=").append(profile).append(',');
-    sb.append("level=").append(level).append(']');
-    return sb.toString();
-  }
+    /**
+     * Track id.
+     */
+    private final int id;
+
+    /**
+     * Profile.
+     */
+    private final int profile;
+
+    /**
+     * Level.
+     */
+    private final int level;
+
+    /**
+     * Create a new track info.
+     * 
+     * @param codec codec
+     * @param id track id
+     * @param profile profile
+     * @param level level
+     */
+    protected TrackInfo(int codec, int id, int profile, int level) {
+        this.codec = codec;
+        this.codecName = codec != 0 ? new String(new byte[] {(byte)(codec >>> 24), (byte)(codec >>> 16), (byte)(codec >>> 8), (byte)codec}).trim() : null;
+        this.id = id;
+        this.profile = profile;
+        this.level = level;
+    }
+
+    /**
+     * Get the codec (fourcc).
+     * 
+     * @return codec
+     */
+    public int codec() {
+        return codec;
+    }
+
+    /**
+     * Get the codec name.
+     * 
+     * @return codec name
+     */
+    public String codecName() {
+        return codecName;
+    }
+
+    /**
+     * Get the track id.
+     * 
+     * @return track id
+     */
+    public int id() {
+        return id;
+    }
+
+    /**
+     * Get the profile.
+     * 
+     * @return profile
+     */
+    public int profile() {
+        return profile;
+    }
+
+    /**
+     * Get the level.
+     * 
+     * @return level
+     */
+    public int level() {
+        return level;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(100);
+        sb.append(getClass().getSimpleName()).append('[');
+        sb.append("codec=").append(codec).append(',');
+        sb.append("codecName=").append(codecName).append(',');
+        sb.append("id=").append(id).append(',');
+        sb.append("profile=").append(profile).append(',');
+        sb.append("level=").append(level).append(']');
+        return sb.toString();
+    }
 }

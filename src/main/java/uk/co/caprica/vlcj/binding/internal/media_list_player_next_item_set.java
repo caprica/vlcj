@@ -26,8 +26,8 @@ import com.sun.jna.Structure;
  */
 public class media_list_player_next_item_set extends Structure {
 
-  /**
-   * 
-   */
-  public libvlc_media_t item;
+    /**
+     * 
+     */
+    public libvlc_media_t item;
 }

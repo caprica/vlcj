@@ -26,5 +26,8 @@ import com.sun.jna.Structure;
  */
 public class media_player_snapshot_taken extends Structure {
 
-  public String filename;
+    /**
+     * 
+     */
+    public String filename;
 }

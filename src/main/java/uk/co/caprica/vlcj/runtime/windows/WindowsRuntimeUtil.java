@@ -29,32 +29,31 @@ import com.sun.jna.platform.win32.WinReg;
  */
 public class WindowsRuntimeUtil {
 
-  /**
-   * The VLC registry key, under HKLM.
-   */
-  public static final String VLC_REGISTRY_KEY = "SOFTWARE\\VideoLAN\\VLC";
-  
-  /**
-   * The VLC registry key for the installation directory.
-   */
-  public static final String VLC_INSTALL_DIR_KEY = "InstallDir";
-  
-  /**
-   * Get the VLC installation directory.
-   * <p>
-   * If vlc is installed correctly, this should not be needed.
-   * 
-   * @return fully-qualified directory name, or <code>null</code> if the value could not be obtained
-   */
-  public static String getVlcInstallDir() {
-    Logger.debug("getVlcInstallDir()");
-    
-    try {
-      return Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, VLC_REGISTRY_KEY, VLC_INSTALL_DIR_KEY);
+    /**
+     * The VLC registry key, under HKLM.
+     */
+    public static final String VLC_REGISTRY_KEY = "SOFTWARE\\VideoLAN\\VLC";
+
+    /**
+     * The VLC registry key for the installation directory.
+     */
+    public static final String VLC_INSTALL_DIR_KEY = "InstallDir";
+
+    /**
+     * Get the VLC installation directory.
+     * <p>
+     * If vlc is installed correctly, this should not be needed.
+     * 
+     * @return fully-qualified directory name, or <code>null</code> if the value could not be obtained
+     */
+    public static String getVlcInstallDir() {
+        Logger.debug("getVlcInstallDir()");
+        try {
+            return Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, VLC_REGISTRY_KEY, VLC_INSTALL_DIR_KEY);
+        }
+        catch(Exception e) {
+            Logger.warn("Failed to get VLC installation directory from the registry", e);
+            return null;
+        }
     }
-    catch(Exception e) {
-      Logger.warn("Failed to get VLC installation directory from the registry", e);
-      return null;
-    }
-  }
 }

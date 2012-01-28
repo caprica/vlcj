@@ -39,109 +39,109 @@ import javax.swing.JComponent;
  */
 public class ImagePane extends JComponent {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  public enum Mode {
-    DEFAULT,
-    CENTER,
-    FIT
-  }
-  
-  private Mode mode;
-  private BufferedImage sourceImage;
-  private float opacity;
-  
-  private BufferedImage image;
-
-  private int lastWidth;
-  private int lastHeight;
-  
-  public ImagePane(Mode mode, URL imageUrl, float opacity) {
-    this.mode = mode;
-    this.opacity = opacity;
-    newImage(imageUrl);
-  }
-  
-  public void setImage(URL imageUrl) {
-    newImage(imageUrl);
-    repaint();
-  }
-
-  @Override
-  public Dimension getPreferredSize() {
-    return image != null ? new Dimension(image.getWidth(), image.getHeight()) : super.getPreferredSize();
-  }
-
-  @Override
-  protected void paintComponent(Graphics g) {
-    prepareImage();
-    
-    Graphics2D g2 = (Graphics2D)g;
-    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-    
-    g2.setColor(Color.black);
-    g2.fill(getBounds());
-    
-    if(image != null) {
-      int x = 0;
-      int y = 0;
-      
-      if(mode != Mode.DEFAULT) {
-        x = (getWidth() - image.getWidth()) / 2;
-        y = (getHeight() - image.getHeight()) / 2;
-      }
-
-      Composite oldComposite = g2.getComposite();
-      
-      if(opacity != 1.0f) {
-        g2.setComposite(AlphaComposite.SrcOver.derive(opacity));
-      }
-      g2.drawImage(image, null, x, y);
-      
-      g2.setComposite(oldComposite);
+    public enum Mode {
+        DEFAULT,
+        CENTER,
+        FIT
     }
-  }
+  
+    private Mode mode;
+    private BufferedImage sourceImage;
+    private float opacity;
+  
+    private BufferedImage image;
 
-  @Override
-  public boolean isOpaque() {
-    return true;
-  }
-  
-  private void newImage(URL imageUrl) {
-    image = null;
-    if(imageUrl != null) {
-      try {
-        sourceImage = ImageIO.read(imageUrl);
-      }
-      catch(IOException e) {
-        e.printStackTrace();
-      }
+    private int lastWidth;
+    private int lastHeight;
+
+    public ImagePane(Mode mode, URL imageUrl, float opacity) {
+        this.mode = mode;
+        this.opacity = opacity;
+        newImage(imageUrl);
     }
-  }
-  
-  private void prepareImage() {
-    if(lastWidth != getWidth() || lastHeight != getHeight()) {
-      lastWidth = getWidth();
-      lastHeight = getHeight();
-      if(sourceImage != null) {
-        switch(mode) {
-          case DEFAULT:
-          case CENTER:
-            image = sourceImage;
-            break;
-            
-          case FIT:
-            image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            AffineTransform at = AffineTransform.getScaleInstance((double)image.getWidth() / sourceImage.getWidth(), (double)image.getHeight() / sourceImage.getHeight());
-            g2.drawRenderedImage(sourceImage, at);
-            g2.dispose();
-            break;
+
+    public void setImage(URL imageUrl) {
+        newImage(imageUrl);
+        repaint();
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return image != null ? new Dimension(image.getWidth(), image.getHeight()) : super.getPreferredSize();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        prepareImage();
+
+        Graphics2D g2 = (Graphics2D)g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2.setColor(Color.black);
+        g2.fill(getBounds());
+
+        if(image != null) {
+            int x = 0;
+            int y = 0;
+
+            if(mode != Mode.DEFAULT) {
+                x = (getWidth() - image.getWidth()) / 2;
+                y = (getHeight() - image.getHeight()) / 2;
+            }
+
+            Composite oldComposite = g2.getComposite();
+
+            if(opacity != 1.0f) {
+                g2.setComposite(AlphaComposite.SrcOver.derive(opacity));
+            }
+            g2.drawImage(image, null, x, y);
+
+            g2.setComposite(oldComposite);
         }
-      }
-      else {
-        image = null;
-      }
     }
-  }
+
+    @Override
+    public boolean isOpaque() {
+        return true;
+    }
+
+    private void newImage(URL imageUrl) {
+        image = null;
+        if(imageUrl != null) {
+            try {
+                sourceImage = ImageIO.read(imageUrl);
+            }
+            catch(IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void prepareImage() {
+        if(lastWidth != getWidth() || lastHeight != getHeight()) {
+            lastWidth = getWidth();
+            lastHeight = getHeight();
+            if(sourceImage != null) {
+                switch(mode) {
+                    case DEFAULT:
+                    case CENTER:
+                        image = sourceImage;
+                        break;
+
+                    case FIT:
+                        image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+                        Graphics2D g2 = image.createGraphics();
+                        AffineTransform at = AffineTransform.getScaleInstance((double)image.getWidth() / sourceImage.getWidth(), (double)image.getHeight() / sourceImage.getHeight());
+                        g2.drawRenderedImage(sourceImage, at);
+                        g2.dispose();
+                        break;
+                }
+            }
+            else {
+                image = null;
+            }
+        }
+    }
 }

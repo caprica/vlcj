@@ -24,17 +24,17 @@ package uk.co.caprica.vlcj.version;
  */
 public class VlcjVersion {
 
-  /**
-   * Run-time version of vlcj.
-   */
-  private static final Version VERSION = new Version("1.3.0-b1");
+    /**
+     * Run-time version of vlcj.
+     */
+    private static final Version VERSION = new Version("1.3.0-b1");
 
-  /**
-   * Get the run-time version.
-   * 
-   * @return vlc/libvlc version
-   */
-  public static final Version getVersion() {
-    return VERSION;
-  }
+    /**
+     * Get the run-time version.
+     * 
+     * @return vlc/libvlc version
+     */
+    public static final Version getVersion() {
+        return VERSION;
+    }
 }

@@ -26,5 +26,8 @@ import com.sun.jna.Structure;
  */
 public class media_player_title_changed extends Structure {
 
-  public int new_title;
+    /**
+     * 
+     */
+    public int new_title;
 }

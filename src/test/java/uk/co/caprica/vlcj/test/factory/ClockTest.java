@@ -32,18 +32,18 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class ClockTest extends VlcjTest {
 
-  public static void main(String[] args) throws Exception {
-    final MediaPlayerFactory factory = new MediaPlayerFactory();
+    public static void main(String[] args) throws Exception {
+        final MediaPlayerFactory factory = new MediaPlayerFactory();
 
-    Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
-      @Override
-      public void run() {
-        System.out.printf("Clock: %d\n", factory.clock());
-      }
-    }, 0, 1, TimeUnit.SECONDS);
-    
-    Thread.sleep(10000);
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                System.out.printf("Clock: %d\n", factory.clock());
+            }
+        }, 0, 1, TimeUnit.SECONDS);
 
-    System.exit(0);
-  }
+        Thread.sleep(10000);
+
+        System.exit(0);
+    }
 }

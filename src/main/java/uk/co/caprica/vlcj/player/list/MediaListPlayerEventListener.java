@@ -22,88 +22,88 @@ package uk.co.caprica.vlcj.player.list;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 
 /**
- * Specification for a component that is interested in receiving event
- * notifications from the media list player.
+ * Specification for a component that is interested in receiving event notifications from the media
+ * list player.
  */
 public interface MediaListPlayerEventListener {
 
-  // === Events relating to the media list player =============================
+    // === Events relating to the media list player =============================
 
-  /**
-   * Place-holder, do not use.
-   * 
-   * <strong>Warning: the native media list player event manager reports that 
-   * it does not support this event.</strong>
-   * 
-   * @param mediaListPlayer media list player that raised the event
-   */
-  void played(MediaListPlayer mediaListPlayer);
+    /**
+     * Place-holder, do not use.
+     * 
+     * <strong>Warning: the native media list player event manager reports that it does not support
+     * this event.</strong>
+     * 
+     * @param mediaListPlayer media list player that raised the event
+     */
+    void played(MediaListPlayer mediaListPlayer);
 
-  /**
-   * The media list player started playing the next item in the list.
-   * 
-   * @param mediaListPlayer media list player that raised the event
-   * @param item next item instance
-   * @param itemMrl MRL of the next item
-   */
-  void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl);
+    /**
+     * The media list player started playing the next item in the list.
+     * 
+     * @param mediaListPlayer media list player that raised the event
+     * @param item next item instance
+     * @param itemMrl MRL of the next item
+     */
+    void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl);
 
-  /**
-   * Place-holder, do not use.
-   * 
-   * <strong>Warning: the native media list player event manager reports that 
-   * it does <em>not</em> support this event.</strong>
-   * 
-   * @param mediaListPlayer media list player that raised the event
-   */
-  void stopped(MediaListPlayer mediaListPlayer);
-  
-  // === Events relating to the current media =================================
-  
-  /**
-   * 
-   * 
-   * @param mediaListPlayer media list player that raised the event
-   * @param metaType meta data type 
-   */
-  void mediaMetaChanged(MediaListPlayer mediaListPlayer, int metaType);
-  
-  /**
-   * 
-   * 
-   * @param mediaListPlayer media list player that raised the event
-   * @param subItem media sub-item instance handle
-   */
-  void mediaSubItemAdded(MediaListPlayer mediaListPlayer, libvlc_media_t subItem);
-  
-  /**
-   * 
-   * 
-   * @param mediaListPlayer media list player that raised the event
-   * @param newDuration
-   */
-  void mediaDurationChanged(MediaListPlayer mediaListPlayer, long newDuration);
-  
-  /**
-   * 
-   * 
-   * @param mediaListPlayer media list player that raised the event
-   * @param newStatus
-   */
-  void mediaParsedChanged(MediaListPlayer mediaListPlayer, int newStatus);
-  
-  /**
-   * 
-   * 
-   * @param mediaListPlayer media list player that raised the event
-   */
-  void mediaFreed(MediaListPlayer mediaListPlayer);
+    /**
+     * Place-holder, do not use.
+     * 
+     * <strong>Warning: the native media list player event manager reports that it does <em>not</em>
+     * support this event.</strong>
+     * 
+     * @param mediaListPlayer media list player that raised the event
+     */
+    void stopped(MediaListPlayer mediaListPlayer);
 
-  /**
-   * 
-   * 
-   * @param mediaListPlayer media list player that raised the event
-   * @param newState
-   */
-  void mediaStateChanged(MediaListPlayer mediaListPlayer, int newState);
+    // === Events relating to the current media =================================
+
+    /**
+     * 
+     * 
+     * @param mediaListPlayer media list player that raised the event
+     * @param metaType meta data type
+     */
+    void mediaMetaChanged(MediaListPlayer mediaListPlayer, int metaType);
+
+    /**
+     * 
+     * 
+     * @param mediaListPlayer media list player that raised the event
+     * @param subItem media sub-item instance handle
+     */
+    void mediaSubItemAdded(MediaListPlayer mediaListPlayer, libvlc_media_t subItem);
+
+    /**
+     * 
+     * 
+     * @param mediaListPlayer media list player that raised the event
+     * @param newDuration
+     */
+    void mediaDurationChanged(MediaListPlayer mediaListPlayer, long newDuration);
+
+    /**
+     * 
+     * 
+     * @param mediaListPlayer media list player that raised the event
+     * @param newStatus
+     */
+    void mediaParsedChanged(MediaListPlayer mediaListPlayer, int newStatus);
+
+    /**
+     * 
+     * 
+     * @param mediaListPlayer media list player that raised the event
+     */
+    void mediaFreed(MediaListPlayer mediaListPlayer);
+
+    /**
+     * 
+     * 
+     * @param mediaListPlayer media list player that raised the event
+     * @param newState
+     */
+    void mediaStateChanged(MediaListPlayer mediaListPlayer, int newState);
 }

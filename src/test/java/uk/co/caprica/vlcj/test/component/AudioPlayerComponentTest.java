@@ -29,71 +29,71 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class AudioPlayerComponentTest extends VlcjTest {
 
-  /**
-   * Media player component.
-   */
-  private final AudioPlayerComponent audioPlayerComponent;
-  
-  /**
-   * Application entry point.
-   * 
-   * @param args
-   */
-  public static void main(String[] args) {
-    if(args.length != 1) {
-      System.out.println("Specify an mrl");
-      System.exit(1);
+    /**
+     * Media player component.
+     */
+    private final AudioPlayerComponent audioPlayerComponent;
+
+    /**
+     * Application entry point.
+     * 
+     * @param args
+     */
+    public static void main(String[] args) {
+        if(args.length != 1) {
+            System.out.println("Specify an mrl");
+            System.exit(1);
+        }
+
+        String mrl = args[0];
+
+        // In this test, we must keep an object reference here otherwise the media
+        // player will become eligible for garbage collection immediately, causing
+        // a potentially fatal JVM crash - this is just an artefact of this test,
+        // ordinarily an application would be keeping a reference to the component
+        // anyway
+        AudioPlayerComponentTest test = new AudioPlayerComponentTest();
+        test.start(mrl);
+
+        // Since there is no UI, we must join here to prevent the application from
+        // exiting and destroying the media player
+        try {
+            Thread.currentThread().join();
+        }
+        catch(InterruptedException e) {
+        }
     }
-    
-    String mrl = args[0];
-    
-    // In this test, we must keep an object reference here otherwise the media
-    // player will become eligible for garbage collection immediately, causing
-    // a potentially fatal JVM crash - this is just an artefact of this test, 
-    // ordinarily an application would be keeping a reference to the component
-    // anyway
-    AudioPlayerComponentTest test = new AudioPlayerComponentTest();
-    test.start(mrl);
 
-    // Since there is no UI, we must join here to prevent the application from
-    // exiting and destroying the media player
-    try {
-      Thread.currentThread().join();
+    /**
+     * Create a new test.
+     */
+    private AudioPlayerComponentTest() {
+        audioPlayerComponent = new AudioPlayerComponent();
+        audioPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+            @Override
+            public void stopped(MediaPlayer mediaPlayer) {
+                System.exit(0);
+            }
+
+            @Override
+            public void finished(MediaPlayer mediaPlayer) {
+                System.exit(0);
+            }
+
+            @Override
+            public void error(MediaPlayer mediaPlayer) {
+                System.exit(1);
+            }
+        });
     }
-    catch(InterruptedException e) {
+
+    /**
+     * Start playing media.
+     * 
+     * @param mrl mrl
+     */
+    private void start(String mrl) {
+        // One line of vlcj code to play the media...
+        audioPlayerComponent.getMediaPlayer().playMedia(mrl);
     }
-  }
-  
-  /**
-   * Create a new test. 
-   */
-  private AudioPlayerComponentTest() {
-    audioPlayerComponent = new AudioPlayerComponent();
-    audioPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-      @Override
-      public void stopped(MediaPlayer mediaPlayer) {
-        System.exit(0);
-      }
-
-      @Override
-      public void finished(MediaPlayer mediaPlayer) {
-        System.exit(0);
-      }
-
-      @Override
-      public void error(MediaPlayer mediaPlayer) {
-        System.exit(1);
-      }
-    });
-  }
-
-  /**
-   * Start playing media.
-   * 
-   * @param mrl mrl
-   */
-  private void start(String mrl) {
-    // One line of vlcj code to play the media...
-    audioPlayerComponent.getMediaPlayer().playMedia(mrl);
-  }
 }

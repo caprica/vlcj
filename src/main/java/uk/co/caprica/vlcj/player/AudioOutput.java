@@ -24,74 +24,73 @@ import java.util.List;
 /**
  * Description of an audio output.
  * <p>
- * An audio output has zero or more associated audio devices. Each device has
- * a unique identifier than can be used to select the required output device 
- * for a media player.
+ * An audio output has zero or more associated audio devices. Each device has a unique identifier
+ * than can be used to select the required output device for a media player.
  */
 public class AudioOutput {
 
-  /**
-   * Name.
-   */
-  private final String name;
-  
-  /**
-   * Description.
-   */
-  private final String description;
+    /**
+     * Name.
+     */
+    private final String name;
 
-  /**
-   * Long name.
-   */
-  private final List<AudioDevice> devices;
+    /**
+     * Description.
+     */
+    private final String description;
 
-  /**
-   * Create an audio output.
-   * 
-   * @param name name
-   * @param description description
-   * @param devices collection of audio devices for this output
-   */
-  public AudioOutput(String name, String description, List<AudioDevice> devices) {
-    this.name = name;
-    this.description = description;
-    this.devices = devices;
-  }
+    /**
+     * Long name.
+     */
+    private final List<AudioDevice> devices;
 
-  /**
-   * Get the name.
-   * 
-   * @return name
-   */
-  public String getName() {
-    return name;
-  }
+    /**
+     * Create an audio output.
+     * 
+     * @param name name
+     * @param description description
+     * @param devices collection of audio devices for this output
+     */
+    public AudioOutput(String name, String description, List<AudioDevice> devices) {
+        this.name = name;
+        this.description = description;
+        this.devices = devices;
+    }
 
-  /**
-   * Get the description.
-   * 
-   * @return description
-   */
-  public String getDescription() {
-    return description;
-  }
+    /**
+     * Get the name.
+     * 
+     * @return name
+     */
+    public String getName() {
+        return name;
+    }
 
-  /**
-   * Get the collection of audio devices for this output.
-   * 
-   * @return audio devices
-   */
-  public List<AudioDevice> getDevices() {
-    return devices;
-  }
-  
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder(60);
-    sb.append(getClass().getSimpleName()).append('[');
-    sb.append("name=").append(name).append(',');
-    sb.append("description=").append(description).append(',');
-    sb.append("devices=").append(devices).append(']');
-    return sb.toString();
-  }
+    /**
+     * Get the description.
+     * 
+     * @return description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Get the collection of audio devices for this output.
+     * 
+     * @return audio devices
+     */
+    public List<AudioDevice> getDevices() {
+        return devices;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(60);
+        sb.append(getClass().getSimpleName()).append('[');
+        sb.append("name=").append(name).append(',');
+        sb.append("description=").append(description).append(',');
+        sb.append("devices=").append(devices).append(']');
+        return sb.toString();
+    }
 }

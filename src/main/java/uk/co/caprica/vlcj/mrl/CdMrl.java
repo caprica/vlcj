@@ -23,6 +23,7 @@ package uk.co.caprica.vlcj.mrl;
  * Implementation of a media resource locator for Audio CDs.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
+ * 
  * <pre>
  * String mrl = new CcdMrl().device("/dev/cdrom")
  *                          .track(3)
@@ -34,48 +35,49 @@ package uk.co.caprica.vlcj.mrl;
  */
 public class CdMrl implements Mrl {
 
-  private static final String CD_TYPE = "cdda";
-  
-  private String device;
-  private int track = -1;
+    private static final String CD_TYPE = "cdda";
 
-  private String value;
-  
-  public CdMrl device(String device) {
-    this.device = device;
-    return this;
-  }
+    private String device;
 
-  public CdMrl track(int track) {
-    this.track = track;
-    return this;
-  }
+    private int track = -1;
 
-  public String value() {
-    if(value == null) {
-      value = constructValue();
+    private String value;
+
+    public CdMrl device(String device) {
+        this.device = device;
+        return this;
     }
-    return value;
-  }
-  
-  /**
-   * Construct the MRL from the internal state.
-   * 
-   * @return media resource locator
-   */
-  private String constructValue() {
-    StringBuilder sb = new StringBuilder(40);
-    sb.append(CD_TYPE);
-    sb.append(":");
-    sb.append(device);
-    if(track != -1) {
-      sb.append('@');
-      sb.append(track);
+
+    public CdMrl track(int track) {
+        this.track = track;
+        return this;
     }
-    return sb.toString();
-  }
-  
-  public static void main(String[] args) {
-    System.out.println(new CdMrl().device("/dev/cdrom").track(3).value());
-  }
+
+    public String value() {
+        if(value == null) {
+            value = constructValue();
+        }
+        return value;
+    }
+
+    /**
+     * Construct the MRL from the internal state.
+     * 
+     * @return media resource locator
+     */
+    private String constructValue() {
+        StringBuilder sb = new StringBuilder(40);
+        sb.append(CD_TYPE);
+        sb.append(":");
+        sb.append(device);
+        if(track != -1) {
+            sb.append('@');
+            sb.append(track);
+        }
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new CdMrl().device("/dev/cdrom").track(3).value());
+    }
 }

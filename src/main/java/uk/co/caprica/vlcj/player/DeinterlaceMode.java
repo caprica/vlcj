@@ -26,76 +26,76 @@ package uk.co.caprica.vlcj.player;
  */
 public enum DeinterlaceMode {
 
-  /**
-   * 
-   */
-  DISCARD("discard"),
-  
-  /**
-   * 
-   */
-  BLEND("blend"),
-  
-  /**
-   * 
-   */
-  MEAN("mean"),
-  
-  /**
-   * 
-   */
-  BOB("bob"),
-  
-  /**
-   * 
-   */
-  LINEAR("linear"),
-  
-  /**
-   * 
-   */
-  X("x"),
-  
-  /**
-   * 
-   */
-  YADIF("yadif"),
-  
-  /**
-   * 
-   */
-  YADIF2X("yadif2x"),
-  
-  /**
-   * 
-   */
-  PHOSPHOR("phosphor"),
-  
-  /**
-   * 
-   */
-  IVTC("ivtc");
-  
-  /**
-   * Native mode value.
-   */
-  private final String mode;
-  
-  /**
-   * Create an enumerated value.
-   * 
-   * @param mode native mode value
-   */
-  private DeinterlaceMode(String mode) {
-    this.mode = mode;
-  }
+    /**
+     * 
+     */
+    DISCARD("discard"),
 
-  /**
-   * Get the native mode value.
-   * 
-   * @return mode value
-   */
-  public final String mode() {
-    return mode;
-  }
+    /**
+     * 
+     */
+    BLEND("blend"),
+
+    /**
+     * 
+     */
+    MEAN("mean"),
+
+    /**
+     * 
+     */
+    BOB("bob"),
+
+    /**
+     * 
+     */
+    LINEAR("linear"),
+
+    /**
+     * 
+     */
+    X("x"),
+
+    /**
+     * 
+     */
+    YADIF("yadif"),
+
+    /**
+     * 
+     */
+    YADIF2X("yadif2x"),
+
+    /**
+     * 
+     */
+    PHOSPHOR("phosphor"),
+
+    /**
+     * 
+     */
+    IVTC("ivtc");
+
+    /**
+     * Native mode value.
+     */
+    private final String mode;
+
+    /**
+     * Create an enumerated value.
+     * 
+     * @param mode native mode value
+     */
+    private DeinterlaceMode(String mode) {
+        this.mode = mode;
+    }
+
+    /**
+     * Get the native mode value.
+     * 
+     * @return mode value
+     */
+    public final String mode() {
+        return mode;
+    }
 }

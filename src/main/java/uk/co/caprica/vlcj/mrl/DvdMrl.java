@@ -23,6 +23,7 @@ package uk.co.caprica.vlcj.mrl;
  * Implementation of a media resource locator for DVDs with menus.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
+ * 
  * <pre>
  * String mrl = new DvdMrl().device("/media/dvd")
  *                          .title(0)
@@ -35,9 +36,9 @@ package uk.co.caprica.vlcj.mrl;
  */
 public class DvdMrl extends BaseDvdMrl {
 
-  private static final String DVD_TYPE = "dvd";
+    private static final String DVD_TYPE = "dvd";
 
-  public DvdMrl() {
-    type(DVD_TYPE);
-  }
+    public DvdMrl() {
+        type(DVD_TYPE);
+    }
 }

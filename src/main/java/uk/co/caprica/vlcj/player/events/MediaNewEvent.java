@@ -26,16 +26,16 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  *
  */
 class MediaNewEvent extends AbstractMediaPlayerEvent {
-  
-  /**
-   * Create a media player event.
-   */
-  MediaNewEvent(MediaPlayer mediaPlayer) {
-    super(mediaPlayer);
-  }
-  
-  @Override
-  public void notify(MediaPlayerEventListener listener) {
-    listener.newMedia(mediaPlayer);
-  }
+
+    /**
+     * Create a media player event.
+     */
+    MediaNewEvent(MediaPlayer mediaPlayer) {
+        super(mediaPlayer);
+    }
+
+    @Override
+    public void notify(MediaPlayerEventListener listener) {
+        listener.newMedia(mediaPlayer);
+    }
 }

@@ -27,24 +27,24 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  */
 class MediaPlayerSeekableChangedEvent extends AbstractMediaPlayerEvent {
 
-  /**
+    /**
    * 
    */
-  private final int newSeekable;
-  
-  /**
-   * Create a media player event.
-   * 
-   * @param mediaPlayer media player the event relates to
-   * @param newSeekable
-   */
-  MediaPlayerSeekableChangedEvent(MediaPlayer mediaPlayer, int newSeekable) {
-    super(mediaPlayer);
-    this.newSeekable = newSeekable;
-  }
-  
-  @Override
-  public void notify(MediaPlayerEventListener listener) {
-    listener.seekableChanged(mediaPlayer, newSeekable);
-  }
+    private final int newSeekable;
+
+    /**
+     * Create a media player event.
+     * 
+     * @param mediaPlayer media player the event relates to
+     * @param newSeekable
+     */
+    MediaPlayerSeekableChangedEvent(MediaPlayer mediaPlayer, int newSeekable) {
+        super(mediaPlayer);
+        this.newSeekable = newSeekable;
+    }
+
+    @Override
+    public void notify(MediaPlayerEventListener listener) {
+        listener.seekableChanged(mediaPlayer, newSeekable);
+    }
 }

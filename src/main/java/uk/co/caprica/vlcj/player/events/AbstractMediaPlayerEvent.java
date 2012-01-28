@@ -28,22 +28,22 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
  */
 abstract class AbstractMediaPlayerEvent implements MediaPlayerEvent {
 
-  /**
-   * The media player the event relates to.
-   */
-  protected final MediaPlayer mediaPlayer;
-  
-  /**
-   * Create a media player event.
-   * 
-   * @param mediaPlayer media player that the event relates to
-   */
-  protected AbstractMediaPlayerEvent(MediaPlayer mediaPlayer) {
-    this.mediaPlayer = mediaPlayer;
-  }
+    /**
+     * The media player the event relates to.
+     */
+    protected final MediaPlayer mediaPlayer;
 
-  @Override
-  public String toString() {
-    return getClass().getSimpleName();
-  }
+    /**
+     * Create a media player event.
+     * 
+     * @param mediaPlayer media player that the event relates to
+     */
+    protected AbstractMediaPlayerEvent(MediaPlayer mediaPlayer) {
+        this.mediaPlayer = mediaPlayer;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
+    }
 }

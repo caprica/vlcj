@@ -25,45 +25,45 @@ import uk.co.caprica.vlcj.runtime.install.NativeLibraryManagerEventListener;
 /**
  * Test for the native library manager.
  * <p>
- * You need to add a jar file containing the package of native libraries to the
- * application class-path before running this - you make this package yourself.
+ * You need to add a jar file containing the package of native libraries to the application
+ * class-path before running this - you make this package yourself.
  */
 public class NativeLibraryManagerTest {
-  
-  public static void main(String[] args) {
-    long start = System.currentTimeMillis();
-    NativeLibraryManager m = new NativeLibraryManager("/var/tmp/jartemp");
-    m.addEventListener(new NativeLibraryManagerEventListener() {
-      @Override
-      public void start(String installTo, int installCount) {
-        System.out.printf("start %s %d\n", installTo, installCount);
-      }
-      
-      @Override
-      public void install(int number, String name) {
-        System.out.printf("install %3d %s\n", number,name);
-      }
-      
-      @Override
-      public void end() {
-        System.out.println("end");
-      }
 
-      @Override
-      public void purge(String installTo) {
-        System.out.printf("purge %s\n", installTo);
-      }
+    public static void main(String[] args) {
+        long start = System.currentTimeMillis();
+        NativeLibraryManager m = new NativeLibraryManager("/var/tmp/jartemp");
+        m.addEventListener(new NativeLibraryManagerEventListener() {
+            @Override
+            public void start(String installTo, int installCount) {
+                System.out.printf("start %s %d\n", installTo, installCount);
+            }
 
-      @Override
-      public void purged(boolean result) {
-        System.out.printf("purged %s\n", result ? "true" : "false");
-      }
-    });
-    m.unpackNativePackage();
-    long end = System.currentTimeMillis();
-    System.out.println(end-start);
+            @Override
+            public void install(int number, String name) {
+                System.out.printf("install %3d %s\n", number, name);
+            }
 
-    // Be very careful invoking purge, it will delete everything recursively!
-//    m.purge();
-  }
+            @Override
+            public void end() {
+                System.out.println("end");
+            }
+
+            @Override
+            public void purge(String installTo) {
+                System.out.printf("purge %s\n", installTo);
+            }
+
+            @Override
+            public void purged(boolean result) {
+                System.out.printf("purged %s\n", result ? "true" : "false");
+            }
+        });
+        m.unpackNativePackage();
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
+
+        // Be very careful invoking purge, it will delete everything recursively!
+        // m.purge();
+    }
 }

@@ -27,10 +27,10 @@ import com.sun.jna.Pointer;
  */
 public interface libvlc_video_cleanup_cb extends Callback {
 
-  /**
-   * 
-   * 
-   * @param opaque
-   */
-  void cleanup(Pointer opaque);
+    /**
+     * 
+     * 
+     * @param opaque
+     */
+    void cleanup(Pointer opaque);
 }

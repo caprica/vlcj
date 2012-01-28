@@ -32,40 +32,40 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class FilterTest extends VlcjTest {
 
-  private static final String FORMAT_PATTERN = "%3s %-24s %-24s %-80s %s\n";
+    private static final String FORMAT_PATTERN = "%3s %-24s %-24s %-80s %s\n";
 
-  public static void main(String[] args) throws Exception {
-    MediaPlayerFactory factory = new MediaPlayerFactory();
-    
-    List<ModuleDescription> audioFilters = factory.getAudioFilters();
-    List<ModuleDescription> videoFilters = factory.getVideoFilters();
+    public static void main(String[] args) throws Exception {
+        MediaPlayerFactory factory = new MediaPlayerFactory();
 
-    System.out.println("Audio Filters:");
-    System.out.println();
+        List<ModuleDescription> audioFilters = factory.getAudioFilters();
+        List<ModuleDescription> videoFilters = factory.getVideoFilters();
 
-    System.out.printf(FORMAT_PATTERN , "#", "Name", "Short Name", "Long Name", "Help");
-    System.out.printf(FORMAT_PATTERN , "=", "====", "==========", "=========", "====");
-    for(int i = 0; i < audioFilters.size(); i++) {
-      dump(i, audioFilters.get(i));
+        System.out.println("Audio Filters:");
+        System.out.println();
+
+        System.out.printf(FORMAT_PATTERN, "#", "Name", "Short Name", "Long Name", "Help");
+        System.out.printf(FORMAT_PATTERN, "=", "====", "==========", "=========", "====");
+        for(int i = 0; i < audioFilters.size(); i ++ ) {
+            dump(i, audioFilters.get(i));
+        }
+
+        System.out.println();
+
+        System.out.println("Video Filters:");
+        System.out.println();
+
+        System.out.printf(FORMAT_PATTERN, "#", "Name", "Short Name", "Long Name", "Help");
+        System.out.printf(FORMAT_PATTERN, "=", "====", "==========", "=========", "====");
+        for(int i = 0; i < videoFilters.size(); i ++ ) {
+            dump(i, videoFilters.get(i));
+        }
     }
-    
-    System.out.println();
-    
-    System.out.println("Video Filters:");
-    System.out.println();
 
-    System.out.printf(FORMAT_PATTERN , "#", "Name", "Short Name", "Long Name", "Help");
-    System.out.printf(FORMAT_PATTERN , "=", "====", "==========", "=========", "====");
-    for(int i = 0; i < videoFilters.size(); i++) {
-      dump(i, videoFilters.get(i));
+    private static void dump(int i, ModuleDescription moduleDescription) {
+        System.out.printf(FORMAT_PATTERN, String.valueOf(i + 1), moduleDescription.name(), moduleDescription.shortName(), moduleDescription.longName(), formatHelp(moduleDescription.help()));
     }
-  }
 
-  private static void dump(int i, ModuleDescription moduleDescription) {
-    System.out.printf(FORMAT_PATTERN , String.valueOf(i+1), moduleDescription.name(), moduleDescription.shortName(), moduleDescription.longName(), formatHelp(moduleDescription.help()));
-  }
-
-  private static String formatHelp(String help) {
-    return help != null ? help.replaceAll("\\n", " ") : "";
-  }
+    private static String formatHelp(String help) {
+        return help != null ? help.replaceAll("\\n", " ") : "";
+    }
 }

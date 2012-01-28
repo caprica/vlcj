@@ -23,6 +23,7 @@ package uk.co.caprica.vlcj.mrl;
  * Implementation for a file MRL.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
+ * 
  * <pre>
  * String mrl = new FileMrl().file("the-file.mp4")
  *                           .value();
@@ -31,45 +32,45 @@ package uk.co.caprica.vlcj.mrl;
  */
 public class FileMrl implements Mrl {
 
-  /**
-   * File path/name.
-   */
-  private String file;
-  
-  /**
-   * MRL value.
-   */
-  private String value;
-  
-  /**
-   * Create a new media resource locaator for a file.
-   * 
-   * @param file file path/name
-   * @return this
-   */
-  public FileMrl file(String file) {
-    this.file = file;
-    return this;
-  }
-  
-//  @Override
-  public String value() {
-    if(value == null) {
-      value = constructValue();
-    }
-    return value;
-  }
+    /**
+     * File path/name.
+     */
+    private String file;
 
-  /**
-   * Construct the MRL from the internal state.
-   * 
-   * @return media resource locator
-   */
-  private String constructValue() {
-    StringBuilder sb = new StringBuilder(40);
-    sb.append("file");
-    sb.append("://");
-    sb.append(file);
-    return sb.toString();
-  }
+    /**
+     * MRL value.
+     */
+    private String value;
+
+    /**
+     * Create a new media resource locaator for a file.
+     * 
+     * @param file file path/name
+     * @return this
+     */
+    public FileMrl file(String file) {
+        this.file = file;
+        return this;
+    }
+
+    // @Override
+    public String value() {
+        if(value == null) {
+            value = constructValue();
+        }
+        return value;
+    }
+
+    /**
+     * Construct the MRL from the internal state.
+     * 
+     * @return media resource locator
+     */
+    private String constructValue() {
+        StringBuilder sb = new StringBuilder(40);
+        sb.append("file");
+        sb.append("://");
+        sb.append(file);
+        return sb.toString();
+    }
 }

@@ -27,6 +27,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
  * Builder for a Marquee.
  * <p>
  * Use like this, with a static import of {@link #marquee()}:
+ * 
  * <pre>
  *   marquee()
  *     .opacity(200)
@@ -42,247 +43,247 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
  */
 public final class Marquee {
 
-  /**
-   * Text.
-   */
-  private String text;
-  
-  /**
-   * Text colour.
-   */
-  private Color colour;
-  
-  /**
-   * Text colour expressed as RGB components.
-   */
-  private Integer rgb;
-  
-  /**
-   * Opacity expressed as an integer, 0 to 255, where 255 is fully opaque.
-   */
-  private Integer intOpacity;
-  
-  /**
-   * Opacity expressed as a fraction, 0.0 to 1.0, where 1.0 is fully opaque.
-   */
-  private Float floatOpacity;
+    /**
+     * Text.
+     */
+    private String text;
 
-  /**
-   * Text size.
-   */
-  private Integer size;
-  
-  /**
-   * Timeout, in milliseconds.
-   * <p>
-   * The marquee will be removed after this timeout has expired.
-   */
-  private Integer timeout;
-  
-  /**
-   * Text X position, in video co-ordinates.
-   */
-  private Integer x;
-  
-  /**
-   * Text Y position, in video co-ordinates.
-   */
-  private Integer y;
-  
-  /**
-   * Predefined text position.
-   */
-  private libvlc_marquee_position_e position;
-  
-  /**
-   * Enabled/disabled state.
-   */
-  private boolean enable;
-  
-  /**
-   * Create a marquee.
-   * 
-   * @return marquee
-   */
-  public static Marquee marquee() {
-    return new Marquee();
-  }
+    /**
+     * Text colour.
+     */
+    private Color colour;
 
-  /**
-   * Private constructor prevents direct instantiation by others.
-   */
-  private Marquee() {
-  }
-  
-  /**
-   * Apply the text.
-   * 
-   * @param text text
-   * @return this
-   */
-  public Marquee text(String text) {
-    this.text = text;
-    return this;
-  }
-  
-  /**
-   * Apply the text colour.
-   * 
-   * @param colour text colour
-   * @return this
-   */
-  public Marquee colour(Color colour) {
-    this.colour = colour;
-    return this;
-  }
-  
-  /**
-   * Apply the text colour as RGB components.
-   * 
-   * @param rgb integer encoded red, green, blue colour components
-   * @return this
-   */
-  public Marquee colour(int rgb) {
-    this.rgb = rgb;
-    return this;
-  }
-  
-  /**
-   * Apply the text opacity.
-   * 
-   * @param opacity opacity, 0 to 255, where 255 is fully opaque
-   * @return this
-   */
-  public Marquee opacity(int opacity) {
-    this.intOpacity = opacity;
-    return this;
-  }
-  
-  /**
-   * Apply the text opacity.
-   * 
-   * @param opacity opacity, 0.0 to 1.0, where 1.0 is fully opaque
-   * @return this
-   */
-  public Marquee opacity(float opacity) {
-    this.floatOpacity = opacity;
-    return this;
-  }
+    /**
+     * Text colour expressed as RGB components.
+     */
+    private Integer rgb;
 
-  /**
-   * Apply the text size.
-   * 
-   * @param size text size
-   * @return this
-   */
-  public Marquee size(int size) {
-    this.size = size;
-    return this;
-  }
-  
-  /**
-   * Apply the timeout.
-   * <p>
-   * The marquee will be removed when the timeout expires.
-   * 
-   * @param timeout timeout, in milliseconds
-   * @return this
-   */
-  public Marquee timeout(int timeout) {
-    this.timeout = timeout;
-    return this;
-  }
-  
-  /**
-   * Apply the text location in video co-ordinates.
-   * 
-   * @param x x ordinate
-   * @param y y ordinate
-   * @return this
-   */
-  public Marquee location(int x, int y) {
-    this.x = x;
-    this.y = y;
-    return this;
-  }
-  
-  /**
-   * Apply the text position.
-   * 
-   * @param position predefined text position
-   * @return this
-   */
-  public Marquee position(libvlc_marquee_position_e position) {
-    this.position = position;
-    return this;
-  }
+    /**
+     * Opacity expressed as an integer, 0 to 255, where 255 is fully opaque.
+     */
+    private Integer intOpacity;
 
-  /**
-   * Apply the initial enabled/disabled state.
-   * 
-   * @param enable <code>true</code> to enable the marquee; <code>false</code> to disable it
-   * @return this
-   */
-  public Marquee enable(boolean enable) {
-    this.enable = enable;
-    return this;
-  }
-  
-  /**
-   * Enable the marquee.
-   * 
-   * @return this
-   */
-  public Marquee enable() {
-    this.enable = true;
-    return this;
-  }
+    /**
+     * Opacity expressed as a fraction, 0.0 to 1.0, where 1.0 is fully opaque.
+     */
+    private Float floatOpacity;
 
-  /**
-   * Disable the marquee.
-   * 
-   * @return this
-   */
-  public Marquee disable() {
-    this.enable = false;
-    return this;
-  }
-  
-  /**
-   * Apply the marquee to the media player.
-   * 
-   * @param mediaPlayer media player
-   */
-  public void apply(MediaPlayer mediaPlayer) {
-    if(text != null) {
-      mediaPlayer.setMarqueeText(text);
+    /**
+     * Text size.
+     */
+    private Integer size;
+
+    /**
+     * Timeout, in milliseconds.
+     * <p>
+     * The marquee will be removed after this timeout has expired.
+     */
+    private Integer timeout;
+
+    /**
+     * Text X position, in video co-ordinates.
+     */
+    private Integer x;
+
+    /**
+     * Text Y position, in video co-ordinates.
+     */
+    private Integer y;
+
+    /**
+     * Predefined text position.
+     */
+    private libvlc_marquee_position_e position;
+
+    /**
+     * Enabled/disabled state.
+     */
+    private boolean enable;
+
+    /**
+     * Create a marquee.
+     * 
+     * @return marquee
+     */
+    public static Marquee marquee() {
+        return new Marquee();
     }
-    if(colour != null) {
-      mediaPlayer.setMarqueeColour(colour);
+
+    /**
+     * Private constructor prevents direct instantiation by others.
+     */
+    private Marquee() {
     }
-    if(rgb != null) {
-      mediaPlayer.setMarqueeColour(rgb);
+
+    /**
+     * Apply the text.
+     * 
+     * @param text text
+     * @return this
+     */
+    public Marquee text(String text) {
+        this.text = text;
+        return this;
     }
-    if(intOpacity != null) {
-      mediaPlayer.setMarqueeOpacity(intOpacity);
+
+    /**
+     * Apply the text colour.
+     * 
+     * @param colour text colour
+     * @return this
+     */
+    public Marquee colour(Color colour) {
+        this.colour = colour;
+        return this;
     }
-    if(floatOpacity != null) {
-      mediaPlayer.setMarqueeOpacity(floatOpacity);
+
+    /**
+     * Apply the text colour as RGB components.
+     * 
+     * @param rgb integer encoded red, green, blue colour components
+     * @return this
+     */
+    public Marquee colour(int rgb) {
+        this.rgb = rgb;
+        return this;
     }
-    if(size != null) {
-      mediaPlayer.setMarqueeSize(size);
+
+    /**
+     * Apply the text opacity.
+     * 
+     * @param opacity opacity, 0 to 255, where 255 is fully opaque
+     * @return this
+     */
+    public Marquee opacity(int opacity) {
+        this.intOpacity = opacity;
+        return this;
     }
-    if(timeout != null) {
-      mediaPlayer.setMarqueeTimeout(timeout);
+
+    /**
+     * Apply the text opacity.
+     * 
+     * @param opacity opacity, 0.0 to 1.0, where 1.0 is fully opaque
+     * @return this
+     */
+    public Marquee opacity(float opacity) {
+        this.floatOpacity = opacity;
+        return this;
     }
-    if(x != null && y != null && x >= 0 && y >= 0) {
-      mediaPlayer.setMarqueeLocation(x, y);
+
+    /**
+     * Apply the text size.
+     * 
+     * @param size text size
+     * @return this
+     */
+    public Marquee size(int size) {
+        this.size = size;
+        return this;
     }
-    if(position != null) {
-      mediaPlayer.setMarqueePosition(position);
+
+    /**
+     * Apply the timeout.
+     * <p>
+     * The marquee will be removed when the timeout expires.
+     * 
+     * @param timeout timeout, in milliseconds
+     * @return this
+     */
+    public Marquee timeout(int timeout) {
+        this.timeout = timeout;
+        return this;
     }
-    if(enable) {
-      mediaPlayer.enableMarquee(true);
+
+    /**
+     * Apply the text location in video co-ordinates.
+     * 
+     * @param x x ordinate
+     * @param y y ordinate
+     * @return this
+     */
+    public Marquee location(int x, int y) {
+        this.x = x;
+        this.y = y;
+        return this;
     }
-  }
+
+    /**
+     * Apply the text position.
+     * 
+     * @param position predefined text position
+     * @return this
+     */
+    public Marquee position(libvlc_marquee_position_e position) {
+        this.position = position;
+        return this;
+    }
+
+    /**
+     * Apply the initial enabled/disabled state.
+     * 
+     * @param enable <code>true</code> to enable the marquee; <code>false</code> to disable it
+     * @return this
+     */
+    public Marquee enable(boolean enable) {
+        this.enable = enable;
+        return this;
+    }
+
+    /**
+     * Enable the marquee.
+     * 
+     * @return this
+     */
+    public Marquee enable() {
+        this.enable = true;
+        return this;
+    }
+
+    /**
+     * Disable the marquee.
+     * 
+     * @return this
+     */
+    public Marquee disable() {
+        this.enable = false;
+        return this;
+    }
+
+    /**
+     * Apply the marquee to the media player.
+     * 
+     * @param mediaPlayer media player
+     */
+    public void apply(MediaPlayer mediaPlayer) {
+        if(text != null) {
+            mediaPlayer.setMarqueeText(text);
+        }
+        if(colour != null) {
+            mediaPlayer.setMarqueeColour(colour);
+        }
+        if(rgb != null) {
+            mediaPlayer.setMarqueeColour(rgb);
+        }
+        if(intOpacity != null) {
+            mediaPlayer.setMarqueeOpacity(intOpacity);
+        }
+        if(floatOpacity != null) {
+            mediaPlayer.setMarqueeOpacity(floatOpacity);
+        }
+        if(size != null) {
+            mediaPlayer.setMarqueeSize(size);
+        }
+        if(timeout != null) {
+            mediaPlayer.setMarqueeTimeout(timeout);
+        }
+        if(x != null && y != null && x >= 0 && y >= 0) {
+            mediaPlayer.setMarqueeLocation(x, y);
+        }
+        if(position != null) {
+            mediaPlayer.setMarqueePosition(position);
+        }
+        if(enable) {
+            mediaPlayer.enableMarquee(true);
+        }
+    }
 }

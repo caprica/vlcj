@@ -30,37 +30,37 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 /**
  * A simple example showing how to use a media list player.
  * <p>
- * This test does not embed a video window so a new native video window will be
- * created for each movie in the play-list.
+ * This test does not embed a video window so a new native video window will be created for each
+ * movie in the play-list.
  */
 public class TestMediaListPlayer extends VlcjTest {
 
-  public static void main(String[] args) throws Exception {
-    MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
-    
-    MediaListPlayer mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
-    
-    mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
-      @Override
-      public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
-        System.out.println("nextItem()");
-      }
-    });
-    
-    MediaList mediaList = mediaPlayerFactory.newMediaList();
-    mediaList.addMedia("/home/movies/one.mp4");
-    mediaList.addMedia("/home/movies/two.mp4");
-    mediaList.addMedia("/home/movies/three.mp4");
-    
-    mediaListPlayer.setMediaList(mediaList);
-    mediaListPlayer.setMode(MediaListPlayerMode.LOOP);
-    
-    mediaListPlayer.play();
-    
-    Thread.currentThread().join();
-    
-//    mediaList.release();
-//    mediaListPlayer.release();
-//    mediaPlayerFactory.release();
-  }
+    public static void main(String[] args) throws Exception {
+        MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+
+        MediaListPlayer mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
+
+        mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
+            @Override
+            public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
+                System.out.println("nextItem()");
+            }
+        });
+
+        MediaList mediaList = mediaPlayerFactory.newMediaList();
+        mediaList.addMedia("/home/movies/one.mp4");
+        mediaList.addMedia("/home/movies/two.mp4");
+        mediaList.addMedia("/home/movies/three.mp4");
+
+        mediaListPlayer.setMediaList(mediaList);
+        mediaListPlayer.setMode(MediaListPlayerMode.LOOP);
+
+        mediaListPlayer.play();
+
+        Thread.currentThread().join();
+
+        // mediaList.release();
+        // mediaListPlayer.release();
+        // mediaPlayerFactory.release();
+    }
 }

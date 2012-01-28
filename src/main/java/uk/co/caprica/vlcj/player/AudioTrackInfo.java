@@ -24,56 +24,56 @@ package uk.co.caprica.vlcj.player;
  */
 public class AudioTrackInfo extends TrackInfo {
 
-  /**
-   * Number of audio channels.
-   */
-  private final int channels;
-  
-  /**
-   * Rate.
-   */
-  private final int rate;
-  
-  /**
-   * Create a new audio track info
-   * 
-   * @param codec audio codec
-   * @param id track id
-   * @param profile profile
-   * @param level level
-   * @param channels number of channels
-   * @param rate rate
-   */
-  protected AudioTrackInfo(int codec, int id, int profile, int level, int channels, int rate) {
-    super(codec, id, profile, level);
-    this.channels = channels;
-    this.rate = rate;
-  }
+    /**
+     * Number of audio channels.
+     */
+    private final int channels;
 
-  /**
-   * Get the number of channels.
-   * 
-   * @return channel count
-   */
-  public int channels() {
-    return channels;
-  }
+    /**
+     * Rate.
+     */
+    private final int rate;
 
-  /**
-   * Get the rate.
-   * 
-   * @return rate
-   */
-  public int rate() {
-    return rate;
-  }
+    /**
+     * Create a new audio track info
+     * 
+     * @param codec audio codec
+     * @param id track id
+     * @param profile profile
+     * @param level level
+     * @param channels number of channels
+     * @param rate rate
+     */
+    protected AudioTrackInfo(int codec, int id, int profile, int level, int channels, int rate) {
+        super(codec, id, profile, level);
+        this.channels = channels;
+        this.rate = rate;
+    }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder(200);
-    sb.append(super.toString()).append('[');
-    sb.append("channels=").append(channels).append(',');
-    sb.append("rate=").append(rate).append(']');
-    return sb.toString();
-  }
+    /**
+     * Get the number of channels.
+     * 
+     * @return channel count
+     */
+    public int channels() {
+        return channels;
+    }
+
+    /**
+     * Get the rate.
+     * 
+     * @return rate
+     */
+    public int rate() {
+        return rate;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(200);
+        sb.append(super.toString()).append('[');
+        sb.append("channels=").append(channels).append(',');
+        sb.append("rate=").append(rate).append(']');
+        return sb.toString();
+    }
 }

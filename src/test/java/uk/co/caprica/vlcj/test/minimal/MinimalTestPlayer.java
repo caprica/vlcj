@@ -32,30 +32,30 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * An absolute minimum test player.
  */
 public class MinimalTestPlayer extends VlcjTest {
-  
-  public static void main(String[] args) throws Exception {
-    if(args.length != 1) {
-      System.out.println("Specify an MRL to play");
-      System.exit(1);
+
+    public static void main(String[] args) throws Exception {
+        if(args.length != 1) {
+            System.out.println("Specify an MRL to play");
+            System.exit(1);
+        }
+
+        final EmbeddedMediaPlayerComponent mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
+
+        JFrame f = new JFrame("Test Player");
+        f.setIconImage(new ImageIcon(MinimalTestPlayer.class.getResource("/icons/vlcj-logo.png")).getImage());
+        f.setSize(800, 600);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mediaPlayerComponent.release();
+            }
+        });
+        f.setContentPane(mediaPlayerComponent);
+        f.setVisible(true);
+
+        mediaPlayerComponent.getMediaPlayer().playMedia(args[0]);
+
+        Thread.currentThread().join();
     }
-
-    final EmbeddedMediaPlayerComponent mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
-    
-    JFrame f = new JFrame("Test Player");
-    f.setIconImage(new ImageIcon(MinimalTestPlayer.class.getResource("/icons/vlcj-logo.png")).getImage());
-    f.setSize(800, 600);
-    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    f.addWindowListener(new WindowAdapter() {
-      @Override
-      public void windowClosing(WindowEvent e) {
-        mediaPlayerComponent.release();
-      }
-    });
-    f.setContentPane(mediaPlayerComponent);
-    f.setVisible(true);
-
-    mediaPlayerComponent.getMediaPlayer().playMedia(args[0]);
-
-    Thread.currentThread().join();
-  }
 }

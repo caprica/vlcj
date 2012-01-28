@@ -27,22 +27,22 @@ import com.sun.jna.Structure;
  */
 public class libvlc_media_track_info_t extends Structure {
 
-  public libvlc_media_track_info_t() {
-  }
+    public libvlc_media_track_info_t() {
+    }
 
-  public libvlc_media_track_info_t(Pointer value) {
-    super(value);
-    read();
-  }
+    public libvlc_media_track_info_t(Pointer value) {
+        super(value);
+        read();
+    }
 
-  /* Codec fourcc */
-  public int i_codec;
-  public int i_id;
-  public int i_type;
+    /* Codec fourcc */
+    public int i_codec;
+    public int i_id;
+    public int i_type;
   
-  /* Codec specific */
-  public int i_profile;
-  public int i_level;
+    /* Codec specific */
+    public int i_profile;
+    public int i_level;
   
-  public libvlc_media_track_info_u.ByValue u;
+    public libvlc_media_track_info_u.ByValue u;
 }

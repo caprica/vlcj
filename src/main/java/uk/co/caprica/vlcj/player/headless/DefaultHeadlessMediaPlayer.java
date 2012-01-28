@@ -24,23 +24,22 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.player.DefaultMediaPlayer;
 
 /**
- * A media player implementation with no user interface component to render the
- * video to.
+ * A media player implementation with no user interface component to render the video to.
  * <p>
  * This is useful for a streaming server component.
  * <p>
- * Client applications must use the correct media options otherwise a native 
- * video window may still appear. 
+ * Client applications must use the correct media options otherwise a native video window may still
+ * appear.
  */
 public class DefaultHeadlessMediaPlayer extends DefaultMediaPlayer implements HeadlessMediaPlayer {
 
-  /**
-   * Create a new media player.
-   * 
-   * @param libvlc native interface
-   * @param instance libvlc instance
-   */
-  public DefaultHeadlessMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
-    super(libvlc, instance);
-  }
+    /**
+     * Create a new media player.
+     * 
+     * @param libvlc native interface
+     * @param instance libvlc instance
+     */
+    public DefaultHeadlessMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
+        super(libvlc, instance);
+    }
 }

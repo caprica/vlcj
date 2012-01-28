@@ -29,30 +29,30 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
  */
 public abstract class VideoSurface implements Serializable {
 
-  /**
-   * Serial version.
-   */
-  private static final long serialVersionUID = 1L;
-  
-  /**
-   * Operating System specific video surface adapter implementation.
-   */
-  protected final VideoSurfaceAdapter videoSurfaceAdapter;
-  
-  /**
-   * Create a new video surface wrapper.
-   * 
-   * @param videoSurfaceAdapter video surface adapter implementation
-   */
-  protected VideoSurface(VideoSurfaceAdapter videoSurfaceAdapter) {
-    this.videoSurfaceAdapter = videoSurfaceAdapter;
-  }
+    /**
+     * Serial version.
+     */
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * Attach the video surface to a media player.
-   * 
-   * @param libvlc native library interface
-   * @param mediaPlayer media player instance
-   */
-  public abstract void attach(LibVlc libvlc, MediaPlayer mediaPlayer);
+    /**
+     * Operating System specific video surface adapter implementation.
+     */
+    protected final VideoSurfaceAdapter videoSurfaceAdapter;
+
+    /**
+     * Create a new video surface wrapper.
+     * 
+     * @param videoSurfaceAdapter video surface adapter implementation
+     */
+    protected VideoSurface(VideoSurfaceAdapter videoSurfaceAdapter) {
+        this.videoSurfaceAdapter = videoSurfaceAdapter;
+    }
+
+    /**
+     * Attach the video surface to a media player.
+     * 
+     * @param libvlc native library interface
+     * @param mediaPlayer media player instance
+     */
+    public abstract void attach(LibVlc libvlc, MediaPlayer mediaPlayer);
 }

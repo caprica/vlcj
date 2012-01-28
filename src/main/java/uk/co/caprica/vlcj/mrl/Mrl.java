@@ -24,10 +24,10 @@ package uk.co.caprica.vlcj.mrl;
  */
 public interface Mrl {
 
-  /**
-   * Get the media resource locator value
-   * 
-   * @return media resource locator
-   */
-  String value();
+    /**
+     * Get the media resource locator value
+     * 
+     * @return media resource locator
+     */
+    String value();
 }

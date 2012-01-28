@@ -23,41 +23,41 @@ package uk.co.caprica.vlcj.filter;
  * File filter implementation for sub-title files recognised by libvlc.
  */
 public class SubTitleFileFilter extends ExtensionFileFilter {
-  
-  /**
-   * From the vlc_interfaces.h include file.
-   */
-  private static final String[] EXTENSIONS_SUBTITLE = {
-    "cdg",
-    "idx",
-    "srt",
-    "sub",
-    "utf",
-    "ass",
-    "ssa",
-    "aqt",
-    "jss",
-    "psb",
-    "rt",
-    "smi",
-    "txt",
-    "smil",
-    "stl",
-    "usf",
-    "dks",
-    "pjs",
-    "mpl2"
-  };
 
-  /**
-   * Single instance.
-   */
-  public static SubTitleFileFilter INSTANCE = new SubTitleFileFilter();
-  
-  /**
-   * Create a new file filter.
-   */
-  public SubTitleFileFilter() {
-    super(EXTENSIONS_SUBTITLE);
-  }
+    /**
+     * From the vlc_interfaces.h include file.
+     */
+    private static final String[] EXTENSIONS_SUBTITLE = {
+        "cdg",
+        "idx",
+        "srt",
+        "sub",
+        "utf",
+        "ass",
+        "ssa",
+        "aqt",
+        "jss",
+        "psb",
+        "rt",
+        "smi",
+        "txt",
+        "smil",
+        "stl",
+        "usf",
+        "dks",
+        "pjs",
+        "mpl2"
+    };
+
+    /**
+     * Single instance.
+     */
+    public static SubTitleFileFilter INSTANCE = new SubTitleFileFilter();
+
+    /**
+     * Create a new file filter.
+     */
+    public SubTitleFileFilter() {
+        super(EXTENSIONS_SUBTITLE);
+    }
 }

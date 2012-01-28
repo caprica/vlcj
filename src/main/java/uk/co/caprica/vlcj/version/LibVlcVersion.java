@@ -26,17 +26,17 @@ import uk.co.caprica.vlcj.binding.LibVlc;
  */
 public class LibVlcVersion {
 
-  /**
-   * Run-time version of vlc/libvlc.
-   */
-  private static final Version VERSION = new Version(LibVlc.INSTANCE.libvlc_get_version());
-  
-  /**
-   * Get the run-time version.
-   * 
-   * @return vlc/libvlc version
-   */
-  public static final Version getVersion() {
-    return VERSION;
-  }
+    /**
+     * Run-time version of vlc/libvlc.
+     */
+    private static final Version VERSION = new Version(LibVlc.INSTANCE.libvlc_get_version());
+
+    /**
+     * Get the run-time version.
+     * 
+     * @return vlc/libvlc version
+     */
+    public static final Version getVersion() {
+        return VERSION;
+    }
 }

@@ -29,11 +29,12 @@ import com.sun.jna.platform.win32.WinUser.POINT;
  */
 public class MSLLHOOKSTRUCT extends Structure {
 
-  public static class ByReference extends MSLLHOOKSTRUCT implements Structure.ByReference {};
+    public static class ByReference extends MSLLHOOKSTRUCT implements Structure.ByReference {
+    };
 
-  public POINT pt;
-  public DWORD mouseData;
-  public DWORD flags;
-  public DWORD time;
-  public ULONG_PTR dwExtraInfo;
+    public POINT pt;
+    public DWORD mouseData;
+    public DWORD flags;
+    public DWORD time;
+    public ULONG_PTR dwExtraInfo;
 }

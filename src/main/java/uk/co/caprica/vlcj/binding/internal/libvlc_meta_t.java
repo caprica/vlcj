@@ -24,31 +24,31 @@ package uk.co.caprica.vlcj.binding.internal;
  */
 public enum libvlc_meta_t {
   
-  libvlc_meta_Title      ( 0),
-  libvlc_meta_Artist     ( 1),
-  libvlc_meta_Genre      ( 2),
-  libvlc_meta_Copyright  ( 3),
-  libvlc_meta_Album      ( 4),
-  libvlc_meta_TrackNumber( 5),
-  libvlc_meta_Description( 6),
-  libvlc_meta_Rating     ( 7),
-  libvlc_meta_Date       ( 8),
-  libvlc_meta_Setting    ( 9),
-  libvlc_meta_URL        (10),
-  libvlc_meta_Language   (11),
-  libvlc_meta_NowPlaying (12),
-  libvlc_meta_Publisher  (13),
-  libvlc_meta_EncodedBy  (14),
-  libvlc_meta_ArtworkURL (15),
-  libvlc_meta_TrackID    (16);
+    libvlc_meta_Title      ( 0),
+    libvlc_meta_Artist     ( 1),
+    libvlc_meta_Genre      ( 2),
+    libvlc_meta_Copyright  ( 3),
+    libvlc_meta_Album      ( 4),
+    libvlc_meta_TrackNumber( 5),
+    libvlc_meta_Description( 6),
+    libvlc_meta_Rating     ( 7),
+    libvlc_meta_Date       ( 8),
+    libvlc_meta_Setting    ( 9),
+    libvlc_meta_URL        (10),
+    libvlc_meta_Language   (11),
+    libvlc_meta_NowPlaying (12),
+    libvlc_meta_Publisher  (13),
+    libvlc_meta_EncodedBy  (14),
+    libvlc_meta_ArtworkURL (15),
+    libvlc_meta_TrackID    (16);
   
-  private final int intValue;
+    private final int intValue;
 
-  private libvlc_meta_t(int intValue) {
-    this.intValue = intValue;
-  }
-  
-  public int intValue() {
-    return intValue;
-  }
+    private libvlc_meta_t(int intValue) {
+        this.intValue = intValue;
+    }
+
+    public int intValue() {
+        return intValue;
+    }
 }

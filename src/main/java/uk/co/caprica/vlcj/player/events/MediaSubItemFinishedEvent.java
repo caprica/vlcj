@@ -26,25 +26,25 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  *
  */
 class MediaSubItemFinishedEvent extends AbstractMediaPlayerEvent {
-  
-  /**
+
+    /**
    * 
    */
-  private final int subItemIndex;
-  
-  /**
-   * Create a media player event.
-   * 
-   * @param mediaPlayer media player the event relates to
-   * @param subItemIndex index of the sub-item
-   */
-  MediaSubItemFinishedEvent(MediaPlayer mediaPlayer, int subItemIndex) {
-    super(mediaPlayer);
-    this.subItemIndex = subItemIndex;
-  }
-  
-  @Override
-  public void notify(MediaPlayerEventListener listener) {
-    listener.subItemFinished(mediaPlayer, subItemIndex);
-  }
+    private final int subItemIndex;
+
+    /**
+     * Create a media player event.
+     * 
+     * @param mediaPlayer media player the event relates to
+     * @param subItemIndex index of the sub-item
+     */
+    MediaSubItemFinishedEvent(MediaPlayer mediaPlayer, int subItemIndex) {
+        super(mediaPlayer);
+        this.subItemIndex = subItemIndex;
+    }
+
+    @Override
+    public void notify(MediaPlayerEventListener listener) {
+        listener.subItemFinished(mediaPlayer, subItemIndex);
+    }
 }

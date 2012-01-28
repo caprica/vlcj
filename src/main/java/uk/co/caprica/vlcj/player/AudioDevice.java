@@ -24,51 +24,51 @@ package uk.co.caprica.vlcj.player;
  */
 public class AudioDevice {
 
-  /**
-   * Device identifier.
-   */
-  private final String deviceId;
-  
-  /**
-   * Long name.
-   */
-  private final String longName;
+    /**
+     * Device identifier.
+     */
+    private final String deviceId;
 
-  /**
-   * Create an audio device.
-   * 
-   * @param deviceId device identifier 
-   * @param longName long name
-   */
-  public AudioDevice(String deviceId, String longName) {
-    this.deviceId = deviceId;
-    this.longName = longName;
-  }
+    /**
+     * Long name.
+     */
+    private final String longName;
 
-  /**
-   * Get the device identifier.
-   * 
-   * @return device identifier
-   */
-  public String getDeviceId() {
-    return deviceId;
-  }
-  
-  /**
-   * Get the long name.
-   * 
-   * @return long name
-   */
-  public String getLongName() {
-    return longName;
-  }
-  
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder(60);
-    sb.append(getClass().getSimpleName()).append('[');
-    sb.append("deviceId=").append(deviceId).append(',');
-    sb.append("longName=").append(longName).append(']');
-    return sb.toString();
-  }
+    /**
+     * Create an audio device.
+     * 
+     * @param deviceId device identifier
+     * @param longName long name
+     */
+    public AudioDevice(String deviceId, String longName) {
+        this.deviceId = deviceId;
+        this.longName = longName;
+    }
+
+    /**
+     * Get the device identifier.
+     * 
+     * @return device identifier
+     */
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    /**
+     * Get the long name.
+     * 
+     * @return long name
+     */
+    public String getLongName() {
+        return longName;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(60);
+        sb.append(getClass().getSimpleName()).append('[');
+        sb.append("deviceId=").append(deviceId).append(',');
+        sb.append("longName=").append(longName).append(']');
+        return sb.toString();
+    }
 }

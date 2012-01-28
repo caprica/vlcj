@@ -27,18 +27,18 @@ import com.sun.jna.Structure;
  */
 public class libvlc_event_t extends Structure {
 
-  /**
-   * @see libvlc_event_e
-   */
-  public int type;
+    /**
+     * @see libvlc_event_e
+     */
+    public int type;
 
-  /**
-   * 
-   */
-  public Pointer obj;
+    /**
+     * 
+     */
+    public Pointer obj;
 
-  /**
-   * 
-   */
-  public libvlc_event_u.ByValue u;
+    /**
+     * 
+     */
+    public libvlc_event_u.ByValue u;
 }

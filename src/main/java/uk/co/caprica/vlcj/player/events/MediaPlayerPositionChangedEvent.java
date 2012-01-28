@@ -27,24 +27,24 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  */
 class MediaPlayerPositionChangedEvent extends AbstractMediaPlayerEvent {
 
-  /**
-   * New position, a percentage.
-   */
-  private final float newPosition;
-  
-  /**
-   * Create a media player event.
-   * 
-   * @param mediaPlayer media player the event relates to
-   * @param newPosition a percentage
-   */
-  MediaPlayerPositionChangedEvent(MediaPlayer mediaPlayer, float newPosition) {
-    super(mediaPlayer);
-    this.newPosition = newPosition;
-  }
-  
-  @Override
-  public void notify(MediaPlayerEventListener listener) {
-    listener.positionChanged(mediaPlayer, newPosition);
-  }
+    /**
+     * New position, a percentage.
+     */
+    private final float newPosition;
+
+    /**
+     * Create a media player event.
+     * 
+     * @param mediaPlayer media player the event relates to
+     * @param newPosition a percentage
+     */
+    MediaPlayerPositionChangedEvent(MediaPlayer mediaPlayer, float newPosition) {
+        super(mediaPlayer);
+        this.newPosition = newPosition;
+    }
+
+    @Override
+    public void notify(MediaPlayerEventListener listener) {
+        listener.positionChanged(mediaPlayer, newPosition);
+    }
 }

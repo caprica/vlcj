@@ -29,51 +29,49 @@ import com.sun.jna.ptr.IntByReference;
  * <p>
  * This library is only available on Windows platforms.
  * <p>
- * The functionality provided by this library may be helpful especially when
- * working with full-screen exclusive mode in Java which suffers from numerous
- * idiosyncrasies on Windows, some of which can be mitigated by ensuring that
- * desktop window composition is disabled. Disabling composition can be done at
- * the operating system level, but is more convenient for end-users if the
- * application itself does it.
+ * The functionality provided by this library may be helpful especially when working with
+ * full-screen exclusive mode in Java which suffers from numerous idiosyncrasies on Windows, some of
+ * which can be mitigated by ensuring that desktop window composition is disabled. Disabling
+ * composition can be done at the operating system level, but is more convenient for end-users if
+ * the application itself does it.
  * <p>
- * <strong>This class may be removed in future versions of vlcj due to it's
- * uselessness.</strong>
+ * <strong>This class may be removed in future versions of vlcj due to it's uselessness.</strong>
  */
 public interface LibDwmApi extends Library {
 
-  /**
-   * Native library instance. 
-   */
-  LibDwmApi INSTANCE = (LibDwmApi)Native.loadLibrary("dwmapi", LibDwmApi.class);
+    /**
+     * Native library instance.
+     */
+    LibDwmApi INSTANCE = (LibDwmApi)Native.loadLibrary("dwmapi", LibDwmApi.class);
 
-  /**
-   * Disable composition.
-   */
-  public static final int DWM_EC_DISABLECOMPOSITION = 0;
-  
-  /**
-   * Enable composition.
-   */
-  public static final int DWM_EC_ENABLECOMPOSITION = 1;
+    /**
+     * Disable composition.
+     */
+    public static final int DWM_EC_DISABLECOMPOSITION = 0;
 
-  /**
-   * API success code.
-   */
-  public static final int S_OK = 0;
-  
-  /**
-   * Enable/disable desktop window composition.
-   * 
-   * @param uCompositionAction enable/disable, i.e. DWM_EC_ENABLECOMPOSITION or DWM_EC_DISABLECOMPOSITION
-   * @return S_OK or HRESULT error code
-   */
-  HRESULT DwmEnableComposition(int uCompositionAction);
-  
-  /**
-   * Check whether or not desktop window composition is currently enabled. 
-   * 
-   * @param pfEnabled pointer to enabled/disabled flag.
-   * @return S_OK or HRESULT error code
-   */
-  HRESULT DwmIsCompositionEnabled(IntByReference pfEnabled);
+    /**
+     * Enable composition.
+     */
+    public static final int DWM_EC_ENABLECOMPOSITION = 1;
+
+    /**
+     * API success code.
+     */
+    public static final int S_OK = 0;
+
+    /**
+     * Enable/disable desktop window composition.
+     * 
+     * @param uCompositionAction enable/disable, i.e. DWM_EC_ENABLECOMPOSITION or DWM_EC_DISABLECOMPOSITION
+     * @return S_OK or HRESULT error code
+     */
+    HRESULT DwmEnableComposition(int uCompositionAction);
+
+    /**
+     * Check whether or not desktop window composition is currently enabled.
+     * 
+     * @param pfEnabled pointer to enabled/disabled flag.
+     * @return S_OK or HRESULT error code
+     */
+    HRESULT DwmIsCompositionEnabled(IntByReference pfEnabled);
 }

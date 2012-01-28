@@ -27,24 +27,24 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  */
 class MediaMetaChangedEvent extends AbstractMediaPlayerEvent {
 
-  /**
-   * Meta type.
-   */
-  private final int metaType;
-  
-  /**
-   * Create a media player event.
-   * 
-   * @param mediaPlayer media player the event relates to
-   * @param metaType meta data type
-   */
-  MediaMetaChangedEvent(MediaPlayer mediaPlayer, int metaType) {
-    super(mediaPlayer);
-    this.metaType = metaType;
-  }
-  
-  @Override
-  public void notify(MediaPlayerEventListener listener) {
-    listener.mediaMetaChanged(mediaPlayer, metaType);
-  }
+    /**
+     * Meta type.
+     */
+    private final int metaType;
+
+    /**
+     * Create a media player event.
+     * 
+     * @param mediaPlayer media player the event relates to
+     * @param metaType meta data type
+     */
+    MediaMetaChangedEvent(MediaPlayer mediaPlayer, int metaType) {
+        super(mediaPlayer);
+        this.metaType = metaType;
+    }
+
+    @Override
+    public void notify(MediaPlayerEventListener listener) {
+        listener.mediaMetaChanged(mediaPlayer, metaType);
+    }
 }

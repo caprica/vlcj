@@ -26,9 +26,9 @@ import com.sun.jna.Structure;
  */
 public class libvlc_media_track_info_audio_t extends Structure {
 
-  public static class ByValue extends libvlc_media_track_info_audio_t implements Structure.ByValue {}
+    public static class ByValue extends libvlc_media_track_info_audio_t implements Structure.ByValue {}
   
-  /* Audio specific */
-  public int i_channels;
-  public int i_rate;
+    /* Audio specific */
+    public int i_channels;
+    public int i_rate;
 }

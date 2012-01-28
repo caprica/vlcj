@@ -24,18 +24,18 @@ package uk.co.caprica.vlcj.player.list;
  */
 public enum MediaListPlayerMode {
 
-  /**
-   *
-   */
-  DEFAULT,
-  
-  /**
-   * 
-   */
-  LOOP,
-  
-  /**
-   * 
-   */
-  REPEAT
+    /**
+     * 
+     */
+    DEFAULT,
+
+    /**
+     * 
+     */
+    LOOP,
+
+    /**
+     * 
+     */
+    REPEAT
 }

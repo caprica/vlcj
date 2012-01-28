@@ -29,27 +29,28 @@ import com.sun.jna.Platform;
  * The only exposed API is that used to initialise XLib for multi-threaded access.
  * <p>
  * Usage is simple, at the start of an application:
+ * 
  * <pre>
- *   int result = LibX11.INSTANCE.XInitThreads();
- *   // "result" will be non-zero if the native library call succeeded
+ * int result = LibX11.INSTANCE.XInitThreads();
+ * // &quot;result&quot; will be non-zero if the native library call succeeded
  * </pre>
  */
 public interface LibX11 extends Library {
 
-  /**
-   * Native library instance.
-   * <p>
-   * Conceivably Xlib could be present on Windows.
-   */
-  LibX11 INSTANCE = (LibX11)Native.loadLibrary(Platform.isWindows() ? "libX11" : "X11", LibX11.class);
+    /**
+     * Native library instance.
+     * <p>
+     * Conceivably Xlib could be present on Windows.
+     */
+    LibX11 INSTANCE = (LibX11)Native.loadLibrary(Platform.isWindows() ? "libX11" : "X11", LibX11.class);
 
-  /**
-   * Initialise Xlib support for concurrent threads. 
-   * <p>
-   * Invoking this at the start of an application can reduce the chance of a
-   * fatal JVM crash when using multiple media players.
-   * 
-   * @return non-zero on success, zero on failure (or if threading is not supported)
-   */
-  int XInitThreads();
+    /**
+     * Initialise Xlib support for concurrent threads.
+     * <p>
+     * Invoking this at the start of an application can reduce the chance of a fatal JVM crash when
+     * using multiple media players.
+     * 
+     * @return non-zero on success, zero on failure (or if threading is not supported)
+     */
+    int XInitThreads();
 }

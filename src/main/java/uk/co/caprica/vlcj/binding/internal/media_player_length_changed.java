@@ -26,5 +26,8 @@ import com.sun.jna.Structure;
  */
 public class media_player_length_changed extends Structure {
 
-  public long new_length;
+    /**
+     * 
+     */
+    public long new_length;
 }

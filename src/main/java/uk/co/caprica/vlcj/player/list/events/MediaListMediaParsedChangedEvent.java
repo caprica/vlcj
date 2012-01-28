@@ -27,24 +27,24 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
  */
 class MediaListMediaParsedChangedEvent extends AbstractMediaListPlayerEvent {
 
-  /**
-   * Status.
-   */
-  private final int newStatus;
-  
-  /**
-   * Create a media list player event.
-   * 
-   * @param mediaListPlayer media list player the event relates to
-   * @param newDuration duration
-   */
-  MediaListMediaParsedChangedEvent(MediaListPlayer mediaListPlayer, int newStatus) {
-    super(mediaListPlayer);
-    this.newStatus = newStatus;
-  }
-  
-  @Override
-  public void notify(MediaListPlayerEventListener listener) {
-    listener.mediaParsedChanged(mediaListPlayer, newStatus);
-  }
+    /**
+     * Status.
+     */
+    private final int newStatus;
+
+    /**
+     * Create a media list player event.
+     * 
+     * @param mediaListPlayer media list player the event relates to
+     * @param newDuration duration
+     */
+    MediaListMediaParsedChangedEvent(MediaListPlayer mediaListPlayer, int newStatus) {
+        super(mediaListPlayer);
+        this.newStatus = newStatus;
+    }
+
+    @Override
+    public void notify(MediaListPlayerEventListener listener) {
+        listener.mediaParsedChanged(mediaListPlayer, newStatus);
+    }
 }

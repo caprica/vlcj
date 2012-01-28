@@ -39,64 +39,64 @@ import com.sun.jna.ptr.IntByReference;
  */
 public class DwmTest {
 
-  private JFrame frame;
-  private JPanel contentPane;
-  private JButton enableButton;
-  private JButton disableButton;
-  
-  public static void main(String[] args) {
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        new DwmTest();
-      }
-    });
-  }
-  
-  public DwmTest() {
-    enableButton = new JButton("Enable");
-    enableButton.setMnemonic('e');
-    enableButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        HRESULT hResult;
-        hResult = LibDwmApi.INSTANCE.DwmEnableComposition(LibDwmApi.DWM_EC_ENABLECOMPOSITION);
-        System.out.println("DwmEnableComposition hResult=" + hResult.intValue());
-        dumpStatus();
-      }
-    });
-    
-    disableButton = new JButton("Disable");
-    disableButton.setMnemonic('d');
-    disableButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        HRESULT hResult;
-        hResult = LibDwmApi.INSTANCE.DwmEnableComposition(LibDwmApi.DWM_EC_DISABLECOMPOSITION);
-        System.out.println("DwmEnableComposition hResult=" + hResult.intValue());
-        dumpStatus();
-      }
-    });
-    
-    contentPane = new JPanel();
-    contentPane.setLayout(new FlowLayout());
-    contentPane.add(enableButton);
-    contentPane.add(disableButton);
-    
-    frame = new JFrame("DWM Test");
-    frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
-    frame.setContentPane(contentPane);
-    frame.pack();
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setVisible(true);
-  }
-  
-  private void dumpStatus() {
-    IntByReference pfEnabled = new IntByReference();
-    HRESULT hResult = LibDwmApi.INSTANCE.DwmIsCompositionEnabled(pfEnabled);
-    System.out.println("DwmIsCompositionEnabled hResult=" + hResult.intValue());
-    if(hResult.intValue() == LibDwmApi.S_OK) {
-      System.out.println("Desktop composition is " + (pfEnabled.getValue() != 0 ? "enabled" : "disabled"));
+    private JFrame frame;
+    private JPanel contentPane;
+    private JButton enableButton;
+    private JButton disableButton;
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new DwmTest();
+            }
+        });
     }
-  }
+
+    public DwmTest() {
+        enableButton = new JButton("Enable");
+        enableButton.setMnemonic('e');
+        enableButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                HRESULT hResult;
+                hResult = LibDwmApi.INSTANCE.DwmEnableComposition(LibDwmApi.DWM_EC_ENABLECOMPOSITION);
+                System.out.println("DwmEnableComposition hResult=" + hResult.intValue());
+                dumpStatus();
+            }
+        });
+
+        disableButton = new JButton("Disable");
+        disableButton.setMnemonic('d');
+        disableButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                HRESULT hResult;
+                hResult = LibDwmApi.INSTANCE.DwmEnableComposition(LibDwmApi.DWM_EC_DISABLECOMPOSITION);
+                System.out.println("DwmEnableComposition hResult=" + hResult.intValue());
+                dumpStatus();
+            }
+        });
+
+        contentPane = new JPanel();
+        contentPane.setLayout(new FlowLayout());
+        contentPane.add(enableButton);
+        contentPane.add(disableButton);
+
+        frame = new JFrame("DWM Test");
+        frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
+        frame.setContentPane(contentPane);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
+    private void dumpStatus() {
+        IntByReference pfEnabled = new IntByReference();
+        HRESULT hResult = LibDwmApi.INSTANCE.DwmIsCompositionEnabled(pfEnabled);
+        System.out.println("DwmIsCompositionEnabled hResult=" + hResult.intValue());
+        if(hResult.intValue() == LibDwmApi.S_OK) {
+            System.out.println("Desktop composition is " + (pfEnabled.getValue() != 0 ? "enabled" : "disabled"));
+        }
+    }
 }

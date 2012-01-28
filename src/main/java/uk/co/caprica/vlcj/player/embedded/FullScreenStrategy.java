@@ -24,20 +24,20 @@ package uk.co.caprica.vlcj.player.embedded;
  */
 public interface FullScreenStrategy {
 
-  /**
-   * Attempt to enter full-screen mode.
-   */
-  void enterFullScreenMode();
-  
-  /**
-   * Exit full-screen mode.
-   */
-  void exitFullScreenMode();
+    /**
+     * Attempt to enter full-screen mode.
+     */
+    void enterFullScreenMode();
 
-  /**
-   * Test whether or not full-screen mode is currently active.
-   * 
-   * @return true if full-screen mode is active, otherwise false
-   */
-  boolean isFullScreenMode();
+    /**
+     * Exit full-screen mode.
+     */
+    void exitFullScreenMode();
+
+    /**
+     * Test whether or not full-screen mode is currently active.
+     * 
+     * @return true if full-screen mode is active, otherwise false
+     */
+    boolean isFullScreenMode();
 }

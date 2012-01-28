@@ -26,39 +26,39 @@ import java.awt.image.BufferedImage;
  */
 public interface MediaMeta {
 
-  String getTitle();
+    String getTitle();
 
-  String getArtist();
+    String getArtist();
 
-  String getGenre();
+    String getGenre();
 
-  String getCopyright();
+    String getCopyright();
 
-  String getAlbum();
+    String getAlbum();
 
-  String getTrackNumber();
+    String getTrackNumber();
 
-  String getDescription();
+    String getDescription();
 
-  String getRating();
+    String getRating();
 
-  String getDate();
+    String getDate();
 
-  String getSetting();
+    String getSetting();
 
-  String getUrl();
+    String getUrl();
 
-  String getLanguage();
+    String getLanguage();
 
-  String getNowPlaying();
+    String getNowPlaying();
 
-  String getPublisher();
+    String getPublisher();
 
-  String getEncodedby();
+    String getEncodedby();
 
-  String getArtworkUrl();
+    String getArtworkUrl();
 
-  String getTrackId();
+    String getTrackId();
 
-  BufferedImage getArtwork();
+    BufferedImage getArtwork();
 }

@@ -28,13 +28,13 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class LibVlcFactoryVersionTest extends VlcjTest {
 
-  /**
-   * Execute test test.
-   * 
-   * @param args command-line arguments
-   */
-  public static void main(String[] args) {
-    LibVlc libvlc = LibVlcFactory.factory().atLeast("1.2.0").create();
-    System.out.println(libvlc);
-  }
+    /**
+     * Execute test test.
+     * 
+     * @param args command-line arguments
+     */
+    public static void main(String[] args) {
+        LibVlc libvlc = LibVlcFactory.factory().atLeast("1.2.0").create();
+        System.out.println(libvlc);
+    }
 }

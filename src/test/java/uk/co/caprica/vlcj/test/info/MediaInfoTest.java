@@ -27,59 +27,57 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 /**
  * A test for the various media information functions.
  * <p>
- * For regular media files (like ".mpg" or ".avi") the track information is 
- * available after the media has been parsed (or played).
+ * For regular media files (like ".mpg" or ".avi") the track information is available after the
+ * media has been parsed (or played).
  * <p>
- * For DVD media files (like ".iso" files) the track information is not 
- * available after the media has been parsed, a video output must have been
- * created, and even then the video track width/height might not be available
- * until a short time later.
+ * For DVD media files (like ".iso" files) the track information is not available after the media
+ * has been parsed, a video output must have been created, and even then the video track
+ * width/height might not be available until a short time later.
  * <p>
- * In all cases, the other functions for title, video, audio and chapter
- * descriptions require that a video output has been created before they return
- * valid information.
+ * In all cases, the other functions for title, video, audio and chapter descriptions require that a
+ * video output has been created before they return valid information.
  */
 public class MediaInfoTest extends VlcjTest {
 
-  public static void main(String[] args) {
-    if(args.length != 1) {
-      System.out.println("Specify an MRL");
-      System.exit(1);
-    }
-    
-    MediaPlayerFactory factory = new MediaPlayerFactory();
-    MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
-    
-    mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-      @Override
-      public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-        System.out.println("     Track Information: " + mediaPlayer.getTrackInfo());
-        System.out.println("    Title Descriptions: " + mediaPlayer.getTitleDescriptions());
-        System.out.println("    Video Descriptions: " + mediaPlayer.getVideoDescriptions());
-        System.out.println("    Audio Descriptions: " + mediaPlayer.getAudioDescriptions());
-        for(int i = 0; i < mediaPlayer.getTitleDescriptions().size(); i++) {
-          System.out.println("Chapter Descriptions " + i + ": " + mediaPlayer.getChapterDescriptions(i));
+    public static void main(String[] args) {
+        if(args.length != 1) {
+            System.out.println("Specify an MRL");
+            System.exit(1);
         }
-      }
-    });
 
-    mediaPlayer.prepareMedia(args[0]);
-    
-    mediaPlayer.parseMedia();
-    
-    mediaPlayer.start();
-    
-    try {
-      Thread.sleep(1000);
-    }
-    catch(InterruptedException e) {
-    }
+        MediaPlayerFactory factory = new MediaPlayerFactory();
+        MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
 
-    System.out.println("Track Information before end: " + mediaPlayer.getTrackInfo());
-    
-    mediaPlayer.stop();
-    
-    mediaPlayer.release();
-    factory.release();
-  }
+        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+            @Override
+            public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
+                System.out.println("     Track Information: " + mediaPlayer.getTrackInfo());
+                System.out.println("    Title Descriptions: " + mediaPlayer.getTitleDescriptions());
+                System.out.println("    Video Descriptions: " + mediaPlayer.getVideoDescriptions());
+                System.out.println("    Audio Descriptions: " + mediaPlayer.getAudioDescriptions());
+                for(int i = 0; i < mediaPlayer.getTitleDescriptions().size(); i ++ ) {
+                    System.out.println("Chapter Descriptions " + i + ": " + mediaPlayer.getChapterDescriptions(i));
+                }
+            }
+        });
+
+        mediaPlayer.prepareMedia(args[0]);
+
+        mediaPlayer.parseMedia();
+
+        mediaPlayer.start();
+
+        try {
+            Thread.sleep(1000);
+        }
+        catch(InterruptedException e) {
+        }
+
+        System.out.println("Track Information before end: " + mediaPlayer.getTrackInfo());
+
+        mediaPlayer.stop();
+
+        mediaPlayer.release();
+        factory.release();
+    }
 }

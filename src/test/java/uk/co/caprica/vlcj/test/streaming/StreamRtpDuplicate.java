@@ -31,61 +31,61 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
- * An example of how to stream a media file using RTP and use the "duplicate"
- * output to also display the video locally in an embedded media player.
+ * An example of how to stream a media file using RTP and use the "duplicate" output to also display
+ * the video locally in an embedded media player.
  * <p>
- * Note that the duplicated output does not play it's own <em>stream</em>, so
- * video displayed by client applications will lag the local duplicated output.
+ * Note that the duplicated output does not play it's own <em>stream</em>, so video displayed by
+ * client applications will lag the local duplicated output.
  * <p>
  * The client specifies an MRL of <code>rtp://@230.0.0.1:5555</code>
  */
 public class StreamRtpDuplicate extends VlcjTest {
 
-  public static void main(String[] args) throws Exception {
-    if(args.length != 1) {
-      System.out.println("Specify a single MRL to stream");
-      System.exit(1);
-    }
-    
-    String media = args[0];
-    String options = formatRtpStream("230.0.0.1", 5555);
+    public static void main(String[] args) throws Exception {
+        if(args.length != 1) {
+            System.out.println("Specify a single MRL to stream");
+            System.exit(1);
+        }
 
-    System.out.println("Streaming '" + media + "' to '" + options + "'");
-    
-    MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(args);
-    EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
-    
-    Canvas canvas = new Canvas();
-    canvas.setBackground(Color.black);
-    CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
-    mediaPlayer.setVideoSurface(videoSurface);
-    
-    JFrame f = new JFrame("vlcj duplicate output test");
-    f.setIconImage(new ImageIcon(StreamRtpDuplicate.class.getResource("/icons/vlcj-logo.png")).getImage());
-    f.add(canvas);
-    f.setSize(800, 600);
-    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    f.setVisible(true);
-    
-    mediaPlayer.playMedia(media,
-      options,
-      ":no-sout-rtp-sap", 
-      ":no-sout-standard-sap", 
-      ":sout-all", 
-      ":sout-keep"
-    );
-    
-    // Don't exit
-    Thread.currentThread().join();
-  }
-  
-  private static String formatRtpStream(String serverAddress, int serverPort) {
-    StringBuilder sb = new StringBuilder(60);
-    sb.append(":sout=#duplicate{dst=display,dst=rtp{dst=");
-    sb.append(serverAddress);
-    sb.append(",port=");
-    sb.append(serverPort);
-    sb.append(",mux=ts}}");
-    return sb.toString();
-  }
+        String media = args[0];
+        String options = formatRtpStream("230.0.0.1", 5555);
+
+        System.out.println("Streaming '" + media + "' to '" + options + "'");
+
+        MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(args);
+        EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+
+        Canvas canvas = new Canvas();
+        canvas.setBackground(Color.black);
+        CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
+        mediaPlayer.setVideoSurface(videoSurface);
+
+        JFrame f = new JFrame("vlcj duplicate output test");
+        f.setIconImage(new ImageIcon(StreamRtpDuplicate.class.getResource("/icons/vlcj-logo.png")).getImage());
+        f.add(canvas);
+        f.setSize(800, 600);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
+
+        mediaPlayer.playMedia(media,
+            options,
+            ":no-sout-rtp-sap", 
+            ":no-sout-standard-sap", 
+            ":sout-all", 
+            ":sout-keep"
+        );
+
+        // Don't exit
+        Thread.currentThread().join();
+    }
+
+    private static String formatRtpStream(String serverAddress, int serverPort) {
+        StringBuilder sb = new StringBuilder(60);
+        sb.append(":sout=#duplicate{dst=display,dst=rtp{dst=");
+        sb.append(serverAddress);
+        sb.append(",port=");
+        sb.append(serverPort);
+        sb.append(",mux=ts}}");
+        return sb.toString();
+    }
 }
