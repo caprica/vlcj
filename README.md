@@ -17,7 +17,7 @@ At least JDK 1.5 is required, JDK 1.6 is recommended, and it works without
 changes on JDK 1.7.
 
 This is the open source vlcj project page, see also the 'official' 
-[home page](http://www.capricasoftware.co.uk/ "Caprica Software home page")
+[home page](http://www.capricasoftware.co.uk/vlcj "Official vlcj home page at Caprica Software")
 where you can find more information as well as some new simple tutorials.
 
 News
@@ -25,7 +25,22 @@ News
 
 28/01/2012 Moved to github.
 
+Support
+-------
+
+Support for personal and open source projects may be provided free of charge at 
+[Caprica Software](http://www.capricasoftware.co.uk/forum "Caprica Software Forums").
+
+Support for commercial projects is provided exclusively on commercial terms -
+send an email to the following address for more information:
+
+> mark [dot] lee [at] capricasoftware [dot] co [dot] uk
+
 License
 -------
 
 The vlcj framework is provided under the GPL, version 3 or later.
+
+If in the future the vlc license terms change from GPL, then alternative 
+licensing arrangements for vlcj *may* be offered.
+ 
