@@ -60,6 +60,9 @@ public class AudioPlayerComponent extends MediaPlayerEventAdapter {
      * Default factory initialisation arguments.
      * <p>
      * Sub-classes may totally disregard these arguments and provide their own.
+     * <p>
+     * A sub-class has access to these default arguments so new ones could be merged with these if
+     * required.
      */
     protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
         "--no-plugins-cache", 

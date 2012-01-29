@@ -57,6 +57,9 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      * <p>
      * Sub-classes may totally disregard these arguments and provide their own - for example to
      * enable ffmpeg hardware decoding via "--ffmpeg-hw" if supported by the OS and the GPU.
+     * <p>
+     * A sub-class has access to these default arguments so new ones could be merged with these if
+     * required.
      */
     protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
         "--no-plugins-cache", 
