@@ -1,4 +1,4 @@
-![vlcj](https://github.com/penguinista/vlcj/raw/master/etc/vlcj-logo.png "vlcj")
+![vlcj](https://github.com/caprica/vlcj/raw/master/etc/vlcj-logo.png "vlcj")
 
 vlcj
 ====
