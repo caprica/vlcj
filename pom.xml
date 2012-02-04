@@ -1,7 +1,7 @@
 <!-- 
 	vlcj pom. 
 	
-	Add the following content to your own project pom.xml file.
+	Add the following content to your own project pom.xml file:
 	 
 	<dependencies>
 		<dependency>
