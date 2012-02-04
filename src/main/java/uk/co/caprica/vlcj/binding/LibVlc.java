@@ -30,7 +30,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_set_volume_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_setup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_event_u;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
@@ -261,7 +263,7 @@ public interface LibVlc extends Library {
      * @return a list of module descriptions. It should be freed with
      *         libvlc_module_description_list_release(). In case of an error, NULL is returned.
      * @see libvlc_module_description_t
-     * @see libvlc_module_description_list_release
+     * @see #libvlc_module_description_list_release(libvlc_module_description_t)
      */
     libvlc_module_description_t libvlc_audio_filter_list_get(libvlc_instance_t p_instance);
 
@@ -272,7 +274,7 @@ public interface LibVlc extends Library {
      * @return a list of module descriptions. It should be freed with
      *         libvlc_module_description_list_release(). In case of an error, NULL is returned.
      * @see libvlc_module_description_t
-     * @see libvlc_module_description_list_release
+     * @see #libvlc_module_description_list_release(libvlc_module_description_t)
      */
     libvlc_module_description_t libvlc_video_filter_list_get(libvlc_instance_t p_instance);
 
@@ -291,7 +293,7 @@ public interface LibVlc extends Library {
     /**
      * Create a media with a certain given media resource location.
      * 
-     * @see libvlc_media_release
+     * @see #libvlc_media_release(libvlc_media_t)
      * @param p_instance the instance
      * @param psz_mrl the MRL to read
      * @return the newly created media or NULL on error
@@ -301,7 +303,7 @@ public interface LibVlc extends Library {
     /**
      * Create a media with a certain file path.
      * 
-     * @see libvlc_media_release
+     * @see #libvlc_media_release(libvlc_media_t)
      * @param p_instance the instance
      * @param path local filesystem path
      * @return the newly created media or NULL on error
@@ -311,7 +313,7 @@ public interface LibVlc extends Library {
     /**
      * Create a media as an empty node with a given name.
      * 
-     * @see libvlc_media_release
+     * @see #libvlc_media_release(libvlc_media_t)
      * @param p_instance the instance
      * @param psz_name the name of the node
      * @return the new empty media or NULL on error
@@ -379,9 +381,9 @@ public interface LibVlc extends Library {
      * libvlc_MediaMetaChanged event. If you prefer a synchronous version ensure that you call
      * libvlc_media_parse() before get_meta().
      * 
-     * @see libvlc_media_parse
-     * @see libvlc_media_parse_async
-     * @see libvlc_MediaMetaChanged
+     * @see #libvlc_media_parse(libvlc_media_t)
+     * @see #libvlc_media_parse_async(libvlc_media_t)
+     * @see libvlc_event_e#libvlc_MediaMetaChanged
      * @param p_md the media descriptor
      * @param e_meta the meta to read
      * @return the media's meta
@@ -458,9 +460,9 @@ public interface LibVlc extends Library {
      * Parse a media. This fetches (local) meta data and tracks information. The method is
      * synchronous.
      * 
-     * @see libvlc_media_parse_async
-     * @see libvlc_media_get_meta
-     * @see libvlc_media_get_tracks_info
+     * @see #libvlc_media_parse_async(libvlc_media_t)
+     * @see #libvlc_media_get_meta(libvlc_media_t, int)
+     * @see #libvlc_media_get_tracks_info(libvlc_media_t, PointerByReference)
      * @param media media descriptor object
      */
     void libvlc_media_parse(libvlc_media_t media);
@@ -471,10 +473,10 @@ public interface LibVlc extends Library {
      * libvlc_MediaParsedChanged event. However if the media was already parsed you will not receive
      * this event.
      * 
-     * @see libvlc_media_parse
-     * @see libvlc_MediaParsedChanged
-     * @see libvlc_media_get_meta
-     * @see libvlc_media_get_tracks_info
+     * @see #libvlc_media_parse(libvlc_media_t)
+     * @see libvlc_event_e#libvlc_MediaParsedChanged
+     * @see #libvlc_media_get_meta(libvlc_media_t, int)
+     * @see #libvlc_media_get_tracks_info(libvlc_media_t, PointerByReference)
      * @param media media descriptor object
      */
     void libvlc_media_parse_async(libvlc_media_t media);
@@ -482,7 +484,7 @@ public interface LibVlc extends Library {
     /**
      * Get Parsed status for media descriptor object.
      * 
-     * @see libvlc_MediaParsedChanged
+     * @see libvlc_event_e#libvlc_MediaParsedChanged
      * @param p_md media descriptor object
      * @return true if media object has been parsed otherwise it returns false
      */
@@ -1209,7 +1211,7 @@ public interface LibVlc extends Library {
      * 
      * @param p_mi media player
      * @return time (in microseconds) the display of subtitles is being delayed
-     * @version LibVLC 1.2.0 or later
+     * @since LibVLC 1.2.0 or later
      */
     long libvlc_video_get_spu_delay(libvlc_media_player_t p_mi);
 
@@ -1223,7 +1225,7 @@ public interface LibVlc extends Library {
      * @param p_mi media player
      * @param i_delay time (in microseconds) the display of subtitles should be delayed
      * @return 0 on success, -1 on error
-     * @version LibVLC 1.2.0 or later
+     * @since LibVLC 1.2.0 or later
      */
     int libvlc_video_set_spu_delay(libvlc_media_player_t p_mi, long i_delay);
 
