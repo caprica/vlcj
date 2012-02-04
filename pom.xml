@@ -121,6 +121,41 @@
 					<encoding>UTF-8</encoding>
     			</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<author>true</author>
+					<charset>UTF-8</charset>
+					<doctitle>${project.name} ${project.version} API Documentation</doctitle>
+					<docfilessubdirs>true</docfilessubdirs>
+					<encoding>UTF-8</encoding>
+					<footer>(C)2012 Caprica Software Limited"</footer>
+					<show>public</show>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+ 			</plugin>
 		</plugins>
 		<extensions>
 			<extension>
