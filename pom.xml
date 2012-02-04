@@ -1,31 +1,115 @@
 <!-- 
-    Maven project xml for private use.
+	vlcj pom. 
+	
+	Add the following content to your own project pom.xml file.
+	 
+	<dependencies>
+		<dependency>
+			<groupId>uk.co.caprica</groupId> 
+			<artifactId>vlcj</artifactId> 
+			<version>1.3.0</version> 
+		</dependency>
+	</dependencies> 
+	
+	<repositories>
+		<repository> 
+		<id>caprica</id>
+		<name>Caprica Software</name>
+		<url>http://www.capricasoftware.co.uk/repo</url> 
+		</repository>
+	</repositories> 
+-->
 
-    NOTE: vlcj is NOT (currently) published to any public Maven repository.
- -->
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>uk.co.caprica</groupId>
-  <artifactId>vlcj</artifactId>
-  <packaging>jar</packaging>
-  <version>1.3.0-b1</version>
-  <name>vlcj</name>
-  <description>Java Framework for the vlc Media Player</description>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jna.version>3.4.0</jna.version>
-  </properties>
-  <dependencies>
-    <dependency>
-      <groupId>net.java.dev.jna</groupId>
-      <artifactId>jna</artifactId>
-      <version>${jna.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>net.java.dev.jna</groupId>
-      <artifactId>platform</artifactId>
-      <version>${jna.version}</version>
-    </dependency>
-  </dependencies>
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>uk.co.caprica</groupId>
+	<artifactId>vlcj</artifactId>
+	<version>1.3.0-SNAPSHOT</version>
+
+	<name>vlcj</name>
+	<description>Java Framework for the vlc Media Player.</description>
+
+	<packaging>jar</packaging>
+
+	<licenses>
+		<license>
+			<name>GPL v3</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>Caprica Software Limited</name>
+		<url>http://www.capricasoftware.co.uk</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>mark</id>
+			<name>Mark Lee</name>
+			<email>mark.lee@capricasoftware.co.uk</email>
+			<url>https://github.com/caprica/vlcj</url>
+			<organization>Caprica Software Limited</organization>
+			<organizationUrl>http://www.capricasoftware.co.uk</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>0</timezone>
+		</developer>
+	</developers>
+
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/caprica/vlcj/issues</url>
+	</issueManagement>
+
+	<scm>
+		<connection>scm:git:git://github.com/caprica/vlcj.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:caprica/vlcj.git</developerConnection>
+		<tag>vlcj-1.3.0</tag>
+		<url>https://github.com/caprica/vlcj</url>
+	</scm>
+
+  	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jna.version>3.4.0</jna.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>${jna.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>platform</artifactId>
+			<version>${jna.version}</version>
+		</dependency>
+	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>Caprica FTP</id>
+			<url>ftp://ftp.capricasoftware.co.uk/public_html/repo</url>
+		</repository>
+	</distributionManagement>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
+	</build>
+
 </project>
