@@ -93,39 +93,39 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaPlayerCompone
 
     // === MediaPlayerEventListener =============================================
 
-    // @Override
+    @Override
     public void played(MediaListPlayer mediaListPlayer) {
     }
 
-    // @Override
+    @Override
     public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
     }
 
-    // @Override
+    @Override
     public void stopped(MediaListPlayer mediaListPlayer) {
     }
 
-    // @Override
+    @Override
     public void mediaMetaChanged(MediaListPlayer mediaListPlayer, int metaType) {
     }
 
-    // @Override
+    @Override
     public void mediaSubItemAdded(MediaListPlayer mediaListPlayer, libvlc_media_t subItem) {
     }
 
-    // @Override
+    @Override
     public void mediaDurationChanged(MediaListPlayer mediaListPlayer, long newDuration) {
     }
 
-    // @Override
+    @Override
     public void mediaParsedChanged(MediaListPlayer mediaListPlayer, int newStatus) {
     }
 
-    // @Override
+    @Override
     public void mediaFreed(MediaListPlayer mediaListPlayer) {
     }
 
-    // @Override
+    @Override
     public void mediaStateChanged(MediaListPlayer mediaListPlayer, int newState) {
     }
 }

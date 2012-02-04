@@ -52,7 +52,7 @@ class DefaultMediaMeta implements MediaMeta {
     DefaultMediaMeta() {
     }
 
-    // @Override
+    @Override
     public String getTitle() {
         return title;
     }
@@ -61,7 +61,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.title = title;
     }
 
-    // @Override
+    @Override
     public String getArtist() {
         return artist;
     }
@@ -70,7 +70,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.artist = artist;
     }
 
-    // @Override
+    @Override
     public String getGenre() {
         return genre;
     }
@@ -79,7 +79,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.genre = genre;
     }
 
-    // @Override
+    @Override
     public String getCopyright() {
         return copyright;
     }
@@ -88,7 +88,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.copyright = copyright;
     }
 
-    // @Override
+    @Override
     public String getAlbum() {
         return album;
     }
@@ -97,7 +97,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.album = album;
     }
 
-    // @Override
+    @Override
     public String getTrackNumber() {
         return trackNumber;
     }
@@ -106,7 +106,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.trackNumber = trackNumber;
     }
 
-    // @Override
+    @Override
     public String getDescription() {
         return description;
     }
@@ -115,7 +115,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.description = description;
     }
 
-    // @Override
+    @Override
     public String getRating() {
         return rating;
     }
@@ -124,7 +124,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.rating = rating;
     }
 
-    // @Override
+    @Override
     public String getDate() {
         return date;
     }
@@ -133,7 +133,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.date = date;
     }
 
-    // @Override
+    @Override
     public String getSetting() {
         return setting;
     }
@@ -142,7 +142,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.setting = setting;
     }
 
-    // @Override
+    @Override
     public String getUrl() {
         return url;
     }
@@ -151,7 +151,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.url = url;
     }
 
-    // @Override
+    @Override
     public String getLanguage() {
         return language;
     }
@@ -160,7 +160,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.language = language;
     }
 
-    // @Override
+    @Override
     public String getNowPlaying() {
         return nowPlaying;
     }
@@ -169,7 +169,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.nowPlaying = nowPlaying;
     }
 
-    // @Override
+    @Override
     public String getPublisher() {
         return publisher;
     }
@@ -178,7 +178,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.publisher = publisher;
     }
 
-    // @Override
+    @Override
     public String getEncodedby() {
         return encodedBy;
     }
@@ -187,7 +187,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.encodedBy = encodedBy;
     }
 
-    // @Override
+    @Override
     public String getArtworkUrl() {
         return artworkUrl;
     }
@@ -196,7 +196,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.artworkUrl = artworkUrl;
     }
 
-    // @Override
+    @Override
     public String getTrackId() {
         return trackId;
     }
@@ -205,7 +205,7 @@ class DefaultMediaMeta implements MediaMeta {
         this.trackId = trackId;
     }
 
-    // @Override
+    @Override
     public BufferedImage getArtwork() {
         if(artwork == null && artworkUrl != null) {
             try {

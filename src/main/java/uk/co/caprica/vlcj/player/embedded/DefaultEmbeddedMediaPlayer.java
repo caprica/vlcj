@@ -137,7 +137,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
         this.overlayWindowAdapter = new OverlayWindowAdapter();
     }
 
-    // @Override
+    @Override
     public void setVideoSurface(CanvasVideoSurface videoSurface) {
         Logger.debug("setVideoSurface(videoSurface={})", videoSurface);
         // Keep a hard reference to the video surface component
@@ -146,7 +146,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
         // media is played
     }
 
-    // @Override
+    @Override
     public void attachVideoSurface() {
         Logger.debug("attachVideoSurface()");
         if(videoSurface != null) {
@@ -166,7 +166,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
         }
     }
 
-    // @Override
+    @Override
     public void toggleFullScreen() {
         Logger.debug("toggleFullScreen()");
         if(fullScreenStrategy != null) {
@@ -174,7 +174,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
         }
     }
 
-    // @Override
+    @Override
     public void setFullScreen(boolean fullScreen) {
         Logger.debug("setFullScreen(fullScreen={})", fullScreen);
         if(fullScreenStrategy != null) {
@@ -187,7 +187,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
         }
     }
 
-    // @Override
+    @Override
     public boolean isFullScreen() {
         Logger.debug("isFullScreen()");
         if(fullScreenStrategy != null) {
@@ -198,7 +198,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
         }
     }
 
-    // @Override
+    @Override
     public BufferedImage getVideoSurfaceContents() {
         Logger.debug("getVideoSurfaceContents()");
         try {
@@ -211,13 +211,13 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
         }
     }
 
-    // @Override
+    @Override
     public Window getOverlay() {
         Logger.debug("getOverlay()");
         return overlay;
     }
 
-    // @Override
+    @Override
     public void setOverlay(Window overlay) {
         Logger.debug("setOverlay(overlay={})", overlay);
         if(videoSurface != null) {
@@ -233,7 +233,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
         }
     }
 
-    // @Override
+    @Override
     public void enableOverlay(boolean enable) {
         Logger.debug("enableOverlay(enable={})", enable);
         requestedOverlay = enable;
@@ -257,19 +257,19 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
         }
     }
 
-    // @Override
+    @Override
     public boolean overlayEnabled() {
         Logger.debug("overlayEnabled()");
         return overlay != null && overlay.isVisible();
     }
 
-    // @Override
+    @Override
     public void setEnableMouseInputHandling(boolean enable) {
         Logger.debug("setEnableMouseInputHandling(enable={})", enable);
         libvlc.libvlc_video_set_mouse_input(mediaPlayerInstance(), enable ? 1 : 0);
     }
 
-    // @Override
+    @Override
     public void setEnableKeyInputHandling(boolean enable) {
         Logger.debug("setEnableKeyInputHandling(enable={})", enable);
         libvlc.libvlc_video_set_key_input(mediaPlayerInstance(), enable ? 1 : 0);

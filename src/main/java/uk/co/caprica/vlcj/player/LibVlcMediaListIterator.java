@@ -82,12 +82,12 @@ class LibVlcMediaListIterator implements Iterable<libvlc_media_t>, Iterator<libv
         this.count = mediaList != null ? libvlc.libvlc_media_list_count(mediaList) : 0;
     }
 
-    // @Override
+    @Override
     public Iterator<libvlc_media_t> iterator() {
         return this;
     }
 
-    // @Override
+    @Override
     public boolean hasNext() {
         // First release the current item if there is one...
         if(current != null) {
@@ -97,14 +97,14 @@ class LibVlcMediaListIterator implements Iterable<libvlc_media_t>, Iterator<libv
         return mediaList != null && index + 1 < count;
     }
 
-    // @Override
+    @Override
     public libvlc_media_t next() {
         // Get the next item, this native handle must be released later
         current = libvlc.libvlc_media_list_item_at_index(mediaList, ++ index);
         return current;
     }
 
-    // @Override
+    @Override
     public void remove() {
         throw new UnsupportedOperationException();
     }
