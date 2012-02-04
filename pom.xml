@@ -13,9 +13,9 @@
 	
 	<repositories>
 		<repository> 
-		<id>caprica</id>
-		<name>Caprica Software</name>
-		<url>http://www.capricasoftware.co.uk/repo</url> 
+			<id>caprica</id>
+			<name>Caprica Software</name>
+			<url>http://www.capricasoftware.co.uk/repo</url> 
 		</repository>
 	</repositories> 
 -->
