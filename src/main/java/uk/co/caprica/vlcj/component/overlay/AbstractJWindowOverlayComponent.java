@@ -34,7 +34,6 @@ import java.lang.reflect.Method;
 
 import javax.swing.JWindow;
 
-import com.sun.awt.AWTUtilities;
 import com.sun.jna.platform.WindowUtils;
 
 /**
@@ -48,7 +47,8 @@ import com.sun.jna.platform.WindowUtils;
  * <p>
  * The default implementation of the {@link #onSetWindowTransparency()} template method attempts to
  * make a transparent overlay by either the preferred method of simply setting the background colour
- * to a transparent colour for Java7, or by using {@link AWTUtilities}, if it exists, for Java6.
+ * to a transparent colour for Java7, or by using <code>com.sun.awt.AWTUtilities</code>, if it 
+ * exists, for Java6.
  */
 public abstract class AbstractJWindowOverlayComponent extends JWindow {
 
