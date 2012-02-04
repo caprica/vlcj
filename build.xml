@@ -29,8 +29,8 @@
     <format property="build.timestamp" pattern="yyyy-MM-dd HH:mm:ss"/>
   </tstamp>
 	
-  <property name="source.version"   value="1.5"/>
-  <property name="target.version"   value="1.5"/>
+  <property name="source.version"   value="1.6"/>
+  <property name="target.version"   value="1.6"/>
   <property name="compile.debug"    value="yes"/> <!-- Core library jar file size will be reduced by about 40k if you set debug to "no" -->
   <property name="compile.optimize" value="yes"/>
 	

@@ -118,45 +118,45 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
         createInstance();
     }
 
-    // @Override
+    @Override
     public void addMediaListPlayerEventListener(MediaListPlayerEventListener listener) {
         Logger.debug("addMediaPlayerEventListener(listener={})", listener);
         eventListenerList.add(listener);
     }
 
-    // @Override
+    @Override
     public void removeMediaListPlayerEventListener(MediaListPlayerEventListener listener) {
         Logger.debug("removeMediaPlayerEventListener(listener={})", listener);
         eventListenerList.remove(listener);
     }
 
-    // @Override
+    @Override
     public void enableEvents(int eventMask) {
         Logger.debug("enableEvents(eventMask={})", eventMask);
         this.eventMask = eventMask;
     }
 
-    // @Override
+    @Override
     public void setMediaPlayer(MediaPlayer mediaPlayer) {
         Logger.debug("setMediaPlayer(mediaPlayer={})", mediaPlayer);
         this.mediaPlayer = mediaPlayer;
         libvlc.libvlc_media_list_player_set_media_player(mediaListPlayerInstance, mediaPlayer.mediaPlayerInstance());
     }
 
-    // @Override
+    @Override
     public void setMediaList(MediaList mediaList) {
         Logger.debug("setMediaList(mediaList={})", mediaList);
         libvlc.libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaList.mediaListInstance());
         this.mediaList = mediaList;
     }
 
-    // @Override
+    @Override
     public MediaList getMediaList() {
         Logger.debug("getMediaList()");
         return mediaList;
     }
 
-    // @Override
+    @Override
     public void play() {
         Logger.debug("play()");
         // If there is an associated media player then make sure the video surface
@@ -167,43 +167,43 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
         libvlc.libvlc_media_list_player_play(mediaListPlayerInstance);
     }
 
-    // @Override
+    @Override
     public void pause() {
         Logger.debug("pause()");
         libvlc.libvlc_media_list_player_pause(mediaListPlayerInstance);
     }
 
-    // @Override
+    @Override
     public void stop() {
         Logger.debug("stop()");
         libvlc.libvlc_media_list_player_stop(mediaListPlayerInstance);
     }
 
-    // @Override
+    @Override
     public boolean playItem(int itemIndex) {
         Logger.debug("playItem(itemIndex={})", itemIndex);
         return libvlc.libvlc_media_list_player_play_item_at_index(mediaListPlayerInstance, itemIndex) == 0;
     }
 
-    // @Override
+    @Override
     public void playNext() {
         Logger.debug("playNext()");
         libvlc.libvlc_media_list_player_next(mediaListPlayerInstance);
     }
 
-    // @Override
+    @Override
     public void playPrevious() {
         Logger.debug("playPrevious()");
         libvlc.libvlc_media_list_player_previous(mediaListPlayerInstance);
     }
 
-    // @Override
+    @Override
     public boolean isPlaying() {
         Logger.debug("isPlaying()");
         return libvlc.libvlc_media_list_player_is_playing(mediaListPlayerInstance) != 0;
     }
 
-    // @Override
+    @Override
     public void setMode(MediaListPlayerMode mode) {
         Logger.debug("setMode(mode={})", mode);
         libvlc_playback_mode_e playbackMode;
@@ -226,25 +226,25 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
         libvlc.libvlc_media_list_player_set_playback_mode(mediaListPlayerInstance, playbackMode.intValue());
     }
 
-    // @Override
+    @Override
     public String mrl(libvlc_media_t mediaInstance) {
         Logger.debug("mrl(mediaInstance={})", mediaInstance);
         return getNativeString(libvlc.libvlc_media_get_mrl(mediaInstance));
     }
 
-    // @Override
+    @Override
     public Object userData() {
         Logger.debug("userData()");
         return userData;
     }
 
-    // @Override
+    @Override
     public void userData(Object userData) {
         Logger.debug("userData(userData={})", userData);
         this.userData = userData;
     }
 
-    // @Override
+    @Override
     public final void release() {
         Logger.debug("release()");
         if(released.compareAndSet(false, true)) {

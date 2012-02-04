@@ -145,7 +145,7 @@ public class WindowsCanvas extends Canvas {
      */
     private final class WindowsKeyListener implements AWTEventListener {
 
-        // @Override
+        @Override
         public void eventDispatched(AWTEvent event) {
             Logger.trace("eventDispatched(event={})", event);
 
