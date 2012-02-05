@@ -54,7 +54,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * This is not quite as useful as the {@link EmbeddedMediaPlayerComponent} as audio players are
  * generally quite simple to create anyway.
  */
-public class AudioPlayerComponent extends MediaPlayerEventAdapter {
+public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
 
     /**
      * Default factory initialisation arguments.
@@ -85,7 +85,7 @@ public class AudioPlayerComponent extends MediaPlayerEventAdapter {
     /**
      * Construct a media player component.
      */
-    public AudioPlayerComponent() {
+    public AudioMediaPlayerComponent() {
         mediaPlayerFactory = onGetMediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
     }
