@@ -23,8 +23,6 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.logger.Logger;
 
-import com.sun.jna.Pointer;
-
 /**
  * Base implementation for media players sharing common behaviours.
  */
@@ -51,28 +49,10 @@ public abstract class AbstractMediaPlayer {
         this.instance = instance;
     }
 
-    /**
-     * Get a String from a native string pointer, freeing the native string pointer when done.
-     * <p>
-     * If the native string pointer is not freed then a native memory leak will occur.
-     * 
-     * @param pointer pointer to native string, may be <code>null</code>
-     * @return string, or <code>null</code> if the pointer was <code>null</code>
-     */
-    protected final String getNativeString(Pointer pointer) {
-        if(pointer != null) {
-            String result = pointer.getString(0, false);
-            libvlc.libvlc_free(pointer);
-            return result;
-        }
-        else {
-            return null;
-        }
-    }
-
     @Override
     protected void finalize() throws Throwable {
         Logger.debug("finalize()");
         Logger.debug("Media player has been garbage collected");
+        // FIXME should this invoke release()?
     }
 }
