@@ -91,7 +91,7 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaPlayerCompone
     protected void onBeforeReleaseComponent() {
     }
 
-    // === MediaPlayerEventListener =============================================
+    // === MediaListPlayerEventListener =========================================
 
     @Override
     public void played(MediaListPlayer mediaListPlayer) {
