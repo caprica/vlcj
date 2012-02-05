@@ -37,6 +37,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.AbstractMediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.NativeString;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEvent;
 import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventFactory;
@@ -229,7 +230,7 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     @Override
     public String mrl(libvlc_media_t mediaInstance) {
         Logger.debug("mrl(mediaInstance={})", mediaInstance);
-        return getNativeString(libvlc.libvlc_media_get_mrl(mediaInstance));
+        return NativeString.getNativeString(libvlc, libvlc.libvlc_media_get_mrl(mediaInstance));
     }
 
     @Override
