@@ -33,7 +33,6 @@ import javax.swing.JPanel;
 
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.MediaMeta;
-import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -42,8 +41,9 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <p>
  * Specify a single local media file as the first (and only) command-line argument.
  * <p>
- * An interesting feature of vlc is that if art-work associated with the media can be obtained, the
- * ARTWORKURL meta data field will point to a valid local file for that art-work.
+ * An interesting feature of vlc is that if artwork associated with the media can be obtained, the
+ * <code>ARTWORKURL</code> meta data field will point to a valid <em>local</em> file for that 
+ * artwork.
  * <p>
  * If the artwork is available, this test opens a frame to display it.
  */
@@ -55,23 +55,21 @@ public class MetaTest extends VlcjTest {
             System.exit(1);
         }
 
-        Logger.setLevel(Logger.Level.INFO);
-
         // Create a media player
         MediaPlayerFactory factory = new MediaPlayerFactory();
-        MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
 
         // Get the meta data and dump it out
-        MediaMeta mediaMeta = mediaPlayer.getMediaMeta(args[0], true);
-        System.out.println(mediaMeta);
-
-        // Orderly clean-up
-        mediaPlayer.release();
-        factory.release();
+        MediaMeta mediaMeta = factory.getMediaMeta(args[0], true);
+        Logger.debug("mediaMeta={}", mediaMeta);
 
         // Load the artwork into a buffered image (if available)
         final BufferedImage artwork = mediaMeta.getArtwork();
         System.out.println(artwork);
+
+        // Orderly clean-up
+        mediaMeta.release();
+        factory.release();
+        
         if(artwork != null) {
             JPanel cp = new JPanel() {
                 private static final long serialVersionUID = 1L;

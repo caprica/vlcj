@@ -27,7 +27,6 @@ import java.util.List;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -59,9 +58,8 @@ public class SearchMetaTest extends VlcjTest {
         }
 
         Logger.setLevel(Logger.Level.INFO);
-
+        
         MediaPlayerFactory factory = new MediaPlayerFactory();
-        HeadlessMediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
 
         List<File> files = new ArrayList<File>(400);
         for(String arg : args) {
@@ -70,11 +68,11 @@ public class SearchMetaTest extends VlcjTest {
 
         for(File file : files) {
             String mrl = file.getAbsolutePath();
-            MediaMeta meta = mediaPlayer.getMediaMeta(mrl, true);
-            System.out.printf("%s -> %s\n", mrl, meta);
+            MediaMeta meta = factory.getMediaMeta(mrl, true);
+            Logger.info("{} -> {}", mrl, meta);
+            meta.release();
         }
 
-        mediaPlayer.release();
         factory.release();
     }
 
