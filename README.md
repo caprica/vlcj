@@ -25,6 +25,11 @@ News
 
 28/01/2012 Moved to github.
 
+Documentation
+-------------
+
+Documentation is being made available at [Caprica Software](http://www.capricasoftware.co.uk/wiki "Caprica Software WIKI"). 
+
 Support
 -------
 
