@@ -72,7 +72,7 @@ import com.sun.jna.ptr.PointerByReference;
  * <p>
  * Some functions are only available <em>after</em> version 1.1.0 of libvlc.
  * <p>
- * Some functions are only available <em>after</em> version 1.2.0 of libvlc.
+ * Some functions are only available <em>after</em> version 2.0.0 of libvlc.
  * <p>
  * This system property may be useful for debugging:
  * 
@@ -665,7 +665,7 @@ public interface LibVlc extends Library {
      * @param mp the media player
      * @param setup callback to select the video format (cannot be NULL)
      * @param cleanup callback to release any allocated resources (or NULL)
-     * @since LibVLC 1.2.0 or later
+     * @since LibVLC 2.0.0 or later
      */
     void libvlc_video_set_format_callbacks(libvlc_media_player_t mp, libvlc_video_format_cb setup, libvlc_video_cleanup_cb cleanup);
 
@@ -765,7 +765,7 @@ public interface LibVlc extends Library {
      * @param flush callback to flush audio buffers (or NULL to ignore)
      * @param drain callback to drain audio buffers (or NULL to ignore)
      * @param opaque private pointer for the audio callbacks (as first parameter)
-     * @since LibVLC 1.2.0 or later
+     * @since LibVLC 2.0.0 or later
      */
     void libvlc_audio_set_callbacks(libvlc_media_player_t mp, libvlc_audio_play_cb play, libvlc_audio_pause_cb pause, libvlc_audio_resume_cb resume, libvlc_audio_flush_cb flush, libvlc_audio_drain_cb drain, Pointer opaque);
 
@@ -775,7 +775,7 @@ public interface LibVlc extends Library {
      * 
      * @param mp the media player
      * @param set_volume callback to apply audio volume, or NULL to apply volume in software
-     * @since LibVLC 1.2.0 or later
+     * @since LibVLC 2.0.0 or later
      */
     void libvlc_audio_set_volume_callback(libvlc_media_player_t mp, libvlc_audio_set_volume_cb set_volume);
 
@@ -785,7 +785,7 @@ public interface LibVlc extends Library {
      * @param mp the media player
      * @param setup callback to select the audio format (cannot be NULL)
      * @param cleanup callback to release any allocated resources (or NULL)
-     * @since LibVLC 1.2.0 or later
+     * @since LibVLC 2.0.0 or later
      */
     void libvlc_audio_set_format_callbacks(libvlc_media_player_t mp, libvlc_audio_setup_cb setup, libvlc_audio_cleanup_cb cleanup);
 
@@ -797,7 +797,7 @@ public interface LibVlc extends Library {
      * @param format a four-characters string identifying the sample format (e.g. "S16N" or "FL32")
      * @param rate sample rate (expressed in Hz)
      * @param channels channels count
-     * @since LibVLC 1.2.0 or later
+     * @since LibVLC 2.0.0 or later
      */
     void libvlc_audio_set_format(libvlc_media_player_t mp, String format, int rate, int channels);
 
@@ -998,7 +998,7 @@ public interface LibVlc extends Library {
      * 
      * @param p_mi the Media Player
      * @param navigate the Navigation mode
-     * @since libVLC 1.2.0
+     * @since libVLC 2.0.0
      */
     void libvlc_media_player_navigate(libvlc_media_player_t p_mi, int navigate);
 
@@ -1210,7 +1210,7 @@ public interface LibVlc extends Library {
      * 
      * @param p_mi media player
      * @return time (in microseconds) the display of subtitles is being delayed
-     * @since LibVLC 1.2.0 or later
+     * @since LibVLC 2.0.0 or later
      */
     long libvlc_video_get_spu_delay(libvlc_media_player_t p_mi);
 
@@ -1224,7 +1224,7 @@ public interface LibVlc extends Library {
      * @param p_mi media player
      * @param i_delay time (in microseconds) the display of subtitles should be delayed
      * @return 0 on success, -1 on error
-     * @since LibVLC 1.2.0 or later
+     * @since LibVLC 2.0.0 or later
      */
     int libvlc_video_set_spu_delay(libvlc_media_player_t p_mi, long i_delay);
 
