@@ -27,7 +27,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 /**
  * Test demonstrating the {@link AudioMediaPlayerComponent}.
  */
-public class AudioPlayerComponentTest extends VlcjTest {
+public class AudioMediaPlayerComponentTest extends VlcjTest {
 
     /**
      * Media player component.
@@ -52,7 +52,7 @@ public class AudioPlayerComponentTest extends VlcjTest {
         // a potentially fatal JVM crash - this is just an artefact of this test,
         // ordinarily an application would be keeping a reference to the component
         // anyway
-        AudioPlayerComponentTest test = new AudioPlayerComponentTest();
+        AudioMediaPlayerComponentTest test = new AudioMediaPlayerComponentTest();
         test.start(mrl);
 
         // Since there is no UI, we must join here to prevent the application from
@@ -67,7 +67,7 @@ public class AudioPlayerComponentTest extends VlcjTest {
     /**
      * Create a new test.
      */
-    private AudioPlayerComponentTest() {
+    private AudioMediaPlayerComponentTest() {
         audioMediaPlayerComponent = new AudioMediaPlayerComponent();
         audioMediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
