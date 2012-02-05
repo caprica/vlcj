@@ -49,7 +49,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_audio_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_video_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_meta_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
@@ -262,51 +261,10 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public MediaMeta getMediaMeta(libvlc_media_t media) {
         Logger.debug("getMediaMeta(media={})", media);
         if(media != null) {
-            // Some media types must be parsed before meta data is available, but
-            // equally some media types when parsed would cause a hang - therefore it
-            // is the responsibility of the client application to parse or not parse
-            // before getting media meta data
-            DefaultMediaMeta mediaMeta = new DefaultMediaMeta();
-            mediaMeta.setTitle(getMeta(libvlc_meta_t.libvlc_meta_Title, media));
-            mediaMeta.setArtist(getMeta(libvlc_meta_t.libvlc_meta_Artist, media));
-            mediaMeta.setGenre(getMeta(libvlc_meta_t.libvlc_meta_Genre, media));
-            mediaMeta.setCopyright(getMeta(libvlc_meta_t.libvlc_meta_Copyright, media));
-            mediaMeta.setAlbum(getMeta(libvlc_meta_t.libvlc_meta_Album, media));
-            mediaMeta.setTrackNumber(getMeta(libvlc_meta_t.libvlc_meta_TrackNumber, media));
-            mediaMeta.setDescription(getMeta(libvlc_meta_t.libvlc_meta_Description, media));
-            mediaMeta.setRating(getMeta(libvlc_meta_t.libvlc_meta_Rating, media));
-            mediaMeta.setDate(getMeta(libvlc_meta_t.libvlc_meta_Date, media));
-            mediaMeta.setSetting(getMeta(libvlc_meta_t.libvlc_meta_Setting, media));
-            mediaMeta.setUrl(getMeta(libvlc_meta_t.libvlc_meta_URL, media));
-            mediaMeta.setLanguage(getMeta(libvlc_meta_t.libvlc_meta_Language, media));
-            mediaMeta.setNowPlaying(getMeta(libvlc_meta_t.libvlc_meta_NowPlaying, media));
-            mediaMeta.setPublisher(getMeta(libvlc_meta_t.libvlc_meta_Publisher, media));
-            mediaMeta.setEncodedBy(getMeta(libvlc_meta_t.libvlc_meta_EncodedBy, media));
-            mediaMeta.setArtworkUrl(getMeta(libvlc_meta_t.libvlc_meta_ArtworkURL, media)); // FIXME this triggers the HTTP download request, should really make that optional
-            mediaMeta.setTrackId(getMeta(libvlc_meta_t.libvlc_meta_TrackID, media));
-            return mediaMeta;
+            return new DefaultMediaMeta(libvlc, media);
         }
         else {
             throw new IllegalStateException("No media");
-        }
-    }
-
-    @Override
-    public MediaMeta getMediaMeta(String mediaPath, boolean parse) {
-        Logger.debug("getMediaMeta(mediaPath={},parse={})", mediaPath, parse);
-        libvlc_media_t media = libvlc.libvlc_media_new_path(instance, mediaPath);
-        if(media != null) {
-            if(parse) {
-                Logger.debug("Parsing media...");
-                libvlc.libvlc_media_parse(media);
-                Logger.debug("Media parsed.");
-            }
-            MediaMeta mediaMeta = getMediaMeta(media);
-            libvlc.libvlc_media_release(media);
-            return mediaMeta;
-        }
-        else {
-            return null;
         }
     }
 
@@ -324,7 +282,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             }
         });
     }
-
+    
     @Override
     public void addMediaOptions(String... mediaOptions) {
         Logger.debug("addMediaOptions(mediaOptions={})", Arrays.toString(mediaOptions));
@@ -383,7 +341,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             public List<String> subItems(int count, libvlc_media_list_t subItems) {
                 List<String> result = new ArrayList<String>(count);
                 for(libvlc_media_t subItem : new LibVlcMediaListIterator(libvlc, subItems)) {
-                    result.add(getNativeString(libvlc.libvlc_media_get_mrl(subItem)));
+                    result.add(NativeString.getNativeString(libvlc, libvlc.libvlc_media_get_mrl(subItem)));
                 }
                 return result;
             }
@@ -585,7 +543,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public String getAspectRatio() {
         Logger.debug("getAspectRatio()");
-        return getNativeString(libvlc.libvlc_video_get_aspect_ratio(mediaPlayerInstance));
+        return NativeString.getNativeString(libvlc, libvlc.libvlc_video_get_aspect_ratio(mediaPlayerInstance));
     }
 
     @Override
@@ -597,7 +555,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public String getCropGeometry() {
         Logger.debug("getCropGeometry()");
-        return getNativeString(libvlc.libvlc_video_get_crop_geometry(mediaPlayerInstance));
+        return NativeString.getNativeString(libvlc, libvlc.libvlc_video_get_crop_geometry(mediaPlayerInstance));
     }
 
     @Override
@@ -1477,7 +1435,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public String mrl() {
         Logger.debug("mrl()");
         if(mediaInstance != null) {
-            return getNativeString(libvlc.libvlc_media_get_mrl(mediaInstance));
+            return NativeString.getNativeString(libvlc, libvlc.libvlc_media_get_mrl(mediaInstance));
         }
         else {
             throw new IllegalStateException("No media");
@@ -1487,7 +1445,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public String mrl(libvlc_media_t mediaInstance) {
         Logger.debug("mrl(mediaInstance={})", mediaInstance);
-        return getNativeString(libvlc.libvlc_media_get_mrl(mediaInstance));
+        return NativeString.getNativeString(libvlc, libvlc.libvlc_media_get_mrl(mediaInstance));
     }
 
     @Override
@@ -1712,23 +1670,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
 
     /**
-     * Get a local meta data value for a media instance.
-     * 
-     * @param metaType type of meta data
-     * @param media media instance
-     * @return meta data value
-     */
-    private String getMeta(libvlc_meta_t metaType, libvlc_media_t media) {
-        Logger.trace("getMeta(metaType={},media={})", metaType, media);
-        if(media != null) {
-            return getNativeString(libvlc.libvlc_media_get_meta(media, metaType.intValue()));
-        }
-        else {
-            throw new IllegalStateException("No media");
-        }
-    }
-
-    /**
      * Handle sub-items.
      * <p>
      * This method contains the common code that is required when iterating over the media sub-items
@@ -1866,7 +1807,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                 int subItemCount = subItemCount();
                 Logger.debug("subitemCount={}", subItemCount);
                 if(subItemCount == 0) {
-                    String mrl = getNativeString(libvlc.libvlc_media_get_mrl(mediaInstance));
+                    String mrl = NativeString.getNativeString(libvlc, libvlc.libvlc_media_get_mrl(mediaInstance));
                     Logger.debug("auto repeat mrl={}", mrl);
                     // It is not sufficient to simply call play(), the MRL must explicitly
                     // be played again - this is the reason why the repeat play might not

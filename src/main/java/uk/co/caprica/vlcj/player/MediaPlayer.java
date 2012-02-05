@@ -276,17 +276,6 @@ public interface MediaPlayer {
     MediaMeta getMediaMeta(libvlc_media_t mediaInstance);
 
     /**
-     * Get local meta data for a media path.
-     * <p>
-     * See {@link #getMediaMeta()}, the same notes with regard to parsing hold here.
-     * 
-     * @param mediaPath path to the media
-     * @param parse flag whether or not to parse the media before getting the meta data
-     * @return meta data, or <code>null</code> if not available (e.g. error or invalid path)
-     */
-    MediaMeta getMediaMeta(String mediaPath, boolean parse);
-
-    /**
      * Get local meta data for all of the current media sub-items (if there are any).
      * <p>
      * See {@link #getMediaMeta()}, the same notes with regard to parsing hold here.

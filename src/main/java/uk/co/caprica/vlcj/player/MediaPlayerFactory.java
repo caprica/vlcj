@@ -29,6 +29,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
@@ -550,6 +551,35 @@ public class MediaPlayerFactory {
     public MediaList newMediaList() {
         Logger.debug("newMediaList()");
         return new MediaList(libvlc, instance);
+    }
+
+    // === Meta Data ============================================================
+
+    /**
+     * Get local media meta data.
+     * 
+     * @param mediaPath path to the local media
+     * @param parse <code>true</code> if the media should be parsed immediately</code>; otherwise <code>false</code>
+     * @return media meta data, or <code>null</code> if the media could not be located
+     */
+    public MediaMeta getMediaMeta(String mediaPath, boolean parse) {
+        Logger.debug("getMediaMeta(mediaPath={},parse={})", mediaPath, parse);
+        libvlc_media_t media = libvlc.libvlc_media_new_path(instance, mediaPath);
+        Logger.debug("media={}", media);
+        if(media != null) {
+            if(parse) {
+                Logger.debug("Parsing media...");
+                libvlc.libvlc_media_parse(media);
+                Logger.debug("Media parsed.");
+            }
+            MediaMeta mediaMeta = new DefaultMediaMeta(libvlc, media);
+            // Release this native reference, the media meta instance retains its own native reference
+            libvlc.libvlc_media_release(media);
+            return mediaMeta;
+        }
+        else {
+            return null;
+        }
     }
 
     // === Clock ================================================================

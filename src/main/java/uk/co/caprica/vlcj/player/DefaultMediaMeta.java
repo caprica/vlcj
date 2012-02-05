@@ -21,224 +21,325 @@ package uk.co.caprica.vlcj.player;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.imageio.ImageIO;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_meta_t;
+import uk.co.caprica.vlcj.logger.Logger;
+
 /**
  * Representation of all available media meta data.
+ * <p>
+ * This implementation retains a reference to the supplied native media instance, and releases
+ * this native reference in {@link #release()}.
+ * <p>
+ * Invoking {@link #getArtworkUrl()}, {@link #getArtwork()} or {@link #toString()} may cause an
+ * HTTP request to be made to download artwork.
  */
 class DefaultMediaMeta implements MediaMeta {
 
-    private String title;
-    private String artist;
-    private String genre;
-    private String copyright;
-    private String album;
-    private String trackNumber;
-    private String description;
-    private String rating;
-    private String date;
-    private String setting;
-    private String url;
-    private String language;
-    private String nowPlaying;
-    private String publisher;
-    private String encodedBy;
-    private String artworkUrl;
-    private String trackId;
+    /**
+     * Set to true when the player has been released.
+     */
+    private final AtomicBoolean released = new AtomicBoolean();
 
+    /**
+     * Native library interface.
+     */
+    private final LibVlc libvlc;
+
+    /**
+     * Associated media instance.
+     * <p>
+     * May be <code>null</code>.
+     */
+    private final libvlc_media_t media;
+
+    /**
+     * Artwork.
+     * <p>
+     * Lazily loaded.
+     */
     private BufferedImage artwork;
   
-    DefaultMediaMeta() {
+    /**
+     * Create media meta.
+     * 
+     * @param libvlc native library instance
+     * @param media media instance
+     */
+    DefaultMediaMeta(LibVlc libvlc, libvlc_media_t media) {
+        this.libvlc = libvlc;
+        this.media = media;
+        // Keep a native reference
+        libvlc.libvlc_media_retain(media);
+    }
+    
+    @Override
+    public final void parse() {
+        Logger.debug("parse()");
+        libvlc.libvlc_media_parse(media);
     }
 
     @Override
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public final String getTitle() {
+        return getMeta(libvlc_meta_t.libvlc_meta_Title);
     }
 
     @Override
-    public String getArtist() {
-        return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
+    public final void setTitle(String title) {
+        setMeta(libvlc_meta_t.libvlc_meta_Title, title);
     }
 
     @Override
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public final String getArtist() {
+        return getMeta(libvlc_meta_t.libvlc_meta_Artist);
     }
 
     @Override
-    public String getCopyright() {
-        return copyright;
-    }
-
-    public void setCopyright(String copyright) {
-        this.copyright = copyright;
+    public final void setArtist(String artist) {
+        setMeta(libvlc_meta_t.libvlc_meta_Artist, artist);
     }
 
     @Override
-    public String getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
+    public final String getGenre() {
+        return getMeta(libvlc_meta_t.libvlc_meta_Genre);
     }
 
     @Override
-    public String getTrackNumber() {
-        return trackNumber;
-    }
-
-    public void setTrackNumber(String trackNumber) {
-        this.trackNumber = trackNumber;
+    public final void setGenre(String genre) {
+        setMeta(libvlc_meta_t.libvlc_meta_Genre, genre);
     }
 
     @Override
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public final String getCopyright() {
+        return getMeta(libvlc_meta_t.libvlc_meta_Copyright);
     }
 
     @Override
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
+    public final void setCopyright(String copyright) {
+        setMeta(libvlc_meta_t.libvlc_meta_Copyright, copyright);
     }
 
     @Override
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    public final String getAlbum() {
+        return getMeta(libvlc_meta_t.libvlc_meta_Album);
     }
 
     @Override
-    public String getSetting() {
-        return setting;
-    }
-
-    public void setSetting(String setting) {
-        this.setting = setting;
+    public final void setAlbum(String album) {
+        setMeta(libvlc_meta_t.libvlc_meta_Album, album);
     }
 
     @Override
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public final String getTrackNumber() {
+        return getMeta(libvlc_meta_t.libvlc_meta_TrackNumber);
     }
 
     @Override
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
+    public final void setTrackNumber(String trackNumber) {
+        setMeta(libvlc_meta_t.libvlc_meta_TrackNumber, trackNumber);
     }
 
     @Override
-    public String getNowPlaying() {
-        return nowPlaying;
-    }
-
-    public void setNowPlaying(String nowPlaying) {
-        this.nowPlaying = nowPlaying;
+    public final String getDescription() {
+        return getMeta(libvlc_meta_t.libvlc_meta_Description);
     }
 
     @Override
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
+    public final void setDescription(String description) {
+        setMeta(libvlc_meta_t.libvlc_meta_Description, description);
     }
 
     @Override
-    public String getEncodedby() {
-        return encodedBy;
-    }
-
-    public void setEncodedBy(String encodedBy) {
-        this.encodedBy = encodedBy;
+    public final String getRating() {
+        return getMeta(libvlc_meta_t.libvlc_meta_Rating);
     }
 
     @Override
-    public String getArtworkUrl() {
-        return artworkUrl;
-    }
-
-    public void setArtworkUrl(String artworkUrl) {
-        this.artworkUrl = artworkUrl;
+    public final void setRating(String rating) {
+        setMeta(libvlc_meta_t.libvlc_meta_Rating, rating);
     }
 
     @Override
-    public String getTrackId() {
-        return trackId;
-    }
-
-    public void setTrackId(String trackId) {
-        this.trackId = trackId;
+    public final String getDate() {
+        return getMeta(libvlc_meta_t.libvlc_meta_Date);
     }
 
     @Override
-    public BufferedImage getArtwork() {
-        if(artwork == null && artworkUrl != null) {
-            try {
-                artwork = ImageIO.read(new URL(artworkUrl));
-            }
-            catch(Exception e) {
-                throw new RuntimeException("Failed to load artwork", e);
+    public final void setDate(String date) {
+        setMeta(libvlc_meta_t.libvlc_meta_Date, date);
+    }
+
+    @Override
+    public final String getSetting() {
+        return getMeta(libvlc_meta_t.libvlc_meta_Setting);
+    }
+
+    @Override
+    public final void setSetting(String setting) {
+        setMeta(libvlc_meta_t.libvlc_meta_Setting, setting);
+    }
+
+    @Override
+    public final String getUrl() {
+        return getMeta(libvlc_meta_t.libvlc_meta_URL);
+    }
+
+    @Override
+    public final void setUrl(String url) {
+        setMeta(libvlc_meta_t.libvlc_meta_URL, url);
+    }
+
+    @Override
+    public final String getLanguage() {
+        return getMeta(libvlc_meta_t.libvlc_meta_Language);
+    }
+
+    @Override
+    public final void setLanguage(String language) {
+        setMeta(libvlc_meta_t.libvlc_meta_Language, language);
+    }
+
+    @Override
+    public final String getNowPlaying() {
+        return getMeta(libvlc_meta_t.libvlc_meta_NowPlaying);
+    }
+
+    @Override
+    public final void setNowPlaying(String nowPlaying) {
+        setMeta(libvlc_meta_t.libvlc_meta_NowPlaying, nowPlaying);
+    }
+
+    @Override
+    public final String getPublisher() {
+        return getMeta(libvlc_meta_t.libvlc_meta_Publisher);
+    }
+
+    @Override
+    public final void setPublisher(String publisher) {
+        setMeta(libvlc_meta_t.libvlc_meta_Publisher, publisher);
+    }
+
+    @Override
+    public final String getEncodedBy() {
+        return getMeta(libvlc_meta_t.libvlc_meta_EncodedBy);
+    }
+
+    @Override
+    public final void setEncodedBy(String encodedBy) {
+        setMeta(libvlc_meta_t.libvlc_meta_EncodedBy, encodedBy);
+    }
+
+    @Override
+    public final String getArtworkUrl() {
+        return getMeta(libvlc_meta_t.libvlc_meta_ArtworkURL);
+    }
+
+    @Override
+    public final void setArtworkUrl(String artworkUrl) {
+        setMeta(libvlc_meta_t.libvlc_meta_ArtworkURL, artworkUrl);
+    }
+
+    @Override
+    public final String getTrackId() {
+        return getMeta(libvlc_meta_t.libvlc_meta_TrackID);
+    }
+
+    @Override
+    public final void setTrackId(String trackId) {
+        setMeta(libvlc_meta_t.libvlc_meta_TrackID, trackId);
+    }
+
+    @Override
+    public final BufferedImage getArtwork() {
+        Logger.debug("getArtwork()");
+        if(artwork == null) {
+            String artworkUrl = getArtworkUrl();
+            if(artworkUrl != null && artworkUrl.length() > 0) {
+                try {
+                    URL url = new URL(artworkUrl);
+                    Logger.debug("url={}", url);
+                    artwork = ImageIO.read(url);
+                }
+                catch(Exception e) {
+                    throw new RuntimeException("Failed to load artwork", e);
+                }
             }
         }
         return artwork;
     }
 
     @Override
+    public final void save() {
+        Logger.debug("save()");
+        libvlc.libvlc_media_save_meta(media);
+    }
+
+    @Override
+    public final void release() {
+        Logger.debug("release()");
+        if(released.compareAndSet(false, true)) {
+            libvlc.libvlc_media_release(media);
+        }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        Logger.debug("finalize()");
+        Logger.debug("Meta data has been garbage collected");
+        // FIXME should this invoke release()?
+    }
+
+    /**
+     * Get a local meta data value for a media instance.
+     * 
+     * @param metaType type of meta data
+     * @return meta data value
+     */
+    private String getMeta(libvlc_meta_t metaType) {
+        Logger.trace("getMeta(metaType={},media={})", metaType, media);
+        return NativeString.getNativeString(libvlc, libvlc.libvlc_media_get_meta(media, metaType.intValue()));
+    }
+
+    /**
+     * Set a local meta data value for a media instance.
+     * <p>
+     * Setting meta does not affect the underlying media file until {@link #save()} is called.
+     * 
+     * @param metaType type of meta data
+     * @param media media instance
+     * @param value meta data value
+     */
+    private void setMeta(libvlc_meta_t metaType, String value) {
+        Logger.trace("getMeta(metaType={},media={},value={})", metaType, media, value);
+        libvlc.libvlc_media_set_meta(media, metaType.intValue(), value);
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(200);
         sb.append(getClass().getSimpleName()).append('[');
-        sb.append("title=").append(title).append(',');
-        sb.append("artist=").append(artist).append(',');
-        sb.append("genre=").append(genre).append(',');
-        sb.append("copyright=").append(copyright).append(',');
-        sb.append("album=").append(album).append(',');
-        sb.append("trackNumber=").append(trackNumber).append(',');
-        sb.append("description=").append(description).append(',');
-        sb.append("rating=").append(rating).append(',');
-        sb.append("date=").append(date).append(',');
-        sb.append("setting=").append(setting).append(',');
-        sb.append("url=").append(url).append(',');
-        sb.append("language=").append(language).append(',');
-        sb.append("nowPlaying=").append(nowPlaying).append(',');
-        sb.append("publisher=").append(publisher).append(',');
-        sb.append("encodedBy=").append(encodedBy).append(',');
-        sb.append("artworkUrl=").append(artworkUrl).append(',');
-        sb.append("trackId=").append(trackId).append(']');
+        sb.append("title=").append(getTitle()).append(',');
+        sb.append("artist=").append(getArtist()).append(',');
+        sb.append("genre=").append(getGenre()).append(',');
+        sb.append("copyright=").append(getCopyright()).append(',');
+        sb.append("album=").append(getAlbum()).append(',');
+        sb.append("trackNumber=").append(getTrackNumber()).append(',');
+        sb.append("description=").append(getDescription()).append(',');
+        sb.append("rating=").append(getRating()).append(',');
+        sb.append("date=").append(getDate()).append(',');
+        sb.append("setting=").append(getSetting()).append(',');
+        sb.append("url=").append(getUrl()).append(',');
+        sb.append("language=").append(getLanguage()).append(',');
+        sb.append("nowPlaying=").append(getNowPlaying()).append(',');
+        sb.append("publisher=").append(getPublisher()).append(',');
+        sb.append("encodedBy=").append(getEncodedBy()).append(',');
+        sb.append("artworkUrl=").append(getArtworkUrl()).append(',');
+        sb.append("trackId=").append(getTrackId()).append(']');
         return sb.toString();
     }
 }
