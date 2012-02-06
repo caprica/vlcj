@@ -53,6 +53,9 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * 
  * This is not quite as useful as the {@link EmbeddedMediaPlayerComponent} as audio players are
  * generally quite simple to create anyway.
+ * <p>
+ * An audio player may still have a user interface, but it will not have an associated video
+ * surface.
  */
 public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
 
