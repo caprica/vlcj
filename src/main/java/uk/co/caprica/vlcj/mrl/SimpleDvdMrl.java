@@ -35,8 +35,14 @@ package uk.co.caprica.vlcj.mrl;
  */
 public class SimpleDvdMrl extends BaseDvdMrl {
 
+    /**
+     * 
+     */
     private static final String DVD_TYPE = "dvdsimple";
 
+    /**
+     * 
+     */
     public SimpleDvdMrl() {
         type(DVD_TYPE);
     }

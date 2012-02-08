@@ -32,10 +32,16 @@ package uk.co.caprica.vlcj.mrl;
  * </pre>
  * This will generate <code>"rtsp://www.myhost.com:8888/example"</code>.
  */
-public class RtspMrl extends WebMrl {
+public class RtspMrl extends UrlMrl {
 
+    /**
+     * 
+     */
     private static final String RTSP_TYPE = "rtsp";
 
+    /**
+     * 
+     */
     public RtspMrl() {
         type(RTSP_TYPE);
     }

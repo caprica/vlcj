@@ -35,25 +35,50 @@ package uk.co.caprica.vlcj.mrl;
  */
 public class CdMrl implements Mrl {
 
+    /**
+     * 
+     */
     private static final String CD_TYPE = "cdda";
 
+    /**
+     * 
+     */
     private String device;
 
+    /**
+     * 
+     */
     private int track = -1;
 
+    /**
+     * 
+     */
     private String value;
 
-    public CdMrl device(String device) {
+    /**
+     * 
+     * 
+     * @param device
+     * @return
+     */
+    public final CdMrl device(String device) {
         this.device = device;
         return this;
     }
 
-    public CdMrl track(int track) {
+    /**
+     * 
+     * 
+     * @param track
+     * @return
+     */
+    public final CdMrl track(int track) {
         this.track = track;
         return this;
     }
 
-    public String value() {
+    @Override
+    public final String value() {
         if(value == null) {
             value = constructValue();
         }
@@ -75,9 +100,5 @@ public class CdMrl implements Mrl {
             sb.append(track);
         }
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new CdMrl().device("/dev/cdrom").track(3).value());
     }
 }

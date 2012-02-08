@@ -34,33 +34,66 @@ package uk.co.caprica.vlcj.mrl;
  */
 public class SsmMrl implements Mrl {
 
+    /**
+     * 
+     */
     private static final String RTP_TYPE = "rtp";
 
+    /**
+     * 
+     */
     private String serverAddress;
 
+    /**
+     * 
+     */
     private String multicastAddress;
 
+    /**
+     * 
+     */
     private int port;
 
+    /**
+     * 
+     */
     private String value;
 
-    public SsmMrl serverAddress(String serverAddress) {
+    /**
+     * 
+     * 
+     * @param serverAddress
+     * @return
+     */
+    public final SsmMrl serverAddress(String serverAddress) {
         this.serverAddress = serverAddress;
         return this;
     }
 
-    public SsmMrl multicastAddress(String multicastAddress) {
+    /**
+     * 
+     * 
+     * @param multicastAddress
+     * @return
+     */
+    public final SsmMrl multicastAddress(String multicastAddress) {
         this.multicastAddress = multicastAddress;
         return this;
     }
 
-    public SsmMrl port(int port) {
+    /**
+     * 
+     * 
+     * @param port
+     * @return
+     */
+    public final SsmMrl port(int port) {
         this.port = port;
         return this;
     }
 
     @Override
-    public String value() {
+    public final String value() {
         if(value == null) {
             value = constructValue();
         }

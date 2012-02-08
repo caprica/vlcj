@@ -35,47 +35,95 @@ package uk.co.caprica.vlcj.mrl;
  * 
  * This will generate <code>"dvdsimple:///media/dvd/@dev/cdrom#0:3:1"</code>.
  */
-public class BaseDvdMrl implements Mrl {
+public abstract class BaseDvdMrl implements Mrl {
 
+    /**
+     * 
+     */
     private String type;
 
+    /**
+     * 
+     */
     private String device;
 
+    /**
+     * 
+     */
     private int title = -1;
 
+    /**
+     * 
+     */
     private int chapter = -1;
 
+    /**
+     * 
+     */
     private int angle = -1;
 
+    /**
+     * 
+     */
     private String value;
 
-    public BaseDvdMrl type(String type) {
+    /**
+     * 
+     * 
+     * @param type
+     * @return
+     */
+    public final BaseDvdMrl type(String type) {
         this.type = type;
         return this;
     }
 
-    public BaseDvdMrl device(String device) {
+    /**
+     * 
+     * 
+     * @param device
+     * @return
+     */
+    public final BaseDvdMrl device(String device) {
         this.device = device;
         return this;
     }
 
-    public BaseDvdMrl title(int title) {
+    /**
+     * 
+     * 
+     * @param title
+     * @return
+     */
+    public final BaseDvdMrl title(int title) {
         this.title = title;
         return this;
     }
 
-    public BaseDvdMrl chapter(int chapter) {
+    /**
+     * 
+     * 
+     * @param chapter
+     * @return
+     */
+    public final BaseDvdMrl chapter(int chapter) {
         this.chapter = chapter;
         return this;
     }
 
-    public BaseDvdMrl angle(int angle) {
+    /**
+     * 
+     * 
+     * @param angle
+     * @return
+     */
+    public final BaseDvdMrl angle(int angle) {
         this.angle = angle;
         return this;
     }
 
     @Override
-    public String value() {
+    public final String value() {
         if(value == null) {
             value = constructValue();
         }

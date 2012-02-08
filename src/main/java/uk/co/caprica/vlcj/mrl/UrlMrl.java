@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.mrl;
 
 /**
- * Implementation for a web-style MRL. // TODO perhaps this should simply have been UrlMrl?
+ * Implementation for a web-style MRL.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
  * 
@@ -33,55 +33,79 @@ package uk.co.caprica.vlcj.mrl;
  * </pre>
  * This will generate <code>"http://www.myhost.com:8080/media/example.mp4"</code>.
  */
-public class WebMrl implements Mrl {
+public abstract class UrlMrl implements Mrl {
 
     /**
-   * 
-   */
+     * 
+     */
     private String type;
 
     /**
-   * 
-   */
+     * 
+     */
     private String host;
 
     /**
-   * 
-   */
+     * 
+     */
     private int port = -1;
 
     /**
-   * 
-   */
+     * 
+     */
     private String path;
 
     /**
-   * 
-   */
+     * 
+     */
     private String value;
 
-    public WebMrl type(String type) {
+    /**
+     * 
+     * 
+     * @param type
+     * @return
+     */
+    public final UrlMrl type(String type) {
         this.type = type;
         return this;
     }
 
-    public WebMrl host(String host) {
+    /**
+     * 
+     * 
+     * @param host
+     * @return
+     */
+    public final UrlMrl host(String host) {
         this.host = host;
         return this;
     }
 
-    public WebMrl port(int port) {
+    /**
+     * 
+     * 
+     * @param port
+     * @return
+     */
+    public final UrlMrl port(int port) {
         this.port = port;
         return this;
     }
 
-    public WebMrl path(String path) {
+    /**
+     * 
+     * 
+     * @param path
+     * @return
+     */
+    public final UrlMrl path(String path) {
         this.path = path;
         return this;
     }
 
     @Override
-    public String value() {
+    public final String value() {
         if(value == null) {
             value = constructValue();
         }

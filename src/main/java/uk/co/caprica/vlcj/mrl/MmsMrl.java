@@ -32,10 +32,16 @@ package uk.co.caprica.vlcj.mrl;
  * </pre>
  * This will generate <code>"mms://www.myhost.com:8000/mediainfo"</code>.
  */
-public class MmsMrl extends WebMrl {
+public class MmsMrl extends UrlMrl {
 
+    /**
+     * 
+     */
     private static final String MMS_TYPE = "mms";
 
+    /**
+     * 
+     */
     public MmsMrl() {
         type(MMS_TYPE);
     }

@@ -34,32 +34,66 @@ package uk.co.caprica.vlcj.mrl;
  */
 public class VcdMrl implements Mrl {
 
+    /**
+     * 
+     */
     private static final String VCD_TYPE = "vcd";
 
+    /**
+     * 
+     */
     private String device;
 
+    /**
+     * 
+     */
     private String startingPosition;
 
+    /**
+     * 
+     */
     private int number = -1;
 
+    /**
+     * 
+     */
     private String value;
 
-    public VcdMrl device(String device) {
+    /**
+     * 
+     * 
+     * @param device
+     * @return
+     */
+    public final VcdMrl device(String device) {
         this.device = device;
         return this;
     }
 
-    public VcdMrl startingPosition(String startingPosition) {
+    /**
+     * 
+     * 
+     * @param startingPosition
+     * @return
+     */
+    public final VcdMrl startingPosition(String startingPosition) {
         this.startingPosition = startingPosition;
         return this;
     }
 
-    public VcdMrl number(int number) {
+    /**
+     * 
+     * 
+     * @param number
+     * @return
+     */
+    public final VcdMrl number(int number) {
         this.number = number;
         return this;
     }
 
-    public String value() {
+    @Override
+    public final String value() {
         if(value == null) {
             value = constructValue();
         }

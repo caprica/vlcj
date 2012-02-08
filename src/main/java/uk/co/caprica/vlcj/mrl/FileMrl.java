@@ -48,13 +48,13 @@ public class FileMrl implements Mrl {
      * @param file file path/name
      * @return this
      */
-    public FileMrl file(String file) {
+    public final FileMrl file(String file) {
         this.file = file;
         return this;
     }
 
     @Override
-    public String value() {
+    public final String value() {
         if(value == null) {
             value = constructValue();
         }

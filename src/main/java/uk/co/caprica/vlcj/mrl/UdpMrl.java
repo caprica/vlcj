@@ -36,26 +36,50 @@ package uk.co.caprica.vlcj.mrl;
 @Deprecated
 public class UdpMrl implements Mrl {
 
+    /**
+     * 
+     */
     private static final String UDP_TYPE = "udp";
 
+    /**
+     * 
+     */
     private String groupAddress;
 
+    /**
+     * 
+     */
     private int port;
 
+    /**
+     * 
+     */
     private String value;
 
-    public UdpMrl groupAddress(String groupAddress) {
+    /**
+     * 
+     * 
+     * @param groupAddress
+     * @return
+     */
+    public final UdpMrl groupAddress(String groupAddress) {
         this.groupAddress = groupAddress;
         return this;
     }
 
-    public UdpMrl port(int port) {
+    /**
+     * 
+     * 
+     * @param port
+     * @return
+     */
+    public final UdpMrl port(int port) {
         this.port = port;
         return this;
     }
 
     @Override
-    public String value() {
+    public final String value() {
         if(value == null) {
             value = constructValue();
         }

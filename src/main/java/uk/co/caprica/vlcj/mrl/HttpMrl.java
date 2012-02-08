@@ -32,10 +32,16 @@ package uk.co.caprica.vlcj.mrl;
  * </pre>
  * This will generate <code>"http://www.myhost.com:8080/media/example.mp4"</code>.
  */
-public class HttpMrl extends WebMrl {
+public class HttpMrl extends UrlMrl {
 
+    /**
+     * 
+     */
     private static final String HTTP_TYPE = "http";
 
+    /**
+     * 
+     */
     public HttpMrl() {
         type(HTTP_TYPE);
     }

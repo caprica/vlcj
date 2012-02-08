@@ -32,10 +32,16 @@ package uk.co.caprica.vlcj.mrl;
  * </pre>
  * This will generate <code>"ftp://www.myhost.com:21/media/example.mp4"</code>.
  */
-public class FtpMrl extends WebMrl {
+public class FtpMrl extends UrlMrl {
 
+    /**
+     * 
+     */
     private static final String FTP_TYPE = "ftp";
 
+    /**
+     * 
+     */
     public FtpMrl() {
         type(FTP_TYPE);
     }

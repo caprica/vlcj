@@ -33,26 +33,50 @@ package uk.co.caprica.vlcj.mrl;
  */
 public class RtpMrl implements Mrl {
 
+    /**
+     * 
+     */
     private static final String RTP_TYPE = "rtp";
 
+    /**
+     * 
+     */
     private String multicastAddress;
 
+    /**
+     * 
+     */
     private int port;
 
+    /**
+     * 
+     */
     private String value;
 
-    public RtpMrl multicastAddress(String multicastAddress) {
+    /**
+     * 
+     * 
+     * @param multicastAddress
+     * @return
+     */
+    public final RtpMrl multicastAddress(String multicastAddress) {
         this.multicastAddress = multicastAddress;
         return this;
     }
 
-    public RtpMrl port(int port) {
+    /**
+     * 
+     * 
+     * @param port
+     * @return
+     */
+    public final RtpMrl port(int port) {
         this.port = port;
         return this;
     }
 
     @Override
-    public String value() {
+    public final String value() {
         if(value == null) {
             value = constructValue();
         }
