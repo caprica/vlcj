@@ -63,7 +63,7 @@ public class SsmMrl implements Mrl {
      * 
      * 
      * @param serverAddress
-     * @return
+     * @return this
      */
     public final SsmMrl serverAddress(String serverAddress) {
         this.serverAddress = serverAddress;
@@ -74,7 +74,7 @@ public class SsmMrl implements Mrl {
      * 
      * 
      * @param multicastAddress
-     * @return
+     * @return this
      */
     public final SsmMrl multicastAddress(String multicastAddress) {
         this.multicastAddress = multicastAddress;
@@ -85,7 +85,7 @@ public class SsmMrl implements Mrl {
      * 
      * 
      * @param port
-     * @return
+     * @return this
      */
     public final SsmMrl port(int port) {
         this.port = port;

@@ -57,7 +57,7 @@ public class RtpMrl implements Mrl {
      * 
      * 
      * @param multicastAddress
-     * @return
+     * @return this
      */
     public final RtpMrl multicastAddress(String multicastAddress) {
         this.multicastAddress = multicastAddress;
@@ -68,7 +68,7 @@ public class RtpMrl implements Mrl {
      * 
      * 
      * @param port
-     * @return
+     * @return this
      */
     public final RtpMrl port(int port) {
         this.port = port;

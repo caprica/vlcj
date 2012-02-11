@@ -59,7 +59,7 @@ public class CdMrl implements Mrl {
      * 
      * 
      * @param device
-     * @return
+     * @return this
      */
     public final CdMrl device(String device) {
         this.device = device;
@@ -70,7 +70,7 @@ public class CdMrl implements Mrl {
      * 
      * 
      * @param track
-     * @return
+     * @return this
      */
     public final CdMrl track(int track) {
         this.track = track;

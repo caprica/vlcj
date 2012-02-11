@@ -63,7 +63,7 @@ public class VcdMrl implements Mrl {
      * 
      * 
      * @param device
-     * @return
+     * @return this
      */
     public final VcdMrl device(String device) {
         this.device = device;
@@ -74,7 +74,7 @@ public class VcdMrl implements Mrl {
      * 
      * 
      * @param startingPosition
-     * @return
+     * @return this
      */
     public final VcdMrl startingPosition(String startingPosition) {
         this.startingPosition = startingPosition;
@@ -85,7 +85,7 @@ public class VcdMrl implements Mrl {
      * 
      * 
      * @param number
-     * @return
+     * @return this
      */
     public final VcdMrl number(int number) {
         this.number = number;

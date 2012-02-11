@@ -64,7 +64,7 @@ public abstract class UrlMrl implements Mrl {
      * 
      * 
      * @param type
-     * @return
+     * @return this
      */
     public final UrlMrl type(String type) {
         this.type = type;
@@ -75,7 +75,7 @@ public abstract class UrlMrl implements Mrl {
      * 
      * 
      * @param host
-     * @return
+     * @return this
      */
     public final UrlMrl host(String host) {
         this.host = host;
@@ -86,7 +86,7 @@ public abstract class UrlMrl implements Mrl {
      * 
      * 
      * @param port
-     * @return
+     * @return this
      */
     public final UrlMrl port(int port) {
         this.port = port;
@@ -97,7 +97,7 @@ public abstract class UrlMrl implements Mrl {
      * 
      * 
      * @param path
-     * @return
+     * @return this
      */
     public final UrlMrl path(String path) {
         this.path = path;

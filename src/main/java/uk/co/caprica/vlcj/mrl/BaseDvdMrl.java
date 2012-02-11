@@ -71,7 +71,7 @@ public abstract class BaseDvdMrl implements Mrl {
      * 
      * 
      * @param type
-     * @return
+     * @return this
      */
     public final BaseDvdMrl type(String type) {
         this.type = type;
@@ -82,7 +82,7 @@ public abstract class BaseDvdMrl implements Mrl {
      * 
      * 
      * @param device
-     * @return
+     * @return this
      */
     public final BaseDvdMrl device(String device) {
         this.device = device;
@@ -93,7 +93,7 @@ public abstract class BaseDvdMrl implements Mrl {
      * 
      * 
      * @param title
-     * @return
+     * @return this
      */
     public final BaseDvdMrl title(int title) {
         this.title = title;
@@ -104,7 +104,7 @@ public abstract class BaseDvdMrl implements Mrl {
      * 
      * 
      * @param chapter
-     * @return
+     * @return this
      */
     public final BaseDvdMrl chapter(int chapter) {
         this.chapter = chapter;
@@ -115,7 +115,7 @@ public abstract class BaseDvdMrl implements Mrl {
      * 
      * 
      * @param angle
-     * @return
+     * @return this
      */
     public final BaseDvdMrl angle(int angle) {
         this.angle = angle;

@@ -60,7 +60,7 @@ public class UdpMrl implements Mrl {
      * 
      * 
      * @param groupAddress
-     * @return
+     * @return this
      */
     public final UdpMrl groupAddress(String groupAddress) {
         this.groupAddress = groupAddress;
@@ -71,7 +71,7 @@ public class UdpMrl implements Mrl {
      * 
      * 
      * @param port
-     * @return
+     * @return this
      */
     public final UdpMrl port(int port) {
         this.port = port;

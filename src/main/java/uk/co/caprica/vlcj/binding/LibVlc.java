@@ -105,8 +105,8 @@ public interface LibVlc extends Library {
     /**
      * A human-readable error message for the last LibVLC error in the calling thread. The resulting
      * string is valid until another error occurs (at least until the next LibVLC call).
-     * 
-     * @warning This will be NULL if there was no error.
+     * <p>
+     * This will be NULL if there was no error.
      */
     String libvlc_errmsg();
 
@@ -653,7 +653,7 @@ public interface LibVlc extends Library {
      * @param pitch line pitch (in bytes)
      * @since LibVLC 1.1.1
      * 
-     * @bug All pixel planes are expected to have the same pitch. To use the YCbCr color space with
+     * bug: All pixel planes are expected to have the same pitch. To use the YCbCr color space with
      *      chrominance subsampling, consider using libvlc_video_set_format_callback() instead.
      */
     void libvlc_video_set_format(libvlc_media_player_t mp, String chroma, int width, int height, int pitch);
@@ -673,15 +673,21 @@ public interface LibVlc extends Library {
      * Set the NSView handler where the media player should render its video output. Use the vout
      * called "macosx". The drawable is an NSObject that follow the VLCOpenGLVideoViewEmbedding
      * protocol:
+     * <pre>
+     *     \@protocol VLCOpenGLVideoViewEmbedding <NSObject> - (void)addVoutSubview:(NSView*)view; - (void)removeVoutSubview:(NSView *)view; \@end
+     * </pre>
+     * Or it can be an NSView object. If you want to use it along with Qt4 see the
+     * QMacCocoaViewContainer. Then the following code should work:
+     * <pre>
+     * {
+     *     NSView *video = [[NSView alloc] init]; 
+     *     QMacCocoaViewContainer *container = new QMacCocoaViewContainer(video, parent); 
+     *     libvlc_media_player_set_nsobject(mp, video); 
+     *     [video release]; 
+     * }
+     * </pre>
+     * You can find a live example in VLCVideoView in VLCKit.framework.
      * 
-     * @begincode \@protocol VLCOpenGLVideoViewEmbedding <NSObject> - (void)addVoutSubview:(NSView
-     *            *)view; - (void)removeVoutSubview:(NSView *)view; \@end
-     * @endcode Or it can be an NSView object. If you want to use it along with Qt4 see the
-     *          QMacCocoaViewContainer. Then the following code should work:
-     * @begincode { NSView *video = [[NSView alloc] init]; QMacCocoaViewContainer *container = new
-     *            QMacCocoaViewContainer(video, parent); libvlc_media_player_set_nsobject(mp,
-     *            video); [video release]; }
-     * @endcode You can find a live example in VLCVideoView in VLCKit.framework.
      * @param p_mi the Media Player
      * @param drawable the drawable that is either an NSView or an object following the
      *            VLCOpenGLVideoViewEmbedding protocol.
@@ -926,8 +932,8 @@ public interface LibVlc extends Library {
 
     /**
      * Get the requested movie play rate.
-     * 
-     * @warning Depending on the underlying media, the requested rate may be different from the real
+     * <p>
+     * Depending on the underlying media, the requested rate may be different from the real
      *          playback rate.
      * @param p_mi the Media Player
      * @return movie play rate
@@ -1019,21 +1025,23 @@ public interface LibVlc extends Library {
 
     /**
      * Toggle fullscreen status on non-embedded video outputs.
+     * <p>
+     * The same limitations applies to this function as to libvlc_set_fullscreen().
      * 
-     * @warning The same limitations applies to this function as to libvlc_set_fullscreen().
      * @param p_mi the media player
      */
     void libvlc_toggle_fullscreen(libvlc_media_player_t p_mi);
 
     /**
      * Enable or disable fullscreen.
+     * <p>
+     * With most window managers, only a top-level windows can be in full-screen mode.
+     * Hence, this function will not operate properly if libvlc_media_player_set_xid() was
+     * used to embed the video in a non-top-level window. In that case, the embedding
+     * window must be reparented to the root window <b>before</b> fullscreen mode is
+     * enabled. You will want to reparent it back to its normal parent when disabling
+     * fullscreen.
      * 
-     * @warning With most window managers, only a top-level windows can be in full-screen mode.
-     *          Hence, this function will not operate properly if libvlc_media_player_set_xid() was
-     *          used to embed the video in a non-top-level window. In that case, the embedding
-     *          window must be reparented to the root window <b>before</b> fullscreen mode is
-     *          enabled. You will want to reparent it back to its normal parent when disabling
-     *          fullscreen.
      * @param p_mi the media player
      * @param b_fullscreen boolean for fullscreen status
      */
@@ -1050,10 +1058,14 @@ public interface LibVlc extends Library {
     /**
      * Enable or disable key press events handling, according to the LibVLC hotkeys configuration.
      * By default and for historical reasons, keyboard events are handled by the LibVLC video
-     * widget. \note On X11, there can be only one subscriber for key press and mouse click events
+     * widget.
+     * <p>
+     * On X11, there can be only one subscriber for key press and mouse click events
      * per window. If your application has subscribed to those events for the X window ID of the
      * video widget, then LibVLC will not be able to handle key presses and mouse clicks in any
-     * case. \warning This function is only implemented for X11 and Win32 at the moment.
+     * case.
+     * <p>
+     * This function is only implemented for X11 and Win32 at the moment.
      * 
      * @param p_mi the media player
      * @param on true to handle key press events, false to ignore them.
@@ -1062,9 +1074,11 @@ public interface LibVlc extends Library {
 
     /**
      * Enable or disable mouse click events handling. By default, those events are handled. This is
-     * needed for DVD menus to work, as well as a few video filters such as "puzzle". \note See also
-     * libvlc_video_set_key_input(). \warning This function is only implemented for X11 and Win32 at
-     * the moment.
+     * needed for DVD menus to work, as well as a few video filters such as "puzzle".
+     * <p>
+     * See also libvlc_video_set_key_input().
+     * <p>
+     * This function is only implemented for X11 and Win32 at the moment.
      * 
      * @param p_mi the media player
      * @param on true to handle mouse click events, false to ignore them.
@@ -1110,12 +1124,14 @@ public interface LibVlc extends Library {
      * latter, you can query your windowing system directly). Either of the coordinates may be
      * negative or larger than the corresponding dimension of the video, if the cursor is outside
      * the rendering area.
+     * <p>
+     * The coordinates may be out-of-date if the pointer is not located on the video
+     * rendering area. LibVLC does not track the pointer if it is outside of the video
+     * widget.
+     * <p>
+     * LibVLC does not support multiple pointers (it does of course support multiple input
+     * devices sharing the same pointer) at the moment.
      * 
-     * @warning The coordinates may be out-of-date if the pointer is not located on the video
-     *          rendering area. LibVLC does not track the pointer if it is outside of the video
-     *          widget.
-     * @note LibVLC does not support multiple pointers (it does of course support multiple input
-     *       devices sharing the same pointer) at the moment.
      * @param p_mi media player
      * @param num number of the video (starting from, and most commonly 0)
      * @param px pointer to get the abscissa [OUT]
