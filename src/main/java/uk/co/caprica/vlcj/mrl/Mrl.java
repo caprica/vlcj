@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.mrl;
 
 /**
  * Specification for a media resource locator.
+ * <p>
+ * See <a href="http://wiki.videolan.org/Media_resource_locator">MRLs at Videolan</a>
+ * for some more information.
  */
 public interface Mrl {
 
