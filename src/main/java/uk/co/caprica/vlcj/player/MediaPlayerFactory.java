@@ -165,7 +165,7 @@ public class MediaPlayerFactory {
      * @param libvlcArgs initialisation arguments to pass to libvlc
      */
     public MediaPlayerFactory(String... libvlcArgs) {
-        this(LibVlcFactory.factory().atLeast("1.2.0").create(), libvlcArgs);
+        this(LibVlcFactory.factory().atLeast("2.0.0").create(), libvlcArgs);
     }
 
     /**
@@ -347,7 +347,7 @@ public class MediaPlayerFactory {
      * 
      * @return collection of audio filter descriptions
      * 
-     * @since libvlc 1.2.0
+     * @since libvlc 2.0.0
      */
     public List<ModuleDescription> getAudioFilters() {
         Logger.debug("getAudioFilters()");
@@ -370,7 +370,7 @@ public class MediaPlayerFactory {
      * 
      * @return collection of video filter descriptions
      * 
-     * @since libvlc 1.2.0
+     * @since libvlc 2.0.0
      */
     public List<ModuleDescription> getVideoFilters() {
         Logger.debug("getVideoFilters()");

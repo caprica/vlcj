@@ -34,6 +34,7 @@ public class VersionFormatTest {
      * @param args command-line arguments
      */
     public static void main(String[] args) {
+        test("2.0.0");
         test("1.2.0");
         test("1.2.0-b1");
         test("1.1.10 The Luggage");

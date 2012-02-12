@@ -34,7 +34,7 @@ public class LibVlcFactoryVersionTest extends VlcjTest {
      * @param args command-line arguments
      */
     public static void main(String[] args) {
-        LibVlc libvlc = LibVlcFactory.factory().atLeast("1.2.0").create();
+        LibVlc libvlc = LibVlcFactory.factory().atLeast("2.0.0").create();
         System.out.println(libvlc);
     }
 }

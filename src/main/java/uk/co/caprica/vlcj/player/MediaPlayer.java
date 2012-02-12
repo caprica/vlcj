@@ -873,35 +873,35 @@ public interface MediaPlayer {
     /**
      * Activate a DVD menu.
      * 
-     * <strong>Requires vlc 1.2.0 or later.</strong>
+     * <strong>Requires vlc 2.0.0 or later.</strong>
      */
     void menuActivate();
 
     /**
      * Navigate up a DVD menu.
      * 
-     * <strong>Requires vlc 1.2.0 or later.</strong>
+     * <strong>Requires vlc 2.0.0 or later.</strong>
      */
     void menuUp();
 
     /**
      * Navigate down a DVD menu.
      * 
-     * <strong>Requires vlc 1.2.0 or later.</strong>
+     * <strong>Requires vlc 2.0.0 or later.</strong>
      */
     void menuDown();
 
     /**
      * Navigate left a DVD menu.
      * 
-     * <strong>Requires vlc 1.2.0 or later.</strong>
+     * <strong>Requires vlc 2.0.0 or later.</strong>
      */
     void menuLeft();
 
     /**
      * Navigate right a DVD menu.
      * 
-     * <strong>Requires vlc 1.2.0 or later.</strong>
+     * <strong>Requires vlc 2.0.0 or later.</strong>
      */
     void menuRight();
 

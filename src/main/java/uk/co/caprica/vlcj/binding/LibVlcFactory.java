@@ -38,7 +38,7 @@ import uk.co.caprica.vlcj.version.Version;
  * Or:
  * 
  * <pre>
- * LibVlc libvlc = LibVlcFactory.factory().atLeast(&quot;1.2.0&quot;).log().create();
+ * LibVlc libvlc = LibVlcFactory.factory().atLeast(&quot;2.0.0&quot;).log().create();
  * </pre>
  */
 public class LibVlcFactory {
