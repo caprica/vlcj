@@ -75,11 +75,9 @@ import com.sun.jna.ptr.PointerByReference;
  * Some functions are only available <em>after</em> version 2.0.0 of libvlc.
  * <p>
  * This system property may be useful for debugging:
- * 
  * <pre>
  * -Djna.dump_memory=true
  * </pre>
- * 
  * In the native header file, generally "char*" types must be freed, but "const char*" need (must)
  * not.
  */
