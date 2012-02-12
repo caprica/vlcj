@@ -63,9 +63,9 @@ import com.sun.jna.ptr.PointerByReference;
  * separately in the "internal" sub-package.
  * <p>
  * This code and that in the internal sub-package is structured out of necessity to interoperate
- * with the libvlc native library. This code was originally derived from the original JVLC source
- * code, the copyright of which belongs to the VideoLAN team, which was distributed under GPL
- * version 2 or later.
+ * with the libvlc native library. This code was originally derived (but has now been completely
+ * re-written) from the original JVLC source code, the copyright of which belongs to the VideoLAN 
+ * team, which was distributed under GPL version 2 or later.
  * <p>
  * This binding is for version 1.1 and later of vlc. Earlier versions of vlc are radically different
  * and will not work with these bindings.
