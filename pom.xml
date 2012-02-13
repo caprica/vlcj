@@ -135,6 +135,13 @@
 						</manifest>
 					</archive>
 				</configuration>
+				<!-- executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions -->
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -144,7 +151,8 @@
 					<execution>
 						<id>attach-sources</id>
 						<goals>
-							<goal>jar</goal>
+							<goal>jar-no-fork</goal>
+							<!-- goal>test-jar-no-fork</goal -->
 						</goals>
 					</execution>
 				</executions>
