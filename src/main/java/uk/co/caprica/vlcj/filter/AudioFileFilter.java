@@ -28,6 +28,7 @@ public class AudioFileFilter extends ExtensionFileFilter {
      * From the vlc_interfaces.h include file.
      */
     private static final String[] EXTENSIONS_AUDIO = {
+        "3ga",
         "a52",
         "aac",
         "ac3",
