@@ -75,7 +75,7 @@
 	<scm>
 		<connection>scm:git:git://github.com/caprica/vlcj.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com:caprica/vlcj.git</developerConnection>
-		<tag>vlcj-2.0.0</tag>
+		<tag>vlcj-2.1.0</tag>
 		<url>https://github.com/caprica/vlcj</url>
 	</scm>
 

@@ -34,7 +34,7 @@ class Info {
         "__   _| | ___ (_)"   + "\n" +
         "\\ \\ / / |/ __|| |" + "\n" +
         " \\ V /| | (__ | |"  + "\n" +
-        "  \\_/ |_|\\___|/ | 2.0.0" + "\n" +
+        "  \\_/ |_|\\___|/ | 2.1.0" + "\n" +
         "            |__/  www.capricasoftware.co.uk" + "\n";
 
     /**
@@ -63,7 +63,7 @@ class Info {
         System.err.println(APP_MSG);
         System.err.println(LICENSE_MSG);
         System.err.flush();
-        Logger.info("vlcj: 2.0.0");
+        Logger.info("vlcj: 2.1.0");
         Logger.info("java: {} {}", System.getProperty("java.version"), System.getProperty("java.vendor"));
         Logger.info("java home: {}", System.getProperty("java.home"));
         Logger.info("os: {} {} {}", System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"));
