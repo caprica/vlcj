@@ -49,6 +49,8 @@ import com.sun.jna.platform.WindowUtils;
  * make a transparent overlay by either the preferred method of simply setting the background colour
  * to a transparent colour for Java7, or by using <code>com.sun.awt.AWTUtilities</code>, if it 
  * exists, for Java6.
+ * <p>
+ * Best results will be obtained by <em>disabling</em> any compositing desktop window manager.
  */
 public abstract class AbstractJWindowOverlayComponent extends JWindow {
 
