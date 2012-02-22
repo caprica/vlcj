@@ -32,7 +32,7 @@ public class VlcjVersion {
     /**
      * Get the run-time version.
      * 
-     * @return vlc/libvlc version
+     * @return vlcj version
      */
     public static final Version getVersion() {
         return VERSION;

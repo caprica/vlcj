@@ -42,9 +42,9 @@ import uk.co.caprica.vlcj.logger.Logger;
  * <p>
  * To work around this requires two strategies.
  * <p>
- * For keyboard events add a global AWTEventListener.
+ * For keyboard events add a global {@link AWTEventListener}.
  * <p>
- * For mouse events a register a global Windows message hook.
+ * For mouse events register a global Windows message hook.
  * <p>
  * This component implements both of those strategies behind the scenes - as far as client code is
  * concerned key and mouse listeners are added in the usual way.

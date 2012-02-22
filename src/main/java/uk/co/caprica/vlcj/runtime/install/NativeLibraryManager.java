@@ -45,7 +45,7 @@ import uk.co.caprica.vlcj.logger.Logger;
  * The idea is to package the native library files (in the case of vlc this is the libvlc native
  * library and all of the required plug-in native libraries) into a single jar file, ship that jar
  * file along with the application, and have the application unpack those jars at run-time (or
- * perhaps installation- time).
+ * perhaps installation-time).
  * <p>
  * This will not happen automatically, it is up to each individual client application to determine
  * how this class will be used - for example some clients may wish to use this class to unpack and
