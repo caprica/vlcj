@@ -24,6 +24,7 @@ News
 ----
 
 13/02/2012 Released version 2.0.0, for use with libvlc 2.0.
+
 28/01/2012 Moved to github.
 
 Documentation
