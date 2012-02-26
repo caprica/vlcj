@@ -37,6 +37,7 @@ public class VideoFileFilter extends ExtensionFileFilter {
         "avi",
         "bin",
         "divx",
+        "drc",
         "dv",
         "f4v",
         "flv",
