@@ -61,7 +61,6 @@ public class AdvancedEmbeddedMediaPlayerComponentTest extends VlcjTest {
             @Override
             public void run() {
                 new AdvancedEmbeddedMediaPlayerComponentTest().start(mrl);
-                ;
             }
         });
     }
