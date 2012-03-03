@@ -21,13 +21,14 @@ package uk.co.caprica.vlcj.component.playlist;
 
 /**
  * Default implementation of a play-list event listener.
- * <p>
- * This class is not really necessary right now, but serves as a place-holder in
- * case new events are added in the future.
  */
 public class PlaylistEventAdapter implements PlaylistEventListener {
 
     @Override
     public void playlistItemChanged(PlaylistComponent source, int itemIndex, PlaylistEntry current) {
+    }
+
+    @Override
+    public void playlistFinished(PlaylistComponent playlistComponent) {
     }
 }

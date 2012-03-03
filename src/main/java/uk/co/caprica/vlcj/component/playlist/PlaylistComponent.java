@@ -19,7 +19,10 @@
 
 package uk.co.caprica.vlcj.component.playlist;
 
+import static uk.co.caprica.vlcj.component.playlist.PlaylistMode.NORMAL;
 import static uk.co.caprica.vlcj.component.playlist.PlaylistMode.SHUFFLE;
+import static uk.co.caprica.vlcj.component.playlist.RepeatMode.NO_REPEAT;
+import static uk.co.caprica.vlcj.component.playlist.RepeatMode.REPEAT_CURRENT;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 /**
  * Implementation of a high-level component to manage a play-list for a media player.
  * <p>
+ * TODO implement REPEAT_LIST
  * TODO record errors on the play-list item so we don't churn if every item in the play-list is in error
  */
 public class PlaylistComponent implements PlaylistEventListener {
@@ -58,12 +62,12 @@ public class PlaylistComponent implements PlaylistEventListener {
     /**
      * Play-list mode.
      */
-    private PlaylistMode playlistMode = PlaylistMode.NORMAL;
+    private PlaylistMode playlistMode = NORMAL;
     
     /**
      * Repeat mode.
      */
-    private RepeatMode repeatMode = RepeatMode.NO_REPEAT;
+    private RepeatMode repeatMode = NO_REPEAT;
     
     /**
      * Create a play-list component.
@@ -182,10 +186,15 @@ public class PlaylistComponent implements PlaylistEventListener {
     public final void playNext() {
         Logger.debug("playNext()");
         if(!playlist.isEmpty()) {
+            int previous = current;
             current = onGetNext(current);
             Logger.debug("current={}", current);
             if(current != -1) {
                 playMedia(current, onGetMediaOptions(current));
+            }
+            else if(previous != -1) {
+                stop();
+                notifyPlaylistFinished();
             }
         }
     }
@@ -230,6 +239,14 @@ public class PlaylistComponent implements PlaylistEventListener {
     }
 
     /**
+     * 
+     */
+    public final void stop() {
+       Logger.debug("stop()");
+       getMediaPlayer().stop();
+    }
+    
+    /**
      * Get the media player associated with the play-list.
      * 
      * @return media player
@@ -260,7 +277,7 @@ public class PlaylistComponent implements PlaylistEventListener {
         Logger.debug("onGetNext(current={})", current);
         int result;
         Logger.debug("repeatMode={}", repeatMode);
-        if(repeatMode != RepeatMode.REPEAT_CURRENT || current == -1) {
+        if(repeatMode != REPEAT_CURRENT || current == -1) {
             Logger.debug("playlistMode={}", playlistMode);
             switch(playlistMode) {
                 case NORMAL:
@@ -269,7 +286,7 @@ public class PlaylistComponent implements PlaylistEventListener {
                         result = 0;
                     }
                     else {
-                        if(repeatMode == RepeatMode.NO_REPEAT) {
+                        if(repeatMode == NO_REPEAT) {
                             result = current+1 < playlist.size() ? current+1 : -1;
                         }
                         else {
@@ -363,8 +380,21 @@ public class PlaylistComponent implements PlaylistEventListener {
             eventListenerList.get(i).playlistItemChanged(PlaylistComponent.this, currentIndex, current);
         }
     }
+
+    /**
+     * 
+     */
+    private void notifyPlaylistFinished() {
+        for(int i = eventListenerList.size()-1; i >= 0; i--) {
+            eventListenerList.get(i).playlistFinished(PlaylistComponent.this);
+        }
+    }
     
     @Override
     public void playlistItemChanged(PlaylistComponent source, int itemIndex, PlaylistEntry item) {
+    }
+
+    @Override
+    public void playlistFinished(PlaylistComponent playlistComponent) {
     }
 }

@@ -34,4 +34,11 @@ public interface PlaylistEventListener {
      * @param current new item
      */
     void playlistItemChanged(PlaylistComponent source, int itemIndex, PlaylistEntry current);
+
+    /**
+     * The end of the play-list was reached.
+     * 
+     * @param playlistComponent play-list
+     */
+    void playlistFinished(PlaylistComponent playlistComponent);
 }
