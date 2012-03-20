@@ -48,6 +48,7 @@ License
 
 The vlcj framework is provided under the GPL, version 3 or later.
 
-If in the future the vlc license terms change from GPL, then alternative 
-licensing arrangements for vlcj *may* be offered.
- 
+If you want to consider a commercial license for vlcj that allows you to use and 
+redistribute vlcj without complying with the GPL then send your proposal to:
+
+> mark [dot] lee [at] capricasoftware [dot] co [dot] uk
