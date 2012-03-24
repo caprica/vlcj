@@ -178,6 +178,9 @@ public interface MediaPlayer {
      * events be enabled.
      * <p>
      * See {@link MediaPlayerEventType}.
+     * <p>
+     * This setting applies to <em>all</em> registered event listeners - it is not (currently)
+     * possible to set a different event mask for each listener.
      * 
      * @param eventMask bit mask of events to enable
      */
