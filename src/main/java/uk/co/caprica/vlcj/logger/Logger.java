@@ -147,11 +147,11 @@ public class Logger {
         synchronized(out) {
             StackTraceElement el = getLine();
             String location = new Formatter().format("(%s:%d)", el.getFileName(), el.getLineNumber()).toString();
-            out.printf("vlcj: %-40s | %-5s | %s\n", location, level, format(msg, args));
+            out.printf("vlcj: %-46s | %-5s | %s\n", location, level, format(msg, args));
             out.flush();
             if(t != null) {
                 PrintWriter err = INSTANCE.err;
-                err.printf("vlcj: %-40s | %-5s | %s\n", location, level, t.getMessage());
+                err.printf("vlcj: %-46s | %-5s | %s\n", location, level, t.getMessage());
                 err.flush();
                 t.printStackTrace();
             }
