@@ -34,7 +34,6 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 /**
  * Implementation of a high-level component to manage a play-list for a media player.
  * <p>
- * TODO implement REPEAT_LIST
  * TODO record errors on the play-list item so we don't churn if every item in the play-list is in error
  */
 public class PlaylistComponent implements PlaylistEventListener {
@@ -173,7 +172,7 @@ public class PlaylistComponent implements PlaylistEventListener {
      */
     public final void setPlaylist(Playlist playlist) {
         this.playlist = playlist;
-        // Shuffle if needed
+        // Re-shuffle if needed
         shuffle();
     }
     
@@ -277,25 +276,34 @@ public class PlaylistComponent implements PlaylistEventListener {
         Logger.debug("onGetNext(current={})", current);
         int result;
         Logger.debug("repeatMode={}", repeatMode);
+        // If the current item should not be repeated, or if there is no current item...
         if(repeatMode != REPEAT_CURRENT || current == -1) {
+            // ...set the next item to play depending on the play-list mode
             Logger.debug("playlistMode={}", playlistMode);
             switch(playlistMode) {
                 case NORMAL:
                 case SHUFFLE:
+                    // If there is no current item (e.g. first play)...
                     if(current == -1) {
+                        // ...simply set the first item
                         result = 0;
                     }
                     else {
+                        // If the play-list should not repeat...
                         if(repeatMode == NO_REPEAT) {
+                            // ...advance to the next item until the end of the list is reached
                             result = current+1 < playlist.size() ? current+1 : -1;
                         }
+                        // Otherwise the play-list mode must be repeat-list...
                         else {
+                            // ...so reset back to the start of the list
                             result = 0;
                         }
                     }
                     break;
                     
                 case RANDOM:
+                    // For random mode, the play-list never ends so always pick a new random item
                     result = (int)Math.round(Math.random() * playlist.size()); 
                     break;
                     
@@ -303,7 +311,9 @@ public class PlaylistComponent implements PlaylistEventListener {
                     throw new IllegalStateException("Unexpected play-list mode " + playlistMode);
             }            
         }
+        // If the current item should be repeated...
         else {
+            // ...simply return the current item
             result = current;
         }
         Logger.debug("result={}", result);
