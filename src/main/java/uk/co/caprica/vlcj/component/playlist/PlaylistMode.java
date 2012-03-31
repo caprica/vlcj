@@ -26,16 +26,22 @@ public enum PlaylistMode {
 
     /**
      * The play-list is played in the order in which items were added.
+     * <p>
+     * The play-list will end after the last item has been played.
      */
     NORMAL,
     
     /**
      * The play-list is shuffled once, each track is played in turn.
+     * <p>
+     * The play-list will end after each item has been played once.
      */
     SHUFFLE,
     
     /**
      * A random item is picked each time (even if it has already been played).
+     * <p>
+     * The play-list will never end with this mode.
      */
     RANDOM
 }
