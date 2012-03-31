@@ -37,6 +37,8 @@ public interface PlaylistEventListener {
 
     /**
      * The end of the play-list was reached.
+     * <p>
+     * This event is <em>not</em> fired if the play-list repeat mode is set to {@link RepeatMode#REPEAT_LIST}.
      * 
      * @param playlistComponent play-list
      */
