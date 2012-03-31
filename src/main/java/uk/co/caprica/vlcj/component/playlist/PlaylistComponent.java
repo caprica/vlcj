@@ -34,6 +34,9 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 /**
  * Implementation of a high-level component to manage a play-list for a media player.
  * <p>
+ * No guarantees of thread-safety are made, it is the responsibility of the client
+ * application to manage concurrent access to this component correctly.
+ *  
  * TODO record errors on the play-list item so we don't churn if every item in the play-list is in error
  */
 public class PlaylistComponent implements PlaylistEventListener {
@@ -238,7 +241,11 @@ public class PlaylistComponent implements PlaylistEventListener {
     }
 
     /**
-     * 
+     * Stop play-back.
+     * <p>
+     * The currently playing item, if any, will be stopped.
+     * <p>
+     * The play-list will be stopped.
      */
     public final void stop() {
        Logger.debug("stop()");
@@ -368,6 +375,12 @@ public class PlaylistComponent implements PlaylistEventListener {
         }
 
         @Override
+        public void playing(MediaPlayer mediaPlayer) {
+            // Clear any error on the current item
+            current().error();
+        }
+
+        @Override
         public void finished(MediaPlayer mediaPlayer) {
             Logger.debug("finished()");
             playNext();
@@ -376,6 +389,9 @@ public class PlaylistComponent implements PlaylistEventListener {
         @Override
         public void error(MediaPlayer mediaPlayer) {
             Logger.debug("error()");
+            // Make the current play-list item as error
+            current().error();
+            // Play the next item
             playNext();
         }
     }
