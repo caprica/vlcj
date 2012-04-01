@@ -17,14 +17,17 @@
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding;
+package uk.co.caprica.vlcj;
+
+import java.util.Properties;
 
 import uk.co.caprica.vlcj.logger.Logger;
+import uk.co.caprica.vlcj.version.Version;
 
 /**
  * Application information banner.
  */
-class Info {
+public class Info {
 
     /**
      * Application name.
@@ -57,15 +60,58 @@ class Info {
         "Copyright 2009, 2010, 2011, 2012 Caprica Software Limited."           + "\n";
       
     /**
-     * Package-private constructor.
+     * Singleton holder.
      */
-    Info() {
+    private static class InfoHolder {
+
+        /**
+         * Singleton instance.
+         */
+        public static final Info INSTANCE = new Info();
+    }
+
+    /**
+     * Get application information.
+     * 
+     * @return
+     */
+    public static Info getInstance() {
+        return InfoHolder.INSTANCE;
+    }
+
+    /**
+     * vlcj version.
+     */
+    private Version version;
+
+    /**
+     * Private constructor.
+     */
+    private Info() {
         System.err.println(APP_MSG);
         System.err.println(LICENSE_MSG);
         System.err.flush();
-        Logger.info("vlcj: 2.1.0");
+        try {
+            Properties properties = new Properties();
+            properties.load(getClass().getResourceAsStream("/build.properties"));
+            version = new Version(properties.getProperty("build.version"));
+        }
+        catch(Throwable t) {
+            // This can only happen if something went wrong with the build
+            version = null;
+        }
+        Logger.info("vlcj: {}", version != null ? version : "<version not available>");
         Logger.info("java: {} {}", System.getProperty("java.version"), System.getProperty("java.vendor"));
         Logger.info("java home: {}", System.getProperty("java.home"));
         Logger.info("os: {} {} {}", System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"));
+    }
+    
+    /**
+     * Get the vlcj version.
+     * 
+     * @return version
+     */
+    public final Version version() {
+        return version;
     }
 }

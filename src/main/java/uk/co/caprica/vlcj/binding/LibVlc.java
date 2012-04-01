@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.binding;
 
+import uk.co.caprica.vlcj.Info;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_drain_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_flush_cb;
@@ -86,7 +87,7 @@ public interface LibVlc extends Library {
     /**
      * Application information.
      */
-    Info info = new Info();
+    Info info = Info.getInstance();
 
     /**
      * Native library instance.
