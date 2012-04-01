@@ -195,18 +195,23 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
 
     @Override
-    public void playMedia(String mrl, String... mediaOptions) {
+    public boolean playMedia(String mrl, String... mediaOptions) {
         Logger.debug("playMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
         // First 'prepare' the media...
-        prepareMedia(mrl, mediaOptions);
-        // ...then play it
-        play();
+        if(prepareMedia(mrl, mediaOptions)) {
+            // ...then play it
+            play();
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
-    public void prepareMedia(String mrl, String... mediaOptions) {
+    public boolean prepareMedia(String mrl, String... mediaOptions) {
         Logger.debug("prepareMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
-        setMedia(mrl, mediaOptions);
+        return setMedia(mrl, mediaOptions);
     }
 
     @Override
@@ -1663,6 +1668,9 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             registerMediaEventListener();
             // Set the new media on the media player
             libvlc.libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
+        }
+        else {
+            Logger.error("Failed to create native media resource for '{}'", media);
         }
         // Prepare a new statistics object to re-use for the new media item
         libvlcMediaStats = new libvlc_media_stats_t();

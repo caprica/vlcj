@@ -199,19 +199,27 @@ public interface MediaPlayer {
      * Play a new media item, with options.
      * <p>
      * The new media will begin play-back immediately.
+     * <p>
+     * When playing files, depending on the run-time Operating System it may be necessary 
+     * to pass a URL here (beginning with "file://") rather than a local file path.
      * 
      * @param mrl media resource locator
      * @param mediaOptions zero or more media item options
+     * @return <code>true</code> if the media item was created; <code>false</code> otherwise
      */
-    void playMedia(String mrl, String... mediaOptions);
+    boolean playMedia(String mrl, String... mediaOptions);
 
     /**
      * Prepare a new media item for play-back, but do not begin playing.
+     * <p>
+     * When playing files, depending on the run-time Operating System it may be necessary 
+     * to pass a URL here (beginning with "file://") rather than a local file path.
      * 
      * @param mrl media resource locator
      * @param mediaOptions zero or more media item options
+     * @return <code>true</code> if the media item was created; <code>false</code> otherwise
      */
-    void prepareMedia(String mrl, String... mediaOptions);
+    boolean prepareMedia(String mrl, String... mediaOptions);
 
     /**
      * Play a new media item, with options, and wait for it to start playing or error.
