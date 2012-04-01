@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.binding;
 import java.lang.reflect.Proxy;
 import java.text.MessageFormat;
 
+import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.version.Version;
@@ -80,6 +81,11 @@ public class LibVlcFactory {
     private Version requiredVersion;
 
     /**
+     * Component used to search for libvlc native libraries.
+     */
+    private NativeDiscovery discovery;
+
+    /**
      * Private constructor prevents direct instantiation by others.
      */
     private LibVlcFactory() {
@@ -126,12 +132,27 @@ public class LibVlcFactory {
     }
 
     /**
+     * Request that automatic discovery of the native libraries be tried.
+     * 
+     * @param discovery discovery
+     * @return factory
+     */
+    public LibVlcFactory discovery(NativeDiscovery discovery) {
+        this.discovery = discovery;
+        return this;
+    }
+    
+    /**
      * Create a new libvlc native library instance.
      * 
      * @return native library instance
      * @throws RuntimeException if a minimum version check was specified and failed
      */
     public LibVlc create() {
+        // Invoke discovery?
+        if(discovery != null) {
+            discovery.discover();
+        }
         // Synchronised or not...
         try {
             LibVlc instance = synchronise ? LibVlc.SYNC_INSTANCE : LibVlc.INSTANCE;
