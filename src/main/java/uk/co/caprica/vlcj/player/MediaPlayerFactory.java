@@ -187,15 +187,12 @@ public class MediaPlayerFactory {
      */
     public MediaPlayerFactory(LibVlc libvlc, String... libvlcArgs) {
         Logger.debug("MediaPlayerFactory(libvlc={},libvlcArgs={})", libvlc, Arrays.toString(libvlcArgs));
-
         // JNA will look for the libvlc shared library here (and also libvlccore)...
         Logger.debug("jna.library.path={}", System.getProperty("jna.library.path"));
-
         // Convenience
         if(libvlcArgs == null) {
             libvlcArgs = new String[0];
         }
-
         // Ordinarily libvlc will look for it's plugins in a directory named
         // "vlc/plugins" relative to the directory where libvlccore is loaded from,
         // this can be overridden by explicitly specifying the "--plugin-path"
@@ -205,7 +202,6 @@ public class MediaPlayerFactory {
                 Logger.debug(libvlcArg);
             }
         }
-
         // The "--plugin-path" switch is deprecated in libvlc 1.2.x and is replaced
         // by an environment variable - again as per the above comment it should
         // not be necessary to set this
@@ -213,12 +209,9 @@ public class MediaPlayerFactory {
         if(vlcPluginPath != null) {
             Logger.debug("VLC_PLUGIN_PATH={}", vlcPluginPath);
         }
-
         this.libvlc = libvlc;
-
         this.instance = libvlc.libvlc_new(libvlcArgs.length, libvlcArgs);
         Logger.debug("instance={}", instance);
-
         if(instance == null) {
             Logger.error("Failed to initialise libvlc");
             String msg = MessageFormat.format(PLUGIN_PATH_HELP, new Object[] {RuntimeUtil.getLibVlcName(), RuntimeUtil.getLibVlcCoreName(), RuntimeUtil.getPluginsDirectoryName()});
@@ -232,8 +225,7 @@ public class MediaPlayerFactory {
      * This is simply an alternate constructor for convenience, see
      * {@link #MediaPlayerFactory(String...)}.
      * 
-     * @param libvlcArgs initialisation arguments to pass to libvlc, may be empty but must not be
-     *            <code>null</code>
+     * @param libvlcArgs initialisation arguments to pass to libvlc, may be empty but must not be <code>null</code>
      */
     public MediaPlayerFactory(List<String> libvlcArgs) {
         this(libvlcArgs.toArray(new String[libvlcArgs.size()]));
@@ -248,8 +240,7 @@ public class MediaPlayerFactory {
      * {@link #MediaPlayerFactory(LibVlc, String...)}.
      * 
      * @param libvlc interface to the native library
-     * @param libvlcArgs initialisation arguments to pass to libvlc, may be empty but must not be
-     *            <code>null</code>
+     * @param libvlcArgs initialisation arguments to pass to libvlc, may be empty but must not be <code>null</code>
      */
     public MediaPlayerFactory(LibVlc libvlc, List<String> libvlcArgs) {
         this(libvlc, libvlcArgs.toArray(new String[libvlcArgs.size()]));
@@ -349,15 +340,12 @@ public class MediaPlayerFactory {
      */
     public List<ModuleDescription> getAudioFilters() {
         Logger.debug("getAudioFilters()");
-
         libvlc_module_description_t moduleDescriptions = libvlc.libvlc_audio_filter_list_get(instance);
-
         // Without disabling auto synch on this JNA structure a fatal crash will
         // intermittently occur when the release call is made - this is the only
         // time (filters) in all of the vlcj bindings that this is required and I
         // do not understand why it is needed only in this case
         moduleDescriptions.setAutoSynch(false);
-
         List<ModuleDescription> result = getModuleDescriptions(moduleDescriptions);
         libvlc.libvlc_module_description_list_release(moduleDescriptions);
         return result;
@@ -372,15 +360,12 @@ public class MediaPlayerFactory {
      */
     public List<ModuleDescription> getVideoFilters() {
         Logger.debug("getVideoFilters()");
-
         libvlc_module_description_t moduleDescriptions = libvlc.libvlc_video_filter_list_get(instance);
-
         // Without disabling auto synch on this JNA structure a fatal crash will
         // intermittently occur when the release call is made - this is the only
         // time (filters) in all of the vlcj bindings that this is required and I
         // do not understand why it is needed only in this case
         moduleDescriptions.setAutoSynch(false);
-
         List<ModuleDescription> result = getModuleDescriptions(moduleDescriptions);
         libvlc.libvlc_module_description_list_release(moduleDescriptions);
         return result;
