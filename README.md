@@ -13,8 +13,7 @@ that hides a lot of the complexities of working with libvlc.
 vlcj works just fine on Linux and Windows and should work on Mac - but for Mac
 you likely need a bleeding-edge release of vlc.
 
-At least JDK 1.5 is required, JDK 1.6 is recommended, and it works without 
-changes on JDK 1.7.
+At least JDK 1.6 is required, and it works without changes on JDK 1.7.
 
 This is the open source vlcj project page, see also the 'official' 
 [home page](http://www.capricasoftware.co.uk/vlcj "Official vlcj home page at Caprica Software")
