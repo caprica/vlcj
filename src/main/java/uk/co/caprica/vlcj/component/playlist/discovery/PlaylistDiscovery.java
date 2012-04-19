@@ -79,10 +79,10 @@ public class PlaylistDiscovery {
         }
         // Add the items
         for(File file : files) {
-            playlist.append(new PlaylistEntry(file.getAbsolutePath()));
+            playlist.append(new PlaylistEntry(file.getAbsolutePath(), file));
         }
     }
-    
+
     /**
      * Add one or more files to the play-list.
      * <p>
@@ -101,7 +101,7 @@ public class PlaylistDiscovery {
             // ...then add them to the play-list inside the lock...
             if(!result.isEmpty()) {
                 for(File file : result) {
-                    playlist.append(new PlaylistEntry(file.getAbsolutePath()));
+                    playlist.append(new PlaylistEntry(file.getAbsolutePath(), file));
                 }
             }
         }

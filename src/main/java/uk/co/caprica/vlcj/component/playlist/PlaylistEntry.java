@@ -40,13 +40,30 @@ public final class PlaylistEntry {
     private boolean error;
     
     /**
+     * User data.
+     */
+    private Object userData;
+    
+    /**
      * Create a play-list entry.
      * 
      * @param mrl media resource locator
      * @param mediaOptions zero or more media options to apply when playing this item
      */
     public PlaylistEntry(String mrl, String... mediaOptions) {
+        this(mrl, null, mediaOptions);
+    }
+    
+    /**
+     * Create a play-list entry.
+     * 
+     * @param mrl media resource locator
+     * @param userData application-specific data for this item
+     * @param mediaOptions zero or more media options to apply when playing this item
+     */
+    public PlaylistEntry(String mrl, Object userData, String... mediaOptions) {
         this.mrl = mrl;
+        this.userData = userData;
         this.mediaOptions = mediaOptions;
     }
     
@@ -90,12 +107,32 @@ public final class PlaylistEntry {
     public final void clearError() {
         this.error = false;
     }
+
+    /**
+     * Get the user data.
+     * 
+     * @return user data
+     */
+    @SuppressWarnings("unchecked")
+    public final <T> T userData() {
+        return (T)userData;
+    }
+    
+    /**
+     * Set the user data.
+     * 
+     * @param userData user data
+     */
+    public final void setUserData(Object userData) {
+        this.userData = userData;
+    }
     
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(40);
         sb.append(getClass().getSimpleName()).append("[");
         sb.append("mrl=").append(mrl).append(',');
+        sb.append("userData=").append(userData).append(',');
         sb.append("mediaOptions=").append(mediaOptions).append(']');
         return sb.toString();
     }
