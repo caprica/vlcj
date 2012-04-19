@@ -29,6 +29,8 @@ import java.awt.Panel;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
@@ -170,6 +172,22 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
         mediaPlayer.addMediaPlayerEventListener(this);
         // Set the overlay
         mediaPlayer.setOverlay(onGetOverlay());
+        
+        // if you hide embedded component (or mainwindow) vlc plyaer stops to play video stream and continue only audio.
+        canvas.addHierarchyListener(new HierarchyListener() {
+            @Override
+            public void hierarchyChanged(HierarchyEvent arg0) {
+                if (canvas.isShowing()) {
+                    if (mediaPlayer.isPlaying()) {
+                        float p = mediaPlayer.getPosition();
+                        mediaPlayer.stop();
+                        mediaPlayer.attachVideoSurface();
+                        mediaPlayer.start();
+                        mediaPlayer.setPosition(p);
+                    }
+                }
+            }
+        });
     }
 
     /**
