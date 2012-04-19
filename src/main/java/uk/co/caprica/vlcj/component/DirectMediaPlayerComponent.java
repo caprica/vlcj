@@ -95,6 +95,8 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
         mediaPlayer = mediaPlayerFactory.newDirectMediaPlayer(format, width, height, pitch, onGetRenderCallback());
         // Register listeners
         mediaPlayer.addMediaPlayerEventListener(this);
+        // Sub-class initialisation
+        onAfterConstruct();
     }
 
     /**
@@ -170,6 +172,12 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
         return this;
     }
 
+    /**
+     * Template method invoked at the end of the media player constructor.
+     */
+    protected void onAfterConstruct() {
+    }
+    
     /**
      * Template method invoked immediately prior to releasing the media player and media player
      * factory instances.

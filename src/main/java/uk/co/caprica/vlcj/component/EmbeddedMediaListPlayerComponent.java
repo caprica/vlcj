@@ -56,6 +56,8 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaPlayerCompone
         mediaListPlayer.setMediaPlayer(getMediaPlayer());
         // Register listeners
         mediaListPlayer.addMediaListPlayerEventListener(this);
+        // Sub-class initialisation
+        onAfterConstruct();
     }
 
     /**

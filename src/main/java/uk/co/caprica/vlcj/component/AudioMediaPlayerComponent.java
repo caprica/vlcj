@@ -91,6 +91,8 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
     public AudioMediaPlayerComponent() {
         mediaPlayerFactory = onGetMediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
+        // Sub-class initialisation
+        onAfterConstruct();
     }
 
     /**
@@ -151,6 +153,12 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
         return DEFAULT_FACTORY_ARGUMENTS;
     }
 
+    /**
+     * Template method invoked at the end of the media player constructor.
+     */
+    protected void onAfterConstruct() {
+    }
+    
     /**
      * Template method invoked immediately prior to releasing the media player and media player
      * factory instances.

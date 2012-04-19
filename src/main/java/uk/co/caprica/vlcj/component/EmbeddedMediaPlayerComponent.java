@@ -170,6 +170,8 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
         mediaPlayer.addMediaPlayerEventListener(this);
         // Set the overlay
         mediaPlayer.setOverlay(onGetOverlay());
+        // Sub-class initialisation
+        onAfterConstruct();
     }
 
     /**
@@ -301,6 +303,12 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
         return null;
     }
 
+    /**
+     * Template method invoked at the end of the media player constructor.
+     */
+    protected void onAfterConstruct() {
+    }
+    
     /**
      * Template method invoked immediately prior to releasing the media player and media player
      * factory instances.
