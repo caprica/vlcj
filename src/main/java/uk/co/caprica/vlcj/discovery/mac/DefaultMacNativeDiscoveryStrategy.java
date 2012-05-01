@@ -37,6 +37,6 @@ public class DefaultMacNativeDiscoveryStrategy extends StandardNativeDiscoverySt
 
     @Override
     protected void onGetDirectoryNames(List<String> directoryNames) {
-        // Nothing right now...
+        directoryNames.add("/Applications/VLC.app/Contents/MacOS/lib");
     }
 }
