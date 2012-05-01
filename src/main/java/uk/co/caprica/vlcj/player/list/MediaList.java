@@ -185,6 +185,23 @@ public class MediaList {
     }
 
     /**
+     * Clear the list.
+     */
+    public void clear() {
+        Logger.debug("clear()");
+        try {
+            lock();
+            for(int i = libvlc.libvlc_media_list_count(mediaListInstance)-1; i >= 0; i--) {
+                libvlc.libvlc_media_list_remove_index(mediaListInstance, i);
+            }
+            mediaListMap.clear();
+        }
+        finally {
+            unlock();
+        }
+    }
+
+    /**
      * Get the number of items currently in the list.
      * 
      * @return item count
