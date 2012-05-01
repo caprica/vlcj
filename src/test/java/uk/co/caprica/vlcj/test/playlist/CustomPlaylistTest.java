@@ -44,6 +44,7 @@ import uk.co.caprica.vlcj.component.playlist.Playlist;
 import uk.co.caprica.vlcj.component.playlist.PlaylistComponent;
 import uk.co.caprica.vlcj.component.playlist.PlaylistEntry;
 import uk.co.caprica.vlcj.component.playlist.PlaylistMode;
+import uk.co.caprica.vlcj.component.playlist.RepeatMode;
 import uk.co.caprica.vlcj.component.playlist.swing.PlaylistListModel;
 import uk.co.caprica.vlcj.filter.AudioFileFilter;
 import uk.co.caprica.vlcj.logger.Logger;
@@ -80,6 +81,7 @@ public class CustomPlaylistTest extends VlcjTest {
         });
     }
     
+    @SuppressWarnings("serial")
     public CustomPlaylistTest() {
         nextButton = new JButton("Next");
         gotoEndButton = new JButton("Goto End");
@@ -149,9 +151,17 @@ public class CustomPlaylistTest extends VlcjTest {
                     }
                 });
             }
+
+            @Override
+            public void playlistFinished(PlaylistComponent playlistComponent) {
+                System.out.println("##################################");
+                System.out.println("### Playlist Finished ############");
+                System.out.println("##################################");
+            }
         };
 
-        playlistComponent.setMode(PlaylistMode.SHUFFLE);
+        playlistComponent.setMode(PlaylistMode.NORMAL);
+        playlistComponent.setRepeatMode(RepeatMode.REPEAT_LIST);
         
         listModel = new PlaylistListModel(playlistComponent.getPlaylist());
         list.setModel(listModel);
