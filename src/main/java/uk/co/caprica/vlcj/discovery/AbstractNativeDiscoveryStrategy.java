@@ -35,7 +35,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * This implementation looks for libvlc shared libraries by name in pre-defined
  * directory locations.
  * <p>
- * Extra directory names can be provided by implementations of the {@link #onGetDirectoryNames()} 
+ * Extra directory names can be provided by implementations of the {@link #getDirectoryNames(List)} 
  * template method in sub-classes.
  * <p>
  * If the named native libraries are found in a particular directory, then that
