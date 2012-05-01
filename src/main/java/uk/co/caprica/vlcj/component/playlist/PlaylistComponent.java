@@ -304,7 +304,7 @@ public class PlaylistComponent implements PlaylistEventListener {
                         // Otherwise the play-list mode must be repeat-list...
                         else {
                             // ...so reset back to the start of the list
-                            result = 0;
+                            result = current+1 < playlist.size() ? current+1 : 0;
                         }
                     }
                     break;
