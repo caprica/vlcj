@@ -154,6 +154,11 @@ public class YouTubePlayer extends VlcjTest {
 
         mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
+            public void buffering(MediaPlayer mediaPlayer, float newCache) {
+                System.out.println("Buffering " + newCache);
+            }
+
+            @Override
             public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
                 List<String> items = mediaPlayer.subItems();
                 System.out.println(items);

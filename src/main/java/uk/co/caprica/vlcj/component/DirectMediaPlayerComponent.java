@@ -203,7 +203,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     }
 
     @Override
-    public void buffering(MediaPlayer mediaPlayer) {
+    public void buffering(MediaPlayer mediaPlayer, float newCache) {
     }
 
     @Override

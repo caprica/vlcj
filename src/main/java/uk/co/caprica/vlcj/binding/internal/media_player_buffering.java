@@ -17,33 +17,17 @@
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.events;
+package uk.co.caprica.vlcj.binding.internal;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import com.sun.jna.Structure;
 
 /**
  *
  */
-class MediaPlayerBufferingEvent extends AbstractMediaPlayerEvent {
+public class media_player_buffering extends Structure {
 
     /**
-     * 
+     * A percentage complete indicator, ranging from 0.0 to 100.0.
      */
-    private final float newCache;
-    
-    /**
-     * Create a media player event.
-     * 
-     * @param mediaPlayer media player the event relates to
-     */
-    MediaPlayerBufferingEvent(MediaPlayer mediaPlayer, float newCache) {
-        super(mediaPlayer);
-        this.newCache = newCache;
-    }
-
-    @Override
-    public void notify(MediaPlayerEventListener listener) {
-        listener.buffering(mediaPlayer, newCache);
-    }
+    public float new_cache;
 }

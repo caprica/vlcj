@@ -58,8 +58,9 @@ public interface MediaPlayerEventListener {
      * Buffering media.
      * 
      * @param mediaPlayer media player that raised the event
+     * @param newCache percentage complete, ranging from 0.0 to 100.0
      */
-    void buffering(MediaPlayer mediaPlayer);
+    void buffering(MediaPlayer mediaPlayer, float newCache);
 
     /**
      * The media started playing.
