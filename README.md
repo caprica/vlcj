@@ -34,9 +34,6 @@ Documentation is being made available at [Caprica Software](http://www.capricaso
 Support
 -------
 
-Support for personal and open source projects may be provided free of charge at 
-[Caprica Software](http://www.capricasoftware.co.uk/forum "Caprica Software Forums").
-
 Support for commercial projects is provided exclusively on commercial terms -
 send an email to the following address for more information:
 
