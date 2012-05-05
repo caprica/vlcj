@@ -20,9 +20,14 @@
 package uk.co.caprica.vlcj.player;
 
 /**
- *
+ * Unknown track info.
  */
 public class UnknownTrackInfo extends TrackInfo {
+
+    /**
+     * Serial version.
+     */
+    private static final long serialVersionUID = 1L;
 
     /**
      * 

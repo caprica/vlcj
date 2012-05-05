@@ -20,9 +20,14 @@
 package uk.co.caprica.vlcj.player;
 
 /**
- *
+ * Sub-picture/sub-title track info.
  */
 public class SpuTrackInfo extends TrackInfo {
+
+    /**
+     * Serial version.
+     */
+    private static final long serialVersionUID = 1L;
 
     /**
      * 

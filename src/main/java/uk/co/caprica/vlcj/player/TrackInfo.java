@@ -19,10 +19,17 @@
 
 package uk.co.caprica.vlcj.player;
 
+import java.io.Serializable;
+
 /**
  * Base track info.
  */
-public abstract class TrackInfo {
+public abstract class TrackInfo implements Serializable {
+
+    /**
+     * Serial version.
+     */
+    private static final long serialVersionUID = 1L;
 
     /**
      * Codec (fourcc).

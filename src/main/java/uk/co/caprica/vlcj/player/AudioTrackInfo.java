@@ -25,6 +25,11 @@ package uk.co.caprica.vlcj.player;
 public class AudioTrackInfo extends TrackInfo {
 
     /**
+     * Serial version.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Number of audio channels.
      */
     private final int channels;
