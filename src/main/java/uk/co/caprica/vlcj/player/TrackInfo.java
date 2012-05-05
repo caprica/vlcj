@@ -59,7 +59,7 @@ public abstract class TrackInfo {
      */
     protected TrackInfo(int codec, int id, int profile, int level) {
         this.codec = codec;
-        this.codecName = codec != 0 ? new String(new byte[] {(byte)(codec >>> 24), (byte)(codec >>> 16), (byte)(codec >>> 8), (byte)codec}).trim() : null;
+        this.codecName = codec != 0 ? new String(new byte[] {(byte)codec, (byte)(codec >>> 8), (byte)(codec >>> 16), (byte)(codec >>> 24)}).trim() : null;
         this.id = id;
         this.profile = profile;
         this.level = level;
