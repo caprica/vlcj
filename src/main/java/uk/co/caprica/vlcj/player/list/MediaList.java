@@ -177,6 +177,8 @@ public class MediaList {
                 mediaListMap.remove(oldMediaInstance);
                 // Remove the media descriptor from the media list
                 libvlc.libvlc_media_list_remove_index(mediaListInstance, index);
+                // Release the native media instance
+                libvlc.libvlc_media_release(oldMediaInstance);
             }
         }
         finally {
@@ -243,7 +245,10 @@ public class MediaList {
             List<String> result = new ArrayList<String>(count);
             for(int i = 0; i < count; i ++ ) {
                 libvlc_media_t mediaInstance = libvlc.libvlc_media_list_item_at_index(mediaListInstance, i);
-                result.add(mrl(mediaInstance));
+                if(mediaInstance != null) {
+                    result.add(mrl(mediaInstance));
+                    libvlc.libvlc_media_release(mediaInstance);
+                }
             }
             return result;
         }
