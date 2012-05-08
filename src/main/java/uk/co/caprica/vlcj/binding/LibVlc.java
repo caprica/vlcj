@@ -1953,8 +1953,7 @@ public interface LibVlc extends Library {
      * @param p_mdis media discover object
      * @return localized name
      */
-    // WARN: has to be free'd?
-    String libvlc_media_discoverer_localized_name(libvlc_media_discoverer_t p_mdis);
+    Pointer libvlc_media_discoverer_localized_name(libvlc_media_discoverer_t p_mdis);
 
     /**
      * Get media service discover media list.
