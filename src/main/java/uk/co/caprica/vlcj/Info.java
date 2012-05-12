@@ -73,7 +73,7 @@ public class Info {
     /**
      * Get application information.
      * 
-     * @return
+     * @return singleton instance
      */
     public static Info getInstance() {
         return InfoHolder.INSTANCE;
