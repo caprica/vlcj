@@ -122,6 +122,9 @@ public interface MediaListPlayer {
 
     /**
      * Play a particular item on the media list.
+     * <p>
+     * <strong>There is a bug in vlc that prevents proper operation of this method,
+     * and may cause a fatal JVM failure. This is resolved in vlc 2.0.2 and later.</strong>
      * 
      * @param itemIndex index of the item to play
      * @return <code>true</code> if the item could be played, otherwise <code>false</code>
