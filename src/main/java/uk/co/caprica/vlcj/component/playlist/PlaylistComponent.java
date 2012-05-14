@@ -27,6 +27,7 @@ import static uk.co.caprica.vlcj.component.playlist.RepeatMode.REPEAT_CURRENT;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
@@ -369,7 +370,7 @@ public class PlaylistComponent implements PlaylistEventListener {
      */
     private class PlaylistMediaPlayerEventHandler extends MediaPlayerEventAdapter {
         @Override
-        public void mediaChanged(MediaPlayer mediaPlayer) {
+        public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
             Logger.debug("mediaChanged()");
             notifyPlaylistItemChanged();
         }
