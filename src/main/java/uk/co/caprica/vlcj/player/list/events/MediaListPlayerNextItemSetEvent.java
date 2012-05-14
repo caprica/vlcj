@@ -34,18 +34,25 @@ class MediaListPlayerNextItemSetEvent extends AbstractMediaListPlayerEvent {
     private final libvlc_media_t item;
 
     /**
+     * Media resource locator.
+     */
+    private final String mrl;
+    
+    /**
      * Create a media player event.
      * 
      * @param mediaListPlayer media player the event relates to
      * @param metaType meta data type
+     * @param mrl media resource locator
      */
-    MediaListPlayerNextItemSetEvent(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
+    MediaListPlayerNextItemSetEvent(MediaListPlayer mediaListPlayer, libvlc_media_t item, String mrl) {
         super(mediaListPlayer);
         this.item = item;
+        this.mrl = mrl;
     }
 
     @Override
     public void notify(MediaListPlayerEventListener listener) {
-        listener.nextItem(mediaListPlayer, item, mediaListPlayer.getMediaList().mrl(item));
+        listener.nextItem(mediaListPlayer, item, mrl);
     }
 }

@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player.list.events;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
 import uk.co.caprica.vlcj.binding.internal.media_list_player_next_item_set;
 import uk.co.caprica.vlcj.binding.internal.media_meta_changed;
@@ -65,7 +66,8 @@ public class MediaListPlayerEventFactory {
 
             case libvlc_MediaListPlayerNextItemSet:
                 if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_CHANGED)) {
-                    result = new MediaListPlayerNextItemSetEvent(mediaListPlayer, ((media_list_player_next_item_set)event.u.getTypedValue(media_list_player_next_item_set.class)).item);
+                    libvlc_media_t media = ((media_list_player_next_item_set)event.u.getTypedValue(media_list_player_next_item_set.class)).item;
+                    result = new MediaListPlayerNextItemSetEvent(mediaListPlayer, media, mediaListPlayer.getMediaList().mrl(media));
                 }
                 break;
 
