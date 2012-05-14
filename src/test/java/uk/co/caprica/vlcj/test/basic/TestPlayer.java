@@ -381,8 +381,8 @@ public class TestPlayer extends VlcjTest {
 
     private final class TestPlayerMediaPlayerEventListener extends MediaPlayerEventAdapter {
         @Override
-        public void mediaChanged(MediaPlayer mediaPlayer) {
-            Logger.debug("mediaChanged(mediaPlayer={})", mediaPlayer);
+        public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
+            Logger.debug("mediaChanged(mediaPlayer={},media={},mrl={})", mediaPlayer, media, mrl);
         }
 
         @Override

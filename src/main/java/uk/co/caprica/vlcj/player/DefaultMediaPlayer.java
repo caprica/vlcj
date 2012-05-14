@@ -1792,8 +1792,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     private final class NewMediaEventHandler extends MediaPlayerEventAdapter {
 
         @Override
-        public void mediaChanged(MediaPlayer mediaPlayer) {
-            Logger.debug("mediaChanged(mediaPlayer={})", mediaPlayer);
+        public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
+            Logger.debug("mediaChanged(mediaPlayer={},media={},mrl={})", mediaPlayer, media, mrl);
             // If this is not a sub-item...
             if(subItemIndex() == -1) {
                 // Raise a semantic event to announce the media was changed

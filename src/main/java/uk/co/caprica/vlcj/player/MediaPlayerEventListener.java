@@ -44,8 +44,10 @@ public interface MediaPlayerEventListener {
      * The media changed.
      * 
      * @param mediaPlayer media player that raised the event
+     * @param media new media instance
+     * @param mrl media resource locator
      */
-    void mediaChanged(MediaPlayer mediaPlayer);
+    void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl);
 
     /**
      * Opening the media.

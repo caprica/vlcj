@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.test.multi;
 import java.awt.Canvas;
 import java.awt.Color;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -52,7 +53,7 @@ public class PlayerInstance extends MediaPlayerEventAdapter {
     }
 
     @Override
-    public void mediaChanged(MediaPlayer mediaPlayer) {
+    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
         System.out.println("mediaChanged");
     }
 

@@ -37,7 +37,7 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     // === Events relating to the media player ==================================
 
     @Override
-    public void mediaChanged(MediaPlayer mediaPlayer) {
+    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
     }
 
     @Override

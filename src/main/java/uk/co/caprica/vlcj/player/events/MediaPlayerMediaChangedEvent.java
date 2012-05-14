@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.events;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
@@ -28,16 +29,30 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 class MediaPlayerMediaChangedEvent extends AbstractMediaPlayerEvent {
 
     /**
+     * 
+     */
+    private final libvlc_media_t newMedia;
+
+    /**
+     * 
+     */
+    private final String mrl;
+    
+    /**
      * Create a media player event.
      * 
      * @param mediaPlayer media player the event relates to
+     * @param newMedia native media instance 
+     * @param mrl media resource locator
      */
-    MediaPlayerMediaChangedEvent(MediaPlayer mediaPlayer) {
+    MediaPlayerMediaChangedEvent(MediaPlayer mediaPlayer, libvlc_media_t newMedia, String mrl) {
         super(mediaPlayer);
+        this.newMedia = newMedia;
+        this.mrl = mrl;
     }
 
     @Override
     public void notify(MediaPlayerEventListener listener) {
-        listener.mediaChanged(mediaPlayer);
+        listener.mediaChanged(mediaPlayer, newMedia, mrl);
     }
 }

@@ -195,7 +195,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     // === MediaPlayerEventListener =============================================
 
     @Override
-    public void mediaChanged(MediaPlayer mediaPlayer) {
+    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
     }
 
     @Override
