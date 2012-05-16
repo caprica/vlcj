@@ -91,20 +91,6 @@ public class MediaList {
     }
 
     /**
-     * Create a new media list.
-     * 
-     * @param libvlc native interface
-     * @param instance native library instance
-     * @param mediaListInstance native media list instance
-     */
-    public MediaList(LibVlc libvlc, libvlc_instance_t instance, libvlc_media_list_t mediaListInstance) {
-        this.libvlc = libvlc;
-        this.instance = instance;
-
-        this.mediaListInstance = mediaListInstance;
-    }
-
-    /**
      * Set standard media options for all media items subsequently played.
      * <p>
      * This will <strong>not</strong> affect any currently playing media item.
