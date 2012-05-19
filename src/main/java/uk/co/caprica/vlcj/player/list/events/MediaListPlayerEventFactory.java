@@ -67,7 +67,7 @@ public class MediaListPlayerEventFactory {
             case libvlc_MediaListPlayerNextItemSet:
                 if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_CHANGED)) {
                     libvlc_media_t media = ((media_list_player_next_item_set)event.u.getTypedValue(media_list_player_next_item_set.class)).item;
-                    result = new MediaListPlayerNextItemSetEvent(mediaListPlayer, media, mediaListPlayer.getMediaList().mrl(media));
+                    result = new MediaListPlayerNextItemSetEvent(mediaListPlayer, media, mediaListPlayer.mrl(media));
                 }
                 break;
 
