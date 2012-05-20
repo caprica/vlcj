@@ -22,7 +22,7 @@ where you can find more information as well as some new simple tutorials.
 News
 ----
 
-13/02/2012 Released version 2.0.0, for use with libvlc 2.0.
+20/05/2012 Released version 2.1.0, for use with libvlc 2.0.
 
 28/01/2012 Moved to github.
 
