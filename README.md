@@ -29,6 +29,8 @@ News
 Documentation
 -------------
 
+The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at github").
+
 Online Javadoc is available:
 
 * [2.1.0 (current)](http://caprica.github.com/vlcj/javadoc/2.1.0/index.html "2.1.0 Javadoc")
