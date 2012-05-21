@@ -31,8 +31,8 @@ Documentation
 
 Online Javadoc is available:
 
-* <a href="http://caprica.github.com/vlcj/javadoc/2.1.0/index.html">2.1.0</a> (current)
-* <a href="http://caprica.github.com/vlcj/javadoc/2.0.0/index.html">2.0.0</a>
+* [2.1.0 javadoc](http://caprica.github.com/vlcj/javadoc/2.1.0/index.html "2.1.0 (current)")
+* [2.0.0 javadoc](http://caprica.github.com/vlcj/javadoc/2.0.0/index.html "2.0.0")
 
 Documentation is being made available at [Caprica Software](http://www.capricasoftware.co.uk/wiki "Caprica Software WIKI"). 
 
