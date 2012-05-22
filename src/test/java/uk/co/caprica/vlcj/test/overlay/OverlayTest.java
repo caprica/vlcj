@@ -48,7 +48,7 @@ import com.sun.awt.AWTUtilities;
 import com.sun.jna.platform.WindowUtils;
 
 /**
- * An test player demonstrating how to achieve a transparent overlay and translucent painting.
+ * A test player demonstrating how to achieve a transparent overlay and translucent painting.
  * <p>
  * Press SPACE to pause the video play-back.
  * <p>
