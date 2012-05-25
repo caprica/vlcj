@@ -46,7 +46,7 @@ public interface LibC extends Library {
      * @param size capacity of the buffer
      * @param format format string
      * @param args format arguments
-     * @return number of bytes written to the buffer
+     * @return length of the formatted string, which may exceed the capacity of the buffer
      */
     int vsnprintf(ByteBuffer str, int size, String format, Pointer args); 
 }
