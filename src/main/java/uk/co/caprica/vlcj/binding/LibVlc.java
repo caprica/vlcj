@@ -35,6 +35,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_log_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_log_subscriber_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
@@ -246,6 +248,48 @@ public interface LibVlc extends Library {
      * @param event_type the desired event
      */
     String libvlc_event_type_name(int event_type);
+
+    /**
+     * Registers a logging callback to LibVLC.
+     * <p>
+     * This function is thread-safe.
+     * <p>
+     * Some log messages (especially debug) are emitted by LibVLC while initializing, 
+     * before any LibVLC instance even exists. Thus this function does not require a
+     * LibVLC instance parameter.
+     * <p>
+     * <strong>Warning: as a consequence of not depending on a LibVLC instance, all 
+     * logging callbacks are shared by all LibVLC instances within the process/address
+     * space. This also enables log messages to be emitted by LibVLC components that 
+     * are not specific to any given LibVLC instance.</strong>
+     * <p>
+     * <strong>Do not call this function from within a logging callback. It 
+     * would trigger a dead lock.</strong>
+     * 
+     * @param sub uninitialized subscriber structure
+     * @param cb callback function pointer
+     * @param data opaque data pointer for the callback function
+     * 
+     * @since LibVLC 2.1.0 or later
+     */
+    void libvlc_log_subscribe(libvlc_log_subscriber_t sub, libvlc_log_cb cb, Pointer data);
+
+    /**
+     * Deregisters a logging callback from LibVLC.
+     * <p>
+     * This function is thread-safe.
+     * <p>
+     * Note: after (and only after) libvlc_log_unsubscribe() has returned, LibVLC 
+     * warrants that there are no more pending calls of the subscription callback 
+     * function.
+     * <p>
+     * <strong>Warning: do not call this function from within a logging callback. It 
+     * would trigger a dead lock.</strong>
+     *
+     * @param sub initialized subscriber structure
+     * @since LibVLC 2.1.0 or later
+     */
+    void libvlc_log_unsubscribe(libvlc_log_subscriber_t sub);
 
     /**
      * Release a list of module descriptions.
