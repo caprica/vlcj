@@ -61,6 +61,8 @@ import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventFactory;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
 
+import com.sun.jna.CallbackThreadInitializer;
+import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
@@ -81,7 +83,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     private final MediaPlayerEventFactory eventFactory = new MediaPlayerEventFactory(this);
 
     /**
-     * Background thread to event notifications.
+     * Background thread to send event notifications to listeners.
      * <p>
      * The single-threaded nature of this executor service ensures that events are delivered to
      * listeners in a thread-safe manner and in their proper sequence.
@@ -1552,6 +1554,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     private void registerEventListener() {
         Logger.debug("registerEventListener()");
         callback = new VlcVideoPlayerCallback();
+        Native.setCallbackThreadInitializer(callback, new CallbackThreadInitializer());
         for(libvlc_event_e event : libvlc_event_e.values()) {
             if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaPlayerVout.intValue()) {
                 Logger.debug("event={}", event);
