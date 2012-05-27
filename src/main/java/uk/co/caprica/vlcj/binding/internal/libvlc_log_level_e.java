@@ -27,10 +27,10 @@ import java.util.Map;
  */
 public enum libvlc_log_level_e {
 
-    LIBVLC_DEBUG  (0), // Debug message
-    LIBVLC_NOTICE (2), // Important informational message
-    LIBVLC_WARNING(3), // Warning (potential error) message
-    LIBVLC_ERROR  (4); // Error message
+    DEBUG  (0), // Debug message
+    NOTICE (2), // Important informational message
+    WARNING(3), // Warning (potential error) message
+    ERROR  (4); // Error message
 
     private static final Map<Integer, libvlc_log_level_e> INT_MAP = new HashMap<Integer, libvlc_log_level_e>();
 
@@ -40,7 +40,7 @@ public enum libvlc_log_level_e {
         }
     }
 
-    public static libvlc_log_level_e event(int intValue) {
+    public static libvlc_log_level_e level(int intValue) {
         return INT_MAP.get(intValue);
     }
 
