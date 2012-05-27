@@ -22,6 +22,9 @@ where you can find more information as well as some new simple tutorials.
 News
 ----
 
+27/05/2012 New pre-release snapshot version 2.2.0 integrates the new native log
+exposed by libvlc 2.1.x (available in vlc git).
+
 20/05/2012 Released version 2.1.0, for use with libvlc 2.0.
 
 28/01/2012 Moved to github.
