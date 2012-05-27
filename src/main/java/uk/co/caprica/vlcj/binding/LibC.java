@@ -41,12 +41,17 @@ public interface LibC extends Library {
      * <p>
      * The resultant string will be truncated to the size of the buffer if it would
      * otherwise exceed it.
+     * <p>
+     * For example, if the buffer has a capacity of 10 this is a maximum of 9 
+     * characters plus a null terminator for a total capacity of 10. This means if
+     * 10 characters are required, the buffer capacity must be 11 to accommodate
+     * the null terminator.
      * 
      * @param str buffer
-     * @param size capacity of the buffer
+     * @param size capacity of the buffer, including space for a null terminator
      * @param format format string
      * @param args format arguments
-     * @return length of the formatted string, which may exceed the capacity of the buffer
+     * @return length of the formatted string, which may exceed the capacity of the buffer, or less than zero on error
      */
     int vsnprintf(ByteBuffer str, int size, String format, Pointer args); 
 }
