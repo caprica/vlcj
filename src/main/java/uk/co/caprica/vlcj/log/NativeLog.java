@@ -115,7 +115,7 @@ public class NativeLog {
     /**
      * Remove a component previously added so it is no longer notified of log messages.
      * 
-     * @param logListener component to remove
+     * @param listener component to remove
      */
     public final void removeLogListener(LogEventListener listener) {
         Logger.debug("removeLogListener(listener={})", listener);
@@ -128,7 +128,7 @@ public class NativeLog {
      * Only log messages that are equal to or exceed this threshold are notified to
      * listeners.
      * 
-     * @param level level
+     * @param logLevel log threshold level
      */
     public final void setLevel(libvlc_log_level_e logLevel) {
         this.logLevel = logLevel;
