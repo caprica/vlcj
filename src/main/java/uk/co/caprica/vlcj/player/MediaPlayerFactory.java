@@ -31,6 +31,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
+import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
@@ -563,6 +564,18 @@ public class MediaPlayerFactory {
         else {
             return null;
         }
+    }
+
+    // === Log ==================================================================
+
+    /**
+     * Create a new native log component.
+     * 
+     * @return native log component
+     */
+    public NativeLog newLog() {
+        Logger.debug("newLog()");
+        return new NativeLog(libvlc);
     }
 
     // === Clock ================================================================
