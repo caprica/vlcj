@@ -42,6 +42,9 @@ import com.sun.jna.Pointer;
  * <p>
  * The native library specifies that implementations of native log handlers (like
  * that encapsulated within this class) must be thread-safe.
+ * <p>
+ * The default log level is {@link libvlc_log_level_e#NOTICE}, this can be changed
+ * by invoking {@link #setLevel(libvlc_log_level_e)}.
  */
 public class NativeLog {
 
