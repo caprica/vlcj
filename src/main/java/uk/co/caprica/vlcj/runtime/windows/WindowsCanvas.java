@@ -49,6 +49,9 @@ import uk.co.caprica.vlcj.logger.Logger;
  * This component implements both of those strategies behind the scenes - as far as client code is
  * concerned key and mouse listeners are added in the usual way.
  * <p>
+ * It is the responsibility of the client application to {@link #release()} this component
+ * when it is no longer needed.
+ * <p>
  * <strong>This class is experimental, unsupported and unstable in operation.</strong>
  */
 public class WindowsCanvas extends Canvas {
