@@ -32,7 +32,7 @@ import com.sun.jna.NativeLibrary;
  * Base class for tests.
  * <p>
  * This makes it a lot easier to switch vlc versions or vlc install directories without having to
- * change system properties on a lot of IDE application run- configurations.
+ * change system properties on a lot of IDE application run-configurations.
  * <p>
  * Explicitly setting a search path forces JNA to search that path <em>first</em>.
  * <p>
@@ -55,7 +55,7 @@ public abstract class VlcjTest {
      * <p>
      * This is a bit more explicit than using the -Djna.library.path= system property.
      */
-    private static final String NATIVE_LIBRARY_SEARCH_PATH = null;
+    private static final String NATIVE_LIBRARY_SEARCH_PATH = "/home/linux/vlc/install/lib";
 
     /**
      * Set to true to dump out native JNA memory structures.
