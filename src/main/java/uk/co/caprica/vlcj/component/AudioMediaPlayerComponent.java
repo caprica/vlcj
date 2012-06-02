@@ -93,6 +93,8 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
         mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
         // Sub-class initialisation
         onAfterConstruct();
+        // Register listeners
+        mediaPlayer.addMediaPlayerEventListener(this);
     }
 
     /**
