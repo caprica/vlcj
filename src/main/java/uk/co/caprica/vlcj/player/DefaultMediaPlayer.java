@@ -1612,7 +1612,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                     libvlc.libvlc_event_detach(mediaEventManager, event.intValue(), callback, null);
                 }
             }
-            mediaEventManager = null;
         }
     }
 
