@@ -775,7 +775,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
     @Override
     public AudioOutputDeviceType getAudioOutputDeviceType() {
-        Logger.debug("audioOutputDeviceType()");
+        Logger.debug("getAudioOutputDeviceType()");
         return AudioOutputDeviceType.valueOf(libvlc.libvlc_audio_output_get_device_type(mediaPlayerInstance));
     }
 
