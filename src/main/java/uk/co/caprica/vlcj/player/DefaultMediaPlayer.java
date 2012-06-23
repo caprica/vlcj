@@ -1093,7 +1093,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         if(media != null) {
             PointerByReference tracks = new PointerByReference();
             int numberOfTracks = libvlc.libvlc_media_get_tracks_info(media, tracks);
-            Logger.trace("numberOfTracks={}", numberOfTracks);
+            Logger.debug("numberOfTracks={}", numberOfTracks);
             List<TrackInfo> result = new ArrayList<TrackInfo>(numberOfTracks);
             if(numberOfTracks > 0) {
                 libvlc_media_track_info_t trackInfos = new libvlc_media_track_info_t(tracks.getValue());
