@@ -294,12 +294,15 @@ public class MediaPlayerFactory {
     public List<AudioOutput> getAudioOutputs() {
         Logger.debug("getAudioOutputs()");
         List<AudioOutput> result = new ArrayList<AudioOutput>();
-        libvlc_audio_output_t audioOutput = libvlc.libvlc_audio_output_list_get(instance);
-        while(audioOutput != null) {
-            result.add(new AudioOutput(audioOutput.psz_name, audioOutput.psz_description, getAudioOutputDevices(audioOutput.psz_name)));
-            audioOutput = audioOutput.p_next;
+        libvlc_audio_output_t audioOutputs = libvlc.libvlc_audio_output_list_get(instance);
+        if(audioOutputs != null) {
+            libvlc_audio_output_t audioOutput = audioOutputs;
+            while(audioOutput != null) {
+                result.add(new AudioOutput(audioOutput.psz_name, audioOutput.psz_description, getAudioOutputDevices(audioOutput.psz_name)));
+                audioOutput = audioOutput.p_next;
+            }
+            libvlc.libvlc_audio_output_list_release(audioOutputs);
         }
-        libvlc.libvlc_audio_output_list_release(audioOutput);
         return result;
     }
 
@@ -319,13 +322,13 @@ public class MediaPlayerFactory {
             Pointer deviceIdPtr = libvlc.libvlc_audio_output_device_id(instance, outputName, i);
             if(deviceIdPtr != null) {
                 deviceId = deviceIdPtr.getString(0, false);
-                libvlc.libvlc_free(deviceIdPtr);
+                libvlc.libvlc_free(deviceIdPtr); // FIXME why not nativestring?
             }
             String longName = null;
             Pointer longNamePtr = libvlc.libvlc_audio_output_device_longname(instance, outputName, i);
             if(longNamePtr != null) {
                 longName = longNamePtr.getString(0, false);
-                libvlc.libvlc_free(longNamePtr);
+                libvlc.libvlc_free(longNamePtr);  // FIXME why not nativestring?
             }
             result.add(new AudioDevice(deviceId, longName));
         }
