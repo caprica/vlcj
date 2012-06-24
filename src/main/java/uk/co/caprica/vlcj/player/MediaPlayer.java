@@ -1270,11 +1270,11 @@ public interface MediaPlayer {
      * Format variables are available:
      * <pre>
      * Time related:
-     *   %Y = year
-     *   %d = day
-     *   %H = hour
-     *   %M = minute
-     *   %S = second
+     *  %Y = year
+     *  %d = day
+     *  %H = hour
+     *  %M = minute
+     *  %S = second
      * </pre> 
      * Meta data related:
      * <pre>
