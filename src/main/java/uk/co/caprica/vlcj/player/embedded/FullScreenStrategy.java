@@ -37,7 +37,7 @@ public interface FullScreenStrategy {
     /**
      * Test whether or not full-screen mode is currently active.
      * 
-     * @return true if full-screen mode is active, otherwise false
+     * @return <code>true</code> if full-screen mode is active; otherwise <code>false</code>
      */
     boolean isFullScreenMode();
 }
