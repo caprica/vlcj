@@ -288,6 +288,10 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
             libvlc.libvlc_media_list_player_release(mediaListPlayerInstance);
             Logger.debug("Media list player released");
         }
+        
+        Logger.debug("Shut down listeners...");
+        listenersService.shutdown();
+        Logger.debug("Listeners shut down.");
     }
 
     /**
