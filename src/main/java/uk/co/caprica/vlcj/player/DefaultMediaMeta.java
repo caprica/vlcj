@@ -315,7 +315,7 @@ class DefaultMediaMeta implements MediaMeta {
      * @param value meta data value
      */
     private void setMeta(libvlc_meta_t metaType, String value) {
-        Logger.trace("getMeta(metaType={},media={},value={})", metaType, media, value);
+        Logger.trace("setMeta(metaType={},media={},value={})", metaType, media, value);
         libvlc.libvlc_media_set_meta(media, metaType.intValue(), value);
     }
 
