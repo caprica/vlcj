@@ -318,18 +318,8 @@ public class MediaPlayerFactory {
         Logger.debug("deviceCount={}", deviceCount);
         List<AudioDevice> result = new ArrayList<AudioDevice>(deviceCount);
         for(int i = 0; i < deviceCount; i ++ ) {
-            String deviceId = null;
-            Pointer deviceIdPtr = libvlc.libvlc_audio_output_device_id(instance, outputName, i);
-            if(deviceIdPtr != null) {
-                deviceId = deviceIdPtr.getString(0, false);
-                libvlc.libvlc_free(deviceIdPtr); // FIXME why not nativestring?
-            }
-            String longName = null;
-            Pointer longNamePtr = libvlc.libvlc_audio_output_device_longname(instance, outputName, i);
-            if(longNamePtr != null) {
-                longName = longNamePtr.getString(0, false);
-                libvlc.libvlc_free(longNamePtr);  // FIXME why not nativestring?
-            }
+            String deviceId = NativeString.getNativeString(libvlc, libvlc.libvlc_audio_output_device_id(instance, outputName, i));
+            String longName = NativeString.getNativeString(libvlc, libvlc.libvlc_audio_output_device_longname(instance, outputName, i));
             result.add(new AudioDevice(deviceId, longName));
         }
         return result;
