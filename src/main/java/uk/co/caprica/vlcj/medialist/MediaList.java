@@ -158,6 +158,7 @@ public class MediaList {
      * @param standardMediaOptions options to apply to all subsequently played media items
      */
     public final void setStandardMediaOptions(String... standardMediaOptions) {
+        Logger.debug("setStandardMediaOptions(standardMediaOptions={})", Arrays.toString(standardMediaOptions));
         this.standardMediaOptions = standardMediaOptions;
     }
 
@@ -168,7 +169,7 @@ public class MediaList {
      * @param mediaOptions zero or more media item options
      */
     public final void addMedia(String mrl, String... mediaOptions) {
-        Logger.debug("addMedia(mrl={},mediaOptions={})", mrl, mediaOptions);
+        Logger.debug("addMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
         try {
             lock();
             // Create a new native media descriptor
@@ -191,7 +192,7 @@ public class MediaList {
      * @param mediaOptions zero or more media item options
      */
     public final void insertMedia(int index, String mrl, String... mediaOptions) {
-        Logger.debug("insertMedia(index={},mrl={},mediaOptions={})", index, mrl, mediaOptions);
+        Logger.debug("insertMedia(index={},mrl={},mediaOptions={})", index, mrl, Arrays.toString(mediaOptions));
         try {
             lock();
             // Create a new native media descriptor
