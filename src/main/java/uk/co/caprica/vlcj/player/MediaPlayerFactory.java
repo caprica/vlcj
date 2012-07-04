@@ -54,8 +54,6 @@ import uk.co.caprica.vlcj.player.manager.DefaultMediaManager;
 import uk.co.caprica.vlcj.player.manager.MediaManager;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
-import com.sun.jna.Pointer;
-
 /**
  * Factory for media player instances.
  * <p>
