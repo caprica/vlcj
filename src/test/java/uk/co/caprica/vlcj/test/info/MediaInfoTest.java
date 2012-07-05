@@ -68,7 +68,7 @@ public class MediaInfoTest extends VlcjTest {
         mediaPlayer.start();
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(3000);
         }
         catch(InterruptedException e) {
         }
