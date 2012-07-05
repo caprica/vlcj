@@ -987,65 +987,29 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public List<TrackDescription> getTitleDescriptions() {
         Logger.debug("getTitleDescriptions()");
-        List<TrackDescription> trackDescriptionList = new ArrayList<TrackDescription>();
         libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_title_description(mediaPlayerInstance);
-        libvlc_track_description_t trackDescription = trackDescriptions;
-        while(trackDescription != null) {
-            trackDescriptionList.add(new TrackDescription(trackDescription.i_id, trackDescription.psz_name));
-            trackDescription = trackDescription.p_next;
-        }
-        if(trackDescriptions != null) {
-            libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
-        }
-        return trackDescriptionList;
+        return getTrackDescriptions(trackDescriptions);
     }
 
     @Override
     public List<TrackDescription> getVideoDescriptions() {
         Logger.debug("getVideoDescriptions()");
-        List<TrackDescription> trackDescriptionList = new ArrayList<TrackDescription>();
         libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_track_description(mediaPlayerInstance);
-        libvlc_track_description_t trackDescription = trackDescriptions;
-        while(trackDescription != null) {
-            trackDescriptionList.add(new TrackDescription(trackDescription.i_id, trackDescription.psz_name));
-            trackDescription = trackDescription.p_next;
-        }
-        if(trackDescriptions != null) {
-            libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
-        }
-        return trackDescriptionList;
+        return getTrackDescriptions(trackDescriptions);
     }
 
     @Override
     public List<TrackDescription> getAudioDescriptions() {
         Logger.debug("getAudioDescriptions()");
-        List<TrackDescription> trackDescriptionList = new ArrayList<TrackDescription>();
         libvlc_track_description_t trackDescriptions = libvlc.libvlc_audio_get_track_description(mediaPlayerInstance);
-        libvlc_track_description_t trackDescription = trackDescriptions;
-        while(trackDescription != null) {
-            trackDescriptionList.add(new TrackDescription(trackDescription.i_id, trackDescription.psz_name));
-            trackDescription = trackDescription.p_next;
-        }
-        if(trackDescriptions != null) {
-            libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
-        }
-        return trackDescriptionList;
+        return getTrackDescriptions(trackDescriptions);
     }
 
     @Override
     public List<TrackDescription> getSpuDescriptions() {
         Logger.debug("getSpuDescriptions()");
-        List<TrackDescription> trackDescriptionList = new ArrayList<TrackDescription>();
         libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_spu_description(mediaPlayerInstance);
-        libvlc_track_description_t trackDescription = trackDescriptions;
-        while(trackDescription != null) {
-            trackDescriptionList.add(new TrackDescription(trackDescription.i_id, trackDescription.psz_name));
-            trackDescription = trackDescription.p_next;
-        }
-        if(trackDescriptions != null) {
-            libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
-        }
-        return trackDescriptionList;
+        return getTrackDescriptions(trackDescriptions);
     }
 
     @Override
@@ -1143,6 +1107,26 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                 return result;
             }
         });
+    }
+
+    /**
+     * Get track descriptions.
+     * 
+     * @param trackDescriptions native track descriptions, this pointer will be freed by this method
+     * @return collection of track descriptions
+     */
+    private List<TrackDescription> getTrackDescriptions(libvlc_track_description_t trackDescriptions) {
+        Logger.debug("getTrackDescriptions()");
+        List<TrackDescription> trackDescriptionList = new ArrayList<TrackDescription>();
+        libvlc_track_description_t trackDescription = trackDescriptions;
+        while(trackDescription != null) {
+            trackDescriptionList.add(new TrackDescription(trackDescription.i_id, trackDescription.psz_name));
+            trackDescription = trackDescription.p_next;
+        }
+        if(trackDescriptions != null) {
+            libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
+        }
+        return trackDescriptionList;
     }
 
     // === Snapshot Controls ====================================================
