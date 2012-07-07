@@ -457,5 +457,6 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     protected void finalize() throws Throwable {
         Logger.debug("finalize()");
         Logger.debug("Media list player has been garbage collected");
+        super.finalize();
     }
 }

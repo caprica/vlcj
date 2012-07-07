@@ -102,7 +102,7 @@ public class MediaPlayerLatch {
     /**
      * Short-lived listener to wait for playing/error events.
      */
-    private final class LatchListener extends MediaPlayerEventAdapter {
+    private static final class LatchListener extends MediaPlayerEventAdapter {
 
         /**
          * Synchronisation latch.

@@ -152,6 +152,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
 
     @Override
     public final void paint(Graphics g) {
+        // The use of the non-short-circuit logical '|' operator here is intentional
         if(layoutWidth != (layoutWidth = getWidth()) | layoutHeight != (layoutHeight = getHeight())) {
             onNewSize(layoutWidth, layoutHeight);
         }
