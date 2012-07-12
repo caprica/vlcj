@@ -49,6 +49,8 @@ send an email to the following address for more information:
 
 > mark [dot] lee [at] capricasoftware [dot] co [dot] uk
 
+You can also follow @capricasoftware on Twitter for vlcj news.
+
 License
 -------
 
