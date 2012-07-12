@@ -29,6 +29,8 @@ exposed by libvlc 2.1.x (available in vlc git).
 
 28/01/2012 Moved to github.
 
+You can also follow @capricasoftware on Twitter for more vlcj news.
+
 Documentation
 -------------
 
@@ -48,8 +50,6 @@ Support for commercial projects is provided exclusively on commercial terms -
 send an email to the following address for more information:
 
 > mark [dot] lee [at] capricasoftware [dot] co [dot] uk
-
-You can also follow @capricasoftware on Twitter for vlcj news.
 
 License
 -------
