@@ -29,6 +29,8 @@ exposed by libvlc 2.1.x (available in vlc git).
 
 28/01/2012 Moved to github.
 
+You can also follow @capricasoftware on Twitter for more vlcj news.
+
 Documentation
 -------------
 
