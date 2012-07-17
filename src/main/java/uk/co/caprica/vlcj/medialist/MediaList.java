@@ -344,6 +344,9 @@ public class MediaList {
         if(mediaListInstance == null) {
             mediaListInstance = libvlc.libvlc_media_list_new(instance);
         }
+        else {
+            libvlc.libvlc_media_list_retain(mediaListInstance);
+        }
 
         this.mediaListInstance = mediaListInstance;
         Logger.debug("mediaListInstance={}", mediaListInstance);
