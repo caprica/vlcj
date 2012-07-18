@@ -104,6 +104,14 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  *     }
  * };
  * </pre>
+ * The media player component be requested to enable hardware accelerated decoding via the
+ * {@link #EmbeddedMediaPlayerComponent(boolean)} constructor. 
+ * <p>
+ * The implementation of this will be undone if a subclass overrides {@link #onGetMediaPlayerFactoryArgs()}
+ * or {@link #onGetMediaPlayerFactory()} - if one or other of those methods is overridden then the 
+ * subclass is responsible for enabling hardware accelerated decoding if so desired.
+ * <p>
+ * Currently the default behaviour is to <em>not</em> enable hardware accelerated decoding.
  */
 @SuppressWarnings("serial")
 public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEventListener {
@@ -127,6 +135,24 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
         "dummy"
     };
 
+    /**
+     * Factory initialisation arguments for hardware accelerated decoding.
+     * <p>
+     * A sub-class has access to these default arguments so new ones could be merged with these if
+     * required.
+     */
+    protected static final String[] HARDWARE_DECODING_ARGUMENTS = {
+        "--ffmpeg-hw"
+    };
+    
+    /**
+     * Flag to attempt to enable hardware accelerated decoding.
+     * <p>
+     * Hardware accelerated decoding will obviously only be enabled if the operating system
+     * and GPU supports it.
+     */
+    private final boolean enableHardwareDecoding;
+    
     /**
      * Media player factory.
      */
@@ -156,6 +182,16 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * Construct a media player component.
      */
     public EmbeddedMediaPlayerComponent() {
+        this(false);
+    }
+    
+    /**
+     * Construct a media player component.
+     * 
+     * @param enableHardwareDecoding <code>true</code> to enable hardware decoding of video, if supported; <code>false</code> otherwise
+     */
+    public EmbeddedMediaPlayerComponent(boolean enableHardwareDecoding) {
+        this.enableHardwareDecoding = enableHardwareDecoding;
         // Create the native resources
         mediaPlayerFactory = onGetMediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(onGetFullScreenStrategy());
@@ -173,7 +209,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
         // Sub-class initialisation
         onAfterConstruct();
     }
-
+    
     /**
      * Get the media player factory reference.
      * 
@@ -245,6 +281,9 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * <p>
      * When this component is released via {@link #release()} the factory instance returned by this
      * method will also be released.
+     * <p>
+     * If a sub-class overrides this method then {@link #enableHardwareDecoding} will be ignored
+     * and instead the subclass is responsible for enabling hardware decoding if so desired. 
      * 
      * @return media player factory
      */
@@ -258,11 +297,23 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * <p>
      * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
      * guarantee that {@link #onGetMediaPlayerFactoryArgs()} will be called.
+     * <p>
+     * If a sub-class overrides this method then {@link #enableHardwareDecoding} will be ignored
+     * and instead the subclass is responsible for enabling hardware decoding if so desired. 
      * 
      * @return media player factory initialisation arguments
      */
     protected String[] onGetMediaPlayerFactoryArgs() {
-        return DEFAULT_FACTORY_ARGUMENTS;
+        String[] args;
+        if(enableHardwareDecoding) {
+            args = new String[DEFAULT_FACTORY_ARGUMENTS.length + HARDWARE_DECODING_ARGUMENTS.length];
+            System.arraycopy(DEFAULT_FACTORY_ARGUMENTS, 0, args, 0, DEFAULT_FACTORY_ARGUMENTS.length);
+            System.arraycopy(HARDWARE_DECODING_ARGUMENTS, 0, args, DEFAULT_FACTORY_ARGUMENTS.length, HARDWARE_DECODING_ARGUMENTS.length);
+        }
+        else {
+            args = DEFAULT_FACTORY_ARGUMENTS;
+        }
+        return args;
     }
 
     /**
