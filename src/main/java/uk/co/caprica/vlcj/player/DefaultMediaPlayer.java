@@ -57,6 +57,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
 import uk.co.caprica.vlcj.logger.Logger;
+import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventFactory;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
@@ -368,6 +369,21 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                 return result;
             }
         });
+    }
+    
+    @Override
+    public MediaList subItemsMediaList() {
+        Logger.debug("subItemsMediaList()");
+        MediaList result;
+        if(mediaInstance != null) {
+            libvlc_media_list_t mediaListInstance = libvlc.libvlc_media_subitems(mediaInstance);
+            result = new MediaList(libvlc, instance, mediaListInstance);
+            libvlc.libvlc_media_list_release(mediaListInstance);
+        }
+        else {
+            result = null;
+        }
+        return result;
     }
 
     @Override

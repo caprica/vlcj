@@ -34,6 +34,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
 
 /**
@@ -362,6 +363,13 @@ public interface MediaPlayer {
      */
     List<libvlc_media_t> subItemsMedia();
 
+    /**
+     * Get the sub-items as a {@link MediaList}.
+     * 
+     * @return sub-item media list, or <code>null</code> if there is no current media
+     */
+    MediaList subItemsMediaList();
+    
     /**
      * Play the next sub-item (if there is one).
      * <p>
