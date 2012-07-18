@@ -323,7 +323,7 @@ public class MediaList {
         else {
             subItems = Collections.emptyList();
         }
-        return new MediaListItem(name, mrl, subItems);
+        return new MediaListItem(mediaInstance, name, mrl, subItems);
     }
 
     /**
