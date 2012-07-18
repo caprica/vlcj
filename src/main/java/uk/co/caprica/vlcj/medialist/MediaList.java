@@ -286,6 +286,7 @@ public class MediaList {
             for(int i = 0; i < libvlc.libvlc_media_list_count(mediaListInstance); i++) { 
                 libvlc_media_t mediaInstance = libvlc.libvlc_media_list_item_at_index(mediaListInstance, i);
                 result.add(newMediaListItem(mediaInstance));
+                libvlc.libvlc_media_release(mediaInstance);
             }
         }
         finally {
