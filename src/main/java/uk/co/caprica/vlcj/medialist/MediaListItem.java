@@ -22,8 +22,6 @@ package uk.co.caprica.vlcj.medialist;
 import java.util.Collections;
 import java.util.List;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-
 /**
  * Encapsulation of an item in a {@link MediaList}.
  * <p>
@@ -35,11 +33,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
  */
 public class MediaListItem {
 
-    /**
-     * Native media instance.
-     */
-    private final libvlc_media_t mediaInstance;
-    
     /**
      * Name/description of the item.
      */
@@ -57,17 +50,15 @@ public class MediaListItem {
     
     /**
      * Create a media list item.
-     *
-     * @param mediaInstance native media instance 
+     * 
      * @param name name/description
      * @param mrl MRL
      * @param subItems
      */
-    public MediaListItem(libvlc_media_t mediaInstance, String name, String mrl, List<MediaListItem> subItems) {
+    public MediaListItem(String name, String mrl, List<MediaListItem> subItems) {
         this.name = name;
         this.mrl = mrl;
         this.subItems = subItems;
-        this.mediaInstance = mediaInstance;
     }
     
     /**
@@ -88,15 +79,6 @@ public class MediaListItem {
         return mrl;
     }
 
-    /**
-     * Get the native media instance.
-     * 
-     * @return native media instance
-     */
-    public final libvlc_media_t mediaInstance() {
-        return mediaInstance;
-    }
-    
     /**
      * Get the sub-item list.
      * 
