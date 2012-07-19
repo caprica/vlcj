@@ -66,10 +66,19 @@ public class SearchMetaTest extends VlcjTest {
             files.addAll(scan(new File(arg)));
         }
 
+        // Dump out the meta
         for(File file : files) {
             String mrl = file.getAbsolutePath();
             MediaMeta meta = factory.getMediaMeta(mrl, true);
             Logger.info("{} -> {}", mrl, meta);
+            meta.release();
+        }
+
+        // Dump out only the title and the length
+        for(File file : files) {
+            String mrl = file.getAbsolutePath();
+            MediaMeta meta = factory.getMediaMeta(mrl, true);
+            Logger.info("{} -> {}ms", meta.getTitle(), meta.getLength());
             meta.release();
         }
 
