@@ -37,6 +37,7 @@ import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
+import uk.co.caprica.vlcj.player.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
@@ -569,6 +570,46 @@ public class MediaPlayerFactory {
         return new NativeLog(libvlc);
     }
 
+    // === Media Discoverer =====================================================
+
+    /**
+     * Create a new native media service discoverer.
+     * 
+     * @param name name of the required service discoverer, e.g. "audio", "video".
+     * @return native media discoverer component
+     */
+    public MediaDiscoverer newMediaDiscoverer(String name) {
+        Logger.debug("newMediaDiscoverer(name={})", name);
+        return new MediaDiscoverer(libvlc, instance, name);
+    }
+    
+    /**
+     * Create a new native audio media service discoverer.
+     * <p>
+     * This method is simply a convenient wrapper around {@link #newMediaDiscoverer(String)}.
+     * 
+     * @return native media discoverer component
+     */
+    public MediaDiscoverer newAudioMediaDiscoverer() {
+        Logger.debug("newAudioMediaDiscoverer()");
+        return newMediaDiscoverer("audio");
+    }
+    
+    /**
+     * Create a new native video media service discoverer.
+     * <p>
+     * This should return for example video capture devices currently attached to
+     * the system.
+     * <p>
+     * This method is simply a convenient wrapper around {@link #newMediaDiscoverer(String)}.
+     * 
+     * @return native media discoverer component
+     */
+    public MediaDiscoverer newVideoMediaDiscoverer() {
+        Logger.debug("newVideoMediaDiscoverer()");
+        return newMediaDiscoverer("video");
+    }
+    
     // === Clock ================================================================
 
     /**
