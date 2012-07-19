@@ -22,8 +22,13 @@ where you can find more information as well as some new simple tutorials.
 News
 ----
 
-27/05/2012 New pre-release snapshot version 2.2.0 integrates the new native log
-exposed by libvlc 2.1.x (available in vlc git).
+19/07/2012 New pre-release snapshot version 2.2.0:
+
+* new native log integration (libvlc 2.1.x);
+* native media discoverer integration - it is now possible to get list of audio and video capture devices;
+* media meta data now provides media length (if available);
+* make it easier to enable hardware decoding in the media player component framework;
+* minor bug fixes and memory leak fixes.
 
 20/05/2012 Released version 2.1.0, for use with libvlc 2.0.
 
