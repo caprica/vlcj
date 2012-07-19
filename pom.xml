@@ -167,7 +167,7 @@
 					<doctitle>${project.name} ${project.version} API Documentation</doctitle>
 					<docfilessubdirs>true</docfilessubdirs>
 					<encoding>UTF-8</encoding>
-					<footer>(C)2012 Caprica Software Limited"</footer>
+					<footer>(C)2012 Caprica Software Limited</footer>
 					<show>public</show>
 				</configuration>
 				<executions>
