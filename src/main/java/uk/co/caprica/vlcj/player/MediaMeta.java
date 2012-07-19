@@ -26,6 +26,8 @@ import java.awt.image.BufferedImage;
  * <p>
  * It is possible that any particular meta data value may be <code>null</code>.
  * <p>
+ * It may be necessary for the media to be parsed before any meta data is available.
+ * <p>
  * When invoking setter methods to change media meta data then that change is <em>not</em> applied 
  * to the media file. It is necessary to call {@link #save()} to commit the changes to the media 
  * file.
@@ -302,6 +304,13 @@ public interface MediaMeta {
      */
     BufferedImage getArtwork();
  
+    /**
+     * Get the media length, if available.
+     * 
+     * @return length (milliseconds)
+     */
+    long getLength();
+    
     /**
      * Write the meta data to the media.
      */

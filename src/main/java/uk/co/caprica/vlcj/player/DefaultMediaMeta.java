@@ -273,6 +273,10 @@ class DefaultMediaMeta implements MediaMeta {
         return artwork;
     }
 
+    public final long getLength() {
+        return libvlc.libvlc_media_get_duration(media);
+    }
+    
     @Override
     public final void save() {
         Logger.debug("save()");
@@ -339,7 +343,8 @@ class DefaultMediaMeta implements MediaMeta {
         sb.append("publisher=").append(getPublisher()).append(',');
         sb.append("encodedBy=").append(getEncodedBy()).append(',');
         sb.append("artworkUrl=").append(getArtworkUrl()).append(',');
-        sb.append("trackId=").append(getTrackId()).append(']');
+        sb.append("trackId=").append(getTrackId()).append(',');
+        sb.append("length=").append(getLength()).append(']');
         return sb.toString();
     }
 }
