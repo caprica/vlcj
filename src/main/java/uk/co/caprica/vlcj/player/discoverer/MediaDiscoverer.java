@@ -31,6 +31,10 @@ import uk.co.caprica.vlcj.player.NativeString;
 
 /**
  * Encapsulation of a native media discoverer component.
+ * <p>
+ * This is a minimal implementation providing a list of media <em>on-demand</em> - it
+ * does not implement any events and will not automatically update if and when new
+ * media is discovered.
  */
 public class MediaDiscoverer {
 
