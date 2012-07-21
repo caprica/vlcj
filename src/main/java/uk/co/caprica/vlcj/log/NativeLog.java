@@ -45,6 +45,9 @@ import com.sun.jna.Pointer;
  * <p>
  * The default log level is {@link libvlc_log_level_e#NOTICE}, this can be changed
  * by invoking {@link #setLevel(libvlc_log_level_e)}.
+ * <p>
+ * Using a NativeLog component will <em>prevent</em> the native log from being
+ * output to the standard output and standard error streams. 
  */
 public class NativeLog {
 
