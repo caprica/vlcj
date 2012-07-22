@@ -60,7 +60,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  * applications are free to directly use the {@link MediaPlayerFactory}, if required, as has always
  * been the case.
  * <p>
- * This component also adds implements the various media player listener interfaces, consequently an
+ * This component also implements the various media player listener interfaces, consequently an
  * implementation sub-class can simply override those listener methods to handle events.
  * <p>
  * Applications can get a handle to the underlying media player object by invoking
@@ -104,6 +104,13 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  *     }
  * };
  * </pre>
+ * When the media player component is no longer needed, it should be released by invoking the
+ * {@link #release()} method.
+ * <p>
+ * Since the media player factory associated by this component may be created by this component
+ * itself or may be shared with some other media player resources it is the responsibility of
+ * the application to also release the media player factory at the appropriate time.
+ * <p>
  * The media player component be requested to enable hardware accelerated decoding via the
  * {@link #EmbeddedMediaPlayerComponent(boolean)} constructor. 
  * <p>
@@ -252,11 +259,13 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
 
     /**
      * Release the media player component and the associated native media player resources.
+     * <p>
+     * The associated media player factory will <em>not</em> be released, the client 
+     * application is responsible for releasing the factory at the appropriate time.
      */
     public final void release() {
         onBeforeRelease();
         mediaPlayer.release();
-        mediaPlayerFactory.release();
         onAfterRelease();
     }
 
@@ -278,9 +287,6 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * <p>
      * The default implementation will invoke the {@link #onGetMediaPlayerFactoryArgs()} template
      * method.
-     * <p>
-     * When this component is released via {@link #release()} the factory instance returned by this
-     * method will also be released.
      * <p>
      * If a sub-class overrides this method then {@link #enableHardwareDecoding} will be ignored
      * and instead the subclass is responsible for enabling hardware decoding if so desired. 

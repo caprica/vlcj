@@ -56,6 +56,13 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * <p>
  * An audio player may still have a user interface, but it will not have an associated video
  * surface.
+ * <p>
+ * When the media player component is no longer needed, it should be released by invoking the
+ * {@link #release()} method.
+ * <p>
+ * Since the media player factory associated by this component may be created by this component
+ * itself or may be shared with some other media player resources it is the responsibility of
+ * the application to also release the media player factory at the appropriate time.
  */
 public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
 
@@ -119,11 +126,13 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
 
     /**
      * Release the media player component and the associated native media player resources.
+     * <p>
+     * The associated media player factory will <em>not</em> be released, the client 
+     * application is responsible for releasing the factory at the appropriate time.
      */
     public final void release() {
         onBeforeRelease();
         mediaPlayer.release();
-        mediaPlayerFactory.release();
         onAfterRelease();
     }
 
@@ -132,9 +141,6 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
      * <p>
      * The default implementation will invoke the {@link #onGetMediaPlayerFactoryArgs()} template
      * method.
-     * <p>
-     * When this component is released via {@link #release()} the factory instance returned by this
-     * method will also be released.
      * 
      * @return media player factory
      */
