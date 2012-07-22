@@ -39,20 +39,19 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * decoding libraries installed.
  * <p>
  * Specify three things on the command-line:
- * 
  * <pre>
  *   [dvd-device] [output-file] [preset]
  * </pre>
- * 
  * For example:
- * 
  * <pre>
  *   simpledvd:///dev/dvd /home/rip.webm WEBM_LOW
  * </pre>
- * 
  * It is recommended to try the WEBM_LOW preset first.
  * <p>
  * Encoding a full DVD is going to be slow.
+ * <p>
+ * In principle, a start-time and end-time could also be set via media options - e.g. to trim
+ * out unnecessary intro or trailing credits from the movie. 
  */
 public class RipDvdTest extends VlcjTest {
 
