@@ -574,6 +574,8 @@ public class MediaPlayerFactory {
 
     /**
      * Create a new native media service discoverer.
+     * <p>
+     * Not all media discoveres are supported on all platforms.
      * 
      * @param name name of the required service discoverer, e.g. "audio", "video".
      * @return native media discoverer component
@@ -602,6 +604,8 @@ public class MediaPlayerFactory {
      * the system.
      * <p>
      * This method is simply a convenient wrapper around {@link #newMediaDiscoverer(String)}.
+     * <p>
+     * The video discoverer may not be available on all platforms.
      * 
      * @return native media discoverer component
      */

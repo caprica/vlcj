@@ -132,7 +132,7 @@ public class MediaDiscoverer {
         Logger.debug("mediaDiscovererInstance={}", mediaDiscovererInstance);
         
         if(mediaDiscovererInstance == null) {
-            throw new IllegalArgumentException("No media discoverer for '" + name + "'");
+            throw new IllegalArgumentException("No media discoverer for '" + name + "' is available on this platform");
         }
     }
 
