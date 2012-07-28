@@ -562,6 +562,8 @@ public class MediaPlayerFactory {
 
     /**
      * Create a new native log component.
+     * <p>
+     * <strong>The native log requires vlc 2.1.0 or later.</strong>
      * 
      * @return native log component
      */

@@ -45,6 +45,8 @@ import com.sun.jna.Pointer;
  * <p>
  * The default log level is {@link libvlc_log_level_e#NOTICE}, this can be changed
  * by invoking {@link #setLevel(libvlc_log_level_e)}.
+ * <p>
+ * <strong>The native log requires vlc 2.1.0 or later.</strong>
  */
 public class NativeLog {
 
