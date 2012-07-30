@@ -1511,7 +1511,7 @@ public interface MediaPlayer {
      * <p>
      * The native media instance may be an automatically/scripted added sub-item.
      * 
-     * @return URL-encoded media resource locator
+     * @return URL-encoded media resource locator, or <code>null</code> if there is no current media
      */
     String mrl();
 
