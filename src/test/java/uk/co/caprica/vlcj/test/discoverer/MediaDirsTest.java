@@ -44,7 +44,7 @@ public class MediaDirsTest extends VlcjTest implements MediaListEventListener {
         MediaDiscoverer videoMediaDiscoverer = mediaPlayerFactory.newMediaDiscoverer("video_dir");
         Thread.sleep(500); // FIXME not acceptable
         MediaList videoFileList = videoMediaDiscoverer.getMediaList();
-        videoFileList.addMediaListEventListener(this);
+//        videoFileList.addMediaListEventListener(this);
         List<MediaListItem> videoFiles = videoFileList.items();
         System.out.println("Video Files:");
         dumpItems(videoFiles, 1);
@@ -54,7 +54,7 @@ public class MediaDirsTest extends VlcjTest implements MediaListEventListener {
         MediaDiscoverer audioMediaDiscoverer = mediaPlayerFactory.newMediaDiscoverer("audio_dir");
         Thread.sleep(500); // FIXME not acceptable
         MediaList audioFileList = audioMediaDiscoverer.getMediaList();
-        audioFileList.addMediaListEventListener(this);
+//        audioFileList.addMediaListEventListener(this);
         List<MediaListItem> audioFiles = audioFileList.items();
         System.out.println("Audio Files:");
         dumpItems(audioFiles, 1);
@@ -64,14 +64,14 @@ public class MediaDirsTest extends VlcjTest implements MediaListEventListener {
         MediaDiscoverer pictureMediaDiscoverer = mediaPlayerFactory.newMediaDiscoverer("picture_dir");
         Thread.sleep(500); // FIXME not acceptable
         MediaList pictureFileList = pictureMediaDiscoverer.getMediaList();
-        pictureFileList.addMediaListEventListener(this);
+//        pictureFileList.addMediaListEventListener(this);
         List<MediaListItem> pictureFiles = pictureFileList.items();
         System.out.println("Picture Files:");
         dumpItems(pictureFiles, 1);
         
         System.out.println("DONE!");
         
-        Thread.currentThread().join();
+//        Thread.currentThread().join();
     }
 
     private static void dumpItems(List<MediaListItem> items, int indent) {
