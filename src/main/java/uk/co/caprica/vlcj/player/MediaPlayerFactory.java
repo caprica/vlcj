@@ -533,6 +533,9 @@ public class MediaPlayerFactory {
 
     /**
      * Get local media meta data.
+     * <p>
+     * Note that requesting meta data may cause one or more HTTP connections to
+     * be made to external web-sites to attempt download of album art.
      * 
      * @param mediaPath path to the local media
      * @param parse <code>true</code> if the media should be parsed immediately</code>; otherwise <code>false</code>

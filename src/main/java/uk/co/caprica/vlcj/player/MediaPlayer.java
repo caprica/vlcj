@@ -272,6 +272,9 @@ public interface MediaPlayer {
      * Some media types require that the media be parsed before accessing meta data - it is the
      * responsibility of the client application to parse the media if required, see
      * {@link #parseMedia()}.
+     * <p>
+     * Note that requesting meta data may cause one or more HTTP connections to
+     * be made to external web-sites to attempt download of album art.
      * 
      * @return meta data
      */
