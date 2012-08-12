@@ -73,29 +73,36 @@ public class MediaPlayerLatch {
      * Play the media and wait for it to either start playing or error.
      * 
      * @return true if the media definitely started playing and false if it did not or the thread
-     *         was interrupted while waiting (unlikely, but in which case the media player
-     *         <em>might</em> still start)
+     *          was interrupted while waiting (unlikely, but in which case the media player
+     *          <em>might</em> still start)
      */
     public boolean play() {
         Logger.debug("play()");
-        CountDownLatch latch = new CountDownLatch(1);
-        LatchListener listener = new LatchListener(latch);
-        mediaPlayer.addMediaPlayerEventListener(listener);
-        mediaPlayer.play();
-        try {
-            Logger.debug("Waiting for media playing or error...");
-            latch.await();
-            Logger.debug("Finished waiting.");
-            boolean started = listener.playing.get();
-            Logger.debug("started={}", started);
-            return started;
+        // If the media player is already playing, then the latch will wait for an event that
+        // will never arrive and so will block incorrectly
+        if(!mediaPlayer.isPlaying()) {
+            CountDownLatch latch = new CountDownLatch(1);
+            LatchListener listener = new LatchListener(latch);
+            mediaPlayer.addMediaPlayerEventListener(listener);
+            mediaPlayer.play();
+            try {
+                Logger.debug("Waiting for media playing or error...");
+                latch.await();
+                Logger.debug("Finished waiting.");
+                boolean started = listener.playing.get();
+                Logger.debug("started={}", started);
+                return started;
+            }
+            catch(InterruptedException e) {
+                Logger.debug("Interrupted while waiting for media player", e);
+                return false;
+            }
+            finally {
+                mediaPlayer.removeMediaPlayerEventListener(listener);
+            }
         }
-        catch(InterruptedException e) {
-            Logger.debug("Interrupted while waiting for media player", e);
-            return false;
-        }
-        finally {
-            mediaPlayer.removeMediaPlayerEventListener(listener);
+        else {
+            return true;
         }
     }
 
