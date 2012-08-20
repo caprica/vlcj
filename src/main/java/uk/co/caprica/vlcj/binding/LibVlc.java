@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.Info;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_drain_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_flush_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_pause_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_play_cb;
@@ -1503,7 +1504,7 @@ public interface LibVlc extends Library {
     void libvlc_video_set_adjust_float(libvlc_media_player_t p_mi, int option, float value);
 
     /**
-     * Get the list of available audio outputs
+     * Gets the list of available audio outputs
      * 
      * @param p_instance libvlc instance
      * @return list of available audio outputs. It must be freed it with
@@ -1513,15 +1514,18 @@ public interface LibVlc extends Library {
     libvlc_audio_output_t libvlc_audio_output_list_get(libvlc_instance_t p_instance);
 
     /**
-     * Free the list of available audio outputs
+     * Frees the list of available audio outputs
      * 
      * @param p_list list with audio outputs for release
      */
     void libvlc_audio_output_list_release(libvlc_audio_output_t p_list);
 
     /**
-     * Set the audio output. Change will be applied after stop and play.
-     * 
+     * Sets the audio output.
+     * <p>
+     * Note: Any change will take be effect only after playback is stopped and
+     * restarted. Audio output cannot be changed while playing.
+     *
      * @param p_mi media player
      * @param psz_name name of audio output, use psz_name of @see libvlc_audio_output_t
      * @return 0 if function succeded, -1 on error
@@ -1530,12 +1534,13 @@ public interface LibVlc extends Library {
 
     /**
      * Get count of devices for audio output, these devices are hardware oriented like analor or
-     * digital output of sound card
+     * digital output of sound card.
      * 
      * @param p_instance libvlc instance
      * @param psz_audio_output - name of audio output, @see libvlc_audio_output_t
      * @return number of devices
      */
+    @Deprecated
     int libvlc_audio_output_device_count(libvlc_instance_t p_instance, String psz_audio_output);
 
     /**
@@ -1546,24 +1551,69 @@ public interface LibVlc extends Library {
      * @param i_device device index
      * @return long name of device
      */
+    @Deprecated
     Pointer libvlc_audio_output_device_longname(libvlc_instance_t p_instance, String psz_audio_output, int i_device);
 
     /**
      * Get id name of device
-     * 
+     *
      * @param p_instance libvlc instance
      * @param psz_audio_output - name of audio output, @see libvlc_audio_output_t
      * @param i_device device index
      * @return id name of device, use for setting device, need to be free after use
      */
+    @Deprecated
     Pointer libvlc_audio_output_device_id(libvlc_instance_t p_instance, String psz_audio_output, int i_device);
 
     /**
-     * Set audio output device. Changes are only effective after stop and play.
-     * 
+     * Gets a list of audio output devices for a given audio output.
+     * <p>
+     * @see libvlc_audio_output_device_set().
+     *
+     * Not all audio outputs support this. In particular, an empty (NULL)
+     * list of devices does <em>not</em> imply that the specified audio output does
+     * not work.
+     *
+     * The list might not be exhaustive.
+     *
+     * Some audio output devices in the list might not actually work in some
+     * circumstances. By default, it is recommended to not specify anyexplicit
+     * audio device.
+     *
+     * @param p_instance libvlc instance
+     * @param psz_aout audio output name (as returned by libvlc_audio_output_list_get())
+     * @return A NULL-terminated linked list of potential audio output devices. It must be freed it with libvlc_audio_output_device_list_release()
+     * @version LibVLC 2.1.0 or later.
+     */
+    libvlc_audio_output_device_t libvlc_audio_output_device_list_get( libvlc_instance_t p_instance, String aout );
+
+    /**
+     * Frees a list of available audio output devices.
+     *
+     * @param p_list list with audio outputs for release
+     * @version LibVLC 2.1.0 or later.
+     */
+    void libvlc_audio_output_device_list_release(libvlc_audio_output_device_t p_list );
+
+    /**
+     * Configures an explicit audio output device for a given audio output plugin.
+     * <p>
+     * A list of possible devices can be obtained with libvlc_audio_output_device_list_get().
+     * <p>
+     * This function does not select the specified audio output plugin. libvlc_audio_output_set()
+     * is used for that purpose.
+     * <p>
+     * The syntax for the device parameter depends on the audio output. This is not
+     * portable. Only use this function if you know what you are doing.
+     * <p>
+     * Some audio outputs do not support this function (e.g. PulseAudio, WASAPI).
+     * <p>
+     * Some audio outputs require further parameters (e.g. ALSA: channels map).
+     *
      * @param p_mi media player
-     * @param psz_audio_output - name of audio output, @see libvlc_audio_output_t
+     * @param psz_audio_output - name of audio output, \see libvlc_audio_output_t
      * @param psz_device_id device
+     * @return Nothing. Errors are ignored.
      */
     void libvlc_audio_output_device_set(libvlc_media_player_t p_mi, String psz_audio_output, String psz_device_id);
 

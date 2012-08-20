@@ -17,31 +17,18 @@
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.version;
+package uk.co.caprica.vlcj.binding.internal;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
+import com.sun.jna.Structure;
 
 /**
- * Holder for run-time libvlc version information.
+ * Description for audio output device.
  */
-public class LibVlcVersion {
+public class libvlc_audio_output_device_t extends Structure {
 
-    /**
-     * Run-time version of vlc/libvlc.
-     */
-    private static final Version VERSION = new Version(LibVlc.INSTANCE.libvlc_get_version());
+    public static class ByReference extends libvlc_audio_output_device_t implements Structure.ByReference {}
 
-    /**
-     * LibVlc 2.1.0 API baseline.
-     */
-    public static final Version LIBVLC_210 = new Version("2.1.0");
-
-    /**
-     * Get the run-time version.
-     * 
-     * @return vlc/libvlc version
-     */
-    public static final Version getVersion() {
-        return VERSION;
-    }
+    public libvlc_audio_output_device_t.ByReference p_next;          // Next entry in list
+    public String                                   psz_device;      // Device identifier string
+    public String                                   psz_description; // User-friendly device description
 }

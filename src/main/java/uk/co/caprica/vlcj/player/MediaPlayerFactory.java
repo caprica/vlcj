@@ -27,6 +27,7 @@ import java.util.List;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -54,6 +55,8 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.manager.DefaultMediaManager;
 import uk.co.caprica.vlcj.player.manager.MediaManager;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.version.LibVlcVersion;
+import uk.co.caprica.vlcj.version.Version;
 
 /**
  * Factory for media player instances.
@@ -313,13 +316,28 @@ public class MediaPlayerFactory {
      */
     private List<AudioDevice> getAudioOutputDevices(String outputName) {
         Logger.debug("getAudioOutputDevices(outputName={})", outputName);
-        int deviceCount = libvlc.libvlc_audio_output_device_count(instance, outputName);
-        Logger.debug("deviceCount={}", deviceCount);
-        List<AudioDevice> result = new ArrayList<AudioDevice>(deviceCount);
-        for(int i = 0; i < deviceCount; i ++ ) {
-            String deviceId = NativeString.getNativeString(libvlc, libvlc.libvlc_audio_output_device_id(instance, outputName, i));
-            String longName = NativeString.getNativeString(libvlc, libvlc.libvlc_audio_output_device_longname(instance, outputName, i));
-            result.add(new AudioDevice(deviceId, longName));
+        List<AudioDevice> result = new ArrayList<AudioDevice>();
+        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_210)) {
+            Logger.debug("Using new audio device list");
+            libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_list_get(instance, outputName);
+            if (audioDevices != null) {
+                libvlc_audio_output_device_t audioDevice = audioDevices;
+                while(audioDevice != null) {
+                    result.add(new AudioDevice(audioDevice.psz_device, audioDevice.psz_description));
+                    audioDevice = audioDevice.p_next;
+                }
+                libvlc.libvlc_audio_output_device_list_release(audioDevices);
+            }
+        }
+        else {
+            Logger.debug("Using deprecated audio device count");
+            int deviceCount = libvlc.libvlc_audio_output_device_count(instance, outputName);
+            Logger.debug("deviceCount={}", deviceCount);
+            for(int i = 0; i < deviceCount; i ++ ) {
+                String deviceId = NativeString.getNativeString(libvlc, libvlc.libvlc_audio_output_device_id(instance, outputName, i));
+                String longName = NativeString.getNativeString(libvlc, libvlc.libvlc_audio_output_device_longname(instance, outputName, i));
+                result.add(new AudioDevice(deviceId, longName));
+            }
         }
         return result;
     }
