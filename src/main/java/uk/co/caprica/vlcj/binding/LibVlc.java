@@ -1568,7 +1568,7 @@ public interface LibVlc extends Library {
     /**
      * Gets a list of audio output devices for a given audio output.
      * <p>
-     * @see libvlc_audio_output_device_set().
+     * See {@link #libvlc_audio_output_device_set(libvlc_media_player_t, String, String)}.
      *
      * Not all audio outputs support this. In particular, an empty (NULL)
      * list of devices does <em>not</em> imply that the specified audio output does
@@ -1583,15 +1583,15 @@ public interface LibVlc extends Library {
      * @param p_instance libvlc instance
      * @param psz_aout audio output name (as returned by libvlc_audio_output_list_get())
      * @return A NULL-terminated linked list of potential audio output devices. It must be freed it with libvlc_audio_output_device_list_release()
-     * @version LibVLC 2.1.0 or later.
+     * @since LibVLC 2.1.0 or later.
      */
-    libvlc_audio_output_device_t libvlc_audio_output_device_list_get( libvlc_instance_t p_instance, String aout );
+    libvlc_audio_output_device_t libvlc_audio_output_device_list_get( libvlc_instance_t p_instance, String psz_aout );
 
     /**
      * Frees a list of available audio output devices.
      *
      * @param p_list list with audio outputs for release
-     * @version LibVLC 2.1.0 or later.
+     * @since LibVLC 2.1.0 or later.
      */
     void libvlc_audio_output_device_list_release(libvlc_audio_output_device_t p_list );
 
@@ -1613,7 +1613,6 @@ public interface LibVlc extends Library {
      * @param p_mi media player
      * @param psz_audio_output - name of audio output, \see libvlc_audio_output_t
      * @param psz_device_id device
-     * @return Nothing. Errors are ignored.
      */
     void libvlc_audio_output_device_set(libvlc_media_player_t p_mi, String psz_audio_output, String psz_device_id);
 
