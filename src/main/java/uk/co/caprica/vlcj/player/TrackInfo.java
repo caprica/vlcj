@@ -121,7 +121,7 @@ public abstract class TrackInfo implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder(100);
         sb.append(getClass().getSimpleName()).append('[');
-        sb.append("codec=").append(codec).append(',');
+        sb.append("codec=0x").append(Integer.toHexString(codec)).append(',');
         sb.append("codecName=").append(codecName).append(',');
         sb.append("id=").append(id).append(',');
         sb.append("profile=").append(profile).append(',');
