@@ -34,6 +34,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 
+import uk.co.caprica.vlcj.Info;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -95,7 +96,7 @@ public class ScriptTest extends VlcjTest {
 
         contentPane.add(splitPane, BorderLayout.CENTER);
 
-        splitPane.setDividerLocation(450);
+        splitPane.setDividerLocation(500);
         
         mainFrame = new JFrame("vlcj scripting");
         mainFrame.setSize(1200, 900);
@@ -108,10 +109,14 @@ public class ScriptTest extends VlcjTest {
         mediaPlayerFactory = new MediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
         
+        scriptEngine.put("vlcj", Info.getInstance().version());
         scriptEngine.put("mediaPlayerFactory", mediaPlayerFactory);
         scriptEngine.put("mediaPlayer", mediaPlayer);
         
         // Add some examples (not exhaustive by any means)
+        scriptTextArea.append("vlcj\n");
+        scriptTextArea.append("\n");
+        
         scriptTextArea.append("mediaPlayerFactory.version()\n");
         scriptTextArea.append("mediaPlayerFactory.changeset()\n");
         scriptTextArea.append("mediaPlayerFactory.compiler()\n");
@@ -119,6 +124,7 @@ public class ScriptTest extends VlcjTest {
         scriptTextArea.append("mediaPlayerFactory.getVideoFilters()\n");
         scriptTextArea.append("mediaPlayerFactory.getAudioOutputs()\n");
         scriptTextArea.append("\n");
+        
         scriptTextArea.append("mediaPlayer.playMedia(\"<filename>\", null)\n");
         scriptTextArea.append("mediaPlayer.startMedia(\"<filename>\", null)\n");
         scriptTextArea.append("mediaPlayer.play()\n");
