@@ -586,11 +586,17 @@ public class MediaPlayerFactory {
      * <p>
      * <strong>The native log requires vlc 2.1.0 or later.</strong>
      * 
-     * @return native log component
+     * @return native log component, or <code>null</code> if the native log is not available
      */
     public NativeLog newLog() {
         Logger.debug("newLog()");
-        return new NativeLog(libvlc);
+        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_210)) {
+            return new NativeLog(libvlc);
+        }
+        else {
+            Logger.warn("Native log not available on this platform, needs libvlc 2.1.0 or later");
+            return null;
+        }
     }
 
     // === Media Discoverer =====================================================

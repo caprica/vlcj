@@ -205,7 +205,7 @@ public class NativeLog {
         @Override
         public final void log(Pointer data, int level, String format, Pointer args) {
             // If the log is not being suppressed...
-            if(logLevel != null) {
+            if(logLevel != null && level >= logLevel.intValue()) {
                 // Allocate a new buffer to hold the formatted log message
                 ByteBuffer byteBuffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
                 // Delegate to the native library to format the log message
@@ -221,12 +221,8 @@ public class NativeLog {
                     byteBuffer.get(bytes);
                     String message = new String(bytes);
                     if(message.length() > 0) {
-                        // If the log level of this message is greater than or equal to the 
-                        // current threshold...
-                        if(level >= logLevel.intValue()) {
-                            // ...send the event
-                            raiseLogEvent(libvlc_log_level_e.level(level), message);
-                        }
+                        // ...send the event
+                        raiseLogEvent(libvlc_log_level_e.level(level), message);
                     }
                 }
                 else {
