@@ -48,16 +48,6 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaPlayerCompone
      * Construct a media list player component.
      */
     public EmbeddedMediaListPlayerComponent() {
-        this(false);
-    }
-
-    /**
-     * Construct a media list player component. 
-     * 
-     * @param enableHardwareDecoding <code>true</code> to enable hardware decoding of video, if supported; <code>false</code> otherwise
-     */
-    public EmbeddedMediaListPlayerComponent(boolean enableHardwareDecoding) {
-        super(enableHardwareDecoding);
         // Create the native resources
         MediaPlayerFactory mediaPlayerFactory = getMediaPlayerFactory();
         mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();

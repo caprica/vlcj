@@ -87,7 +87,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  * <pre>
  * mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
  *     protected String[] onGetMediaPlayerFactoryArgs() {
- *         return new String[] {&quot;--no-video-title-show&quot;, &quot;--ffmpeg-hw&quot;};
+ *         return new String[] {&quot;--no-video-title-show&quot;};
  *     }
  * 
  *     protected FullScreenStrategy onGetFullScreenStrategy() {
@@ -126,8 +126,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     /**
      * Default factory initialisation arguments.
      * <p>
-     * Sub-classes may totally disregard these arguments and provide their own - for example to
-     * enable ffmpeg hardware decoding via "--ffmpeg-hw" if supported by the OS and the GPU.
+     * Sub-classes may totally disregard these arguments and provide their own.
      * <p>
      * A sub-class has access to these default arguments so new ones could be merged with these if
      * required.
@@ -142,24 +141,6 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
         "dummy"
     };
 
-    /**
-     * Factory initialisation arguments for hardware accelerated decoding.
-     * <p>
-     * A sub-class has access to these default arguments so new ones could be merged with these if
-     * required.
-     */
-    protected static final String[] HARDWARE_DECODING_ARGUMENTS = {
-        "--ffmpeg-hw"
-    };
-    
-    /**
-     * Flag to attempt to enable hardware accelerated decoding.
-     * <p>
-     * Hardware accelerated decoding will obviously only be enabled if the operating system
-     * and GPU supports it.
-     */
-    private final boolean enableHardwareDecoding;
-    
     /**
      * Media player factory.
      */
@@ -189,16 +170,6 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * Construct a media player component.
      */
     public EmbeddedMediaPlayerComponent() {
-        this(false);
-    }
-    
-    /**
-     * Construct a media player component.
-     * 
-     * @param enableHardwareDecoding <code>true</code> to enable hardware decoding of video, if supported; <code>false</code> otherwise
-     */
-    public EmbeddedMediaPlayerComponent(boolean enableHardwareDecoding) {
-        this.enableHardwareDecoding = enableHardwareDecoding;
         // Create the native resources
         mediaPlayerFactory = onGetMediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(onGetFullScreenStrategy());
@@ -310,16 +281,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * @return media player factory initialisation arguments
      */
     protected String[] onGetMediaPlayerFactoryArgs() {
-        String[] args;
-        if(enableHardwareDecoding) {
-            args = new String[DEFAULT_FACTORY_ARGUMENTS.length + HARDWARE_DECODING_ARGUMENTS.length];
-            System.arraycopy(DEFAULT_FACTORY_ARGUMENTS, 0, args, 0, DEFAULT_FACTORY_ARGUMENTS.length);
-            System.arraycopy(HARDWARE_DECODING_ARGUMENTS, 0, args, DEFAULT_FACTORY_ARGUMENTS.length, HARDWARE_DECODING_ARGUMENTS.length);
-        }
-        else {
-            args = DEFAULT_FACTORY_ARGUMENTS;
-        }
-        return args;
+        return DEFAULT_FACTORY_ARGUMENTS;
     }
 
     /**

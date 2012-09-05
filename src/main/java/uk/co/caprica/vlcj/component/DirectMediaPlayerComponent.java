@@ -39,7 +39,7 @@ import com.sun.jna.Memory;
  * template method.
  * <p>
  * An example: mediaPlayerComponent = new DirectMediaPlayerComponent() { protected String[]
- * onGetMediaPlayerFactoryArgs() { return new String[] {"--no-video-title-show", "--ffmpeg-hw"}; }
+ * onGetMediaPlayerFactoryArgs() { return new String[] {&quot;--no-video-title-show&quot;}; }
  * 
  * public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) { }
  * 
@@ -61,8 +61,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     /**
      * Default factory initialisation arguments.
      * <p>
-     * Sub-classes may totally disregard these arguments and provide their own - for example to
-     * enable ffmpeg hardware decoding via "--ffmpeg-hw" if supported by the OS and the GPU.
+     * Sub-classes may totally disregard these arguments and provide their own.
      * <p>
      * A sub-class has access to these default arguments so new ones could be merged with these if
      * required.
