@@ -29,6 +29,7 @@ public class AudioFileFilter extends ExtensionFileFilter {
      */
     private static final String[] EXTENSIONS_AUDIO = {
         "3ga",
+        "669",
         "a52",
         "aac",
         "ac3",
@@ -56,9 +57,13 @@ public class AudioFileFilter extends ExtensionFileFilter {
         "mp2",
         "mp3",
         "mpc",
+        "mpga",
         "oga",
         "ogg",
         "oma",
+        "opus",
+        "qcp",
+        "ra",
         "rmi",
         "s3m",
         "spx",

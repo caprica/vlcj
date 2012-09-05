@@ -41,6 +41,7 @@ public class PlayListFileFilter extends ExtensionFileFilter {
         "sdp",
         "vlc",
         "xspf",
+        "wvx",
         "zip"
     };
 

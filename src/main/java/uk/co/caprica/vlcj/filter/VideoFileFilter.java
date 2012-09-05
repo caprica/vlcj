@@ -41,6 +41,7 @@ public class VideoFileFilter extends ExtensionFileFilter {
         "dv",
         "f4v",
         "flv",
+        "gvi",
         "gxf",
         "iso",
         "m1v",
@@ -65,6 +66,7 @@ public class VideoFileFilter extends ExtensionFileFilter {
         "mts",
         "mtv",
         "mxf",
+        "mxg",
         "nsv",
         "nuv",
         "ogg",
@@ -81,7 +83,9 @@ public class VideoFileFilter extends ExtensionFileFilter {
         "vob",
         "vro",
         "webm",
-        "wmv"
+        "wm",
+        "wmv",
+        "xesc"
     };
 
     /**
