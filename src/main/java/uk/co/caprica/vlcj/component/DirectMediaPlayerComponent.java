@@ -313,7 +313,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     // === RenderCallback =======================================================
 
     @Override
-    public void display(Memory nativeBuffer) {
+    public void display(DirectMediaPlayer mediaPlayer, Memory nativeBuffer) {
         // Default implementation does nothing, sub-classes should override this or
         // provide their own implementation of a RenderCallback
     }

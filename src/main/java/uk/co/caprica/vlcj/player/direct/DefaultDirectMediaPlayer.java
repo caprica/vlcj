@@ -166,7 +166,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
             public void display(Pointer opaque, Pointer picture) {
                 Logger.trace("display");
                 // Invoke the call-back
-                DefaultDirectMediaPlayer.this.renderCallback.display(nativeBuffer);
+                DefaultDirectMediaPlayer.this.renderCallback.display(DefaultDirectMediaPlayer.this, nativeBuffer);
                 Logger.trace("display finished");
             }
         };

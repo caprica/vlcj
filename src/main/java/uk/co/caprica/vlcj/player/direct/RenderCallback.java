@@ -32,7 +32,8 @@ public interface RenderCallback {
     /**
      * Call-back when ready to display a video frame.
      * 
+     * @param mediaPlayer media player to which the event relates
      * @param nativeBuffer video data for one frame
      */
-    public void display(Memory nativeBuffer);
+    public void display(DirectMediaPlayer mediaPlayer, Memory nativeBuffer);
 }
