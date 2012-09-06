@@ -56,7 +56,6 @@ import uk.co.caprica.vlcj.player.manager.DefaultMediaManager;
 import uk.co.caprica.vlcj.player.manager.MediaManager;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
-import uk.co.caprica.vlcj.version.Version;
 
 /**
  * Factory for media player instances.
