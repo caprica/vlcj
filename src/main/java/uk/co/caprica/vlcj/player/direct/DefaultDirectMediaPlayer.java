@@ -31,6 +31,7 @@ import uk.co.caprica.vlcj.player.DefaultMediaPlayer;
 
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
+import com.sun.jna.ptr.PointerByReference;
 
 /**
  * Media player implementation that provides direct access to the video frame data.
@@ -136,14 +137,14 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
 
         this.lock = new libvlc_lock_callback_t() {
             @Override
-            public Pointer lock(Pointer opaque, Pointer plane) {
+            public Pointer lock(Pointer opaque, PointerByReference plane) {
                 Logger.trace("lock");
                 // Acquire the single permit from the semaphore to ensure that the
                 // memory buffer is not trashed while display() is invoked
                 Logger.trace("acquire");
                 semaphore.acquireUninterruptibly();
                 Logger.trace("acquired");
-                plane.setPointer(0, nativeBuffer);
+                plane.setValue(nativeBuffer);
                 Logger.trace("lock finished");
                 return null;
             }

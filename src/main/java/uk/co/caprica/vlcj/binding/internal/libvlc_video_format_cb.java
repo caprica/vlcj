@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -35,7 +35,7 @@ public interface libvlc_video_format_cb extends Callback {
      * video filters (if any). It can opt to change any parameter as it needs. In that case, LibVLC
      * will attempt to convert the video format (rescaling and chroma conversion) but these
      * operations can be CPU intensive.
-     * 
+     *
      * @param opaque pointer to the private pointer passed to libvlc_video_set_callbacks() [IN/OUT]
      * @param chroma pointer to the 4 bytes video format identifier [IN/OUT]
      * @param width pointer to the pixel width [IN/OUT]
@@ -44,7 +44,7 @@ public interface libvlc_video_format_cb extends Callback {
      *            allocated by LibVLC) [OUT]
      * @param lines table of scanlines count for each plane [OUT]
      * @return the number of picture buffers allocated, 0 indicates failure
-     * 
+     *
      *         Note: For each pixels plane, the scanline pitch must be bigger than or equal to the
      *         number of bytes per pixel multiplied by the pixel width. Similarly, the number of
      *         scanlines must be bigger than of equal to the pixel height. Furthermore, we recommend
@@ -52,5 +52,5 @@ public interface libvlc_video_format_cb extends Callback {
      *         by various optimizations in the video decoders, video filters and/or video
      *         converters.
      */
-    int format(PointerByReference opaque, PointerByReference chroma, IntByReference width, IntByReference height, IntByReference pitches, IntByReference lines);
+    int format(PointerByReference opaque, PointerByReference chroma, IntByReference width, IntByReference height, PointerByReference pitches, PointerByReference lines);
 }
