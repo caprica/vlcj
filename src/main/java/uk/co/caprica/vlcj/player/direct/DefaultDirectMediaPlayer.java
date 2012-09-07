@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -26,11 +26,15 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.DefaultMediaPlayer;
 
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
+import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
 
 /**
  * Media player implementation that provides direct access to the video frame data.
@@ -56,24 +60,9 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     private final Semaphore semaphore = new Semaphore(1);
 
     /**
-     * Video buffer pixel format.
+     * Format of the native buffers.
      */
-    private final String format;
-
-    /**
-     * Video buffer width.
-     */
-    private final int width;
-
-    /**
-     * Video buffer height.
-     */
-    private final int height;
-
-    /**
-     * Video buffer pitch (or "stride").
-     */
-    private final int pitch;
+    private BufferFormat bufferFormat;
 
     /**
      * Component to call-back for each video frame.
@@ -81,9 +70,9 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     private final RenderCallback renderCallback;
 
     /**
-     * Native memory buffer.
+     * Native memory buffers, one for each plane.
      */
-    private final Memory nativeBuffer;
+    private Memory[] nativeBuffers;
 
     /**
      * Lock call-back.
@@ -109,9 +98,12 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
      */
     private final libvlc_display_callback_t display;
 
+    private libvlc_video_format_cb setup;
+    private libvlc_video_cleanup_cb cleanup;
+
     /**
-     * Create a new media player.
-     * 
+     * Create a new media player.  Note: this constructor does not support formats that require multiple planes (buffers)
+     *
      * @param libvlc native library interface
      * @param instance libvlc instance
      * @param width width for the video
@@ -120,30 +112,46 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
      * @param pitch pitch, also known as stride
      * @param renderCallback call-back to receive the video frame data
      */
-    public DefaultDirectMediaPlayer(LibVlc libvlc, libvlc_instance_t instance, String format, int width, int height, int pitch, RenderCallback renderCallback) {
+    public DefaultDirectMediaPlayer(LibVlc libvlc, libvlc_instance_t instance, final String format, final int width, final int height, final int pitch, RenderCallback renderCallback) {
+        this(libvlc, instance, new BufferFormatCallback() {
+            @Override
+            public BufferFormat getBufferFormat(int originalWidth, int originalHeight) {
+                return new BufferFormat(format, width, height, new int[] {pitch}, new int[] {height});
+            }
+        }, renderCallback);
+    }
+
+    /**
+     * Create a new media player.
+     *
+     * @param libvlc native library interface
+     * @param instance libvlc instance
+     * @param bufferFormatCallback call-back to set the desired buffer format
+     * @param renderCallback call-back to receive the video frame data
+     */
+    public DefaultDirectMediaPlayer(LibVlc libvlc, libvlc_instance_t instance, final BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback) {
         super(libvlc, instance);
 
-        this.format = format;
-        this.width = width;
-        this.height = height;
-        this.pitch = pitch;
         this.renderCallback = renderCallback;
-
-        // Memory must be aligned correctly (on a 32-byte boundary) for the libvlc
-        // API functions (extra bytes are allocated to allow for enough memory if
-        // the alignment needs to be changed)
-        this.nativeBuffer = new Memory(width * height * 4 + 32).align(32);
 
         this.lock = new libvlc_lock_callback_t() {
             @Override
-            public Pointer lock(Pointer opaque, Pointer plane) {
+            public Pointer lock(Pointer opaque, PointerByReference planesRef) {
                 Logger.trace("lock");
                 // Acquire the single permit from the semaphore to ensure that the
                 // memory buffer is not trashed while display() is invoked
                 Logger.trace("acquire");
                 semaphore.acquireUninterruptibly();
                 Logger.trace("acquired");
-                plane.setPointer(0, nativeBuffer);
+
+                Pointer[] planes = new Pointer[bufferFormat.getPlaneCount()];
+
+                for(int i = 0; i < bufferFormat.getPlaneCount(); i++) {
+                    planes[i] = nativeBuffers[i];
+                }
+
+                planesRef.getPointer().write(0, planes, 0, planes.length);
+
                 Logger.trace("lock finished");
                 return null;
             }
@@ -166,50 +174,64 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
             public void display(Pointer opaque, Pointer picture) {
                 Logger.trace("display");
                 // Invoke the call-back
-                DefaultDirectMediaPlayer.this.renderCallback.display(DefaultDirectMediaPlayer.this, nativeBuffer);
+                DefaultDirectMediaPlayer.this.renderCallback.display(DefaultDirectMediaPlayer.this, nativeBuffers, bufferFormat);
                 Logger.trace("display finished");
             }
         };
 
-        // Set the desired video buffer format
-        libvlc.libvlc_video_set_format(mediaPlayerInstance(), format, width, height, pitch);
+        this.setup = new libvlc_video_format_cb() {
+            @Override
+            public int format(PointerByReference opaque, PointerByReference chroma, IntByReference width, IntByReference height, PointerByReference pitchesRef, PointerByReference linesRef) {
+                bufferFormat = bufferFormatCallback.getBufferFormat(width.getValue(), height.getValue());
+
+                if(bufferFormat == null) {
+                    throw new IllegalStateException("BufferFormat cannot be null");
+                }
+
+                byte[] chromaBytes = bufferFormat.getChroma().getBytes();
+
+                chroma.getPointer().write(0, chromaBytes, 0, chromaBytes.length > 4 ? 4 : chromaBytes.length);
+                width.setValue(bufferFormat.getWidth());
+                height.setValue(bufferFormat.getHeight());
+
+                int[] pitches = bufferFormat.getPitches();
+                int[] lines = bufferFormat.getLines();
+                nativeBuffers = new Memory[pitches.length];
+
+                for(int i = 0; i < pitches.length; i++) {
+                    pitchesRef.getPointer().setInt(i * 4, pitches[i]);
+                    linesRef.getPointer().setInt(i * 4, lines[i]);
+
+                    // Memory must be aligned correctly (on a 32-byte boundary) for the libvlc
+                    // API functions (extra bytes are allocated to allow for enough memory if
+                    // the alignment needs to be changed)
+                    nativeBuffers[i] = new Memory(pitches[i] * lines[i] + 32).align(32);
+                }
+
+                return pitches.length;
+            }
+        };
+
+        this.cleanup = new libvlc_video_cleanup_cb() {
+            @Override
+            public void cleanup(Pointer opaque) {
+                if(nativeBuffers != null) {
+                    nativeBuffers = null;
+                }
+            }
+        };
+
         // Install the video callbacks
         libvlc.libvlc_video_set_callbacks(mediaPlayerInstance(), lock, unlock, display, null);
+        libvlc.libvlc_video_set_format_callbacks(mediaPlayerInstance(), setup, cleanup);
     }
 
     /**
-     * Get the buffer format.
-     * 
-     * @return format
+     * Get the current buffer format.
+     *
+     * @return the current buffer format
      */
-    public String format() {
-        return format;
-    }
-
-    /**
-     * Get the buffer width.
-     * 
-     * @return width
-     */
-    public int width() {
-        return width;
-    }
-
-    /**
-     * Get the buffer height.
-     * 
-     * @return height
-     */
-    public int height() {
-        return height;
-    }
-
-    /**
-     * Get the buffer pitch.
-     * 
-     * @return pitch
-     */
-    public int pitch() {
-        return pitch;
+    public BufferFormat getBufferFormat() {
+        return bufferFormat;
     }
 }

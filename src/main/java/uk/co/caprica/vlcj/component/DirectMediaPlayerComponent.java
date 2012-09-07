@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
 import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
@@ -40,13 +41,13 @@ import com.sun.jna.Memory;
  * <p>
  * An example: mediaPlayerComponent = new DirectMediaPlayerComponent() { protected String[]
  * onGetMediaPlayerFactoryArgs() { return new String[] {&quot;--no-video-title-show&quot;}; }
- * 
+ *
  * public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) { }
- * 
+ *
  * public void error(MediaPlayer mediaPlayer) { }
- * 
+ *
  * public void finished(MediaPlayer mediaPlayer) { }
- * 
+ *
  * public void display(Memory nativeBuffer) { // Do something with the native video memory... } };
  * </pre>
  * When the media player component is no longer needed, it should be released by invoking the
@@ -67,12 +68,12 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      * required.
      */
     protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
-        "--no-plugins-cache", 
-        "--no-video-title-show", 
-        "--no-snapshot-preview", 
-        "--quiet", 
-        "--quiet-synchro", 
-        "--intf", 
+        "--no-plugins-cache",
+        "--no-video-title-show",
+        "--no-snapshot-preview",
+        "--quiet",
+        "--quiet-synchro",
+        "--intf",
         "dummy"
     };
 
@@ -88,7 +89,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
 
     /**
      * Construct a media player component.
-     * 
+     *
      * @param format video format
      * @param width video width
      * @param height video height
@@ -106,7 +107,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
 
     /**
      * Get the media player factory reference.
-     * 
+     *
      * @return media player factory
      */
     public final MediaPlayerFactory getMediaPlayerFactory() {
@@ -117,7 +118,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      * Get the direct media player reference.
      * <p>
      * An application uses this handle to control the media player, add listeners and so on.
-     * 
+     *
      * @return media player
      */
     public final DirectMediaPlayer getMediaPlayer() {
@@ -127,7 +128,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     /**
      * Release the media player component and the associated native media player resources.
      * <p>
-     * The associated media player factory will <em>not</em> be released, the client 
+     * The associated media player factory will <em>not</em> be released, the client
      * application is responsible for releasing the factory at the appropriate time.
      */
     public final void release() {
@@ -141,7 +142,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      * <p>
      * The default implementation will invoke the {@link #onGetMediaPlayerFactoryArgs()} template
      * method.
-     * 
+     *
      * @return media player factory
      */
     protected MediaPlayerFactory onGetMediaPlayerFactory() {
@@ -154,7 +155,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      * <p>
      * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
      * guarantee that {@link #onGetMediaPlayerFactoryArgs()} will be called.
-     * 
+     *
      * @return media player factory initialisation arguments
      */
     protected String[] onGetMediaPlayerFactoryArgs() {
@@ -169,7 +170,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      * <p>
      * A sub-class may provide any implementation of {@link RenderCallback} - including
      * {@link RenderCallbackAdapter}.
-     * 
+     *
      * @return render callback implementation
      */
     protected RenderCallback onGetRenderCallback() {
@@ -181,7 +182,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      */
     protected void onAfterConstruct() {
     }
-    
+
     /**
      * Template method invoked immediately prior to releasing the media player and media player
      * factory instances.
@@ -313,7 +314,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     // === RenderCallback =======================================================
 
     @Override
-    public void display(DirectMediaPlayer mediaPlayer, Memory nativeBuffer) {
+    public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
         // Default implementation does nothing, sub-classes should override this or
         // provide their own implementation of a RenderCallback
     }
