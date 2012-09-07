@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -37,6 +37,7 @@ import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
+import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
 import uk.co.caprica.vlcj.player.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
@@ -71,31 +72,31 @@ import uk.co.caprica.vlcj.version.LibVlcVersion;
  * of audio outputs, and the list of available audio and video filters.
  * <p>
  * Usage:
- * 
+ *
  * <pre>
  *   // Set some options for libvlc
  *   String[] libvlcArgs = {...add options here...};
- * 
+ *
  *   // Create a factory instance (once), you can keep a reference to this
  *   MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(libvlcArgs);
- *   
+ *
  *   // Create a full-screen strategy
  *   FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
- *   
+ *
  *   // Create a media player instance
  *   EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(fullScreenStrategy);
- * 
+ *
  *   // Do some interesting things with the media player, like setting a video surface...
- *   
+ *
  *   ...
- *   
+ *
  *   // Release the media player
  *   mediaPlayer.release();
- *   
+ *
  *   // Release the factory
  *   factory.release();
  * </pre>
- * 
+ *
  * You <em>must</em> make sure you keep a hard reference to the media player (and possibly other)
  * objects created by this factory. If you allow a media player object to go out of scope, then
  * unpredictable behaviour will occur (such as events no longer seeming to fire) even though the
@@ -116,7 +117,7 @@ public class MediaPlayerFactory {
         " 1. Make sure the plugins are installed in the \"<libvlc-path>/{2}\" directory, this should be the case with a normal vlc installation.\n" +
         " 2. Set the VLC_PLUGIN_PATH operating system environment variable to point to \"<plugins-path>\".\n\n" +
         "More information may be available in the log, specify -Dvlcj.log=DEBUG on the command-line when starting your application.\n\n";
-  
+
     /**
      * Native library interface.
      */
@@ -161,7 +162,7 @@ public class MediaPlayerFactory {
      * accepts a LibVlc instance that you obtain from the {@link LibVlcFactory}.
      * <p>
      * Most initialisation arguments may be gleaned by invoking <code>"vlc -H"</code>.
-     * 
+     *
      * @param libvlcArgs initialisation arguments to pass to libvlc
      */
     public MediaPlayerFactory(String... libvlcArgs) {
@@ -172,7 +173,7 @@ public class MediaPlayerFactory {
      * Create a new media player factory.
      * <p>
      * Use {@link LibVlcFactory} to get a reference to the native library.
-     * 
+     *
      * @param libvlc interface to the native library
      */
     public MediaPlayerFactory(LibVlc libvlc) {
@@ -183,7 +184,7 @@ public class MediaPlayerFactory {
      * Create a new media player factory.
      * <p>
      * Use {@link LibVlcFactory} to get a reference to the native library.
-     * 
+     *
      * @param libvlc interface to the native library
      * @param libvlcArgs initialisation arguments to pass to libvlc
      */
@@ -226,7 +227,7 @@ public class MediaPlayerFactory {
      * <p>
      * This is simply an alternate constructor for convenience, see
      * {@link #MediaPlayerFactory(String...)}.
-     * 
+     *
      * @param libvlcArgs initialisation arguments to pass to libvlc, may be empty but must not be <code>null</code>
      */
     public MediaPlayerFactory(List<String> libvlcArgs) {
@@ -240,7 +241,7 @@ public class MediaPlayerFactory {
      * <p>
      * This is simply an alternate constructor for convenience, see
      * {@link #MediaPlayerFactory(LibVlc, String...)}.
-     * 
+     *
      * @param libvlc interface to the native library
      * @param libvlcArgs initialisation arguments to pass to libvlc, may be empty but must not be <code>null</code>
      */
@@ -265,7 +266,7 @@ public class MediaPlayerFactory {
 
     /**
      * Set the application name.
-     * 
+     *
      * @param userAgent application name
      */
     public void setUserAgent(String userAgent) {
@@ -275,7 +276,7 @@ public class MediaPlayerFactory {
 
     /**
      * Set the application name.
-     * 
+     *
      * @param userAgent application name
      * @param httpUserAgent application name for HTTP
      */
@@ -289,7 +290,7 @@ public class MediaPlayerFactory {
      * <p>
      * Each audio output has zero or more audio devices, each device having it's own unique
      * identifier that can be used on a media player to set the select the required output device.
-     * 
+     *
      * @return collection of audio outputs
      */
     public List<AudioOutput> getAudioOutputs() {
@@ -309,7 +310,7 @@ public class MediaPlayerFactory {
 
     /**
      * Get the devices associated with an audio output.
-     * 
+     *
      * @param outputName output
      * @return collection of audio output devices
      */
@@ -343,9 +344,9 @@ public class MediaPlayerFactory {
 
     /**
      * Get the available audio filters.
-     * 
+     *
      * @return collection of audio filter descriptions
-     * 
+     *
      * @since libvlc 2.0.0
      */
     public List<ModuleDescription> getAudioFilters() {
@@ -363,9 +364,9 @@ public class MediaPlayerFactory {
 
     /**
      * Get the available video filters.
-     * 
+     *
      * @return collection of video filter descriptions
-     * 
+     *
      * @since libvlc 2.0.0
      */
     public List<ModuleDescription> getVideoFilters() {
@@ -383,7 +384,7 @@ public class MediaPlayerFactory {
 
     /**
      * Convert a collection of native module description structures.
-     * 
+     *
      * @param moduleDescriptions module descriptions
      * @return collection of module descriptions
      */
@@ -405,7 +406,7 @@ public class MediaPlayerFactory {
      * Full-screen will not be available, to enable full-screen support see
      * {@link #newEmbeddedMediaPlayer(FullScreenStrategy)}, or use an alternate mechanism to
      * manually set full-screen if needed.
-     * 
+     *
      * @return media player instance
      */
     public EmbeddedMediaPlayer newEmbeddedMediaPlayer() {
@@ -415,7 +416,7 @@ public class MediaPlayerFactory {
 
     /**
      * Create a new embedded media player.
-     * 
+     *
      * @param fullScreenStrategy full screen implementation, may be <code>null</code>
      * @return media player instance
      */
@@ -430,7 +431,7 @@ public class MediaPlayerFactory {
      * <p>
      * The pixel format used is "RV32" (a raw RGB format with padded alpha) and the pitch is
      * width*4.
-     * 
+     *
      * @param width width for the video
      * @param height height for the video
      * @param renderCallback call-back to receive the video frame data
@@ -443,7 +444,7 @@ public class MediaPlayerFactory {
 
     /**
      * Create a new direct video rendering media player.
-     * 
+     *
      * @param width width for the video
      * @param height height for the video
      * @param format pixel format (e.g. RV15, RV16, RV24, RV32, RGBA, YUYV)
@@ -457,12 +458,24 @@ public class MediaPlayerFactory {
     }
 
     /**
+     * Create a new direct video rendering media player.
+     *
+     * @param bufferFormatCallback call-back to set the desired buffer format
+     * @param renderCallback call-back to receive the video frame data
+     * @return media player instance
+     */
+    public DirectMediaPlayer newDirectMediaPlayer(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback) {
+        Logger.debug("newDirectMediaPlayer(formatCallback={},renderCallback={})", bufferFormatCallback, renderCallback);
+        return new DefaultDirectMediaPlayer(libvlc, instance, bufferFormatCallback, renderCallback);
+    }
+
+    /**
      * Create a new head-less media player.
      * <p>
      * The head-less player is intended for audio media players or streaming server media players
      * and may spawn a native video player window unless you set proper media options when playing
      * media.
-     * 
+     *
      * @return media player instance
      */
     public HeadlessMediaPlayer newHeadlessMediaPlayer() {
@@ -472,7 +485,7 @@ public class MediaPlayerFactory {
 
     /**
      * Create a new play-list media player.
-     * 
+     *
      * @return media player instance
      */
     public MediaListPlayer newMediaListPlayer() {
@@ -484,7 +497,7 @@ public class MediaPlayerFactory {
 
     /**
      * Create a new video surface for a Canvas.
-     * 
+     *
      * @param canvas canvas
      * @return video surface
      */
@@ -510,7 +523,7 @@ public class MediaPlayerFactory {
 
     /**
      * Create a new video surface for a native component id.
-     * 
+     *
      * @param componentId native component id
      * @return video surface
      */
@@ -538,7 +551,7 @@ public class MediaPlayerFactory {
 
     /**
      * Create a new media list for a play-list media player.
-     * 
+     *
      * @return media list instance
      */
     public MediaList newMediaList() {
@@ -553,7 +566,7 @@ public class MediaPlayerFactory {
      * <p>
      * Note that requesting meta data may cause one or more HTTP connections to
      * be made to external web-sites to attempt download of album art.
-     * 
+     *
      * @param mediaPath path to the local media
      * @param parse <code>true</code> if the media should be parsed immediately</code>; otherwise <code>false</code>
      * @return media meta data, or <code>null</code> if the media could not be located
@@ -584,7 +597,7 @@ public class MediaPlayerFactory {
      * Create a new native log component.
      * <p>
      * <strong>The native log requires vlc 2.1.0 or later.</strong>
-     * 
+     *
      * @return native log component, or <code>null</code> if the native log is not available
      */
     public NativeLog newLog() {
@@ -604,7 +617,7 @@ public class MediaPlayerFactory {
      * Create a new native media service discoverer.
      * <p>
      * Not all media discoveres are supported on all platforms.
-     * 
+     *
      * @param name name of the required service discoverer, e.g. "audio", "video".
      * @return native media discoverer component
      */
@@ -612,19 +625,19 @@ public class MediaPlayerFactory {
         Logger.debug("newMediaDiscoverer(name={})", name);
         return new MediaDiscoverer(libvlc, instance, name);
     }
-    
+
     /**
      * Create a new native audio media service discoverer.
      * <p>
      * This method is simply a convenient wrapper around {@link #newMediaDiscoverer(String)}.
-     * 
+     *
      * @return native media discoverer component
      */
     public MediaDiscoverer newAudioMediaDiscoverer() {
         Logger.debug("newAudioMediaDiscoverer()");
         return newMediaDiscoverer("audio");
     }
-    
+
     /**
      * Create a new native video media service discoverer.
      * <p>
@@ -634,14 +647,14 @@ public class MediaPlayerFactory {
      * This method is simply a convenient wrapper around {@link #newMediaDiscoverer(String)}.
      * <p>
      * The video discoverer may not be available on all platforms.
-     * 
+     *
      * @return native media discoverer component
      */
     public MediaDiscoverer newVideoMediaDiscoverer() {
         Logger.debug("newVideoMediaDiscoverer()");
         return newMediaDiscoverer("video");
     }
-    
+
     // === Clock ================================================================
 
     /**
@@ -649,7 +662,7 @@ public class MediaPlayerFactory {
      * <p>
      * The time is not meaningful in the sense of what time is it, rather it is a monotonic clock
      * with an arbitrary starting value.
-     * 
+     *
      * @return current clock time value, in microseconds
      */
     public long clock() {
@@ -661,7 +674,7 @@ public class MediaPlayerFactory {
 
     /**
      * Create a new media manager.
-     * 
+     *
      * @return media manager instance
      */
     public MediaManager newMediaManager() {
@@ -673,7 +686,7 @@ public class MediaPlayerFactory {
 
     /**
      * Get the libvlc version.
-     * 
+     *
      * @return native library version
      */
     public String version() {
@@ -683,7 +696,7 @@ public class MediaPlayerFactory {
 
     /**
      * Get the compiler used to build libvlc.
-     * 
+     *
      * @return compiler
      */
     public String compiler() {
@@ -693,7 +706,7 @@ public class MediaPlayerFactory {
 
     /**
      * Get the source code change-set id used to build libvlc.
-     * 
+     *
      * @return change-set
      */
     public String changeset() {

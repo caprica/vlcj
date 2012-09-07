@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -39,7 +39,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
 
     /**
      * Create a new render call-back.
-     * 
+     *
      * @param rgbBuffer video data buffer
      */
     public RenderCallbackAdapter(int[] rgbBuffer) {
@@ -47,14 +47,14 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     }
 
     @Override
-    public final void display(DirectMediaPlayer mediaPlayer, Memory nativeBuffer) {
-        nativeBuffer.read(0, rgbBuffer, 0, rgbBuffer.length);
+    public final void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffer, BufferFormat bufferFormat) {
+        nativeBuffer[0].read(0, rgbBuffer, 0, rgbBuffer.length);
         onDisplay(rgbBuffer);
     }
 
     /**
      * Get the video data buffer.
-     * 
+     *
      * @return video buffer
      */
     public int[] rgbBuffer() {
@@ -63,7 +63,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
 
     /**
      * Template method invoked when a new frame of video data is ready.
-     * 
+     *
      * @param rgbBuffer video data buffer
      */
     protected abstract void onDisplay(int[] rgbBuffer);

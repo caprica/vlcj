@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -31,9 +31,9 @@ public interface RenderCallback {
 
     /**
      * Call-back when ready to display a video frame.
-     * 
+     *
      * @param mediaPlayer media player to which the event relates
      * @param nativeBuffer video data for one frame
      */
-    public void display(DirectMediaPlayer mediaPlayer, Memory nativeBuffer);
+    public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat);
 }
