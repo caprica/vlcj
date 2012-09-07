@@ -221,9 +221,13 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public boolean startMedia(String mrl, String... mediaOptions) {
         Logger.debug("startMedia(mrl={}, mediaOptions)", mrl, Arrays.toString(mediaOptions));
         // First 'prepare' the media...
-        prepareMedia(mrl, mediaOptions);
-        // ...then play it and wait for it to start (or error)
-        return new MediaPlayerLatch(this).play();
+        if(prepareMedia(mrl, mediaOptions)) {
+            // ...then play it and wait for it to start (or error)
+            return new MediaPlayerLatch(this).play();
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
