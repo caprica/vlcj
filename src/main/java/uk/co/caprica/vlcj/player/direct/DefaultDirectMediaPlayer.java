@@ -288,7 +288,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
         /**
          * Buffer format instance. 
          */
-        private final BufferFormat BUFFER_FORMAT;
+        private final BufferFormat bufferFormat;
 
         /**
          * Create a buffer format.
@@ -299,12 +299,12 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
          * @param pitch pitch (also called "stride")
          */
         private DefaultBufferFormatCallback(String format, int width, int height, int pitch) {
-            BUFFER_FORMAT = new BufferFormat(format, width, height, new int[] {pitch}, new int[] {height});
+            bufferFormat = new BufferFormat(format, width, height, new int[] {pitch}, new int[] {height});
         }
 
         @Override
         public final BufferFormat getBufferFormat(int width, int height) {
-            return BUFFER_FORMAT;
+            return bufferFormat;
         }
     }
 }
