@@ -190,17 +190,15 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
             chroma.getPointer().write(0, chromaBytes, 0, chromaBytes.length > 4 ? 4 : chromaBytes.length);
             width.setValue(bufferFormat.getWidth());
             height.setValue(bufferFormat.getHeight());
-            // Allocate sufficient memory to accommodate each plane
             int[] pitchValues = bufferFormat.getPitches();
             int[] lineValues = bufferFormat.getLines();
-            nativeBuffers = new Memory[pitchValues.length];
-            for(int i = 0; i < pitchValues.length; i ++ ) {
-                int pointerOffset = i * 4;
-                pitches.getPointer().setInt(pointerOffset, pitchValues[i]);
-                lines.getPointer().setInt(pointerOffset, lineValues[i]);
-                // Memory must be aligned correctly (on a 32-byte boundary) for the libvlc
-                // API functions (extra bytes are allocated to allow for enough memory if
-                // the alignment needs to be changed)
+            pitches.getPointer().write(0, pitchValues, 0, pitchValues.length);
+            lines.getPointer().write(0, lineValues, 0, lineValues.length);
+            // Memory must be aligned correctly (on a 32-byte boundary) for the libvlc
+            // API functions (extra bytes are allocated to allow for enough memory if
+            // the alignment needs to be changed)
+            nativeBuffers = new Memory[bufferFormat.getPlaneCount()];
+            for(int i = 0; i < bufferFormat.getPlaneCount(); i ++ ) {
                 nativeBuffers[i] = new Memory(pitchValues[i] * lineValues[i] + 32).align(32);
             }
             Logger.trace("format finished");
