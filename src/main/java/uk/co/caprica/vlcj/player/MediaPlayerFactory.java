@@ -35,6 +35,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
 import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
@@ -433,9 +434,11 @@ public class MediaPlayerFactory {
      * 
      * @param width width for the video
      * @param height height for the video
-     * @param renderCallback call-back to receive the video frame data
+     * @param renderCallback callback to receive the video frame data
      * @return direct media player implementation
+     * @deprecated use {@link #newDirectMediaPlayer(BufferFormatCallback, RenderCallback)} instead
      */
+    @Deprecated
     public DirectMediaPlayer newDirectMediaPlayer(int width, int height, RenderCallback renderCallback) {
         Logger.debug("newDirectMediaPlayer(width={},height={},renderCallback={})", width, height, renderCallback);
         return newDirectMediaPlayer("RV32", width, height, width * 4, renderCallback);
@@ -448,16 +451,30 @@ public class MediaPlayerFactory {
      * @param height height for the video
      * @param format pixel format (e.g. RV15, RV16, RV24, RV32, RGBA, YUYV)
      * @param pitch pitch, also known as stride
-     * @param renderCallback call-back to receive the video frame data
+     * @param renderCallback callback to receive the video frame data
      * @return media player instance
+     * @deprecated use {@link #newDirectMediaPlayer(BufferFormatCallback, RenderCallback)} instead
      */
+    @Deprecated
     public DirectMediaPlayer newDirectMediaPlayer(String format, int width, int height, int pitch, RenderCallback renderCallback) {
         Logger.debug("newDirectMediaPlayer(format={},width={},height={},pitch={},renderCallback={})", format, width, height, pitch, renderCallback);
         return new DefaultDirectMediaPlayer(libvlc, instance, format, width, height, pitch, renderCallback);
     }
 
     /**
-     * Create a new head-less media player.
+     * Create a new direct video rendering media player.
+     *
+     * @param bufferFormatCallback callback to set the desired buffer format
+     * @param renderCallback callback to receive the video frame data
+     * @return media player instance
+     */
+    public DirectMediaPlayer newDirectMediaPlayer(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback) {
+        Logger.debug("newDirectMediaPlayer(formatCallback={},renderCallback={})", bufferFormatCallback, renderCallback);
+        return new DefaultDirectMediaPlayer(libvlc, instance, bufferFormatCallback, renderCallback);
+    }
+
+    /**
+     * Create a new headless media player.
      * <p>
      * The head-less player is intended for audio media players or streaming server media players
      * and may spawn a native video player window unless you set proper media options when playing

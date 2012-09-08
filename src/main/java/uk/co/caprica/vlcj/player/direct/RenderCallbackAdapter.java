@@ -29,6 +29,9 @@ import com.sun.jna.Memory;
  * <p>
  * If you simply want access to the native memory buffer you should consider sub-classing
  * {@link RenderCallback} directly rather than using this class.
+ * <p>
+ * This is probably the most <em>inefficient</em> implementation possible of a render callback,
+ * ordinarily the video data should be written directly to some other construct (like a texture). 
  */
 public abstract class RenderCallbackAdapter implements RenderCallback {
 
@@ -47,8 +50,8 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     }
 
     @Override
-    public final void display(DirectMediaPlayer mediaPlayer, Memory nativeBuffer) {
-        nativeBuffer.read(0, rgbBuffer, 0, rgbBuffer.length);
+    public final void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffer, BufferFormat bufferFormat) {
+        nativeBuffer[0].read(0, rgbBuffer, 0, rgbBuffer.length);
         onDisplay(rgbBuffer);
     }
 

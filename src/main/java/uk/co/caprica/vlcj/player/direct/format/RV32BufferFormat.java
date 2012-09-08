@@ -17,24 +17,24 @@
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.direct;
+package uk.co.caprica.vlcj.player.direct.format;
 
-import com.sun.jna.Memory;
+import uk.co.caprica.vlcj.player.direct.BufferFormat;
 
 /**
- * Specification for a component that wishes to be called back to process video frames.
+ * Implementation of a buffer format for RV32.
  * <p>
- * The render call-back provides access to the native memory buffer, if instead the full RGB integer
- * data is required for the full video frame then consider using {@link RenderCallbackAdapter}.
+ * RV32 is a 24-bit BGR format with 8-bit of padding (no alpha) in a single plane.
  */
-public interface RenderCallback {
+public class RV32BufferFormat extends BufferFormat {
 
     /**
-     * Call-back when ready to display a video frame.
-     * 
-     * @param mediaPlayer media player to which the event relates
-     * @param nativeBuffer video data for one frame
-     * @param bufferFormat information about the format of the buffer used
+     * Creates a RV32 buffer format with the given width and height.
+     *
+     * @param width width of the buffer
+     * @param height height of the buffer
      */
-    public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat);
+    public RV32BufferFormat(int width, int height) {
+        super("RV32", width, height, new int[] {width * 4}, new int[] {height});
+    }
 }

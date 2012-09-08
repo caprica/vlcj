@@ -23,6 +23,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.direct.BufferFormat;
+import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
 import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
@@ -32,22 +34,26 @@ import com.sun.jna.Memory;
 /**
  * Encapsulation of a direct-rendering media player.
  * <p>
- * The default behaviour is to provide the video data via the {@link #display(Memory)} method.
+ * The default behaviour is to provide the video data via the {@link #display(DirectMediaPlayer, Memory[], BufferFormat)} method.
  * <p>
  * Sub-classes may override this method to implement their own processing, or alternately return an
  * implementation of a {@link RenderCallback} by overriding the {@link #onGetRenderCallback()}
  * template method.
  * <p>
- * An example: mediaPlayerComponent = new DirectMediaPlayerComponent() { protected String[]
- * onGetMediaPlayerFactoryArgs() { return new String[] {&quot;--no-video-title-show&quot;}; }
- * 
- * public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) { }
- * 
- * public void error(MediaPlayer mediaPlayer) { }
- * 
- * public void finished(MediaPlayer mediaPlayer) { }
- * 
- * public void display(Memory nativeBuffer) { // Do something with the native video memory... } };
+ * An example:
+ * <pre>
+ * mediaPlayerComponent = new DirectMediaPlayerComponent() {
+ *
+ *     protected String[] onGetMediaPlayerFactoryArgs() { return new String[] {&quot;--no-video-title-show&quot;}; }
+ *
+ *     public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) { }
+ *
+ *     public void error(MediaPlayer mediaPlayer) { }
+ *
+ *     public void finished(MediaPlayer mediaPlayer) { }
+ *
+ *     public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) { // Do something with the native video memory... }
+ * };
  * </pre>
  * When the media player component is no longer needed, it should be released by invoking the
  * {@link #release()} method.
@@ -93,11 +99,28 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      * @param width video width
      * @param height video height
      * @param pitch video pitch (also known as "stride")
+     * @deprecated use {@link #DirectMediaPlayerComponent(BufferFormatCallback)} instead
      */
+    @Deprecated
     public DirectMediaPlayerComponent(String format, int width, int height, int pitch) {
         // Create the native resources
         mediaPlayerFactory = onGetMediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.newDirectMediaPlayer(format, width, height, pitch, onGetRenderCallback());
+        // Register listeners
+        mediaPlayer.addMediaPlayerEventListener(this);
+        // Sub-class initialisation
+        onAfterConstruct();
+    }
+
+    /**
+     * Construct a media player component.
+     *
+     * @param bufferFormatCallback callback used to set video buffer characteristics
+     */
+    public DirectMediaPlayerComponent(BufferFormatCallback bufferFormatCallback) {
+        // Create the native resources
+        mediaPlayerFactory = onGetMediaPlayerFactory();
+        mediaPlayer = mediaPlayerFactory.newDirectMediaPlayer(bufferFormatCallback, onGetRenderCallback());
         // Register listeners
         mediaPlayer.addMediaPlayerEventListener(this);
         // Sub-class initialisation
@@ -313,7 +336,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     // === RenderCallback =======================================================
 
     @Override
-    public void display(DirectMediaPlayer mediaPlayer, Memory nativeBuffer) {
+    public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
         // Default implementation does nothing, sub-classes should override this or
         // provide their own implementation of a RenderCallback
     }
