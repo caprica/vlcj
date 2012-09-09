@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.direct;
 
+import java.util.Arrays;
+
 /**
  * Specifies the formats used by the {@link DirectMediaPlayer}.
  * <p>
@@ -129,6 +131,18 @@ public class BufferFormat {
         return pitches.length;
     }
 
+    @Override
+    public final String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName()).append('[');
+        sb.append("chroma=").append(chroma).append(',');
+        sb.append("width=").append(width).append(',');
+        sb.append("height=").append(height).append(',');
+        sb.append("pitches=").append(Arrays.toString(pitches)).append(',');
+        sb.append("lines=").append(Arrays.toString(lines)).append(']');
+        return sb.toString();
+    }
+    
     /**
      * Validate the buffer format.
      * <p>
