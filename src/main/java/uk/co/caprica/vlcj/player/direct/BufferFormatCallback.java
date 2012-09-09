@@ -28,9 +28,9 @@ public interface BufferFormatCallback {
      * Returns a {@link BufferFormat} instance specifying how the {@link DirectMediaPlayer}
      * should structure its buffers.
      * 
-     * @param width video width
-     * @param height video height
+     * @param sourceWidth video width
+     * @param sourceHeight video height
      * @return buffer format, must never be <code>null</code>
      */
-    BufferFormat getBufferFormat(int width, int height);
+    BufferFormat getBufferFormat(int sourceWidth, int sourceHeight);
 }

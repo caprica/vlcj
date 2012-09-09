@@ -180,13 +180,16 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     private final class SetupCallback implements libvlc_video_format_cb {
         @Override
         public int format(PointerByReference opaque, PointerByReference chroma, IntByReference width, IntByReference height, PointerByReference pitches, PointerByReference lines) {
-            Logger.trace("format");
+            Logger.debug("format(chroma={},width={},height={})", chroma.getPointer().getString(0, false), width.getValue(), height.getValue());
             bufferFormat = bufferFormatCallback.getBufferFormat(width.getValue(), height.getValue());
+            Logger.debug("bufferFormat={}", bufferFormat);
             if(bufferFormat == null) {
                 throw new IllegalStateException("buffer format can not be null");
             }
             // Set the desired video format properties
             byte[] chromaBytes = bufferFormat.getChroma().getBytes();
+            // Space for these structures is already allocated by libvlc, we
+            // simply fill the existing memory
             chroma.getPointer().write(0, chromaBytes, 0, chromaBytes.length > 4 ? 4 : chromaBytes.length);
             width.setValue(bufferFormat.getWidth());
             height.setValue(bufferFormat.getHeight());
@@ -303,7 +306,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
         }
 
         @Override
-        public final BufferFormat getBufferFormat(int width, int height) {
+        public final BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
             return bufferFormat;
         }
     }
