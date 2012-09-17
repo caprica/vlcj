@@ -24,17 +24,35 @@ import com.sun.jna.Memory;
 /**
  * Specification for a component that wishes to be called back to process video frames.
  * <p>
- * The render call-back provides access to the native memory buffer, if instead the full RGB integer
- * data is required for the full video frame then consider using {@link RenderCallbackAdapter}.
+ * The render callback provides access to the native memory buffer - this is the most
+ * efficient use-case.
+ * <p>
+ * If instead the full RGB integer data is required for the full video frame then consider
+ * using the default {@link RenderCallbackAdapter}.
  */
 public interface RenderCallback {
 
     /**
-     * Call-back when ready to display a video frame.
+     * callback invoked by the native library to prepare the next frame to do display.
+     * <p>
+     * Implementations should use this method to <em>prepare</em> the frame, <strong>not</strong>
+     * to <em>render</em> it - see {@link #display(DirectMediaPlayer)}. 
      * 
      * @param mediaPlayer media player to which the event relates
-     * @param nativeBuffer video data for one frame
+     * @param nativeBuffers video data for one frame
      * @param bufferFormat information about the format of the buffer used
      */
-    public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat);
+    public void prepare(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat);
+    
+    /**
+     * callback invoked by the native library when it is ready to display a video frame.
+     * <p>
+     * Implementations should use this method to do the minimum necessary to <em>render</em> a
+     * pre-prepared video frame.
+     * <p>
+     * This method must execute as quickly as possible.
+     * 
+     * @param mediaPlayer media player to which the event relates
+     */
+    public void display(DirectMediaPlayer mediaPlayer);
 }

@@ -59,9 +59,9 @@ public class DirectTestPlayer extends VlcjTest {
     // The size does NOT need to match the mediaPlayer size - it's the size that
     // the media will be scaled to
     // Matching the native size will be faster of course
-    private final int width = 720;
+    private final int width = 1920;
 
-    private final int height = 480;
+    private final int height = 800;
 
     // private final int width = 1280;
     // private final int height = 720;
@@ -163,11 +163,16 @@ public class DirectTestPlayer extends VlcjTest {
         public TestRenderCallback() {
             super(new int[width * height]);
         }
+        
+        @Override
+        protected final void onPrepare(int[] rgbBuffer) {
+            // The image data could be manipulated here...
+            image.setRGB(0, 0, width, height, rgbBuffer, 0, width);
+        }
 
         @Override
-        public void onDisplay(int[] data) {
-            // The image data could be manipulated here...
-            image.setRGB(0, 0, width, height, data, 0, width);
+        protected final void onDisplay() {
+            // You could implement multi-buffering
             imagePane.repaint();
         }
     }

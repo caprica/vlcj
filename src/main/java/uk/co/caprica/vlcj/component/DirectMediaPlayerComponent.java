@@ -34,7 +34,8 @@ import com.sun.jna.Memory;
 /**
  * Encapsulation of a direct-rendering media player.
  * <p>
- * The default behaviour is to provide the video data via the {@link #display(DirectMediaPlayer, Memory[], BufferFormat)} method.
+ * The default behaviour is for sub-classes to prepare the video data via the {@link #prepare(DirectMediaPlayer, Memory[], BufferFormat)} 
+ * method, and to render the video frame via the {@link #display(DirectMediaPlayer)} method.
  * <p>
  * Sub-classes may override this method to implement their own processing, or alternately return an
  * implementation of a {@link RenderCallback} by overriding the {@link #onGetRenderCallback()}
@@ -51,8 +52,10 @@ import com.sun.jna.Memory;
  *     public void error(MediaPlayer mediaPlayer) { }
  *
  *     public void finished(MediaPlayer mediaPlayer) { }
+ *     
+ *     public void prepare(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) { // Prepare the video frame for display... }
  *
- *     public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) { // Do something with the native video memory... }
+ *     public void display(DirectMediaPlayer mediaPlayer) { // Render the video frame... }
  * };
  * </pre>
  * When the media player component is no longer needed, it should be released by invoking the
@@ -334,9 +337,15 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     }
 
     // === RenderCallback =======================================================
+    
+    @Override
+    public void prepare(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
+        // Default implementation does nothing, sub-classes should override this or
+        // provide their own implementation of a RenderCallback
+    }
 
     @Override
-    public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
+    public void display(DirectMediaPlayer mediaPlayer) {
         // Default implementation does nothing, sub-classes should override this or
         // provide their own implementation of a RenderCallback
     }
