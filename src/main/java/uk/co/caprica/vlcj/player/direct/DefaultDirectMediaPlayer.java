@@ -31,7 +31,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.DefaultMediaPlayer;
 
+import com.sun.jna.CallbackThreadInitializer;
 import com.sun.jna.Memory;
+import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
@@ -157,6 +159,10 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
         this.lock = new LockCallback();
         this.unlock = new UnlockCallback();
         this.display = new DisplayCallback();
+        // Configure JNA to use, and keep, one thread per callback
+        Native.setCallbackThreadInitializer(lock, new CallbackThreadInitializer());
+        Native.setCallbackThreadInitializer(unlock, new CallbackThreadInitializer());
+        Native.setCallbackThreadInitializer(display, new CallbackThreadInitializer());
         // Install the native video callbacks
         libvlc.libvlc_video_set_format_callbacks(mediaPlayerInstance(), setup, cleanup);
         libvlc.libvlc_video_set_callbacks(mediaPlayerInstance(), lock, unlock, display, null);
