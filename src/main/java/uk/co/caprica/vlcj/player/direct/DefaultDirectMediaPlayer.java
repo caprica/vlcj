@@ -264,8 +264,6 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
         @Override
         public final void unlock(Pointer opaque, Pointer picture, Pointer plane) {
             Logger.trace("unlock");
-            // Prepare the next frame for rendering
-            renderCallback.prepare(DefaultDirectMediaPlayer.this, nativeBuffers, bufferFormat);
             // Release the semaphore
             Logger.trace("release");
             semaphore.release();
@@ -285,7 +283,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
         public final void display(Pointer opaque, Pointer picture) {
             Logger.trace("display");
             // Invoke the callback
-            DefaultDirectMediaPlayer.this.renderCallback.display(DefaultDirectMediaPlayer.this);
+            DefaultDirectMediaPlayer.this.renderCallback.display(DefaultDirectMediaPlayer.this, nativeBuffers, bufferFormat);
             Logger.trace("display finished");
         }
     }

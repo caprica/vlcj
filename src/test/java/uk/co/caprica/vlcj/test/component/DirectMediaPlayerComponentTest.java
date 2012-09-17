@@ -158,13 +158,9 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
         }
         
         @Override
-        protected final void onPrepare(int[] rgbBuffer) {
-            // Simply copy buffer to the image
+        protected void onDisplay(int[] rgbBuffer) {
+            // Simply copy buffer to the image and repaint
             image.setRGB(0, 0, width, height, rgbBuffer, 0, width);
-        }
-
-        @Override
-        protected final void onDisplay() {
             panel.repaint();
         }
     }
