@@ -24,6 +24,10 @@ import java.awt.Font;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -35,7 +39,9 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 
 import uk.co.caprica.vlcj.Info;
+import uk.co.caprica.vlcj.player.Equalizer;
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -63,12 +69,18 @@ public class ScriptTest extends VlcjTest {
     private final JTextArea scriptTextArea;
     private final JTextArea outputTextArea;
     
+    private final JFrame eventFrame;
+    private final JTextArea eventTextArea;
+    
     private final ScriptEngineManager scriptEngineManager;
     private final ScriptEngine scriptEngine;
     
     private final MediaPlayerFactory mediaPlayerFactory;
     private final MediaPlayer mediaPlayer;
 
+    private final Equalizer equalizer;
+    private final Map<String, Equalizer> presets;
+    
     public static void main(String[] args) throws ScriptException {
         new ScriptTest().start();
     }
@@ -96,22 +108,53 @@ public class ScriptTest extends VlcjTest {
 
         contentPane.add(splitPane, BorderLayout.CENTER);
 
-        splitPane.setDividerLocation(500);
+        splitPane.setDividerLocation(700);
         
         mainFrame = new JFrame("vlcj scripting");
-        mainFrame.setSize(1200, 900);
+        mainFrame.setSize(1600, 1000);
         mainFrame.setContentPane(contentPane);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel eventContentPane = new JPanel();
+        eventContentPane.setLayout(new BorderLayout());
+        
+        eventTextArea = new JTextArea();
+        eventTextArea.setFont(font);
+        eventTextArea.setEditable(false);
+
+        JScrollPane eventScrollPane = new JScrollPane(eventTextArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        eventContentPane.add(eventScrollPane, BorderLayout.CENTER);
+        
+        eventFrame = new JFrame("vlcj events");
+        eventFrame.setSize(600, 200);
+        eventFrame.setContentPane(eventContentPane);
+        eventFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         
         scriptEngineManager = new ScriptEngineManager();
         scriptEngine = scriptEngineManager.getEngineByMimeType("application/javascript");
         
         mediaPlayerFactory = new MediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
+
+        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventHandler());
+        
+        if(mediaPlayerFactory.isEqualizerAvailable()) {
+            equalizer = mediaPlayerFactory.newEqualizer();
+            presets = mediaPlayerFactory.getAllPresetEqualizers();
+        }
+        else {
+            equalizer = null;
+            presets = null;
+        }
         
         scriptEngine.put("vlcj", Info.getInstance().version());
         scriptEngine.put("mediaPlayerFactory", mediaPlayerFactory);
         scriptEngine.put("mediaPlayer", mediaPlayer);
+        
+        if(mediaPlayerFactory.isEqualizerAvailable()) {
+            scriptEngine.put("equalizer", equalizer);
+            scriptEngine.put("presets", presets);
+        }
         
         // Add some examples (not exhaustive by any means)
         scriptTextArea.append("vlcj\n");
@@ -123,11 +166,18 @@ public class ScriptTest extends VlcjTest {
         scriptTextArea.append("mediaPlayerFactory.getAudioFilters()\n");
         scriptTextArea.append("mediaPlayerFactory.getVideoFilters()\n");
         scriptTextArea.append("mediaPlayerFactory.getAudioOutputs()\n");
+        scriptTextArea.append("mediaPlayerFactory.isEqualizerAvailable()\n");
+        if(mediaPlayerFactory.isEqualizerAvailable()) {
+            scriptTextArea.append("mediaPlayerFactory.getEqualizerPresetNames()\n");
+            scriptTextArea.append("mediaPlayerFactory.getAllPresetEqualizers()\n");
+        }
         scriptTextArea.append("\n");
         
         scriptTextArea.append("mediaPlayer.playMedia(\"<filename>\", null)\n");
         scriptTextArea.append("mediaPlayer.startMedia(\"<filename>\", null)\n");
         scriptTextArea.append("mediaPlayer.play()\n");
+        scriptTextArea.append("mediaPlayer.setPosition(0.2)\n");
+        scriptTextArea.append("mediaPlayer.setTime(30)\n");
         scriptTextArea.append("mediaPlayer.pause()\n");
         scriptTextArea.append("mediaPlayer.stop()\n");
         scriptTextArea.append("mediaPlayer.start()\n");
@@ -145,6 +195,23 @@ public class ScriptTest extends VlcjTest {
         scriptTextArea.append("mediaPlayer.mute(true)\n");
         scriptTextArea.append("mediaPlayer.mute(false)\n");
         scriptTextArea.append("mediaPlayer.isMute()\n");
+        scriptTextArea.append("\n");
+
+        if(mediaPlayerFactory.isEqualizerAvailable()) {
+            scriptTextArea.append("mediaPlayer.getEqualizer()\n");
+            scriptTextArea.append("mediaPlayer.setEqualizer(null)\n");
+            scriptTextArea.append("mediaPlayer.setEqualizer(equalizer)\n");
+            for(String name : mediaPlayerFactory.getEqualizerPresetNames()) {
+                scriptTextArea.append(String.format("mediaPlayer.setEqualizer(presets.get(\"%s\"))\n", name));
+            }
+            scriptTextArea.append("\n");
+
+            scriptTextArea.append("equalizer.setPreamp(10.0)\n");
+            for(int i = 0; i < equalizer.getBandCount(); i++) {
+                scriptTextArea.append(String.format("equalizer.setAmp(%d,15.0)%n", i));
+            }
+            scriptTextArea.append("\n");
+        }
         
         scriptTextArea.addKeyListener(new KeyAdapter() {
             @Override
@@ -164,6 +231,14 @@ public class ScriptTest extends VlcjTest {
                                 outputTextArea.append("-> ");
                                 outputTextArea.append(String.valueOf(obj));
                                 outputTextArea.append("\n");
+                            }
+                        }
+                        else if(result instanceof Map) {
+                            @SuppressWarnings("unchecked")
+                            Map<Object,Object> map = (Map<Object,Object>)result;
+                            for(Map.Entry<Object, Object> entry : map.entrySet()) {
+                                outputTextArea.append("-> ");
+                                outputTextArea.append(String.format("%30s ---> %s%n", entry.getKey(), entry.getValue()));
                             }
                         }
                         else {
@@ -192,9 +267,72 @@ public class ScriptTest extends VlcjTest {
                 }
             }
         });
+
+        eventTextArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if(evt.getKeyCode() == KeyEvent.VK_DELETE && (evt.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0) {
+                    eventTextArea.setText("");
+                }
+            }
+        });
     }
     
     private void start() {
         mainFrame.setVisible(true);
+        eventFrame.setVisible(true);
+    }
+    
+    private final class MediaPlayerEventHandler extends MediaPlayerEventAdapter {
+
+        private final DateFormat df = new SimpleDateFormat("HH:mm:ss.sss");
+        
+        @Override
+        public void opening(MediaPlayer mediaPlayer) {
+            event("opening");
+        }
+
+        @Override
+        public void buffering(MediaPlayer mediaPlayer, float newCache) {
+            event(String.format("buffering %.0f", newCache));
+        }
+
+        @Override
+        public void playing(MediaPlayer mediaPlayer) {
+            event("playing");
+        }
+
+        @Override
+        public void paused(MediaPlayer mediaPlayer) {
+            event("paused");
+        }
+
+        @Override
+        public void stopped(MediaPlayer mediaPlayer) {
+            event("stopped");
+        }
+
+        @Override
+        public void finished(MediaPlayer mediaPlayer) {
+            event("finished");
+        }
+
+        @Override
+        public void error(MediaPlayer mediaPlayer) {
+            event("error");
+        }
+
+        @Override
+        public void newMedia(MediaPlayer mediaPlayer) {
+            event("newMedia");
+        }
+        
+        private void event(String msg) {
+            eventTextArea.append(df.format(new Date()));
+            eventTextArea.append(" ");
+            eventTextArea.append(msg);
+            eventTextArea.append("\n");
+            eventTextArea.setCaretPosition(eventTextArea.getText().length() - 1);
+        }
     }
 }
