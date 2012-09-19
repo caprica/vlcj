@@ -22,12 +22,21 @@ where you can find more information as well as some new simple tutorials.
 News
 ----
 
-19/07/2012 New pre-release snapshot version 2.2.0:
+19/09/2012 New pre-release snapshot version 2.2.0:
 
+* new native audio equalizer integration (libvlc 2.1.x);
 * new native log integration (libvlc 2.1.x);
 * native media discoverer integration - it is now possible to get a list of audio and video (on Linux) capture devices;
 * media meta data now provides media length (if available);
 * minor bug fixes and memory leak fixes.
+
+PLEASE!
+
+If you are interested in the new audio equalizer API, check out the latest vlcj
+master from github or download the latest 2.2.0 snapshot dependency the Caprica
+Software maven repository. This functionality is very new in libvlc and vlcj so
+please try it and feed back any problems. You must use a bleeding edge build of
+vlc from the 2.1.0 git repository.
 
 20/05/2012 Released version 2.1.0, for use with libvlc 2.0.
 
