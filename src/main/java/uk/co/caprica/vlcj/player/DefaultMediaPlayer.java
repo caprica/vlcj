@@ -1557,7 +1557,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
      */
     private void registerEventListener() {
         Logger.debug("registerEventListener()");
-        callback = new VlcVideoPlayerCallback();
+        callback = new EventCallback();
         Native.setCallbackThreadInitializer(callback, new CallbackThreadInitializer());
         for(libvlc_event_e event : libvlc_event_e.values()) {
             if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaPlayerVout.intValue()) {
@@ -1738,7 +1738,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
      * notification thread runs. This would lead to unreliable data being sent with the
      * notification, or even a fatal JVM crash.
      */
-    private final class VlcVideoPlayerCallback implements libvlc_callback_t {
+    private final class EventCallback implements libvlc_callback_t {
         @Override
         public void callback(libvlc_event_t event, Pointer userData) {
             Logger.trace("callback(event={},userData={})", event, userData);
