@@ -33,7 +33,7 @@ News
 PLEASE!
 
 If you are interested in the new audio equalizer API, check out the latest vlcj
-master from github or download the latest 2.2.0 snapshot dependency the Caprica
+master from github or download the latest 2.2.0 snapshot dependency from the Caprica
 Software maven repository. This functionality is very new in libvlc and vlcj so
 please try it and feed back any problems. You must use a bleeding edge build of
 vlc from the 2.1.0 git repository.
