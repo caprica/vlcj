@@ -807,14 +807,17 @@ public interface MediaPlayer {
     /**
      * Get the current volume.
      * 
-     * @return volume, in the range 0 to 100 where 100 is full volume
+     * @return volume, a percentage of full volume in the range 0 to 200
      */
     int getVolume();
 
     /**
      * Set the volume.
+     * <p>
+     * The volume is actually a percentage of full volume, setting a volume over
+     * 100 may cause audible distortion.
      * 
-     * @param volume volume, in the range 0 to 200 where 200 is full volume
+     * @param volume volume, a percentage of full volume in the range 0 to 200
      */
     void setVolume(int volume);
 
