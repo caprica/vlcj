@@ -750,6 +750,9 @@ public class MediaPlayerFactory {
      * <p>
      * Note that requesting meta data may cause one or more HTTP connections to
      * be made to external web-sites to attempt download of album art.
+     * <p>
+     * This method should <strong>not</strong> be invoked for non-local MRL's
+     * like streaming network addresses.
      * 
      * @param mediaPath path to the local media
      * @param parse <code>true</code> if the media should be parsed immediately</code>; otherwise <code>false</code>
