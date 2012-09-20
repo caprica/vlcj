@@ -189,21 +189,20 @@ public class EqualizerFrame extends JFrame implements ChangeListener, ActionList
     @Override
     public final void itemStateChanged(ItemEvent e) {
         String presetName = (String)presetComboBox.getSelectedItem();
-        if(presetName != null) {
-            Equalizer presetEqualizer = mediaPlayerFactory.newEqualizer(presetName);
-            if(presetEqualizer != null) {
-                applyingPreset = true;
-                preampControl.getSlider().setValue((int)(presetEqualizer.getPreamp() * 100f)); // FIXME
-                float[] amps = presetEqualizer.getAmps();
-                for(int i = 0; i < amps.length; i++) {
-                    bandControls[i].getSlider().setValue((int)(amps[i] * 100f));
+        if(e.getStateChange() == ItemEvent.SELECTED) {
+            if(presetName != null) {
+                Equalizer presetEqualizer = mediaPlayerFactory.newEqualizer(presetName);
+                if(presetEqualizer != null) {
+                    applyingPreset = true;
+                    preampControl.getSlider().setValue((int)(presetEqualizer.getPreamp() * 100f)); // FIXME
+                    float[] amps = presetEqualizer.getAmps();
+                    for(int i = 0; i < amps.length; i++) {
+                        bandControls[i].getSlider().setValue((int)(amps[i] * 100f));
+                    }
+    
+                    applyingPreset = false;
                 }
-
-                applyingPreset = false;
             }
-        }
-        else {
-            // Nothing...
         }
     }
 }
