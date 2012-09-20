@@ -44,8 +44,6 @@ import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEvent;
 import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventFactory;
 import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
 
-import com.sun.jna.CallbackThreadInitializer;
-import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 
 /**
@@ -300,7 +298,6 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     private void registerEventListener() {
         Logger.debug("registerEventListener()");
         callback = new VlcVideoPlayerCallback();
-        Native.setCallbackThreadInitializer(callback, new CallbackThreadInitializer());
         for(libvlc_event_e event : libvlc_event_e.values()) {
             // The native event manager reports that it does not support
             // libvlc_MediaListPlayerPlayed or libvlc_MediaListPlayerStopped

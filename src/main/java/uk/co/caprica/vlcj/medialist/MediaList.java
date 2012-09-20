@@ -41,8 +41,6 @@ import uk.co.caprica.vlcj.medialist.events.MediaListEvent;
 import uk.co.caprica.vlcj.medialist.events.MediaListEventFactory;
 import uk.co.caprica.vlcj.player.NativeString;
 
-import com.sun.jna.CallbackThreadInitializer;
-import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 
 /**
@@ -381,7 +379,6 @@ public class MediaList {
     private void registerEventListener() {
         Logger.debug("registerEventListener()");
         callback = new MediaListCallback();
-        Native.setCallbackThreadInitializer(callback, new CallbackThreadInitializer());
         for(libvlc_event_e event : libvlc_event_e.values()) {
             if(event.intValue() >= libvlc_event_e.libvlc_MediaListItemAdded.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListWillDeleteItem.intValue()) {
                 Logger.debug("event={}", event);

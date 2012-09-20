@@ -33,8 +33,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_log_level_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_subscriber_t;
 import uk.co.caprica.vlcj.logger.Logger;
 
-import com.sun.jna.CallbackThreadInitializer;
-import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 
 /**
@@ -165,9 +163,6 @@ public class NativeLog {
         Logger.debug("createInstance()");
         // Create a native callback to receive log messages
         callback = new NativeLogCallback();
-        // Without this thread initialiser, many threads will be rapidly created (worst
-        // case is one thread per log message)
-        Native.setCallbackThreadInitializer(callback, new CallbackThreadInitializer());
         // Subscribe to the native log
         subscriberInstance = new libvlc_log_subscriber_t();
         libvlc.libvlc_log_subscribe(subscriberInstance, callback, null);
