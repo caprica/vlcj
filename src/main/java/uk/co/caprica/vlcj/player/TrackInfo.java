@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -58,7 +58,7 @@ public abstract class TrackInfo implements Serializable {
 
     /**
      * Create a new track info.
-     * 
+     *
      * @param codec codec
      * @param id track id
      * @param profile profile
@@ -74,7 +74,7 @@ public abstract class TrackInfo implements Serializable {
 
     /**
      * Get the codec (fourcc).
-     * 
+     *
      * @return codec
      */
     public int codec() {
@@ -83,7 +83,7 @@ public abstract class TrackInfo implements Serializable {
 
     /**
      * Get the codec name.
-     * 
+     *
      * @return codec name
      */
     public String codecName() {
@@ -92,7 +92,7 @@ public abstract class TrackInfo implements Serializable {
 
     /**
      * Get the track id.
-     * 
+     *
      * @return track id
      */
     public int id() {
@@ -101,7 +101,7 @@ public abstract class TrackInfo implements Serializable {
 
     /**
      * Get the profile.
-     * 
+     *
      * @return profile
      */
     public int profile() {
@@ -110,7 +110,7 @@ public abstract class TrackInfo implements Serializable {
 
     /**
      * Get the level.
-     * 
+     *
      * @return level
      */
     public int level() {

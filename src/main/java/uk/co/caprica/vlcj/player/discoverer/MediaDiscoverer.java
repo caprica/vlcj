@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -42,7 +42,7 @@ public class MediaDiscoverer {
      * Native interface.
      */
     private final LibVlc libvlc;
-    
+
     /**
      * Native library instance.
      */
@@ -54,12 +54,12 @@ public class MediaDiscoverer {
      * For example "audio", "video".
      */
     private final String name;
-    
+
     /**
      * Native media discoverer instance.
      */
     private libvlc_media_discoverer_t mediaDiscovererInstance;
-    
+
     /**
      * Set to true when the media discoverer has been released.
      */
@@ -67,7 +67,7 @@ public class MediaDiscoverer {
 
     /**
      * Create a media discoverer.
-     * 
+     *
      * @param libvlc native interface
      * @param instance native library instance
      * @param name discoverer name
@@ -81,28 +81,28 @@ public class MediaDiscoverer {
 
     /**
      * Get the name of this discoverer.
-     * 
+     *
      * @return name
      */
     public final String getName() {
         return name;
     }
-    
+
     /**
      * Get the localised name of this discoverer.
-     * 
+     *
      * @return name
      */
     public final String getLocalisedName() {
         return NativeString.getNativeString(libvlc, libvlc.libvlc_media_discoverer_localized_name(mediaDiscovererInstance));
     }
-    
+
     /**
      * Get the media list containing the discovered services/media.
      * <p>
      * This media list will likely contain nested sub-items, so the list should
      * be processed recursively to discover media items and their MRLs.
-     * 
+     *
      * @return media list
      */
     public final MediaList getMediaList() {
@@ -111,7 +111,7 @@ public class MediaDiscoverer {
         libvlc.libvlc_media_list_release(mediaListInstance);
         return mediaList;
     }
-    
+
     /**
      * Clean up media list resources.
      */
@@ -127,10 +127,10 @@ public class MediaDiscoverer {
      */
     private void createInstance() {
         Logger.debug("createInstance()");
-        
+
         mediaDiscovererInstance = libvlc.libvlc_media_discoverer_new_from_name(instance, name);
         Logger.debug("mediaDiscovererInstance={}", mediaDiscovererInstance);
-        
+
         if(mediaDiscovererInstance == null) {
             throw new IllegalArgumentException("No media discoverer for '" + name + "' is available on this platform");
         }

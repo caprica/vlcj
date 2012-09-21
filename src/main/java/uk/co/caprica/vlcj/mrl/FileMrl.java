@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -23,7 +23,7 @@ package uk.co.caprica.vlcj.mrl;
  * Implementation for a file MRL.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
- * 
+ *
  * <pre>
  * String mrl = new FileMrl().file("the-file.mp4")
  *                           .value();
@@ -44,7 +44,7 @@ public class FileMrl implements Mrl {
 
     /**
      * Create a new media resource locaator for a file.
-     * 
+     *
      * @param file file path/name
      * @return this
      */
@@ -63,7 +63,7 @@ public class FileMrl implements Mrl {
 
     /**
      * Construct the MRL from the internal state.
-     * 
+     *
      * @return media resource locator
      */
     private String constructValue() {

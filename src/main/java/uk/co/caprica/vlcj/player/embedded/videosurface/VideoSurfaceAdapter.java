@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -34,7 +34,7 @@ public interface VideoSurfaceAdapter extends Serializable {
 
     /**
      * Attach a video surface to a media player.
-     * 
+     *
      * @param libvlc native interface
      * @param mediaPlayer media player instance
      * @param componentId native id of the video surface component

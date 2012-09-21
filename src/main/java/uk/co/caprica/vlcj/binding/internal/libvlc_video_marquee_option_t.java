@@ -13,12 +13,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.binding.internal;
 
+/**
+ * Enumeration of marquee options.
+ */
 public enum libvlc_video_marquee_option_t {
 
     libvlc_marquee_Enable  (0),

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -41,7 +41,7 @@ public class VideoTrackInfo extends TrackInfo {
 
     /**
      * Create a new video track info.
-     * 
+     *
      * @param codec video codec
      * @param id track id
      * @param profile profile
@@ -57,7 +57,7 @@ public class VideoTrackInfo extends TrackInfo {
 
     /**
      * Get the video width.
-     * 
+     *
      * @return width
      */
     public int width() {
@@ -66,7 +66,7 @@ public class VideoTrackInfo extends TrackInfo {
 
     /**
      * Get the video height.
-     * 
+     *
      * @return height
      */
     public int height() {

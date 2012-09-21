@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -27,7 +27,7 @@ public interface BufferFormatCallback {
     /**
      * Returns a {@link BufferFormat} instance specifying how the {@link DirectMediaPlayer}
      * should structure its buffers.
-     * 
+     *
      * @param sourceWidth video width
      * @param sourceHeight video height
      * @return buffer format, must never be <code>null</code>

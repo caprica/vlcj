@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -26,7 +26,7 @@ import com.sun.jna.Structure;
  * Native log subscriber handle.
  * <p>
  * The members of this structure should not be accessed from outside of the native
- * library. 
+ * library.
  */
 public class libvlc_log_subscriber_t extends Structure {
 

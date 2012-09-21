@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -123,7 +123,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     private String[] standardMediaOptions;
 
     /**
-     * 
+     *
      */
     // FIXME use a Java structure (encapsulate this in an event listener?)
     private libvlc_media_stats_t libvlcMediaStats;
@@ -152,16 +152,16 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
     /**
      * Audio equalizer.
-     * 
+     *
      * May be <code>null</code>.
      */
     private Equalizer equalizer;
-    
+
     /**
      * Native audio equalizer instance.
      */
     private libvlc_equalizer_t equalizerInstance;
-    
+
     /**
      * Opaque reference to user/application-specific data associated with this media player.
      */
@@ -174,7 +174,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
     /**
      * Create a new media player.
-     * 
+     *
      * @param libvlc native library interface
      * @param instance libvlc instance
      */
@@ -307,7 +307,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             }
         });
     }
-    
+
     @Override
     public void addMediaOptions(String... mediaOptions) {
         Logger.debug("addMediaOptions(mediaOptions={})", Arrays.toString(mediaOptions));
@@ -387,7 +387,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             }
         });
     }
-    
+
     @Override
     public MediaList subItemsMediaList() {
         Logger.debug("subItemsMediaList()");
@@ -1144,7 +1144,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
     /**
      * Get track descriptions.
-     * 
+     *
      * @param trackDescriptions native track descriptions, this pointer will be freed by this method
      * @return collection of track descriptions
      */
@@ -1496,7 +1496,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             libvlc.libvlc_media_player_set_equalizer(mediaPlayerInstance, null);
         }
     }
-    
+
     // === Implementation =======================================================
 
     @Override
@@ -1608,12 +1608,12 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             equalizer.removeEqualizerListener(this);
             equalizer = null;
         }
-        
+
         if(equalizerInstance != null) {
             libvlc.libvlc_audio_equalizer_release(equalizerInstance);
             equalizerInstance = null;
         }
-        
+
         Logger.debug("Shut down listeners...");
         listenersService.shutdown();
         Logger.debug("Listeners shut down.");
@@ -1687,7 +1687,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
     /**
      * Raise an event.
-     * 
+     *
      * @param mediaPlayerEvent event to raise, may be <code>null</code>
      */
     private void raiseEvent(MediaPlayerEvent mediaPlayerEvent) {
@@ -1702,7 +1702,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
      * <p>
      * This method cleans up the previous media if there was one before associating new media with
      * the media player.
-     * 
+     *
      * @param media media resource locator (MRL)
      * @param mediaOptions zero or more media options
      * @throws IllegalArgumentException if the supplied MRL could not be parsed
@@ -1768,7 +1768,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
      * - the sub-items are obtained from the media player, the list is locked, the sub-items are
      * processed by a {@link SubItemsHandler} implementation, then the list is unlocked and
      * released.
-     * 
+     *
      * @param <T> type of result
      * @param subItemsHandler handler implementation
      * @return result
@@ -1844,7 +1844,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
         /**
          * Create a runnable.
-         * 
+         *
          * @param mediaPlayerEvent event to notify
          */
         private NotifyEventListenersRunnable(MediaPlayerEvent mediaPlayerEvent) {
@@ -1948,14 +1948,14 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
     /**
      * Specification for a component that handles media list sub-items.
-     * 
+     *
      * @param <T> desired result type
      */
     private interface SubItemsHandler<T> {
 
         /**
          * Handle sub-items.
-         * 
+         *
          * @param count number of sub-items in the list, will always be zero or greater
          * @param subItems sub-item list, may be <code>null</code>
          * @return result of processing the sub-items

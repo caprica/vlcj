@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -114,7 +114,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
      * Create a new media player.
      * <p>
      * Full-screen will not be supported.
-     * 
+     *
      * @param libvlc native interface
      * @param instance libvlc instance
      */
@@ -124,7 +124,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
 
     /**
      * Create a new media player.
-     * 
+     *
      * @param libvlc native interface
      * @param instance libvlc instance
      * @param fullScreenStrategy
@@ -277,7 +277,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
 
     /**
      * Install an overlay component.
-     * 
+     *
      * @param overlay overlay window
      */
     private void addOverlay(Window overlay) {
@@ -297,7 +297,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
 
     /**
      * Remove the overlay component.
-     * 
+     *
      * @param overlay overlay window
      */
     private void removeOverlay() {

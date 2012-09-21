@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * afloat with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -34,7 +34,7 @@ class MediaPlayerPositionChangedEvent extends AbstractMediaPlayerEvent {
 
     /**
      * Create a media player event.
-     * 
+     *
      * @param mediaPlayer media player the event relates to
      * @param newPosition a percentage
      */

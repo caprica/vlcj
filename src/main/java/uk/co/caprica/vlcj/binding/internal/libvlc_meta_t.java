@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -23,7 +23,7 @@ package uk.co.caprica.vlcj.binding.internal;
  *
  */
 public enum libvlc_meta_t {
-  
+
     libvlc_meta_Title      ( 0),
     libvlc_meta_Artist     ( 1),
     libvlc_meta_Genre      ( 2),
@@ -41,7 +41,7 @@ public enum libvlc_meta_t {
     libvlc_meta_EncodedBy  (14),
     libvlc_meta_ArtworkURL (15),
     libvlc_meta_TrackID    (16);
-  
+
     private final int intValue;
 
     private libvlc_meta_t(int intValue) {

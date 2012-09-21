@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -59,12 +59,12 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaPlayerCompone
         // Sub-class initialisation
         onAfterConstruct();
     }
-    
+
     /**
      * Get the embedded media list player reference.
      * <p>
      * An application uses this handle to control the media player, add listeners and so on.
-     * 
+     *
      * @return media list player
      */
     public final MediaListPlayer getMediaListPlayer() {
@@ -73,7 +73,7 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaPlayerCompone
 
     /**
      * Get the embedded media list reference.
-     * 
+     *
      * @return media list
      */
     public final MediaList getMediaList() {

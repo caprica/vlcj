@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -64,10 +64,10 @@ class DefaultMediaMeta implements MediaMeta {
      * Lazily loaded.
      */
     private BufferedImage artwork;
-  
+
     /**
      * Create media meta.
-     * 
+     *
      * @param libvlc native library instance
      * @param media media instance
      */
@@ -77,7 +77,7 @@ class DefaultMediaMeta implements MediaMeta {
         // Keep a native reference
         libvlc.libvlc_media_retain(media);
     }
-    
+
     @Override
     public final void parse() {
         Logger.debug("parse()");
@@ -273,10 +273,11 @@ class DefaultMediaMeta implements MediaMeta {
         return artwork;
     }
 
+    @Override
     public final long getLength() {
         return libvlc.libvlc_media_get_duration(media);
     }
-    
+
     @Override
     public final void save() {
         Logger.debug("save()");
@@ -300,7 +301,7 @@ class DefaultMediaMeta implements MediaMeta {
 
     /**
      * Get a local meta data value for a media instance.
-     * 
+     *
      * @param metaType type of meta data
      * @return meta data value
      */
@@ -313,7 +314,7 @@ class DefaultMediaMeta implements MediaMeta {
      * Set a local meta data value for a media instance.
      * <p>
      * Setting meta does not affect the underlying media file until {@link #save()} is called.
-     * 
+     *
      * @param metaType type of meta data
      * @param media media instance
      * @param value meta data value

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -31,13 +31,13 @@ import uk.co.caprica.vlcj.version.Version;
  * A factory that creates interfaces to the libvlc native library.
  * <p>
  * For example:
- * 
+ *
  * <pre>
  * LibVlc libvlc = LibVlcFactory.factory().create();
  * </pre>
- * 
+ *
  * Or:
- * 
+ *
  * <pre>
  * LibVlc libvlc = LibVlcFactory.factory().atLeast(&quot;2.0.0&quot;).log().create();
  * </pre>
@@ -47,7 +47,7 @@ public class LibVlcFactory {
     /**
      * Help text if the native library failed to load.
      */
-    private static final String NATIVE_LIBRARY_HELP = 
+    private static final String NATIVE_LIBRARY_HELP =
         "Failed to load the native library.\n\n" +
         "The error was \"{0}\".\n\n" +
         "The required native libraries are named \"{1}\" and \"{2}\".\n\n" +
@@ -64,7 +64,7 @@ public class LibVlcFactory {
         "Finally, it is not possible to mix CPU architectures - it is not possible for a 64-bit Java Virtual Machine to load\n" +
         "32-bit native libraries.\n\n" +
         "More information may be available in the log, specify -Dvlcj.log=DEBUG on the command-line when starting your application.\n";
-  
+
     /**
      * True if the access to the native library should be synchronised.
      */
@@ -93,7 +93,7 @@ public class LibVlcFactory {
 
     /**
      * Create a new factory instance
-     * 
+     *
      * @return factory
      */
     public static LibVlcFactory factory() {
@@ -102,7 +102,7 @@ public class LibVlcFactory {
 
     /**
      * Request that the libvlc native library instance be synchronised.
-     * 
+     *
      * @return factory
      */
     public LibVlcFactory synchronise() {
@@ -112,7 +112,7 @@ public class LibVlcFactory {
 
     /**
      * Request that the libvlc native library instance be logged.
-     * 
+     *
      * @return factory
      */
     public LibVlcFactory log() {
@@ -122,7 +122,7 @@ public class LibVlcFactory {
 
     /**
      * Request that the libvlc native library be of at least a particular version.
-     * 
+     *
      * @param version required version
      * @return factory
      */
@@ -133,7 +133,7 @@ public class LibVlcFactory {
 
     /**
      * Request that automatic discovery of the native libraries be tried.
-     * 
+     *
      * @param discovery discovery
      * @return factory
      */
@@ -141,10 +141,10 @@ public class LibVlcFactory {
         this.discovery = discovery;
         return this;
     }
-    
+
     /**
      * Create a new libvlc native library instance.
-     * 
+     *
      * @return native library instance
      * @throws RuntimeException if a minimum version check was specified and failed
      */
@@ -196,7 +196,7 @@ public class LibVlcFactory {
      * Parse out the complete file path of the native library.
      * <p>
      * This depends on the format of the toString() of the JNA implementation class.
-     * 
+     *
      * @param library native library instance
      * @return native library path, or simply the toString of the instance if the path could not be parsed out
      */

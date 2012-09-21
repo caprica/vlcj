@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -28,7 +28,7 @@ import java.util.List;
  * This strategy should be supported across all platforms.
  */
 public class StandardNativeDiscoveryStrategy extends AbstractNativeDiscoveryStrategy {
-    
+
     @Override
     public boolean supported() {
         return true;
@@ -43,12 +43,12 @@ public class StandardNativeDiscoveryStrategy extends AbstractNativeDiscoveryStra
         // Look in the extra directories supplied by the sub-class
         onGetDirectoryNames(directoryNames);
     }
-    
+
     /**
      * Template method to get extra, perhaps platform-specific, directory names
      * to search.
-     * 
-     * @param directoryNames list of directories to add to 
+     *
+     * @param directoryNames list of directories to add to
      */
     protected void onGetDirectoryNames(List<String> directoryNames) {
     }

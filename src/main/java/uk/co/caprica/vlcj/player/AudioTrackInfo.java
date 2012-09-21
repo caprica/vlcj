@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -41,7 +41,7 @@ public class AudioTrackInfo extends TrackInfo {
 
     /**
      * Create a new audio track info
-     * 
+     *
      * @param codec audio codec
      * @param id track id
      * @param profile profile
@@ -57,7 +57,7 @@ public class AudioTrackInfo extends TrackInfo {
 
     /**
      * Get the number of channels.
-     * 
+     *
      * @return channel count
      */
     public int channels() {
@@ -66,7 +66,7 @@ public class AudioTrackInfo extends TrackInfo {
 
     /**
      * Get the rate.
-     * 
+     *
      * @return rate
      */
     public int rate() {

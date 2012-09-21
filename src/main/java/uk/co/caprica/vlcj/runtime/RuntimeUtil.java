@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -35,7 +35,7 @@ public class RuntimeUtil {
 
     /**
      * Test whether the runtime operating system is "unix-like".
-     * 
+     *
      * @return true if the runtime OS is unix-like, Linux, Unix, FreeBSD etc
      */
     public static boolean isNix() {
@@ -44,7 +44,7 @@ public class RuntimeUtil {
 
     /**
      * Test whether the runtime operating system is a Windows variant.
-     * 
+     *
      * @return true if the runtime OS is Windows
      */
     public static boolean isWindows() {
@@ -53,7 +53,7 @@ public class RuntimeUtil {
 
     /**
      * Test whether the runtime operating system is a Mac variant.
-     * 
+     *
      * @return true if the runtime OS is Mac
      */
     public static boolean isMac() {
@@ -62,7 +62,7 @@ public class RuntimeUtil {
 
     /**
      * Try to safely convert a long value to an int.
-     * 
+     *
      * The current libvlc API requires a 32-bit integer value for the drawable window handle -
      * however, according to the JNA API it is possible that 64-bit integer values are used (since
      * Native.getComponentId returns a long value).
@@ -71,7 +71,7 @@ public class RuntimeUtil {
      * libvlc.
      * <p>
      * In practice, I have never seen this happen on Linux or Windows.
-     * 
+     *
      * @param value long value
      * @return int value
      * @throws IllegalArgumentException if the long value can not be safely converted to an int
@@ -89,7 +89,7 @@ public class RuntimeUtil {
 
     /**
      * Get the native library name.
-     * 
+     *
      * @return library name
      */
     public static String getLibVlcLibraryName() {
@@ -100,7 +100,7 @@ public class RuntimeUtil {
      * Get the operating system file name for the libvlc shared object.
      * <p>
      * This is only used to generate help/error messages.
-     * 
+     *
      * @return shared object file name
      */
     public static String getLibVlcName() {
@@ -122,7 +122,7 @@ public class RuntimeUtil {
      * Get the operating system file name for the libvlc core shared object.
      * <p>
      * This is only used to generate help/error messages.
-     * 
+     *
      * @return shared object file name
      */
     public static String getLibVlcCoreName() {
@@ -144,7 +144,7 @@ public class RuntimeUtil {
      * Get the default directory name for the vlc plugins directory.
      * <p>
      * This is only used to generate help/error messages.
-     * 
+     *
      * @return plugin directory name
      */
     public static String getPluginsDirectoryName() {

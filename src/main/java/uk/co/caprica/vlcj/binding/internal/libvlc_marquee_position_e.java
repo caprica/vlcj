@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -22,20 +22,23 @@ package uk.co.caprica.vlcj.binding.internal;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Enumeration of marquee positions.
+ */
 public enum libvlc_marquee_position_e {
 
     centre      ( 0),
     left        ( 1),
     right       ( 2),
-  
+
     top         ( 4),
     top_left    ( 5),
     top_right   ( 6),
-  
+
     bottom      ( 8),
     bottom_left ( 9),
     bottom_right(10);
-  
+
     private static final Map<Integer, libvlc_marquee_position_e> INT_MAP = new HashMap<Integer, libvlc_marquee_position_e>();
 
     static {

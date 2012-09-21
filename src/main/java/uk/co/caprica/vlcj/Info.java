@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -44,10 +44,10 @@ public class Info {
      * Application license (GPL3) summary text.
      */
     private static final String LICENSE_MSG =
-        "VLCJ is free software: you can redistribute it and/or modify"         + "\n" + 
+        "VLCJ is free software: you can redistribute it and/or modify"         + "\n" +
         "it under the terms of the GNU General Public License as published by" + "\n" +
         "the Free Software Foundation, either version 3 of the License, or"    + "\n" +
-        "(at your option) any later version."                                  + "\n" +    
+        "(at your option) any later version."                                  + "\n" +
         ""                                                                     + "\n" +
         "VLCJ is distributed in the hope that it will be useful,"              + "\n" +
         "but WITHOUT ANY WARRANTY; without even the implied warranty of"       + "\n" +
@@ -58,7 +58,7 @@ public class Info {
         "along with VLCJ.  If not, see <http://www.gnu.org/licenses/>."        + "\n" +
         ""                                                                     + "\n" +
         "Copyright 2009, 2010, 2011, 2012 Caprica Software Limited."           + "\n";
-      
+
     /**
      * Singleton holder.
      */
@@ -72,7 +72,7 @@ public class Info {
 
     /**
      * Get application information.
-     * 
+     *
      * @return singleton instance
      */
     public static Info getInstance() {
@@ -105,10 +105,10 @@ public class Info {
         Logger.info("java home: {}", System.getProperty("java.home"));
         Logger.info("os: {} {} {}", System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"));
     }
-    
+
     /**
      * Get the vlcj version.
-     * 
+     *
      * @return version
      */
     public final Version version() {

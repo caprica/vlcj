@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -29,7 +29,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
  * Builder for a Logo.
  * <p>
  * Use like this, with a static import of {@link #logo()}:
- * 
+ *
  * <pre>
  *   logo()
  *     .opacity(200)
@@ -86,7 +86,7 @@ public final class Logo {
 
     /**
      * Create a logo.
-     * 
+     *
      * @return logo
      */
     public static Logo logo() {
@@ -101,7 +101,7 @@ public final class Logo {
 
     /**
      * Apply a logo opacity.
-     * 
+     *
      * @param opacity opacity, from 0 to 255, where 255 is fully opaque
      * @return this
      */
@@ -112,7 +112,7 @@ public final class Logo {
 
     /**
      * Apply a logo opacity.
-     * 
+     *
      * @param opacity opacity, from 0.0 to 1.0, where 1.0 is fully opaque
      * @return this
      */
@@ -123,7 +123,7 @@ public final class Logo {
 
     /**
      * Apply the logo position in video co-ordinates.
-     * 
+     *
      * @param x x ordinate
      * @param y y ordinate
      * @return this
@@ -136,7 +136,7 @@ public final class Logo {
 
     /**
      * Apply the logo position.
-     * 
+     *
      * @param position position enumeration value
      * @return this
      */
@@ -151,7 +151,7 @@ public final class Logo {
      * It is possible to simply specify the name of the file, or the extended syntax supported by
      * libvlc - e.g. "file,d,t;file,d,t;...", see
      * {@link libvlc_video_logo_option_t#libvlc_logo_file}.
-     * 
+     *
      * @param file name of the file
      * @return this
      */
@@ -162,7 +162,7 @@ public final class Logo {
 
     /**
      * Apply the logo file.
-     * 
+     *
      * @param file logo file
      * @return this
      */
@@ -175,7 +175,7 @@ public final class Logo {
      * Apply the logo image.
      * <p>
      * This is not optimal as the image must first be written to disk in a temporary file.
-     * 
+     *
      * @param image logo image
      * @return this
      */
@@ -186,7 +186,7 @@ public final class Logo {
 
     /**
      * Apply the initial enabled/disabled state.
-     * 
+     *
      * @param enable <code>true</code> to enable the logo; <code>false</code> to disable it
      * @return this
      */
@@ -197,7 +197,7 @@ public final class Logo {
 
     /**
      * Enable the logo.
-     * 
+     *
      * @return this
      */
     public Logo enable() {
@@ -207,7 +207,7 @@ public final class Logo {
 
     /**
      * Disable the logo.
-     * 
+     *
      * @return this
      */
     public Logo disable() {
@@ -219,7 +219,7 @@ public final class Logo {
      * Apply the logo to the media player.
      * <p>
      * All previously applied properties will be set on the media player.
-     * 
+     *
      * @param mediaPlayer media player
      */
     public void apply(MediaPlayer mediaPlayer) {

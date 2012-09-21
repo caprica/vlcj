@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.discovery.StandardNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
- * Default implementation of a native library discovery strategy that searches in 
+ * Default implementation of a native library discovery strategy that searches in
  * standard well-known directory locations on MacOS.
  */
 public class DefaultMacNativeDiscoveryStrategy extends StandardNativeDiscoveryStrategy {

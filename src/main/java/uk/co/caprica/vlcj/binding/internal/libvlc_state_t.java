@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -46,7 +46,7 @@ public enum libvlc_state_t {
 
     /**
      * Get an enumerated value for a native value.
-     * 
+     *
      * @param intValue native value
      * @return enumerated value
      */
@@ -61,7 +61,7 @@ public enum libvlc_state_t {
 
     /**
      * Create an enumerated value.
-     * 
+     *
      * @param intValue native value
      */
     private libvlc_state_t(int intValue) {
@@ -70,7 +70,7 @@ public enum libvlc_state_t {
 
     /**
      * Get the native value.
-     * 
+     *
      * @return value
      */
     public int intValue() {

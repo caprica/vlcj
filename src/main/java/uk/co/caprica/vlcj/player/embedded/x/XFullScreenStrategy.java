@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -46,7 +46,7 @@ public class XFullScreenStrategy implements FullScreenStrategy {
 
     /**
      * Create a new full-screen strategy.
-     * 
+     *
      * @param window component that will be made full-screen
      */
     public XFullScreenStrategy(Window window) {

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -47,7 +47,7 @@ import com.sun.jna.platform.WindowUtils;
  * <p>
  * The default implementation of the {@link #onSetWindowTransparency()} template method attempts to
  * make a transparent overlay by either the preferred method of simply setting the background colour
- * to a transparent colour for Java7, or by using <code>com.sun.awt.AWTUtilities</code>, if it 
+ * to a transparent colour for Java7, or by using <code>com.sun.awt.AWTUtilities</code>, if it
  * exists, for Java6.
  * <p>
  * Best results will be obtained by <em>disabling</em> any compositing desktop window manager.
@@ -74,7 +74,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
      * <p>
      * An "alpha-compatible" graphics configuration will be used when creating the window so as to
      * enable a transparent overlay.
-     * 
+     *
      * @param owner owning window, must not be <code>null</code>
      * @throws IllegalArgumentException if the <code>owner</code> parameter is <code>null</code>
      */
@@ -84,7 +84,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
 
     /**
      * Create an overlay.
-     * 
+     *
      * @param owner owning window, must not be <code>null</code>
      * @param graphicsConfiguration graphics configuration to use when creating the <code>Window</code>
      * @throws IllegalArgumentException if the <code>owner</code> parameter is <code>null</code>
@@ -143,7 +143,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
      * overlay is active.
      * <p>
      * The default behaviour is to hide the mouse pointer.
-     * 
+     *
      * @return <code>true</code> to hide the mouse pointer; otherwise <code>false</code>
      */
     protected boolean onHideCursor() {
@@ -164,7 +164,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
 
     /**
      * Template method invoked when the overlay size changes.
-     * 
+     *
      * @param width new width
      * @param height new height
      */
@@ -176,7 +176,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
      * Template method used to configure the graphics context before painting the overlay.
      * <p>
      * The default implementation enables anti-aliasing.
-     * 
+     *
      * @param g2 graphics context
      */
     protected void onPrepareGraphicsContext(Graphics2D g2) {
@@ -186,7 +186,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
 
     /**
      * Template method used to paint the overlay.
-     * 
+     *
      * @param g2 graphics context
      */
     protected void onPaintOverlay(Graphics2D g2) {
@@ -195,7 +195,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
 
     /**
      * Get a blank cursor to use for the mouse pointer.
-     * 
+     *
      * @return blank cursor
      */
     private Cursor getBlankCursor() {

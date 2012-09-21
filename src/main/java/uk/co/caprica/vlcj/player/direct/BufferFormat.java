@@ -142,7 +142,7 @@ public class BufferFormat {
         sb.append("lines=").append(Arrays.toString(lines)).append(']');
         return sb.toString();
     }
-    
+
     /**
      * Validate the buffer format.
      * <p>

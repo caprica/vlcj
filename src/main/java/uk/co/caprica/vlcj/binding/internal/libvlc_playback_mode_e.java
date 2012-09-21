@@ -3,6 +3,9 @@ package uk.co.caprica.vlcj.binding.internal;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Enumeration of media list player playback modes.
+ */
 public enum libvlc_playback_mode_e {
 
     libvlc_playback_mode_default (0),

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -23,7 +23,7 @@ package uk.co.caprica.vlcj.mrl;
  * Implementation of a media resource locator for RTP streams.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
- * 
+ *
  * <pre>
  * String mrl = new RtpMrl().multicastAddress("234.0.0.1")
  *                          .port(5401)
@@ -34,28 +34,28 @@ package uk.co.caprica.vlcj.mrl;
 public class RtpMrl implements Mrl {
 
     /**
-     * 
+     *
      */
     private static final String RTP_TYPE = "rtp";
 
     /**
-     * 
+     *
      */
     private String multicastAddress;
 
     /**
-     * 
+     *
      */
     private int port;
 
     /**
-     * 
+     *
      */
     private String value;
 
     /**
-     * 
-     * 
+     *
+     *
      * @param multicastAddress
      * @return this
      */
@@ -65,8 +65,8 @@ public class RtpMrl implements Mrl {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param port
      * @return this
      */

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -61,7 +61,7 @@ public interface LibDwmApi extends Library {
 
     /**
      * Enable/disable desktop window composition.
-     * 
+     *
      * @param uCompositionAction enable/disable, i.e. DWM_EC_ENABLECOMPOSITION or DWM_EC_DISABLECOMPOSITION
      * @return S_OK or HRESULT error code
      */
@@ -69,7 +69,7 @@ public interface LibDwmApi extends Library {
 
     /**
      * Check whether or not desktop window composition is currently enabled.
-     * 
+     *
      * @param pfEnabled pointer to enabled/disabled flag.
      * @return S_OK or HRESULT error code
      */

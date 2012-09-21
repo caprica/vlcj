@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -43,7 +43,7 @@ public class TrackDescription implements Serializable {
 
     /**
      * Create a track description.
-     * 
+     *
      * @param id track identifier
      * @param description track description
      */
@@ -54,7 +54,7 @@ public class TrackDescription implements Serializable {
 
     /**
      * Get the track identifier
-     * 
+     *
      * @return identifier
      */
     public int id() {
@@ -63,7 +63,7 @@ public class TrackDescription implements Serializable {
 
     /**
      * Get the track description
-     * 
+     *
      * @return description
      */
     public String description() {

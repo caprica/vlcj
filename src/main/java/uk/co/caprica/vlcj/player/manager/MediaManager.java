@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -28,27 +28,27 @@ package uk.co.caprica.vlcj.player.manager;
  * Specification for a media manager component.
  * <p>
  * The basic life-cycle is:
- * 
+ *
  * <pre>
  *   // Set some options for libvlc
  *   String[] libvlcArgs = {...add options here...};
- * 
+ *
  *   // Create a factory
  *   MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(libvlcArgs);
- * 
+ *
  *   // Create a media manager
  *   MediaManager mediaManager = mediaPlayerFactory.newMediaManager();
- *   
+ *
  *   // Do some interesting things in the application
  *   ...
- *   
+ *
  *   // Cleanly dispose of the media manager instance and any associated native resources
  *   mediaManager.release();
- *   
+ *
  *   // Cleanly dispose of the media player factory and any associated native resources
  *   mediaPlayerFactory.release();
  * </pre>
- * 
+ *
  * <strong>All of the MediaManager API is experimental and is subject to change or removal at any
  * time.</strong>
  */

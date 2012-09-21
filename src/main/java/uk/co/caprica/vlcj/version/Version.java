@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -55,7 +55,7 @@ public final class Version implements Comparable<Version> {
 
     /**
      * Create a new version.
-     * 
+     *
      * @param version version string
      */
     public Version(final String version) {
@@ -74,7 +74,7 @@ public final class Version implements Comparable<Version> {
 
     /**
      * Get the original version string.
-     * 
+     *
      * @return version
      */
     public String version() {
@@ -83,7 +83,7 @@ public final class Version implements Comparable<Version> {
 
     /**
      * Get the major version.
-     * 
+     *
      * @return major version number
      */
     public int major() {
@@ -92,7 +92,7 @@ public final class Version implements Comparable<Version> {
 
     /**
      * Get the minor version.
-     * 
+     *
      * @return minor version number
      */
     public int minor() {
@@ -101,7 +101,7 @@ public final class Version implements Comparable<Version> {
 
     /**
      * Get the revision.
-     * 
+     *
      * @return revision number
      */
     public int revision() {
@@ -110,7 +110,7 @@ public final class Version implements Comparable<Version> {
 
     /**
      * Get the extra.
-     * 
+     *
      * @return extra
      */
     public String extra() {
@@ -119,7 +119,7 @@ public final class Version implements Comparable<Version> {
 
     /**
      * Test whether or not this version is at least the required version.
-     * 
+     *
      * @param required required version
      * @return <code>true</code> if this version is at least (equal to or
      *         greater than) the required version

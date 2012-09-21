@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -37,20 +37,20 @@ public class MediaListItem {
      * Name/description of the item.
      */
     private final String name;
-    
+
     /**
      * MRL of the item.
      */
     private final String mrl;
-    
+
     /**
      * List of sub-items.
      */
     private final List<MediaListItem> subItems;
-    
+
     /**
      * Create a media list item.
-     * 
+     *
      * @param name name/description
      * @param mrl MRL
      * @param subItems
@@ -60,19 +60,19 @@ public class MediaListItem {
         this.mrl = mrl;
         this.subItems = subItems;
     }
-    
+
     /**
      * Get the name/description of this item.
-     * 
+     *
      * @return name/description
      */
     public final String name() {
         return name;
     }
-    
+
     /**
      * Get the MRL of this item.
-     * 
+     *
      * @return MRL
      */
     public final String mrl() {
@@ -81,13 +81,13 @@ public class MediaListItem {
 
     /**
      * Get the sub-item list.
-     * 
+     *
      * @return sub-items
      */
     public final List<MediaListItem> subItems() {
         return Collections.unmodifiableList(subItems);
     }
-    
+
     @Override
     public final String toString() {
         StringBuilder sb = new StringBuilder();

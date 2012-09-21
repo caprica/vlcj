@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -28,7 +28,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 /**
  * A one-time media list iterator.
  * <p>
- * For simplicities sake, and since this is a <em>private implementation 
+ * For simplicities sake, and since this is a <em>private implementation
  * class</em>, the iterator may not be re-used and the implementation takes some liberties to ensure
  * that native resources are properly released.
  * <p>
@@ -72,7 +72,7 @@ class LibVlcMediaListIterator implements Iterable<libvlc_media_t>, Iterator<libv
 
     /**
      * Create a new media list iterable iterator.
-     * 
+     *
      * @param libvlc native library instance
      * @param mediaList native media list instance, may be <code>null</code>
      */

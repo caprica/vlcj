@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -65,7 +65,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
      * Component to call back to set up video buffers.
      */
 
-    private BufferFormatCallback bufferFormatCallback;
+    private final BufferFormatCallback bufferFormatCallback;
 
     /**
      * Component to call back for each video frame.
@@ -126,7 +126,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
      * Create a new media player.
      * <p>
      * This constructor does not support formats that require multiple planes (buffers).
-     * 
+     *
      * @param libvlc native library interface
      * @param instance libvlc instance
      * @param width width for the video
@@ -164,7 +164,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
 
     /**
      * Get the current buffer format.
-     * 
+     *
      * @return the current buffer format
      */
     public final BufferFormat getBufferFormat() {
@@ -212,7 +212,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     /**
      * Implementation of a callback invoked by the native library to clean up
      * previously allocated video buffers.
-     * 
+     *
      * This callback is invoked when the video buffer is no longer needed.
      */
     private final class CleanupCallback implements libvlc_video_cleanup_cb {
@@ -229,7 +229,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     /**
      * Implementation of a callback invoked by the native library to prepare
      * the video buffer(s) for rendering a video frame.
-     * 
+     *
      * This callback is invoked every frame.
      */
     private final class LockCallback implements libvlc_lock_callback_t {
@@ -251,7 +251,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     /**
      * Implementation of a callback invoked by the native library after each
      * video frame.
-     * 
+     *
      * This callback is invoked every frame.
      */
     private final class UnlockCallback implements libvlc_unlock_callback_t {
@@ -269,7 +269,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     /**
      * Implementation of a callback invoked by the native library to render a
      * single frame of video.
-     * 
+     *
      * This callback is invoked every frame.
      */
     private final class DisplayCallback implements libvlc_display_callback_t {
@@ -289,13 +289,13 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     private static final class DefaultBufferFormatCallback implements BufferFormatCallback {
 
         /**
-         * Buffer format instance. 
+         * Buffer format instance.
          */
         private final BufferFormat bufferFormat;
 
         /**
          * Create a buffer format.
-         * 
+         *
          * @param format chroma/pixel-format
          * @param width video width
          * @param height video height

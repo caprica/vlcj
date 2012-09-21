@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -31,7 +31,7 @@ import com.sun.jna.Memory;
  * {@link RenderCallback} directly rather than using this class.
  * <p>
  * This is probably the most <em>inefficient</em> implementation possible of a render callback,
- * ordinarily the video data should be written directly to some other construct (like a texture). 
+ * ordinarily the video data should be written directly to some other construct (like a texture).
  */
 public abstract class RenderCallbackAdapter implements RenderCallback {
 
@@ -42,7 +42,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
 
     /**
      * Create a new render call-back.
-     * 
+     *
      * @param rgbBuffer video data buffer
      */
     public RenderCallbackAdapter(int[] rgbBuffer) {
@@ -57,7 +57,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
 
     /**
      * Get the video data buffer.
-     * 
+     *
      * @return video buffer
      */
     public int[] rgbBuffer() {
@@ -66,7 +66,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
 
     /**
      * Template method invoked when a new frame of video data is ready.
-     * 
+     *
      * @param rgbBuffer video data buffer
      */
     protected abstract void onDisplay(int[] rgbBuffer);

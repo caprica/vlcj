@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.binding.internal;
 import com.sun.jna.Structure;
 
 /**
- * 
+ *
  */
 public class libvlc_media_track_info_video_t extends Structure {
 

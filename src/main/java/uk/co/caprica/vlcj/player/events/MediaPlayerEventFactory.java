@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -56,7 +56,7 @@ public class MediaPlayerEventFactory {
 
     /**
      * Create a media player event factory.
-     * 
+     *
      * @param mediaPlayer media player to create events for
      */
     public MediaPlayerEventFactory(MediaPlayer mediaPlayer) {
@@ -65,7 +65,7 @@ public class MediaPlayerEventFactory {
 
     /**
      * Create a new media player event for a given native event.
-     * 
+     *
      * @param event native event
      * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
      * @return media player event, or <code>null</code> if the native event type is not enabled or otherwise could not be handled
@@ -235,7 +235,7 @@ public class MediaPlayerEventFactory {
 
     /**
      * Create a new semantic event for new media.
-     * 
+     *
      * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
      * @return media player event, or <code>null</code> if the event type is not enabled
      */
@@ -248,7 +248,7 @@ public class MediaPlayerEventFactory {
 
     /**
      * Create a new semantic event for a played sub-item.
-     * 
+     *
      * @param subItemIndex index of the sub-item that was played
      * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
      * @return media player event, or <code>null</code> if the event type is not enabled
@@ -262,7 +262,7 @@ public class MediaPlayerEventFactory {
 
     /**
      * Create a new semantic event for a finished sub-item.
-     * 
+     *
      * @param subItemIndex index of the sub-item that finished playing
      * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
      * @return media player event, or <code>null</code> if the event type is not enabled
@@ -276,7 +276,7 @@ public class MediaPlayerEventFactory {
 
     /**
      * Create a new semantic event for the end of the sub-items being reached.
-     * 
+     *
      * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
      * @return media player event, or <code>null</code> if the event type is not enabled
      */

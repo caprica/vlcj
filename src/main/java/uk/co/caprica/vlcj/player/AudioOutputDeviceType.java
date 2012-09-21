@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -25,13 +25,13 @@ package uk.co.caprica.vlcj.player;
 public enum AudioOutputDeviceType {
 
     AUDIO_ERROR(-1),
-    AUDIO_MONO(1), 
+    AUDIO_MONO(1),
     AUDIO_STEREO(2),
-    AUDIO_2F2R(4), 
-    AUDIO_3F2R(5), 
-    AUDIO_5_1(6), 
-    AUDIO_6_1(7), 
-    AUDIO_7_1(8), 
+    AUDIO_2F2R(4),
+    AUDIO_3F2R(5),
+    AUDIO_5_1(6),
+    AUDIO_6_1(7),
+    AUDIO_7_1(8),
     AUDIO_SPDIF(10);
 
     private final int intValue;
@@ -46,7 +46,7 @@ public enum AudioOutputDeviceType {
 
     /**
      * Get an enumerated value for a native value.
-     * 
+     *
      * @param intValue native value
      * @return enumerated value, or <code>null</code> if the native value is not recognised
      */

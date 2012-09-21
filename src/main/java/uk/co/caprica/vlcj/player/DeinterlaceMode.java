@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -27,52 +27,52 @@ package uk.co.caprica.vlcj.player;
 public enum DeinterlaceMode {
 
     /**
-     * 
+     *
      */
     DISCARD("discard"),
 
     /**
-     * 
+     *
      */
     BLEND("blend"),
 
     /**
-     * 
+     *
      */
     MEAN("mean"),
 
     /**
-     * 
+     *
      */
     BOB("bob"),
 
     /**
-     * 
+     *
      */
     LINEAR("linear"),
 
     /**
-     * 
+     *
      */
     X("x"),
 
     /**
-     * 
+     *
      */
     YADIF("yadif"),
 
     /**
-     * 
+     *
      */
     YADIF2X("yadif2x"),
 
     /**
-     * 
+     *
      */
     PHOSPHOR("phosphor"),
 
     /**
-     * 
+     *
      */
     IVTC("ivtc");
 
@@ -83,7 +83,7 @@ public enum DeinterlaceMode {
 
     /**
      * Create an enumerated value.
-     * 
+     *
      * @param mode native mode value
      */
     private DeinterlaceMode(String mode) {
@@ -92,7 +92,7 @@ public enum DeinterlaceMode {
 
     /**
      * Get the native mode value.
-     * 
+     *
      * @return mode value
      */
     public final String mode() {

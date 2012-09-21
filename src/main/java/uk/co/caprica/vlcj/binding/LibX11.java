@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -29,7 +29,7 @@ import com.sun.jna.Platform;
  * The only exposed API is that used to initialise XLib for multi-threaded access.
  * <p>
  * Usage is simple, at the start of an application:
- * 
+ *
  * <pre>
  * int result = LibX11.INSTANCE.XInitThreads();
  * // &quot;result&quot; will be non-zero if the native library call succeeded
@@ -49,7 +49,7 @@ public interface LibX11 extends Library {
      * <p>
      * Invoking this at the start of an application can reduce the chance of a fatal JVM crash when
      * using multiple media players.
-     * 
+     *
      * @return non-zero on success, zero on failure (or if threading is not supported)
      */
     int XInitThreads();

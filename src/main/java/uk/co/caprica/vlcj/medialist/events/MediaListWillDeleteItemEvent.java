@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -32,15 +32,15 @@ class MediaListWillDeleteItemEvent extends AbstractMediaListEvent {
      * Native media instance that will deleted.
      */
     private final libvlc_media_t mediaInstance;
-    
+
     /**
      * Index from which the item will be deleted.
      */
     private final int index;
-    
+
     /**
      * Create a media list event.
-     * 
+     *
      * @param mediaList media list the event relates to
      * @param mediaInstance native media instance that will be added
      * @param index index from which the item will be deleted

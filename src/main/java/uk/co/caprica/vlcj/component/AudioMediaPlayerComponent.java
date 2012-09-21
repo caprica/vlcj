@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -45,12 +45,12 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * <p>
  * In this minimal example, only two lines of code are required to create an audio player and play
  * media:
- * 
+ *
  * <pre>
  * mediaPlayerComponent = new AudioMediaPlayerComponent(); // &lt;--- 1
  * mediaPlayerComponent.getMediaPlayer().playMedia(mrl); // &lt;--- 2
  * </pre>
- * 
+ *
  * This is not quite as useful as the {@link EmbeddedMediaPlayerComponent} as audio players are
  * generally quite simple to create anyway.
  * <p>
@@ -75,10 +75,10 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
      * required.
      */
     protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
-        "--no-plugins-cache", 
-        "--quiet", 
-        "--quiet-synchro", 
-        "--intf", 
+        "--no-plugins-cache",
+        "--quiet",
+        "--quiet-synchro",
+        "--intf",
         "dummy"
     };
 
@@ -106,7 +106,7 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
 
     /**
      * Get the media player factory reference.
-     * 
+     *
      * @return media player factory
      */
     public final MediaPlayerFactory getMediaPlayerFactory() {
@@ -117,7 +117,7 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
      * Get the embedded media player reference.
      * <p>
      * An application uses this handle to control the media player, add listeners and so on.
-     * 
+     *
      * @return media player
      */
     public final MediaPlayer getMediaPlayer() {
@@ -127,7 +127,7 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
     /**
      * Release the media player component and the associated native media player resources.
      * <p>
-     * The associated media player factory will <em>not</em> be released, the client 
+     * The associated media player factory will <em>not</em> be released, the client
      * application is responsible for releasing the factory at the appropriate time.
      */
     public final void release() {
@@ -141,7 +141,7 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
      * <p>
      * The default implementation will invoke the {@link #onGetMediaPlayerFactoryArgs()} template
      * method.
-     * 
+     *
      * @return media player factory
      */
     protected MediaPlayerFactory onGetMediaPlayerFactory() {
@@ -154,7 +154,7 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
      * <p>
      * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
      * guarantee that {@link #onGetMediaPlayerFactoryArgs()} will be called.
-     * 
+     *
      * @return media player factory initialisation arguments
      */
     protected String[] onGetMediaPlayerFactoryArgs() {
@@ -166,7 +166,7 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
      */
     protected void onAfterConstruct() {
     }
-    
+
     /**
      * Template method invoked immediately prior to releasing the media player and media player
      * factory instances.

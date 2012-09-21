@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -74,12 +74,12 @@ public class MediaList {
     /**
      * Native interface.
      */
-    private LibVlc libvlc;
+    private final LibVlc libvlc;
 
     /**
      * Native library instance.
      */
-    private libvlc_instance_t instance;
+    private final libvlc_instance_t instance;
 
     /**
      * Play-list instance.
@@ -90,7 +90,7 @@ public class MediaList {
      * Event manager instance.
      */
     private libvlc_event_manager_t mediaListEventManager;
-    
+
     /**
      * Call-back to handle native media player events.
      */
@@ -108,7 +108,7 @@ public class MediaList {
 
     /**
      * Create a new media list.
-     * 
+     *
      * @param libvlc native interface
      * @param instance native library instance
      */
@@ -118,7 +118,7 @@ public class MediaList {
 
     /**
      * Create a media list for a given native media list instance.
-     * 
+     *
      * @param libvlc native interface
      * @param instance native library instance
      * @param mediaListInstance media list instance
@@ -131,7 +131,7 @@ public class MediaList {
 
     /**
      * Add a component to be notified of media list events.
-     * 
+     *
      * @param listener component to add
      */
     public final void addMediaListEventListener(MediaListEventListener listener) {
@@ -142,7 +142,7 @@ public class MediaList {
     /**
      * Remove a component previously added so that it no longer receives media
      * list events.
-     * 
+     *
      * @param listener component to remove
      */
     public final void removeListEventListener(MediaListEventListener listener) {
@@ -154,7 +154,7 @@ public class MediaList {
      * Set standard media options for all media items subsequently played.
      * <p>
      * This will <strong>not</strong> affect any currently playing media item.
-     * 
+     *
      * @param standardMediaOptions options to apply to all subsequently played media items
      */
     public final void setStandardMediaOptions(String... standardMediaOptions) {
@@ -164,7 +164,7 @@ public class MediaList {
 
     /**
      * Add a media item, with options, to the play-list.
-     * 
+     *
      * @param mrl media resource locator
      * @param mediaOptions zero or more media item options
      */
@@ -186,7 +186,7 @@ public class MediaList {
 
     /**
      * Insert a media item, with options, to the play-list.
-     * 
+     *
      * @param index position at which to insert the media item (counting from zero)
      * @param mrl media resource locator
      * @param mediaOptions zero or more media item options
@@ -209,7 +209,7 @@ public class MediaList {
 
     /**
      * Remove a media item from the play-list.
-     * 
+     *
      * @param index item to remove (counting from zero)
      */
     public final void removeMedia(int index) {
@@ -248,7 +248,7 @@ public class MediaList {
 
     /**
      * Get the number of items currently in the list.
-     * 
+     *
      * @return item count
      */
     public final int size() {
@@ -265,7 +265,7 @@ public class MediaList {
 
     /**
      * Test if the play-list is read-only.
-     * 
+     *
      * @return <code>true</code> if the play-list is currently read-only, otherwise <code>false</code>
      */
     public final boolean isReadOnly() {
@@ -275,7 +275,7 @@ public class MediaList {
 
     /**
      * Get the list of items.
-     * 
+     *
      * @return list of items
      */
     public final List<MediaListItem> items() {
@@ -283,7 +283,7 @@ public class MediaList {
         List<MediaListItem> result = new ArrayList<MediaListItem>();
         try {
             lock();
-            for(int i = 0; i < libvlc.libvlc_media_list_count(mediaListInstance); i++) { 
+            for(int i = 0; i < libvlc.libvlc_media_list_count(mediaListInstance); i++) {
                 libvlc_media_t mediaInstance = libvlc.libvlc_media_list_item_at_index(mediaListInstance, i);
                 result.add(newMediaListItem(mediaInstance));
                 libvlc.libvlc_media_release(mediaInstance);
@@ -297,7 +297,7 @@ public class MediaList {
 
     /**
      * Create a new media list item for a give native media instance.
-     * 
+     *
      * @param mediaInstance native media instance
      * @return media list item
      */
@@ -351,10 +351,10 @@ public class MediaList {
 
         this.mediaListInstance = mediaListInstance;
         Logger.debug("mediaListInstance={}", mediaListInstance);
-        
+
         mediaListEventManager = libvlc.libvlc_media_list_event_manager(mediaListInstance);
         Logger.debug("mediaListEventManager={}", mediaListEventManager);
-        
+
         registerEventListener();
     }
 
@@ -363,9 +363,9 @@ public class MediaList {
      */
     private void destroyInstance() {
         Logger.debug("destroyInstance()");
-        
+
         deregisterEventListener();
-        
+
         if(mediaListInstance != null) {
             libvlc.libvlc_media_list_release(mediaListInstance);
         }
@@ -408,7 +408,7 @@ public class MediaList {
 
     /**
      * Raise an event.
-     * 
+     *
      * @param mediaListEvent event to raise, may be <code>null</code>
      */
     private void raiseEvent(MediaListEvent mediaListEvent) {
@@ -436,7 +436,7 @@ public class MediaList {
 
     /**
      * Create a new native media instance.
-     * 
+     *
      * @param media media resource locator
      * @param mediaOptions zero or more media options
      * @return native media instance
@@ -475,7 +475,7 @@ public class MediaList {
 
     /**
      * Release a native media instance.
-     * 
+     *
      * @param mediaDescripor native media instance
      */
     private void releaseMediaDescriptor(libvlc_media_t mediaDescriptor) {
@@ -485,13 +485,13 @@ public class MediaList {
 
     /**
      * Get the native media list instance handle.
-     * 
+     *
      * @return native media list handle
      */
     public final libvlc_media_list_t mediaListInstance() {
         return mediaListInstance;
     }
-    
+
     /**
      * A call-back to handle events from the native media list.
      * <p>
@@ -536,7 +536,7 @@ public class MediaList {
 
         /**
          * Create a runnable.
-         * 
+         *
          * @param mediaPlayerEvent event to notify
          */
         private NotifyEventListenersRunnable(MediaListEvent mediaListEvent) {

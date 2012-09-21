@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -71,7 +71,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  * <p>
  * For example, here a media player component is used directly as the content pane of a
  * {@link JFrame}, and only two lines of code that use vlcj are required:
- * 
+ *
  * <pre>
  * frame = new JFrame();
  * mediaPlayerComponent = new EmbeddedMediaPlayerComponent(); // &lt;--- 1
@@ -81,25 +81,25 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  * frame.setVisible(true);
  * mediaPlayerComponent.getMediaPlayer().playMedia(mrl); // &lt;--- 2
  * </pre>
- * 
+ *
  * An example of a sub-class to tailor behaviours and override event handlers:
- * 
+ *
  * <pre>
  * mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
  *     protected String[] onGetMediaPlayerFactoryArgs() {
  *         return new String[] {&quot;--no-video-title-show&quot;};
  *     }
- * 
+ *
  *     protected FullScreenStrategy onGetFullScreenStrategy() {
  *         return new XFullScreenStrategy(frame);
  *     }
- * 
+ *
  *     public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
  *     }
- * 
+ *
  *     public void error(MediaPlayer mediaPlayer) {
  *     }
- * 
+ *
  *     public void finished(MediaPlayer mediaPlayer) {
  *     }
  * };
@@ -112,10 +112,10 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  * the application to also release the media player factory at the appropriate time.
  * <p>
  * The media player component be requested to enable hardware accelerated decoding via the
- * {@link #EmbeddedMediaPlayerComponent(boolean)} constructor. 
+ * {@link #EmbeddedMediaPlayerComponent(boolean)} constructor.
  * <p>
  * The implementation of this will be undone if a subclass overrides {@link #onGetMediaPlayerFactoryArgs()}
- * or {@link #onGetMediaPlayerFactory()} - if one or other of those methods is overridden then the 
+ * or {@link #onGetMediaPlayerFactory()} - if one or other of those methods is overridden then the
  * subclass is responsible for enabling hardware accelerated decoding if so desired.
  * <p>
  * Currently the default behaviour is to <em>not</em> enable hardware accelerated decoding.
@@ -132,12 +132,12 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * required.
      */
     protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
-        "--no-plugins-cache", 
-        "--no-video-title-show", 
-        "--no-snapshot-preview", 
-        "--quiet", 
-        "--quiet-synchro", 
-        "--intf", 
+        "--no-plugins-cache",
+        "--no-video-title-show",
+        "--no-snapshot-preview",
+        "--quiet",
+        "--quiet-synchro",
+        "--intf",
         "dummy"
     };
 
@@ -187,10 +187,10 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
         // Sub-class initialisation
         onAfterConstruct();
     }
-    
+
     /**
      * Get the media player factory reference.
-     * 
+     *
      * @return media player factory
      */
     public final MediaPlayerFactory getMediaPlayerFactory() {
@@ -201,7 +201,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * Get the embedded media player reference.
      * <p>
      * An application uses this handle to control the media player, add listeners and so on.
-     * 
+     *
      * @return media player
      */
     public final EmbeddedMediaPlayer getMediaPlayer() {
@@ -212,7 +212,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * Get the video surface {@link Canvas} component.
      * <p>
      * An application may want to add key/mouse listeners to the video surface component.
-     * 
+     *
      * @return video surface component
      */
     public final Canvas getVideoSurface() {
@@ -221,7 +221,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
 
     /**
      * Enable or disable the mouse cursor when it is over the component.
-     * 
+     *
      * @param enabled <code>true</code> to enable (show) the cursor; <code>false</code> to disable (hide) it
      */
     public final void setCursorEnabled(boolean enabled) {
@@ -231,7 +231,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     /**
      * Release the media player component and the associated native media player resources.
      * <p>
-     * The associated media player factory will <em>not</em> be released, the client 
+     * The associated media player factory will <em>not</em> be released, the client
      * application is responsible for releasing the factory at the appropriate time.
      */
     public final void release() {
@@ -242,7 +242,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
 
     /**
      * Create a blank 1x1 image to use when the cursor is disabled.
-     * 
+     *
      * @return cursor
      */
     private Cursor getBlankCursor() {
@@ -260,8 +260,8 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * method.
      * <p>
      * If a sub-class overrides this method then {@link #enableHardwareDecoding} will be ignored
-     * and instead the subclass is responsible for enabling hardware decoding if so desired. 
-     * 
+     * and instead the subclass is responsible for enabling hardware decoding if so desired.
+     *
      * @return media player factory
      */
     protected MediaPlayerFactory onGetMediaPlayerFactory() {
@@ -276,8 +276,8 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * guarantee that {@link #onGetMediaPlayerFactoryArgs()} will be called.
      * <p>
      * If a sub-class overrides this method then {@link #enableHardwareDecoding} will be ignored
-     * and instead the subclass is responsible for enabling hardware decoding if so desired. 
-     * 
+     * and instead the subclass is responsible for enabling hardware decoding if so desired.
+     *
      * @return media player factory initialisation arguments
      */
     protected String[] onGetMediaPlayerFactoryArgs() {
@@ -288,7 +288,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * Template method to obtain a full-screen strategy implementation.
      * <p>
      * The default implementation does not provide any full-screen strategy.
-     * 
+     *
      * @return full-screen strategy implementation
      */
     protected FullScreenStrategy onGetFullScreenStrategy() {
@@ -299,7 +299,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * Template method to obtain a video surface {@link Canvas} component.
      * <p>
      * The default implementation simply returns an ordinary Canvas with a black background.
-     * 
+     *
      * @return video surface component
      */
     protected Canvas onGetCanvas() {
@@ -315,7 +315,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * <p>
      * The overlay component may be a {@link Window} or a <code>Window</code> sub-class such as
      * {@link JWindow}.
-     * 
+     *
      * @return overlay component
      */
     protected Window onGetOverlay() {
@@ -327,7 +327,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      */
     protected void onAfterConstruct() {
     }
-    
+
     /**
      * Template method invoked immediately prior to releasing the media player and media player
      * factory instances.

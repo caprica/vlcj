@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -29,7 +29,7 @@ public interface libvlc_audio_set_volume_cb extends Callback {
 
     /**
      * Callback prototype for audio volume change.
-     * 
+     *
      * @param data data pointer as passed to libvlc_audio_set_callbacks()
      * @param volume linear volume (1 = nominal, 0 = mute)
      * @param mute muted flag

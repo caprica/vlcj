@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -31,7 +31,7 @@ public interface libvlc_audio_drain_cb extends Callback {
      * Callback prototype for audio buffer drain.
      * <p>
      * (i.e. wait for pending buffers to be played).
-     * 
+     *
      * @param data data pointer as passed to libvlc_audio_set_callbacks()
      */
     void drain(Pointer data);

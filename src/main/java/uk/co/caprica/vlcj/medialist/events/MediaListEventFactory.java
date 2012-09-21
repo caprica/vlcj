@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -36,10 +36,10 @@ public class MediaListEventFactory {
      * Media list to which the event relates.
      */
     private final MediaList mediaList;
-    
+
     /**
      * Create a new factory.
-     * 
+     *
      * @param mediaList media list to create events for
      */
     public MediaListEventFactory(MediaList mediaList) {
@@ -48,7 +48,7 @@ public class MediaListEventFactory {
 
     /**
      * Create an event.
-     * 
+     *
      * @param event native event
      * @return media list event, or <code>null</code> if the native event type is not enabled or otherwise could not be handled
      */
@@ -60,7 +60,7 @@ public class MediaListEventFactory {
                 media_list_will_add_item addItemEvent = ((media_list_will_add_item)event.u.getTypedValue(media_list_will_add_item.class));
                 result = new MediaListWillAddItemEvent(mediaList, addItemEvent.item, addItemEvent.index);
                 break;
-                
+
             case libvlc_MediaListItemAdded:
                 media_list_item_added itemAddedEvent = ((media_list_item_added)event.u.getTypedValue(media_list_item_added.class));
                 result = new MediaListItemAddedEvent(mediaList, itemAddedEvent.item, itemAddedEvent.index);
@@ -70,7 +70,7 @@ public class MediaListEventFactory {
                 media_list_will_delete_item deleteItemEvent = ((media_list_will_delete_item)event.u.getTypedValue(media_list_will_delete_item.class));
                 result = new MediaListWillDeleteItemEvent(mediaList, deleteItemEvent.item, deleteItemEvent.index);
                 break;
-                
+
             case libvlc_MediaListItemDeleted:
                 media_list_item_deleted itemDeletedEvent = ((media_list_item_deleted)event.u.getTypedValue(media_list_item_deleted.class));
                 result = new MediaListItemDeletedEvent(mediaList, itemDeletedEvent.item, itemDeletedEvent.index);

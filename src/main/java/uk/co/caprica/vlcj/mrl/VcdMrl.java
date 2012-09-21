@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -23,7 +23,7 @@ package uk.co.caprica.vlcj.mrl;
  * Implementation of a media resource locator for Video CDs.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
- * 
+ *
  * <pre>
  * String mrl = new VcdMrl().device("/media/dvd")
  *                          .startingPosition("S")
@@ -35,33 +35,33 @@ package uk.co.caprica.vlcj.mrl;
 public class VcdMrl implements Mrl {
 
     /**
-     * 
+     *
      */
     private static final String VCD_TYPE = "vcd";
 
     /**
-     * 
+     *
      */
     private String device;
 
     /**
-     * 
+     *
      */
     private String startingPosition;
 
     /**
-     * 
+     *
      */
     private int number = -1;
 
     /**
-     * 
+     *
      */
     private String value;
 
     /**
-     * 
-     * 
+     *
+     *
      * @param device
      * @return this
      */
@@ -71,8 +71,8 @@ public class VcdMrl implements Mrl {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param startingPosition
      * @return this
      */
@@ -82,8 +82,8 @@ public class VcdMrl implements Mrl {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param number
      * @return this
      */
@@ -102,7 +102,7 @@ public class VcdMrl implements Mrl {
 
     /**
      * Construct the MRL from the internal state.
-     * 
+     *
      * @return media resource locator
      */
     private String constructValue() {

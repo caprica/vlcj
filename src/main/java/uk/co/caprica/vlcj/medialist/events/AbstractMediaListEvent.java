@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -35,7 +35,7 @@ abstract class AbstractMediaListEvent implements MediaListEvent {
 
     /**
      * Create a media list event.
-     * 
+     *
      * @param mediaList media list that the event relates to
      */
     protected AbstractMediaListEvent(MediaList mediaList) {

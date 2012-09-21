@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -43,7 +43,7 @@ public class MediaListPlayerEventFactory {
 
     /**
      * Create a media player event factory.
-     * 
+     *
      * @param mediaPlayer media list player to create events for
      */
     public MediaListPlayerEventFactory(MediaListPlayer mediaPlayer) {
@@ -52,7 +52,7 @@ public class MediaListPlayerEventFactory {
 
     /**
      * Create a new media player event for a given native event.
-     * 
+     *
      * @param event native event
      * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
      * @return media player event, or <code>null</code> if the native event type is not enabled or otherwise could not be handled

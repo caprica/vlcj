@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -23,7 +23,7 @@ package uk.co.caprica.vlcj.mrl;
  * Implementation for a web-style MRL.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
- * 
+ *
  * <pre>
  * String mrl = new WebMrl().type("http")
  *                          .host("www.myhost.com")
@@ -36,33 +36,33 @@ package uk.co.caprica.vlcj.mrl;
 public abstract class UrlMrl implements Mrl {
 
     /**
-     * 
+     *
      */
     private String type;
 
     /**
-     * 
+     *
      */
     private String host;
 
     /**
-     * 
+     *
      */
     private int port = -1;
 
     /**
-     * 
+     *
      */
     private String path;
 
     /**
-     * 
+     *
      */
     private String value;
 
     /**
-     * 
-     * 
+     *
+     *
      * @param type
      * @return this
      */
@@ -72,8 +72,8 @@ public abstract class UrlMrl implements Mrl {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param host
      * @return this
      */
@@ -83,8 +83,8 @@ public abstract class UrlMrl implements Mrl {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param port
      * @return this
      */
@@ -94,8 +94,8 @@ public abstract class UrlMrl implements Mrl {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param path
      * @return this
      */
@@ -114,7 +114,7 @@ public abstract class UrlMrl implements Mrl {
 
     /**
      * Construct the MRL from the internal state.
-     * 
+     *
      * @return media resource locator
      */
     private String constructValue() {

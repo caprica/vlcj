@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -30,7 +30,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  * Note that client applications must still set proper media options otherwise a native video window
  * may still appear, for example the following media options could be used when creating the
  * {@link MediaPlayerFactory}.
- * 
+ *
  * <pre>
  * String[] args = {&quot;--vout&quot;, &quot;dummy&quot;};
  * </pre>

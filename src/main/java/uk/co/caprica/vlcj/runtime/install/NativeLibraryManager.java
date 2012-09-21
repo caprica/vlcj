@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -61,33 +61,33 @@ import uk.co.caprica.vlcj.logger.Logger;
  * <p>
  * The expected structure of the native library package jar files is described below (where
  * {os.name} and {os.arch} are replaced by system properties):
- * 
+ *
  * <pre>
  *   vlc/{os.name}-{os.arch}/vlc
  *   vlc/{os.name}-{os.arch}/vlc/plugins
  * </pre>
- * 
+ *
  * For example:
- * 
+ *
  * <pre>
  *   vlc/linux-amd64/vlc
  *   vlc/linux-amd64/vlc/plugins
  * </pre>
- * 
+ *
  * Underneath "plugins" is the regular vlc plug-ins directory structure with multiple nested
  * directories.
  * <p>
  * Note that these system properties are converted to lower case, so "Linux" becomes "linux".
  * <p>
  * When unpacked, the structure underneath the "install to" directory will be (in part):
- * 
+ *
  * <pre>
  *   /libvlc.so
  *   /libvlccore.so
  *   /vlc/
  *   /vlc/plugins/
  * </pre>
- * 
+ *
  * The prefix <code>vlc/{os.name}-{os.arch}</code> in the package file is stripped from each file
  * name before installing locally.
  * <p>
@@ -131,7 +131,7 @@ import uk.co.caprica.vlcj.logger.Logger;
  * <p>
  * Here is a <em>partial</em> example showing the structure required for a native library package
  * jar file:
- * 
+ *
  * <pre>
  *   vlc/
  *   vlc/linux-amd64/
@@ -186,7 +186,7 @@ public class NativeLibraryManager {
 
     /**
      * Create a new native library manager.
-     * 
+     *
      * @param installTo name of the directory to install the files to
      */
     public NativeLibraryManager(String installTo) {
@@ -195,7 +195,7 @@ public class NativeLibraryManager {
 
     /**
      * Create a new native library manager.
-     * 
+     *
      * @param installTo name of the directory to install the files to
      * @param ioBufferSize size of the file input/output buffer
      */
@@ -206,7 +206,7 @@ public class NativeLibraryManager {
 
     /**
      * Add a listener to be notified of native library manager events.
-     * 
+     *
      * @param listener listener to add
      */
     public void addEventListener(NativeLibraryManagerEventListener listener) {
@@ -215,7 +215,7 @@ public class NativeLibraryManager {
 
     /**
      * Remove a listener being notified of native library manager events.
-     * 
+     *
      * @param listener listener to remove
      */
     public void removeEventListener(NativeLibraryManagerEventListener listener) {
@@ -224,7 +224,7 @@ public class NativeLibraryManager {
 
     /**
      * Get the name of the installation directory.
-     * 
+     *
      * @return installation directory name
      */
     public String getInstallTo() {
@@ -233,7 +233,7 @@ public class NativeLibraryManager {
 
     /**
      * Unpack a package containing native libraries.
-     * 
+     *
      * @throws RuntimeException if an error occurs, such as no native resource package found
      */
     public void unpackNativePackage() {
@@ -291,7 +291,7 @@ public class NativeLibraryManager {
      * <p>
      * <strong>Warning: this will without discrimination delete the entire contents of the native
      * library installation directory.</strong>
-     * 
+     *
      * @return <code>true</code> if all files and directories were deleted, otherwise <code>false</code>
      */
     public boolean purge() {
@@ -304,7 +304,7 @@ public class NativeLibraryManager {
 
     /**
      * Get a jar file containing a vlc native library package from the class-path.
-     * 
+     *
      * @param resourcePath resource path inside the jar file
      * @return jar file
      * @throws RuntimeException if an error occurs, such as no native resource package found
@@ -337,7 +337,7 @@ public class NativeLibraryManager {
 
     /**
      * Count the number of files to be installed.
-     * 
+     *
      * @param jarFile installation package
      * @return number of files to be installed
      */
@@ -356,7 +356,7 @@ public class NativeLibraryManager {
 
     /**
      * Install a file from the installation package.
-     * 
+     *
      * @param installDirectory directory to install the file to
      * @param entryName local file name
      * @param jarFile installation package
@@ -379,7 +379,7 @@ public class NativeLibraryManager {
 
     /**
      * Save a file from the installation package to the installation directory.
-     * 
+     *
      * @param installFile local installation file
      * @param jarFile installation package
      * @param jarEntry entry to install from the install package
@@ -428,7 +428,7 @@ public class NativeLibraryManager {
 
     /**
      * Recursively delete the contents of a directory and the directory itself.
-     * 
+     *
      * @param file file/directory to delete
      * @param result used to keep track of whether all files have been successfully deleted or not
      * @return <code>true</code> if all files and directories successfully deleted, <code>false</code> otherwise
@@ -445,7 +445,7 @@ public class NativeLibraryManager {
 
     /**
      * Notify all registered listeners that installation has started.
-     * 
+     *
      * @param installCount number of files to install
      */
     private void fireStartEvent(int installCount) {
@@ -456,7 +456,7 @@ public class NativeLibraryManager {
 
     /**
      * Notify all registered listeners that a file is being installed.
-     * 
+     *
      * @param number number (not index) of the file
      * @param name name of the file
      */
@@ -486,7 +486,7 @@ public class NativeLibraryManager {
 
     /**
      * Notify all registered listeners that purging has completed.
-     * 
+     *
      * @param result <code>true</code> if all files and directories were deleted, otherwise <code>false</code>
      */
     private void firePurgedEvent(boolean result) {

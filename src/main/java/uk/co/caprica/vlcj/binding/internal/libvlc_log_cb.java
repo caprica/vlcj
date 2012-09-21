@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -31,7 +31,7 @@ public interface libvlc_log_cb extends Callback {
 
     /**
      * Process a log message.
-     * 
+     *
      * @param data opaque data as set by {@link LibVlc#libvlc_log_subscribe(libvlc_log_subscriber_t, libvlc_log_cb, Pointer)}
      * @param level log level
      * @param format printf-style format string

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -43,7 +43,7 @@ public abstract class ExtensionFileFilter implements FileFilter {
 
     /**
      * Create a new file filter.
-     * 
+     *
      * @param extensions file extensions to accept
      */
     protected ExtensionFileFilter(String[] extensions) {
@@ -59,7 +59,7 @@ public abstract class ExtensionFileFilter implements FileFilter {
      * Get the recognised file extensions.
      * <p>
      * A sorted copy of the array of file extensions is returned.
-     * 
+     *
      * @return file extensions accepted by the filter
      */
     public String[] getExtensions() {
@@ -71,7 +71,7 @@ public abstract class ExtensionFileFilter implements FileFilter {
      * Get the set of recognised file extensions.
      * <p>
      * A new (copy) sorted set of file extensions is returned.
-     * 
+     *
      * @return set of file extensions accepted by the filter
      */
     public Set<String> getExtensionSet() {

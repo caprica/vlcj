@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -23,7 +23,7 @@ package uk.co.caprica.vlcj.mrl;
  * Implementation of an MMS media resource locator.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
- * 
+ *
  * <pre>
  * String mrl = new MmsMrl().host("www.myhost.com")
  *                          .port("8000")
@@ -35,12 +35,12 @@ package uk.co.caprica.vlcj.mrl;
 public class MmsMrl extends UrlMrl {
 
     /**
-     * 
+     *
      */
     private static final String MMS_TYPE = "mms";
 
     /**
-     * 
+     *
      */
     public MmsMrl() {
         type(MMS_TYPE);

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -36,7 +36,7 @@ public interface FullScreenStrategy {
 
     /**
      * Test whether or not full-screen mode is currently active.
-     * 
+     *
      * @return <code>true</code> if full-screen mode is active; otherwise <code>false</code>
      */
     boolean isFullScreenMode();

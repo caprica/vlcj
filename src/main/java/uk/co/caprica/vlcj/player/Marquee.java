@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -27,7 +27,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
  * Builder for a Marquee.
  * <p>
  * Use like this, with a static import of {@link #marquee()}:
- * 
+ *
  * <pre>
  *   marquee()
  *     .opacity(200)
@@ -102,7 +102,7 @@ public final class Marquee {
 
     /**
      * Create a marquee.
-     * 
+     *
      * @return marquee
      */
     public static Marquee marquee() {
@@ -126,7 +126,7 @@ public final class Marquee {
      *  %H = hour
      *  %M = minute
      *  %S = second
-     * </pre> 
+     * </pre>
      * Meta data related:
      * <pre>
      *  $a = artist
@@ -157,7 +157,7 @@ public final class Marquee {
      *  $T = time
      *  $U = publisher
      *  $V = volume
-     *  $_ = new line 
+     *  $_ = new line
      * </pre>
      * See <code>http://wiki.videolan.org/index.php?title=Documentation:Modules/marq</code>.
      *
@@ -171,7 +171,7 @@ public final class Marquee {
 
     /**
      * Apply the text colour.
-     * 
+     *
      * @param colour text colour
      * @return this
      */
@@ -182,7 +182,7 @@ public final class Marquee {
 
     /**
      * Apply the text colour as RGB components.
-     * 
+     *
      * @param rgb integer encoded red, green, blue colour components
      * @return this
      */
@@ -193,7 +193,7 @@ public final class Marquee {
 
     /**
      * Apply the text opacity.
-     * 
+     *
      * @param opacity opacity, 0 to 255, where 255 is fully opaque
      * @return this
      */
@@ -204,7 +204,7 @@ public final class Marquee {
 
     /**
      * Apply the text opacity.
-     * 
+     *
      * @param opacity opacity, 0.0 to 1.0, where 1.0 is fully opaque
      * @return this
      */
@@ -215,7 +215,7 @@ public final class Marquee {
 
     /**
      * Apply the text size.
-     * 
+     *
      * @param size text size
      * @return this
      */
@@ -228,7 +228,7 @@ public final class Marquee {
      * Apply the timeout.
      * <p>
      * The marquee will be removed when the timeout expires.
-     * 
+     *
      * @param timeout timeout, in milliseconds
      * @return this
      */
@@ -239,7 +239,7 @@ public final class Marquee {
 
     /**
      * Apply the text location in video co-ordinates.
-     * 
+     *
      * @param x x ordinate
      * @param y y ordinate
      * @return this
@@ -252,7 +252,7 @@ public final class Marquee {
 
     /**
      * Apply the text position.
-     * 
+     *
      * @param position predefined text position
      * @return this
      */
@@ -263,7 +263,7 @@ public final class Marquee {
 
     /**
      * Apply the initial enabled/disabled state.
-     * 
+     *
      * @param enable <code>true</code> to enable the marquee; <code>false</code> to disable it
      * @return this
      */
@@ -274,7 +274,7 @@ public final class Marquee {
 
     /**
      * Enable the marquee.
-     * 
+     *
      * @return this
      */
     public Marquee enable() {
@@ -284,7 +284,7 @@ public final class Marquee {
 
     /**
      * Disable the marquee.
-     * 
+     *
      * @return this
      */
     public Marquee disable() {
@@ -294,7 +294,7 @@ public final class Marquee {
 
     /**
      * Apply the marquee to the media player.
-     * 
+     *
      * @param mediaPlayer media player
      */
     public void apply(MediaPlayer mediaPlayer) {

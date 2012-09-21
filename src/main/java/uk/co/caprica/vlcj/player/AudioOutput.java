@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -46,7 +46,7 @@ public class AudioOutput {
 
     /**
      * Create an audio output.
-     * 
+     *
      * @param name name
      * @param description description
      * @param devices collection of audio devices for this output
@@ -59,7 +59,7 @@ public class AudioOutput {
 
     /**
      * Get the name.
-     * 
+     *
      * @return name
      */
     public String getName() {
@@ -68,7 +68,7 @@ public class AudioOutput {
 
     /**
      * Get the description.
-     * 
+     *
      * @return description
      */
     public String getDescription() {
@@ -77,7 +77,7 @@ public class AudioOutput {
 
     /**
      * Get the collection of audio devices for this output.
-     * 
+     *
      * @return audio devices
      */
     public List<AudioDevice> getDevices() {

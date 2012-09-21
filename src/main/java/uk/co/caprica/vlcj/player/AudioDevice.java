@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -36,7 +36,7 @@ public class AudioDevice {
 
     /**
      * Create an audio device.
-     * 
+     *
      * @param deviceId device identifier
      * @param longName long name
      */
@@ -47,7 +47,7 @@ public class AudioDevice {
 
     /**
      * Get the device identifier.
-     * 
+     *
      * @return device identifier
      */
     public String getDeviceId() {
@@ -56,7 +56,7 @@ public class AudioDevice {
 
     /**
      * Get the long name.
-     * 
+     *
      * @return long name
      */
     public String getLongName() {

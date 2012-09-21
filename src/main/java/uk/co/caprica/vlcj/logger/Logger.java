@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -29,11 +29,11 @@ import java.util.Formatter;
  * <p>
  * The log level can be configured at run-time by specifying a system property on the command-line,
  * for example:
- * 
+ *
  * <pre>
  *   -Dvlcj.log=INFO
  * </pre>
- * 
+ *
  * The log levels are defined in {@link Level}.
  */
 public class Logger {
@@ -174,7 +174,7 @@ public class Logger {
     /**
      * Format a string, such as "something{0}, another{1}", replacing the tokens with argument
      * values.
-     * 
+     *
      * @param msg message, including token place-holders
      * @param args values to substitute
      * @return formatted string

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -23,7 +23,7 @@ package uk.co.caprica.vlcj.mrl;
  * Base implementation of a media resource locator for DVD MRLs.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
- * 
+ *
  * <pre>
  * String mrl = new BaseDvdMrl().type("dvdsimple").
  *                              .device("/media/dvd")
@@ -32,44 +32,44 @@ package uk.co.caprica.vlcj.mrl;
  *                              .angle(1)
  *                              .value();
  * </pre>
- * 
+ *
  * This will generate <code>"dvdsimple:///media/dvd/@dev/cdrom#0:3:1"</code>.
  */
 public abstract class BaseDvdMrl implements Mrl {
 
     /**
-     * 
+     *
      */
     private String type;
 
     /**
-     * 
+     *
      */
     private String device;
 
     /**
-     * 
+     *
      */
     private int title = -1;
 
     /**
-     * 
+     *
      */
     private int chapter = -1;
 
     /**
-     * 
+     *
      */
     private int angle = -1;
 
     /**
-     * 
+     *
      */
     private String value;
 
     /**
-     * 
-     * 
+     *
+     *
      * @param type
      * @return this
      */
@@ -79,8 +79,8 @@ public abstract class BaseDvdMrl implements Mrl {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param device
      * @return this
      */
@@ -90,8 +90,8 @@ public abstract class BaseDvdMrl implements Mrl {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param title
      * @return this
      */
@@ -101,8 +101,8 @@ public abstract class BaseDvdMrl implements Mrl {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param chapter
      * @return this
      */
@@ -112,8 +112,8 @@ public abstract class BaseDvdMrl implements Mrl {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param angle
      * @return this
      */
@@ -132,7 +132,7 @@ public abstract class BaseDvdMrl implements Mrl {
 
     /**
      * Construct the MRL from the internal state.
-     * 
+     *
      * @return media resource locator
      */
     private String constructValue() {

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -48,7 +48,7 @@ public class ComponentIdVideoSurface extends VideoSurface {
 
     /**
      * Create a new video surface.
-     * 
+     *
      * @param componentId native component identifier for the video surface
      * @param videoSurfaceAdapter adapter to attach a video surface to a native media player
      */

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -32,13 +32,13 @@ import uk.co.caprica.vlcj.logger.Logger;
 class LoggingProxy implements InvocationHandler {
 
     /**
-     * 
+     *
      */
     private final LibVlc target;
 
     /**
-     * 
-     * 
+     *
+     *
      * @param target
      */
     LoggingProxy(LibVlc target) {
@@ -61,8 +61,8 @@ class LoggingProxy implements InvocationHandler {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param method
      * @param args
      */
@@ -71,8 +71,8 @@ class LoggingProxy implements InvocationHandler {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param method
      * @param result
      */
@@ -86,8 +86,8 @@ class LoggingProxy implements InvocationHandler {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param method
      * @param t
      */

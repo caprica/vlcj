@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.binding.internal;
 
 import com.sun.jna.Union;
 
+/**
+ * Native event data.
+ */
 public class libvlc_event_u extends Union {
 
     public static class ByValue extends libvlc_event_u implements Union.ByValue {}
@@ -46,5 +49,5 @@ public class libvlc_event_u extends Union {
     public media_player_snapshot_taken     media_player_snapshot_taken;
     public media_player_length_changed     media_player_length_changed;
     public vlm_media_event                 vlm_media_event;
-    public media_player_media_changed      media_player_media_changed;  
+    public media_player_media_changed      media_player_media_changed;
 }

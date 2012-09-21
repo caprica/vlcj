@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -23,7 +23,7 @@ package uk.co.caprica.vlcj.mrl;
  * Implementation of an HTTP media resource locator.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
- * 
+ *
  * <pre>
  * String mrl = new FtpMrl().host("www.myhost.com")
  *                          .port("21")
@@ -35,12 +35,12 @@ package uk.co.caprica.vlcj.mrl;
 public class FtpMrl extends UrlMrl {
 
     /**
-     * 
+     *
      */
     private static final String FTP_TYPE = "ftp";
 
     /**
-     * 
+     *
      */
     public FtpMrl() {
         type(FTP_TYPE);

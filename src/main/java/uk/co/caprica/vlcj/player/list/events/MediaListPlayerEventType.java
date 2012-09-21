@@ -6,12 +6,12 @@ package uk.co.caprica.vlcj.player.list.events;
 public enum MediaListPlayerEventType {
 
     /**
-     * 
+     *
      */
     NEXT_ITEM_SET(0x00000001),
 
     /**
-     * 
+     *
      */
     ALL(0xffffffff);
 
@@ -22,7 +22,7 @@ public enum MediaListPlayerEventType {
 
     /**
      * Create an enumerated value.
-     * 
+     *
      * @param value bit-mask
      */
     private MediaListPlayerEventType(int value) {
@@ -31,7 +31,7 @@ public enum MediaListPlayerEventType {
 
     /**
      * Get the bit-mask.
-     * 
+     *
      * @return value
      */
     public final int value() {
@@ -40,7 +40,7 @@ public enum MediaListPlayerEventType {
 
     /**
      * Get a bit-mask for one or more event types.
-     * 
+     *
      * @param types one or more event types
      * @return bit-mask
      */
@@ -54,7 +54,7 @@ public enum MediaListPlayerEventType {
 
     /**
      * Get an inverse bit-mask for one or more event types.
-     * 
+     *
      * @param types one or more event types
      * @return bit-mask
      */
@@ -68,7 +68,7 @@ public enum MediaListPlayerEventType {
 
     /**
      * Test whether or not a media player event type is set in a bit-mask.
-     * 
+     *
      * @param value bit-mask
      * @param type event type to test for
      * @return <code>true</code> if the type value is set in the bit-mask, otherwise <code>false</code>
@@ -79,7 +79,7 @@ public enum MediaListPlayerEventType {
 
     /**
      * Test whether or not a media player event type is set in a bit-mask.
-     * 
+     *
      * @param value bit-mask
      * @param type event type to test for
      * @return <code>false</code> if the type value is set in the bit-mask, otherwise <code>true</code>

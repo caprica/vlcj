@@ -33,14 +33,14 @@ public enum MediaPlayerEventType {
     MEDIA_PARSED_CHANGED           (0X00200000),
     MEDIA_FREED                    (0X00400000),
     MEDIA_STATE_CHANGED            (0X00800000),
-  
+
     NEW_MEDIA                      (0x01000000),
     SUB_ITEM_PLAYED                (0x02000000),
     SUB_ITEM_FINISHED              (0x04000000),
     END_OF_SUB_ITEMS               (0x08000000),
-  
+
     ALL                            (0xffffffff);
-  
+
     /**
      * Bit-mask.
      */
@@ -48,7 +48,7 @@ public enum MediaPlayerEventType {
 
     /**
      * Create an enumerated value.
-     * 
+     *
      * @param value bit-mask
      */
     private MediaPlayerEventType(int value) {
@@ -57,7 +57,7 @@ public enum MediaPlayerEventType {
 
     /**
      * Get the bit-mask.
-     * 
+     *
      * @return value
      */
     public final int value() {
@@ -66,7 +66,7 @@ public enum MediaPlayerEventType {
 
     /**
      * Get a bit-mask for one or more event types.
-     * 
+     *
      * @param types one or more event types
      * @return bit-mask
      */
@@ -80,7 +80,7 @@ public enum MediaPlayerEventType {
 
     /**
      * Get an inverse bit-mask for one or more event types.
-     * 
+     *
      * @param types one or more event types
      * @return bit-mask
      */
@@ -94,7 +94,7 @@ public enum MediaPlayerEventType {
 
     /**
      * Test whether or not a media player event type is set in a bit-mask.
-     * 
+     *
      * @param value bit-mask
      * @param type event type to test for
      * @return <code>true</code> if the type value is set in the bit-mask, otherwise <code>false</code>
@@ -105,7 +105,7 @@ public enum MediaPlayerEventType {
 
     /**
      * Test whether or not a media player event type is set in a bit-mask.
-     * 
+     *
      * @param value bit-mask
      * @param type event type to test for
      * @return <code>false</code> if the type value is set in the bit-mask, otherwise <code>true</code>

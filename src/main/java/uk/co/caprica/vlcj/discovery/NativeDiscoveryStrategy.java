@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -28,16 +28,16 @@ public interface NativeDiscoveryStrategy {
     /**
      * Is this strategy supported?
      * <p>
-     * Some strategies may, for example, only be applicable to one particular 
+     * Some strategies may, for example, only be applicable to one particular
      * operating system or another.
-     * 
+     *
      * @return <code>true</code> if this strategy is supported; <code>false</code> otherwise
      */
     boolean supported();
-    
+
     /**
      * Attempt to discover the location of the libvlc native shared libraries.
-     * 
+     *
      * @return path containing the shared libraries, or <code>null</code> if this strategy did not find them
      */
     String discover();

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -50,7 +50,7 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
 
     /**
      * Create a new full-screen strategy.
-     * 
+     *
      * @param window component that will be made full-screen
      */
     public DefaultFullScreenStrategy(Window window) {
@@ -100,7 +100,7 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
      * Get the desired screen device.
      * <p>
      * The default implementation simply returns the default screen device.
-     * 
+     *
      * @return screen device, must not be <code>null</code>
      */
     protected GraphicsDevice getScreenDevice() {
@@ -112,7 +112,7 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
      * Get the desired display mode.
      * <p>
      * The default implementation returns <code>null</code> to accept the default display mode.
-     * 
+     *
      * @param displayModes available display modes
      * @return display mode, may be <code>null</code>
      */

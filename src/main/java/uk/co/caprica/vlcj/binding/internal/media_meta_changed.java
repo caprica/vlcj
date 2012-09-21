@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -31,7 +31,7 @@ public class media_meta_changed extends Structure {
      * <p>
      * <strong>This value may be unreliable, for example when parsing media some types are reported
      * multiple times and some types are not reported at all.</strong>
-     * 
+     *
      * @see libvlc_meta_t
      */
     public int meta_type;

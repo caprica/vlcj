@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -32,7 +32,7 @@ public interface libvlc_audio_setup_cb extends Callback {
      * Callback prototype to setup the audio playback.
      * <p>
      * This is called when the media player needs to create a new audio output.
-     * 
+     *
      * @param data pointer to the data pointer passed to libvlc_audio_set_callbacks()
      * @param format 4 bytes sample format
      * @param rate sample rate

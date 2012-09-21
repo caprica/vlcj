@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -23,42 +23,42 @@ package uk.co.caprica.vlcj.mrl;
  * Implementation of a media resource locator for UDP streams.
  * <p>
  * This class provides a fluent API for initialising the MRL, e.g.
- * 
+ *
  * <pre>
  * String mrl = new RtpMrl().groupAddress("234.0.0.1")
  *                          .port(1234)
  *                          .value();
  * </pre>
  * This will generate <code>"udp://@234.0.0.1:1234"</code>.
- * <p> 
+ * <p>
  * <strong>UDP is deprecated in VLC.</strong>
  */
 @Deprecated
 public class UdpMrl implements Mrl {
 
     /**
-     * 
+     *
      */
     private static final String UDP_TYPE = "udp";
 
     /**
-     * 
+     *
      */
     private String groupAddress;
 
     /**
-     * 
+     *
      */
     private int port;
 
     /**
-     * 
+     *
      */
     private String value;
 
     /**
-     * 
-     * 
+     *
+     *
      * @param groupAddress
      * @return this
      */
@@ -68,8 +68,8 @@ public class UdpMrl implements Mrl {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param port
      * @return this
      */
@@ -88,7 +88,7 @@ public class UdpMrl implements Mrl {
 
     /**
      * Construct the MRL from the internal state.
-     * 
+     *
      * @return media resource locator
      */
     private String constructValue() {

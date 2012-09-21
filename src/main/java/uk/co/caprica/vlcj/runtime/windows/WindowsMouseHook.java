@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -113,7 +113,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
 
     /**
      * Create a new mouse hook.
-     * 
+     *
      * @param relativeTo component to report mouse coordinates relative to
      */
     public WindowsMouseHook(Component relativeTo) {
@@ -125,8 +125,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param listener
      */
     public void addMouseListener(MouseListener listener) {
@@ -135,8 +135,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param listener
      */
     public void removeMouseListener(MouseListener listener) {
@@ -145,8 +145,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param listener
      */
     public void addMouseMotionListener(MouseMotionListener listener) {
@@ -155,8 +155,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param listener
      */
     public void removeMouseMotionListener(MouseMotionListener listener) {
@@ -165,8 +165,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param listener
      */
     public void addMouseWheelListener(MouseWheelListener listener) {
@@ -175,8 +175,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param listener
      */
     public void removeMouseWheelListener(MouseWheelListener listener) {
@@ -197,7 +197,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     }
 
     /**
-   * 
+   *
    */
     public synchronized void release() {
         Logger.debug("release()");
@@ -213,8 +213,8 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @return
      */
     private synchronized HHOOK getHook() {
@@ -304,7 +304,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
 
     /**
      * Fire a mouse motion event to the registered listeners.
-     * 
+     *
      * @param eventType
      * @param button
      * @param lParam
@@ -326,7 +326,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
 
     /**
      * Fire a mouse event to the registered listeners.
-     * 
+     *
      * @param eventType
      * @param button
      * @param lParam
@@ -360,7 +360,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
 
     /**
      * Fire a mouse wheel event to the registered listeners.
-     * 
+     *
      * @param eventType
      * @param button
      * @param lParam
@@ -382,7 +382,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
 
     /**
      * Create a new mouse event.
-     * 
+     *
      * @param eventType
      * @param button
      * @param lParam
@@ -399,12 +399,12 @@ public class WindowsMouseHook implements LowLevelMouseProc {
 
     /**
      * Create a new mouse wheel event.
-     * 
+     *
      * In Windows the rotation amount is positive when moving the wheel away from the user whereas
      * in Java the rotation amount is negative when moving the wheel away from the user.
      * <p>
      * This implementation adjusts the sign so that the value is correct for Java.
-     * 
+     *
      * @param eventType
      * @param lParam
      * @return

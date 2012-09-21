@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -38,7 +38,7 @@ public class LibVlcVersion {
 
     /**
      * Get the run-time version.
-     * 
+     *
      * @return vlc/libvlc version
      */
     public static final Version getVersion() {

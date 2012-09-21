@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -21,7 +21,6 @@ package uk.co.caprica.vlcj.player.events;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-
 /**
  *
  */
@@ -29,7 +28,7 @@ class MediaPlayerPlayingEvent extends AbstractMediaPlayerEvent {
 
     /**
      * Create a media player event.
-     * 
+     *
      * @param mediaPlayer media player the event relates to
      */
     MediaPlayerPlayingEvent(MediaPlayer mediaPlayer) {

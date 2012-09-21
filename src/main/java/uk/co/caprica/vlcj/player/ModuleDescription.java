@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -46,7 +46,7 @@ public class ModuleDescription {
 
     /**
      * Create a new module description
-     * 
+     *
      * @param name name
      * @param shortName short name
      * @param longName long name
@@ -61,7 +61,7 @@ public class ModuleDescription {
 
     /**
      * Get the module name.
-     * 
+     *
      * @return name
      */
     public String name() {
@@ -70,7 +70,7 @@ public class ModuleDescription {
 
     /**
      * Get the module short name.
-     * 
+     *
      * @return short name
      */
     public String shortName() {
@@ -79,7 +79,7 @@ public class ModuleDescription {
 
     /**
      * Get the module long name.
-     * 
+     *
      * @return long name
      */
     public String longName() {
@@ -88,7 +88,7 @@ public class ModuleDescription {
 
     /**
      * Get the module help text.
-     * 
+     *
      * @return help text
      */
     public String help() {

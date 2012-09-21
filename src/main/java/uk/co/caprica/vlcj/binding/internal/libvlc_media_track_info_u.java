@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -25,7 +25,7 @@ import com.sun.jna.Union;
  *
  */
 public class libvlc_media_track_info_u extends Union {
-  
+
     public static class ByValue extends libvlc_media_track_info_u implements Union.ByValue {}
 
     public libvlc_media_track_info_audio_t.ByValue audio;

@@ -13,14 +13,17 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.binding.internal;
 
+/**
+ * Enumeration of logo options.
+ */
 public enum libvlc_video_logo_option_t {
-  
+
     libvlc_logo_enable  (0),
     libvlc_logo_file    (1),           /** string argument, "file,d,t;file,d,t;..." */
     libvlc_logo_x       (2),

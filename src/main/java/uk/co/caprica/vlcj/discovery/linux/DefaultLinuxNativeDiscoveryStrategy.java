@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -24,11 +24,11 @@ import java.util.List;
 import uk.co.caprica.vlcj.discovery.StandardNativeDiscoveryStrategy;
 
 /**
- * Default implementation of a native library discovery strategy that searches in 
+ * Default implementation of a native library discovery strategy that searches in
  * standard well-known directory locations on Linux.
  */
 public class DefaultLinuxNativeDiscoveryStrategy extends StandardNativeDiscoveryStrategy {
-    
+
     @Override
     protected void onGetDirectoryNames(List<String> directoryNames) {
         // Nothing right now...

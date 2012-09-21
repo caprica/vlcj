@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -35,19 +35,19 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * This implementation looks for libvlc shared libraries by name in pre-defined
  * directory locations.
  * <p>
- * Extra directory names can be provided by implementations of the {@link #getDirectoryNames(List)} 
+ * Extra directory names can be provided by implementations of the {@link #getDirectoryNames(List)}
  * template method in sub-classes.
  * <p>
  * If the named native libraries are found in a particular directory, then that
  * directory is registered as a native library search path for JNA.
  */
 public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscoveryStrategy {
-    
+
     /**
      * Collection of filenames to search for.
      */
     private final List<String> fileNames = new ArrayList<String>(2);
-    
+
     /**
      * Create a native library discovery strategy.
      */
@@ -55,7 +55,7 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
         fileNames.add(RuntimeUtil.getLibVlcName());
         fileNames.add(RuntimeUtil.getLibVlcCoreName());
     }
-    
+
     @Override
     public final String discover() {
         Logger.debug("discover()");
@@ -91,12 +91,12 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
             }
         }
         Logger.debug("result={}", result);
-        return result; 
+        return result;
     }
 
     /**
      * Get the system search path components.
-     * 
+     *
      * @return path components
      */
     protected final List<String> getSystemPath() {
@@ -109,10 +109,10 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
             return Collections.emptyList();
         }
     }
-    
+
     /**
      * Get the names of the directories that should be searched.
-     * 
+     *
      * @return collection of directories to search
      */
     protected abstract void getDirectoryNames(List<String> directoryNames);

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -41,12 +41,12 @@ import uk.co.caprica.vlcj.logger.Logger;
  * received.
  * <p>
  * Example usage:
- * 
+ *
  * <pre>
  * mediaPlayer.prepareMedia(mrl, options);
  * boolean definitelyStarted = new MediaPlayerLatch(mediaPlayer).play();
  * </pre>
- * 
+ *
  * The {@link DefaultMediaPlayer} uses this class for the "play and wait..." implementation, see
  * {@link MediaPlayer#startMedia(String, String...)}.
  * <p>
@@ -62,7 +62,7 @@ public class MediaPlayerLatch {
 
     /**
      * Create a new media player latch.
-     * 
+     *
      * @param mediaPlayer media player instance
      */
     public MediaPlayerLatch(MediaPlayer mediaPlayer) {
@@ -71,7 +71,7 @@ public class MediaPlayerLatch {
 
     /**
      * Play the media and wait for it to either start playing or error.
-     * 
+     *
      * @return true if the media definitely started playing and false if it did not or the thread
      *          was interrupted while waiting (unlikely, but in which case the media player
      *          <em>might</em> still start)
@@ -123,7 +123,7 @@ public class MediaPlayerLatch {
 
         /**
          * Create a new listener.
-         * 
+         *
          * @param latch synchronisation latch.
          */
         private LatchListener(CountDownLatch latch) {

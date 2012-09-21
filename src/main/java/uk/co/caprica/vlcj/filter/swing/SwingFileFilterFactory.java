@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -32,7 +32,7 @@ import uk.co.caprica.vlcj.filter.VideoFileFilter;
  * configured with the recognised vlc file-types.
  * <p>
  * Use this factory to help initialise a {@link javax.swing.JFileChooser}, for example:
- * 
+ *
  * <pre>
  * fileChooser = new JFileChooser();
  * fileChooser.setApproveButtonText(&quot;Play&quot;);
@@ -42,7 +42,7 @@ import uk.co.caprica.vlcj.filter.VideoFileFilter;
  * fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newMediaFileFilter());
  * fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newSubTitleFileFilter());
  * </pre>
- * 
+ *
  * @see javax.swing.filechooser.FileNameExtensionFilter
  * @see javax.swing.JFileChooser
  */
@@ -75,7 +75,7 @@ public class SwingFileFilterFactory {
 
     /**
      * Create a new file name extension filter that accepts video files.
-     * 
+     *
      * @return filter
      */
     public static FileFilter newVideoFileFilter() {
@@ -84,7 +84,7 @@ public class SwingFileFilterFactory {
 
     /**
      * Create a new file name extension filter that accepts audio files.
-     * 
+     *
      * @return filter
      */
     public static FileFilter newAudioFileFilter() {
@@ -93,7 +93,7 @@ public class SwingFileFilterFactory {
 
     /**
      * Create a new file name extension filter that accepts play-list files.
-     * 
+     *
      * @return filter
      */
     public static FileFilter newPlayListFileFilter() {
@@ -109,7 +109,7 @@ public class SwingFileFilterFactory {
      * <li>Audio</li>
      * <li>Play-list</li>
      * </ul>
-     * 
+     *
      * @return filter
      */
     public static FileFilter newMediaFileFilter() {
@@ -118,7 +118,7 @@ public class SwingFileFilterFactory {
 
     /**
      * Create a new file name extension filter that accepts sub-title files.
-     * 
+     *
      * @return filter
      */
     public static FileFilter newSubtitleFileFilter() {

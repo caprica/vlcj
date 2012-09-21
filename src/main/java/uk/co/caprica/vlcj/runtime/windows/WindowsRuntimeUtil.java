@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -43,7 +43,7 @@ public class WindowsRuntimeUtil {
      * Get the VLC installation directory.
      * <p>
      * If vlc is installed correctly, this should not be needed.
-     * 
+     *
      * @return fully-qualified directory name, or <code>null</code> if the value could not be obtained
      */
     public static String getVlcInstallDir() {

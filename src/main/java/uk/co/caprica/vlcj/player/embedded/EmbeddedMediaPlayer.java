@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -43,7 +43,7 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
      * <p>
      * It is possible to change the video surface after it has been set, but the change will not
      * take effect until the media is played.
-     * 
+     *
      * @param videoSurface component to render video to
      */
     void setVideoSurface(CanvasVideoSurface videoSurface);
@@ -84,7 +84,7 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
      * <p>
      * Setting the display into or out of full-screen mode is delegate to the
      * {@link FullScreenStrategy} that was used when the media player was created.
-     * 
+     *
      * @param fullScreen true for full-screen, otherwise false
      */
     void setFullScreen(boolean fullScreen);
@@ -94,7 +94,7 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
      * <p>
      * Testing whether or not the display is in full-screen mode is delegate to the
      * {@link FullScreenStrategy} that was used when the media player was created.
-     * 
+     *
      * @return true if full-screen is active, otherwise false
      */
     boolean isFullScreen();
@@ -110,14 +110,14 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
      * <strong>Since this implementation will use the AWT Robot class to make a screen capture, care
      * must be taken when invoking this method to ensure that nothing else is overlaying the video
      * surface!</strong>
-     * 
+     *
      * @return current contents of the video surface
      */
     BufferedImage getVideoSurfaceContents();
 
     /**
      * Get the overlay component.
-     * 
+     *
      * @return overlay component, may be <code>null</code>
      */
     Window getOverlay();
@@ -134,35 +134,35 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
      * should use <code>JWindow</code> so that your updates will be double-buffered and there will
      * be no tearing or flickering when you paint the overlay. If you do this, you must take care to
      * erase the overlay background before you paint it.
-     * 
+     *
      * @param overlay overlay component, may be <code>null</code>
      */
     void setOverlay(Window overlay);
 
     /**
      * Enable/disable the overlay component if there is one.
-     * 
+     *
      * @param enable whether to enable the overlay or disable it
      */
     void enableOverlay(boolean enable);
 
     /**
      * Check whether or not there is an overlay component currently enabled.
-     * 
+     *
      * @return true if there is an overlay enabled, otherwise false
      */
     boolean overlayEnabled();
 
     /**
      * Set whether or not to enable native media player mouse input handling.
-     * 
+     *
      * @param enable <code>true</code> to enable, <code>false</code> to disable
      */
     void setEnableMouseInputHandling(boolean enable);
 
     /**
      * Set whether or not to enable native media player keyboard input handling.
-     * 
+     *
      * @param enable <code>true</code> to enable, <code>false</code> to disable
      */
     void setEnableKeyInputHandling(boolean enable);

@@ -13,14 +13,17 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.binding.internal;
 
+/**
+ *
+ */
 public enum libvlc_audio_output_channel_t {
-  
+
     libvlc_AudioChannel_Error  (-1),
     libvlc_AudioChannel_Stereo ( 1),
     libvlc_AudioChannel_RStereo( 2),
