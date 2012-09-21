@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -30,7 +30,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
- * Very basic test showing using a cue sheet paired with a single mp3 file 
+ * Very basic test showing using a cue sheet paired with a single mp3 file
  * containing a series of individual tracks.
  * <p>
  * Shows how to "play" the cue-sheet to generate the list of sub-items, and
@@ -43,17 +43,17 @@ public class CueTest extends VlcjTest {
             System.err.println("Specify a single cue sheet");
             System.exit(1);
         }
-        
+
         final AudioMediaPlayerComponent player = new AudioMediaPlayerComponent();
         player.getMediaPlayer().prepareMedia(args[0]);
-        
+
         player.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 
             @Override
             public void finished(MediaPlayer mediaPlayer) {
                 System.out.println("finished");
                 dump(player);
-                
+
                 // Play an arbitrary sub-item - note that in this basic test each
                 // time the media finishes it will be replayed - a more useful
                 // implementation would do something more sophisticated here
@@ -80,5 +80,5 @@ public class CueTest extends VlcjTest {
         for(MediaListItem item : items) {
             System.out.println(item);
         }
-    }    
+    }
 }

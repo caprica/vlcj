@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -32,7 +32,7 @@ public class LibVlcVersionTest extends VlcjTest {
      * Execute the test.
      * <p>
      * This will throw a RuntimeException if the libvlc native library version is too old.
-     * 
+     *
      * @param args command-line arguments
      */
     public static void main(String[] args) {
@@ -42,7 +42,7 @@ public class LibVlcVersionTest extends VlcjTest {
 
     /**
      * Execute a test case.
-     * 
+     *
      * @param required required version
      * @param actual actual version
      */

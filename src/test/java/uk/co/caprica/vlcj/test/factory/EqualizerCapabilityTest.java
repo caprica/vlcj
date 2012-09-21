@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -33,28 +33,28 @@ public class EqualizerCapabilityTest extends VlcjTest {
 
     public static void main(String[] args) {
         MediaPlayerFactory factory = new MediaPlayerFactory();
-        
+
         if(!factory.isEqualizerAvailable()) {
             System.out.println("Equalizer not available on this platform");
             System.exit(0);
         }
-        
+
         System.out.println("Preset names:");
         List<String> presetNames = factory.getEqualizerPresetNames();
         for(String presetName : presetNames) {
             System.out.printf(" %s%n", presetName);
         }
         System.out.println();
-        
+
         System.out.println("Band frequencies:");
         List<Float> bandFrequencies = factory.getEqualizerBandFrequencies();
         for(Float freq : bandFrequencies) {
             System.out.printf(" %f Hz%n", freq);
         }
         System.out.println();
-        
+
         // You can get individual presets by name, or get them all in one call as is done here...
-        
+
         Map<String, Equalizer> allPresets = factory.getAllPresetEqualizers();
         for(String presetName : allPresets.keySet()) {
             System.out.printf("%s:%n", presetName);

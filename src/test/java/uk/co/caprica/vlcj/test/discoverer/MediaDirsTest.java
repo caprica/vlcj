@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -37,8 +37,8 @@ public class MediaDirsTest extends VlcjTest implements MediaListEventListener {
     public static void main(String[] args) throws Exception {
         new MediaDirsTest();
     }
-    
-    public MediaDirsTest() throws Exception {    
+
+    public MediaDirsTest() throws Exception {
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
 
         MediaDiscoverer videoMediaDiscoverer = mediaPlayerFactory.newMediaDiscoverer("video_dir");
@@ -50,7 +50,7 @@ public class MediaDirsTest extends VlcjTest implements MediaListEventListener {
         dumpItems(videoFiles, 1);
 
         System.out.println();
-        
+
         MediaDiscoverer audioMediaDiscoverer = mediaPlayerFactory.newMediaDiscoverer("audio_dir");
         Thread.sleep(500); // FIXME not acceptable
         MediaList audioFileList = audioMediaDiscoverer.getMediaList();
@@ -58,9 +58,9 @@ public class MediaDirsTest extends VlcjTest implements MediaListEventListener {
         List<MediaListItem> audioFiles = audioFileList.items();
         System.out.println("Audio Files:");
         dumpItems(audioFiles, 1);
-        
+
         System.out.println();
-        
+
         MediaDiscoverer pictureMediaDiscoverer = mediaPlayerFactory.newMediaDiscoverer("picture_dir");
         Thread.sleep(500); // FIXME not acceptable
         MediaList pictureFileList = pictureMediaDiscoverer.getMediaList();
@@ -68,9 +68,9 @@ public class MediaDirsTest extends VlcjTest implements MediaListEventListener {
         List<MediaListItem> pictureFiles = pictureFileList.items();
         System.out.println("Picture Files:");
         dumpItems(pictureFiles, 1);
-        
+
         System.out.println("DONE!");
-        
+
 //        Thread.currentThread().join();
         System.exit(0);
     }

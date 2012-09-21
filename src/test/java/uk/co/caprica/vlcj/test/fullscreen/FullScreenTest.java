@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -73,6 +73,7 @@ public class FullScreenTest extends VlcjTest {
             @Override
             public void enterFullScreenMode() {
                 SwingUtilities.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         // f.dispose();
                         // f.setUndecorated(true);

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -43,7 +43,7 @@ import com.sun.jna.Native;
 public class Troubleshooter {
 
     private static final String libvlcLibraryName = RuntimeUtil.getLibVlcLibraryName();
-  
+
     private static final String libvlcFileName = RuntimeUtil.getLibVlcName();
     private static final String libvlcCoreFileName = RuntimeUtil.getLibVlcCoreName();
 
@@ -53,10 +53,10 @@ public class Troubleshooter {
     private static String javaVmName;
     private static String osArch;
     private static String sunArchDataModel;
-  
+
     private static boolean likely64bitOs;
     private static boolean likely64bitVm;
-  
+
     private static LibVlc libvlc;
 
     public static void main(String[] args) {

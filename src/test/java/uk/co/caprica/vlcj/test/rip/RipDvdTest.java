@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -51,7 +51,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * Encoding a full DVD is going to be slow.
  * <p>
  * In principle, a start-time and end-time could also be set via media options - e.g. to trim
- * out unnecessary intro or trailing credits from the movie. 
+ * out unnecessary intro or trailing credits from the movie.
  */
 public class RipDvdTest extends VlcjTest {
 

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -45,16 +45,16 @@ public class StreamRtsp extends VlcjTest {
         HeadlessMediaPlayer mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
         mediaPlayer.playMedia(media,
             options,
-            ":no-sout-rtp-sap", 
-            ":no-sout-standard-sap", 
-            ":sout-all", 
+            ":no-sout-rtp-sap",
+            ":no-sout-standard-sap",
+            ":sout-all",
             ":sout-keep"
         );
 
         // Don't exit
         Thread.currentThread().join();
     }
-  
+
     private static String formatRtspStream(String serverAddress, int serverPort, String id) {
         StringBuilder sb = new StringBuilder(60);
         sb.append(":sout=#rtp{sdp=rtsp://@");

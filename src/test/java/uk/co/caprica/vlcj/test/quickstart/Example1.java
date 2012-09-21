@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -30,12 +30,12 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 public class Example1 {
 
     private final JFrame frame;
-    
+
     private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
-    
+
     public static void main(String[] args) {
         final String mrl = args[0];
-        
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -43,10 +43,10 @@ public class Example1 {
             }
         });
     }
-    
+
     public Example1() {
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
-        
+
         frame = new JFrame("vlcj quickstart");
         frame.setLocation(50, 50);
         frame.setSize(1400, 800);
@@ -54,7 +54,7 @@ public class Example1 {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-    
+
     private void start(String mrl) {
         mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
     }

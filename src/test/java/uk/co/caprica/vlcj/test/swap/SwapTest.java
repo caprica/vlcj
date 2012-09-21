@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -56,21 +56,21 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class SwapTest extends VlcjTest {
 
-    private JFrame frame;
-    private JPanel contentPane;
-    private Canvas previewCanvas;
-    private Canvas mainCanvas;
-    private JPanel controlsPanel;
-    private JButton showMainButton;
-    private JButton showPreviewButton;
-    private JButton playButton;
-    private JButton pauseButton;
-    private JButton stopButton;
-  
-    private MediaPlayerFactory factory;
-    private EmbeddedMediaPlayer mediaPlayer;
-    private CanvasVideoSurface previewVideoSurface;
-    private CanvasVideoSurface mainVideoSurface;
+    private final JFrame frame;
+    private final JPanel contentPane;
+    private final Canvas previewCanvas;
+    private final Canvas mainCanvas;
+    private final JPanel controlsPanel;
+    private final JButton showMainButton;
+    private final JButton showPreviewButton;
+    private final JButton playButton;
+    private final JButton pauseButton;
+    private final JButton stopButton;
+
+    private final MediaPlayerFactory factory;
+    private final EmbeddedMediaPlayer mediaPlayer;
+    private final CanvasVideoSurface previewVideoSurface;
+    private final CanvasVideoSurface mainVideoSurface;
 
     public static void main(final String[] args) throws Exception {
         if(args.length != 1) {

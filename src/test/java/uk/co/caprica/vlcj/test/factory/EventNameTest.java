@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -30,7 +30,7 @@ public class EventNameTest extends VlcjTest {
 
     public static void main(String[] args) {
         LibVlc libvlc = LibVlc.INSTANCE;
-        
+
         for(libvlc_event_e event : libvlc_event_e.values()) {
             int val = event.intValue();
             System.out.printf("%4d %04x %s%n", val, val, libvlc.libvlc_event_type_name(val));

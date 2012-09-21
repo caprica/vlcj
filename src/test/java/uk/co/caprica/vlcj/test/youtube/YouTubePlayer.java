@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -49,18 +49,18 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * A minimal YouTube player.
  * <p>
  * The URL/MRL must be in the following format:
- * 
+ *
  * <pre>
  *   http://www.youtube.com/watch?v=000000
  * </pre>
- * 
+ *
  * The only thing that makes this different from a 'regular' media player application is the
  * following piece of code:
- * 
+ *
  * <pre>
  * mediaPlayer.setPlaySubItems(true); // &lt;--- This is very important for YouTube media
  * </pre>
- * 
+ *
  * Note that it is also possible to programmatically play the sub-item in response to events - this
  * is slightly more complex but more flexible.
  * <p>
@@ -71,13 +71,13 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class YouTubePlayer extends VlcjTest {
 
-    private MediaPlayerFactory factory;
-    private EmbeddedMediaPlayer mediaPlayer;
-    private Frame mainFrame;
+    private final MediaPlayerFactory factory;
+    private final EmbeddedMediaPlayer mediaPlayer;
+    private final Frame mainFrame;
 
-    private JLabel urlLabel;
-    private JTextField urlTextField;
-    private JButton playButton;
+    private final JLabel urlLabel;
+    private final JTextField urlTextField;
+    private final JButton playButton;
 
     public static void main(String[] args) throws Exception {
         setLookAndFeel();

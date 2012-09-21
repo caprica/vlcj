@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -71,44 +71,44 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <p>
  * If you want to capture audio, you should a media option similar to the following (on Linux at
  * least):
- * 
+ *
  * <pre>
  *   :input-slave=alsa://hw:0,0
  * </pre>
  */
 public class ChatTest extends VlcjTest {
 
-    private MediaPlayerFactory mediaPlayerFactory;
-    private EmbeddedMediaPlayer localMediaPlayer;
-    private EmbeddedMediaPlayer remoteMediaPlayer;
-  
-    private JFrame frame;
-    private JPanel contentPane;
-    private JPanel sourceControls;
-    private JPanel videoPanel;
-    private JPanel localPanel;
-    private JPanel remotePanel;
-    private Canvas localCanvas;
-    private Canvas remoteCanvas;
-    private JPanel localStreamControls;
-    private JPanel remoteStreamControls;
-  
-    private JLabel mediaLabel;
-    private JTextField mediaTextField;
-  
-    private JLabel streamToLabel;
-    private JTextField streamToTextField;
-    private JButton sendButton;
-    private JButton sendSnapshotButton;
-  
-    private JLabel streamFromLabel;
-    private JTextField streamFromTextField;
-    private JButton receiveButton;
-    private JButton receiveSnapshotButton;
-  
-    private CanvasVideoSurface localVideoSurface;
-    private CanvasVideoSurface remoteVideoSurface;
-  
+    private final MediaPlayerFactory mediaPlayerFactory;
+    private final EmbeddedMediaPlayer localMediaPlayer;
+    private final EmbeddedMediaPlayer remoteMediaPlayer;
+
+    private final JFrame frame;
+    private final JPanel contentPane;
+    private final JPanel sourceControls;
+    private final JPanel videoPanel;
+    private final JPanel localPanel;
+    private final JPanel remotePanel;
+    private final Canvas localCanvas;
+    private final Canvas remoteCanvas;
+    private final JPanel localStreamControls;
+    private final JPanel remoteStreamControls;
+
+    private final JLabel mediaLabel;
+    private final JTextField mediaTextField;
+
+    private final JLabel streamToLabel;
+    private final JTextField streamToTextField;
+    private final JButton sendButton;
+    private final JButton sendSnapshotButton;
+
+    private final JLabel streamFromLabel;
+    private final JTextField streamFromTextField;
+    private final JButton receiveButton;
+    private final JButton receiveSnapshotButton;
+
+    private final CanvasVideoSurface localVideoSurface;
+    private final CanvasVideoSurface remoteVideoSurface;
+
     public static void main(String[] args) throws Exception {
         setLookAndFeel();
 

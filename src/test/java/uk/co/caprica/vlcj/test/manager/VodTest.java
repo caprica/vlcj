@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -33,7 +33,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * Inputs/outputs are flexible - you do not have to play a <em>file</em>.
  * <p>
  * The native media manager (VLM) is quite basic - it is probably easier to build
- * a broadcast server or video-on-demand server in Java. 
+ * a broadcast server or video-on-demand server in Java.
  */
 public class VodTest extends VlcjTest {
 
@@ -42,16 +42,16 @@ public class VodTest extends VlcjTest {
         MediaPlayerFactory factory = new MediaPlayerFactory("--rtsp-host=127.0.0.1", "--rtsp-port=5004");
 
         MediaManager manager = factory.newMediaManager();
-        
+
         String vodMux = "mp2t";
 //        String mux = "ts";
-        
+
         // Client MRL: rtsp://@127.0.0.1:5004/Movie1
         manager.addVideoOnDemand("Movie1", "/movies/Movie1.iso", true, vodMux);
 
         // Client MRL: rtsp://@127.0.0.1:5004/Movie2
         manager.addVideoOnDemand("Movie2", "/movies/Movie2.iso", true, vodMux);
-        
+
         System.out.println("Movie1: " + manager.show("Movie1"));
         System.out.println("Movie2: " + manager.show("Movie2"));
 

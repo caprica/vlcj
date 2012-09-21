@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -57,9 +57,9 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 public class EqualizerFrame extends JFrame implements ChangeListener, ActionListener, ItemListener {
 
     private static final String BAND_INDEX_PROPERTY = "equalizerBandIndex";
-    
+
     private final String dbFormat = "%.2fdB";
-    
+
     private final MediaPlayerFactory mediaPlayerFactory;
     private final MediaPlayer mediaPlayer;
     private final Equalizer equalizer;
@@ -70,27 +70,27 @@ public class EqualizerFrame extends JFrame implements ChangeListener, ActionList
     private final JToggleButton enableButton;
     private final JComboBox presetComboBox;
 
-    
+
     public EqualizerFrame(List<Float> list, List<String> presets, MediaPlayerFactory mediaPlayerFactory, MediaPlayer mediaPlayer, Equalizer equalizer) {
         super("Equalizer");
-    
+
         this.mediaPlayerFactory = mediaPlayerFactory;
         this.mediaPlayer = mediaPlayer;
         this.equalizer = equalizer;
-        
+
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        
+
         JPanel contentPane = new JPanel();
         contentPane.setBorder(BorderFactory.createEmptyBorder(4,  4,  4,  4));
         contentPane.setLayout(new BorderLayout(0, 4));
-        
+
         JPanel bandsPane = new JPanel();
         bandsPane.setLayout(new GridLayout(1, 1 + list.size(), 2, 0));
-        
+
         preampControl = new SliderControl("Preamp", (int)LibVlcConst.MIN_GAIN, (int)LibVlcConst.MAX_GAIN, 0, dbFormat);
         preampControl.getSlider().addChangeListener(this);
         bandsPane.add(preampControl);
-        
+
         bandControls = new SliderControl[list.size()];
         for(int i = 0; i < list.size(); i++) {
             bandControls[i] = new SliderControl(formatFrequency(list.get(i)), (int)LibVlcConst.MIN_GAIN, (int)LibVlcConst.MAX_GAIN, 0, dbFormat);
@@ -98,22 +98,22 @@ public class EqualizerFrame extends JFrame implements ChangeListener, ActionList
             bandControls[i].getSlider().addChangeListener(this);
             bandsPane.add(bandControls[i]);
         }
-        
+
         contentPane.add(bandsPane, BorderLayout.CENTER);
 
         JPanel controlsPane = new JPanel();
         controlsPane.setLayout(new BoxLayout(controlsPane, BoxLayout.X_AXIS));
-        
+
         enableButton = new JToggleButton("Enable");
         enableButton.setMnemonic('e');
         controlsPane.add(enableButton);
-        
+
         controlsPane.add(Box.createHorizontalGlue());
 
         JLabel presetLabel = new JLabel("Preset:");
         presetLabel.setDisplayedMnemonic('p');
         controlsPane.add(presetLabel);
-        
+
         presetComboBox = new JComboBox();
         presetLabel.setLabelFor(presetComboBox);
         DefaultComboBoxModel presetModel = (DefaultComboBoxModel)presetComboBox.getModel();
@@ -135,11 +135,11 @@ public class EqualizerFrame extends JFrame implements ChangeListener, ActionList
             }
         });
         controlsPane.add(presetComboBox);
-        
+
         contentPane.add(controlsPane, BorderLayout.SOUTH);
-        
+
         setContentPane(contentPane);
-        
+
         enableButton.addActionListener(this);
         presetComboBox.addItemListener(this);
     }
@@ -161,12 +161,12 @@ public class EqualizerFrame extends JFrame implements ChangeListener, ActionList
         }
         mediaPlayer.setEqualizer(enable ? equalizer : null);
     }
-    
+
     @Override
     public void stateChanged(ChangeEvent e) {
         if(e.getSource() instanceof JSlider) {
             JSlider slider = (JSlider)e.getSource();
-            
+
             Integer index = (Integer)slider.getClientProperty(BAND_INDEX_PROPERTY);
             int value = slider.getValue();
             // Band...
@@ -185,7 +185,7 @@ public class EqualizerFrame extends JFrame implements ChangeListener, ActionList
     }
 
     boolean applyingPreset;
-    
+
     @Override
     public final void itemStateChanged(ItemEvent e) {
         String presetName = (String)presetComboBox.getSelectedItem();
@@ -199,7 +199,7 @@ public class EqualizerFrame extends JFrame implements ChangeListener, ActionList
                     for(int i = 0; i < amps.length; i++) {
                         bandControls[i].getSlider().setValue((int)(amps[i] * 100f));
                     }
-    
+
                     applyingPreset = false;
                 }
             }

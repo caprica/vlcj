@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -98,6 +98,7 @@ public class DirectTestPlayer extends VlcjTest {
                 frame.setVisible(true);
 
                 frame.addWindowListener(new WindowAdapter() {
+                    @Override
                     public void windowClosing(WindowEvent evt) {
                         mediaPlayer.release();
                         factory.release();

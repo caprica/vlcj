@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -39,29 +39,29 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * See {@link ScreenRecorder} if you want to encode and save the video.
  * <p>
  * Additional media options that can be set are:
- * 
+ *
  * <pre>
  *   :screen-top=
  *   :screen-left=
  *   :screen-width=
  *   :screen-height=
  * </pre>
- * 
+ *
  * See <a href="http://wiki.videolan.org/Documentation:Modules/screen">Screen Module</a>.
  */
 public class ScreenTestPlayer extends VlcjTest {
 
-    private JFrame frame;
+    private final JFrame frame;
 
-    private JPanel contentPane;
+    private final JPanel contentPane;
 
-    private Canvas canvas;
+    private final Canvas canvas;
 
-    private MediaPlayerFactory factory;
+    private final MediaPlayerFactory factory;
 
-    private EmbeddedMediaPlayer mediaPlayer;
+    private final EmbeddedMediaPlayer mediaPlayer;
 
-    private CanvasVideoSurface videoSurface;
+    private final CanvasVideoSurface videoSurface;
 
     public static void main(final String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -102,7 +102,7 @@ public class ScreenTestPlayer extends VlcjTest {
         String mrl = "screen://";
 
         String[] options = {
-            ":screen-fps=30", 
+            ":screen-fps=30",
             ":screen-caching=100"
         };
 

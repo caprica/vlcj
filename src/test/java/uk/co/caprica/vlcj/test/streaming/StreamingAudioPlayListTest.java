@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -51,24 +51,24 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <li>port to stream to</li>
  * </ul>
  * For example:
- * 
+ *
  * <pre>
  *   /home/music 230.0.0.1 5555
  * </pre>
- * 
+ *
  * Using this example, the streaming audio can be played in vlc with the following address:
- * 
+ *
  * <pre>
  *   rtp://230.0.0.1:5555
  * </pre>
  */
 public class StreamingAudioPlayListTest extends VlcjTest {
 
-    private MediaPlayerFactory factory;
+    private final MediaPlayerFactory factory;
 
-    private MediaListPlayer mediaListPlayer;
+    private final MediaListPlayer mediaListPlayer;
 
-    private MediaList playList;
+    private final MediaList playList;
 
     public static void main(String[] args) throws Exception {
         if(args.length == 3) {
@@ -122,7 +122,7 @@ public class StreamingAudioPlayListTest extends VlcjTest {
 
     /**
      * Search a directory, recursively, for mp3 files.
-     * 
+     *
      * @param root root directory
      * @return collection of mp3 files
      */

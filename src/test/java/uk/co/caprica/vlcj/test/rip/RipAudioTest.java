@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -38,11 +38,11 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class RipAudioTest extends VlcjTest {
 
-    private CountDownLatch completionLatch;
+    private final CountDownLatch completionLatch;
 
-    private MediaPlayerFactory mediaPlayerFactory;
+    private final MediaPlayerFactory mediaPlayerFactory;
 
-    private MediaPlayer mediaPlayer;
+    private final MediaPlayer mediaPlayer;
 
     public static void main(String[] args) {
         if(args.length != 2) {

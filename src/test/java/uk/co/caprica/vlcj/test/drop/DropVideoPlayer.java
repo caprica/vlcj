@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -57,7 +57,7 @@ public class DropVideoPlayer extends VlcjTest {
     private final DataFlavor uriListFlavor;
     private final DataFlavor javaUrlFlavor;
     private final DataFlavor javaFileListFlavor;
-  
+
     private final MediaPlayerFactory mediaPlayerFactory;
     private final EmbeddedMediaPlayer mediaPlayer;
     private final CanvasVideoSurface videoSurface;

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -46,11 +46,11 @@ public class ImagePane extends JComponent {
         CENTER,
         FIT
     }
-  
-    private Mode mode;
+
+    private final Mode mode;
     private BufferedImage sourceImage;
-    private float opacity;
-  
+    private final float opacity;
+
     private BufferedImage image;
 
     private int lastWidth;

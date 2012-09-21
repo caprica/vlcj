@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -39,40 +39,40 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class StatsTest extends VlcjTest {
 
-    private JFrame frame;
-    private EmbeddedMediaPlayerComponent mediaPlayerComponent;
-  
-    private JLabel readBytesLabel;
-    private JLabel inputBitrateLabel;
-    private JLabel demuxReadBytesLabel;
-    private JLabel demuxBitrateLabel;
-    private JLabel demuxCorruptedLabel;
-    private JLabel demuxDiscontinuityLabel;
-    private JLabel decodedVideoLabel;
-    private JLabel decodedAudioLabel;
-    private JLabel displayedPicturesLabel;
-    private JLabel lostPicturesLabel;
-    private JLabel playedABuffersLabel;
-    private JLabel lostABuffersLabel;
-    private JLabel sentPacketsLabel;
-    private JLabel sentBytesLabel;
-    private JLabel sendBitRateLabel;
+    private final JFrame frame;
+    private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 
-    private JLabel readBytesValueLabel;
-    private JLabel inputBitrateValueLabel;
-    private JLabel demuxReadBytesValueLabel;
-    private JLabel demuxBitrateValueLabel;
-    private JLabel demuxCorruptedValueLabel;
-    private JLabel demuxDiscontinuityValueLabel;
-    private JLabel decodedVideoValueLabel;
-    private JLabel decodedAudioValueLabel;
-    private JLabel displayedPicturesValueLabel;
-    private JLabel lostPicturesValueLabel;
-    private JLabel playedABuffersValueLabel;
-    private JLabel lostABuffersValueLabel;
-    private JLabel sentPacketsValueLabel;
-    private JLabel sentBytesValueLabel;
-    private JLabel sendBitRateValueLabel;
+    private final JLabel readBytesLabel;
+    private final JLabel inputBitrateLabel;
+    private final JLabel demuxReadBytesLabel;
+    private final JLabel demuxBitrateLabel;
+    private final JLabel demuxCorruptedLabel;
+    private final JLabel demuxDiscontinuityLabel;
+    private final JLabel decodedVideoLabel;
+    private final JLabel decodedAudioLabel;
+    private final JLabel displayedPicturesLabel;
+    private final JLabel lostPicturesLabel;
+    private final JLabel playedABuffersLabel;
+    private final JLabel lostABuffersLabel;
+    private final JLabel sentPacketsLabel;
+    private final JLabel sentBytesLabel;
+    private final JLabel sendBitRateLabel;
+
+    private final JLabel readBytesValueLabel;
+    private final JLabel inputBitrateValueLabel;
+    private final JLabel demuxReadBytesValueLabel;
+    private final JLabel demuxBitrateValueLabel;
+    private final JLabel demuxCorruptedValueLabel;
+    private final JLabel demuxDiscontinuityValueLabel;
+    private final JLabel decodedVideoValueLabel;
+    private final JLabel decodedAudioValueLabel;
+    private final JLabel displayedPicturesValueLabel;
+    private final JLabel lostPicturesValueLabel;
+    private final JLabel playedABuffersValueLabel;
+    private final JLabel lostABuffersValueLabel;
+    private final JLabel sentPacketsValueLabel;
+    private final JLabel sentBytesValueLabel;
+    private final JLabel sendBitRateValueLabel;
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 

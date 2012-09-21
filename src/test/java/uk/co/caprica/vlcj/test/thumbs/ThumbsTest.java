@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -34,11 +34,11 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * the vlc code-base.
  * <p>
  * The original "C" implementation is available in the vlc code-base here:
- * 
+ *
  * <pre>
  *   /vlc/doc/libvlc/vlc-thumb.c
  * </pre>
- * 
+ *
  * This implementation tries to stick as closely to the original "C" implementation as possible, but
  * uses a different synchronisation technique.
  * <p>

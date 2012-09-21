@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -69,9 +69,9 @@ public class StreamRtpDuplicate extends VlcjTest {
 
         mediaPlayer.playMedia(media,
             options,
-            ":no-sout-rtp-sap", 
-            ":no-sout-standard-sap", 
-            ":sout-all", 
+            ":no-sout-rtp-sap",
+            ":no-sout-standard-sap",
+            ":sout-all",
             ":sout-keep"
         );
 

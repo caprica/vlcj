@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -35,7 +35,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * This test simply dumps out the (possibly nested) list of audio/video devices.
  * <p>
  * There are other native media discoverers available (depending on available vlc
- * service discovery plugins) but audio and video at least seem reliable - the 
+ * service discovery plugins) but audio and video at least seem reliable - the
  * others may not be as reliable.
  */
 public class MediaDiscovererTest extends VlcjTest {
@@ -44,19 +44,19 @@ public class MediaDiscovererTest extends VlcjTest {
         "audio",
         "video",
     };
-    
+
     private final MediaPlayerFactory mediaPlayerFactory;
-    
+
     private final Map<String, MediaDiscoverer> discoverers = new LinkedHashMap<String, MediaDiscoverer>();
-    
+
     public static void main(String[] args) throws Exception {
         new MediaDiscovererTest().run();
     }
-    
+
     public MediaDiscovererTest() {
         this.mediaPlayerFactory = new MediaPlayerFactory();
     }
-     
+
     private void run() {
         for(String name : NAMES) {
             System.out.println("Creating discoverer for '" + name + "'");
@@ -66,25 +66,25 @@ public class MediaDiscovererTest extends VlcjTest {
         System.out.println();
 
         refresh();
-        
+
         for(String name : NAMES) {
             System.out.println("Releasing '" + name + "'");
             MediaDiscoverer discoverer = discoverers.get(name);
             discoverer.release();
         }
     }
-    
+
     private void refresh() {
         for(String name : NAMES) {
             System.out.println("Testing '" + name + "'");
-            MediaDiscoverer discoverer = discoverers.get(name); 
+            MediaDiscoverer discoverer = discoverers.get(name);
             MediaList mediaList = discoverer.getMediaList();
             List<MediaListItem> items = mediaList.items();
             dumpItems(items, 1);
             System.out.println();
         }
     }
-    
+
     private void dumpItems(List<MediaListItem> items, int indent) {
         for(MediaListItem item : items) {
             System.out.printf("%" + indent + "s%s%n", " ", item);

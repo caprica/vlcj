@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -81,34 +81,34 @@ import com.sun.jna.Pointer;
  */
 public class SetDrawableTest extends VlcjTest {
 
-    private MediaPlayerFactory mediaPlayerFactory;
-    private EmbeddedMediaPlayer aglMediaPlayer;
-    private EmbeddedMediaPlayer nsobjectMediaPlayer;
-    private EmbeddedMediaPlayer nsviewMediaPlayer;
-    private EmbeddedMediaPlayer xwindowMediaPlayer;
-  
-    private Canvas aglCanvas;
-    private Canvas nsobjectCanvas;
-    private Canvas nsviewCanvas;
-    private Canvas xwindowCanvas;
-  
-    private CanvasVideoSurface aglVideoSurface;
-    private CanvasVideoSurface nsobjectVideoSurface;
-    private CanvasVideoSurface nsviewVideoSurface;
-    private CanvasVideoSurface xwindowVideoSurface;
-  
-    private JPanel mainFrameContentPane;
-    private JButton aglButton;
-    private JButton nsobjectButton;
-    private JButton nsviewButton;
-    private JButton xwindowButton;
-  
-    private JFrame mainFrame;
-    private VideoFrame aglFrame;
-    private VideoFrame nsobjectFrame;
-    private VideoFrame nsviewFrame;
-    private VideoFrame xwindowFrame;
-  
+    private final MediaPlayerFactory mediaPlayerFactory;
+    private final EmbeddedMediaPlayer aglMediaPlayer;
+    private final EmbeddedMediaPlayer nsobjectMediaPlayer;
+    private final EmbeddedMediaPlayer nsviewMediaPlayer;
+    private final EmbeddedMediaPlayer xwindowMediaPlayer;
+
+    private final Canvas aglCanvas;
+    private final Canvas nsobjectCanvas;
+    private final Canvas nsviewCanvas;
+    private final Canvas xwindowCanvas;
+
+    private final CanvasVideoSurface aglVideoSurface;
+    private final CanvasVideoSurface nsobjectVideoSurface;
+    private final CanvasVideoSurface nsviewVideoSurface;
+    private final CanvasVideoSurface xwindowVideoSurface;
+
+    private final JPanel mainFrameContentPane;
+    private final JButton aglButton;
+    private final JButton nsobjectButton;
+    private final JButton nsviewButton;
+    private final JButton xwindowButton;
+
+    private final JFrame mainFrame;
+    private final VideoFrame aglFrame;
+    private final VideoFrame nsobjectFrame;
+    private final VideoFrame nsviewFrame;
+    private final VideoFrame xwindowFrame;
+
     public static void main(final String[] args) {
         if(args.length != 1) {
             System.out.println("Specify a single MRL");
@@ -326,7 +326,7 @@ public class SetDrawableTest extends VlcjTest {
      * It exists here for the sake of investigation.
      * <p>
      * On MacOS, the peer's getViewPtr() method returns a handle for an NSView object instance.
-     * 
+     *
      * @param component component
      * @return peer
      */
@@ -335,7 +335,7 @@ public class SetDrawableTest extends VlcjTest {
             @SuppressWarnings("deprecation")
             ComponentPeer peer = component.getPeer();
             Method method = peer.getClass().getMethod("getViewPtr");
-            Object result = (Object)method.invoke(peer);
+            Object result = method.invoke(peer);
             System.out.println("result: " + result);
             if(result != null) {
                 System.out.println("class: " + result.getClass());

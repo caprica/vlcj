@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -46,9 +46,9 @@ public class ScreenRecorder extends VlcjTest {
         "--intf",
         "dummy"
     };
-  
+
     private static final String MRL     = "screen://";
-    private static final String SOUT    = ":sout=#transcode{vcodec=FLV1,vb=%d,scale=%f}:duplicate{dst=file{dst=%s}}"; 
+    private static final String SOUT    = ":sout=#transcode{vcodec=FLV1,vb=%d,scale=%f}:duplicate{dst=file{dst=%s}}";
     private static final String FPS     = ":screen-fps=%d";
     private static final String CACHING = ":screen-caching=%d";
 
@@ -56,12 +56,12 @@ public class ScreenRecorder extends VlcjTest {
     private static final int    caching = 500;
     private static final int    bits    = 4096;
     private static final float  scale   = 0.5f;
-  
+
     private final MediaPlayerFactory mediaPlayerFactory;
     private final MediaPlayer mediaPlayer;
-  
+
     private final JFrame frame;
-  
+
     public static void main(String[] args) {
         if(args.length != 1) {
             System.err.println("Specify a destination file");
@@ -114,7 +114,7 @@ public class ScreenRecorder extends VlcjTest {
         mediaPlayer.release();
         mediaPlayerFactory.release();
     }
-  
+
     private String[] getMediaOptions(String destination) {
         return new String[] {
             String.format(SOUT, bits, scale, destination),

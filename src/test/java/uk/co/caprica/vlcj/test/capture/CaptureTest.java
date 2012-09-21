@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -49,34 +49,34 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * Specify the MRL of the capture device as a command-line argument...
  * <p>
  * Linux:
- * 
+ *
  * <pre>
  *   v4l2:///dev/video0
  * </pre>
- * 
+ *
  * Windows:
- * 
+ *
  * <pre>
  *   dshow://
  * </pre>
- * 
+ *
  * Audio capture is achieved by setting a media option, for example (on Linux at least):
- * 
+ *
  * <pre>
  *   :input-slave=alsa://hw:0,0
  * </pre>
- * 
+ *
  * Each time this application is executed a new time-stamped video capture file will be created in a
  * directory called "Videos" under the user home directory.
  */
 public class CaptureTest extends VlcjTest {
 
-    private JFrame frame;
-    private JPanel contentPane;
-    private Canvas canvas;
-    private MediaPlayerFactory factory;
-    private EmbeddedMediaPlayer mediaPlayer;
-    private CanvasVideoSurface videoSurface;
+    private final JFrame frame;
+    private final JPanel contentPane;
+    private final Canvas canvas;
+    private final MediaPlayerFactory factory;
+    private final EmbeddedMediaPlayer mediaPlayer;
+    private final CanvasVideoSurface videoSurface;
 
     public static void main(final String[] args) {
         if(args.length != 1) {

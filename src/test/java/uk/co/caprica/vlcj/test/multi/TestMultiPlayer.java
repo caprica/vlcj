@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -58,20 +58,20 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class TestMultiPlayer extends VlcjTest {
 
-    private String[] medias = {
+    private final String[] medias = {
         "wibble1.mp4",
         "wibble2.mp4"
         // Your MRL's go here
     };
-    
-    private int rows = 1;
-    private int cols = 4;
-  
-    private Frame mainFrame;
-  
-    private List<PlayerInstance> players = new ArrayList<PlayerInstance>();
 
-    private MediaPlayerFactory factory;
+    private final int rows = 1;
+    private final int cols = 4;
+
+    private final Frame mainFrame;
+
+    private final List<PlayerInstance> players = new ArrayList<PlayerInstance>();
+
+    private final MediaPlayerFactory factory;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -95,6 +95,7 @@ public class TestMultiPlayer extends VlcjTest {
         mainFrame.add(contentPane, BorderLayout.CENTER);
         mainFrame.setBounds(100, 100, 1600, 300);
         mainFrame.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent evt) {
                 for(PlayerInstance pi : players) {
                     pi.mediaPlayer().release();

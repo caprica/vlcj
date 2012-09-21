@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -55,16 +55,16 @@ public class PlayerControlsPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private static final int SKIP_TIME_MS = 10 * 1000;
-  
+
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     private final EmbeddedMediaPlayer mediaPlayer;
-  
+
     private JLabel timeLabel;
 //    private JProgressBar positionProgressBar;
     private JSlider positionSlider;
     private JLabel chapterLabel;
-  
+
     private JButton previousChapterButton;
     private JButton rewindButton;
     private JButton stopButton;
@@ -72,21 +72,21 @@ public class PlayerControlsPanel extends JPanel {
     private JButton playButton;
     private JButton fastForwardButton;
     private JButton nextChapterButton;
-  
+
     private JButton toggleMuteButton;
     private JSlider volumeSlider;
-  
+
     private JButton captureButton;
-  
+
     private JButton ejectButton;
     private JButton connectButton;
-  
+
     private JButton fullScreenButton;
-  
+
     private JButton subTitlesButton;
-  
+
     private JFileChooser fileChooser;
-  
+
     private boolean mousePressedPlaying = false;
 
     public PlayerControlsPanel(EmbeddedMediaPlayer mediaPlayer) {
@@ -242,7 +242,7 @@ public class PlayerControlsPanel extends JPanel {
         if(!mediaPlayer.isSeekable()) {
             return;
         }
-        float positionValue = (float)positionSlider.getValue() / 1000.0f;
+        float positionValue = positionSlider.getValue() / 1000.0f;
         // Avoid end of file freeze-up
         if(positionValue > 0.99f) {
             positionValue = 0.99f;
@@ -398,7 +398,7 @@ public class PlayerControlsPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.enableOverlay(false);
-                String mediaUrl = (String)JOptionPane.showInputDialog(PlayerControlsPanel.this, "Enter a media URL", "Connect to media", JOptionPane.QUESTION_MESSAGE);
+                String mediaUrl = JOptionPane.showInputDialog(PlayerControlsPanel.this, "Enter a media URL", "Connect to media", JOptionPane.QUESTION_MESSAGE);
                 if(mediaUrl != null && mediaUrl.length() > 0) {
                     mediaPlayer.playMedia(mediaUrl);
                 }

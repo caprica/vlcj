@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -55,13 +55,13 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class MarqueeTest extends VlcjTest {
 
-    private EmbeddedMediaPlayerComponent mediaPlayerComponent;
+    private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 
-    private JFrame frame;
+    private final JFrame frame;
 
-    private JPanel cp;
+    private final JPanel cp;
 
-    private JPanel controlsPanel;
+    private final JPanel controlsPanel;
 
     public static void main(final String[] args) throws Exception {
         if(args.length != 1) {

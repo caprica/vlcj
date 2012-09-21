@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -40,24 +40,24 @@ public class SliderControl extends JPanel implements ChangeListener {
     private final JLabel label;
     private final JSlider slider;
     private final JLabel valueLabel;
-    
+
     public SliderControl(String text, float min, float max, float value, String valueFormat) {
         this.valueFormat = valueFormat;
-        
+
         setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED), BorderFactory.createEmptyBorder(4,  4,  4,  4)));
-        
+
         label = new JLabel(text);
         label.setHorizontalAlignment(JLabel.CENTER);
-        
+
         int modelMin = (int)(min * factor);
         int modelMax = (int)(max * factor);
         int modelValue = (int)(value * factor);
-        
+
         modelValue = Math.min(modelValue, modelMax);
         modelValue = Math.max(modelValue, modelMin);
-        
+
         System.out.printf("min max value -> %d %d %d%n", modelMin, modelMax, modelValue);
-        
+
         slider = new JSlider(JSlider.VERTICAL, modelMin, modelMax, modelValue);
         valueLabel = new JLabel();
 
@@ -66,16 +66,16 @@ public class SliderControl extends JPanel implements ChangeListener {
         label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         slider.setAlignmentX(JSlider.CENTER_ALIGNMENT);
         valueLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        
+
         add(label);
         add(slider);
         add(valueLabel);
-        
+
         slider.getModel().addChangeListener(this);
-        
+
         updateValue();
     }
-    
+
     public final JSlider getSlider() {
         return slider;
     }
@@ -84,7 +84,7 @@ public class SliderControl extends JPanel implements ChangeListener {
     public final void stateChanged(ChangeEvent e) {
         updateValue();
     }
-    
+
     private void updateValue() {
         int value = slider.getValue();
         valueLabel.setText(String.format(valueFormat, value / factor));

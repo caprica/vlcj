@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -54,24 +54,24 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class VisualisationPlayer extends VlcjTest {
 
-    private MediaPlayerFactory factory;
-    private EmbeddedMediaPlayer mediaPlayer;
-    private CanvasVideoSurface videoSurface;
-  
-    private String mrl;
-  
-    private JFrame frame;
-    private JPanel contentPane;
-    private Canvas canvas;
-    private JPanel controlsPane;
-    private JLabel typeLabel;
-    private JComboBox comboBox;
-    private JButton playButton;
-    private JLabel widthLabel;
-    private JTextField widthTextField;
-    private JLabel heightLabel;
-    private JTextField heightTextField;
-  
+    private final MediaPlayerFactory factory;
+    private final EmbeddedMediaPlayer mediaPlayer;
+    private final CanvasVideoSurface videoSurface;
+
+    private final String mrl;
+
+    private final JFrame frame;
+    private final JPanel contentPane;
+    private final Canvas canvas;
+    private final JPanel controlsPane;
+    private final JLabel typeLabel;
+    private final JComboBox comboBox;
+    private final JButton playButton;
+    private final JLabel widthLabel;
+    private final JTextField widthTextField;
+    private final JLabel heightLabel;
+    private final JTextField heightTextField;
+
     public static void main(final String[] args) throws Exception {
         if(args.length != 1) {
             System.out.println("Specify a single audio MRL");

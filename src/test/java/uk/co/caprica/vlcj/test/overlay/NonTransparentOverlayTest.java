@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -61,16 +61,16 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class NonTransparentOverlayTest extends VlcjTest {
 
-    private Frame f;
-    private Canvas c;
-    private Canvas o1;
-    private Canvas o2;
-    private Canvas o3;
-    private Label o4;
-  
-    private MediaPlayerFactory factory;
-    private EmbeddedMediaPlayer mediaPlayer;
-  
+    private final Frame f;
+    private final Canvas c;
+    private final Canvas o1;
+    private final Canvas o2;
+    private final Canvas o3;
+    private final Label o4;
+
+    private final MediaPlayerFactory factory;
+    private final EmbeddedMediaPlayer mediaPlayer;
+
     public static void main(final String[] args) {
         if(args.length != 1) {
             System.err.println("Specify an MRL");

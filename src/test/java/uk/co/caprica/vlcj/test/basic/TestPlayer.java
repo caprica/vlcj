@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -87,18 +87,18 @@ import com.sun.jna.platform.WindowUtils;
  * performance improvements in graphics rendering.
  */
 public class TestPlayer extends VlcjTest {
-  
-    private JFrame mainFrame;
+
+    private final JFrame mainFrame;
     private JFrame equalizerFrame;
     private Canvas videoSurface;
-    private JPanel controlsPanel;
-    private JPanel videoAdjustPanel;
-  
+    private final JPanel controlsPanel;
+    private final JPanel videoAdjustPanel;
+
     private MediaPlayerFactory mediaPlayerFactory;
     private Equalizer equalizer;
 
     private EmbeddedMediaPlayer mediaPlayer;
-  
+
     public static void main(final String[] args) throws Exception {
         LibVlc libVlc = LibVlcFactory.factory().create();
 
@@ -192,6 +192,7 @@ public class TestPlayer extends VlcjTest {
         mainFrame.pack();
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent evt) {
                 Logger.debug("windowClosing(evt={})", evt);
 
@@ -215,7 +216,7 @@ public class TestPlayer extends VlcjTest {
             equalizer = mediaPlayerFactory.newEqualizer();
             equalizerFrame = new EqualizerFrame(mediaPlayerFactory.getEqualizerBandFrequencies(), mediaPlayerFactory.getEqualizerPresetNames(), mediaPlayerFactory, mediaPlayer, equalizer);
         }
-        
+
         // Global AWT key handler, you're better off using Swing's InputMap and
         // ActionMap with a JFrame - that would solve all sorts of focus issues too
         Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
@@ -296,6 +297,7 @@ public class TestPlayer extends VlcjTest {
             final Window test = new Window(null, WindowUtils.getAlphaCompatibleGraphicsConfiguration()) {
                 private static final long serialVersionUID = 1L;
 
+                @Override
                 public void paint(Graphics g) {
                     Graphics2D g2 = (Graphics2D)g;
 
@@ -523,8 +525,8 @@ public class TestPlayer extends VlcjTest {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param enable
      */
     @SuppressWarnings("unused")

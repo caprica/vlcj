@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -40,7 +40,7 @@ public class BasicEmbeddedMediaPlayerComponentTest extends VlcjTest {
 
     /**
      * Application entry point.
-     * 
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -78,7 +78,7 @@ public class BasicEmbeddedMediaPlayerComponentTest extends VlcjTest {
 
     /**
      * Start playing a movie.
-     * 
+     *
      * @param mrl mrl
      */
     private void start(String mrl) {

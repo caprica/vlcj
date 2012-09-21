@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -43,22 +43,22 @@ public class PlayerVideoAdjustPanel extends JPanel {
     private final MediaPlayer mediaPlayer;
 
     private JCheckBox enableVideoAdjustCheckBox;
-  
+
     private JLabel contrastLabel;
     private JSlider contrastSlider;
-  
+
     private JLabel brightnessLabel;
     private JSlider brightnessSlider;
 
     private JLabel hueLabel;
     private JSlider hueSlider;
-  
+
     private JLabel saturationLabel;
     private JSlider saturationSlider;
-  
+
     private JLabel gammaLabel;
     private JSlider gammaSlider;
-  
+
     public PlayerVideoAdjustPanel(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
 

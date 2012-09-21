@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -49,7 +49,7 @@ public class UpdateMetaTest extends VlcjTest {
 
         // Keep the original description to restore it later
         String originalDescription = mediaMeta.getDescription();
-        
+
         // Write new meta data
         mediaMeta.setDescription("Oh isn't this a lovely tune.");
         mediaMeta.save();
@@ -60,7 +60,7 @@ public class UpdateMetaTest extends VlcjTest {
         mediaMeta = factory.getMediaMeta(args[0], true);
         Logger.info("mediaMeta={}", mediaMeta);
         Logger.info("updated description={}", mediaMeta.getDescription());
-        
+
         // Restore the original description
         mediaMeta.setDescription(originalDescription);
         mediaMeta.save();

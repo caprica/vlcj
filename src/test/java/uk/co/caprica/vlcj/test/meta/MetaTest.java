@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -42,7 +42,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * Specify a single local media file as the first (and only) command-line argument.
  * <p>
  * An interesting feature of vlc is that if artwork associated with the media can be obtained, the
- * <code>ARTWORKURL</code> meta data field will point to a valid <em>local</em> file for that 
+ * <code>ARTWORKURL</code> meta data field will point to a valid <em>local</em> file for that
  * artwork.
  * <p>
  * If the artwork is available, this test opens a frame to display it.
@@ -69,7 +69,7 @@ public class MetaTest extends VlcjTest {
         // Orderly clean-up
         mediaMeta.release();
         factory.release();
-        
+
         if(artwork != null) {
             JPanel cp = new JPanel() {
                 private static final long serialVersionUID = 1L;

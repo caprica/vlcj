@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -39,10 +39,10 @@ import com.sun.jna.ptr.IntByReference;
  */
 public class DwmTest {
 
-    private JFrame frame;
-    private JPanel contentPane;
-    private JButton enableButton;
-    private JButton disableButton;
+    private final JFrame frame;
+    private final JPanel contentPane;
+    private final JButton enableButton;
+    private final JButton disableButton;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -66,7 +66,7 @@ public class AspectTest extends VlcjTest {
      */
     private static final String[][] ASPECTS = {
         {"<choose...>",     null },
-        {      "16:10",  "16:10" }, 
+        {      "16:10",  "16:10" },
         {      "16:9" ,  "16:9"  },
         {    "1.85:1" , "185:100"},
         {    "2.21:1" , "221:100"},
@@ -74,20 +74,20 @@ public class AspectTest extends VlcjTest {
         {    "2.39:1" , "239:100"},
         {       "5:3" ,   "5:3"  },
         {       "4:3" ,   "4:3"  },
-        {       "5:4" ,   "5:4"  }, 
+        {       "5:4" ,   "5:4"  },
         {       "1:1" ,   "1:1"  }
     };
 
-    private static final String HELP_TEXT = 
+    private static final String HELP_TEXT =
         "<html>Select a standard apsect ratio from the list box, or enter a custom aspect ratio and press enter/return.<br/><br/>" +
       	"For the custom aspect ratio, use:<ul>" +
       	"<li>W:H, e.g. 16:9 and the values must be integers</li>" +
       	"</ul></html>";
-  
+
     private MediaPlayerFactory factory;
     private EmbeddedMediaPlayer mediaPlayer;
     private CanvasVideoSurface videoSurface;
-  
+
     private JFrame frame;
     private JPanel contentPane;
     private JPanel videoPane;
@@ -99,7 +99,7 @@ public class AspectTest extends VlcjTest {
     private JTextField customAspectTextField;
     private JButton pauseButton;
     private JLabel helpText;
-  
+
     public static void main(String[] args) throws Exception {
         if(args.length != 1) {
             System.out.println("Specify a single MRL");

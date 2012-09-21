@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -73,7 +73,7 @@ import com.sun.jna.platform.WindowUtils;
  * Specify a single MRL to play on the command-line.
  */
 public class OverlayTest extends VlcjTest {
-  
+
     public static void main(final String[] args) throws Exception {
         if(args.length != 1) {
             System.out.println("Specify a single MRL");

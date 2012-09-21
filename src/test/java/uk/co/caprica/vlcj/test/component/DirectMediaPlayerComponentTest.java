@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2009, 2010, 2011, 2012 Caprica Software Limited.
  */
 
@@ -58,28 +58,28 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
     private final DirectMediaPlayerComponent mediaPlayerComponent;
 
     /**
-     * 
+     *
      */
     private final int width = 720;
-    
+
     /**
-     * 
+     *
      */
     private final int height = 480;
-    
+
     /**
-     * 
+     *
      */
     private final JPanel panel;
-    
+
     /**
-     * 
+     *
      */
     private final BufferedImage image;
-    
+
     /**
      * Application entry point.
-     * 
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -107,7 +107,7 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
         JFrame frame = new JFrame("vlcj Direct Media Player Component Test");
 
         final Font font = new Font("Sansserif", Font.BOLD, 36);
-        
+
         panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -123,9 +123,9 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
         };
         panel.setBackground(Color.black);
         panel.setOpaque(true);
-        
+
         image = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(width, height);
-        
+
         mediaPlayerComponent = new DirectMediaPlayerComponent("RV32", width, height, width * 4) {
             @Override
             protected RenderCallback onGetRenderCallback() {
@@ -143,20 +143,20 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
 
     /**
      * Start playing a movie.
-     * 
+     *
      * @param mrl mrl
      */
     private void start(String mrl) {
         // One line of vlcj code to play the media...
         mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
     }
-    
+
     private class TestRenderCallbackAdapter extends RenderCallbackAdapter {
 
         private TestRenderCallbackAdapter() {
             super(new int[width * height]);
         }
-        
+
         @Override
         protected void onDisplay(int[] rgbBuffer) {
             // Simply copy buffer to the image and repaint
