@@ -152,4 +152,3 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     public void endOfSubItems(MediaPlayer mediaPlayer) {
     }
 }
-s
