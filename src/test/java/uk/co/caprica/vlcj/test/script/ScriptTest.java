@@ -39,7 +39,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 
 import uk.co.caprica.vlcj.Info;
-import uk.co.caprica.vlcj.player.Equalizer;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -77,9 +76,6 @@ public class ScriptTest extends VlcjTest {
 
     private final MediaPlayerFactory mediaPlayerFactory;
     private final MediaPlayer mediaPlayer;
-
-    private final Equalizer equalizer;
-    private final Map<String, Equalizer> presets;
 
     public static void main(String[] args) throws ScriptException {
         new ScriptTest().start();
@@ -138,23 +134,9 @@ public class ScriptTest extends VlcjTest {
 
         mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventHandler());
 
-        if(mediaPlayerFactory.isEqualizerAvailable()) {
-            equalizer = mediaPlayerFactory.newEqualizer();
-            presets = mediaPlayerFactory.getAllPresetEqualizers();
-        }
-        else {
-            equalizer = null;
-            presets = null;
-        }
-
         scriptEngine.put("vlcj", Info.getInstance().version());
         scriptEngine.put("mediaPlayerFactory", mediaPlayerFactory);
         scriptEngine.put("mediaPlayer", mediaPlayer);
-
-        if(mediaPlayerFactory.isEqualizerAvailable()) {
-            scriptEngine.put("equalizer", equalizer);
-            scriptEngine.put("presets", presets);
-        }
 
         // Add some examples (not exhaustive by any means)
         scriptTextArea.append("vlcj\n");
@@ -166,11 +148,6 @@ public class ScriptTest extends VlcjTest {
         scriptTextArea.append("mediaPlayerFactory.getAudioFilters()\n");
         scriptTextArea.append("mediaPlayerFactory.getVideoFilters()\n");
         scriptTextArea.append("mediaPlayerFactory.getAudioOutputs()\n");
-        scriptTextArea.append("mediaPlayerFactory.isEqualizerAvailable()\n");
-        if(mediaPlayerFactory.isEqualizerAvailable()) {
-            scriptTextArea.append("mediaPlayerFactory.getEqualizerPresetNames()\n");
-            scriptTextArea.append("mediaPlayerFactory.getAllPresetEqualizers()\n");
-        }
         scriptTextArea.append("\n");
 
         scriptTextArea.append("mediaPlayer.playMedia(\"<filename>\", null)\n");
@@ -196,22 +173,6 @@ public class ScriptTest extends VlcjTest {
         scriptTextArea.append("mediaPlayer.mute(false)\n");
         scriptTextArea.append("mediaPlayer.isMute()\n");
         scriptTextArea.append("\n");
-
-        if(mediaPlayerFactory.isEqualizerAvailable()) {
-            scriptTextArea.append("mediaPlayer.getEqualizer()\n");
-            scriptTextArea.append("mediaPlayer.setEqualizer(null)\n");
-            scriptTextArea.append("mediaPlayer.setEqualizer(equalizer)\n");
-            for(String name : mediaPlayerFactory.getEqualizerPresetNames()) {
-                scriptTextArea.append(String.format("mediaPlayer.setEqualizer(presets.get(\"%s\"))\n", name));
-            }
-            scriptTextArea.append("\n");
-
-            scriptTextArea.append("equalizer.setPreamp(10.0)\n");
-            for(int i = 0; i < equalizer.getBandCount(); i++) {
-                scriptTextArea.append(String.format("equalizer.setAmp(%d,15.0)%n", i));
-            }
-            scriptTextArea.append("\n");
-        }
 
         scriptTextArea.addKeyListener(new KeyAdapter() {
             @Override

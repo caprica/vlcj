@@ -23,16 +23,12 @@ import java.awt.Canvas;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
@@ -61,7 +57,6 @@ import uk.co.caprica.vlcj.player.manager.DefaultMediaManager;
 import uk.co.caprica.vlcj.player.manager.MediaManager;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
-import uk.co.caprica.vlcj.version.Version;
 
 /**
  * Factory for media player instances.
@@ -132,25 +127,6 @@ public class MediaPlayerFactory {
      * Native library instance.
      */
     protected final libvlc_instance_t instance;
-
-    /**
-     * Flag if the native equalizer is available or not.
-     * <p>
-     * Requires libvlc 2.1.0 or later.
-     * <p>
-     * This flag will be removed eventually when 2.0.0 is no longer supported.
-     */
-    private final boolean equalizerAvailable;
-
-    /**
-     * Cached equalizer band frequencies.
-     */
-    private final List<Float> equalizerBandFrequencies;
-
-    /**
-     * Cached equalizer preset names.
-     */
-    private final List<String> equalizerPresetNames;
 
     /**
      * True when the factory has been released.
@@ -243,17 +219,6 @@ public class MediaPlayerFactory {
             Logger.error("Failed to initialise libvlc");
             String msg = MessageFormat.format(PLUGIN_PATH_HELP, new Object[] {RuntimeUtil.getLibVlcName(), RuntimeUtil.getLibVlcCoreName(), RuntimeUtil.getPluginsDirectoryName()});
             throw new RuntimeException(msg);
-        }
-        // Cache the equalizer static data
-        equalizerAvailable = LibVlcVersion.getVersion().atLeast(new Version("2.1.0"));
-        Logger.debug("equalizerAvailable={}", equalizerAvailable);
-        if(equalizerAvailable) {
-            equalizerBandFrequencies = createEqualizerBandFrequencies();
-            equalizerPresetNames = createEqualizerPresetNames();
-        }
-        else {
-            equalizerBandFrequencies = null;
-            equalizerPresetNames = null;
         }
     }
 
@@ -431,151 +396,6 @@ public class MediaPlayerFactory {
             moduleDescription = moduleDescription.p_next;
         }
         return result;
-    }
-
-    // === Equalizer ============================================================
-
-    /**
-     * Is the audio equalizer available?
-     *
-     * This will be removed when libvlc 2.0.x is no longer supported.
-     *
-     * @return <code>true</code> if the equalizer is available; <code>false</code> otherwise
-     */
-    public final boolean isEqualizerAvailable() {
-        return equalizerAvailable;
-    }
-
-    /**
-     * Create the available equalizer band frequency values.
-     *
-     * @return list of equalizer band frequencies
-     */
-    private List<Float> createEqualizerBandFrequencies() {
-        Logger.debug("createEqualizerBandFrequencies()");
-        int numBands = libvlc.libvlc_audio_equalizer_get_band_count();
-        Logger.debug("numBands={}", numBands);
-        List<Float> result = new ArrayList<Float>(numBands);
-        for(int i = 0; i < numBands; i++) {
-            result.add(libvlc.libvlc_audio_equalizer_get_band_frequency(i));
-        }
-        Logger.debug("result={}", result);
-        return Collections.unmodifiableList(result);
-    }
-
-    /**
-     * Create the available equalizer preset names.
-     *
-     * @return list of equalizer preset names
-     */
-    private List<String> createEqualizerPresetNames() {
-        Logger.debug("createEqualizerPresetNames()");
-        int numPresets = libvlc.libvlc_audio_equalizer_get_preset_count();
-        Logger.debug("numPresets={}", numPresets);
-        List<String> result = new ArrayList<String>(numPresets);
-        for(int i = 0; i < numPresets; i++) {
-            result.add(libvlc.libvlc_audio_equalizer_get_preset_name(i));
-        }
-        Logger.debug("result={}", result);
-        return Collections.unmodifiableList(result);
-    }
-
-    /**
-     * Get the list of distinct equalizer band frequencies.
-     *
-     * @return list of frequencies (Hz)
-     * @since libvlc 2.1.0
-     */
-    public final List<Float> getEqualizerBandFrequencies() {
-        Logger.debug("getEqualizerBandFrequencies()");
-        checkEqualizer();
-        return equalizerBandFrequencies;
-    }
-
-    /**
-     * Get the list of names of available equalizer presets.
-     *
-     * @return list of preset names
-     * @since libvlc 2.1.0
-     */
-    public final List<String> getEqualizerPresetNames() {
-        Logger.debug("getEqualizerPresetNames()");
-        checkEqualizer();
-        return equalizerPresetNames;
-    }
-
-    /**
-     * Create a new audio equalizer.
-     *
-     * @return equalizer
-     * @since libvlc 2.1.0
-     */
-    public final Equalizer newEqualizer() {
-        Logger.debug("newEqualizer()");
-        checkEqualizer();
-        return new Equalizer(libvlc);
-    }
-
-    /**
-     * Create a new audio equalizer from a named preset.
-     *
-     * @param presetName name of the preset
-     * @return equalizer
-     * @since libvlc 2.1.0
-     */
-    public final Equalizer newEqualizer(String presetName) {
-        Logger.debug("newEqualizer(presetName={})", presetName);
-        checkEqualizer();
-        int index = equalizerPresetNames.indexOf(presetName);
-        if(index != -1) {
-            libvlc_equalizer_t presetEqualizer = libvlc.libvlc_audio_equalizer_new_from_preset(index);
-            if(presetEqualizer != null) {
-                Equalizer equalizer = new Equalizer(libvlc);
-                equalizer.setPreamp(libvlc.libvlc_audio_equalizer_get_preamp(presetEqualizer));
-                for(int i = 0; i < libvlc.libvlc_audio_equalizer_get_band_count(); i++) {
-                    equalizer.setAmp(i, libvlc.libvlc_audio_equalizer_get_amp_at_index(presetEqualizer, i));
-                }
-                libvlc.libvlc_audio_equalizer_release(presetEqualizer);
-                return equalizer;
-            }
-            else {
-                return null;
-            }
-        }
-        else {
-            throw new IllegalArgumentException("No such preset named '" + presetName + "'");
-        }
-    }
-
-    /**
-     * Get all of the available preset equalizer instances.
-     * <p>
-     * This will return new equalizer instances (i.e. they are not cached or shared), so
-     * applications are free to change the values in the returned equalizer instances if
-     * so desired.
-     *
-     * @return map of preset name to equalizer instance, sorted by name
-     */
-    public final Map<String, Equalizer> getAllPresetEqualizers() {
-        Logger.debug("getAllPresetEqualizers()");
-        checkEqualizer();
-        Map<String, Equalizer> result = new TreeMap<String, Equalizer>();
-        for(String presetName : equalizerPresetNames) {
-            result.put(presetName, newEqualizer(presetName));
-        }
-        Logger.trace("result={}", result);
-        return result;
-    }
-
-    /**
-     * Check whether or not the audio equalizer is available.
-     *
-     * @throws UnsupportedOperationException if the equalizer is not available
-     */
-    private void checkEqualizer() {
-        if(!equalizerAvailable) {
-            throw new UnsupportedOperationException("Equalizer is not available, you need libvlc 2.1.0 or later");
-        }
     }
 
     // === Media Player =========================================================

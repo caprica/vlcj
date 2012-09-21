@@ -60,7 +60,6 @@ import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.AudioOutput;
-import uk.co.caprica.vlcj.player.Equalizer;
 import uk.co.caprica.vlcj.player.MediaDetails;
 import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -89,13 +88,11 @@ import com.sun.jna.platform.WindowUtils;
 public class TestPlayer extends VlcjTest {
 
     private final JFrame mainFrame;
-    private JFrame equalizerFrame;
     private Canvas videoSurface;
     private final JPanel controlsPanel;
     private final JPanel videoAdjustPanel;
 
     private MediaPlayerFactory mediaPlayerFactory;
-    private Equalizer equalizer;
 
     private EmbeddedMediaPlayer mediaPlayer;
 
@@ -212,11 +209,6 @@ public class TestPlayer extends VlcjTest {
             }
         });
 
-        if(mediaPlayerFactory.isEqualizerAvailable()) {
-            equalizer = mediaPlayerFactory.newEqualizer();
-            equalizerFrame = new EqualizerFrame(mediaPlayerFactory.getEqualizerBandFrequencies(), mediaPlayerFactory.getEqualizerPresetNames(), mediaPlayerFactory, mediaPlayer, equalizer);
-        }
-
         // Global AWT key handler, you're better off using Swing's InputMap and
         // ActionMap with a JFrame - that would solve all sorts of focus issues too
         Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
@@ -274,11 +266,6 @@ public class TestPlayer extends VlcjTest {
         }, AWTEvent.KEY_EVENT_MASK);
 
         mainFrame.setVisible(true);
-
-        if(mediaPlayerFactory.isEqualizerAvailable()) {
-            equalizerFrame.pack();
-            equalizerFrame.setVisible(true);
-        }
 
         mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
 
