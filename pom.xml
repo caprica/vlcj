@@ -132,6 +132,26 @@
                         </manifest>
                     </archive>
                 </configuration>
+                <executions> 
+                    <execution>
+                        <goals> 
+                            <goal>test-jar</goal>
+                        </goals>
+                        <configuration>
+                            <useDefaultManifestFile>false</useDefaultManifestFile>
+                            <archive>
+                                <addMavenDescriptor>false</addMavenDescriptor>
+                                <manifest>
+                                    <mainClass>uk.co.caprica.vlcj.test.basic.TestPlayer</mainClass>
+                                    <addClasspath>true</addClasspath>
+                                </manifest>
+                                <manifestEntries>
+                                    <Class-Path>${project.artifactId}-${project.version}.jar</Class-Path>
+                                </manifestEntries>                                    
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -142,6 +162,7 @@
                         <id>attach-sources</id>
                         <goals>
                             <goal>jar-no-fork</goal>
+                            <goal>test-jar-no-fork</goal>
                         </goals>
                     </execution>
                 </executions>
