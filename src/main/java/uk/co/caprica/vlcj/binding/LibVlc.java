@@ -1536,7 +1536,7 @@ public interface LibVlc extends Library {
     int libvlc_audio_output_set(libvlc_media_player_t p_mi, String psz_name);
 
     /**
-     * Get count of devices for audio output, these devices are hardware oriented like analor or
+     * Get count of devices for audio output, these devices are hardware oriented like analog or
      * digital output of sound card.
      *
      * @param p_instance libvlc instance
