@@ -1,0 +1,67 @@
+Installation for vlcj.
+
+0. Manual installation
+
+These instructions describe a manual installation of vlcj. You may choose 
+instead to use maven to add vlcj to your project.
+
+1. Unpack the distribution archive to a local directory, for example:
+
+    $mkdir -p /home/java/vlcj
+    $cd /home/java/vlcj
+
+1.1 If using the gzipped package:
+
+    $tar -xzf vlcj-2.2.0-dist.tar.gz
+
+1.2 Or, if using the zipped package:
+
+    $unzip -x vlcj-2.2.0-dist.zip
+
+1.3 A new directory will be created, for example:
+
+    /home/java/vlcj/vlcj-2.2.0
+
+Inside this directory you will find all of the vlcj distribution artifacts and
+third-party library dependencies:
+
+    jna-3.4.0.jar                   - JNA binary jar file
+    platform-3.4.0.jar              - JNA platform binary jar file
+    
+    vlcj-2.2.0.jar                  - vlcj binary jar file
+    vlcj-2.2.0-javadoc.jar          - vlcj Javadoc archive
+    vlcj-2.2.0-sources.jar          - vlcj source code archive
+    vlcj-2.2.0-tests.jar            - vlcj tests binary jar file
+    vlcj-2.2.0-test-sources.jar     - vlcj test sources
+
+2. Using with Eclipse or some other IDE
+
+The vlcj binary jar file contains manifest classpath entries to set up the
+proper run-time classpath automatically. This means you only need add the vlcj
+binary jar to your project and the dependent jar files will be automatically
+included.
+
+This will work so long as you keep all of the jar files in the same directory.
+
+This works in Eclipse at least, other IDE's may have different behaviour.
+
+If it does not work automatically, then you will have to add the JNA and JNA
+platform jars explicitly.
+
+3. Run the test application.
+
+The tests jar file is executable and when executed the "basic" vlcj media player
+test case will start.
+
+    $java -jar vlcj-2.2.0-tests.jar
+    
+The tests jar contains manifest classpath entries to set up the proper run-time
+classpath automatically.
+
+This will work so long as you keep all of the jar files in the same directory.
+
+4. Sources
+
+The vlcj distribution contains all of the sources for the project (sources for
+main and test classes are included). You are encouraged to link the sources to
+your libraries in your IDE.
