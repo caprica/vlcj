@@ -169,6 +169,8 @@
 					<encoding>UTF-8</encoding>
 					<footer>(C)2012 Caprica Software Limited</footer>
 					<show>public</show>
+					<quiet>true</quiet>
+					<javadocVersion>1.7</javadocVersion>
 				</configuration>
 				<executions>
 					<execution>
