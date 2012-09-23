@@ -1,225 +1,215 @@
-<!-- 
-	vlcj pom. 
-	
-	Add the following content to your own project pom.xml file:
-	 
-	<dependencies>
-		<dependency>
-			<groupId>uk.co.caprica</groupId> 
-			<artifactId>vlcj</artifactId> 
-			<version>2.2.0</version> 
-		</dependency>
-	</dependencies> 
-	
-	<repositories>
-		<repository> 
-			<id>caprica</id>
-			<name>Caprica Software</name>
-			<url>http://www.capricasoftware.co.uk/repo</url> 
-		</repository>
-	</repositories> 
+<!--
+    vlcj pom.
+
+    Add the following content to your own project pom.xml file:
+
+    <dependencies>
+        <dependency>
+            <groupId>uk.co.caprica</groupId>
+            <artifactId>vlcj</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+    </dependencies> 
+
+    <repositories>
+        <repository>
+            <id>caprica</id>
+            <name>Caprica Software</name>
+            <url>http://www.capricasoftware.co.uk/repo</url>
+        </repository>
+    </repositories> 
 -->
 
-<project 
-	xmlns="http://maven.apache.org/POM/4.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>uk.co.caprica</groupId>
-	<artifactId>vlcj</artifactId>
-	<version>2.2.0-SNAPSHOT</version>
+    <groupId>uk.co.caprica</groupId>
+    <artifactId>vlcj</artifactId>
+    <version>2.2.0-SNAPSHOT</version>
 
-	<name>vlcj</name>
-	<description>Java Framework for the vlc Media Player.</description>
-	<url>http://www.capricasoftware.co.uk/vlcj</url>
-	<inceptionYear>2009</inceptionYear>
+    <name>vlcj</name>
+    <description>Java Framework for the vlc Media Player.</description>
+    <url>http://www.capricasoftware.co.uk/vlcj</url>
+    <inceptionYear>2009</inceptionYear>
 
-	<packaging>jar</packaging>
+    <packaging>jar</packaging>
 
-	<licenses>
-		<license>
-			<name>GPL v3</name>
-			<url>http://www.gnu.org/licenses/gpl-3.0.html</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+    <licenses>
+        <license>
+            <name>GPL v3</name>
+            <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-	<organization>
-		<name>Caprica Software Limited</name>
-		<url>http://www.capricasoftware.co.uk</url>
-	</organization>
+    <organization>
+        <name>Caprica Software Limited</name>
+        <url>http://www.capricasoftware.co.uk</url>
+    </organization>
 
-	<developers>
-		<developer>
-			<id>mark</id>
-			<name>Mark Lee</name>
-			<email>mark.lee@capricasoftware.co.uk</email>
-			<url>https://github.com/caprica/vlcj</url>
-			<organization>Caprica Software Limited</organization>
-			<organizationUrl>http://www.capricasoftware.co.uk</organizationUrl>
-			<roles>
-				<role>architect</role>
-				<role>developer</role>
-			</roles>
-			<timezone>0</timezone>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <id>mark</id>
+            <name>Mark Lee</name>
+            <email>mark.lee@capricasoftware.co.uk</email>
+            <url>https://github.com/caprica/vlcj</url>
+            <organization>Caprica Software Limited</organization>
+            <organizationUrl>http://www.capricasoftware.co.uk</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+    </developers>
 
-	<issueManagement>
-		<system>Github</system>
-		<url>https://github.com/caprica/vlcj/issues</url>
-	</issueManagement>
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/caprica/vlcj/issues</url>
+    </issueManagement>
 
-	<scm>
-		<connection>scm:git:git://github.com/caprica/vlcj.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com:caprica/vlcj.git</developerConnection>
-		<tag>vlcj-2.2.0</tag>
-		<url>https://github.com/caprica/vlcj</url>
-	</scm>
+    <scm>
+        <connection>scm:git:git://github.com/caprica/vlcj.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:caprica/vlcj.git</developerConnection>
+        <tag>vlcj-2.2.0</tag>
+        <url>https://github.com/caprica/vlcj</url>
+    </scm>
 
-  	<properties>
-		<jna.version>3.4.0</jna.version>
-	</properties>
+    <properties>
+        <jna.version>3.4.0</jna.version>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>net.java.dev.jna</groupId>
-			<artifactId>jna</artifactId>
-			<version>${jna.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.java.dev.jna</groupId>
-			<artifactId>platform</artifactId>
-			<version>${jna.version}</version>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>${jna.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>platform</artifactId>
+            <version>${jna.version}</version>
+        </dependency>
+    </dependencies>
 
-	<distributionManagement>
-		<repository>
-			<id>Caprica FTP</id>
-			<url>ftp://ftp.capricasoftware.co.uk/public_html/repo</url>
-		</repository>
-	</distributionManagement>
+    <distributionManagement>
+        <repository>
+            <id>Caprica FTP</id>
+            <url>ftp://ftp.capricasoftware.co.uk/public_html/repo</url>
+        </repository>
+    </distributionManagement>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.4.3</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<encoding>UTF-8</encoding>
-    			</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<archive>
-						<index>true</index>
-						<manifest>
-							<addClasspath>true</addClasspath>
-						</manifest>
-					</archive>
-				</configuration>
-				<!-- executions>
-					<execution>
-						<goals>
-							<goal>test-jar</goal>
-						</goals>
-					</execution>
-				</executions -->
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-							<!-- goal>test-jar-no-fork</goal -->
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.8.1</version>
-				<configuration>
-					<author>true</author>
-					<charset>UTF-8</charset>
-					<doctitle>${project.name} ${project.version} API Documentation</doctitle>
-					<docfilessubdirs>true</docfilessubdirs>
-					<encoding>UTF-8</encoding>
-					<footer>(C)2012 Caprica Software Limited</footer>
-					<show>public</show>
-					<quiet>true</quiet>
-					<javadocVersion>1.7</javadocVersion>
-				</configuration>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
- 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<attach>false</attach>
-				</configuration>
-				<executions>
-					<execution>
-						<id>user_distribution</id>
-						<phase>package</phase>
-						<goals>
-							<goal>attached</goal>
-						</goals>
-						<configuration>
-							<descriptors>
-								<descriptor>src/main/assembly/dist.xml</descriptor>
-							</descriptors>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-				<excludes>
-					<exclude>.gitignore</exclude>
-				</excludes>
-			</resource>
-		</resources>
-		<extensions>
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ftp</artifactId>
-				<version>1.0-beta-6</version>
-			</extension>
-		</extensions>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.8.1</version>
+                <configuration>
+                    <author>true</author>
+                    <charset>UTF-8</charset>
+                    <doctitle>${project.name} ${project.version} API Documentation</doctitle>
+                    <docfilessubdirs>true</docfilessubdirs>
+                    <encoding>UTF-8</encoding>
+                    <footer>(C)2012 Caprica Software Limited</footer>
+                    <show>public</show>
+                    <javadocVersion>1.7</javadocVersion>
+                    <quiet>true</quiet>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <attach>false</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>user_distribution</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attached</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/dist.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>.gitignore</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>1.0-beta-6</version>
+            </extension>
+        </extensions>
+    </build>
 
 </project>
