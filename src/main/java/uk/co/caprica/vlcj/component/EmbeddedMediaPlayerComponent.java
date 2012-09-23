@@ -110,15 +110,6 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  * Since the media player factory associated by this component may be created by this component
  * itself or may be shared with some other media player resources it is the responsibility of
  * the application to also release the media player factory at the appropriate time.
- * <p>
- * The media player component be requested to enable hardware accelerated decoding via the
- * {@link #EmbeddedMediaPlayerComponent(boolean)} constructor.
- * <p>
- * The implementation of this will be undone if a subclass overrides {@link #onGetMediaPlayerFactoryArgs()}
- * or {@link #onGetMediaPlayerFactory()} - if one or other of those methods is overridden then the
- * subclass is responsible for enabling hardware accelerated decoding if so desired.
- * <p>
- * Currently the default behaviour is to <em>not</em> enable hardware accelerated decoding.
  */
 @SuppressWarnings("serial")
 public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEventListener {
@@ -258,9 +249,6 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * <p>
      * The default implementation will invoke the {@link #onGetMediaPlayerFactoryArgs()} template
      * method.
-     * <p>
-     * If a sub-class overrides this method then {@link #enableHardwareDecoding} will be ignored
-     * and instead the subclass is responsible for enabling hardware decoding if so desired.
      *
      * @return media player factory
      */
@@ -274,9 +262,6 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * <p>
      * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
      * guarantee that {@link #onGetMediaPlayerFactoryArgs()} will be called.
-     * <p>
-     * If a sub-class overrides this method then {@link #enableHardwareDecoding} will be ignored
-     * and instead the subclass is responsible for enabling hardware decoding if so desired.
      *
      * @return media player factory initialisation arguments
      */
