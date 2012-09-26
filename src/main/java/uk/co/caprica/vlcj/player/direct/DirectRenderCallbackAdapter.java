@@ -25,8 +25,6 @@ import com.sun.jna.NativeLong;
 import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.logger.Logger;
 
-import java.awt.image.DataBufferInt;
-import java.nio.ByteBuffer;
 
 /**
  * A render call-back adapter implementation that fills an array of RGB integer data for an entire
