@@ -152,14 +152,12 @@ public class FasterDirectTestPlayer extends VlcjTest {
     private final class TestRenderCallback extends DirectRenderCallbackAdapter {
 
         public TestRenderCallback() {
-            super(new int[width * height]);
+            super(((DataBufferInt) image.getRaster().getDataBuffer()).getData());
         }
 
         @Override
-        public void onDisplay(ByteBuffer buffer) {
+        public void onDisplay(int[] buffer) {
             // The image data could be manipulated here...
-            final int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-            buffer.asIntBuffer().get(pixels, 0, width * height);
             imagePane.repaint();
         }
     }

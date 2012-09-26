@@ -20,8 +20,12 @@
 package uk.co.caprica.vlcj.player.direct;
 
 import com.sun.jna.Memory;
+import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
+import uk.co.caprica.vlcj.binding.LibC;
+import uk.co.caprica.vlcj.logger.Logger;
 
+import java.awt.image.DataBufferInt;
 import java.nio.ByteBuffer;
 
 /**
@@ -42,6 +46,8 @@ public abstract class DirectRenderCallbackAdapter implements RenderCallback {
      * Video data buffer.
      */
     private final int[] rgbBuffer;
+    private final boolean pinMemory;
+    private boolean tryToPin = true;
 
     /**
      * Create a new render call-back.
@@ -49,12 +55,37 @@ public abstract class DirectRenderCallbackAdapter implements RenderCallback {
      * @param rgbBuffer video data buffer
      */
     public DirectRenderCallbackAdapter(int[] rgbBuffer) {
+        this(rgbBuffer, false);
+    }
+
+    /**
+     * Create a new render call-back.
+     *
+     * @param rgbBuffer video data buffer
+     * @param pinMemory try to pin the buffer using mlock which
+     *                  can help when copying buffers between CPU & GPU.
+     */
+    public DirectRenderCallbackAdapter(int[] rgbBuffer, boolean pinMemory) {
         this.rgbBuffer = rgbBuffer;
+        this.pinMemory = pinMemory;
     }
 
     @Override
-    public final void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffer, BufferFormat bufferFormat) {
-        onDisplay(nativeBuffer[0].getByteBuffer(0L, nativeBuffer[0].size()));
+    public final void display(DirectMediaPlayer mediaPlayer, final Memory[] nativeBuffer, BufferFormat bufferFormat) {
+        if (tryToPin && pinMemory) {
+            if (LibC.INSTANCE.mlock(nativeBuffer[0], new NativeLong(nativeBuffer.length)) == 0) {
+                tryToPin = false;
+                Logger.debug("Image buffer was pinned.");
+            } else {
+                int errno = Native.getLastError();
+                tryToPin = false;
+                Logger.debug("Image buffer could not be pinned. ERRNO:" + errno);
+            }
+        }
+        nativeBuffer[0].getByteBuffer(0L, nativeBuffer[0].size())
+                .asIntBuffer()
+                .get(rgbBuffer, 0, bufferFormat.getHeight() * bufferFormat.getWidth());
+        onDisplay(rgbBuffer);
     }
 
     /**
@@ -69,7 +100,7 @@ public abstract class DirectRenderCallbackAdapter implements RenderCallback {
     /**
      * Template method invoked when a new frame of video data is ready.
      *
-     * @param buffer video data buffer
+     * @param rgbBuffer video data buffer
      */
-    protected abstract void onDisplay(ByteBuffer buffer);
+    protected abstract void onDisplay(int[] rgbBuffer);
 }
