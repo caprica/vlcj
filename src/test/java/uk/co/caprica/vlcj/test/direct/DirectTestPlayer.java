@@ -31,6 +31,7 @@ import java.awt.RenderingHints;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
@@ -162,13 +163,22 @@ public class DirectTestPlayer extends VlcjTest {
     private final class TestRenderCallback extends RenderCallbackAdapter {
 
         public TestRenderCallback() {
-            super(new int[width * height]);
+            super(((DataBufferInt) image.getRaster().getDataBuffer()).getData());
         }
 
         @Override
         public void onDisplay(int[] data) {
             // The image data could be manipulated here...
-            image.setRGB(0, 0, width, height, data, 0, width);
+
+            /* RGB to GRAYScale conversion example */
+//            for(int i=0; i < data.length; i++){
+//                int argb = data[i];
+//                int b = (argb & 0xFF);
+//                int g = ((argb >> 8 ) & 0xFF);
+//                int r = ((argb >> 16 ) & 0xFF);
+//                int grey = (r + g + b + g) >> 2 ; //performance optimized - not real grey!
+//                data[i] = (grey << 16) + (grey << 8) + grey;
+//            }
             imagePane.repaint();
         }
     }
