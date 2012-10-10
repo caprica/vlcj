@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.medialist;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,6 +39,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_meta_t;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.medialist.events.MediaListEvent;
 import uk.co.caprica.vlcj.medialist.events.MediaListEventFactory;
+import uk.co.caprica.vlcj.player.MediaResourceLocator;
 import uk.co.caprica.vlcj.player.NativeString;
 
 import com.sun.jna.Pointer;
@@ -444,33 +443,29 @@ public class MediaList {
      */
     private libvlc_media_t newMediaDescriptor(String media, String... mediaOptions) {
         Logger.debug("newMediaDescriptor(media={},mediaOptions={})", media, Arrays.toString(mediaOptions));
-        try {
-            libvlc_media_t mediaDescriptor;
-            URI uri = new URI(media);
-            if(uri.isAbsolute()) {
-                mediaDescriptor = libvlc.libvlc_media_new_location(instance, media);
-            }
-            else {
-                mediaDescriptor = libvlc.libvlc_media_new_path(instance, media);
-            }
-            Logger.debug("mediaDescriptor={}", mediaDescriptor);
-            if(standardMediaOptions != null) {
-                for(String standardMediaOption : standardMediaOptions) {
-                    Logger.debug("standardMediaOption={}", standardMediaOption);
-                    libvlc.libvlc_media_add_option(mediaDescriptor, standardMediaOption);
-                }
-            }
-            if(mediaOptions != null) {
-                for(String mediaOption : mediaOptions) {
-                    Logger.debug("mediaOption={}", mediaOption);
-                    libvlc.libvlc_media_add_option(mediaDescriptor, mediaOption);
-                }
-            }
-            return mediaDescriptor;
+        libvlc_media_t mediaDescriptor;
+        if(MediaResourceLocator.isLocation(media)) {
+            Logger.debug("Treating mrl as a location");
+            mediaDescriptor = libvlc.libvlc_media_new_location(instance, media);
         }
-        catch(URISyntaxException e) {
-            throw new IllegalArgumentException(String.format("MRL is invalid: '%s'", media));
+        else {
+            Logger.debug("Treating mrl as a path");
+            mediaDescriptor = libvlc.libvlc_media_new_path(instance, media);
         }
+        Logger.debug("mediaDescriptor={}", mediaDescriptor);
+        if(standardMediaOptions != null) {
+            for(String standardMediaOption : standardMediaOptions) {
+                Logger.debug("standardMediaOption={}", standardMediaOption);
+                libvlc.libvlc_media_add_option(mediaDescriptor, standardMediaOption);
+            }
+        }
+        if(mediaOptions != null) {
+            for(String mediaOption : mediaOptions) {
+                Logger.debug("mediaOption={}", mediaOption);
+                libvlc.libvlc_media_add_option(mediaDescriptor, mediaOption);
+            }
+        }
+        return mediaDescriptor;
     }
 
     /**

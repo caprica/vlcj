@@ -25,8 +25,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -1653,45 +1651,41 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         // Reset sub-items
         subItemIndex = -1;
         // Create new media...
-        try {
-            URI uri = new URI(media);
-            if(uri.isAbsolute()) {
-                mediaInstance = libvlc.libvlc_media_new_location(instance, media);
-            }
-            else {
-                mediaInstance = libvlc.libvlc_media_new_path(instance, media);
-            }
-            Logger.debug("mediaInstance={}", mediaInstance);
-            if(mediaInstance != null) {
-                // Set the standard media options (if any)...
-                if(standardMediaOptions != null) {
-                    for(String standardMediaOption : standardMediaOptions) {
-                        Logger.debug("standardMediaOption={}", standardMediaOption);
-                        libvlc.libvlc_media_add_option(mediaInstance, standardMediaOption);
-                    }
-                }
-                // Set the particular media options (if any)...
-                if(mediaOptions != null) {
-                    for(String mediaOption : mediaOptions) {
-                        Logger.debug("mediaOption={}", mediaOption);
-                        libvlc.libvlc_media_add_option(mediaInstance, mediaOption);
-                    }
-                }
-                // Attach a listener to the new media
-                registerMediaEventListener();
-                // Set the new media on the media player
-                libvlc.libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
-            }
-            else {
-                Logger.error("Failed to create native media resource for '{}'", media);
-            }
-            // Prepare a new statistics object to re-use for the new media item
-            libvlcMediaStats = new libvlc_media_stats_t();
-            return mediaInstance != null;
+        if(MediaResourceLocator.isLocation(media)) {
+            Logger.debug("Treating mrl as a location");
+            mediaInstance = libvlc.libvlc_media_new_location(instance, media);
         }
-        catch(URISyntaxException e) {
-            throw new IllegalArgumentException(String.format("MRL is invalid: '%s'", media));
+        else {
+            Logger.debug("Treating mrl as a path");
+            mediaInstance = libvlc.libvlc_media_new_path(instance, media);
         }
+        Logger.debug("mediaInstance={}", mediaInstance);
+        if(mediaInstance != null) {
+            // Set the standard media options (if any)...
+            if(standardMediaOptions != null) {
+                for(String standardMediaOption : standardMediaOptions) {
+                    Logger.debug("standardMediaOption={}", standardMediaOption);
+                    libvlc.libvlc_media_add_option(mediaInstance, standardMediaOption);
+                }
+            }
+            // Set the particular media options (if any)...
+            if(mediaOptions != null) {
+                for(String mediaOption : mediaOptions) {
+                    Logger.debug("mediaOption={}", mediaOption);
+                    libvlc.libvlc_media_add_option(mediaInstance, mediaOption);
+                }
+            }
+            // Attach a listener to the new media
+            registerMediaEventListener();
+            // Set the new media on the media player
+            libvlc.libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
+        }
+        else {
+            Logger.error("Failed to create native media resource for '{}'", media);
+        }
+        // Prepare a new statistics object to re-use for the new media item
+        libvlcMediaStats = new libvlc_media_stats_t();
+        return mediaInstance != null;
     }
 
     /**
