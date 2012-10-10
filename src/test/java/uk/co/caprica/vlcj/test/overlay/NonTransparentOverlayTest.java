@@ -36,7 +36,6 @@ import javax.swing.SwingUtilities;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
-import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -76,8 +75,6 @@ public class NonTransparentOverlayTest extends VlcjTest {
             System.err.println("Specify an MRL");
             System.exit(1);
         }
-
-        LibXUtil.initialise();
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
