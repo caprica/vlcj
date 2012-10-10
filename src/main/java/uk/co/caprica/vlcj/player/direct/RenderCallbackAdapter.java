@@ -50,9 +50,9 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     }
 
     @Override
-    public final void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffer, BufferFormat bufferFormat) {
-        nativeBuffer[0].read(0, rgbBuffer, 0, rgbBuffer.length);
-        onDisplay(rgbBuffer);
+    public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffer, BufferFormat bufferFormat) {
+        nativeBuffer[0].getByteBuffer(0L, nativeBuffer[0].size()).asIntBuffer().get(rgbBuffer(), 0, bufferFormat.getHeight() * bufferFormat.getWidth());
+        onDisplay(rgbBuffer());
     }
 
     /**
