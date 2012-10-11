@@ -65,7 +65,7 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
         getDirectoryNames(directoryNames);
         Logger.debug("directoryNames={}", directoryNames);
         // Search the set of declared directories...
-        if(directoryNames != null) {
+        if(!directoryNames.isEmpty()) {
             // Search for the fixed set of declared filenames...
             Logger.debug("fileNames={}", (Object)fileNames);
             // Process each declared directory name
