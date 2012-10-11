@@ -21,10 +21,7 @@ package uk.co.caprica.vlcj.binding;
 
 import java.nio.ByteBuffer;
 
-import com.sun.jna.Library;
-import com.sun.jna.Native;
-import com.sun.jna.Platform;
-import com.sun.jna.Pointer;
+import com.sun.jna.*;
 
 /**
  * Minimal interface to the standard "C" library.
@@ -54,4 +51,16 @@ public interface LibC extends Library {
      * @return length of the formatted string, which may exceed the capacity of the buffer, or less than zero on error
      */
     int vsnprintf(ByteBuffer str, int size, String format, Pointer args);
+
+
+    /**
+     * Locks (pinns) parts of virtual address space into RAM so it can not be swapped out.
+     *
+     * http://linux.die.net/man/2/mlock
+     *
+     * @param addr address pointer
+     * @param length length
+     * @return 0 is successful or -1 if not and sets errno to an error code
+     */
+    int mlock(Pointer addr, NativeLong length);
 }
