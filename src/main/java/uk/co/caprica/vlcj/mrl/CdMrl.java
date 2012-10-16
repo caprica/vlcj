@@ -93,7 +93,7 @@ public class CdMrl implements Mrl {
     private String constructValue() {
         StringBuilder sb = new StringBuilder(40);
         sb.append(CD_TYPE);
-        sb.append(":");
+        sb.append("://");
         sb.append(device);
         if(track != -1) {
             sb.append('@');
