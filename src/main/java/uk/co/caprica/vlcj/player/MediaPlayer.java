@@ -1125,6 +1125,10 @@ public interface MediaPlayer {
      * The snapshot will be assigned a filename based on the current time.
      * <p>
      * The size of the image will be that produced by the libvlc native snapshot function.
+     * <p>
+     * Taking a snapshot is an asynchronous function, the snapshot is not available until
+     * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
+     * is received.
      *
      * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
      */
@@ -1143,6 +1147,10 @@ public interface MediaPlayer {
      * <p>
      * If both width and height are zero, the original image size will be used, see
      * {@link #saveSnapshot()}.
+     * <p>
+     * Taking a snapshot is an asynchronous function, the snapshot is not available until
+     * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
+     * is received.
      *
      * @param width desired image width
      * @param height desired image height
@@ -1157,6 +1165,10 @@ public interface MediaPlayer {
      * size of the media itself.
      * <p>
      * Any missing directory path will be created if it does not exist.
+     * <p>
+     * Taking a snapshot is an asynchronous function, the snapshot is not available until
+     * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
+     * is received.
      *
      * @param file file to contain the snapshot
      * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
@@ -1170,9 +1182,12 @@ public interface MediaPlayer {
      * <p>
      * If one of width or height is zero the original image aspect ratio will be preserved.
      * <p>
-     *
      * If both width and height are zero, the original image size will be used, see
      * {@link #saveSnapshot(File)}.
+     * <p>
+     * Taking a snapshot is an asynchronous function, the snapshot is not available until
+     * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
+     * is received.
      *
      * @param file file to contain the snapshot
      * @param width desired image width
@@ -1190,6 +1205,10 @@ public interface MediaPlayer {
      * This implementation uses the native libvlc method to save a snapshot of the currently playing
      * video. This snapshot is saved to a temporary file and then the resultant image is loaded from
      * the file.
+     * <p>
+     * Taking a snapshot is an asynchronous function, the snapshot is not available until
+     * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
+     * is received.
      *
      * @return snapshot image, or <code>null</code> if a snapshot could not be taken
      */
@@ -1206,6 +1225,10 @@ public interface MediaPlayer {
      * <p>
      * If both width and height are zero, the original image size will be used, see
      * {@link #getSnapshot()}
+     * <p>
+     * Taking a snapshot is an asynchronous function, the snapshot is not available until
+     * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
+     * is received.
      *
      * @param width desired image width
      * @param height desired image height
