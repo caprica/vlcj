@@ -23,6 +23,7 @@ import java.nio.ByteBuffer;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
+import com.sun.jna.NativeLong;
 import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
 
@@ -54,4 +55,22 @@ public interface LibC extends Library {
      * @return length of the formatted string, which may exceed the capacity of the buffer, or less than zero on error
      */
     int vsnprintf(ByteBuffer str, int size, String format, Pointer args);
+
+    /**
+     * Locks (pins) parts of virtual address space into RAM so it can not be swapped out.
+     *
+     * @param addr address pointer
+     * @param length length
+     * @return 0 if successful; -1 if not, setting <code>errno</code> to an error code
+     */
+    int mlock(Pointer addr, NativeLong length);
+    
+    /**
+     * Unlock previously locked memory.
+     * 
+     * @param addr address pointer
+     * @param length length
+     * @return 0 if successful; -1 if not, setting <code>errno</code> to an error code
+     */
+    int munlock(Pointer addr, NativeLong length);
 }
