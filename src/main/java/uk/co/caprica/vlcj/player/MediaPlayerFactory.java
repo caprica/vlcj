@@ -20,6 +20,9 @@
 package uk.co.caprica.vlcj.player;
 
 import java.awt.Canvas;
+import java.awt.Toolkit;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -104,6 +107,33 @@ import uk.co.caprica.vlcj.version.LibVlcVersion;
  * JVM crashes.
  */
 public class MediaPlayerFactory {
+
+    /**
+     * Workaround for running under Java7 on Linux.
+     * <p>
+     * Without this (unless other client configuration changes have already been made) an
+     * unsatisfied link error will likely be thrown by the JVM when an attempt is made to play
+     * video in an embedded media player.
+     * <p>
+     * This should be harmless on other platforms.
+     */
+    static {
+        Toolkit.getDefaultToolkit();
+        AccessController.doPrivileged(new PrivilegedAction<Object>() {
+            @Override
+            public Object run() {
+                try {
+                    Logger.debug("Attempting to load jawt");
+                    System.loadLibrary("jawt");
+                    Logger.debug("Loaded jawt");
+                }
+                catch (UnsatisfiedLinkError e) {
+                    Logger.debug("Failed to load jawt", e);
+                }
+                return null;
+            }
+        });
+    }
 
     /**
      * Help text if libvlc failed to load and initialise.
