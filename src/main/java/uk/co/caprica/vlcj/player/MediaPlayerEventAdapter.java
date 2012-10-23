@@ -28,65 +28,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
  * <p>
  * Simply override the methods you're interested in.
  * <p>
- * For example:
- * <pre>
- *     mediaPlayer.addEventListener(new MediaPlayerEventAdapter() {
- *         @Override
- *         public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
- *             // Maybe update a text control showing the current time...
- *         }
- *
- *         @Override
- *         public void finished(MediaPlayer mediaPlayer) {
- *             // Maybe play the next item in a play-list...
- *         }
- *     });
- * </pre>
- * <p>
- * Events are <em>not</em> raised on the Swing Event Dispatch thread so if updating user
+ * Events are likely <em>not</em> raised on the Swing Event Dispatch thread so if updating user
  * interface components in response to these events care must be taken to use
  * {@link SwingUtilities#invokeLater(Runnable)}.
- * <p>
- * This class also provides assistance for temporary media player event listeners via the
- * {@link #done(MediaPlayer, Object)}, {@link #done(MediaPlayer)} and {@link #onDone(MediaPlayer, Object)}
- * methods.
- * <p>
- * A temporary event listener is useful to implement various one-off strategies like executing
- * a one-time piece of code after the media player time has passed a certain value.
- * <p>
- * The listener is temporary because when the desired condition is met the event listener is
- * removed from the media player and thrown away.
- * <p>
- * A common use-case is to add a sequence of new temporary listeners with new conditions each
- * time a previous listener is done with its own processing.
- * <p>
- * For example:
- * <pre>
- *     mediaPlayer.addEventListener(new MediaPlayerEventAdapter() {
- *         @Override
- *         public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
- *             if(newTime >= 20000) {
- *                 // Maybe save a snapshot or something...
- *                 done();
- *             }
- *         }
- *
- *         @Override
- *         public void finished(MediaPlayer mediaPlayer) {
- *             done();
- *         }
- *
- *         @Override
- *         public void error(MediaPlayer mediaPlayer) {
- *             done();
- *         }
- *
- *         @Override
- *         protected void onDone(MediaPlayer mediaPlayer, Object result) {
- *             // Maybe add a new temporary listener with a new condition to wait for
- *         }
- *     });
- * </pre>
  */
 public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
 
@@ -206,53 +150,5 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
 
     @Override
     public void endOfSubItems(MediaPlayer mediaPlayer) {
-    }
-
-    // === Implementation =======================================================
-
-    /**
-     * Method for sub-classes to invoke when they are done processing and the
-     * listener is no longer needed.
-     * <p>
-     * Invoking this method from an event listener method implementation will
-     * <em>remove</em> this media player event listener from the media player and
-     * then invoke {@link #onDone(MediaPlayer, Object)} to give the sub-class the
-     * opportunity to execute code on completion of the listener's work.
-     *
-     * @param mediaPlayer media player
-     * @param result optional caller-specific data, may be <code>null</code>
-     */
-    protected final void done(MediaPlayer mediaPlayer, Object result) {
-        mediaPlayer.removeMediaPlayerEventListener(this);
-        onDone(mediaPlayer, result);
-    }
-
-    /**
-     * Method for sub-classes to invoke when they are done processing and the
-     * listener is no longer needed.
-     * <p>
-     * Invoking this method from an event listener method implementation will
-     * <em>remove</em> this media player event listener from the media player and
-     * then invoke {@link #onDone(MediaPlayer, Object)} to give the sub-class the
-     * opportunity to execute code on completion of the listener's work.
-     * <p>
-     * This is a simple convenience method for {@link #done(MediaPlayer, Object)}
-     * with no result parameter.
-     *
-     * @param mediaPlayer media player
-     */
-    protected final void done(MediaPlayer mediaPlayer) {
-        done(null);
-    }
-
-    /**
-     * Optional template method for sub-classes to specify behaviour that should be
-     * executed when the listener is done, as actioned via {@link #done(MediaPlayer, Object)}
-     * or {@link #done(MediaPlayer)}.
-     *
-     * @param mediaPlayer media player
-     * @param result optional caller-specific data, may be <code>null</code>
-     */
-    protected void onDone(MediaPlayer mediaPlayer, Object result) {
     }
 }
