@@ -28,7 +28,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
  * <p>
  * Simply override the methods you're interested in.
  * <p>
- * Events are likely <em>not</em> raised on the Swing Event Dispatch thread so if updating user
+ * Events are <em>not</em> raised on the Swing Event Dispatch thread so if updating user
  * interface components in response to these events care must be taken to use
  * {@link SwingUtilities#invokeLater(Runnable)}.
  */
