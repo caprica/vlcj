@@ -242,7 +242,7 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
      * @param mediaPlayer media player
      */
     protected final void done(MediaPlayer mediaPlayer) {
-        done(mediaPlayer, null);
+        done(null);
     }
 
     /**
