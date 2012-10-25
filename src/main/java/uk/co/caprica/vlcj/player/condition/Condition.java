@@ -52,6 +52,10 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  * implement behaviour that executes respectively before awaiting the condition and
  * after the condition state is reached.
  * <p>
+ * Using {@link #onBefore()} guarantees that the media player event listener has been
+ * registered with the media player before the condition implementation is executed
+ * for the first time. This is not always necessary, but sometimes it is.
+ * <p>
  * Note that as with other {@link MediaPlayerEventListener} implementations the
  * event callbacks are running in a background thread.
  * <p>
