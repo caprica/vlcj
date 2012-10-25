@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -74,7 +75,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     /**
      * Collection of media player event listeners.
      */
-    private final List<MediaPlayerEventListener> eventListenerList = new ArrayList<MediaPlayerEventListener>();
+    private final CopyOnWriteArrayList<MediaPlayerEventListener> eventListenerList = new CopyOnWriteArrayList<MediaPlayerEventListener>();
 
     /**
      * Factory to create media player events from native events.
@@ -1747,9 +1748,11 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         @Override
         public void callback(libvlc_event_t event, Pointer userData) {
             Logger.trace("callback(event={},userData={})", event, userData);
-            if(!eventListenerList.isEmpty()) {
-                // Create a new media player event for the native event
-                raiseEvent(eventFactory.createEvent(event, eventMask));
+            // Create a new media player event for the native event - due to internal implementation
+            // details the event listener list is never empty so it is redundant to check that here
+            MediaPlayerEvent mediaPlayerEvent = eventFactory.createEvent(event, eventMask);
+            if(event != null) {
+                raiseEvent(mediaPlayerEvent);
             }
         }
     }
