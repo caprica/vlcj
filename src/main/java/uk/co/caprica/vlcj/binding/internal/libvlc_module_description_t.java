@@ -19,12 +19,21 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.sun.jna.Structure;
 
 /**
  * Description of a module.
  */
 public class libvlc_module_description_t extends Structure {
+
+    /**
+     *
+     */
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("psz_name", "psz_shortname", "psz_longname", "psz_help", "p_next"));
 
     public static class ByReference extends libvlc_module_description_t implements Structure.ByReference {}
 
@@ -33,4 +42,9 @@ public class libvlc_module_description_t extends Structure {
     public String psz_longname;
     public String psz_help;
     public libvlc_module_description_t.ByReference p_next;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
+    }
 }

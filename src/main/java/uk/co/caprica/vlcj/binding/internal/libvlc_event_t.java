@@ -19,6 +19,10 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -26,6 +30,11 @@ import com.sun.jna.Structure;
  *
  */
 public class libvlc_event_t extends Structure {
+
+    /**
+     *
+     */
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("type", "obj", "u"));
 
     /**
      * @see libvlc_event_e
@@ -41,4 +50,9 @@ public class libvlc_event_t extends Structure {
      *
      */
     public libvlc_event_u.ByValue u;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
+    }
 }

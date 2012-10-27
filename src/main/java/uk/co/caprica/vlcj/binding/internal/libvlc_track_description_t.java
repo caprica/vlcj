@@ -19,6 +19,10 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.sun.jna.Structure;
 
 /**
@@ -26,9 +30,16 @@ import com.sun.jna.Structure;
  */
 public class libvlc_track_description_t extends Structure {
 
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("i_id", "psz_name", "p_next"));
+
     public static class ByReference extends libvlc_track_description_t implements Structure.ByReference {}
 
     public int i_id;
     public String psz_name;
     public libvlc_track_description_t.ByReference p_next;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
+    }
 }

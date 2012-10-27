@@ -19,6 +19,10 @@
 
 package uk.co.caprica.vlcj.runtime.windows.internal;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.sun.jna.Structure;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTR;
 import com.sun.jna.platform.win32.WinDef.DWORD;
@@ -29,12 +33,21 @@ import com.sun.jna.platform.win32.WinUser.POINT;
  */
 public class MSLLHOOKSTRUCT extends Structure {
 
-    public static class ByReference extends MSLLHOOKSTRUCT implements Structure.ByReference {
-    };
+    /**
+     *
+     */
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("pt", "mouseData", "flags", "time", "dwExtraInfo"));
+
+    public static class ByReference extends MSLLHOOKSTRUCT implements Structure.ByReference {};
 
     public POINT pt;
     public DWORD mouseData;
     public DWORD flags;
     public DWORD time;
     public ULONG_PTR dwExtraInfo;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
+    }
 }

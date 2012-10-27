@@ -19,6 +19,10 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -30,10 +34,20 @@ import com.sun.jna.Structure;
  */
 public class libvlc_log_subscriber_t extends Structure {
 
+    /**
+     *
+     */
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("prev", "next", "func", "opaque"));
+
     public static class ByReference extends libvlc_log_subscriber_t implements Structure.ByReference {}
 
     public libvlc_log_subscriber_t.ByReference prev;
     public libvlc_log_subscriber_t.ByReference next;
     public libvlc_log_cb func;
     public Pointer opaque;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
+    }
 }

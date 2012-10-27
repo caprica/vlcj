@@ -19,6 +19,10 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.sun.jna.Structure;
 
 /**
@@ -26,9 +30,19 @@ import com.sun.jna.Structure;
  */
 public class libvlc_audio_output_device_t extends Structure {
 
+    /**
+     *
+     */
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("p_next", "psz_device", "psz_description"));
+
     public static class ByReference extends libvlc_audio_output_device_t implements Structure.ByReference {}
 
     public libvlc_audio_output_device_t.ByReference p_next;          // Next entry in list
     public String                                   psz_device;      // Device identifier string
     public String                                   psz_description; // User-friendly device description
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
+    }
 }

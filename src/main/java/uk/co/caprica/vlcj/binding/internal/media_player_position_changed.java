@@ -19,6 +19,10 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.sun.jna.Structure;
 
 /**
@@ -29,5 +33,15 @@ public class media_player_position_changed extends Structure {
     /**
      *
      */
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("new_position"));
+
+    /**
+     *
+     */
     public float new_position;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
+    }
 }

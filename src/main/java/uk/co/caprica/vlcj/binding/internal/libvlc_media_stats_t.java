@@ -19,12 +19,28 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.sun.jna.Structure;
 
 /**
  *
  */
 public class libvlc_media_stats_t extends Structure {
+
+    /**
+     *
+     */
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList(
+        "i_read_bytes", "f_input_bitrate",
+        "i_demux_read_bytes", "f_demux_bitrate", "i_demux_corrupted", "i_demux_discontinuity",
+        "i_decoded_video", "i_decoded_audio",
+        "i_displayed_pictures", "i_lost_pictures",
+        "i_played_abuffers", "i_lost_abuffers",
+        "i_sent_packets", "i_sent_bytes", "f_send_bitrate")
+    );
 
     /* Input */
     public int         i_read_bytes;
@@ -52,4 +68,9 @@ public class libvlc_media_stats_t extends Structure {
     public int         i_sent_packets;
     public int         i_sent_bytes;
     public float       f_send_bitrate;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
+    }
 }

@@ -19,6 +19,10 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.sun.jna.Structure;
 
 /**
@@ -26,9 +30,19 @@ import com.sun.jna.Structure;
  */
 public class libvlc_media_track_info_video_t extends Structure {
 
+    /**
+     *
+     */
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("i_height", "i_width"));
+
     public static class ByValue extends libvlc_media_track_info_video_t implements Structure.ByValue {}
 
     /* Video specific */
     public int i_height;
     public int i_width;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
+    }
 }

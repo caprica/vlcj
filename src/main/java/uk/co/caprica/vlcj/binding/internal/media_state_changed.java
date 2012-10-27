@@ -19,6 +19,10 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.sun.jna.Structure;
 
 /**
@@ -29,5 +33,15 @@ public class media_state_changed extends Structure {
     /**
      *
      */
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("new_state"));
+
+    /**
+     *
+     */
     public int new_state;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
+    }
 }

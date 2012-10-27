@@ -19,6 +19,10 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.sun.jna.Structure;
 
 /**
@@ -27,7 +31,17 @@ import com.sun.jna.Structure;
 public class media_player_buffering extends Structure {
 
     /**
+     *
+     */
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("new_cache"));
+
+    /**
      * A percentage complete indicator, ranging from 0.0 to 100.0.
      */
     public float new_cache;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
+    }
 }

@@ -19,12 +19,21 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.sun.jna.Structure;
 
 /**
  *
  */
 public class media_meta_changed extends Structure {
+
+    /**
+     *
+     */
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("meta_type"));
 
     /**
      * Type of meta.
@@ -35,4 +44,9 @@ public class media_meta_changed extends Structure {
      * @see libvlc_meta_t
      */
     public int meta_type;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
+    }
 }
