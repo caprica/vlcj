@@ -39,6 +39,9 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * This example generates a series of snapshots for a video file.
  * <p>
  * The snapshots will be saved in the current directory.
+ * <p>
+ * Specify two options on the command-line: first the MRL to play, second the
+ * period at which to take snapshots (e.g. "20" for every 20 seconds).
  */
 public class ConditionTest extends VlcjTest {
 
@@ -86,7 +89,7 @@ public class ConditionTest extends VlcjTest {
         // will not be fired.
 
         try {
-            Condition<?> playingWaiter = new PlayingCondition(mediaPlayer) {
+            Condition<?> playingCondition = new PlayingCondition(mediaPlayer) {
                 @Override
                 protected void onBefore() {
                     // You do not have to use onBefore(), but sometimes it is very convenient, and guarantees
@@ -94,7 +97,7 @@ public class ConditionTest extends VlcjTest {
                     mediaPlayer.startMedia(mrl);
                 }
             };
-            playingWaiter.await();
+            playingCondition.await();
 
             long time = period;
 
@@ -112,37 +115,37 @@ public class ConditionTest extends VlcjTest {
 
                 System.out.println("Snapshot " + i);
 
-                Condition<?> timeWaiter = new TimeReachedCondition(mediaPlayer, time) {
+                Condition<?> timeReachedCondition = new TimeReachedCondition(mediaPlayer, time) {
                     @Override
                     protected void onBefore() {
                         mediaPlayer.setTime(targetTime);
                     }
                 };
-                timeWaiter.await();
+                timeReachedCondition.await();
 
-                Condition<?> pausedWaiter = new PausedCondition(mediaPlayer) {
+                Condition<?> pausedCondition = new PausedCondition(mediaPlayer) {
                     @Override
                     protected void onBefore() {
                         mediaPlayer.pause();
                     }
                 };
-                pausedWaiter.await();
+                pausedCondition.await();
 
-                Condition<?> snapshotTakenWaiter = new SnapshotTakenCondition(mediaPlayer) {
+                Condition<?> snapshotTakenCondition = new SnapshotTakenCondition(mediaPlayer) {
                     @Override
                     protected void onBefore() {
                         mediaPlayer.saveSnapshot();
                     }
                 };
-                snapshotTakenWaiter.await();
+                snapshotTakenCondition.await();
 
-                playingWaiter = new PlayingCondition(mediaPlayer) {
+                playingCondition = new PlayingCondition(mediaPlayer) {
                     @Override
                     protected void onBefore() {
                         mediaPlayer.play();
                     }
                 };
-                playingWaiter.await();
+                playingCondition.await();
 
                 time += period;
             }
