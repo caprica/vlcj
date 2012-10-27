@@ -30,6 +30,8 @@ News
 * media meta data now provides media length (if available);
 * minor bug fixes and memory leak fixes.
 
+Note: vlcj now *requires* JNA 3.5.0 or later.
+
 20/05/2012 Released version 2.1.0, for use with libvlc 2.0.
 
 28/01/2012 Moved to github.
