@@ -27,7 +27,7 @@ import uk.co.caprica.vlcj.player.condition.DefaultCondition;
  * Implementation of a condition that waits for the media player to report that
  * it has reached/passed a particular position.
  */
-public class PositionReachedCondition extends DefaultCondition<Object> {
+public class PositionReachedCondition extends DefaultCondition<Float> {
 
     /**
      * Target position (percentage, 0.0 to 1.0).
@@ -40,7 +40,7 @@ public class PositionReachedCondition extends DefaultCondition<Object> {
      * @param mediaPlayer media player
      * @param targetPosition target position (percentage, 0.0 to 1.0)
      */
-    public PositionReachedCondition(MediaPlayer mediaPlayer, long targetPosition) {
+    public PositionReachedCondition(MediaPlayer mediaPlayer, float targetPosition) {
         super(mediaPlayer);
         this.targetPosition = targetPosition;
     }
@@ -49,7 +49,7 @@ public class PositionReachedCondition extends DefaultCondition<Object> {
     public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
         if(newPosition >= targetPosition) {
             Logger.debug("Target position {} reached", targetPosition);
-            ready();
+            ready(targetPosition);
         }
     }
 }

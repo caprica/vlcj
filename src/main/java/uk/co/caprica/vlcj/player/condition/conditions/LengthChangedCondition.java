@@ -25,31 +25,22 @@ import uk.co.caprica.vlcj.player.condition.DefaultCondition;
 
 /**
  * Implementation of a condition that waits for the media player to report that
- * it has reached/passed a particular point in time.
+ * the media length has changed.
  */
-public class TimeReachedCondition extends DefaultCondition<Long> {
-
-    /**
-     * Target time (number of milliseconds since start of media).
-     */
-    protected final long targetTime;
+public class LengthChangedCondition extends DefaultCondition<Long> {
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
-     * @param targetTime target time (milliseconds since start)
      */
-    public TimeReachedCondition(MediaPlayer mediaPlayer, long targetTime) {
+    public LengthChangedCondition(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
-        this.targetTime = targetTime;
     }
 
     @Override
-    public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-        if(newTime >= targetTime) {
-            Logger.debug("Target time {} reached", targetTime);
-            ready(targetTime);
-        }
+    public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
+        Logger.debug("lengthChanged(mediaPlayer={},newLength={})", mediaPlayer, newLength);
+        ready(newLength);
     }
 }

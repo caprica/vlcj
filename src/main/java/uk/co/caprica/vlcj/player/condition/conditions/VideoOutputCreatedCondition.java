@@ -25,31 +25,22 @@ import uk.co.caprica.vlcj.player.condition.DefaultCondition;
 
 /**
  * Implementation of a condition that waits for the media player to report that
- * it has reached/passed a particular point in time.
+ * a video output has been created.
  */
-public class TimeReachedCondition extends DefaultCondition<Long> {
-
-    /**
-     * Target time (number of milliseconds since start of media).
-     */
-    protected final long targetTime;
+public class VideoOutputCreatedCondition extends DefaultCondition<Integer> {
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
-     * @param targetTime target time (milliseconds since start)
      */
-    public TimeReachedCondition(MediaPlayer mediaPlayer, long targetTime) {
+    public VideoOutputCreatedCondition(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
-        this.targetTime = targetTime;
     }
 
     @Override
-    public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-        if(newTime >= targetTime) {
-            Logger.debug("Target time {} reached", targetTime);
-            ready(targetTime);
-        }
+    public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
+        Logger.debug("videoOutput(mediaPlayer={},newCount={})", mediaPlayer, newCount);
+        ready(newCount);
     }
 }
