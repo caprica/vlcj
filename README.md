@@ -38,6 +38,8 @@ Note: vlcj now *requires* JNA 3.5.0 or later.
 
 You can also follow @capricasoftware on Twitter for more vlcj news.
 
+There is also a new vlcj-users discussion group at [vlcj-users](https://groups.google.com/forum/#!forum/vlcj-users).
+
 Documentation
 -------------
 
