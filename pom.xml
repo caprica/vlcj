@@ -60,6 +60,7 @@
             <roles>
                 <role>architect</role>
                 <role>developer</role>
+                <role>owner</role>
             </roles>
             <timezone>0</timezone>
         </developer>
