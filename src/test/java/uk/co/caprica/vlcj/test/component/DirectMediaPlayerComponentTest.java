@@ -33,6 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
 import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -158,7 +159,7 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
         }
 
         @Override
-        protected void onDisplay(int[] rgbBuffer) {
+        protected void onDisplay(DirectMediaPlayer mediaPlayer, int[] rgbBuffer) {
             // Simply copy buffer to the image and repaint
             image.setRGB(0, 0, width, height, rgbBuffer, 0, width);
             panel.repaint();
