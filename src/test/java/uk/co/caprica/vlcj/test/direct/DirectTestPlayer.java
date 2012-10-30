@@ -167,7 +167,7 @@ public class DirectTestPlayer extends VlcjTest {
         }
 
         @Override
-        public void onDisplay(int[] data) {
+        public void onDisplay(DirectMediaPlayer mediaPlayer, int[] data) {
             // The image data could be manipulated here...
 
             /* RGB to GRAYScale conversion example */
