@@ -52,7 +52,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     @Override
     public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffer, BufferFormat bufferFormat) {
         nativeBuffer[0].getByteBuffer(0L, nativeBuffer[0].size()).asIntBuffer().get(rgbBuffer(), 0, bufferFormat.getHeight() * bufferFormat.getWidth());
-        onDisplay(rgbBuffer());
+        onDisplay(mediaPlayer, rgbBuffer());
     }
 
     /**
@@ -67,7 +67,8 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     /**
      * Template method invoked when a new frame of video data is ready.
      *
+     * @param mediaPlayer media player
      * @param rgbBuffer video data buffer
      */
-    protected abstract void onDisplay(int[] rgbBuffer);
+    protected abstract void onDisplay(DirectMediaPlayer mediaPlayer, int[] rgbBuffer);
 }
