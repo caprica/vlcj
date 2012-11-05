@@ -55,7 +55,6 @@ public class VideoFileFilter extends ExtensionFileFilter {
         "mp2v",
         "mp4",
         "mp4v",
-        "mpa",
         "mpe",
         "mpeg",
         "mpeg1",
@@ -85,6 +84,7 @@ public class VideoFileFilter extends ExtensionFileFilter {
         "webm",
         "wm",
         "wmv",
+        "wtv",
         "xesc"
     };
 
