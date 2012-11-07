@@ -88,9 +88,13 @@ public class Info {
      * Private constructor.
      */
     private Info() {
-        System.err.println(APP_MSG);
-        System.err.println(LICENSE_MSG);
-        System.err.flush();
+        // Suppress the banner and license message if the calling application explicitly
+        // sets this system property
+        if(!"yes".equalsIgnoreCase(System.getProperty("vlcj.accept.gpl3"))) {
+            System.err.println(APP_MSG);
+            System.err.println(LICENSE_MSG);
+            System.err.flush();
+        }
         try {
             Properties properties = new Properties();
             properties.load(getClass().getResourceAsStream("/build.properties"));
