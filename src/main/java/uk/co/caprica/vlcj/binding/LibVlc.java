@@ -1367,7 +1367,7 @@ public interface LibVlc extends Library {
      * Get current video track.
      *
      * @param p_mi media player
-     * @return the video track (int) or -1 if none
+     * @return the video track ID (int) or -1 if no active input
      */
     int libvlc_video_get_track(libvlc_media_player_t p_mi);
 
@@ -1375,7 +1375,7 @@ public interface LibVlc extends Library {
      * Set video track.
      *
      * @param p_mi media player
-     * @param i_track the track (int)
+     * @param i_track the track ID (i_id field from track description)
      * @return 0 on success, -1 if out of range
      */
     int libvlc_video_set_track(libvlc_media_player_t p_mi, int i_track);
@@ -1697,7 +1697,7 @@ public interface LibVlc extends Library {
      * Get current audio track.
      *
      * @param p_mi media player
-     * @return the audio track (int), or -1 if none.
+     * @return the audio track ID or -1 if no active input.
      */
     int libvlc_audio_get_track(libvlc_media_player_t p_mi);
 
@@ -1705,7 +1705,7 @@ public interface LibVlc extends Library {
      * Set current audio track.
      *
      * @param p_mi media player
-     * @param i_track the track (int)
+     * @param i_track the track ID (i_id field from track description)
      * @return 0 on success, -1 on error
      */
     int libvlc_audio_set_track(libvlc_media_player_t p_mi, int i_track);
