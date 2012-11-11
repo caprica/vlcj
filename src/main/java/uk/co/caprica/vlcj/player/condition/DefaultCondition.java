@@ -36,6 +36,11 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
  * <p>
  * It is expected that <em>most</em> but not necessarily all {@link Condition}
  * implementations will need this behaviour.
+ * <p>
+ * Do not override {@link #error(MediaPlayer)} or {@link #finished()} unless you
+ * are sure you know what you are doing. Some use-cases may require that those
+ * methods can be overridden, so if you do provide an override you must be careful
+ * to invoke the superclass method for correct operation.
  *
  * @param <T> optional type of result
  */
