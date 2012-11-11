@@ -42,8 +42,11 @@ import java.awt.image.BufferedImage;
  * been parsed - this means that when invoking a setter method on a media meta instance it is not
  * possible to undo that and restore the old value without obtaining a new media instance.
  * <p>
- * Not all media types can be parsed - parsing such media may cause fatal errors or application
- * hangs.
+ * Not all media types can be parsed (e.g. network streams) - parsing such media may cause fatal
+ * errors or application hangs.
+ * <p>
+ * The media length is provided if it is available - for some media types the length is not
+ * available until some short time after the media has been played.
  */
 public interface MediaMeta {
 
@@ -306,6 +309,8 @@ public interface MediaMeta {
 
     /**
      * Get the media length, if available.
+     * <p>
+     * Some media must be <em>played</em> before the length becomes available.
      *
      * @return length (milliseconds)
      */
