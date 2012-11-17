@@ -90,7 +90,7 @@ public interface LibVlc extends Library {
     /**
      * Application information.
      */
-    Info info = Info.getInstance();
+    Info INFO = Info.getInstance();
 
     /**
      * Native library instance.

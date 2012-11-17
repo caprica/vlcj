@@ -198,7 +198,7 @@ public class NativeLog {
     private final class NativeLogCallback implements libvlc_log_cb {
 
         @Override
-        public final void log(Pointer data, int level, String format, Pointer args) {
+        public void log(Pointer data, int level, String format, Pointer args) {
             // If the log is not being suppressed...
             if(logLevel != null && level >= logLevel.intValue()) {
                 // Allocate a new buffer to hold the formatted log message
@@ -271,7 +271,7 @@ public class NativeLog {
         }
 
         @Override
-        public final void run() {
+        public void run() {
             Logger.trace("run()");
             for(int i = eventListenerList.size() - 1; i >= 0; i -- ) {
                 LogEventListener listener = eventListenerList.get(i);

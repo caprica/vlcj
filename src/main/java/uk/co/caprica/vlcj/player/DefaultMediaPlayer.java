@@ -596,10 +596,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         // Must first check that the media is playing otherwise a fatal JVM crash
         // will occur - potentially this could still cause a fatal crash if the
         // media item supplied is not the one actually playing right now
-        if(isPlaying()) {
-            if(media != null) {
-                libvlc.libvlc_media_get_stats(media, libvlcMediaStats);
-            }
+        if(isPlaying() && media != null) {
+            libvlc.libvlc_media_get_stats(media, libvlcMediaStats);
         }
         return libvlcMediaStats;
     }

@@ -47,17 +47,17 @@ public interface LibDwmApi extends Library {
     /**
      * Disable composition.
      */
-    public static final int DWM_EC_DISABLECOMPOSITION = 0;
+    int DWM_EC_DISABLECOMPOSITION = 0;
 
     /**
      * Enable composition.
      */
-    public static final int DWM_EC_ENABLECOMPOSITION = 1;
+    int DWM_EC_ENABLECOMPOSITION = 1;
 
     /**
      * API success code.
      */
-    public static final int S_OK = 0;
+    int S_OK = 0;
 
     /**
      * Enable/disable desktop window composition.

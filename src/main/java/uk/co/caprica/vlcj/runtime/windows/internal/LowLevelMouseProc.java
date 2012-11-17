@@ -31,14 +31,14 @@ public interface LowLevelMouseProc extends HOOKPROC {
     /**
      * Windows message codes.
      */
-    public static final int WM_MOUSEMOVE = 512;
-    public static final int WM_LBUTTONDOWN = 513;
-    public static final int WM_LBUTTONUP = 514;
-    public static final int WM_RBUTTONDOWN = 516;
-    public static final int WM_RBUTTONUP = 517;
-    public static final int WM_MBUTTONDOWN = 519;
-    public static final int WM_MBUTTONUP = 520;
-    public static final int WM_MOUSEWHEEL = 522;
+    int WM_MOUSEMOVE = 512;
+    int WM_LBUTTONDOWN = 513;
+    int WM_LBUTTONUP = 514;
+    int WM_RBUTTONDOWN = 516;
+    int WM_RBUTTONUP = 517;
+    int WM_MBUTTONDOWN = 519;
+    int WM_MBUTTONUP = 520;
+    int WM_MOUSEWHEEL = 522;
 
     /**
      * Call-back.

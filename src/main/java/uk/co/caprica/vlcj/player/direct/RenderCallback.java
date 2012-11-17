@@ -36,5 +36,5 @@ public interface RenderCallback {
      * @param nativeBuffers video data for one frame
      * @param bufferFormat information about the format of the buffer used
      */
-    public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat);
+    void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat);
 }

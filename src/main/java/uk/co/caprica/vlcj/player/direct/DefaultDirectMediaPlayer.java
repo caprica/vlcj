@@ -234,7 +234,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
      */
     private final class LockCallback implements libvlc_lock_callback_t {
         @Override
-        public final Pointer lock(Pointer opaque, PointerByReference planes) {
+        public Pointer lock(Pointer opaque, PointerByReference planes) {
             Logger.trace("lock");
             // Acquire the single permit from the semaphore to ensure that the
             // memory buffer is not trashed while display() is invoked
@@ -256,7 +256,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
      */
     private final class UnlockCallback implements libvlc_unlock_callback_t {
         @Override
-        public final void unlock(Pointer opaque, Pointer picture, Pointer plane) {
+        public void unlock(Pointer opaque, Pointer picture, Pointer plane) {
             Logger.trace("unlock");
             // Release the semaphore
             Logger.trace("release");
@@ -274,7 +274,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
      */
     private final class DisplayCallback implements libvlc_display_callback_t {
         @Override
-        public final void display(Pointer opaque, Pointer picture) {
+        public void display(Pointer opaque, Pointer picture) {
             Logger.trace("display");
             // Invoke the callback
             DefaultDirectMediaPlayer.this.renderCallback.display(DefaultDirectMediaPlayer.this, nativeBuffers, bufferFormat);
@@ -306,7 +306,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
         }
 
         @Override
-        public final BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
+        public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
             return bufferFormat;
         }
     }
