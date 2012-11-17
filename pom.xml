@@ -80,6 +80,7 @@
 
     <properties>
         <jna.version>3.5.1</jna.version>
+        <sonar.language>java</sonar.language>
     </properties>
 
     <dependencies>
