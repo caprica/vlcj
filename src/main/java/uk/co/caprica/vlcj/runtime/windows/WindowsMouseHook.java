@@ -215,7 +215,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     /**
      *
      *
-     * @return
+     * @return hook handle
      */
     private synchronized HHOOK getHook() {
         return hHook;
@@ -386,7 +386,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
      * @param eventType
      * @param button
      * @param lParam
-     * @return
+     * @return mouse event
      */
     private MouseEvent createMouseEvent(int eventType, int button, MSLLHOOKSTRUCT lParam) {
         POINT pt = lParam.pt;
@@ -407,7 +407,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
      *
      * @param eventType
      * @param lParam
-     * @return
+     * @return mouse wheel event
      */
     private MouseWheelEvent createMouseWheelEvent(int eventType, MSLLHOOKSTRUCT lParam) {
         POINT pt = lParam.pt;
