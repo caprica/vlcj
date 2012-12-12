@@ -22,6 +22,8 @@ where you can find more information as well as some new simple tutorials.
 News
 ----
 
+12/12/2012 github deprecated the downloads section, go to [googlecode](http://code.google.com/p/vlcj/downloads/list) for distribution archives.
+
 15/11/2012 [New commercial license promotion](http://goo.gl/615h1).
 
 27/10/2012 New pre-release snapshot version 2.2.0:
