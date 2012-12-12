@@ -43,6 +43,10 @@ public class VersionTest {
         test("1.1.11", "1.1.10 The Luggage");
         test("1.1.10", "1.1.10 The Luggage");
         test("1.1.9", "1.1.10 The Luggage");
+        test("0.9.9", "0.9.9a Grishenko");
+        test("1.0.0", "0.9.9a Grishenko");
+        test("0.9.9a", "0.9.9b");
+        test("0.9.9b", "0.9.9a");
     }
 
     /**

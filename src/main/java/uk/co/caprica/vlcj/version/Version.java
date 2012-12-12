@@ -19,14 +19,23 @@
 
 package uk.co.caprica.vlcj.version;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Encapsulation of version information and related behaviours.
  * <p>
  * This may be useful to implement version-specific features.
+ * <p>
+ * This implementation is not exhaustive, but is good enough for the known vlc
+ * versions.
  */
 public final class Version implements Comparable<Version> {
+
+    /**
+     *
+     */
+    private static final Pattern VERSION_PATTERN = Pattern.compile("(\\d)+\\.(\\d)+\\.(\\d+).*");
 
     /**
      * Raw version information.
@@ -36,17 +45,17 @@ public final class Version implements Comparable<Version> {
     /**
      * Major version number.
      */
-    private final int major;
+    private final Integer major;
 
     /**
      * Minor version number.
      */
-    private final int minor;
+    private final Integer minor;
 
     /**
      * Revision number.
      */
-    private final int revision;
+    private final Integer revision;
 
     /**
      * Extra.
@@ -60,15 +69,20 @@ public final class Version implements Comparable<Version> {
      */
     public Version(final String version) {
         this.version = version;
-        String[] parts = Pattern.compile("[.-]|\\s").split(version);
-        this.major = Integer.parseInt(parts[0]);
-        this.minor = Integer.parseInt(parts[1]);
-        this.revision = Integer.parseInt(parts[2]);
-        if(parts.length > 3) {
-            this.extra = parts[3];
+        Matcher matcher = VERSION_PATTERN.matcher(version);
+        if(matcher.matches()) {
+            this.major = Integer.parseInt(matcher.group(1));
+            this.minor = Integer.parseInt(matcher.group(2));
+            this.revision = Integer.parseInt(matcher.group(3));
+            if(matcher.groupCount() > 3) {
+                this.extra = matcher.group(4);
+            }
+            else {
+                this.extra = null;
+            }
         }
         else {
-            this.extra = null;
+            throw new IllegalArgumentException("Can't parse version from '" + version + "'");
         }
     }
 
