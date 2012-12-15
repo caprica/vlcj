@@ -1626,6 +1626,7 @@ public interface LibVlc extends Library {
      * @param p_mi media player
      * @return the audio devices type @see libvlc_audio_output_device_types_t
      */
+    @Deprecated
     int libvlc_audio_output_get_device_type(libvlc_media_player_t p_mi);
 
     /**
@@ -1635,6 +1636,7 @@ public interface LibVlc extends Library {
      * @param device_type the audio device type, according to @see
      *            libvlc_audio_output_device_types_t
      */
+    @Deprecated
     void libvlc_audio_output_set_device_type(libvlc_media_player_t p_mi, int device_type);
 
     /**
