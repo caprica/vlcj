@@ -27,7 +27,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
- * Simple example to show how to extract the audio track from a media file and encode it is a
+ * Simple example to show how to extract the audio track from a media file and encode it as a
  * stand-alone mp3.
  * <p>
  * Specify a MRL and an mp3 output file as command-line arguments.
