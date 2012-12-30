@@ -49,12 +49,10 @@ public interface MediaListPlayerEventListener {
     void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl);
 
     /**
-     * Place-holder, do not use.
-     *
-     * <strong>Warning: the native media list player event manager reports that it does <em>not</em>
-     * support this event.</strong>
+     * The media list player stopped.
      *
      * @param mediaListPlayer media list player that raised the event
+     * @since vlc 2.1.0
      */
     void stopped(MediaListPlayer mediaListPlayer);
 
