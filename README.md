@@ -10,8 +10,9 @@ AWT Window or Swing JFrame.
 You get more than just simple bindings, you also get a higher level framework
 that hides a lot of the complexities of working with libvlc.
 
-vlcj works just fine on Linux and Windows and should work on Mac - but for Mac
-you likely need a bleeding-edge release of vlc.
+vlcj is primarily developed and therefore extensively tested on Linux - it does
+also work just fine on Windows and should work on Mac - but for Mac you likely
+need a bleeding-edge release of vlc.
 
 At least JDK 1.6 is required, and it works without changes on JDK 1.7.
 
@@ -23,8 +24,6 @@ News
 ----
 
 12/12/2012 github deprecated the downloads section, go to [googlecode](http://code.google.com/p/vlcj/downloads/list) for distribution archives.
-
-15/11/2012 [New commercial license promotion](http://goo.gl/615h1).
 
 27/10/2012 New pre-release snapshot version 2.2.0:
 
@@ -42,7 +41,7 @@ Note: vlcj now *requires* JNA 3.5.0 or later.
 
 You can also follow @capricasoftware on Twitter for more vlcj news.
 
-There is also a new vlcj-users discussion group at [vlcj-users](https://groups.google.com/forum/#!forum/vlcj-users).
+There is also a new vlcj-users discussion group at [vlcj-users](https://groups.google.com/forum/#!forum/vlcj-users "vlcj-users google group").
 
 Documentation
 -------------
@@ -58,6 +57,11 @@ Documentation is being made available at [Caprica Software](http://www.capricaso
 
 Support
 -------
+
+Free support for Open Source and non-commercial projects is generally provided - you
+can use [github issues](https://github.com/caprica/vlcj/issues "vlcj github issues") or the 
+[vlcj google group](https://groups.google.com/forum/#!forum/vlcj-users "vlcj users google group")
+for this purpose.
 
 Support for commercial projects is provided exclusively on commercial terms -
 send an email to the following address for more information:
