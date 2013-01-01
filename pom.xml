@@ -10,20 +10,18 @@
             <version>2.2.0</version>
         </dependency>
     </dependencies> 
-
-    <repositories>
-        <repository>
-            <id>caprica</id>
-            <name>Caprica Software</name>
-            <url>http://www.capricasoftware.co.uk/repo</url>
-        </repository>
-    </repositories> 
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
 
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
@@ -72,10 +70,9 @@
     </issueManagement>
 
     <scm>
-        <connection>scm:git:git://github.com/caprica/vlcj.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:caprica/vlcj.git</developerConnection>
-        <tag>vlcj-2.2.0</tag>
-        <url>https://github.com/caprica/vlcj</url>
+        <connection>scm:git:git@github.com/caprica/vlcj.git</connection>
+        <developerConnection>scm:git:git@github.com:caprica/vlcj.git</developerConnection>
+        <url>git@github.com:caprica/vlcj.git</url>
     </scm>
 
     <properties>
@@ -104,6 +101,34 @@
     </distributionManagement>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-enforcer-plugin</artifactId>
+                                        <versionRange>[1.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>enforce</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
