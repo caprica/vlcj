@@ -93,13 +93,6 @@
         </dependency>
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>Caprica FTP</id>
-            <url>ftp://ftp.capricasoftware.co.uk/public_html/repo</url>
-        </repository>
-    </distributionManagement>
-
     <build>
         <pluginManagement>
             <plugins>
