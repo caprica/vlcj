@@ -20,8 +20,23 @@ This is the open source vlcj project page, see also the 'official'
 [home page](http://www.capricasoftware.co.uk/vlcj "Official vlcj home page at Caprica Software")
 where you can find more information as well as some new simple tutorials.
 
+Maven Dependency
+----------------
+
+Add the following Maven dependency to your own project pom.xml:
+
+```
+<dependency>
+    <groupId>uk.co.caprica</groupId>
+    <artifactId>vlcj</artifactId>
+    <version>2.1.0</version>
+</dependency>
+```
+
 News
 ----
+
+02/01/2013 Happy New Year! Current release artifacts are now available on [Maven Central](http://search.maven.org/#search|ga|1|vlcj).
 
 12/12/2012 github deprecated the downloads section, go to [googlecode](http://code.google.com/p/vlcj/downloads/list) for distribution archives.
 
@@ -31,7 +46,8 @@ News
 * new mini-framework to help make it easy to use media players in a synchronous way;
 * native media discoverer integration - it is now possible to get a list of audio and video (on Linux) capture devices;
 * media meta data now provides media length (if available);
-* minor bug fixes and memory leak fixes.
+* minor bug fixes and memory leak fixes;
+* vlcj now works on Java7 on Linux without any workaround needed.
 
 Note: vlcj now *requires* JNA 3.5.0 or later.
 
