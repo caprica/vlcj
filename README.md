@@ -46,7 +46,8 @@ News
 * new mini-framework to help make it easy to use media players in a synchronous way;
 * native media discoverer integration - it is now possible to get a list of audio and video (on Linux) capture devices;
 * media meta data now provides media length (if available);
-* minor bug fixes and memory leak fixes.
+* minor bug fixes and memory leak fixes;
+* vlcj now works on Java7 on Linux without any workaround needed.
 
 Note: vlcj now *requires* JNA 3.5.0 or later.
 
