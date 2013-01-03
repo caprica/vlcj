@@ -38,7 +38,7 @@ public class BareBonesTest extends VlcjTest {
     public static void main(String[] args) throws Exception {
         LibVlc libvlc = LibVlc.INSTANCE;
 
-        libvlc_instance_t instance = libvlc.libvlc_new(args.length, args);
+        libvlc_instance_t instance = libvlc.libvlc_new(0, new String[] {});
 
         libvlc_media_player_t mediaPlayer = libvlc.libvlc_media_player_new(instance);
         libvlc_media_t media = libvlc.libvlc_media_new_path(instance, args[0]);
