@@ -39,7 +39,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class BareBonesParseTest extends VlcjTest {
 
     public static void main(String[] args) throws Exception {
-        LibVlc libvlc = LibVlc.SYNC_INSTANCE;
+        LibVlc libvlc = LibVlc.INSTANCE;
 
         libvlc_instance_t instance = libvlc.libvlc_new(0, new String[] {});
 
