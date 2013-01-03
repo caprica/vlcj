@@ -32,8 +32,9 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * <p>
  * Specify a media file as the only command-line argument.
  * <p>
- * This code is enough to trigger a fatal JVM crash on 32-bit Ubuntu - the associated
- * segfault occurs in libc when invoked by the VLC LUA metadata script.
+ * This code is enough, when running under Java7 only, to trigger a fatal JVM crash
+ * on 32-bit Ubuntu - the associated segfault occurs in libc when invoked by the VLC
+ * LUA metadata script.
  */
 public class BareBonesParseTest extends VlcjTest {
 
