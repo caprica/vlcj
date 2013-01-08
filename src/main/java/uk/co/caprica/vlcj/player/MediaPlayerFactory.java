@@ -60,6 +60,7 @@ import uk.co.caprica.vlcj.player.manager.DefaultMediaManager;
 import uk.co.caprica.vlcj.player.manager.MediaManager;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
+import uk.co.caprica.vlcj.version.Version;
 
 /**
  * Factory for media player instances.
@@ -114,25 +115,32 @@ public class MediaPlayerFactory {
      * Without this (unless other client configuration changes have already been made) an
      * unsatisfied link error will likely be thrown by the JVM when an attempt is made to play
      * video in an embedded media player.
-     * <p>
-     * This should be harmless on other platforms.
      */
     static {
-        Toolkit.getDefaultToolkit();
-        AccessController.doPrivileged(new PrivilegedAction<Object>() {
-            @Override
-            public Object run() {
-                try {
-                    Logger.debug("Attempting to load jawt");
-                    System.loadLibrary("jawt");
-                    Logger.debug("Loaded jawt");
-                }
-                catch (UnsatisfiedLinkError e) {
-                    Logger.debug("Failed to load jawt", e);
-                }
-                return null;
+        // Only apply for Linux...
+        if(RuntimeUtil.isNix()) {
+            // Only apply if the run-time version is Java 1.7.0 or later...
+            Version actualJavaVersion = new Version(System.getProperty("java.version"));
+            if(actualJavaVersion.atLeast(new Version("1.7.0"))) {
+                Logger.debug("Trying workaround for Java7 on Linux");
+                Toolkit.getDefaultToolkit();
+                AccessController.doPrivileged(new PrivilegedAction<Object>() {
+                    @Override
+                    public Object run() {
+                        try {
+                            Logger.debug("Attempting to load jawt...");
+                            System.loadLibrary("jawt");
+                            Logger.debug("...loaded jawt");
+                        }
+                        catch(UnsatisfiedLinkError e) {
+                            Logger.debug("Failed to load jawt", e);
+                        }
+                        return null;
+                    }
+                });
+                Logger.debug("Java7 on Linux workaround complete.");
             }
-        });
+        }
     }
 
     /**
