@@ -61,5 +61,6 @@ public class ComponentIdVideoSurface extends VideoSurface {
     public void attach(LibVlc libvlc, MediaPlayer mediaPlayer) {
         Logger.debug("attach()");
         videoSurfaceAdapter.attach(libvlc, mediaPlayer, componentId);
+        Logger.debug("video surface attached");
     }
 }

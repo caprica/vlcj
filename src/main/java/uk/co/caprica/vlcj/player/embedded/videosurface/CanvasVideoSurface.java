@@ -69,6 +69,7 @@ public class CanvasVideoSurface extends VideoSurface {
             long componentId = Native.getComponentID(canvas);
             Logger.debug("componentId={}", componentId);
             videoSurfaceAdapter.attach(libvlc, mediaPlayer, componentId);
+            Logger.debug("video surface attached");
         }
         else {
             throw new IllegalStateException("The video surface component must be displayable");
