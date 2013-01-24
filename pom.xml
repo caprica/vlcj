@@ -72,7 +72,7 @@
     </issueManagement>
 
     <scm>
-        <connection>scm:git:git@github.com/caprica/vlcj.git</connection>
+        <connection>scm:git:git@github.com:caprica/vlcj.git</connection>
         <developerConnection>scm:git:git@github.com:caprica/vlcj.git</developerConnection>
         <url>git@github.com:caprica/vlcj.git</url>
     </scm>
