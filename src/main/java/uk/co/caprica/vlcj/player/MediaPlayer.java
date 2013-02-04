@@ -582,21 +582,24 @@ public interface MediaPlayer {
 
     /**
      * Get the current video track.
-     * <p>
-     * This does not return the <strong>id</strong> of the track, see
-     * {@link #getVideoDescriptions()}.
      *
-     * @return track number, starting at 1, or -1 if the video is currently disabled
+     * @return track identifier, see {@link #getVideoDescriptions()}
      */
     int getVideoTrack();
 
     /**
      * Set a new video track to play.
      * <p>
-     * This does not take the track number returned from {@link #getVideoTrack()}, rather it takes
-     * the track <strong>id</strong> obtained from see {@link #getVideoDescriptions()}.
+     * The track identifier must be one of those returned by {@link #getVideoDescriptions()}.
+     * <p>
+     * Video can be disabled by passing here the identifier of the track with a description of
+     * "Disable".
+     * <p>
+     * There is no guarantee that the available track identifiers go in sequence from zero up to
+     * {@link #getVideoTrackCount()}-1. The {@link #getVideoDescriptions()} method should always
+     * be used to ascertain the available track identifiers.
      *
-     * @param track track id, or -1 to disable the video
+     * @param track track identifier
      */
     void setVideoTrack(int track);
 
@@ -610,14 +613,27 @@ public interface MediaPlayer {
     /**
      * Get the current audio track.
      *
-     * @return track number
+     * @return track identifier, see {@link #getAudioDescriptions()}
      */
     int getAudioTrack();
 
     /**
      * Set a new audio track to play.
+     * <p>
+     * The track identifier must be one of those returned by {@link #getAudioDescriptions()}.
+     * <p>
+     * Audio can be disabled by passing here the identifier of the track with a description of
+     * "Disable".
+     * <p>
+     * There is no guarantee that the available track identifiers go in sequence from zero up to
+     * {@link #getAudioTrackCount()}-1. The {@link #getAudioDescriptions()} method should always
+     * be used to ascertain the available track identifiers.
+     * <p>
+     * The implementation of the corresponding <em>native</em> method in libvlc is bugged before
+     * vlc 2.0.5, therefore vlc 2.0.5 or later is required for correct behaviour when using this
+     * method.
      *
-     * @param track track number
+     * @param track track identifier
      */
     void setAudioTrack(int track);
 
