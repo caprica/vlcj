@@ -1360,7 +1360,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public void setDeinterlace(DeinterlaceMode deinterlaceMode) {
         Logger.debug("setDeinterlace(deinterlaceMode={})", deinterlaceMode);
-        libvlc.libvlc_video_set_deinterlace(mediaPlayerInstance, deinterlaceMode.mode());
+        libvlc.libvlc_video_set_deinterlace(mediaPlayerInstance, deinterlaceMode != null ? deinterlaceMode.mode() : null);
     }
 
     // === Video Adjustment Controls ============================================
