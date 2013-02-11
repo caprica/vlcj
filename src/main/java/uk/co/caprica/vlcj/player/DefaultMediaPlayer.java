@@ -683,6 +683,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         Logger.debug("play()");
         onBeforePlay();
         libvlc.libvlc_media_player_play(mediaPlayerInstance);
+        Logger.debug("after play");
     }
 
     @Override
