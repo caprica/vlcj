@@ -60,7 +60,6 @@ public class SpuTrackInfo extends TrackInfo {
         return encoding;
     }
 
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(200);
