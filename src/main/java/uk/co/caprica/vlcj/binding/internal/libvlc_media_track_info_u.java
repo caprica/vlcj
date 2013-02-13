@@ -24,6 +24,7 @@ import com.sun.jna.Union;
 /**
  *
  */
+@Deprecated
 public class libvlc_media_track_info_u extends Union {
 
     public static class ByValue extends libvlc_media_track_info_u implements Union.ByValue {}

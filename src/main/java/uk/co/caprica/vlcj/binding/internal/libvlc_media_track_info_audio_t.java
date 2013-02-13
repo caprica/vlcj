@@ -28,6 +28,7 @@ import com.sun.jna.Structure;
 /**
  *
  */
+@Deprecated
 public class libvlc_media_track_info_audio_t extends Structure {
 
     /**

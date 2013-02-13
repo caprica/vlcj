@@ -29,6 +29,7 @@ import com.sun.jna.Structure;
 /**
  *
  */
+@Deprecated
 public class libvlc_media_track_info_t extends Structure {
 
     private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("i_codec", "i_id", "i_type", "i_profile", "i_level", "u"));
