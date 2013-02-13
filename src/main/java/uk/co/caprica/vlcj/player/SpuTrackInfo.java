@@ -54,7 +54,7 @@ public class SpuTrackInfo extends TrackInfo {
     /**
      * Get the encoding
      *
-     * @return
+     * @return encoding
      */
     public final String encoding() {
         return encoding;
