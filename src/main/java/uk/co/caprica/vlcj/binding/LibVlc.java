@@ -555,17 +555,49 @@ public interface LibVlc extends Library {
     /**
      * Get media descriptor's elementary streams description.
      * <p>
-     * Note, you need to call libvlc_media_parse() or play the media at least once before calling
+     * Note, you need to call {@link #libvlc_media_parse(libvlc_media_t)} or play the media at least once before calling
      * this function.
      * <p>
      * Not doing this will result in an empty array.
+     *
+     * @deprecated Use libvlc_media_tracks_get instead.
      *
      * @param p_md media descriptor object
      * @param tracks address to store an allocated array of Elementary Streams descriptions (must be
      *            freed by the caller)
      * @return the number of Elementary Streams
      */
+    @Deprecated
     int libvlc_media_get_tracks_info(libvlc_media_t p_md, PointerByReference tracks);
+
+    /**
+     * Get media descriptor's elementary streams description
+     * <p>
+     * Note, you need to call {@link #libvlc_media_parse(libvlc_media_t)} or play the media at least once
+     * before calling this function.
+     * <p>
+     * Not doing this will result in an empty array.
+     *
+     * @since LibVLC 2.1.0 and later.
+     *
+     * @param p_md media descriptor object
+     * @param tracks address to store an allocated array of Elementary Streams
+     *        descriptions (must be freed with libvlc_media_tracks_release
+     *        by the caller) [OUT]
+     *
+     * @return the number of Elementary Streams (zero on error)
+     */
+    int libvlc_media_tracks_get(libvlc_media_t p_md, PointerByReference tracks);
+
+    /**
+     * Release media descriptor's elementary streams description array
+     *
+     * @since LibVLC 2.1.0 and later.
+     *
+     * @param p_tracks tracks info array to release
+     * @param i_count number of elements in the array
+     */
+    void libvlc_media_tracks_release(Pointer p_tracks, int i_count);
 
     // === libvlc_media.h =======================================================
 
