@@ -30,14 +30,42 @@ public class SpuTrackInfo extends TrackInfo {
     private static final long serialVersionUID = 1L;
 
     /**
-     *
-     *
-     * @param codec
-     * @param id
-     * @param profile
-     * @param level
+     * Encoding.
      */
-    protected SpuTrackInfo(int codec, int id, int profile, int level) {
-        super(codec, id, profile, level);
+    private final String encoding;
+
+    /**
+     * Create a new SPU (subtitle) track info.
+     *
+     * @param codec codec
+     * @param id track id
+     * @param profile profile
+     * @param level level
+     * @param bitRate bit-rate
+     * @param language language
+     * @param description description
+     * @param encoding encoding
+     */
+    protected SpuTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String encoding) {
+        super(codec, originalCodec, id, profile, level, bitRate, language, description);
+        this.encoding = encoding;
+    }
+
+    /**
+     * Get the encoding
+     *
+     * @return
+     */
+    public final String encoding() {
+        return encoding;
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(200);
+        sb.append(super.toString()).append('[');
+        sb.append("encoding=").append(encoding).append(']');
+        return sb.toString();
     }
 }

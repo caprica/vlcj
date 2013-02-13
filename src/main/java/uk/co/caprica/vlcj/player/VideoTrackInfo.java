@@ -40,19 +40,51 @@ public class VideoTrackInfo extends TrackInfo {
     private final int height;
 
     /**
+     * Sample/pixel aspect ratio.
+     */
+    private final int sampleAspectRatio;
+
+    /**
+     * Sample/pixel aspect ratio base.
+     */
+    private final int sampleAspectRatioBase;
+
+    /**
+     * Frame rate.
+     */
+    private final int frameRate;
+
+    /**
+     * Frame rate base.
+     */
+    private final int frameRateBase;
+
+    /**
      * Create a new video track info.
      *
      * @param codec video codec
+     * @param originalCodec original video codec
      * @param id track id
      * @param profile profile
      * @param level level
+     * @param bitRate bit-rate
+     * @param language language
+     * @param description description
      * @param width width
      * @param height height
+     * @param sampleAspectRatio
+     * @param sampleAspectRatioBase
+     * @param frameRate
+     * @param frameRateBase
      */
-    protected VideoTrackInfo(int codec, int id, int profile, int level, int width, int height) {
-        super(codec, id, profile, level);
+    protected VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase) {
+        super(codec, originalCodec, id, profile, level, bitRate, language, description);
         this.width = width;
         this.height = height;
+        this.sampleAspectRatio = sampleAspectRatio;
+        this.sampleAspectRatioBase = sampleAspectRatioBase;
+        this.frameRate = frameRate;
+        this.frameRateBase = frameRateBase;
     }
 
     /**
@@ -60,7 +92,7 @@ public class VideoTrackInfo extends TrackInfo {
      *
      * @return width
      */
-    public int width() {
+    public final int width() {
         return width;
     }
 
@@ -69,8 +101,44 @@ public class VideoTrackInfo extends TrackInfo {
      *
      * @return height
      */
-    public int height() {
+    public final int height() {
         return height;
+    }
+
+    /**
+     * Get the sample aspect ratio.
+     *
+     * @return sample aspect ratio
+     */
+    public final int sampleAspectRatio() {
+        return sampleAspectRatio;
+    }
+
+    /**
+     * Get the sample aspect ratio base.
+     *
+     * @return sample aspect ratio base
+     */
+    public final int sampleAspectRatioBase() {
+        return sampleAspectRatioBase;
+    }
+
+    /**
+     * Get the frame rate.
+     *
+     * @return frame rate
+     */
+    public final int frameRate() {
+        return frameRate;
+    }
+
+    /**
+     * Get the frame rate base.
+     *
+     * @return frame rate base
+     */
+    public final int frameRateBase() {
+        return frameRateBase;
     }
 
     @Override
@@ -78,7 +146,11 @@ public class VideoTrackInfo extends TrackInfo {
         StringBuilder sb = new StringBuilder(200);
         sb.append(super.toString()).append('[');
         sb.append("width=").append(width).append(',');
-        sb.append("height=").append(height).append(']');
+        sb.append("height=").append(height).append(',');
+        sb.append("sampleAspectRatio=").append(sampleAspectRatio).append(',');
+        sb.append("sampleAspectRatioBase=").append(sampleAspectRatioBase).append(',');
+        sb.append("frameRate=").append(frameRate).append(',');
+        sb.append("frameRateBase=").append(frameRateBase).append(']');
         return sb.toString();
     }
 }

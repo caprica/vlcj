@@ -42,6 +42,16 @@ public abstract class TrackInfo implements Serializable {
     private final String codecName;
 
     /**
+     * Original codec (fourcc).
+     */
+    private final int originalCodec;
+
+    /**
+     * Original codec name.
+     */
+    private final String originalCodecName;
+
+    /**
      * Track id.
      */
     private final int id;
@@ -57,19 +67,42 @@ public abstract class TrackInfo implements Serializable {
     private final int level;
 
     /**
+     * Bit rate.
+     */
+    private final int bitRate;
+
+    /**
+     * Language code, e.g. "en", if available.
+     */
+    private final String language;
+
+    /**
+     * Track description, if available.
+     */
+    private final String description;
+
+    /**
      * Create a new track info.
      *
      * @param codec codec
      * @param id track id
      * @param profile profile
      * @param level level
+     * @param bitRate bit-rate
+     * @param language language
+     * @param description description
      */
-    protected TrackInfo(int codec, int id, int profile, int level) {
+    protected TrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description) {
         this.codec = codec;
-        this.codecName = codec != 0 ? new String(new byte[] {(byte)codec, (byte)(codec >>> 8), (byte)(codec >>> 16), (byte)(codec >>> 24)}).trim() : null;
+        this.codecName = codecName(codec);
+        this.originalCodec = originalCodec;
+        this.originalCodecName = codecName(originalCodec);
         this.id = id;
         this.profile = profile;
         this.level = level;
+        this.bitRate = bitRate;
+        this.language = language;
+        this.description = description;
     }
 
     /**
@@ -77,7 +110,7 @@ public abstract class TrackInfo implements Serializable {
      *
      * @return codec
      */
-    public int codec() {
+    public final int codec() {
         return codec;
     }
 
@@ -86,8 +119,26 @@ public abstract class TrackInfo implements Serializable {
      *
      * @return codec name
      */
-    public String codecName() {
+    public final String codecName() {
         return codecName;
+    }
+
+    /**
+     * Get the original codec (fourcc).
+     *
+     * @return original codec
+     */
+    public final int orignalCodec() {
+        return codec;
+    }
+
+    /**
+     * Get the original codec name.
+     *
+     * @return original codec name
+     */
+    public final String originalCodecName() {
+        return originalCodecName;
     }
 
     /**
@@ -95,7 +146,7 @@ public abstract class TrackInfo implements Serializable {
      *
      * @return track id
      */
-    public int id() {
+    public final int id() {
         return id;
     }
 
@@ -104,7 +155,7 @@ public abstract class TrackInfo implements Serializable {
      *
      * @return profile
      */
-    public int profile() {
+    public final int profile() {
         return profile;
     }
 
@@ -113,8 +164,35 @@ public abstract class TrackInfo implements Serializable {
      *
      * @return level
      */
-    public int level() {
+    public final int level() {
         return level;
+    }
+
+    /**
+     * Get the bit-rate.
+     *
+     * @return bit-rate
+     */
+    public final int bitRate() {
+        return bitRate;
+    }
+
+    /**
+     * Get the language.
+     *
+     * @return language
+     */
+    public final String language() {
+        return language;
+    }
+
+    /**
+     * Get the description.
+     *
+     * @return description
+     */
+    public final String description() {
+        return description;
     }
 
     @Override
@@ -123,9 +201,24 @@ public abstract class TrackInfo implements Serializable {
         sb.append(getClass().getSimpleName()).append('[');
         sb.append("codec=0x").append(Integer.toHexString(codec)).append(',');
         sb.append("codecName=").append(codecName).append(',');
+        sb.append("originalCodec=0x").append(Integer.toHexString(originalCodec)).append(',');
+        sb.append("originalCodecName=").append(originalCodecName).append(',');
         sb.append("id=").append(id).append(',');
         sb.append("profile=").append(profile).append(',');
-        sb.append("level=").append(level).append(']');
+        sb.append("level=").append(level).append(',');
+        sb.append("bitRate=").append(bitRate).append(',');
+        sb.append("language=").append(language).append(',');
+        sb.append("description=").append(description).append(']');
         return sb.toString();
+    }
+
+    /**
+     * Make a readable string from a codec identifier.
+     *
+     * @param codec codec identifier
+     * @return string representation of the codec identifier
+     */
+    private final String codecName(int codec) {
+        return codec != 0 ? new String(new byte[] {(byte)codec, (byte)(codec >>> 8), (byte)(codec >>> 16), (byte)(codec >>> 24)}).trim() : null;
     }
 }

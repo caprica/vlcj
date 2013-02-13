@@ -43,14 +43,18 @@ public class AudioTrackInfo extends TrackInfo {
      * Create a new audio track info
      *
      * @param codec audio codec
+     * @param originalCodec original audio codec
      * @param id track id
      * @param profile profile
      * @param level level
+     * @param bitRate bit-rate
+     * @param language language
+     * @param description description
      * @param channels number of channels
      * @param rate rate
      */
-    protected AudioTrackInfo(int codec, int id, int profile, int level, int channels, int rate) {
-        super(codec, id, profile, level);
+    protected AudioTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int channels, int rate) {
+        super(codec, originalCodec, id, profile, level, bitRate, language, description);
         this.channels = channels;
         this.rate = rate;
     }
@@ -60,7 +64,7 @@ public class AudioTrackInfo extends TrackInfo {
      *
      * @return channel count
      */
-    public int channels() {
+    public final int channels() {
         return channels;
     }
 
@@ -69,7 +73,7 @@ public class AudioTrackInfo extends TrackInfo {
      *
      * @return rate
      */
-    public int rate() {
+    public final int rate() {
         return rate;
     }
 

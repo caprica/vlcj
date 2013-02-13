@@ -30,14 +30,17 @@ public class UnknownTrackInfo extends TrackInfo {
     private static final long serialVersionUID = 1L;
 
     /**
+     * Create an unknown track info.
      *
-     *
-     * @param codec
-     * @param id
-     * @param profile
-     * @param level
+     * @param codec codec
+     * @param id track id
+     * @param profile profile
+     * @param level level
+     * @param bitRate bit-rate
+     * @param language language
+     * @param description description
      */
-    protected UnknownTrackInfo(int codec, int id, int profile, int level) {
-        super(codec, id, profile, level);
+    protected UnknownTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description) {
+        super(codec, originalCodec, id, profile, level, bitRate, language, description);
     }
 }
