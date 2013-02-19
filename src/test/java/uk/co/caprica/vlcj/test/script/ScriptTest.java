@@ -160,7 +160,6 @@ public class ScriptTest extends VlcjTest {
         scriptTextArea.append("mediaPlayer.start()\n");
         scriptTextArea.append("mediaPlayer.getMediaDetails()\n");
         scriptTextArea.append("mediaPlayer.getVideoDimension()\n");
-        scriptTextArea.append("mediaPlayer.getTrackInfo()\n");
         scriptTextArea.append("mediaPlayer.getLength()\n");
         scriptTextArea.append("mediaPlayer.getChapterCount()\n");
         scriptTextArea.append("mediaPlayer.getChapter()\n");
@@ -172,6 +171,28 @@ public class ScriptTest extends VlcjTest {
         scriptTextArea.append("mediaPlayer.mute(true)\n");
         scriptTextArea.append("mediaPlayer.mute(false)\n");
         scriptTextArea.append("mediaPlayer.isMute()\n");
+        scriptTextArea.append("\n");
+        scriptTextArea.append("mediaPlayer.getTrackInfo()\n");
+        scriptTextArea.append("mediaPlayer.getTitleCount()\n");
+        scriptTextArea.append("mediaPlayer.getVideoTrackCount()\n");
+        scriptTextArea.append("mediaPlayer.getAudioTrackCount()\n");
+        scriptTextArea.append("mediaPlayer.getSpuCount()\n");
+        scriptTextArea.append("mediaPlayer.getTitleDescriptions()\n");
+        scriptTextArea.append("mediaPlayer.getVideoDescriptions()\n");
+        scriptTextArea.append("mediaPlayer.getAudioDescriptions()\n");
+        scriptTextArea.append("mediaPlayer.getSpuDescriptions()\n");
+        scriptTextArea.append("mediaPlayer.getChapterDescriptions(1)\n");
+        scriptTextArea.append("mediaPlayer.getChapterDescriptions()\n");
+        scriptTextArea.append("mediaPlayer.getAllChapterDescriptions()\n");
+        scriptTextArea.append("mediaPlayer.getTitle()\n");
+        scriptTextArea.append("mediaPlayer.setTitle(1)\n");
+        scriptTextArea.append("mediaPlayer.getVideoTrack()\n");
+        scriptTextArea.append("mediaPlayer.setVideoTrack(1)\n");
+        scriptTextArea.append("mediaPlayer.getAudioTrack()\n");
+        scriptTextArea.append("mediaPlayer.setAudioTrack(1)\n");
+        scriptTextArea.append("mediaPlayer.getSpu()\n");
+        scriptTextArea.append("mediaPlayer.setSpu(1)\n");
+
         scriptTextArea.append("\n");
 
         scriptTextArea.addKeyListener(new KeyAdapter() {
