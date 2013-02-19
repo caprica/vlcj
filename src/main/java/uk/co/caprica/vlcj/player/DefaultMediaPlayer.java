@@ -1038,15 +1038,21 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public List<String> getChapterDescriptions(int title) {
         Logger.debug("getChapterDescriptions(title={})", title);
-        List<String> trackDescriptionList = new ArrayList<String>();
-        libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_chapter_description(mediaPlayerInstance, title);
-        libvlc_track_description_t trackDescription = trackDescriptions;
-        while(trackDescription != null) {
-            trackDescriptionList.add(trackDescription.psz_name);
-            trackDescription = trackDescription.p_next;
+        List<String> trackDescriptionList;
+        if(title >= 0 && title < getTitleCount()) {
+            trackDescriptionList = new ArrayList<String>();
+            libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_chapter_description(mediaPlayerInstance, title);
+            libvlc_track_description_t trackDescription = trackDescriptions;
+            while(trackDescription != null) {
+                trackDescriptionList.add(trackDescription.psz_name);
+                trackDescription = trackDescription.p_next;
+            }
+            if(trackDescriptions != null) {
+                libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
+            }
         }
-        if(trackDescriptions != null) {
-            libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
+        else {
+            trackDescriptionList = null;
         }
         return trackDescriptionList;
     }

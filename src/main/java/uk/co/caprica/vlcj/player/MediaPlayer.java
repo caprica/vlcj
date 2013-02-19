@@ -1064,7 +1064,7 @@ public interface MediaPlayer {
      * The media must be playing before this information is available.
      *
      * @param title title number
-     * @return list of descriptions
+     * @return list of descriptions, or <code>null</code> if there is no such title
      */
     List<String> getChapterDescriptions(int title);
 
