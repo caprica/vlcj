@@ -658,9 +658,10 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
 
     @Override
-    public void setVideoTrack(int track) {
+    public int setVideoTrack(int track) {
         Logger.debug("setVideoTrack(track={})", track);
         libvlc.libvlc_video_set_track(mediaPlayerInstance, track);
+        return getVideoTrack();
     }
 
     @Override
@@ -676,9 +677,10 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
 
     @Override
-    public void setAudioTrack(int track) {
+    public int setAudioTrack(int track) {
         Logger.debug("setAudioTrack(track={})", track);
         libvlc.libvlc_audio_set_track(mediaPlayerInstance, track);
+        return getAudioTrack();
     }
 
     // === Basic Playback Controls ==============================================
@@ -935,7 +937,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
 
     @Override
-    public void setSpu(int spu) {
+    public int setSpu(int spu) {
         Logger.debug("setSpu(spu={})", spu);
         int spuCount = getSpuCount();
         Logger.debug("spuCount={}", spuCount);
@@ -945,10 +947,11 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         else {
             Logger.debug("Ignored out of range spu number {} because spu count is {}", spu, spuCount);
         }
+        return getSpu();
     }
 
     @Override
-    public void cycleSpu() {
+    public int cycleSpu() {
         Logger.debug("cycleSpu()");
         int spu = getSpu();
         int spuCount = getSpuCount();
@@ -958,7 +961,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         else {
             spu ++ ;
         }
-        setSpu(spu);
+        return setSpu(spu);
     }
 
     @Override

@@ -600,8 +600,9 @@ public interface MediaPlayer {
      * be used to ascertain the available track identifiers.
      *
      * @param track track identifier
+     * @return current video track identifier
      */
-    void setVideoTrack(int track);
+    int setVideoTrack(int track);
 
     /**
      * Get the number of available audio tracks.
@@ -634,8 +635,9 @@ public interface MediaPlayer {
      * method.
      *
      * @param track track identifier
+     * @return current audio track identifier
      */
-    void setAudioTrack(int track);
+    int setAudioTrack(int track);
 
     /**
      * Begin play-back.
@@ -963,14 +965,17 @@ public interface MediaPlayer {
     /**
      * Set the current sub-title track.
      *
-     * @param spu sub-title number, or -1 for none
+     * @param spu sub-title identifier, or -1 for none
+     * @return current sub-title identifier
      */
-    void setSpu(int spu);
+    int setSpu(int spu);
 
     /**
      * Select the next sub-title track (or disable sub-titles).
+     *
+     * @return current sub-title identifier
      */
-    void cycleSpu();
+    int cycleSpu();
 
     /**
      * Get the sub-title delay.
