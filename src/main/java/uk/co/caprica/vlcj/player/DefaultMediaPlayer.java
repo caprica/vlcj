@@ -939,14 +939,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public int setSpu(int spu) {
         Logger.debug("setSpu(spu={})", spu);
-        int spuCount = getSpuCount();
-        Logger.debug("spuCount={}", spuCount);
-        if(spuCount != 0 && spu <= spuCount) {
-            libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
-        }
-        else {
-            Logger.debug("Ignored out of range spu number {} because spu count is {}", spu, spuCount);
-        }
+        libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
         return getSpu();
     }
 
