@@ -964,6 +964,19 @@ public interface MediaPlayer {
 
     /**
      * Set the current sub-title track.
+     * <p>
+     * The track identifier must be one of those returned by {@link #getSpuDescriptions()}.
+     * <p>
+     * Subtitles can be disabled by passing here the identifier of the track with a description of
+     * "Disable".
+     * <p>
+     * There is no guarantee that the available subtitle identifiers go in sequence from zero up to
+     * {@link #getSpuCount()}-1. The {@link #getSpuDescriptions()} method should always
+     * be used to ascertain the available subtitle identifiers.
+     * <p>
+     * The implementation of the corresponding <em>native</em> method in libvlc is bugged before
+     * vlc 2.0.6, therefore vlc 2.0.6 or later is required for correct behaviour when using this
+     * method.
      *
      * @param spu sub-title identifier, or -1 for none
      * @return current sub-title identifier
