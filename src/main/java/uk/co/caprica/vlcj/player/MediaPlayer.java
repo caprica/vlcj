@@ -1112,7 +1112,8 @@ public interface MediaPlayer {
      * <p>
      * In the case of DVD media (for example ".iso" files) and streams the media must be played and
      * video output must be available before valid track information becomes available, and even
-     * then it is not always available immediately so polling may be required.
+     * then it is not always available immediately (or it is only partially available) so polling
+     * may be required.
      * <p>
      * If you invoke this method "too soon", you may only receive partial track information.
      *
