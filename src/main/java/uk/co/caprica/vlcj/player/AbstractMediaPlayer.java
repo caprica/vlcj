@@ -53,6 +53,7 @@ public abstract class AbstractMediaPlayer {
     protected void finalize() throws Throwable {
         Logger.debug("finalize()");
         Logger.debug("Media player has been garbage collected");
+        super.finalize();
         // FIXME should this invoke release()?
     }
 }

@@ -184,9 +184,10 @@ public class NativeLog {
     }
 
     @Override
-    protected void finalize() {
+    protected void finalize() throws Throwable {
         Logger.debug("finalize()");
         Logger.debug("Native log has been garbage collected");
+        super.finalize();
         // FIXME should this invoke release()?
     }
 

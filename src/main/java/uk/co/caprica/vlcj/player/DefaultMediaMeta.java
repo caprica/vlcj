@@ -296,6 +296,7 @@ class DefaultMediaMeta implements MediaMeta {
     protected void finalize() throws Throwable {
         Logger.debug("finalize()");
         Logger.debug("Meta data has been garbage collected");
+        super.finalize();
         // FIXME should this invoke release()?
     }
 
