@@ -255,6 +255,7 @@ public class MediaList {
         try {
             lock();
             int size = libvlc.libvlc_media_list_count(mediaListInstance);
+            Logger.debug("size={}", size);
             return size;
         }
         finally {

@@ -1368,8 +1368,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             file = File.createTempFile("vlcj-snapshot-", ".png");
             Logger.debug("file={}", file.getAbsolutePath());
             if(saveSnapshot(file, width, height)) {
-                BufferedImage snapshotImage = ImageIO.read(file);
-                return snapshotImage;
+                return ImageIO.read(file);
             }
             else {
                 return null;
