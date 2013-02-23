@@ -52,7 +52,7 @@ public class SubTitleFileFilter extends ExtensionFileFilter {
     /**
      * Single instance.
      */
-    public static SubTitleFileFilter INSTANCE = new SubTitleFileFilter();
+    public static final SubTitleFileFilter INSTANCE = new SubTitleFileFilter();
 
     /**
      * Create a new file filter.

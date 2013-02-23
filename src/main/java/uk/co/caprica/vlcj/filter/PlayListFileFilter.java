@@ -48,7 +48,7 @@ public class PlayListFileFilter extends ExtensionFileFilter {
     /**
      * Single instance.
      */
-    public static PlayListFileFilter INSTANCE = new PlayListFileFilter();
+    public static final PlayListFileFilter INSTANCE = new PlayListFileFilter();
 
     /**
      * Create a new file filter.
