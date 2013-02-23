@@ -546,8 +546,8 @@ public class MediaList {
                 try {
                     mediaListEvent.notify(listener);
                 }
-                catch(Throwable t) {
-                    Logger.warn("Event listener {} threw an exception", t, listener);
+                catch(Exception e) {
+                    Logger.warn("Event listener {} threw an exception", e, listener);
                     // Continue with the next listener...
                 }
             }

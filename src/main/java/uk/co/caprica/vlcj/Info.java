@@ -63,7 +63,7 @@ public class Info {
             properties.load(getClass().getResourceAsStream("/build.properties"));
             version = new Version(properties.getProperty("build.version"));
         }
-        catch(Throwable t) {
+        catch(Exception e) {
             // This can only happen if something went wrong with the build
             version = null;
         }

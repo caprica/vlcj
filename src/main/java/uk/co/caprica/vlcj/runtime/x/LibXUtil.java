@@ -70,9 +70,9 @@ public class LibXUtil {
         try {
             LibX11.INSTANCE.XInitThreads();
         }
-        catch(Throwable t) {
+        catch(Exception e) {
             if(!RuntimeUtil.isWindows()) {
-                Logger.trace("Did not initialise LibX11: {}", t.getMessage());
+                Logger.debug("Did not initialise LibX11: {}", e.getMessage());
             }
         }
     }

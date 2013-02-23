@@ -168,8 +168,8 @@ public class LibVlcFactory {
                 try {
                     actualVersion = new Version(nativeVersion);
                 }
-                catch(Throwable t) {
-                    Logger.error("Unable to parse native library version {} because of {}", nativeVersion, t);
+                catch(Exception e) {
+                    Logger.error("Unable to parse native library version {} because of {}", nativeVersion, e);
                     actualVersion = null;
                 }
                 if(actualVersion != null) {

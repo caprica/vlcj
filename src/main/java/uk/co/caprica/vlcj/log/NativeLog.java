@@ -184,7 +184,7 @@ public class NativeLog {
     }
 
     @Override
-    protected void finalize() throws Throwable {
+    protected void finalize() {
         Logger.debug("finalize()");
         Logger.debug("Native log has been garbage collected");
         // FIXME should this invoke release()?
@@ -278,8 +278,8 @@ public class NativeLog {
                 try {
                     listener.log(level, message);
                 }
-                catch(Throwable t) {
-                    Logger.warn("Event listener {} threw an exception", t, listener);
+                catch(Exception e) {
+                    Logger.warn("Event listener {} threw an exception", e, listener);
                     // Continue with the next listener...
                 }
             }

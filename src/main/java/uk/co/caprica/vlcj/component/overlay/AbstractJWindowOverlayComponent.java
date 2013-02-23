@@ -34,6 +34,8 @@ import java.lang.reflect.Method;
 
 import javax.swing.JWindow;
 
+import uk.co.caprica.vlcj.logger.Logger;
+
 import com.sun.jna.platform.WindowUtils;
 
 /**
@@ -119,7 +121,8 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
                 Method setWindowOpaqueMethod = awtUtilitiesClass.getMethod("setWindowOpaque", Window.class, Boolean.class);
                 setWindowOpaqueMethod.invoke(null, this, false);
             }
-            catch(Throwable t) {
+            catch(Exception e) {
+                Logger.debug("No apparent support for transparent windows", e.getMessage());
                 // Fall-back, this is the best that can be done
                 setBackground(new Color(0, 0, 0, 0));
             }

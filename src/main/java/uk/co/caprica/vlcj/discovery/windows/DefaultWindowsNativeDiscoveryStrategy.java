@@ -39,13 +39,9 @@ public class DefaultWindowsNativeDiscoveryStrategy extends StandardNativeDiscove
     @Override
     protected void onGetDirectoryNames(List<String> directoryNames) {
         // Try and find the location of the vlc installation directory from the registry
-        try {
-            String installDir = WindowsRuntimeUtil.getVlcInstallDir();
-            if(installDir != null) {
-                directoryNames.add(installDir);
-            }
-        }
-        catch(Throwable t) {
+        String installDir = WindowsRuntimeUtil.getVlcInstallDir();
+        if(installDir != null) {
+            directoryNames.add(installDir);
         }
     }
 }
