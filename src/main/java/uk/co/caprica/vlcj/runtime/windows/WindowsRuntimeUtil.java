@@ -27,7 +27,7 @@ import com.sun.jna.platform.win32.WinReg;
 /**
  * Windows specific run-time utilities.
  */
-public class WindowsRuntimeUtil {
+public final class WindowsRuntimeUtil {
 
     /**
      * The VLC registry key, under HKLM.
@@ -38,6 +38,12 @@ public class WindowsRuntimeUtil {
      * The VLC registry key for the installation directory.
      */
     public static final String VLC_INSTALL_DIR_KEY = "InstallDir";
+
+    /**
+     * Prevent direct instantiation by others.
+     */
+    private WindowsRuntimeUtil() {
+    }
 
     /**
      * Get the VLC installation directory.

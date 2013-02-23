@@ -46,7 +46,7 @@ import uk.co.caprica.vlcj.filter.VideoFileFilter;
  * @see javax.swing.filechooser.FileNameExtensionFilter
  * @see javax.swing.JFileChooser
  */
-public class SwingFileFilterFactory {
+public final class SwingFileFilterFactory {
 
     /**
      * Description for the video file filter.
@@ -72,6 +72,12 @@ public class SwingFileFilterFactory {
      * Description for the sub-title file filter.
      */
     private static final String SUBTITLE_FILTER_DESCRIPTION = "Subtitle Files";
+
+    /**
+     * Prevent direct instantiation by others.
+     */
+    private SwingFileFilterFactory() {
+    }
 
     /**
      * Create a new file name extension filter that accepts video files.

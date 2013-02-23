@@ -42,7 +42,7 @@ import com.sun.jna.platform.unix.X11.XEvent;
  * <li>Interaction with the Window Manager itself.</li>
  * </ul>
  */
-public class LibXUtil {
+public final class LibXUtil {
 
     // X window message definitions
     private static final int _NET_WM_STATE_REMOVE = 0;
@@ -55,6 +55,12 @@ public class LibXUtil {
     private static final int TRUE = 1;
 
     // private static final int FALSE = 0;
+
+    /**
+     * Prevent direct instantiation by others.
+     */
+    private LibXUtil() {
+    }
 
     /**
      * Attempt to initialise LibX threads.

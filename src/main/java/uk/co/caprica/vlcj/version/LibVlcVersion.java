@@ -24,7 +24,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 /**
  * Holder for run-time libvlc version information.
  */
-public class LibVlcVersion {
+public final class LibVlcVersion {
 
     /**
      * Run-time version of vlc/libvlc.
@@ -35,6 +35,12 @@ public class LibVlcVersion {
      * LibVlc 2.1.0 API baseline.
      */
     public static final Version LIBVLC_210 = new Version("2.1.0");
+
+    /**
+     * Prevent direct instantiation by others.
+     */
+    private LibVlcVersion() {
+    }
 
     /**
      * Get the run-time version.

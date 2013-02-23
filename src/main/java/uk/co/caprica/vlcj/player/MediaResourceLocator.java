@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  * <p>
  * This is essentially an internal class.
  */
-public class MediaResourceLocator {
+public final class MediaResourceLocator {
 
     /**
      * Simple pattern to detect locations.

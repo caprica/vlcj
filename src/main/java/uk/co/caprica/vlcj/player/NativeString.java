@@ -28,7 +28,13 @@ import com.sun.jna.Pointer;
  * <p>
  * This class takes care of freeing the memory that was natively allocated for the string.
  */
-public class NativeString {
+public final class NativeString {
+
+    /**
+     * Prevent direct instantiation by others.
+     */
+    private NativeString() {
+    }
 
     /**
      * Get a String from a native string pointer, freeing the native string pointer when done.

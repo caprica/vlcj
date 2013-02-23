@@ -26,12 +26,18 @@ import uk.co.caprica.vlcj.logger.Logger;
  * <p>
  * The com.sun.jna.Platform class provides similar functionality.
  */
-public class RuntimeUtil {
+public final class RuntimeUtil {
 
     /**
      * Operating System Name system property.
      */
     private static final String OS_NAME = System.getProperty("os.name").toLowerCase();
+
+    /**
+     * Prevent direct instantiation by others.
+     */
+    private RuntimeUtil() {
+    }
 
     /**
      * Test whether the runtime operating system is "unix-like".
