@@ -27,7 +27,7 @@ import uk.co.caprica.vlcj.version.Version;
 /**
  * Application information banner.
  */
-public class Info {
+public final class Info {
 
     /**
      * Singleton holder.

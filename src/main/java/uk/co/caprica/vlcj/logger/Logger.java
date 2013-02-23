@@ -36,7 +36,7 @@ import java.util.Formatter;
  *
  * The log levels are defined in {@link Level}.
  */
-public class Logger {
+public final class Logger {
 
     /**
      * Place-holder identifier.
