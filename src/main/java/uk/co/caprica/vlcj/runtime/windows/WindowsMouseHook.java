@@ -84,7 +84,7 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     /**
      * Native library instance.
      */
-    private static User32 USER32_INSTANCE = User32.INSTANCE;
+    private static final User32 USER32_INSTANCE = User32.INSTANCE;
 
     /**
      * Collection of registered event listeners.
