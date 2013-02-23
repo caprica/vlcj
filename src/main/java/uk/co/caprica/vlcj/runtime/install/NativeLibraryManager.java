@@ -322,7 +322,7 @@ public class NativeLibraryManager {
             urlConnection = vlcPluginsUrl.openConnection();
         }
         catch(IOException e) {
-            throw new RuntimeException("Failed to open a the native library class-path resource");
+            throw new RuntimeException("Failed to open a the native library class-path resource", e);
         }
         if(!(urlConnection instanceof JarURLConnection)) {
             throw new RuntimeException("Expected the native library resources to be contained in a jar file");
@@ -331,7 +331,7 @@ public class NativeLibraryManager {
             return ((JarURLConnection)urlConnection).getJarFile();
         }
         catch(IOException e) {
-            throw new RuntimeException("Unable to get the native library class-path resource jar file");
+            throw new RuntimeException("Unable to get the native library class-path resource jar file", e);
         }
     }
 
