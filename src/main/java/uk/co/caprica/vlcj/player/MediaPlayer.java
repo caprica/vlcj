@@ -1117,9 +1117,10 @@ public interface MediaPlayer {
      * <p>
      * If you invoke this method "too soon", you may only receive partial track information.
      *
+     * @param zero or more types of track to get
      * @return collection of track information, or <code>null</code> if there is no current media
      */
-    List<TrackInfo> getTrackInfo();
+    List<TrackInfo> getTrackInfo(TrackType... types);
 
     /**
      * Get track (i.e. "elementary streams") information for a media item.
@@ -1127,18 +1128,20 @@ public interface MediaPlayer {
      * See {@link #getTrackInfo()}.
      *
      * @param media media item
+     * @param zero or more types of track to get
      * @return collection of track information, or <code>null</code> if there is no current media
      */
-    List<TrackInfo> getTrackInfo(libvlc_media_t media);
+    List<TrackInfo> getTrackInfo(libvlc_media_t media, TrackType... types);
 
     /**
      * Get the track (i.e. "elementary streams") information for all sub-items if there are any.
      * <p>
      * See {@link #getTrackInfo()}.
      *
+     * @param zero or more types of track to get
      * @return collection of track information for each sub-item, or <code>null</code> if there is no current media
      */
-    List<List<TrackInfo>> getSubItemTrackInfo();
+    List<List<TrackInfo>> getSubItemTrackInfo(TrackType... types);
 
     /**
      * Set the directory into which snapshots of the video are saved.

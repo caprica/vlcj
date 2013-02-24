@@ -20,9 +20,11 @@
 package uk.co.caprica.vlcj.player;
 
 /**
- * Sub-picture/sub-title track info.
+ * Text track info.
+ * <p>
+ * "Text" includes subtitles, sub-pictures and so on.
  */
-public class SpuTrackInfo extends TrackInfo {
+public class TextTrackInfo extends TrackInfo {
 
     /**
      * Serial version.
@@ -46,7 +48,7 @@ public class SpuTrackInfo extends TrackInfo {
      * @param description description
      * @param encoding encoding
      */
-    protected SpuTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String encoding) {
+    protected TextTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String encoding) {
         super(codec, originalCodec, id, profile, level, bitRate, language, description);
         this.encoding = encoding;
     }

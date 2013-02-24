@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.test.info;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.TrackType;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -74,6 +75,12 @@ public class MediaInfoTest extends VlcjTest {
         }
 
         System.out.println("Track Information before end: " + mediaPlayer.getTrackInfo());
+
+        System.out.println("    UNKNOWN: " +  mediaPlayer.getTrackInfo(TrackType.UNKNOWN));
+        System.out.println("      AUDIO: " +  mediaPlayer.getTrackInfo(TrackType.AUDIO));
+        System.out.println("      VIDEO: " +  mediaPlayer.getTrackInfo(TrackType.VIDEO));
+        System.out.println("       TEXT: " +  mediaPlayer.getTrackInfo(TrackType.TEXT));
+        System.out.println("AUDIO+VIDEO: " +  mediaPlayer.getTrackInfo(TrackType.AUDIO, TrackType.VIDEO));
 
         mediaPlayer.stop();
 
