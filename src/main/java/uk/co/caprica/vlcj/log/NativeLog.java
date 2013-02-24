@@ -32,6 +32,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_log_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_level_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_subscriber_t;
 import uk.co.caprica.vlcj.logger.Logger;
+import uk.co.caprica.vlcj.version.LibVlcVersion;
 
 import com.sun.jna.Pointer;
 
@@ -101,8 +102,13 @@ public class NativeLog {
      * @param libvlc native library instance
      */
     public NativeLog(LibVlc libvlc) {
-        this.libvlc = libvlc;
-        createInstance();
+        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_210)) {
+            this.libvlc = libvlc;
+            createInstance();
+        }
+        else {
+            throw new RuntimeException("Native log requires libvlc 2.1.0 or later");
+        }
     }
 
     /**
