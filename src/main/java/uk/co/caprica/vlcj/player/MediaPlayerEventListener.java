@@ -136,9 +136,9 @@ public interface MediaPlayerEventListener {
      * Media pausable status changed.
      *
      * @param mediaPlayer media player that raised the event
-     * @param newSeekable new pausable status
+     * @param newPausable new pausable status
      */
-    void pausableChanged(MediaPlayer mediaPlayer, int newSeekable);
+    void pausableChanged(MediaPlayer mediaPlayer, int newPausable);
 
     /**
      * Media title changed.
