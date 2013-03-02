@@ -163,7 +163,7 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
             }
         }
         else {
-            throw new IllegalStateException("Can not re-use waiter instances, create a new instance instead");
+            throw new IllegalStateException("Can not re-use Condition instances, create a new instance instead");
         }
     }
 
