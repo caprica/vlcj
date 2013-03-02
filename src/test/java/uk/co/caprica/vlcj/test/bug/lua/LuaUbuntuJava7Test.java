@@ -27,10 +27,10 @@ import com.sun.jna.Pointer;
 /**
  * This simple test case is used to trigger a native crash under the following conditions:
  * <ul>
- *   <li>32-bit Ubuntu</li>
- *   <li>32-bit Java7 (official JDK or OpenJDK)</li>
- *   <li>LUA as packaged by Ubuntu</li>
- *   <li>Execute compiled LUA script</li>
+ *   <li>32-bit Ubuntu, and;</li>
+ *   <li>32-bit Java7 (official JDK or OpenJDK), and;</li>
+ *   <li>LUA as packaged by Ubuntu, and;</li>
+ *   <li>Execute compiled LUA script.</li>
  * </ul>
  * More information is available at <a href="https://github.com/caprica/vlcj/issues/62">Github</a>.
  * <p>
@@ -41,10 +41,10 @@ import com.sun.jna.Pointer;
  * <p>
  * Workarounds are:
  * <ul>
- *   <li>64-bit Ubuntu</li>
- *   <li>Java6 (official JDK or OpenJDK)</li>
- *   <li>LUA as built from vanilla source from lua.org</li>
- *   <li>Execute un-compiled source script</li>
+ *   <li>64-bit Ubuntu, or;</li>
+ *   <li>Java6 (official JDK or OpenJDK), or;</li>
+ *   <li>LUA as built from vanilla source from lua.org, or;</li>
+ *   <li>Execute un-compiled source script.</li>
  * </ul>
  */
 public class LuaUbuntuJava7Test {
@@ -72,7 +72,12 @@ public class LuaUbuntuJava7Test {
     /**
      *
      */
-    private static final String BINARY_SCRIPT = "src/test/resources/lua/test.luac";
+//    private static final String BINARY_SCRIPT = "src/test/resources/lua/test-64.luac";
+
+    /**
+     *
+     */
+    private static final String BINARY_SCRIPT = "src/test/resources/lua/test-32.luac";
 
     /**
      * Minimal bindings to the native lua library.
