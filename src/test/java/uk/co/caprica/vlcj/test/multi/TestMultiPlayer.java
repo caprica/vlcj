@@ -51,6 +51,10 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * player instances you have in one application, the more likely you are to see fatal crashes in
  * those native libraries.
  * <p>
+ * One of the biggest culprits is Fontconfig: version 2.10.91+ is supposed to be thread-safe so one
+ * of the most common causes of multi-player crash bugs should be gone when compiled with that
+ * particular version. However, other native libraries may still cause problems.
+ * <p>
  * Also, a current limitation of vlc is that all in-process media players will share the same audio
  * controls - there is no independent audio control available.
  * <p>
