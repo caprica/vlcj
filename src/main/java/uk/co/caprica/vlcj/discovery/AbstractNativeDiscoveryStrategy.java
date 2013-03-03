@@ -24,9 +24,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import uk.co.caprica.vlcj.logger.Logger;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
  * Base implementation for a component that attempts to locate the libvlc native
@@ -43,19 +44,6 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  */
 public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscoveryStrategy {
 
-    /**
-     * Collection of filenames to search for.
-     */
-    private final List<String> fileNames = new ArrayList<String>(2);
-
-    /**
-     * Create a native library discovery strategy.
-     */
-    public AbstractNativeDiscoveryStrategy() {
-        fileNames.add(RuntimeUtil.getLibVlcName());
-        fileNames.add(RuntimeUtil.getLibVlcCoreName());
-    }
-
     @Override
     public final String discover() {
         Logger.debug("discover()");
@@ -64,35 +52,49 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
         List<String> directoryNames = new ArrayList<String>();
         getDirectoryNames(directoryNames);
         Logger.debug("directoryNames={}", directoryNames);
-        // Search the set of declared directories...
-        if(!directoryNames.isEmpty()) {
-            // Search for the fixed set of declared filenames...
-            Logger.debug("fileNames={}", (Object)fileNames);
-            // Process each declared directory name
-            for(String directoryName : directoryNames) {
-                Logger.debug("directoryName={}", directoryName);
-                // Assume found...
+        // Process each declared directory name
+        for(String directoryName : directoryNames) {
+            Logger.debug("directoryName={}", directoryName);
+            if(find(directoryName)) {
                 result = directoryName;
-                File dir = new File(directoryName);
-                // Look for each declared file in this directory...
-                for(String fileName : fileNames) {
-                    Logger.debug("fileName={}", fileName);
-                    File file = new File(dir, fileName);
-                    if(!file.exists()) {
-                        Logger.debug("File does not exist");
-                        result = null;
-                        break;
-                    }
-                }
-                // If all declared files found in this directory, break out
-                if(result != null) {
-                    break;
-                }
+                break;
             }
         }
         Logger.debug("result={}", result);
         return result;
     }
+
+    /**
+     * Attempt to match all required files in a particular directory.
+     * <p>
+     * The directory is <em>not</em> searched <em>recursively</em>.
+     *
+     * @param directoryName name of the directory to search
+     * @return <code>true</code> if all required files were found; <code>false</code> otherwise
+     */
+    private boolean find(String directoryName) {
+        File dir = new File(directoryName);
+        File[] files = dir.listFiles();
+        if(files != null) {
+            Pattern[] patternsToMatch = getFilenamePatterns();
+            int matchedCount = 0;
+            for(File file : files) {
+                for(Pattern pattern : patternsToMatch) {
+                    Matcher matcher = pattern.matcher(file.getName());
+                    if(matcher.matches()) {
+                        Logger.debug("Matched '{}' in '{}'", file.getName(), directoryName);
+                        matchedCount++ ;
+                        if(matchedCount == patternsToMatch.length) {
+                            Logger.debug("Matched all required files");
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        Logger.debug("Failed to matched all required files");
+        return false;
+   }
 
     /**
      * Get the system search path components.
@@ -109,6 +111,13 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
             return Collections.emptyList();
         }
     }
+
+    /**
+     * Get the filename patterns to search for.
+     *
+     * @return filename patterns
+     */
+    protected abstract Pattern[] getFilenamePatterns();
 
     /**
      * Get the names of the directories that should be searched.

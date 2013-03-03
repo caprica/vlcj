@@ -27,7 +27,7 @@ import java.util.List;
  * <p>
  * This strategy should be supported across all platforms.
  */
-public class StandardNativeDiscoveryStrategy extends AbstractNativeDiscoveryStrategy {
+public abstract class StandardNativeDiscoveryStrategy extends AbstractNativeDiscoveryStrategy {
 
     @Override
     public boolean supported() {

@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.discovery.mac;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import uk.co.caprica.vlcj.discovery.StandardNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -29,6 +30,19 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * standard well-known directory locations on MacOS.
  */
 public class DefaultMacNativeDiscoveryStrategy extends StandardNativeDiscoveryStrategy {
+
+    /**
+     * Filename patterns to search for.
+     */
+    private static final Pattern[] FILENAME_PATTERNS = new Pattern[] {
+        Pattern.compile("libvlc\\.dylib"),
+        Pattern.compile("libvlccore\\.dylib")
+    };
+
+    @Override
+    protected Pattern[] getFilenamePatterns() {
+        return FILENAME_PATTERNS;
+    }
 
     @Override
     public final boolean supported() {

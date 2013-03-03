@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.discovery.linux;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import uk.co.caprica.vlcj.discovery.StandardNativeDiscoveryStrategy;
 
@@ -29,8 +30,29 @@ import uk.co.caprica.vlcj.discovery.StandardNativeDiscoveryStrategy;
  */
 public class DefaultLinuxNativeDiscoveryStrategy extends StandardNativeDiscoveryStrategy {
 
+    /**
+     * Filename patterns to search for.
+     * <p>
+     * The intent is to match one of (for example):
+     * <ul>
+     *   <li>libvlc.so</li>
+     *   <li>libvlc.so.5</li>
+     *   <li>libvlc.so.5.3.0</li>
+     * </ul>
+     */
+    private static final Pattern[] FILENAME_PATTERNS = new Pattern[] {
+        Pattern.compile("libvlc\\.so(?:\\.\\d)*"),
+        Pattern.compile("libvlccore\\.so(?:\\.\\d)*")
+    };
+
+    @Override
+    protected Pattern[] getFilenamePatterns() {
+        return FILENAME_PATTERNS;
+    }
+
     @Override
     protected void onGetDirectoryNames(List<String> directoryNames) {
-        // Nothing right now...
+        directoryNames.add("/usr/lib");
+        directoryNames.add("/usr/local/lib");
     }
 }

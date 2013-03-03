@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.discovery.windows;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import uk.co.caprica.vlcj.discovery.StandardNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -30,6 +31,19 @@ import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
  * standard well-known directory locations on Windows.
  */
 public class DefaultWindowsNativeDiscoveryStrategy extends StandardNativeDiscoveryStrategy {
+
+    /**
+     * Filename patterns to search for.
+     */
+    private static final Pattern[] FILENAME_PATTERNS = new Pattern[] {
+        Pattern.compile("libvlc\\.dll"),
+        Pattern.compile("libvlccore\\.dll")
+    };
+
+    @Override
+    protected Pattern[] getFilenamePatterns() {
+        return FILENAME_PATTERNS;
+    }
 
     @Override
     public final boolean supported() {
