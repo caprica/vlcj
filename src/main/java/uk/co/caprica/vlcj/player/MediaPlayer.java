@@ -199,10 +199,14 @@ public interface MediaPlayer {
     /**
      * Play a new media item, with options.
      * <p>
-     * The new media will begin play-back immediately.
+     * The new media will begin play-back <em>asynchronously</em>. This means that some
+     * media player functions will likely not work if you invoke them immediately after
+     * invoking this method - you will in some circumstances need to wait for an appropriate
+     * event to be fired before some API functions will have an effect.
      * <p>
      * When playing files, depending on the run-time Operating System it may be necessary
-     * to pass a URL here (beginning with "file://") rather than a local file path.
+     * to pass a URL here (beginning with "file://") rather than a local file path. This
+     * should actually <em>not</em> be required.
      *
      * @param mrl media resource locator
      * @param mediaOptions zero or more media item options
