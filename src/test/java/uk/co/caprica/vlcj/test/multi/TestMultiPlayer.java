@@ -63,8 +63,10 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class TestMultiPlayer extends VlcjTest {
 
     private final String[] medias = {
-        "wibble1.mp4",
-        "wibble2.mp4"
+        "/home/videos/1.flv",
+        "/home/videos/2.flv",
+        "/home/videos/3.flv",
+        "/home/videos/4.flv",
         // Your MRL's go here
     };
 
@@ -92,7 +94,7 @@ public class TestMultiPlayer extends VlcjTest {
         contentPane.setLayout(new GridLayout(rows, cols, 16, 16));
         contentPane.setBorder(new EmptyBorder(16, 16, 16, 16));
 
-        mainFrame = new Frame("VLCJ Test Multi Player for VLC 1.2.x");
+        mainFrame = new Frame("VLCJ Test Multi Player");
         mainFrame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
         mainFrame.setLayout(new BorderLayout());
         mainFrame.setBackground(Color.black);
@@ -160,8 +162,8 @@ public class TestMultiPlayer extends VlcjTest {
                 // When libvlc_media_player_play() is called, the video playback is kicked
                 // off asynchronously - so the API call will return before the video has
                 // started playing. If we invoke play and then wait (making this effectively
-                // a synchronous call) for the player to start playing, the hard VM crash
-                // does not occur
+                // a synchronous call) for the player to start playing, there is less chance
+                // for the hard VM crash to occur - but it still might
                 for(int i = 0; i < medias.length; i ++ ) {
                     EmbeddedMediaPlayer mediaPlayer = players.get(i).mediaPlayer();
                     mediaPlayer.start();
