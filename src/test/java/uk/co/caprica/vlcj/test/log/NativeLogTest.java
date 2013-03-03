@@ -62,7 +62,7 @@ public class NativeLogTest extends VlcjTest {
         log.addLogListener(new LogEventListener() {
             @Override
             public void log(libvlc_log_level_e level, String message) {
-                System.out.printf("%-7s: %s\n", level, message);
+                System.out.printf("%7s: %s\n", level, message);
             }
         });
 
