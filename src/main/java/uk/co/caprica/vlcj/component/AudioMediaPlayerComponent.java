@@ -75,6 +75,7 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
      * required.
      */
     protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
+        "--ignore-config",
         "--no-plugins-cache",
         "--quiet",
         "--quiet-synchro",

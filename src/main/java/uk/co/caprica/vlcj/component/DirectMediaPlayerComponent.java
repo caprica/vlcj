@@ -73,6 +73,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      * required.
      */
     protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
+        "--ignore-config",
         "--no-plugins-cache",
         "--no-video-title-show",
         "--no-snapshot-preview",
