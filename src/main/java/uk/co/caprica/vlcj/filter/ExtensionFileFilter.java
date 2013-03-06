@@ -84,7 +84,7 @@ public abstract class ExtensionFileFilter implements FileFilter {
             String name = pathname.getName();
             int dot = name.lastIndexOf('.');
             if(dot != -1 && dot + 1 < name.length()) {
-                String extension = name.substring(dot + 1);
+                String extension = name.substring(dot + 1).toLowerCase();
                 return extensionsSet.contains(extension);
             }
         }
