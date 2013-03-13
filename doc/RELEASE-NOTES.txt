@@ -7,3 +7,8 @@
 
 A small backwardly incompatible API change was made for this release. If you
 previously used the SpuTrackInfo class, you must now use TextTrackInfo instead.
+
+2.2.0
+=====
+
+There is new API to access the native log - this requires vlc 2.1.0 or later.
