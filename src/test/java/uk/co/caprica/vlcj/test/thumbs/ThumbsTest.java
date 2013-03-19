@@ -50,6 +50,8 @@ public class ThumbsTest extends VlcjTest {
         "--intf", "dummy",          /* no interface */
         "--vout", "dummy",          /* we don't want video (output) */
         "--no-audio",               /* we don't want audio (decoding) */
+        "--no-osd",
+        "--no-spu",
         "--no-video-title-show",    /* nor the filename displayed */
         "--no-stats",               /* no stats */
         "--no-sub-autodetect-file", /* we don't want subtitles */
