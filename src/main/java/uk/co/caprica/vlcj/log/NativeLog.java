@@ -28,9 +28,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_level_e;
-import uk.co.caprica.vlcj.binding.internal.libvlc_log_subscriber_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
 
@@ -75,14 +76,14 @@ public class NativeLog {
     private final LibVlc libvlc;
 
     /**
+     * LibVlc instance.
+     */
+    private final libvlc_instance_t instance;
+
+    /**
      * Native log callback.
      */
     private libvlc_log_cb callback;
-
-    /**
-     * Native log instance.
-     */
-    private libvlc_log_subscriber_t subscriberInstance;
 
     /**
      * Set to true when the log has been released.
@@ -100,10 +101,12 @@ public class NativeLog {
      * Create a new native log component.
      *
      * @param libvlc native library instance
+     * @param instance libvlc instance
      */
-    public NativeLog(LibVlc libvlc) {
+    public NativeLog(LibVlc libvlc, libvlc_instance_t instance) {
         if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_210)) {
             this.libvlc = libvlc;
+            this.instance = instance;
             createInstance();
         }
         else {
@@ -170,8 +173,7 @@ public class NativeLog {
         // Create a native callback to receive log messages
         callback = new NativeLogCallback();
         // Subscribe to the native log
-        subscriberInstance = new libvlc_log_subscriber_t();
-        libvlc.libvlc_log_subscribe(subscriberInstance, callback, null);
+        libvlc.libvlc_log_set(instance, callback, null);
     }
 
     /**
@@ -180,7 +182,7 @@ public class NativeLog {
     private void destroyInstance() {
         Logger.debug("destroyInstance()");
         // Stop receiving native log messages
-        libvlc.libvlc_log_unsubscribe(subscriberInstance);
+        libvlc.libvlc_log_unset(instance);
         // Clear all registered listeners
         eventListenerList.clear();
         // Shut down the listener service
@@ -205,7 +207,7 @@ public class NativeLog {
     private final class NativeLogCallback implements libvlc_log_cb {
 
         @Override
-        public void log(Pointer data, int level, String format, Pointer args) {
+        public void log(Pointer data, int level, libvlc_log_t ctx, String format, Pointer args) {
             // If the log is not being suppressed...
             if(logLevel != null && level >= logLevel.intValue()) {
                 // Allocate a new buffer to hold the formatted log message

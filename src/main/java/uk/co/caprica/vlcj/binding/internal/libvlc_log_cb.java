@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
-
 import com.sun.jna.Callback;
 import com.sun.jna.Pointer;
 
@@ -30,12 +28,15 @@ import com.sun.jna.Pointer;
 public interface libvlc_log_cb extends Callback {
 
     /**
-     * Process a log message.
+     * Callback prototype for LibVLC log message handler.
+     * <p>
+     * <em>Log message handlers <b>must</b> be thread-safe.</em>
      *
-     * @param data opaque data as set by {@link LibVlc#libvlc_log_subscribe(libvlc_log_subscriber_t, libvlc_log_cb, Pointer)}
-     * @param level log level
-     * @param format printf-style format string
-     * @param args format arguments
+     * @param data data pointer as given to libvlc_log_set()
+     * @param level message level {@link libvlc_log_level_e}
+     * @param ctx message context (meta-informations about the message)
+     * @param fmt printf() format string (as defined by ISO C11)
+     * @param args variable argument list for the format
      */
-    void log(Pointer data, int level, String format, Pointer args);
+    void log(Pointer data, int level, libvlc_log_t ctx, String format, Pointer args);
 }

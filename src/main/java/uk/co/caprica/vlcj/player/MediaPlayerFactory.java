@@ -648,7 +648,7 @@ public class MediaPlayerFactory {
     public NativeLog newLog() {
         Logger.debug("newLog()");
         if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_210)) {
-            return new NativeLog(libvlc);
+            return new NativeLog(libvlc, instance);
         }
         else {
             Logger.warn("Native log not available on this platform, needs libvlc 2.1.0 or later");
