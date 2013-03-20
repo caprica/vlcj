@@ -37,6 +37,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
@@ -248,6 +249,52 @@ public interface LibVlc extends Library {
      * @param event_type the desired event
      */
     String libvlc_event_type_name(int event_type);
+
+    /**
+     * Gets debugging informations about a log message: the name of the VLC module
+     * emitting the message and the message location within the source code.
+     * <p>
+     * The returned module name and file name will be NULL if unknown.
+     * <p>
+     * The returned line number will similarly be zero if unknown.
+     * <p>
+     * <strong>The returned module name and source code file name, if non-NULL,
+     * are only valid until the logging callback returns.* </strong>
+     *
+     * @param ctx message context (as passed to the {@link libvlc_log_cb})
+     * @param module module name storage (or NULL) [OUT]
+     * @param file source code file name storage (or NULL) [OUT]
+     * @param line source code file line number storage (or NULL) [OUT]
+     *
+     * @since LibVLC 2.1.0 or later
+     */
+    void libvlc_log_get_context(libvlc_log_t ctx, PointerByReference module, PointerByReference file, IntByReference line);
+
+    /**
+     * Gets VLC object informations about a log message: the type name of the VLC
+     * object emitting the message, the object header if any and a temporaly-unique
+     * object identifier. These informations are mainly meant for <b>manual</b>
+     * troubleshooting.
+     * <p>
+     * The returned type name may be "generic" if unknown, but it cannot be NULL.
+     * <p>
+     * The returned header will be NULL if unset; in current versions, the header
+     * is used to distinguish for VLM inputs.
+     * <p>
+     * The returned object ID will be zero if the message is not associated with
+     * any VLC object.
+     * <p>
+     * <strong>The returned module name and source code file name, if non-NULL,
+     * are only valid until the logging callback returns.</strong>
+     *
+     * @param ctx message context (as passed to the {@link libvlc_log_cb})
+     * @param name object name storage (or NULL) [OUT]
+     * @param header object header (or NULL) [OUT]
+     * @param line source code file line number storage (or NULL) [OUT]
+     *
+     * @since LibVLC 2.1.0 or later
+     */
+    void libvlc_log_get_object(libvlc_log_t ctx, PointerByReference name, PointerByReference header, IntByReference id);
 
     /**
      * Unsets the logging callback for a LibVLC instance. This is rarely needed:

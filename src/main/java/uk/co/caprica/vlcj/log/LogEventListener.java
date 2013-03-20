@@ -30,7 +30,13 @@ public interface LogEventListener {
      * Process a native log message.
      *
      * @param level log level
+     * @param module module
+     * @param file file
+     * @param line line number
+     * @param name name
+     * @param header header
+     * @param id object identifier
      * @param message log message
      */
-    void log(libvlc_log_level_e level, String message);
+    void log(libvlc_log_level_e level, String module, String file, Integer line, String name, String header, Integer id, String message);
 }

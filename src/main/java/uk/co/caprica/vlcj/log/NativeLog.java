@@ -36,6 +36,8 @@ import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
 
 import com.sun.jna.Pointer;
+import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
 
 /**
  * Encapsulation of the vlc native log.
@@ -217,7 +219,6 @@ public class NativeLog {
                 // If the message was formatted without error...
                 if(size >= 0) {
                     // FIXME could reallocate a new buffer here and try again if size > capacity?
-
                     // Determine the number of available characters (actually number of bytes)
                     size = Math.min(size, BUFFER_SIZE);
                     // Create a new string from the byte buffer contents
@@ -225,8 +226,23 @@ public class NativeLog {
                     byteBuffer.get(bytes);
                     String message = new String(bytes);
                     if(message.length() > 0) {
+                        // Get the information about the object that emitted the log statement
+                        PointerByReference modulePointer = new PointerByReference();
+                        PointerByReference filePointer = new PointerByReference();
+                        IntByReference linePointer = new IntByReference();
+                        libvlc.libvlc_log_get_context(ctx, modulePointer, filePointer, linePointer);
+                        PointerByReference namePointer = new PointerByReference();
+                        PointerByReference headerPointer = new PointerByReference();
+                        IntByReference idPointer = new IntByReference();
+                        libvlc.libvlc_log_get_object(ctx, namePointer, headerPointer, idPointer);
+                        String module = getString(modulePointer);
+                        String file = getString(filePointer);
+                        Integer line = linePointer.getValue();
+                        String name = getString(namePointer);
+                        String header = getString(headerPointer);
+                        Integer id = idPointer.getValue();
                         // ...send the event
-                        raiseLogEvent(libvlc_log_level_e.level(level), message);
+                        raiseLogEvent(libvlc_log_level_e.level(level), module, file, line, name, header, id, message);
                     }
                 }
                 else {
@@ -237,15 +253,32 @@ public class NativeLog {
     }
 
     /**
+     * Dereference a pointer (that may be <code>null</code>) to get a string.
+     *
+     * @param pointer pointer
+     * @return string, or <code>null</code> if the pointer is <code>null</code>
+     */
+    private String getString(PointerByReference pointer) {
+        Pointer value = pointer.getValue();
+        return value != null ? value.getString(0) : null;
+    }
+
+    /**
      * Raise a log event.
      *
      * @param level log level
+     * @param module module
+     * @param file file
+     * @param line line number
+     * @param name name
+     * @param header header
+     * @param id object identifier
      * @param message log message
      */
-    private void raiseLogEvent(libvlc_log_level_e level, String message) {
-        Logger.trace("raiseLogEvent(level={},message={}", level, message);
+    private void raiseLogEvent(libvlc_log_level_e level, String module, String file, Integer line, String name, String header, Integer id, String message) {
+        Logger.trace("raiseLogEvent(level={},module={},line={},name={},header={},id={},message={}", level, module, file, line, name, header, id, message);
         // Submit a new log event so message are sent serially and asynchronously
-        listenersService.submit(new NotifyEventListenersRunnable(level, message));
+        listenersService.submit(new NotifyEventListenersRunnable(level, module, file, line, name, header, id, message));
 
     }
 
@@ -265,6 +298,36 @@ public class NativeLog {
         private final libvlc_log_level_e level;
 
         /**
+         * Module.
+         */
+        private final String module;
+
+        /**
+         * File.
+         */
+        private final String file;
+
+        /**
+         * Line number.
+         */
+        private final Integer line;
+
+        /**
+         * Name.
+         */
+        private final String name;
+
+        /**
+         * Header.
+         */
+        private final String header;
+
+        /**
+         * Object identifier.
+         */
+        private final Integer id;
+
+        /**
          * Log message.
          */
         private final String message;
@@ -272,10 +335,25 @@ public class NativeLog {
         /**
          * Create a runnable.
          *
+         * @param level log level
+         * @param module module
+         * @param file file
+         * @param line line number
+         * @param name name
+         * @param header header
+         * @param id object identifier
+         * @param message log message
+         *
          * @param mediaPlayerEvent event to notify
          */
-        private NotifyEventListenersRunnable(libvlc_log_level_e level, String message) {
+        private NotifyEventListenersRunnable(libvlc_log_level_e level, String module, String file, Integer line, String name, String header, Integer id, String message) {
             this.level = level;
+            this.module = module;
+            this.file = file;
+            this.line = line;
+            this.name = name;
+            this.header = header;
+            this.id = id;
             this.message = message;
         }
 
@@ -285,7 +363,7 @@ public class NativeLog {
             for(int i = eventListenerList.size() - 1; i >= 0; i -- ) {
                 LogEventListener listener = eventListenerList.get(i);
                 try {
-                    listener.log(level, message);
+                    listener.log(level, module, file, line, name, header, id, message);
                 }
                 catch(Exception e) {
                     Logger.warn("Event listener {} threw an exception", e, listener);
