@@ -950,6 +950,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         Logger.debug("cycleSpu()");
         int spu = getSpu();
         int spuCount = getSpuCount();
+        Logger.debug("spuCount={}", spuCount);
         if(spu >= spuCount) {
             spu = 0;
         }
