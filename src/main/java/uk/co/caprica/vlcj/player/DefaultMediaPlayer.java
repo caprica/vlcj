@@ -747,13 +747,13 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public void setTime(long time) {
         Logger.debug("setTime(time={})", time);
-        libvlc.libvlc_media_player_set_time(mediaPlayerInstance, time);
+        libvlc.libvlc_media_player_set_time(mediaPlayerInstance, Math.max(time, 0));
     }
 
     @Override
     public void setPosition(float position) {
         Logger.debug("setPosition(position={})", position);
-        libvlc.libvlc_media_player_set_position(mediaPlayerInstance, position);
+        libvlc.libvlc_media_player_set_position(mediaPlayerInstance, Math.max(position, 0));
     }
 
     @Override

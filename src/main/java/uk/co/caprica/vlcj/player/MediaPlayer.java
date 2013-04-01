@@ -709,6 +709,8 @@ public interface MediaPlayer {
 
     /**
      * Jump to a specific moment.
+     * <p>
+     * If the requested time is less than zero, it is normalised to zero.
      *
      * @param time time since the beginning, in milliseconds
      */
@@ -716,6 +718,8 @@ public interface MediaPlayer {
 
     /**
      * Jump to a specific position.
+     * <p>
+     * If the requested position is less than zero, it is normalised to zero.
      *
      * @param position position value, a percentage (e.g. 0.15 is 15%)
      */
