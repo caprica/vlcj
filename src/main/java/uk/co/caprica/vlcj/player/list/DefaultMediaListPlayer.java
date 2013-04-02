@@ -184,7 +184,12 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     @Override
     public boolean playItem(int itemIndex) {
         Logger.debug("playItem(itemIndex={})", itemIndex);
-        return libvlc.libvlc_media_list_player_play_item_at_index(mediaListPlayerInstance, itemIndex) == 0;
+        if(mediaList != null && itemIndex >= 0 && itemIndex < mediaList.size()) {
+            return libvlc.libvlc_media_list_player_play_item_at_index(mediaListPlayerInstance, itemIndex) == 0;
+        }
+        else {
+            throw new IllegalArgumentException("Item index is out of bounds");
+        }
     }
 
     @Override
