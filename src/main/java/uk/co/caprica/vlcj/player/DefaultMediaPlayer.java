@@ -431,8 +431,10 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                     if(subItemIndex != -1) {
                         // Get the required sub item from the list
                         libvlc_media_t subItem = libvlc.libvlc_media_list_item_at_index(subItems, subItemIndex);
+                        Logger.debug("subItem={}", subItem);
                         // If there is an item to play...
                         if(subItem != null) {
+                            Logger.debug("subItemMrl={}", mrl(subItem));
                             // Set the sub-item as the new media for the media player
                             libvlc.libvlc_media_player_set_media(mediaPlayerInstance, subItem);
                             // Set any standard media options
