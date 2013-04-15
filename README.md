@@ -38,7 +38,7 @@ Note that some features of vlcj 2.2.0 (access to the native log) require vlc 2.1
 News
 ----
 
-Easter commercial license promotion, see [details](http://www.capricasoftware.co.uk/vlcj/promotion.php).
+Easter commercial license promotion, see [details](http://www.capricasoftware.co.uk/projects/vlcj/promotion.html).
 
 --/--/2013 Upcoming release 2.3.0, minor API incompatibility with previous version caused by renaming SpuTrackInfo class to TextTrackInfo.
 
