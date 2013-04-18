@@ -35,7 +35,7 @@ public final class Version implements Comparable<Version> {
     /**
      *
      */
-    private static final Pattern VERSION_PATTERN = Pattern.compile("(\\d)+\\.(\\d)+\\.(\\d+).*");
+    private static final Pattern VERSION_PATTERN = Pattern.compile("(\\d)+\\.(\\d)+\\.(\\d+)[\\-_]?(.*)");
 
     /**
      * Raw version information.
@@ -135,8 +135,7 @@ public final class Version implements Comparable<Version> {
      * Test whether or not this version is at least the required version.
      *
      * @param required required version
-     * @return <code>true</code> if this version is at least (equal to or
-     *         greater than) the required version
+     * @return <code>true</code> if this version is at least (equal to or greater than) the required version
      */
     public boolean atLeast(Version required) {
         return compareTo(required) >= 0;

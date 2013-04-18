@@ -38,6 +38,7 @@ public class VersionFormatTest {
         test("1.2.0");
         test("1.2.0-b1");
         test("1.1.10 The Luggage");
+        test("1.7.0_17");
     }
 
     /**
@@ -51,6 +52,7 @@ public class VersionFormatTest {
         try {
             new Version(v);
             System.out.println("OK!");
+            System.out.println(new Version(v).extra());
         }
         catch(Throwable t) {
             System.out.println("ERROR: " + t.getMessage());
