@@ -35,7 +35,7 @@ public final class Version implements Comparable<Version> {
     /**
      *
      */
-    private static final Pattern VERSION_PATTERN = Pattern.compile("(\\d)+\\.(\\d)+\\.(\\d+)[\\-_]?(.*)");
+    private static final Pattern VERSION_PATTERN = Pattern.compile("(\\d)+\\.(\\d)+\\.(\\d+)[\\-_\\s]?(.*)");
 
     /**
      * Raw version information.
