@@ -130,6 +130,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
         "--no-snapshot-preview",
         "--quiet",
         "--quiet-synchro",
+        "--sub-filter=logo:marq",
         "--intf=dummy"
     };
 

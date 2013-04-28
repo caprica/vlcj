@@ -79,6 +79,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
         "--no-snapshot-preview",
         "--quiet",
         "--quiet-synchro",
+        "--sub-filter=logo:marq",
         "--intf=dummy"
     };
 
