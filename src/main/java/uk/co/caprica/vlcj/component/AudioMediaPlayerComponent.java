@@ -79,8 +79,7 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
         "--no-plugins-cache",
         "--quiet",
         "--quiet-synchro",
-        "--intf",
-        "dummy"
+        "--intf=dummy"
     };
 
     /**
