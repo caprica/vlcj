@@ -35,7 +35,7 @@ public interface libvlc_log_cb extends Callback {
      * @param data data pointer as given to libvlc_log_set()
      * @param level message level {@link libvlc_log_level_e}
      * @param ctx message context (meta-informations about the message)
-     * @param fmt printf() format string (as defined by ISO C11)
+     * @param format printf() format string (as defined by ISO C11)
      * @param args variable argument list for the format
      */
     void log(Pointer data, int level, libvlc_log_t ctx, String format, Pointer args);
