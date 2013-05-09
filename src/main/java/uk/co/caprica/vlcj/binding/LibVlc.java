@@ -290,7 +290,7 @@ public interface LibVlc extends Library {
      * @param ctx message context (as passed to the {@link libvlc_log_cb})
      * @param name object name storage (or NULL) [OUT]
      * @param header object header (or NULL) [OUT]
-     * @param line source code file line number storage (or NULL) [OUT]
+     * @param id source code file line number storage (or NULL) [OUT]
      *
      * @since LibVLC 2.1.0 or later
      */
