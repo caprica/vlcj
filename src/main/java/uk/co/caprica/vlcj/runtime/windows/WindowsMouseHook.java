@@ -197,14 +197,20 @@ public class WindowsMouseHook implements LowLevelMouseProc {
     }
 
     /**
-   *
-   */
+     *
+     */
     public synchronized void release() {
         Logger.debug("release()");
         HHOOK hook = getHook();
+        Logger.debug("hook={}", hook);
         if(hook != null) {
-            USER32_INSTANCE.UnhookWindowsHookEx(hHook);
-            hook = null;
+            Logger.debug("Before unhook...");
+            USER32_INSTANCE.UnhookWindowsHookEx(hook);
+            Logger.debug("...after unhook");
+            // Release the native reference - this volatile reference is cleared inside a
+            // synchronised block
+            hHook = null;
+            Logger.debug("Cleared native hook reference");
             // TODO ordinarily I'd interrupt the thread to force it to exit if it's
             // blocked, but in this case a fatal VM failure would occur
             // hookThread.interrupt();
@@ -423,16 +429,25 @@ public class WindowsMouseHook implements LowLevelMouseProc {
      * Message loop for the mouse hook.
      */
     private class MouseHookThread extends Thread {
+
+        private MouseHookThread() {
+            super("vlcj native mouse hook");
+        }
+
         @Override
         public void run() {
             Logger.debug("run()");
             try {
+                Logger.debug("Before set hook...");
                 hHook = USER32_INSTANCE.SetWindowsHookEx(WinUser.WH_MOUSE_LL, WindowsMouseHook.this, Kernel32.INSTANCE.GetModuleHandle(null), 0);
+                Logger.debug("...after set hook");
                 MSG msg = new MSG();
                 while((USER32_INSTANCE.GetMessage(msg, null, 0, 0)) != 0) {
+                    Logger.debug("Inside native mouse hook...");
                     // This code is never reached
                     USER32_INSTANCE.TranslateMessage(msg);
                     USER32_INSTANCE.DispatchMessage(msg);
+                    // This call is synchronised, and returns the reference stored in a volatile field
                     if(getHook() == null) {
                         break;
                     }
