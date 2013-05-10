@@ -29,11 +29,11 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>2.2.0</version>
+    <version>2.3.0</version>
 </dependency>
 ```
 
-Note that some features of vlcj 2.2.0 (access to the native log) require vlc 2.1.0 which has *not* yet been released.
+Note that some features of vlcj 2.2.0 and later (access to the native log) require vlc 2.1.0 which has *not* yet been released.
 
 News
 ----
