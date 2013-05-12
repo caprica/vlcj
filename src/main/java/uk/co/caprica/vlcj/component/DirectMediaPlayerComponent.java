@@ -164,6 +164,23 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     }
 
     /**
+     * Release the media player component and the associated media player factory.
+     * <p>
+     * Optionally release the media player factory.
+     * <p>
+     * This method invokes {@link #release()}, then depending on the value of the <code>releaseFactory</code>
+     * parameter the associated factory will also be released.
+     *
+     * @param releaseFactory <code>true</code> if the factory should also be released; <code>false</code> if it should not
+     */
+    public final void release(boolean releaseFactory) {
+        release();
+        if(releaseFactory) {
+            mediaPlayerFactory.release();
+        }
+    }
+
+    /**
      * Template method to create a media player factory.
      * <p>
      * The default implementation will invoke the {@link #onGetMediaPlayerFactoryArgs()} template

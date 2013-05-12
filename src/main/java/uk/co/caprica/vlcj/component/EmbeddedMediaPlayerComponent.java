@@ -237,6 +237,23 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     }
 
     /**
+     * Release the media player component and the associated media player factory.
+     * <p>
+     * Optionally release the media player factory.
+     * <p>
+     * This method invokes {@link #release()}, then depending on the value of the <code>releaseFactory</code>
+     * parameter the associated factory will also be released.
+     *
+     * @param releaseFactory <code>true</code> if the factory should also be released; <code>false</code> if it should not
+     */
+    public final void release(boolean releaseFactory) {
+        release();
+        if(releaseFactory) {
+            mediaPlayerFactory.release();
+        }
+    }
+
+    /**
      * Create a blank 1x1 image to use when the cursor is disabled.
      *
      * @return cursor
