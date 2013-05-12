@@ -153,6 +153,9 @@ import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
  * subsequently need to be played. The media player can be set to automatically play these sub-items
  * via {@link #setPlaySubItems(boolean)}, otherwise {@link #playNextSubItem(String...)} can be
  * invoked in response to a {@link MediaPlayerEventListener#finished(MediaPlayer)} event.
+ * <p>
+ * It is always a better strategy to reuse media player instances, rather than repeatedly creating
+ * and destroying instances.
  *
  * @see EmbeddedMediaPlayerComponent
  */

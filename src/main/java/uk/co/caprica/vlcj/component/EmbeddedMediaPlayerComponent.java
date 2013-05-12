@@ -110,6 +110,9 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  * Since the media player factory associated by this component may be created by this component
  * itself or may be shared with some other media player resources it is the responsibility of
  * the application to also release the media player factory at the appropriate time.
+ * <p>
+ * It is always a better strategy to reuse media player components, rather than repeatedly creating
+ * and destroying instances.
  */
 @SuppressWarnings("serial")
 public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEventListener {

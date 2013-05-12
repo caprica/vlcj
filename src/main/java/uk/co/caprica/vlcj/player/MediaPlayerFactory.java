@@ -106,6 +106,9 @@ import uk.co.caprica.vlcj.version.Version;
  * unpredictable behaviour will occur (such as events no longer seeming to fire) even though the
  * video playback continues (since that happens via native code). You may also likely suffer fatal
  * JVM crashes.
+ * <p>
+ * It is always a better strategy to reuse media player instances, rather than repeatedly creating
+ * and destroying instances.
  */
 public class MediaPlayerFactory {
 
