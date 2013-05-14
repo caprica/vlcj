@@ -96,7 +96,7 @@ public class LogoTest extends VlcjTest {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                mediaPlayerComponent.release();
+                mediaPlayerComponent.release(true);
             }
         });
     }

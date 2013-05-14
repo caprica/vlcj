@@ -48,7 +48,7 @@ public class MinimalTestPlayer extends VlcjTest {
         f.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                mediaPlayerComponent.release();
+                mediaPlayerComponent.release(true);
             }
         });
         f.setContentPane(mediaPlayerComponent);

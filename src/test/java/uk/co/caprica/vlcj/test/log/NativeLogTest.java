@@ -85,6 +85,6 @@ public class NativeLogTest extends VlcjTest {
 
         // Must release the components to exit (otherwise threads are left running)
         log.release();
-        mediaPlayerComponent.release();
+        mediaPlayerComponent.release(true);
     }
 }
