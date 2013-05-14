@@ -111,7 +111,7 @@ public class InputListenerTest extends VlcjTest {
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
-                mediaPlayerComponent.release();
+                mediaPlayerComponent.release(true);
             }
         });
         mainFrame.setVisible(true);
