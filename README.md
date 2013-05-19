@@ -12,7 +12,8 @@ that hides a lot of the complexities of working with libvlc.
 
 vlcj is primarily developed and therefore extensively tested on Linux - it does
 also work just fine on Windows and should work on Mac - but for Mac you likely
-need a bleeding-edge release of vlc.
+need to use a release of vlc no later than 2.0.3, vlc 2.0.4 and later will 
+likely *not* work on Mac.
 
 At least JDK 1.6 is required, and it works without changes on JDK 1.7.
 
