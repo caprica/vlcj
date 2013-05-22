@@ -24,7 +24,7 @@
 
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>2.3.1-SNAPSHOT</version>
+    <version>2.3.1</version>
 
     <name>vlcj</name>
     <description>Java Framework for the vlc Media Player.</description>
