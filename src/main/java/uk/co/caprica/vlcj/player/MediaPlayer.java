@@ -156,6 +156,9 @@ import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
  * <p>
  * It is always a better strategy to reuse media player instances, rather than repeatedly creating
  * and destroying instances.
+ * <p>
+ * Note that media player implementations will guarantee that native media player events are delivered
+ * in a single-threaded sequential manner.
  *
  * @see EmbeddedMediaPlayerComponent
  */
