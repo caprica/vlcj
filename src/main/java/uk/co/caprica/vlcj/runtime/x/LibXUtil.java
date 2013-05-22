@@ -81,6 +81,11 @@ public final class LibXUtil {
                 Logger.debug("Did not initialise LibX11: {}", e.getMessage());
             }
         }
+        catch(Error e) {
+            if(!RuntimeUtil.isWindows()) {
+                Logger.debug("Did not initialise LibX11: {}", e.getMessage());
+            }
+        }
     }
 
     /**
