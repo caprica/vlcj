@@ -30,7 +30,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>2.3.0</version>
+    <version>2.3.1</version>
 </dependency>
 ```
 
@@ -38,6 +38,8 @@ Note that some features of vlcj 2.2.0 and later (access to the native log) requi
 
 News
 ----
+
+22/05/2013 Made new release 2.3.1 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), changed to fix execution of tests on Windows (you only need to uppdate to this version if you want to run the tests on Windows).
 
 10/05/2013 Made new release 2.3.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), minor API incompatibility with previous version caused by renaming SpuTrackInfo class to TextTrackInfo.
 
