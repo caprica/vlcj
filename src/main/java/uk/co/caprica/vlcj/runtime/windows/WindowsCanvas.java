@@ -32,6 +32,7 @@ import java.awt.event.MouseWheelListener;
 import javax.swing.event.EventListenerList;
 
 import uk.co.caprica.vlcj.logger.Logger;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
  * Implementation of a Canvas that uses a native windows message hook to make sure events are
@@ -53,7 +54,10 @@ import uk.co.caprica.vlcj.logger.Logger;
  * when it is no longer needed.
  * <p>
  * <strong>This class is experimental, unsupported and unstable in operation.</strong>
+ *
+ * @deprecated Use a regular <code>java.awt.Canvas</code> and {@link EmbeddedMediaPlayer#setEnableKeyInputHandling(boolean)} and {@link EmbeddedMediaPlayer#setEnableMouseInputHandling(boolean)}
  */
+@Deprecated
 public class WindowsCanvas extends Canvas {
 
     /**

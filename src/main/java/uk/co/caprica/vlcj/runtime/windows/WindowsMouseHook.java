@@ -79,6 +79,7 @@ import com.sun.jna.platform.win32.WinUser.POINT;
  * FIXME: There is probably a whole bunch more synchronisation should be going on in here, for
  * example during release() the listeners should be removed and the call-back should be protected.
  */
+@Deprecated
 public class WindowsMouseHook implements LowLevelMouseProc {
 
     /**
