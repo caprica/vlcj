@@ -155,6 +155,9 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
 
     /**
      * Set whether or not to enable native media player mouse input handling.
+     * <p>
+     * It may be necessary on some platforms to invoke this method with a <code>false</code> parameter
+     * value for Java mouse and keyboard listeners to work.
      *
      * @param enable <code>true</code> to enable, <code>false</code> to disable
      */
@@ -162,6 +165,9 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
 
     /**
      * Set whether or not to enable native media player keyboard input handling.
+     * <p>
+     * It may be necessary on some platforms to invoke this method with a <code>false</code> parameter
+     * value for Java mouse and keyboard listeners to work.
      *
      * @param enable <code>true</code> to enable, <code>false</code> to disable
      */
