@@ -26,11 +26,15 @@ import com.sun.jna.Memory;
  * <p>
  * The render call-back provides access to the native memory buffer, if instead the full RGB integer
  * data is required for the full video frame then consider using {@link RenderCallbackAdapter}.
+ * <p>
+ * The render call-back is invoked by a <em>native</em> thread.
  */
 public interface RenderCallback {
 
     /**
      * Call-back when ready to display a video frame.
+     * <p>
+     * Implementations of this method must execute as quickly as possible.
      *
      * @param mediaPlayer media player to which the event relates
      * @param nativeBuffers video data for one frame
