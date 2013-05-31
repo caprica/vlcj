@@ -71,7 +71,7 @@ Online Javadoc is available:
 * [2.1.0](http://caprica.github.com/vlcj/javadoc/2.1.0/index.html "2.1.0 Javadoc")
 * [2.0.0](http://caprica.github.com/vlcj/javadoc/2.0.0/index.html "2.0.0 Javadoc")
 
-Documentation is being made available at [Caprica Software](http://www.capricasoftware.co.uk/wiki "Caprica Software WIKI"). 
+Documentation is being made available at [Caprica Software](http://www.capricasoftware.co.uk/projects/vlcj/index.html "Caprica Software"). 
 
 Support
 -------
