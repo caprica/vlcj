@@ -548,6 +548,11 @@ public class TestPlayer extends VlcjTest {
         }
 
         @Override
+        public void mouseClicked(MouseEvent e) {
+            Logger.debug("mouseClicked(e={})", e);
+        }
+
+        @Override
         public void mouseWheelMoved(MouseWheelEvent e) {
             Logger.debug("mouseWheelMoved(e={})", e);
         }
