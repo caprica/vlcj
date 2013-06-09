@@ -445,6 +445,8 @@ public class MediaList {
     private libvlc_media_t newMediaDescriptor(String media, String... mediaOptions) {
         Logger.debug("newMediaDescriptor(media={},mediaOptions={})", media, Arrays.toString(mediaOptions));
         libvlc_media_t mediaDescriptor;
+        // Encode the MRL if necessary (if it is a local file that contains Unicode characters)
+        media = MediaResourceLocator.encodeMrl(media);
         if(MediaResourceLocator.isLocation(media)) {
             Logger.debug("Treating mrl as a location");
             mediaDescriptor = libvlc.libvlc_media_new_location(instance, media);

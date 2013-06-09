@@ -1841,6 +1841,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         }
         // Reset sub-items
         subItemIndex = -1;
+        // Encode the MRL if necessary (if it is a local file that contains Unicode characters)
+        media = MediaResourceLocator.encodeMrl(media);
         // Create new media...
         if(MediaResourceLocator.isLocation(media)) {
             Logger.debug("Treating mrl as a location");
