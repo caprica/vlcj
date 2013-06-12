@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.test.layout;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -49,6 +50,7 @@ import javax.swing.border.EmptyBorder;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * An example showing one way to solve the problem of needing to "move" a media player video
@@ -70,13 +72,25 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
  * <p>
  * Click a video panel to zoom it, press the Escape key to return to the grid view.
  * <p>
+ * The strategy in this example is: when one video play is focused, resize the other video players
+ * to a size of 1x1 (setting the size to 0x0 will invalidate the video surface and cause playback
+ * to fail), move the video player to 0x0, and then use a CardLayout to switch from the video view
+ * to a blank container (without this you might still see colour changes in the 1x1 video player
+ * windows).
+ * <p>
+ * The other videos keep playing, but they do not have to.
+ * <p>
+ * The key point is that this example demonstrates how you can achieve the effect of moving,
+ * resizing, showing or hiding video surfaces without invalidating the video surface component and
+ * therefore without causing video playback to fail.
+ * <p>
  * Be warned, this example is somewhat of a lash-up for purposes of this demo only.
  * <p>
  * Be warned also that this example uses multiple in-process media players in the same application
  * and this is not without it's own well known risks.
  */
 @SuppressWarnings("serial")
-public class AdaptiveLayoutTest {
+public class AdaptiveLayoutTest extends VlcjTest {
 
     private static final String[] mrls = {
         // Put your MRL's here, this example uses 12
@@ -116,7 +130,7 @@ public class AdaptiveLayoutTest {
             }
         });
 
-        int rows = 3;
+        int rows = 3; // Change this to suit
         int cols = 4;
 
         layoutManager = new ZoomLayoutManager(rows, cols);
@@ -154,7 +168,11 @@ public class AdaptiveLayoutTest {
             setBackground(Color.black);
             setBorder(BorderFactory.createLineBorder(Color.white));
 
-            setLayout(new BorderLayout());
+            setLayout(new CardLayout());
+
+            JPanel vp = new JPanel();
+            vp.setLayout(new BorderLayout());
+            vp.setBackground(Color.pink);
 
             JPanel top = new JPanel();
             top.setBorder(BorderFactory.createEmptyBorder(2,  6,  2,  6));
@@ -165,7 +183,7 @@ public class AdaptiveLayoutTest {
             label.setForeground(Color.white);
             label.setFont(new Font("Sansserif", Font.BOLD, 12));
             top.add(label);
-            add(top, BorderLayout.NORTH);
+            vp.add(top, BorderLayout.NORTH);
 
             addMouseListener(new MouseAdapter() {
                 @Override
@@ -190,7 +208,13 @@ public class AdaptiveLayoutTest {
                 }
             });
 
-            add(mediaPlayer, BorderLayout.CENTER);
+            vp.add(mediaPlayer, BorderLayout.CENTER);
+
+            add(vp, "video");
+
+            JPanel p = new JPanel();
+            p.setBackground(Color.pink);
+            add(p, "hide");
         }
 
         MediaPlayer mediaPlayer() {
@@ -255,6 +279,7 @@ public class AdaptiveLayoutTest {
                     for(int c = 0; c < cols; c++) {
                         if(i < components.size()) {
                             Component comp = components.get(i++);
+                            ((CardLayout)((JComponent) comp).getLayout()).show((Container) comp, "video");
                             comp.setBounds(x, y, cellWidth, cellHeight);
                             x += cellWidth + hgap;
                         }
@@ -271,8 +296,10 @@ public class AdaptiveLayoutTest {
                     Component comp = components.get(i);
                     if(i != focusIndex) {
                         comp.setBounds(0, 0, 1, 1);
+                        ((CardLayout)((JComponent) comp).getLayout()).show((Container) comp, "hide");
                     }
                     else {
+                        ((CardLayout)((JComponent) comp).getLayout()).show((Container) comp, "video");
                         comp.setBounds(x, y, width, height);
                     }
                 }
