@@ -600,24 +600,6 @@ public interface LibVlc extends Library {
     Pointer libvlc_media_get_user_data(libvlc_media_t p_md);
 
     /**
-     * Get media descriptor's elementary streams description.
-     * <p>
-     * Note, you need to call {@link #libvlc_media_parse(libvlc_media_t)} or play the media at least once before calling
-     * this function.
-     * <p>
-     * Not doing this will result in an empty array.
-     *
-     * @deprecated Use libvlc_media_tracks_get instead.
-     *
-     * @param p_md media descriptor object
-     * @param tracks address to store an allocated array of Elementary Streams descriptions (must be
-     *            freed by the caller)
-     * @return the number of Elementary Streams
-     */
-    @Deprecated
-    int libvlc_media_get_tracks_info(libvlc_media_t p_md, PointerByReference tracks);
-
-    /**
      * Get media descriptor's elementary streams description
      * <p>
      * Note, you need to call {@link #libvlc_media_parse(libvlc_media_t)} or play the media at least once
@@ -1145,15 +1127,6 @@ public interface LibVlc extends Library {
      * Release (free) libvlc_track_description_t
      *
      * @param p_track_description the structure to release
-     * @deprecated Use {@link #libvlc_track_description_list_release(Pointer)} instead
-     */
-    @Deprecated
-    void libvlc_track_description_release(Pointer p_track_description);
-
-    /**
-     * Release (free) libvlc_track_description_t
-     *
-     * @param p_track_description the structure to release
      */
     void libvlc_track_description_list_release(Pointer p_track_description);
 
@@ -1229,30 +1202,6 @@ public interface LibVlc extends Library {
      * @return 0 on success, -1 if the specified video does not exist
      */
     int libvlc_video_get_size(libvlc_media_player_t p_mi, int num, IntByReference px, IntByReference py);
-
-    /**
-     * Get current video height.
-     *
-     * @param p_mi the media player
-     * @return the video pixel height or 0 if not applicable
-     * @deprecated Use
-     *             {@link #libvlc_video_get_size(libvlc_media_player_t, int, IntByReference, IntByReference)}
-     *             instead
-     */
-    @Deprecated
-    int libvlc_video_get_height(libvlc_media_player_t p_mi);
-
-    /**
-     * Get current video width.
-     *
-     * @param p_mi the media player
-     * @return the video pixel width or 0 if not applicable
-     * @deprecated Use
-     *             {@link #libvlc_video_get_size(libvlc_media_player_t, int, IntByReference, IntByReference)}
-     *             instead
-     */
-    @Deprecated
-    int libvlc_video_get_width(libvlc_media_player_t p_mi);
 
     /**
      * Get the mouse pointer coordinates over a video. Coordinates are expressed in terms of the
@@ -1623,39 +1572,6 @@ public interface LibVlc extends Library {
      * @return 0 if function succeded, -1 on error
      */
     int libvlc_audio_output_set(libvlc_media_player_t p_mi, String psz_name);
-
-    /**
-     * Get count of devices for audio output, these devices are hardware oriented like analog or
-     * digital output of sound card.
-     *
-     * @param p_instance libvlc instance
-     * @param psz_audio_output - name of audio output, @see libvlc_audio_output_t
-     * @return number of devices
-     */
-    @Deprecated
-    int libvlc_audio_output_device_count(libvlc_instance_t p_instance, String psz_audio_output);
-
-    /**
-     * Get long name of device, if not available short name given
-     *
-     * @param p_instance libvlc instance
-     * @param psz_audio_output - name of audio output, @see libvlc_audio_output_t
-     * @param i_device device index
-     * @return long name of device
-     */
-    @Deprecated
-    Pointer libvlc_audio_output_device_longname(libvlc_instance_t p_instance, String psz_audio_output, int i_device);
-
-    /**
-     * Get id name of device
-     *
-     * @param p_instance libvlc instance
-     * @param psz_audio_output - name of audio output, @see libvlc_audio_output_t
-     * @param i_device device index
-     * @return id name of device, use for setting device, need to be free after use
-     */
-    @Deprecated
-    Pointer libvlc_audio_output_device_id(libvlc_instance_t p_instance, String psz_audio_output, int i_device);
 
     /**
      * Gets a list of audio output devices for a given audio output.

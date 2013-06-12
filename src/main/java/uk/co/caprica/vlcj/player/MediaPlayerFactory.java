@@ -210,7 +210,7 @@ public class MediaPlayerFactory {
      * @param libvlcArgs initialisation arguments to pass to libvlc
      */
     public MediaPlayerFactory(String... libvlcArgs) {
-        this(LibVlcFactory.factory().atLeast("2.0.0").create(), libvlcArgs);
+        this(LibVlcFactory.factory().atLeast("2.1.0").create(), libvlcArgs);
     }
 
     /**
@@ -240,18 +240,9 @@ public class MediaPlayerFactory {
         if(libvlcArgs == null) {
             libvlcArgs = new String[0];
         }
-        // Ordinarily libvlc will look for it's plugins in a directory named
-        // "vlc/plugins" relative to the directory where libvlccore is loaded from,
-        // this can be overridden by explicitly specifying the "--plugin-path"
-        // option although this should not be necessary
-        for(String libvlcArg : libvlcArgs) {
-            if(libvlcArg.startsWith("--plugin-path=")) {
-                Logger.debug(libvlcArg);
-            }
-        }
-        // The "--plugin-path" switch is deprecated in libvlc 1.2.x and is replaced
-        // by an environment variable - again as per the above comment it should
-        // not be necessary to set this
+        // Ordinarily libvlc will look for it's plugins in a directory named "vlc/plugins" relative
+        // to the directory where libvlccore is loaded from, this can be overridden by explicitly
+        // specifying the "VLC_PLUGIN_PATH" system property (although this should not be necessary)
         String vlcPluginPath = System.getProperty("VLC_PLUGIN_PATH");
         if(vlcPluginPath != null) {
             Logger.debug("VLC_PLUGIN_PATH={}", vlcPluginPath);
@@ -383,35 +374,22 @@ public class MediaPlayerFactory {
     private List<AudioDevice> getAudioOutputDevices(String outputName) {
         Logger.debug("getAudioOutputDevices(outputName={})", outputName);
         List<AudioDevice> result = new ArrayList<AudioDevice>();
-        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_210)) {
-            Logger.debug("Using new audio device list");
-            libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_list_get(instance, outputName);
-            if (audioDevices != null) {
+        libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_list_get(instance, outputName);
+        if (audioDevices != null) {
                 // Must prevent automatic synchronisation on the native structure, otherwise a
                 // fatal JVM crash will occur when the native release call is made - not quite
                 // sure why this is needed here
                 audioDevices.setAutoSynch(false);
-                libvlc_audio_output_device_t audioDevice = audioDevices;
-                while(audioDevice != null) {
-                    // The native strings must be copied here, but not freed (they are freed natively
+            libvlc_audio_output_device_t audioDevice = audioDevices;
+            while(audioDevice != null) {
+                result.add(new AudioDevice(audioDevice.psz_device, audioDevice.psz_description));
                     // in the subsequent release call
                     String device = NativeString.copyNativeString(libvlc, audioDevice.psz_device);
                     String description = NativeString.copyNativeString(libvlc, audioDevice.psz_description);
                     result.add(new AudioDevice(device, description));
-                    audioDevice = audioDevice.p_next;
-                }
-                libvlc.libvlc_audio_output_device_list_release(audioDevices);
+                audioDevice = audioDevice.p_next;
             }
-        }
-        else {
-            Logger.debug("Using deprecated audio device count");
-            int deviceCount = libvlc.libvlc_audio_output_device_count(instance, outputName);
-            Logger.debug("deviceCount={}", deviceCount);
-            for(int i = 0; i < deviceCount; i ++ ) {
-                String deviceId = NativeString.getNativeString(libvlc, libvlc.libvlc_audio_output_device_id(instance, outputName, i));
-                String longName = NativeString.getNativeString(libvlc, libvlc.libvlc_audio_output_device_longname(instance, outputName, i));
-                result.add(new AudioDevice(deviceId, longName));
-            }
+            libvlc.libvlc_audio_output_device_list_release(audioDevices);
         }
         return result;
     }
@@ -497,42 +475,6 @@ public class MediaPlayerFactory {
     public EmbeddedMediaPlayer newEmbeddedMediaPlayer(FullScreenStrategy fullScreenStrategy) {
         Logger.debug("newEmbeddedMediaPlayer(fullScreenStrategy={})", fullScreenStrategy);
         return new DefaultEmbeddedMediaPlayer(libvlc, instance, fullScreenStrategy);
-    }
-
-    /**
-     * Create a new direct video rendering media player with a pixel format suitable for, amongst
-     * other things, rendering into a BufferedImage.
-     * <p>
-     * The pixel format used is "RV32" (a raw RGB format with padded alpha) and the pitch is
-     * width*4.
-     *
-     * @param width width for the video
-     * @param height height for the video
-     * @param renderCallback callback to receive the video frame data
-     * @return direct media player implementation
-     * @deprecated use {@link #newDirectMediaPlayer(BufferFormatCallback, RenderCallback)} instead
-     */
-    @Deprecated
-    public DirectMediaPlayer newDirectMediaPlayer(int width, int height, RenderCallback renderCallback) {
-        Logger.debug("newDirectMediaPlayer(width={},height={},renderCallback={})", width, height, renderCallback);
-        return newDirectMediaPlayer("RV32", width, height, width * 4, renderCallback);
-    }
-
-    /**
-     * Create a new direct video rendering media player.
-     *
-     * @param width width for the video
-     * @param height height for the video
-     * @param format pixel format (e.g. RV15, RV16, RV24, RV32, RGBA, YUYV)
-     * @param pitch pitch, also known as stride
-     * @param renderCallback callback to receive the video frame data
-     * @return media player instance
-     * @deprecated use {@link #newDirectMediaPlayer(BufferFormatCallback, RenderCallback)} instead
-     */
-    @Deprecated
-    public DirectMediaPlayer newDirectMediaPlayer(String format, int width, int height, int pitch, RenderCallback renderCallback) {
-        Logger.debug("newDirectMediaPlayer(format={},width={},height={},pitch={},renderCallback={})", format, width, height, pitch, renderCallback);
-        return new DefaultDirectMediaPlayer(libvlc, instance, format, width, height, pitch, renderCallback);
     }
 
     /**

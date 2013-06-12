@@ -50,9 +50,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_audio_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_video_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
@@ -69,7 +66,6 @@ import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventFactory;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
-import uk.co.caprica.vlcj.version.LibVlcVersion;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
@@ -1098,14 +1094,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                     requestedTypes.add(type);
                 }
             }
-            // Preferred implementation using new functions in libvlc 2.1.0 and later...
-            if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_210)) {
-                result = newGetTrackInfo(media, requestedTypes);
-            }
-            // Legacy implementation for libvlc 2.0.0 and earlier...
-            else {
-                result = oldGetTrackInfo(media, requestedTypes);
-            }
+            result = getTrackInfo(media, requestedTypes);
         }
         return result;
     }
@@ -1117,7 +1106,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
      * @param media media descriptor
      * @return track info
      */
-    private List<TrackInfo> newGetTrackInfo(libvlc_media_t media, Set<TrackType> types) {
+    private List<TrackInfo> getTrackInfo(libvlc_media_t media, Set<TrackType> types) {
         Logger.debug("newGetTrackInfo(media={},types={})", media, types);
         PointerByReference tracksPointer = new PointerByReference();
         int numberOfTracks = libvlc.libvlc_media_tracks_get(media, tracksPointer);
@@ -1205,103 +1194,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                 }
             }
         }
-        return result;
-    }
-
-    /**
-     * Get track info using the new pre-libvlc 2.1.0 implementation.
-     *
-     * @param media media descriptor
-     * @param set of desired track types
-     * @return track info
-     */
-    private List<TrackInfo> oldGetTrackInfo(libvlc_media_t media, Set<TrackType> types) {
-        Logger.debug("oldGetTrackInfo(media={},types={})", media, types);
-        PointerByReference tracks = new PointerByReference();
-        int numberOfTracks = libvlc.libvlc_media_get_tracks_info(media, tracks);
-        Logger.debug("numberOfTracks={}", numberOfTracks);
-        List<TrackInfo> result = new ArrayList<TrackInfo>(numberOfTracks);
-        if(numberOfTracks > 0) {
-            libvlc_media_track_info_t trackInfos = new libvlc_media_track_info_t(tracks.getValue());
-            libvlc_media_track_info_t[] trackInfoArray = (libvlc_media_track_info_t[])trackInfos.toArray(numberOfTracks);
-            for(libvlc_media_track_info_t trackInfo : trackInfoArray) {
-                switch(libvlc_track_type_t.valueOf(trackInfo.i_type)) {
-                    case libvlc_track_unknown:
-                        if(types == null || types.contains(TrackType.UNKNOWN)) {
-                            result.add(new UnknownTrackInfo(
-                                trackInfo.i_codec,
-                                0,
-                                trackInfo.i_id,
-                                trackInfo.i_profile,
-                                trackInfo.i_level,
-                                0,
-                                null,
-                                null
-                            ));
-                        }
-                        break;
-
-                    case libvlc_track_video:
-                        if(types == null || types.contains(TrackType.VIDEO)) {
-                            trackInfo.u.setType(libvlc_media_track_info_video_t.ByValue.class);
-                            trackInfo.u.read();
-                            result.add(new VideoTrackInfo(
-                                trackInfo.i_codec,
-                                0,
-                                trackInfo.i_id,
-                                trackInfo.i_profile,
-                                trackInfo.i_level,
-                                0,
-                                null,
-                                null,
-                                trackInfo.u.video.i_width,
-                                trackInfo.u.video.i_height,
-                                0,
-                                0,
-                                0,
-                                0
-                            ));
-                        }
-                        break;
-
-                    case libvlc_track_audio:
-                        if(types == null || types.contains(TrackType.AUDIO)) {
-                            trackInfo.u.setType(libvlc_media_track_info_audio_t.ByValue.class);
-                            trackInfo.u.read();
-                            result.add(new AudioTrackInfo(
-                                trackInfo.i_codec,
-                                0,
-                                trackInfo.i_id,
-                                trackInfo.i_profile,
-                                trackInfo.i_level,
-                                0,
-                                null,
-                                null,
-                                trackInfo.u.audio.i_channels,
-                                trackInfo.u.audio.i_rate
-                            ));
-                        }
-                        break;
-
-                    case libvlc_track_text:
-                        if(types == null || types.contains(TrackType.TEXT)) {
-                            result.add(new TextTrackInfo(
-                                trackInfo.i_codec,
-                                0,
-                                trackInfo.i_id,
-                                trackInfo.i_profile,
-                                trackInfo.i_level,
-                                0,
-                                null,
-                                null,
-                                null
-                            ));
-                        }
-                        break;
-                }
-            }
-        }
-        libvlc.libvlc_free(tracks.getValue());
         return result;
     }
 

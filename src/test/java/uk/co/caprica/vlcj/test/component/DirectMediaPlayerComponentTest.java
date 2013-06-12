@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.test.component;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -33,9 +34,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.direct.BufferFormat;
+import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
 import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
+import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -124,10 +128,20 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
         };
         panel.setBackground(Color.black);
         panel.setOpaque(true);
+        panel.setPreferredSize(new Dimension(width, height));
+        panel.setMinimumSize(new Dimension(width, height));
+        panel.setMaximumSize(new Dimension(width, height));
 
         image = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(width, height);
 
-        mediaPlayerComponent = new DirectMediaPlayerComponent("RV32", width, height, width * 4) {
+        BufferFormatCallback bufferFormatCallback = new BufferFormatCallback() {
+            @Override
+            public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
+                return new RV32BufferFormat(width, height);
+            }
+        };
+
+        mediaPlayerComponent = new DirectMediaPlayerComponent(bufferFormatCallback) {
             @Override
             protected RenderCallback onGetRenderCallback() {
                 return new TestRenderCallbackAdapter();
@@ -137,7 +151,7 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
         frame.setContentPane(panel);
 
         frame.setLocation(100, 100);
-        frame.setSize(1050, 600);
+        frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }

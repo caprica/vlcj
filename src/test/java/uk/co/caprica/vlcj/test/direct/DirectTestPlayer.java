@@ -41,8 +41,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.direct.BufferFormat;
+import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
+import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -111,7 +114,7 @@ public class DirectTestPlayer extends VlcjTest {
         });
 
         factory = new MediaPlayerFactory(args);
-        mediaPlayer = factory.newDirectMediaPlayer(width, height, new TestRenderCallback());
+        mediaPlayer = factory.newDirectMediaPlayer(new TestBufferFormatCallback(), new TestRenderCallback());
         mediaPlayer.playMedia(media);
 
         // Just to show regular media player functions still work...
@@ -181,5 +184,14 @@ public class DirectTestPlayer extends VlcjTest {
 //            }
             imagePane.repaint();
         }
+    }
+
+    private final class TestBufferFormatCallback implements BufferFormatCallback {
+
+        @Override
+        public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
+            return new RV32BufferFormat(width, height);
+        }
+
     }
 }

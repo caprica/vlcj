@@ -99,26 +99,6 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     /**
      * Construct a media player component.
      *
-     * @param format video format
-     * @param width video width
-     * @param height video height
-     * @param pitch video pitch (also known as "stride")
-     * @deprecated use {@link #DirectMediaPlayerComponent(BufferFormatCallback)} instead
-     */
-    @Deprecated
-    public DirectMediaPlayerComponent(String format, int width, int height, int pitch) {
-        // Create the native resources
-        mediaPlayerFactory = onGetMediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.newDirectMediaPlayer(format, width, height, pitch, onGetRenderCallback());
-        // Register listeners
-        mediaPlayer.addMediaPlayerEventListener(this);
-        // Sub-class initialisation
-        onAfterConstruct();
-    }
-
-    /**
-     * Construct a media player component.
-     *
      * @param bufferFormatCallback callback used to set video buffer characteristics
      */
     public DirectMediaPlayerComponent(BufferFormatCallback bufferFormatCallback) {
