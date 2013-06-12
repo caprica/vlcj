@@ -50,6 +50,7 @@ import javax.swing.border.EmptyBorder;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -95,6 +96,8 @@ public class AdaptiveLayoutTest extends VlcjTest {
     private static final String[] mrls = {
         // Put your MRL's here, this example uses 12
     };
+
+    private final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
 
     private final JFrame frame;
     private final JPanel cp;
@@ -193,7 +196,12 @@ public class AdaptiveLayoutTest extends VlcjTest {
                 }
             });
 
-            mediaPlayer = new EmbeddedMediaPlayerComponent();
+            mediaPlayer = new EmbeddedMediaPlayerComponent() {
+                @Override
+                protected MediaPlayerFactory onGetMediaPlayerFactory() {
+                    return mediaPlayerFactory;
+                }
+            };
 
             mediaPlayer.getVideoSurface().addMouseListener(new MouseAdapter() {
                 @Override
