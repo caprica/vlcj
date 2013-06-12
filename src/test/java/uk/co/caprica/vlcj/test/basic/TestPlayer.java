@@ -68,8 +68,6 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-import uk.co.caprica.vlcj.runtime.windows.WindowsCanvas;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import com.sun.awt.AWTUtilities;
@@ -114,14 +112,6 @@ public class TestPlayer extends VlcjTest {
     }
 
     public TestPlayer(String[] args) {
-        if(RuntimeUtil.isWindows()) {
-            // If running on Windows and you want the mouse/keyboard event hack...
-            videoSurface = new WindowsCanvas();
-        }
-        else {
-            videoSurface = new Canvas();
-        }
-
         Logger.debug("videoSurface={}", videoSurface);
 
         videoSurface.setBackground(Color.black);
@@ -192,10 +182,6 @@ public class TestPlayer extends VlcjTest {
             @Override
             public void windowClosing(WindowEvent evt) {
                 Logger.debug("windowClosing(evt={})", evt);
-
-                if(videoSurface instanceof WindowsCanvas) {
-                    ((WindowsCanvas)videoSurface).release();
-                }
 
                 if(mediaPlayer != null) {
                     mediaPlayer.release();
