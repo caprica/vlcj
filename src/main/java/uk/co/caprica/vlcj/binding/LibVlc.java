@@ -191,6 +191,19 @@ public interface LibVlc extends Library {
     void libvlc_set_user_agent(libvlc_instance_t p_instance, String name, String http);
 
     /**
+     * Sets some meta-informations about the application.
+     * <p>
+     * See also {@link #libvlc_set_user_agent(libvlc_instance_t, String, String)}.
+     *
+     * @param p_instance LibVLC instance
+     * @param id Java-style application identifier, e.g. "com.acme.foobar"
+     * @param version application version numbers, e.g. "1.2.3"
+     * @param icon application icon name, e.g. "foobar"
+     * @since LibVLC 2.1.0
+     */
+    void libvlc_set_app_id(libvlc_instance_t p_instance, String id, String version, String icon);
+
+    /**
      * Retrieve libvlc version. Example: "1.1.0-git The Luggage"
      *
      * @return a string containing the libvlc version

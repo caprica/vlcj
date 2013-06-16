@@ -327,6 +327,20 @@ public class MediaPlayerFactory {
     }
 
     /**
+     * Set the application identification information.
+     *
+     * @param id application id, e.g. com.somecompany.myapp
+     * @param version application version
+     * @param icon path to application icon
+     *
+     * @since libvlc 2.1.0
+     */
+    public void setApplicationId(String id, String version, String icon) {
+        Logger.debug("setApplicationId(id=" + id + ",version=" + version + ",icon=" + icon + ")");
+        libvlc.libvlc_set_app_id(instance, id, version, icon);
+    }
+
+    /**
      * Get the available audio outputs.
      * <p>
      * Each audio output has zero or more audio devices, each device having it's own unique
