@@ -42,6 +42,9 @@ import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
+import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
+import uk.co.caprica.vlcj.player.directaudio.DefaultDirectAudioPlayer;
+import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 import uk.co.caprica.vlcj.player.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -526,6 +529,20 @@ public class MediaPlayerFactory {
     public DirectMediaPlayer newDirectMediaPlayer(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback) {
         Logger.debug("newDirectMediaPlayer(formatCallback={},renderCallback={})", bufferFormatCallback, renderCallback);
         return new DefaultDirectMediaPlayer(libvlc, instance, bufferFormatCallback, renderCallback);
+    }
+
+    /**
+     * Create a new direct audio media player.
+     *
+     * @param format decoded audio format
+     * @param rate decoded audio sample rate
+     * @param channels decoded audio channels
+     * @param audioCallback callback
+     * @return media player instance
+     */
+    public DirectAudioPlayer newDirectAudioPlayer(String format, int rate, int channels, AudioCallback audioCallback) {
+        Logger.debug("newDirectAudioPlayer(format={},rate={},channels={},audioCallback={}", format, rate, channels, audioCallback);
+        return new DefaultDirectAudioPlayer(libvlc, instance, format, rate, channels, audioCallback);
     }
 
     /**
