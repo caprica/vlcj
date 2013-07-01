@@ -29,7 +29,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>2.3.1</version>
+    <version>2.4.0</version>
 </dependency>
 ```
 
@@ -38,7 +38,7 @@ Note that some features of vlcj 2.2.0 and later (access to the native log) requi
 News
 ----
 
-??/??/2013 Made new release 2.4.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), added new audio player providing direct access to audio samples; automatically handle international characters in MRLs; support new application ID API.
+01/07/2013 Made new release 2.4.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), added new audio player providing direct access to audio samples; automatically handle international characters in MRLs; support new application ID API.
 
 22/05/2013 Made new release 2.3.1 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), changed to fix execution of tests on Windows (you only need to uppdate to this version if you want to run the tests on Windows).
 
@@ -67,8 +67,8 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available:
 
-* [2.4.0 (pending)](http://caprica.github.com/vlcj/javadoc/2.4.0/index.html "2.4.0 Javadoc")
-* [2.3.0 (current)](http://caprica.github.com/vlcj/javadoc/2.3.0/index.html "2.3.0 Javadoc")
+* [2.4.0 (current)](http://caprica.github.com/vlcj/javadoc/2.4.0/index.html "2.4.0 Javadoc")
+* [2.3.0](http://caprica.github.com/vlcj/javadoc/2.3.0/index.html "2.3.0 Javadoc")
 * [2.2.0](http://caprica.github.com/vlcj/javadoc/2.2.0/index.html "2.2.0 Javadoc")
 * [2.1.0](http://caprica.github.com/vlcj/javadoc/2.1.0/index.html "2.1.0 Javadoc")
 * [2.0.0](http://caprica.github.com/vlcj/javadoc/2.0.0/index.html "2.0.0 Javadoc")
