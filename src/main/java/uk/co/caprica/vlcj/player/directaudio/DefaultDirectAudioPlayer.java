@@ -105,7 +105,7 @@ public class DefaultDirectAudioPlayer extends DefaultMediaPlayer implements Dire
      * @param format decoded buffer format
      * @param rate decoded buffer sample rate
      * @param channels decoded buffer channel count
-     * @param audioCallback
+     * @param audioCallback audio callback
      */
     public DefaultDirectAudioPlayer(LibVlc libvlc, libvlc_instance_t instance, String format, int rate, int channels, AudioCallback audioCallback) {
         super(libvlc, instance);
