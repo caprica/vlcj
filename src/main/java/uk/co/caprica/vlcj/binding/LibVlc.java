@@ -1132,6 +1132,16 @@ public interface LibVlc extends Library {
     void libvlc_media_player_navigate(libvlc_media_player_t p_mi, int navigate);
 
     /**
+     * Set if, and how, the video title will be shown when media is played.
+     *
+     * @param p_mi the media player
+     * @param position position at which to display the title, or libvlc_position_disable to prevent the title from being displayed
+     * @param timeout title display timeout in milliseconds (ignored if libvlc_position_disable)
+     * @since libVLC 2.1.0 or later
+     */
+    void libvlc_media_player_set_video_title_display(libvlc_media_player_t p_mi, int position, int timeout);
+
+    /**
      * Release (free) libvlc_track_description_t
      *
      * @param p_track_description the structure to release

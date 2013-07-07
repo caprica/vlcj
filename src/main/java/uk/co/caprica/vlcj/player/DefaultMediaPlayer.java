@@ -55,6 +55,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_info_video_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_subtitle_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
@@ -1627,6 +1628,19 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public void setGamma(float gamma) {
         Logger.debug("setGamma(gamma={})", gamma);
         libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue(), gamma);
+    }
+
+    // === Video Title Controls =================================================
+
+    @Override
+    public void setVideoTitleDisplay(libvlc_position_e position, int timeout) {
+        Logger.debug("setVideoTitleDisplay(position={},timeout={})", position, timeout);
+        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_210)) {
+            libvlc.libvlc_media_player_set_video_title_display(mediaPlayerInstance, position.intValue(), timeout);
+        }
+        else {
+            throw new RuntimeException("This function requires libvlc 2.1.0 or later");
+        }
     }
 
     // === Implementation =======================================================

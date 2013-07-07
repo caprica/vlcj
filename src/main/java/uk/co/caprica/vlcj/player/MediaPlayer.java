@@ -32,6 +32,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.medialist.MediaList;
@@ -1588,6 +1589,14 @@ public interface MediaPlayer {
      * @param gamma gamma, in the range from 0.01 to 10.0
      */
     void setGamma(float gamma);
+
+    /**
+     * Set if, and how, the video title will be shown when playing media.
+     *
+     * @param position position, {@link libvlc_position_e#disable} to prevent the title from appearing
+     * @param timeout time to display the title in milliseconds (ignored when the title is disabled)
+     */
+    void setVideoTitleDisplay(libvlc_position_e position, int timeout);
 
     /**
      * Get the media resource locator for the current media instance.
