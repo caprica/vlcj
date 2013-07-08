@@ -286,7 +286,7 @@ public class PlayerControlsPanel extends JPanel {
         mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void playing(MediaPlayer mediaPlayer) {
-                updateVolume(mediaPlayer.getVolume());
+//                updateVolume(mediaPlayer.getVolume());
             }
         });
 
