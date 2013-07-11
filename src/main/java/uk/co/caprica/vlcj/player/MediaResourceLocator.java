@@ -107,7 +107,7 @@ public final class MediaResourceLocator {
             }
         }
         else {
-            Logger.debug("MRL does contain any Unicode characters");
+            Logger.debug("MRL does not contain any Unicode characters");
         }
         Logger.debug("result={}", result);
         return result;
