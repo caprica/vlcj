@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ import java.util.List;
  * An audio output has zero or more associated audio devices. Each device has a unique identifier
  * than can be used to select the required output device for a media player.
  */
-public class AudioOutput {
+public class AudioOutput implements Iterable<AudioDevice> {
 
     /**
      * Name.
@@ -92,5 +93,10 @@ public class AudioOutput {
         sb.append("description=").append(description).append(',');
         sb.append("devices=").append(devices).append(']');
         return sb.toString();
+    }
+
+    @Override
+    public Iterator<AudioDevice> iterator() {
+        return devices.iterator();
     }
 }

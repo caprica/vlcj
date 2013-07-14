@@ -54,4 +54,19 @@ public final class NativeString {
             return null;
         }
     }
+
+    /**
+     * Copy a String from a native string pointer, without freeing the native pointer.
+     *
+     * @param pointer pointer to native string, may be <code>null</code>
+     * @return string, or <code>null</code> if the pointer was <code>null</code>
+     */
+    public static final String copyNativeString(LibVlc libvlc, Pointer pointer) {
+        if(pointer != null) {
+            return pointer.getString(0, false);
+        }
+        else {
+            return null;
+        }
+    }
 }

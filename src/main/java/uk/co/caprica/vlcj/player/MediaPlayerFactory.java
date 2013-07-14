@@ -358,7 +358,11 @@ public class MediaPlayerFactory {
         if(audioOutputs != null) {
             libvlc_audio_output_t audioOutput = audioOutputs;
             while(audioOutput != null) {
-                result.add(new AudioOutput(audioOutput.psz_name, audioOutput.psz_description, getAudioOutputDevices(audioOutput.psz_name)));
+                // The native strings must be copied here, but not freed (they are freed natively
+                // in the subsequent release call
+                String name = NativeString.copyNativeString(libvlc, audioOutput.psz_name);
+                String description = NativeString.copyNativeString(libvlc, audioOutput.psz_description);
+                result.add(new AudioOutput(name, description, getAudioOutputDevices(name)));
                 audioOutput = audioOutput.p_next;
             }
             libvlc.libvlc_audio_output_list_release(audioOutputs);
@@ -381,7 +385,11 @@ public class MediaPlayerFactory {
             if (audioDevices != null) {
                 libvlc_audio_output_device_t audioDevice = audioDevices;
                 while(audioDevice != null) {
-                    result.add(new AudioDevice(audioDevice.psz_device, audioDevice.psz_description));
+                    // The native strings must be copied here, but not freed (they are freed natively
+                    // in the subsequent release call
+                    String device = NativeString.copyNativeString(libvlc, audioDevice.psz_device);
+                    String description = NativeString.copyNativeString(libvlc, audioDevice.psz_description);
+                    result.add(new AudioDevice(device, description));
                     audioDevice = audioDevice.p_next;
                 }
                 libvlc.libvlc_audio_output_device_list_release(audioDevices);

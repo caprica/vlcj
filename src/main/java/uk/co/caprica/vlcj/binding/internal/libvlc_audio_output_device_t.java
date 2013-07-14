@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 /**
@@ -38,8 +39,8 @@ public class libvlc_audio_output_device_t extends Structure {
     public static class ByReference extends libvlc_audio_output_device_t implements Structure.ByReference {}
 
     public libvlc_audio_output_device_t.ByReference p_next;          // Next entry in list
-    public String                                   psz_device;      // Device identifier string
-    public String                                   psz_description; // User-friendly device description
+    public Pointer                                  psz_device;      // Device identifier string
+    public Pointer                                  psz_description; // User-friendly device description
 
     @Override
     protected List<String> getFieldOrder() {
