@@ -376,17 +376,17 @@ public class MediaPlayerFactory {
         List<AudioDevice> result = new ArrayList<AudioDevice>();
         libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_list_get(instance, outputName);
         if (audioDevices != null) {
-                // Must prevent automatic synchronisation on the native structure, otherwise a
-                // fatal JVM crash will occur when the native release call is made - not quite
-                // sure why this is needed here
-                audioDevices.setAutoSynch(false);
+            // Must prevent automatic synchronisation on the native structure, otherwise a
+            // fatal JVM crash will occur when the native release call is made - not quite
+            // sure why this is needed here
+            audioDevices.setAutoSynch(false);
             libvlc_audio_output_device_t audioDevice = audioDevices;
             while(audioDevice != null) {
-                result.add(new AudioDevice(audioDevice.psz_device, audioDevice.psz_description));
-                    // in the subsequent release call
-                    String device = NativeString.copyNativeString(libvlc, audioDevice.psz_device);
-                    String description = NativeString.copyNativeString(libvlc, audioDevice.psz_description);
-                    result.add(new AudioDevice(device, description));
+                // The native strings must be copied here, but not freed (they are freed natively
+                // in the subsequent release call)
+                String device = NativeString.copyNativeString(libvlc, audioDevice.psz_device);
+                String description = NativeString.copyNativeString(libvlc, audioDevice.psz_description);
+                result.add(new AudioDevice(device, description));
                 audioDevice = audioDevice.p_next;
             }
             libvlc.libvlc_audio_output_device_list_release(audioDevices);
