@@ -1527,12 +1527,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public void setVideoTitleDisplay(libvlc_position_e position, int timeout) {
         Logger.debug("setVideoTitleDisplay(position={},timeout={})", position, timeout);
-        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_210)) {
-            libvlc.libvlc_media_player_set_video_title_display(mediaPlayerInstance, position.intValue(), timeout);
-        }
-        else {
-            throw new RuntimeException("This function requires libvlc 2.1.0 or later");
-        }
+        libvlc.libvlc_media_player_set_video_title_display(mediaPlayerInstance, position.intValue(), timeout);
     }
 
     // === Implementation =======================================================
