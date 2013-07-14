@@ -129,7 +129,7 @@ public class SetDrawableTest extends VlcjTest {
     public SetDrawableTest(String[] args) {
         final String mrl = args[0];
 
-        mediaPlayerFactory = new MediaPlayerFactory("--no-video-title-show");
+        mediaPlayerFactory = new MediaPlayerFactory();
         aglMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
         nsobjectMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
         nsviewMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();

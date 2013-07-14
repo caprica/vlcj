@@ -52,7 +52,6 @@ public class ConditionTest extends VlcjTest {
         "--no-audio",               /* we don't want audio (decoding) */
         "--no-osd",
         "--no-spu",
-        "--no-video-title-show",    /* nor the filename displayed */
         "--no-stats",               /* no stats */
         "--no-sub-autodetect-file", /* we don't want subtitles */
         "--no-inhibit",             /* we don't want interfaces */

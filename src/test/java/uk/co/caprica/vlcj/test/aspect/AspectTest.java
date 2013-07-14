@@ -120,7 +120,7 @@ public class AspectTest extends VlcjTest {
 
     @SuppressWarnings("serial")
     public AspectTest() {
-        factory = new MediaPlayerFactory("--no-video-title-show");
+        factory = new MediaPlayerFactory();
         mediaPlayer = factory.newEmbeddedMediaPlayer();
 
         videoPane = new JPanel();

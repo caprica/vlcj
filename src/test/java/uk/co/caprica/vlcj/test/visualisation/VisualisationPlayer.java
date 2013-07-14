@@ -91,7 +91,7 @@ public class VisualisationPlayer extends VlcjTest {
     public VisualisationPlayer(String mrl) {
         this.mrl = mrl;
 
-        factory = new MediaPlayerFactory("--no-video-title-show");
+        factory = new MediaPlayerFactory();
         mediaPlayer = factory.newEmbeddedMediaPlayer();
 
         canvas = new Canvas();

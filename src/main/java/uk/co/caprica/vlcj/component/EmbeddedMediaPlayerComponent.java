@@ -130,7 +130,6 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
         "--ignore-config",
         "--video-title=vlcj video output",
         "--no-plugins-cache",
-        "--no-video-title-show",
         "--no-snapshot-preview",
         "--quiet",
         "--quiet-synchro",

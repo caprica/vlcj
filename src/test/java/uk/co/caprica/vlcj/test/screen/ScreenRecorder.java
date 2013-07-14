@@ -40,7 +40,6 @@ public class ScreenRecorder extends VlcjTest {
 
     private static final String[] OPTIONS = {
         "--no-plugins-cache",
-        "--no-video-title-show",
         "--quiet",
         "--quiet-synchro",
         "--intf",

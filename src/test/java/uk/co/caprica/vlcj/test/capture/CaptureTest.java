@@ -108,7 +108,7 @@ public class CaptureTest extends VlcjTest {
         frame.setLocation(50, 50);
         frame.setSize(800, 600);
 
-        factory = new MediaPlayerFactory("--no-video-title-show");
+        factory = new MediaPlayerFactory();
         mediaPlayer = factory.newEmbeddedMediaPlayer();
 
         videoSurface = factory.newVideoSurface(canvas);

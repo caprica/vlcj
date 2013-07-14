@@ -122,7 +122,7 @@ public class CropTest extends VlcjTest {
 
     @SuppressWarnings("serial")
     public CropTest() {
-        factory = new MediaPlayerFactory("--no-video-title-show");
+        factory = new MediaPlayerFactory();
         mediaPlayer = factory.newEmbeddedMediaPlayer();
 
         videoPane = new JPanel();

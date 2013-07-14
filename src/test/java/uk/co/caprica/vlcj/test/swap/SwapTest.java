@@ -186,7 +186,7 @@ public class SwapTest extends VlcjTest {
             }
         });
 
-        factory = new MediaPlayerFactory("--no-video-title-show");
+        factory = new MediaPlayerFactory();
 
         mediaPlayer = factory.newEmbeddedMediaPlayer();
 

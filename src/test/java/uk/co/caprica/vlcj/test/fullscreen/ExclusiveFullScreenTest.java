@@ -100,7 +100,7 @@ public class ExclusiveFullScreenTest extends VlcjTest {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(800, 600);
 
-        final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory("--no-video-title-show");
+        final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
         final EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
 
         mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(c));

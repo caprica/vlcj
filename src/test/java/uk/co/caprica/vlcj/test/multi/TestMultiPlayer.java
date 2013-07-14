@@ -121,7 +121,7 @@ public class TestMultiPlayer extends VlcjTest {
             }
         });
 
-        factory = new MediaPlayerFactory("--no-video-title-show");
+        factory = new MediaPlayerFactory();
 
         FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
 

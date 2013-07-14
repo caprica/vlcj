@@ -77,7 +77,6 @@ public class TimecodeTest extends VlcjTest {
      */
     public TimecodeTest() {
         factory = new MediaPlayerFactory(
-            "--no-video-title-show",
             "--input-slave", "timecode://",
             "--timecode-fps", "25/1"            // <--- Tweak this to suit
         );

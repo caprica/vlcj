@@ -88,7 +88,7 @@ public class ScreenTestPlayer extends VlcjTest {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
 
-        factory = new MediaPlayerFactory("--no-video-title-show");
+        factory = new MediaPlayerFactory();
         mediaPlayer = factory.newEmbeddedMediaPlayer();
 
         videoSurface = factory.newVideoSurface(canvas);

@@ -121,7 +121,7 @@ public class ChatTest extends VlcjTest {
     }
 
     public ChatTest() {
-        mediaPlayerFactory = new MediaPlayerFactory("--no-video-title-show");
+        mediaPlayerFactory = new MediaPlayerFactory();
         localMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
         remoteMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
 
