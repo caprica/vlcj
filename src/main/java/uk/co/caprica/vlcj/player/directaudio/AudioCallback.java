@@ -64,7 +64,6 @@ public interface AudioCallback {
      * Audio buffer was drained.
      *
      * @param mediaPlayer media player
-     * @param pts presentation time stamp
      */
     void drain(DirectAudioPlayer mediaPlayer);
 }
