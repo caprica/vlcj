@@ -805,20 +805,6 @@ public interface MediaPlayer {
     void setAudioOutputDevice(String output, String outputDeviceId);
 
     /**
-     * Set the audio output device type.
-     *
-     * @param deviceType device type
-     */
-    void setAudioOutputDeviceType(AudioOutputDeviceType deviceType);
-
-    /**
-     * Get the audio output device type.
-     *
-     * @return device type
-     */
-    AudioOutputDeviceType getAudioOutputDeviceType();
-
-    /**
      * Toggle volume mute.
      */
     void mute();
