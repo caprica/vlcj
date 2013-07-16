@@ -40,6 +40,9 @@ import uk.co.caprica.vlcj.logger.Logger;
  * Client applications may also have other requirements such as hiding other on-screen controls when
  * in full-screen mode - extend this class and over- ride {@link #onBeforeEnterFullScreenMode} and
  * {@link #onAfterExitFullScreenMode()} to do so.
+ * <p>
+ * It may be useful to specify "-Dsun.java2d.d3d=false" on the Windows platform for performance
+ * reasons.
  */
 public class DefaultFullScreenStrategy implements FullScreenStrategy {
 
