@@ -29,7 +29,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>2.4.0</version>
+    <version>2.4.1</version>
 </dependency>
 ```
 
@@ -37,6 +37,8 @@ Note that some features of vlcj 2.2.0 and later (access to the native log) requi
 
 News
 ----
+
+16/07/2013 Made new release 2.4.1 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), fix potential fatal JVM crash when enumerating audio devices with vlc 2.1.0.
 
 01/07/2013 Made new release 2.4.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), added new audio player providing direct access to audio samples; automatically handle international characters in MRLs; support new application ID API.
 
