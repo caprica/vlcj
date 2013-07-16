@@ -46,7 +46,7 @@ public final class NativeString {
      */
     public static final String getNativeString(LibVlc libvlc, Pointer pointer) {
         if(pointer != null) {
-            String result = pointer.getString(0, false);
+            String result = pointer.getString(0);
             libvlc.libvlc_free(pointer);
             return result;
         }
@@ -63,7 +63,7 @@ public final class NativeString {
      */
     public static final String copyNativeString(LibVlc libvlc, Pointer pointer) {
         if(pointer != null) {
-            return pointer.getString(0, false);
+            return pointer.getString(0);
         }
         else {
             return null;
