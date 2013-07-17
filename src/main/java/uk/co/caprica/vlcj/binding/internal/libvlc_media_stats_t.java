@@ -34,13 +34,22 @@ public class libvlc_media_stats_t extends Structure {
      *
      */
     private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList(
-        "i_read_bytes", "f_input_bitrate",
-        "i_demux_read_bytes", "f_demux_bitrate", "i_demux_corrupted", "i_demux_discontinuity",
-        "i_decoded_video", "i_decoded_audio",
-        "i_displayed_pictures", "i_lost_pictures",
-        "i_played_abuffers", "i_lost_abuffers",
-        "i_sent_packets", "i_sent_bytes", "f_send_bitrate")
-    );
+        "i_read_bytes",
+        "f_input_bitrate",
+        "i_demux_read_bytes",
+        "f_demux_bitrate",
+        "i_demux_corrupted",
+        "i_demux_discontinuity",
+        "i_decoded_video",
+        "i_decoded_audio",
+        "i_displayed_pictures",
+        "i_lost_pictures",
+        "i_played_abuffers",
+        "i_lost_abuffers",
+        "i_sent_packets",
+        "i_sent_bytes",
+        "f_send_bitrate"
+    ));
 
     /* Input */
     public int         i_read_bytes;
