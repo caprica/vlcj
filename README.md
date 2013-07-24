@@ -29,38 +29,26 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>2.4.1</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
-Note that some features of vlcj 2.2.0 and later (access to the native log) require vlc 2.1.0 which has *not* yet been released.
+Note that some features of vlcj 3.0.0 and later (audio equalizer) require vlc 2.2.0 which has *not*
+yet been released.
+
+If you still need to use vlc 2.0.0 then you must stay with vlcj 2.x.x instead of upgrading to the
+new vlcj 3.0.0 series.
 
 News
 ----
 
-16/07/2013 Made new release 2.4.1 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), fix potential fatal JVM crash when enumerating audio devices with vlc 2.1.0.
+??/??/201? Made new release 3.0.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), ???
 
-01/07/2013 Made new release 2.4.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), added new audio player providing direct access to audio samples; automatically handle international characters in MRLs; support new application ID API.
-
-22/05/2013 Made new release 2.3.1 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), changed to fix execution of tests on Windows (you only need to uppdate to this version if you want to run the tests on Windows).
-
-10/05/2013 Made new release 2.3.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), minor API incompatibility with previous version caused by renaming SpuTrackInfo class to TextTrackInfo.
-
-24/01/2013 Made new release 2.2.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj).
-
-Note: vlcj now *requires* JNA 3.5.0 or later.
-
-02/01/2013 Happy New Year! Current release artifacts are now available on [Maven Central](http://search.maven.org/#search|ga|1|vlcj).
-
-12/12/2012 github deprecated the downloads section, go to [googlecode](http://code.google.com/p/vlcj/downloads/list) for distribution archives.
-
-20/05/2012 Released version 2.1.0, for use with libvlc 2.0.
-
-28/01/2012 Moved to github.
+ * Note: vlcj 3.0.0 *requires* vlc 2.1.0 or later, earlier versions of vlc are not supported.
+ * Note: vlcj now *requires* JNA 4.0.0 or later.
+ * Note: the vlcj project page at googlecode should be considered for historical reference only.
 
 You can also follow @capricasoftware on Twitter for more vlcj news.
-
-There is also a new vlcj-users discussion group at [vlcj-users](https://groups.google.com/forum/#!forum/vlcj-users "vlcj-users google group").
 
 Documentation
 -------------
@@ -69,7 +57,8 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available:
 
-* [2.4.0 (current)](http://caprica.github.com/vlcj/javadoc/2.4.0/index.html "2.4.0 Javadoc")
+* [3.0.0 (current)](http://caprica.github.com/vlcj/javadoc/3.0.0/index.html "3.0.0 Javadoc")
+* [2.4.0](http://caprica.github.com/vlcj/javadoc/2.4.0/index.html "2.4.0 Javadoc")
 * [2.3.0](http://caprica.github.com/vlcj/javadoc/2.3.0/index.html "2.3.0 Javadoc")
 * [2.2.0](http://caprica.github.com/vlcj/javadoc/2.2.0/index.html "2.2.0 Javadoc")
 * [2.1.0](http://caprica.github.com/vlcj/javadoc/2.1.0/index.html "2.1.0 Javadoc")
@@ -81,8 +70,7 @@ Support
 -------
 
 Free support for Open Source and non-commercial projects is generally provided - you
-can use [github issues](https://github.com/caprica/vlcj/issues "vlcj github issues") or the 
-[vlcj google group](https://groups.google.com/forum/#!forum/vlcj-users "vlcj users google group")
+can use [github issues](https://github.com/caprica/vlcj/issues "vlcj github issues")
 for this purpose.
 
 Support for commercial projects is provided exclusively on commercial terms -
