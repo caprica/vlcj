@@ -60,6 +60,7 @@ import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.AudioOutput;
+import uk.co.caprica.vlcj.player.Equalizer;
 import uk.co.caprica.vlcj.player.MediaDetails;
 import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -86,13 +87,17 @@ import com.sun.jna.platform.WindowUtils;
 public class TestPlayer extends VlcjTest {
 
     private final JFrame mainFrame;
-    private Canvas videoSurface;
+    private final Canvas videoSurface;
     private final JPanel controlsPanel;
     private final JPanel videoAdjustPanel;
+
+    private final JFrame equalizerFrame;
 
     private MediaPlayerFactory mediaPlayerFactory;
 
     private EmbeddedMediaPlayer mediaPlayer;
+
+    private Equalizer equalizer;
 
     public static void main(final String[] args) throws Exception {
         LibVlc libVlc = LibVlcFactory.factory().create();
@@ -112,8 +117,7 @@ public class TestPlayer extends VlcjTest {
     }
 
     public TestPlayer(String[] args) {
-        Logger.debug("videoSurface={}", videoSurface);
-
+        videoSurface = new Canvas();
         videoSurface = new Canvas();
         
         videoSurface.setBackground(Color.black);
@@ -196,6 +200,14 @@ public class TestPlayer extends VlcjTest {
             }
         });
 
+        if(mediaPlayerFactory.isEqualizerAvailable()) {
+            equalizer = mediaPlayerFactory.newEqualizer();
+            equalizerFrame = new EqualizerFrame(mediaPlayerFactory.getEqualizerBandFrequencies(), mediaPlayerFactory.getEqualizerPresetNames(), mediaPlayerFactory, mediaPlayer, equalizer);
+        }
+        else {
+            equalizerFrame = null;
+        }
+
         // Global AWT key handler, you're better off using Swing's InputMap and
         // ActionMap with a JFrame - that would solve all sorts of focus issues too
         Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
@@ -253,6 +265,11 @@ public class TestPlayer extends VlcjTest {
         }, AWTEvent.KEY_EVENT_MASK);
 
         mainFrame.setVisible(true);
+
+        if(mediaPlayerFactory.isEqualizerAvailable()) {
+            equalizerFrame.pack();
+            equalizerFrame.setVisible(true);
+        }
 
         mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
 
