@@ -28,6 +28,10 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 /**
  * Specification for a media player component that is intended to be embedded in a user-interface
  * component.
+ *  <p>
+ * Note that to get mouse and keyboard events delivered via listeners on some platforms (i.e. Windows)
+ * you will likely need to invoke {@link #setEnableMouseInputHandling(boolean)} <em>strong</em>
+ * {@link #setEnableKeyInputHandling(boolean)}.
  */
 public interface EmbeddedMediaPlayer extends MediaPlayer {
 
