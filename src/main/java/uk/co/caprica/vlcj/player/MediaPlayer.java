@@ -1585,6 +1585,24 @@ public interface MediaPlayer {
     void setVideoTitleDisplay(libvlc_position_e position, int timeout);
 
     /**
+     * Get the current audio equalizer.
+     * <p>
+     * <strong>Requires vlc 2.2.0 or later.</strong>
+     *
+     * @return equalizer, or <code>null</code> if there is no active equalizer
+     */
+    Equalizer getEqualizer();
+
+    /**
+     * Set the audio equalizer.
+     * <p>
+     * <strong>Requires vlc 2.2.0 or later.</strong>
+     *
+     * @param equalizer equalizer, or <code>null</code> to disable the audio equalizer
+     */
+    void setEqualizer(Equalizer equalizer);
+
+    /**
      * Get the media resource locator for the current media instance.
      * <p>
      * The native media instance may be an automatically/scripted added sub-item.

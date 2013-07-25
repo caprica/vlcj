@@ -40,6 +40,7 @@ import javax.imageio.ImageIO;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
@@ -74,7 +75,7 @@ import com.sun.jna.ptr.PointerByReference;
 /**
  * Media player implementation.
  */
-public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements MediaPlayer {
+public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements MediaPlayer, EqualizerListener {
 
     /**
      * Collection of media player event listeners.
@@ -151,6 +152,18 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
      * If this is not set then snapshots will be saved to the user home directory.
      */
     private String snapshotDirectoryName;
+
+    /**
+     * Audio equalizer.
+     *
+     * May be <code>null</code>.
+     */
+    private Equalizer equalizer;
+
+    /**
+     * Native audio equalizer instance.
+     */
+    private libvlc_equalizer_t equalizerInstance;
 
     /**
      * Opaque reference to user/application-specific data associated with this media player.
@@ -1518,6 +1531,50 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         libvlc.libvlc_media_player_set_video_title_display(mediaPlayerInstance, position.intValue(), timeout);
     }
 
+    // === Audio Equalizer Controls =============================================
+
+    @Override
+    public Equalizer getEqualizer() {
+        Logger.debug("getEqualizer()");
+        return equalizer;
+    }
+
+    @Override
+    public void setEqualizer(Equalizer equalizer) {
+        Logger.debug("setEqualizer(equalizer={})", equalizer);
+        if(this.equalizer != null) {
+            this.equalizer.removeEqualizerListener(this);
+            libvlc.libvlc_audio_equalizer_release(equalizerInstance);
+            equalizerInstance = null;
+        }
+        this.equalizer = equalizer;
+        if(this.equalizer != null) {
+            equalizerInstance = libvlc.libvlc_audio_equalizer_new();
+            this.equalizer.addEqualizerListener(this);
+        }
+        applyEqualizer();
+    }
+
+    /**
+     * Apply the audio equalizer settings to the native media player.
+     */
+    private void applyEqualizer() {
+        Logger.trace("applyEqualizer()");
+        Logger.trace("equalizerInstance={}", equalizerInstance);
+        if(equalizerInstance != null) {
+            Logger.trace("Set equalizer");
+            libvlc.libvlc_audio_equalizer_set_preamp(equalizerInstance, equalizer.getPreamp());
+            for(int i = 0; i < libvlc.libvlc_audio_equalizer_get_band_count(); i ++ ) {
+                libvlc.libvlc_audio_equalizer_set_amp_at_index(equalizerInstance, equalizer.getAmp(i), i);
+            }
+            libvlc.libvlc_media_player_set_equalizer(mediaPlayerInstance, equalizerInstance);
+        }
+        else {
+            Logger.trace("Disable equalizer");
+            libvlc.libvlc_media_player_set_equalizer(mediaPlayerInstance, null);
+        }
+    }
+
     // === Implementation =======================================================
 
     @Override
@@ -1623,6 +1680,16 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             Logger.debug("Release media player...");
             libvlc.libvlc_media_player_release(mediaPlayerInstance);
             Logger.debug("Media player released.");
+        }
+
+        if(equalizer != null) {
+            equalizer.removeEqualizerListener(this);
+            equalizer = null;
+        }
+
+        if(equalizerInstance != null) {
+            libvlc.libvlc_audio_equalizer_release(equalizerInstance);
+            equalizerInstance = null;
         }
 
         Logger.debug("Shut down listeners...");
@@ -1972,5 +2039,13 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
          * @return result of processing the sub-items
          */
         T subItems(int count, libvlc_media_list_t subItems);
+    }
+
+    // === EqualizerListener ====================================================
+
+    @Override
+    public final void equalizerChanged(Equalizer equalizer) {
+        Logger.trace("equalizerChanged(equalizer={})", equalizer);
+        applyEqualizer();
     }
 }
