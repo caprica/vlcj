@@ -42,10 +42,10 @@ new vlcj 3.0.0 series.
 News
 ----
 
-??/??/201? Made new release 3.0.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), ???
+??/??/201? Made new release 3.0.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), new audio equalizer API
 
  * Note: vlcj 3.0.0 *requires* vlc 2.1.0 or later, earlier versions of vlc are not supported.
- * Note: vlcj now *requires* JNA 4.0.0 or later.
+ * Note: vlcj now *requires* JNA 3.5.2 or later.
  * Note: the vlcj project page at googlecode should be considered for historical reference only.
 
 You can also follow @capricasoftware on Twitter for more vlcj news.
@@ -57,8 +57,8 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available:
 
-* [3.0.0 (current)](http://caprica.github.com/vlcj/javadoc/3.0.0/index.html "3.0.0 Javadoc")
-* [2.4.0](http://caprica.github.com/vlcj/javadoc/2.4.0/index.html "2.4.0 Javadoc")
+* [3.0.0 (next)](http://caprica.github.com/vlcj/javadoc/3.0.0/index.html "3.0.0 Javadoc")
+* [2.4.0 (current)](http://caprica.github.com/vlcj/javadoc/2.4.0/index.html "2.4.0 Javadoc")
 * [2.3.0](http://caprica.github.com/vlcj/javadoc/2.3.0/index.html "2.3.0 Javadoc")
 * [2.2.0](http://caprica.github.com/vlcj/javadoc/2.2.0/index.html "2.2.0 Javadoc")
 * [2.1.0](http://caprica.github.com/vlcj/javadoc/2.1.0/index.html "2.1.0 Javadoc")
