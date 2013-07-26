@@ -1816,7 +1816,7 @@ public interface LibVlc extends Library {
      * @param p_equalizer opaque equalizer handle, or NULL
      * @since LibVLC 2.2.0 or later
      */
-    void libvlc_audio_equalizer_release(libvlc_equalizer_t p_equalizer );
+    void libvlc_audio_equalizer_release(libvlc_equalizer_t p_equalizer);
 
     /**
      * Set a new pre-amplification value for an equalizer.
@@ -1824,7 +1824,7 @@ public interface LibVlc extends Library {
      * The new equalizer settings are subsequently applied to a media player by invoking
      * libvlc_media_player_set_equalizer().
      *
-     * @param p_equalizer opaque equalizer handle
+     * @param p_equalizer valid equalizer handle, must not be NULL
      * @param f_preamp preamp value (-20.0 to 20.0 Hz)
      * @return zero on success, -1 on error
      * @since LibVLC 2.2.0 or later
@@ -1834,7 +1834,7 @@ public interface LibVlc extends Library {
     /**
      * Get the current pre-amplification value from an equalizer.
      *
-     * @param p_equalizer opaque equalizer handle
+     * @param p_equalizer valid equalizer handle, must not be NULL
      * @return preamp value (Hz)
      * @since LibVLC 2.2.0 or later
      */
@@ -1846,7 +1846,7 @@ public interface LibVlc extends Library {
      * The new equalizer settings are subsequently applied to a media player by invoking
      * libvlc_media_player_set_equalizer().
      *
-     * @param p_equalizer opaque equalizer handle
+     * @param p_equalizer valid equalizer handle, must not be NULL
      * @param f_amp amplification value (-20.0 to 20.0 Hz)
      * @param u_band index, counting from zero, of the frequency band to set
      * @return zero on success, -1 on error
@@ -1857,7 +1857,7 @@ public interface LibVlc extends Library {
     /**
      * Get the amplification value for a particular equalizer frequency band.
      *
-     * @param p_equalizer opaque equalizer handle
+     * @param p_equalizer valid equalizer handle, must not be NULL
      * @param u_band index, counting from zero, of the frequency band to get
      * @return amplification value (Hz); zero if there is no such frequency band
      * @since LibVLC 2.2.0 or later
