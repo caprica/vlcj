@@ -114,6 +114,8 @@ public class TestPlayer extends VlcjTest {
     public TestPlayer(String[] args) {
         Logger.debug("videoSurface={}", videoSurface);
 
+        videoSurface = new Canvas();
+        
         videoSurface.setBackground(Color.black);
         videoSurface.setSize(800, 600); // Only for initial layout
 
