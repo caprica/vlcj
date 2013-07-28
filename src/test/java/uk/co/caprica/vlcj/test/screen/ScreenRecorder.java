@@ -39,7 +39,6 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class ScreenRecorder extends VlcjTest {
 
     private static final String[] OPTIONS = {
-        "--no-plugins-cache",
         "--quiet",
         "--quiet-synchro",
         "--intf",

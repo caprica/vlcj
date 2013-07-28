@@ -134,7 +134,6 @@ public class TestPlayer extends VlcjTest {
 
         List<String> vlcArgs = new ArrayList<String>();
 
-        vlcArgs.add("--no-plugins-cache");
         vlcArgs.add("--no-snapshot-preview");
         vlcArgs.add("--quiet");
         vlcArgs.add("--quiet-synchro");
