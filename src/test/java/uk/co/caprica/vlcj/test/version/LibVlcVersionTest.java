@@ -37,7 +37,7 @@ public class LibVlcVersionTest extends VlcjTest {
      */
     public static void main(String[] args) {
         String version = LibVlc.INSTANCE.libvlc_get_version();
-        test("2.0.0", version);
+        test("2.1.0", version);
     }
 
     /**
