@@ -72,7 +72,7 @@ public class MediaDirsTest extends VlcjTest implements MediaListEventListener {
         System.out.println("DONE!");
 
 //        Thread.currentThread().join();
-        System.exit(0);
+//        System.exit(0);
     }
 
     private static void dumpItems(List<MediaListItem> items, int indent) {
