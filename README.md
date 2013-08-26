@@ -20,6 +20,10 @@ This is the open source vlcj project page, see also the 'official'
 [home page](http://www.capricasoftware.co.uk/vlcj "Official vlcj home page at Caprica Software")
 where you can find more information as well as some new simple tutorials.
 
+Note the git master branch is for vlcj version 3.0.0 (currently pre-release).
+
+Please switch to the vlcj-2.0 branch for the latest official release.
+
 Maven Dependency
 ----------------
 
