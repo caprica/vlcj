@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import uk.co.caprica.vlcj.discovery.StandardNativeDiscoveryStrategy;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
  * Default implementation of a native library discovery strategy that searches in
@@ -48,6 +49,11 @@ public class DefaultLinuxNativeDiscoveryStrategy extends StandardNativeDiscovery
     @Override
     protected Pattern[] getFilenamePatterns() {
         return FILENAME_PATTERNS;
+    }
+
+    @Override
+    public final boolean supported() {
+        return RuntimeUtil.isNix();
     }
 
     @Override
