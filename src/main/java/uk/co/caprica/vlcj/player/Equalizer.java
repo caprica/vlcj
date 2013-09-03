@@ -111,7 +111,6 @@ public final class Equalizer {
      * Set a new pre-amplification value.
      *
      * @param newPreamp pre-amplification value (Hz)
-     * @return <code>true</code> if the new value was set; <code>false</code> otherwise
      * @throws IllegalArgumentException if the amplification value is outside of the allowed range
      */
     public final void setPreamp(float newPreamp) {
@@ -141,7 +140,6 @@ public final class Equalizer {
      *
      * @param index index of the frequency band to set
      * @param newAmp amplification value
-     * @return <code>true</code> if the new value was set; <code>false</code> otherwise
      * @throws IllegalArgumentException if the index or amplification value is outside of the allowed range
      */
     public final void setAmp(int index, float newAmp) {

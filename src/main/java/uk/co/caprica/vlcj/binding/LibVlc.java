@@ -553,7 +553,6 @@ public interface LibVlc extends Library {
      *
      * @see #libvlc_media_parse_async(libvlc_media_t)
      * @see #libvlc_media_get_meta(libvlc_media_t, int)
-     * @see #libvlc_media_get_tracks_info(libvlc_media_t, PointerByReference)
      * @param media media descriptor object
      */
     void libvlc_media_parse(libvlc_media_t media);
@@ -567,7 +566,6 @@ public interface LibVlc extends Library {
      * @see #libvlc_media_parse(libvlc_media_t)
      * @see libvlc_event_e#libvlc_MediaParsedChanged
      * @see #libvlc_media_get_meta(libvlc_media_t, int)
-     * @see #libvlc_media_get_tracks_info(libvlc_media_t, PointerByReference)
      * @param media media descriptor object
      */
     void libvlc_media_parse_async(libvlc_media_t media);
