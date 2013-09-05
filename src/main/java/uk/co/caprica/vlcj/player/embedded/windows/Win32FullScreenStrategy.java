@@ -44,7 +44,12 @@ public final class Win32FullScreenStrategy implements FullScreenStrategy {
      * @param window component that will be made full-screen
      */
     public Win32FullScreenStrategy(Window window) {
-        this.handler = new Win32FullScreenHandler(window);
+        if(window != null) {
+            this.handler = new Win32FullScreenHandler(window);
+        }
+        else {
+            throw new IllegalArgumentException("Window must not be null");
+        }
     }
 
     @Override
