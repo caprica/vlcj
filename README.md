@@ -46,7 +46,7 @@ new vlcj 3.0.0 series.
 News
 ----
 
-??/??/201? Made new release 3.0.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), new audio equalizer API
+??/??/201? Made new release 3.0.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), new audio equalizer API, new native full-screen implementation for Windows.
 
  * Note: vlcj 3.0.0 *requires* vlc 2.1.0 or later, earlier versions of vlc are not supported.
  * Note: vlcj now *requires* JNA 3.5.2 or later.
