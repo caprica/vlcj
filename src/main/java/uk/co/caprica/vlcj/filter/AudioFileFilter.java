@@ -25,7 +25,7 @@ package uk.co.caprica.vlcj.filter;
 public class AudioFileFilter extends ExtensionFileFilter {
 
     /**
-     * From the vlc_interfaces.h include file.
+     * From the vlc_interface.h include file.
      */
     private static final String[] EXTENSIONS_AUDIO = {
         "3ga",
