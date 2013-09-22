@@ -282,8 +282,8 @@ public class MediaPlayerFactory {
         equalizerAvailable = LibVlcVersion.getVersion().atLeast(new Version("2.2.0"));
         Logger.debug("equalizerAvailable={}", equalizerAvailable);
         if(equalizerAvailable) {
-        equalizerBandFrequencies = createEqualizerBandFrequencies();
-        equalizerPresetNames = createEqualizerPresetNames();
+            equalizerBandFrequencies = createEqualizerBandFrequencies();
+            equalizerPresetNames = createEqualizerPresetNames();
         }
         else {
             equalizerBandFrequencies = null;
