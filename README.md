@@ -17,7 +17,7 @@ need to use release 2.0.3, 2.0.7 or later, *but not any version inbetween*.
 At least JDK 1.6 is required, and it works without changes on JDK 1.7.
 
 This is the open source vlcj project page, see also the 'official' 
-[home page](http://www.capricasoftware.co.uk/vlcj "Official vlcj home page at Caprica Software")
+[home page](http://www.capricasoftware.co.uk/projects/vlcj/index.html "Official vlcj home page at Caprica Software")
 where you can find more information as well as some new simple tutorials.
 
 Note the git master branch is for vlcj version 3.0.0 (currently pre-release).
