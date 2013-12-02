@@ -7,6 +7,11 @@ The vlcj project provides a Java framework to allow an instance of a native
 [vlc](http://www.videolan.org/vlc "vlc") media player to be embedded in a Java 
 AWT Window or Swing JFrame. 
 
+New: December 2013 - Commercial license promotion
+
+vlcj is an open source project distributed according to the terms of the GPL -
+if you need a commercial license for vlcj please visit [here](http://t.co/Q9LNCvi1Pm "vlcj license promotion").
+
 You get more than just simple bindings, you also get a higher level framework
 that hides a lot of the complexities of working with libvlc.
 
