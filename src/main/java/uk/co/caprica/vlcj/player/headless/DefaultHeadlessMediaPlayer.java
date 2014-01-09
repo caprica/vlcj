@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009, 2010, 2011, 2012, 2013 Caprica Software Limited.
+ * Copyright 2009, 2010, 2011, 2012, 2013, 2014 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.headless;
