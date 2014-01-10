@@ -46,7 +46,7 @@ Add the following Maven dependency to your own project pom.xml:
 News
 ----
 
-??/01/2014 Made new release 3.0.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
+10/01/2014 Made new release 3.0.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
 new audio equalizer API, new native full-screen implementation for Windows,
 some little-used deprecated features removed, minor bugs fixed.
 
