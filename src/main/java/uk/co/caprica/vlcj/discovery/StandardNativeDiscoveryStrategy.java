@@ -37,7 +37,7 @@ public abstract class StandardNativeDiscoveryStrategy extends AbstractNativeDisc
     @Override
     protected final void getDirectoryNames(List<String> directoryNames) {
         // Look in the current directory
-        directoryNames.add(".");
+        directoryNames.add(System.getProperty("user.dir"));
         // Look in the directories on the system path
         directoryNames.addAll(getSystemPath());
         // Look in the extra directories supplied by the sub-class
