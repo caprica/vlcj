@@ -158,7 +158,7 @@ public class MediaPlayerFactory {
      */
     private static final String PLUGIN_PATH_HELP =
         "Failed to initialise libvlc.\n\n" +
-        "This is most often caused either by an invalid vlc option begin passed when creating a MediaPlayerFactory or by libvlc being unable to locate the required plugins.\n\n" +
+        "This is most often caused either by an invalid vlc option being passed when creating a MediaPlayerFactory or by libvlc being unable to locate the required plugins.\n\n" +
         "If libvlc is unable to locate the required plugins the instructions below may help:\n\n" +
         "In the text below <libvlc-path> represents the name of the directory containing \"{0}\" and \"{1}\" and <plugins-path> represents the name of the directory containing the vlc plugins...\n\n" +
         "For libvlc to function correctly the vlc plugins must be available, there are a number of different ways to achieve this:\n" +
