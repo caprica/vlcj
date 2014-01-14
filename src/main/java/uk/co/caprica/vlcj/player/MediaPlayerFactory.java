@@ -267,9 +267,7 @@ public class MediaPlayerFactory {
         // to the directory where libvlccore is loaded from, this can be overridden by explicitly
         // specifying the "VLC_PLUGIN_PATH" system property (although this should not be necessary)
         String vlcPluginPath = System.getProperty("VLC_PLUGIN_PATH");
-        if(vlcPluginPath != null) {
-            Logger.debug("VLC_PLUGIN_PATH={}", vlcPluginPath);
-        }
+        Logger.debug("VLC_PLUGIN_PATH={}", vlcPluginPath);
         this.libvlc = libvlc;
         this.instance = libvlc.libvlc_new(libvlcArgs.length, libvlcArgs);
         Logger.debug("instance={}", instance);
