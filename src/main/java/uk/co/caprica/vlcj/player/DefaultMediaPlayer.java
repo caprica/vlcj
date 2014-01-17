@@ -235,7 +235,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
 
     @Override
     public boolean startMedia(String mrl, String... mediaOptions) {
-        Logger.debug("startMedia(mrl={}, mediaOptions)", mrl, Arrays.toString(mediaOptions));
+        Logger.debug("startMedia(mrl={}, mediaOptions={})", mrl, Arrays.toString(mediaOptions));
         // First 'prepare' the media...
         if(prepareMedia(mrl, mediaOptions)) {
             // ...then play it and wait for it to start (or error)
