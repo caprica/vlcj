@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player;
 
 import java.awt.Canvas;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -127,8 +128,8 @@ public class MediaPlayerFactory {
      * video in an embedded media player.
      */
     static {
-        // Only apply for Linux...
-        if(RuntimeUtil.isNix()) {
+        // Only apply for Linux, but not for a headless environment...
+        if(RuntimeUtil.isNix() && !GraphicsEnvironment.isHeadless()) {
             // Only apply if the run-time version is Java 1.7.0 or later...
             Version actualJavaVersion = new Version(System.getProperty("java.version"));
             if(actualJavaVersion.atLeast(new Version("1.7.0"))) {
