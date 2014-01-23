@@ -144,17 +144,6 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
     void setOverlay(Window overlay);
 
     /**
-     * Set whether or not the overlay should be kept visible if the window containing the video
-     * surface is minimised or otherwise loses the input focus.
-     * <p>
-     * This may not be desirable or work well on all platforms, so the default is to <em>not</em>
-     * keep the overlay.
-     *
-     * @param keep <code>true</code> if the overlay should be kept visible; <code>false</code> otherwise
-     */
-    void setKeepOverlay(boolean keep);
-
-    /**
      * Enable/disable the overlay component if there is one.
      *
      * @param enable whether to enable the overlay or disable it
