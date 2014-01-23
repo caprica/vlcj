@@ -111,6 +111,12 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
     private boolean restoreOverlay;
 
     /**
+     * If true keep the overlay visible even when the window is deactivated (e.g. minimised or
+     * otherwise no longer the focus owner).
+     */
+    private boolean keepOverlay;
+
+    /**
      * Create a new media player.
      * <p>
      * Full-screen will not be supported.
@@ -234,6 +240,27 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
     }
 
     @Override
+    public void setKeepOverlay(boolean keep) {
+        // Store the 'keep' value in case the overlay is subsequently changed
+        this.keepOverlay = keep;
+        Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface.canvas());
+        if(window != null) {
+            // Remove the listener just in case the overlay is being reused (it is safe to call
+            // remove here even if the listener was never added)
+            window.removeWindowListener(overlayWindowAdapter);
+            // If the overlay should not be kept visible when deactivating the window...
+            if (!keepOverlay) {
+                // ...add a component to manage the overlay when deactivating
+                window.addWindowListener(overlayWindowAdapter);
+            }
+        }
+        else {
+            // This should not be possible
+            Logger.warn("Failed to find a Window ancestor for the video surface Canvas");
+        }
+    }
+
+    @Override
     public void enableOverlay(boolean enable) {
         Logger.debug("enableOverlay(enable={})", enable);
         requestedOverlay = enable;
@@ -286,7 +313,14 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
             this.overlay = overlay;
             Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface.canvas());
             if(window != null) {
-                window.addWindowListener(overlayWindowAdapter);
+                // Remove the listener just in case the overlay is being reused (it is safe to call
+                // remove here even if the listener was never added)
+                window.removeWindowListener(overlayWindowAdapter);
+                // If the overlay should not be kept visible when deactivating the window...
+                if(!keepOverlay) {
+                    // ...add a component to manage the overlay when deactivating
+                    window.addWindowListener(overlayWindowAdapter);
+                }
             }
             else {
                 // This should not be possible
@@ -304,6 +338,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
         Logger.debug("removeOverlay()");
         if(overlay != null) {
             Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface.canvas());
+            // Note it is safe to remove this even if it was never added
             window.removeWindowListener(overlayWindowAdapter);
             overlay = null;
         }
