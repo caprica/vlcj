@@ -175,7 +175,7 @@ public class LibVlcFactory {
                 if(actualVersion != null) {
                     if(!actualVersion.atLeast(requiredVersion)) {
                         Logger.fatal("This version of vlcj requires version {} or later of libvlc, found too old version {}", requiredVersion, actualVersion);
-                        throw new RuntimeException("This version of vlcj requires version " + requiredVersion + " or later of libvlc, found too old version " + actualVersion + ".");
+                        throw new LibVlcOutOfDateException(requiredVersion, actualVersion);
                     }
                 }
                 else {
