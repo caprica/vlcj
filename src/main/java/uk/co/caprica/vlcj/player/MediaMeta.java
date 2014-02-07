@@ -299,6 +299,102 @@ public interface MediaMeta {
     void setTrackId(String trackId);
 
     /**
+     * Get the track total meta data.
+     *
+     * @return track total
+     * @since LibVLC 2.2.0
+     */
+    String getTrackTotal();
+
+    /**
+     * Set the track total meta data.
+     *
+     * @param trackTotal track total
+     * @since LibVLC 2.2.0
+     */
+    void setTrackTotal(String trackTotal);
+
+    /**
+     * Set the director meta data.
+     *
+     * @return director
+     * @since LibVLC 2.2.0
+     */
+    String getDirector();
+
+    /**
+     * Set the director meta data.
+     *
+     * @param director director
+     * @since LibVLC 2.2.0
+     */
+    void setDirector(String director);
+
+    /**
+     * Get the season meta data.
+     *
+     * @return season
+     * @since LibVLC 2.2.0
+     */
+    String getSeason();
+
+    /**
+     * Set the season meta data.
+     *
+     * @param season season
+     * @since LibVLC 2.2.0
+     */
+    void setSeason(String season);
+
+    /**
+     * Get the episode meta data.
+     *
+     * @return episode
+     * @since LibVLC 2.2.0
+     */
+    String getEpisode();
+
+    /**
+     * Set the episode meta data.
+     *
+     * @param episode episode
+     * @since LibVLC 2.2.0
+     */
+    void setEpisode(String episode);
+
+    /**
+     * Get the show name meta data.
+     *
+     * @return show name
+     * @since LibVLC 2.2.0
+     */
+    String getShowName();
+
+    /**
+     * Set the show name meta data.
+     *
+     * @param showName show name
+     * @since LibVLC 2.2.0
+     */
+    void setShowName(String showName);
+
+    /**
+     * Get the actors meta data.
+     *
+     * @return actors
+     * @since LibVLC 2.2.0
+     */
+    String getActors();
+
+    /**
+     * Set the actors meta data.
+     *
+     * @param actors actors
+     * @since LibVLC 2.2.0
+     */
+    void setActors(String actors);
+
+    /**
      * Load the artwork associated with this media.
      * <p>
      * <strong>Invoking this method may trigger an HTTP request to download the artwork.</strong>

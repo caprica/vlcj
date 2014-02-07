@@ -29,6 +29,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_meta_t;
 import uk.co.caprica.vlcj.logger.Logger;
+import uk.co.caprica.vlcj.version.Version;
 
 /**
  * Representation of all available media meta data.
@@ -40,6 +41,11 @@ import uk.co.caprica.vlcj.logger.Logger;
  * HTTP request to be made to download artwork.
  */
 class DefaultMediaMeta implements MediaMeta {
+
+    /**
+     * Minimum version for new meta data fields.
+     */
+    private static final Version VERSION_220 = new Version("2.2.0");
 
     /**
      * Set to true when the player has been released.
@@ -59,6 +65,11 @@ class DefaultMediaMeta implements MediaMeta {
     private final libvlc_media_t media;
 
     /**
+     * Runtime version of LibVLC.
+     */
+    private final Version actualVersion;
+
+    /**
      * Artwork.
      * <p>
      * Lazily loaded.
@@ -74,6 +85,7 @@ class DefaultMediaMeta implements MediaMeta {
     DefaultMediaMeta(LibVlc libvlc, libvlc_media_t media) {
         this.libvlc = libvlc;
         this.media = media;
+        this.actualVersion = new Version(libvlc.libvlc_get_version());
         // Keep a native reference
         libvlc.libvlc_media_retain(media);
     }
@@ -255,6 +267,78 @@ class DefaultMediaMeta implements MediaMeta {
     }
 
     @Override
+    public final String getTrackTotal() {
+        checkVersion(VERSION_220);
+        return getMeta(libvlc_meta_t.libvlc_meta_TrackTotal);
+    }
+
+    @Override
+    public final void setTrackTotal(String trackTotal) {
+        checkVersion(VERSION_220);
+        setMeta(libvlc_meta_t.libvlc_meta_TrackTotal, trackTotal);
+    }
+
+    @Override
+    public final String getDirector() {
+        checkVersion(VERSION_220);
+        return getMeta(libvlc_meta_t.libvlc_meta_Director);
+    }
+
+    @Override
+    public final void setDirector(String director) {
+        checkVersion(VERSION_220);
+        setMeta(libvlc_meta_t.libvlc_meta_Director, director);
+    }
+
+    @Override
+    public final String getSeason() {
+        checkVersion(VERSION_220);
+        return getMeta(libvlc_meta_t.libvlc_meta_Season);
+    }
+
+    @Override
+    public final void setSeason(String season) {
+        checkVersion(VERSION_220);
+        setMeta(libvlc_meta_t.libvlc_meta_Season, season);
+    }
+
+    @Override
+    public final String getEpisode() {
+        checkVersion(VERSION_220);
+        return getMeta(libvlc_meta_t.libvlc_meta_Episode);
+    }
+
+    @Override
+    public final void setEpisode(String episode) {
+        checkVersion(VERSION_220);
+        setMeta(libvlc_meta_t.libvlc_meta_Episode, episode);
+    }
+
+    @Override
+    public final String getShowName() {
+        checkVersion(VERSION_220);
+        return getMeta(libvlc_meta_t.libvlc_meta_ShowName);
+    }
+
+    @Override
+    public final void setShowName(String showName) {
+        checkVersion(VERSION_220);
+        setMeta(libvlc_meta_t.libvlc_meta_ShowName, showName);
+    }
+
+    @Override
+    public final String getActors() {
+        checkVersion(VERSION_220);
+        return getMeta(libvlc_meta_t.libvlc_meta_Actors);
+    }
+
+    @Override
+    public final void setActors(String actors) {
+        checkVersion(VERSION_220);
+        setMeta(libvlc_meta_t.libvlc_meta_Actors, actors);
+    }
+
+    @Override
     public final BufferedImage getArtwork() {
         Logger.debug("getArtwork()");
         if(artwork == null) {
@@ -325,6 +409,20 @@ class DefaultMediaMeta implements MediaMeta {
         libvlc.libvlc_media_set_meta(media, metaType.intValue(), value);
     }
 
+    /**
+     * Assert that the current runtime version of LibVLC is at least a particular version.
+     * <p>
+     * This is required because some meta data fields are only available after certain versions of
+     * LibVLC.
+     *
+     * @param checkVersion minimum version to check
+     */
+    private void checkVersion(Version checkVersion) {
+        if (!actualVersion.atLeast(checkVersion)) {
+            throw new RuntimeException("Requires at least VLC version " + checkVersion);
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(200);
@@ -346,6 +444,14 @@ class DefaultMediaMeta implements MediaMeta {
         sb.append("encodedBy=").append(getEncodedBy()).append(',');
         sb.append("artworkUrl=").append(getArtworkUrl()).append(',');
         sb.append("trackId=").append(getTrackId()).append(',');
+        if (actualVersion.atLeast(VERSION_220)) {
+            sb.append("trackTotal=").append(getTrackTotal()).append(',');
+            sb.append("director=").append(getDirector()).append(',');
+            sb.append("season=").append(getSeason()).append(',');
+            sb.append("episode=").append(getEpisode()).append(',');
+            sb.append("showName=").append(getShowName()).append(',');
+            sb.append("actors=").append(getActors()).append(',');
+        }
         sb.append("length=").append(getLength()).append(']');
         return sb.toString();
     }

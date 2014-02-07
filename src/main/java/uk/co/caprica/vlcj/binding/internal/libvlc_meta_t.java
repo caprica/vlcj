@@ -40,7 +40,13 @@ public enum libvlc_meta_t {
     libvlc_meta_Publisher  (13),
     libvlc_meta_EncodedBy  (14),
     libvlc_meta_ArtworkURL (15),
-    libvlc_meta_TrackID    (16);
+    libvlc_meta_TrackID    (16),
+    libvlc_meta_TrackTotal (17),
+    libvlc_meta_Director   (18),
+    libvlc_meta_Season     (19),
+    libvlc_meta_Episode    (20),
+    libvlc_meta_ShowName   (21),
+    libvlc_meta_Actors     (22);
 
     private final int intValue;
 
