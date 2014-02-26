@@ -71,6 +71,23 @@ public class NativeStreams {
     private Pointer redirectedErrorStream;
 
     /**
+     * Redirect native streams to files.
+     */
+    public NativeStreams() {
+    }
+
+    /**
+     * Redirect native streams to files.
+     *
+     * @param outputTo new stdout file name
+     * @param errorTo new stderr file name
+     */
+    public NativeStreams(String outputTo, String errorTo) {
+        redirectOutputTo(outputTo);
+        redirectErrorTo(errorTo);
+    }
+
+    /**
      * Redirect the native process standard output stream to a file.
      *
      * @param target file
