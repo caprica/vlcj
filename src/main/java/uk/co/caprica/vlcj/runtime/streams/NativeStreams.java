@@ -18,6 +18,7 @@
  */
 
 package uk.co.caprica.vlcj.runtime.streams;
+
 import uk.co.caprica.vlcj.binding.LibC;
 
 import com.sun.jna.Pointer;
@@ -30,10 +31,12 @@ import com.sun.jna.Pointer;
  * <p>
  * The normal Java redirection of System.out and System.err can not redirect the native process
  * streams.
+ * <p>
+ * This should be used immediately at the start of your application.
  *
  * <strong>This class is experimental and may not work on all platforms!</strong>
  */
-public class NativeStreams {
+public final class NativeStreams {
 
     /**
      * File descriptor for stdout.
@@ -72,58 +75,66 @@ public class NativeStreams {
 
     /**
      * Redirect native streams to files.
-     */
-    public NativeStreams() {
-    }
-
-    /**
-     * Redirect native streams to files.
      *
-     * @param outputTo new stdout file name
-     * @param errorTo new stderr file name
+     * @param outputTo new stdout file name, or <code>null</code>
+     * @param errorTo new stderr file name, or <code>null</code>
      */
     public NativeStreams(String outputTo, String errorTo) {
-        redirectOutputTo(outputTo);
-        redirectErrorTo(errorTo);
+        if (outputTo != null) {
+            if (!redirectOutputTo(outputTo)) {
+                throw new IllegalStateException("Failed to redirect stdout");
+            }
+        }
+        if (errorTo != null) {
+            if (!redirectErrorTo(errorTo)) {
+                throw new IllegalStateException("Failed to redirect stderr");
+            }
+        }
     }
 
     /**
      * Redirect the native process standard output stream to a file.
      *
      * @param target file
+     * @return
      */
-    public void redirectOutputTo(String target) {
-        if (redirectedOutputStream != null) {
-            LibC.INSTANCE.fclose(redirectedOutputStream);
-        }
+    private boolean redirectOutputTo(String target) {
         outputStream = LibC.INSTANCE.fdopen(STDOUT_FD, STREAM_MODE);
-        redirectedOutputStream = LibC.INSTANCE.freopen(target, STREAM_MODE, outputStream);
+        if (outputStream != null) {
+            redirectedOutputStream = LibC.INSTANCE.freopen(target, STREAM_MODE, outputStream);
+            return redirectedOutputStream != null;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
      * Redirect the native process standard error stream to a file.
      *
      * @param target file
+     * @return
      */
-    public void redirectErrorTo(String target) {
-        if (redirectedErrorStream != null) {
-            LibC.INSTANCE.fclose(redirectedErrorStream);
-        }
+    private boolean redirectErrorTo(String target) {
         errorStream = LibC.INSTANCE.fdopen(STDERR_FD, STREAM_MODE);
-        redirectedErrorStream = LibC.INSTANCE.freopen(target, STREAM_MODE, errorStream);
+        if (errorStream != null) {
+            redirectedErrorStream = LibC.INSTANCE.freopen(target, STREAM_MODE, errorStream);
+            return redirectedErrorStream != null;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
      * Close the redirected files.
      */
     public void release() {
-        if(redirectedOutputStream != null) {
+        if (redirectedOutputStream != null) {
             LibC.INSTANCE.fclose(redirectedOutputStream);
-            redirectedOutputStream = null;
         }
-        if(redirectedErrorStream != null) {
+        if (redirectedErrorStream != null) {
             LibC.INSTANCE.fclose(redirectedErrorStream);
-            redirectedErrorStream = null;
         }
     }
 }
