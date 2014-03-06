@@ -1256,9 +1256,10 @@ public interface LibVlc extends Library {
     /**
      * Set new video aspect ratio.
      *
+     * Note: invalid aspect ratios are ignored.
+     *
      * @param p_mi the media player
-     * @param psz_aspect new video aspect-ratio or NULL to reset to default \note Invalid aspect
-     *            ratios are ignored.
+     * @param psz_aspect new video aspect-ratio or NULL to reset to default
      */
     void libvlc_video_set_aspect_ratio(libvlc_media_player_t p_mi, String psz_aspect);
 
