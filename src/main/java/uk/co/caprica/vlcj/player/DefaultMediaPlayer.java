@@ -64,6 +64,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_track_t;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.player.condition.BeforeConditionAbortedException;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventFactory;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
@@ -1295,15 +1296,17 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         try {
             file = File.createTempFile("vlcj-snapshot-", ".png");
             Logger.debug("file={}", file.getAbsolutePath());
-            if(saveSnapshot(file, width, height)) {
-                return ImageIO.read(file);
-            }
-            else {
-                return null;
-            }
+            return ImageIO.read(new File(new WaitForSnapshot(this, file, width, height).await()));
         }
         catch(IOException e) {
             throw new RuntimeException("Failed to get snapshot image", e);
+        }
+        catch(InterruptedException e) {
+            throw new RuntimeException("Failed to get snapshot image", e);
+        }
+        catch(BeforeConditionAbortedException e) {
+            Logger.debug("Failed to take snapshot");
+            return null;
         }
         finally {
             if(file != null) {
