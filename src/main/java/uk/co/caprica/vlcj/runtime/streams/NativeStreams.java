@@ -96,7 +96,7 @@ public final class NativeStreams {
      * Redirect the native process standard output stream to a file.
      *
      * @param target file
-     * @return
+     * @return <code>true</code> if the stream was successfully redirected; <code>false</code> otherwise
      */
     private boolean redirectOutputTo(String target) {
         outputStream = LibC.INSTANCE.fdopen(STDOUT_FD, STREAM_MODE);
@@ -113,7 +113,7 @@ public final class NativeStreams {
      * Redirect the native process standard error stream to a file.
      *
      * @param target file
-     * @return
+     * @return <code>true</code> if the stream was successfully redirected; <code>false</code> otherwise
      */
     private boolean redirectErrorTo(String target) {
         errorStream = LibC.INSTANCE.fdopen(STDERR_FD, STREAM_MODE);
