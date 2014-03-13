@@ -92,10 +92,11 @@ public class ConditionTest extends VlcjTest {
         try {
             Condition<?> playingCondition = new PlayingCondition(mediaPlayer) {
                 @Override
-                protected void onBefore() {
+                protected boolean onBefore() {
                     // You do not have to use onBefore(), but sometimes it is very convenient, and guarantees
                     // that the required media player event listener is added before your condition is tested
                     mediaPlayer.startMedia(mrl);
+                    return true;
                 }
             };
             playingCondition.await();
@@ -118,32 +119,36 @@ public class ConditionTest extends VlcjTest {
 
                 Condition<?> timeReachedCondition = new TimeReachedCondition(mediaPlayer, time) {
                     @Override
-                    protected void onBefore() {
+                    protected boolean onBefore() {
                         mediaPlayer.setTime(targetTime);
+                        return true;
                     }
                 };
                 timeReachedCondition.await();
 
                 Condition<?> pausedCondition = new PausedCondition(mediaPlayer) {
                     @Override
-                    protected void onBefore() {
+                    protected boolean onBefore() {
                         mediaPlayer.pause();
+                        return true;
                     }
                 };
                 pausedCondition.await();
 
                 Condition<?> snapshotTakenCondition = new SnapshotTakenCondition(mediaPlayer) {
                     @Override
-                    protected void onBefore() {
+                    protected boolean onBefore() {
                         mediaPlayer.saveSnapshot();
+                        return true;
                     }
                 };
                 snapshotTakenCondition.await();
 
                 playingCondition = new PlayingCondition(mediaPlayer) {
                     @Override
-                    protected void onBefore() {
+                    protected boolean onBefore() {
                         mediaPlayer.play();
+                        return true;
                     }
                 };
                 playingCondition.await();

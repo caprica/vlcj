@@ -141,25 +141,29 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
         if(!used) {
             used = true;
             // Invoke the template method before waiting
-            onBefore();
-            // Wait for the completion latch to be triggered...
-            completionLatch.await();
-            // Depending on the result status...
-            switch(resultStatus.get()) {
-                case NORMAL:
-                    // ...normal processing, first invoke the template method after finished
-                    onAfter(this.result.get());
-                    // ...then return the result
-                    return result.get();
-                case ERROR:
-                    // ...an error occurred
-                    throw new UnexpectedErrorConditionException();
-                case FINISHED:
-                    // ...the media finished unexpectedly
-                    throw new UnexpectedFinishedConditionException();
-                default:
-                    // Can not happen
-                    throw new IllegalStateException("Unexpected result status: " + resultStatus.get());
+            if(onBefore()) {
+                // Wait for the completion latch to be triggered...
+                completionLatch.await();
+                // Depending on the result status...
+                switch(resultStatus.get()) {
+                    case NORMAL:
+                        // ...normal processing, first invoke the template method after finished
+                        onAfter(this.result.get());
+                        // ...then return the result
+                        return result.get();
+                    case ERROR:
+                        // ...an error occurred
+                        throw new UnexpectedErrorConditionException();
+                    case FINISHED:
+                        // ...the media finished unexpectedly
+                        throw new UnexpectedFinishedConditionException();
+                    default:
+                        // Can not happen
+                        throw new IllegalStateException("Unexpected result status: " + resultStatus.get());
+                }
+            }
+            else {
+                throw new BeforeConditionAbortedException();
             }
         }
         else {
@@ -221,9 +225,12 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
     /**
      * Template method invoked after the listener has been added but before the
      * {@link #await()} is invoked.
+     *
+     * @return <code>true</code> to continue; <code>false</code> to abort
      */
-    protected void onBefore() {
+    protected boolean onBefore() {
         // Default implementation does nothing
+        return true;
     }
 
     /**
