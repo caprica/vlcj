@@ -625,7 +625,7 @@ public class MediaPlayerFactory {
      */
     private void checkEqualizer() {
         if(!equalizerAvailable) {
-            throw new UnsupportedOperationException("Equalizer is not available, you need libvlc 2.1.0 or later");
+            throw new UnsupportedOperationException("Equalizer is not available, you need libvlc 2.2.0 or later");
         }
     }
 
