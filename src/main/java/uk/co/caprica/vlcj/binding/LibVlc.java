@@ -79,12 +79,19 @@ import com.sun.jna.ptr.PointerByReference;
  * <p>
  * Some functions are only available <em>after</em> version 2.0.0 of libvlc.
  * <p>
+ * Some functions are only available <em>after</em> version 2.1.0 of libvlc.
+ * <p>
  * This system property may be useful for debugging:
  * <pre>
  * -Djna.dump_memory=true
  * </pre>
  * In the native header file, generally "char*" types must be freed, but "const char*" need (must)
  * not.
+ * <p>
+ * This interface is essentially a translation of the LibVLC header files to Java, with changes for
+ * JNA/Java types. The documentation in that VLC header file is reproduced here for convenience,
+ * with the appropriate Javadoc documentation convention changes, the copyright of which (mostly)
+ * belongs to the VLC authors.
  */
 public interface LibVlc extends Library {
 
@@ -1574,18 +1581,37 @@ public interface LibVlc extends Library {
     int libvlc_audio_output_set(libvlc_media_player_t p_mi, String psz_name);
 
     /**
+     * Gets a list of potential audio output devices, see
+     * {@link #libvlc_audio_output_device_set(libvlc_media_player_t, String, String)}.
+     * <p>
+     * <em>Not all audio outputs support enumerating devices. The audio output may be functional
+     * even if the list is empty (NULL).</em>
+     * <p>
+     * <em>The list may not be exhaustive.</em>
+     * <p>
+     * <strong>Some audio output devices in the list might not actually work in some circumstances.
+     * By default, it is recommended to not specify any explicit audio device.</strong>
+     *
+     * @param mp media player
+     * @return NULL-terminated linked list of potential audio output devices. It must be freed
+     *         with {@link #libvlc_audio_output_device_list_release(libvlc_audio_output_device_t)}.
+     * @since LibVLC 2.2.0 or later.
+     */
+    libvlc_audio_output_device_t libvlc_audio_output_device_enum(libvlc_media_player_t mp);
+
+    /**
      * Gets a list of audio output devices for a given audio output.
      * <p>
      * See {@link #libvlc_audio_output_device_set(libvlc_media_player_t, String, String)}.
-     *
+     * <p>
      * Not all audio outputs support this. In particular, an empty (NULL)
      * list of devices does <em>not</em> imply that the specified audio output does
      * not work.
-     *
+     * <p>
      * The list might not be exhaustive.
-     *
+     * <p>
      * Some audio output devices in the list might not actually work in some
-     * circumstances. By default, it is recommended to not specify anyexplicit
+     * circumstances. By default, it is recommended to not specify any explicit
      * audio device.
      *
      * @param p_instance libvlc instance
@@ -1604,23 +1630,38 @@ public interface LibVlc extends Library {
     void libvlc_audio_output_device_list_release(libvlc_audio_output_device_t p_list );
 
     /**
-     * Configures an explicit audio output device for a given audio output plugin.
+     * Configures an explicit audio output device.
      * <p>
-     * A list of possible devices can be obtained with libvlc_audio_output_device_list_get().
+     * If the module parameter is NULL, audio output will be moved to the device
+     * specified by the device identifier string immediately. This is the
+     * recommended usage.
      * <p>
-     * This function does not select the specified audio output plugin. libvlc_audio_output_set()
-     * is used for that purpose.
+     * A list of adequate potential device strings can be obtained with
+     * libvlc_audio_output_device_enum(). // FIXME
      * <p>
-     * The syntax for the device parameter depends on the audio output. This is not
-     * portable. Only use this function if you know what you are doing.
+     * However passing NULL is supported in LibVLC version 2.2.0 and later only;
+     * in earlier versions, this function would have no effects when the module
+     * parameter was NULL.
      * <p>
-     * Some audio outputs do not support this function (e.g. PulseAudio, WASAPI).
+     * If the module parameter is not NULL, the device parameter of the
+     * corresponding audio output, if it exists, will be set to the specified
+     * string. Note that some audio output modules do not have such a parameter
+     * (notably MMDevice and PulseAudio).
      * <p>
-     * Some audio outputs require further parameters (e.g. ALSA: channels map).
+     * A list of adequate potential device strings can be obtained with
+     * libvlc_audio_output_device_list_get().
+     * <p>
+     * <em>This function does not select the specified audio output plugin.
+     * libvlc_audio_output_set() is used for that purpose.</em>
+     * <p>
+     * <strong>The syntax for the device parameter depends on the audio output.</strong>
+     * <p>
+     * Some audio output modules require further parameters (e.g. a channels map
+     * in the case of ALSA).
      *
-     * @param p_mi media player
-     * @param psz_audio_output - name of audio output, \see libvlc_audio_output_t
-     * @param psz_device_id device
+     * @param mp media player
+     * @param module If NULL, current audio output module; if non-NULL, name of audio output module (@see {@link libvlc_audio_output_t})
+     * @param device_id device identifier string
      */
     void libvlc_audio_output_device_set(libvlc_media_player_t p_mi, String psz_audio_output, String psz_device_id);
 
