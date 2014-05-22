@@ -33,13 +33,13 @@ public enum libvlc_position_e {
     left        ( 1),
     right       ( 2),
 
-    top         ( 4),
-    top_left    ( 5),
-    top_right   ( 6),
+    top         ( 3),
+    top_left    ( 4),
+    top_right   ( 5),
 
-    bottom      ( 8),
-    bottom_left ( 9),
-    bottom_right(10);
+    bottom      ( 6),
+    bottom_left ( 7),
+    bottom_right( 8);
 
     private static final Map<Integer, libvlc_position_e> INT_MAP = new HashMap<Integer, libvlc_position_e>();
 
