@@ -45,7 +45,7 @@ public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener 
 
     @Override
     public void buffering(MediaPlayer mediaPlayer, float newCache) {
-        Logger.debug("buffering(mediaPlayer={},newCache={})", mediaPlayer);
+        Logger.debug("buffering(mediaPlayer={},newCache={})", mediaPlayer, newCache);
     }
 
     @Override
