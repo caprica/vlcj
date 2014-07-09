@@ -339,7 +339,7 @@ public interface MediaPlayer {
     boolean getRepeat();
 
     /**
-     * Set whether or not the media player should automatically play media sub- items.
+     * Set whether or not the media player should automatically play media sub-items.
      *
      * @param playSubItems <code>true</code> to automatically play sub-items, otherwise <code>false</code>
      */
