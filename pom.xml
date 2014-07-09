@@ -201,6 +201,7 @@
                     <show>public</show>
                     <javadocVersion>1.7</javadocVersion>
                     <quiet>true</quiet>
+                    <failOnError>false</failOnError>
                 </configuration>
                 <executions>
                     <execution>
