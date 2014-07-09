@@ -1104,6 +1104,15 @@ public interface LibVlc extends Library {
     int libvlc_media_player_can_pause(libvlc_media_player_t p_mi);
 
     /**
+     * Is the current program scrambled?
+     *
+     * @param p_mi the media player
+     * @return true if the current program is scrambled
+     * @since libVLC 2.2.0
+     */
+    int libvlc_media_player_program_scrambled(libvlc_media_player_t p_mi);
+
+    /**
      * Display the next frame (if supported)
      *
      * @param p_mi the media player

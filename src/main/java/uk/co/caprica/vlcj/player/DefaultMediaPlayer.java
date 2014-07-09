@@ -507,6 +507,12 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
 
     @Override
+    public boolean programScrambled() {
+        Logger.trace("programScrambled()");
+        return libvlc.libvlc_media_player_program_scrambled(mediaPlayerInstance) == 1;
+    }
+
+    @Override
     public long getLength() {
         Logger.trace("getLength()");
         return libvlc.libvlc_media_player_get_length(mediaPlayerInstance);

@@ -444,6 +444,15 @@ public interface MediaPlayer {
     boolean canPause();
 
     /**
+     * Is the current program scrambled?
+     * <p>
+     * <strong>Requires vlc 2.2.0 or later.</strong>
+     *
+     * @return <code>true</code> if the current program is scrambled, otherwise <code>false</code>
+     */
+    boolean programScrambled();
+
+    /**
      * Get the length of the current media item.
      *
      * @return length, in milliseconds
