@@ -420,6 +420,10 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     }
 
     @Override
+    public void scrambledChanged(MediaPlayer mediaPlayer, int newScrambled) {
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
     }
 

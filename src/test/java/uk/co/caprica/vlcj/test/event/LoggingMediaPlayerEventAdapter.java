@@ -119,6 +119,11 @@ public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener 
     }
 
     @Override
+    public void scrambledChanged(MediaPlayer mediaPlayer, int newScrambled) {
+        Logger.debug("scrambledChanged(mediaPlayer={},newScrambled={})", mediaPlayer, newScrambled);
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
         Logger.debug("error(mediaPlayer={})", mediaPlayer);
     }

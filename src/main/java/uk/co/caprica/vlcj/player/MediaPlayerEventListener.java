@@ -173,6 +173,14 @@ public interface MediaPlayerEventListener {
     void videoOutput(MediaPlayer mediaPlayer, int newCount);
 
     /**
+     * Program scrambled changed.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param newScrambled new scrambled value
+     */
+    void scrambledChanged(MediaPlayer mediaPlayer, int newScrambled);
+
+    /**
      * An error occurred.
      *
      * @param mediaPlayer media player that raised the event

@@ -25,19 +25,20 @@ public enum MediaPlayerEventType {
     SNAPSHOT_TAKEN                 (0x00004000),
     LENGTH_CHANGED                 (0x00008000),
     VIDEO_OUTPUT                   (0x00010000),
-    ERROR                          (0x00020000),
+    SCRAMBLED_CHANGED              (0x00020000),
+    ERROR                          (0x00040000),
 
-    MEDIA_META_CHANGED             (0X00040000),
-    MEDIA_SUB_ITEM_ADDED           (0X00080000),
-    MEDIA_DURATION_CHANGED         (0X00100000),
-    MEDIA_PARSED_CHANGED           (0X00200000),
-    MEDIA_FREED                    (0X00400000),
-    MEDIA_STATE_CHANGED            (0X00800000),
+    MEDIA_META_CHANGED             (0X00080000),
+    MEDIA_SUB_ITEM_ADDED           (0X00100000),
+    MEDIA_DURATION_CHANGED         (0X00200000),
+    MEDIA_PARSED_CHANGED           (0X00400000),
+    MEDIA_FREED                    (0X00800000),
+    MEDIA_STATE_CHANGED            (0X01000000),
 
-    NEW_MEDIA                      (0x01000000),
-    SUB_ITEM_PLAYED                (0x02000000),
-    SUB_ITEM_FINISHED              (0x04000000),
-    END_OF_SUB_ITEMS               (0x08000000),
+    NEW_MEDIA                      (0x02000000),
+    SUB_ITEM_PLAYED                (0x04000000),
+    SUB_ITEM_FINISHED              (0x08000000),
+    END_OF_SUB_ITEMS               (0x10000000),
 
     ALL                            (0xffffffff);
 

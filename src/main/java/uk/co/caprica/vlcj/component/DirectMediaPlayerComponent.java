@@ -288,6 +288,10 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     }
 
     @Override
+    public void scrambledChanged(MediaPlayer mediaPlayer, int newScrambled) {
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
     }
 

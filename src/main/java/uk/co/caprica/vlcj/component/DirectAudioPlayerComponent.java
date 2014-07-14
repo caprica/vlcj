@@ -253,6 +253,10 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
     }
 
     @Override
+    public void scrambledChanged(MediaPlayer mediaPlayer, int newScrambled) {
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
     }
 
