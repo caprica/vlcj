@@ -68,6 +68,7 @@ import uk.co.caprica.vlcj.player.condition.BeforeConditionAbortedException;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventFactory;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
+import uk.co.caprica.vlcj.version.Version;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
@@ -1712,8 +1713,9 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     private void registerEventListener() {
         Logger.debug("registerEventListener()");
         callback = new EventCallback();
+        libvlc_event_e lastKnownEvent = lastKnownEvent();
         for(libvlc_event_e event : libvlc_event_e.values()) {
-            if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaPlayerVout.intValue()) {
+            if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() <= lastKnownEvent.intValue()) {
                 Logger.debug("event={}", event);
                 int result = libvlc.libvlc_event_attach(mediaPlayerEventManager, event.intValue(), callback, null);
                 Logger.debug("result={}", result);
@@ -1727,14 +1729,35 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     private void deregisterEventListener() {
         Logger.debug("deregisterEventListener()");
         if(callback != null) {
+            libvlc_event_e lastKnownEvent = lastKnownEvent();
             for(libvlc_event_e event : libvlc_event_e.values()) {
-                if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaPlayerVout.intValue()) {
+                if(event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() <= lastKnownEvent.intValue()) {
                     Logger.debug("event={}", event);
                     libvlc.libvlc_event_detach(mediaPlayerEventManager, event.intValue(), callback, null);
                 }
             }
             callback = null;
         }
+    }
+
+    /**
+     * Get the last known event type supported by the run-time native event manager.
+     * <p>
+     * This is required to support earlier than LibVLC 2.2.0, and can be removed when such support
+     * is no longer required.
+     *
+     * @return event type
+     */
+    private libvlc_event_e lastKnownEvent() {
+        libvlc_event_e result;
+        Version version = new Version(libvlc.libvlc_get_version());
+        if(version.atLeast(new Version("2.2.0"))) {
+            result = libvlc_event_e.libvlc_MediaPlayerScrambledChanged;
+        }
+        else {
+            result = libvlc_event_e.libvlc_MediaPlayerVout;
+        }
+        return result;
     }
 
     /**
