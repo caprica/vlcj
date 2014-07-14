@@ -28,8 +28,8 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 class MediaPlayerPausableChangedEvent extends AbstractMediaPlayerEvent {
 
     /**
-   *
-   */
+     *
+     */
     private final int newPausable;
 
     /**
