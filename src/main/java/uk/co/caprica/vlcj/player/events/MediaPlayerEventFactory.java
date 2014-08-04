@@ -26,6 +26,7 @@ import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
 import uk.co.caprica.vlcj.binding.internal.media_meta_changed;
 import uk.co.caprica.vlcj.binding.internal.media_parsed_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_buffering;
+import uk.co.caprica.vlcj.binding.internal.media_player_es_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_media_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_pausable_changed;
@@ -196,6 +197,24 @@ public class MediaPlayerEventFactory {
             case libvlc_MediaPlayerScrambledChanged:
                 if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.SCRAMBLED_CHANGED)) {
                     result = new MediaPlayerScrambledChangedEvent(mediaPlayer, ((media_player_scrambled_changed)event.u.getTypedValue(media_player_scrambled_changed.class)).new_scrambled);
+                }
+                break;
+
+            case libvlc_MediaPlayerESAdded:
+                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.ES_ADDED)) {
+                    result = new MediaPlayerESAddedEvent(mediaPlayer, ((media_player_es_changed)event.u.getTypedValue(media_player_es_changed.class)).i_type, ((media_player_es_changed)event.u.getTypedValue(media_player_es_changed.class)).i_id);
+                }
+                break;
+
+           case libvlc_MediaPlayerESDeleted:
+                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.ES_DELETED)) {
+                    result = new MediaPlayerESDeletedEvent(mediaPlayer, ((media_player_es_changed)event.u.getTypedValue(media_player_es_changed.class)).i_type, ((media_player_es_changed)event.u.getTypedValue(media_player_es_changed.class)).i_id);
+                }
+                break;
+
+            case libvlc_MediaPlayerESSelected:
+                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.ES_SELECTED)) {
+                    result = new MediaPlayerESSelectedEvent(mediaPlayer, ((media_player_es_changed)event.u.getTypedValue(media_player_es_changed.class)).i_type, ((media_player_es_changed)event.u.getTypedValue(media_player_es_changed.class)).i_id);
                 }
                 break;
 

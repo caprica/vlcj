@@ -292,6 +292,18 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     }
 
     @Override
+    public void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id) {
+    }
+
+    @Override
+    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id) {
+    }
+
+    @Override
+    public void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id) {
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
     }
 

@@ -124,6 +124,21 @@ public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener 
     }
 
     @Override
+    public void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id) {
+        Logger.debug("elementaryStreamAdded(mediaPlayer={},type={},id={})", mediaPlayer, type, id);
+    }
+
+    @Override
+    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id) {
+        Logger.debug("elementaryStreamDeleted(mediaPlayer={},type={},id={})", mediaPlayer, type, id);
+    }
+
+    @Override
+    public void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id) {
+        Logger.debug("elementaryStreamSelected(mediaPlayer={},type={},id={})", mediaPlayer, type, id);
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
         Logger.debug("error(mediaPlayer={})", mediaPlayer);
     }

@@ -181,6 +181,33 @@ public interface MediaPlayerEventListener {
     void scrambledChanged(MediaPlayer mediaPlayer, int newScrambled);
 
     /**
+     * An elementary stream was added.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param type type of stream
+     * @param id identifier of stream
+     */
+    void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id);
+
+    /**
+     * An elementary stream was deleted.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param type type of stream
+     * @param id identifier of stream
+     */
+    void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id);
+
+    /**
+     * An elementary stream was selected.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param type type of stream
+     * @param id identifier of stream
+     */
+    void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id);
+
+    /**
      * An error occurred.
      *
      * @param mediaPlayer media player that raised the event
