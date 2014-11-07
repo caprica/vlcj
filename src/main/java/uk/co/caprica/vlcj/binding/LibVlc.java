@@ -2168,7 +2168,7 @@ public interface LibVlc extends Library {
      * @param p_mlp media list player instance
      * @return libvlc_state_t for media list player
      */
-    libvlc_state_t libvlc_media_list_player_get_state(libvlc_media_list_player_t p_mlp);
+    int libvlc_media_list_player_get_state(libvlc_media_list_player_t p_mlp);
 
     /**
      * Play media list item at position index

@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.list;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
@@ -148,6 +149,13 @@ public interface MediaListPlayer {
      * @return <code>true</code> if playing, otherwise <code>false</code>
      */
     boolean isPlaying();
+
+    /**
+     * Get the media list player state.
+     *
+     * @return state
+     */
+    libvlc_state_t getMediaListPlayerState();
 
     /**
      * Set the media list play mode.

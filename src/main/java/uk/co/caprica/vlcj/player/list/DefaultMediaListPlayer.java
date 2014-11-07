@@ -34,6 +34,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.AbstractMediaPlayer;
@@ -208,6 +209,12 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     public boolean isPlaying() {
         Logger.debug("isPlaying()");
         return libvlc.libvlc_media_list_player_is_playing(mediaListPlayerInstance) != 0;
+    }
+
+    @Override
+    public libvlc_state_t getMediaListPlayerState() {
+        Logger.debug("getMediaListPlayerState()");
+        return libvlc_state_t.state(libvlc.libvlc_media_list_player_get_state(mediaListPlayerInstance));
     }
 
     @Override
