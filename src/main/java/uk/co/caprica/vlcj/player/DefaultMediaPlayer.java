@@ -1594,7 +1594,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             return NativeString.getNativeString(libvlc, libvlc.libvlc_media_get_mrl(mediaInstance));
         }
         else {
-            throw null;
+            return null;
         }
     }
 
