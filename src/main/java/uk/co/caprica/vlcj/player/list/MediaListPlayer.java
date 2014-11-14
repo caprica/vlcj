@@ -192,6 +192,13 @@ public interface MediaListPlayer {
     void userData(Object userData);
 
     /**
+     * Get the current MRL.
+     *
+     * @return MRL of the current item, or <code>null</code>
+     */
+    String currentMrl();
+
+    /**
      * Release the media list player resources.
      */
     void release();

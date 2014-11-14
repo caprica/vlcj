@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
@@ -103,6 +104,11 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
      * Opaque reference to user/application-specific data associated with this media player.
      */
     private Object userData;
+
+    /**
+     * MRL of the current media item.
+     */
+    private final AtomicReference<String> currentMrl = new AtomicReference<String>();
 
     /**
      * Set to true when the player has been released.
@@ -256,6 +262,12 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     public void userData(Object userData) {
         Logger.debug("userData(userData={})", userData);
         this.userData = userData;
+    }
+
+    @Override
+    public final String currentMrl() {
+        Logger.debug("currentMrl()");
+        return currentMrl.get();
     }
 
     @Override
@@ -422,6 +434,7 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
             Logger.debug("nextItem(item={},itemMrl={})", item, itemMrl);
             deregisterMediaEventListener();
             this.mediaInstance = item;
+            currentMrl.set(itemMrl);
             registerMediaEventListener();
         }
 
