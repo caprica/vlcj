@@ -171,6 +171,17 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
         return bufferFormat;
     }
 
+    @Override
+    public final Memory[] lock() {
+        semaphore.acquireUninterruptibly();
+        return nativeBuffers;
+    }
+
+    @Override
+    public final void unlock() {
+        semaphore.release();
+    }
+
     /**
      * Implementation of a callback invoked by the native library to set up the
      * required video buffer characteristics.

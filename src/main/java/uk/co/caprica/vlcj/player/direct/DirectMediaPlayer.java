@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.player.direct;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
+import com.sun.jna.Memory;
+
 /**
  * Specification for a media player that provides direct access to the video frame data.
  * <p>
@@ -31,5 +33,29 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
  * process it in some way.
  */
 public interface DirectMediaPlayer extends MediaPlayer {
-    // Nothing extra
+
+    /**
+     * Lock the native memory buffers.
+     * <p>
+     * The lock must be held for as short a time as possible - locking the buffers will prevent the
+     * native video player from filling more frames.
+     * <p>
+     * A corresponding call to {@link #unlock()} <strong>must</strong> always be made, no matter what
+     * the return value from this method.
+     * <p>
+     * A client application must not interfere with the returned array - the returned array is the
+     * "live" array used by the media player, so a client must not add/remove/re-order/etc the
+     * returned array.
+     * <p>
+     * To mitigate this, a defensive copy of the array could have been returned, but this would be
+     * added overhead (even though slight) that can be avoided.
+     *
+     * @return native memory buffers, may be <code>null</code>
+     */
+    Memory[] lock();
+
+    /**
+     * Unlock the native memory buffers.
+     */
+    void unlock();
 }
