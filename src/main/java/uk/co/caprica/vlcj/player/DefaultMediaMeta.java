@@ -339,6 +339,18 @@ class DefaultMediaMeta implements MediaMeta {
     }
 
     @Override
+    public String getAlbumArtist() {
+        checkVersion(VERSION_220);
+        return getMeta(libvlc_meta_t.libvlc_meta_AlbumArtist);
+    }
+
+    @Override
+    public void setAlbumArtist(String albumArtist) {
+        checkVersion(VERSION_220);
+        setMeta(libvlc_meta_t.libvlc_meta_AlbumArtist, albumArtist);
+    }
+
+    @Override
     public final BufferedImage getArtwork() {
         Logger.debug("getArtwork()");
         if(artwork == null) {
@@ -451,6 +463,7 @@ class DefaultMediaMeta implements MediaMeta {
             sb.append("episode=").append(getEpisode()).append(',');
             sb.append("showName=").append(getShowName()).append(',');
             sb.append("actors=").append(getActors()).append(',');
+            sb.append("albumArtist=").append(getAlbumArtist()).append(',');
         }
         sb.append("length=").append(getLength()).append(']');
         return sb.toString();

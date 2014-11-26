@@ -395,6 +395,22 @@ public interface MediaMeta {
     void setActors(String actors);
 
     /**
+     * Get the album artist meta data.
+     *
+     * @return album artist
+     * @since LibVLC 2.2.0
+     */
+    String getAlbumArtist();
+
+    /**
+     * Set the album artist meta data.
+     *
+     * @param albumArtist album artist
+     * @since LibVLC 2.2.0
+     */
+    void setAlbumArtist(String albumArtist);
+
+    /**
      * Load the artwork associated with this media.
      * <p>
      * <strong>Invoking this method may trigger an HTTP request to download the artwork.</strong>
