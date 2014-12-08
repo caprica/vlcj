@@ -411,6 +411,22 @@ public interface MediaMeta {
     void setAlbumArtist(String albumArtist);
 
     /**
+     * Get the disc number meta data.
+     *
+     * @return disc number
+     * @since LibVLC 2.2.0
+     */
+    String getDiscNumber();
+
+    /**
+     * Set the disc number meta data.
+     *
+     * @param discNumber disc number
+     * @since LibVLC 2.2.0
+     */
+    void setDiscNumber(String discNumber);
+
+    /**
      * Load the artwork associated with this media.
      * <p>
      * <strong>Invoking this method may trigger an HTTP request to download the artwork.</strong>

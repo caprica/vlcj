@@ -351,6 +351,18 @@ class DefaultMediaMeta implements MediaMeta {
     }
 
     @Override
+    public String getDiscNumber() {
+        checkVersion(VERSION_220);
+        return getMeta(libvlc_meta_t.libvlc_meta_DiscNumber);
+    }
+
+    @Override
+    public void setDiscNumber(String discNumber) {
+        checkVersion(VERSION_220);
+        setMeta(libvlc_meta_t.libvlc_meta_DiscNumber, discNumber);
+    }
+
+    @Override
     public final BufferedImage getArtwork() {
         Logger.debug("getArtwork()");
         if(artwork == null) {

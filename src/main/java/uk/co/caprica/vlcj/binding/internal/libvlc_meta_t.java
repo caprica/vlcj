@@ -47,7 +47,8 @@ public enum libvlc_meta_t {
     libvlc_meta_Episode    (20),
     libvlc_meta_ShowName   (21),
     libvlc_meta_Actors     (22),
-    libvlc_meta_AlbumArtist(23);
+    libvlc_meta_AlbumArtist(23),
+    libvlc_meta_DiscNumber (24);
 
     private final int intValue;
 
