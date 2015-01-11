@@ -16,7 +16,7 @@ also work just fine on Windows and MacOSX.
 At least JDK 1.6 is required, and it works without changes on JDK 1.7.
 
 This is the open source vlcj project page, see also the 'official'
-[home page](http://www.capricasoftware.co.uk/projects/vlcj/index.html "Official vlcj home page at Caprica Software")
+[home page](http://capricasoftware.co.uk/#/projects/vlcj "Official vlcj home page at Caprica Software")
 where you can find more information as well as some new simple tutorials.
 
 Version 3.0.0+ of vlcj requires version 2.1.0+ of vlc, earlier versions of vlc
@@ -72,10 +72,10 @@ Online Javadoc is available:
 * [2.1.0](http://caprica.github.com/vlcj/javadoc/2.1.0/index.html "2.1.0 Javadoc")
 * [2.0.0](http://caprica.github.com/vlcj/javadoc/2.0.0/index.html "2.0.0 Javadoc")
 
-Documentation is being made available at [Caprica Software](http://www.capricasoftware.co.uk/projects/vlcj/index.html "Caprica Software").
-
 Support
 -------
+
+Development of vlcj is carried out by [Caprica Software](http://www.capricasoftware.co.uk).
 
 Free support for Open Source and non-commercial projects is generally provided - you
 can use [github issues](https://github.com/caprica/vlcj/issues "vlcj github issues")
