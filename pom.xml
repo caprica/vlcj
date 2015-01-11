@@ -197,7 +197,7 @@
                     <doctitle>${project.name} ${project.version} API Documentation</doctitle>
                     <docfilessubdirs>true</docfilessubdirs>
                     <encoding>UTF-8</encoding>
-                    <footer>(C)2014 Caprica Software Limited</footer>
+                    <footer>(C)2015 Caprica Software Limited</footer>
                     <show>public</show>
                     <javadocVersion>1.7</javadocVersion>
                     <quiet>true</quiet>
