@@ -34,6 +34,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
@@ -1142,6 +1143,17 @@ public interface MediaPlayer {
      * @return collection of track information, or <code>null</code> if there is no current media
      */
     List<TrackInfo> getTrackInfo(libvlc_media_t media, TrackType... types);
+
+    /**
+     * Get a description for a FourCC codec value.
+     * <p>
+     * Requires LibVLC 3.0.0 or later.
+     *
+     * @param type type of track
+     * @param codec codec value
+     * @return description, or the empty string if the description is not available
+     */
+    String getCodecDescription(libvlc_track_type_t type, int codec);
 
     /**
      * Get the track (i.e. "elementary streams") information for all sub-items if there are any.

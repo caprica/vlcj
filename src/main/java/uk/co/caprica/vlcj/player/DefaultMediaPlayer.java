@@ -68,6 +68,7 @@ import uk.co.caprica.vlcj.player.condition.BeforeConditionAbortedException;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventFactory;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
+import uk.co.caprica.vlcj.version.LibVlcVersion;
 import uk.co.caprica.vlcj.version.Version;
 
 import com.sun.jna.Pointer;
@@ -1136,7 +1137,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                                 trackInfo.i_level,
                                 trackInfo.i_bitrate,
                                 NativeString.getNativeString(libvlc, trackInfo.psz_language),
-                                NativeString.getNativeString(libvlc, trackInfo.psz_description)
+                                NativeString.getNativeString(libvlc, trackInfo.psz_description),
+                                getCodecDescription(libvlc_track_type_t.libvlc_track_unknown, trackInfo.i_codec)
                             ));
                         }
                         break;
@@ -1159,7 +1161,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                                 trackInfo.u.video.i_sar_num,
                                 trackInfo.u.video.i_sar_den,
                                 trackInfo.u.video.i_frame_rate_num,
-                                trackInfo.u.video.i_frame_rate_den
+                                trackInfo.u.video.i_frame_rate_den,
+                                getCodecDescription(libvlc_track_type_t.libvlc_track_video, trackInfo.i_codec)
                             ));
                         }
                         break;
@@ -1178,7 +1181,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                                 NativeString.getNativeString(libvlc, trackInfo.psz_language),
                                 NativeString.getNativeString(libvlc, trackInfo.psz_description),
                                 trackInfo.u.audio.i_channels,
-                                trackInfo.u.audio.i_rate
+                                trackInfo.u.audio.i_rate,
+                                getCodecDescription(libvlc_track_type_t.libvlc_track_audio, trackInfo.i_codec)
                             ));
                         }
                         break;
@@ -1196,7 +1200,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                                 trackInfo.i_bitrate,
                                 NativeString.getNativeString(libvlc, trackInfo.psz_language),
                                 NativeString.getNativeString(libvlc, trackInfo.psz_description),
-                                NativeString.getNativeString(libvlc, trackInfo.u.subtitle.psz_encoding)
+                                NativeString.getNativeString(libvlc, trackInfo.u.subtitle.psz_encoding),
+                                getCodecDescription(libvlc_track_type_t.libvlc_track_text, trackInfo.i_codec)
                             ));
                         }
                         break;
@@ -1204,6 +1209,16 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             }
         }
         return result;
+    }
+
+    @Override
+    public String getCodecDescription(libvlc_track_type_t type, int codec) {
+        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
+            return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
+        }
+        else {
+            return "";
+        }
     }
 
     @Override

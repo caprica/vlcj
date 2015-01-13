@@ -40,6 +40,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
 import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.medialist.MediaList;
@@ -804,6 +805,27 @@ public class MediaPlayerFactory {
         }
         else {
             return null;
+        }
+    }
+
+    // === Codec ================================================================
+
+    /**
+     * Get a description for a particular codec value.
+     *
+     * @param type type of track
+     * @param codec codec value (or codec FourCC)
+     * @return codec description
+     *
+     * @since libvlc 3.0.0
+     */
+    public String getCodecDescription(libvlc_track_type_t type, int codec) {
+        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
+            return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
+        }
+        else {
+            Logger.warn("Codec description not available on this platform, needs libvlc 3.0.0 or later");
+            return "";
         }
     }
 

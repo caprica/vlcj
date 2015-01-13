@@ -634,6 +634,18 @@ public interface LibVlc extends Library {
      */
     void libvlc_media_tracks_release(Pointer p_tracks, int i_count);
 
+    /**
+     * Get codec description from media elementary stream.
+     *
+     * @param i_type i_type from libvlc_media_track_t
+     * @param i_codec i_codec or i_original_fourcc from libvlc_media_track_t
+     *
+     * @return codec description
+     *
+     * @since LibVLC 3.0.0 and later.
+     */
+     String libvlc_media_get_codec_description(int i_type, int i_codec);
+
     // === libvlc_media.h =======================================================
 
     // === libvlc_media_player.h ================================================

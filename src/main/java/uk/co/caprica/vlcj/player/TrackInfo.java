@@ -82,6 +82,11 @@ public abstract class TrackInfo implements Serializable {
     private final String description;
 
     /**
+     * Codec description.
+     */
+    private final String codecDescription;
+
+    /**
      * Create a new track info.
      *
      * @param codec codec
@@ -91,8 +96,9 @@ public abstract class TrackInfo implements Serializable {
      * @param bitRate bit-rate
      * @param language language
      * @param description description
+     * @param codecDescription codec description
      */
-    protected TrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description) {
+    protected TrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String codecDescription) {
         this.codec = codec;
         this.codecName = codecName(codec);
         this.originalCodec = originalCodec;
@@ -103,6 +109,7 @@ public abstract class TrackInfo implements Serializable {
         this.bitRate = bitRate;
         this.language = language;
         this.description = description;
+        this.codecDescription = codecDescription;
     }
 
     /**
@@ -195,6 +202,15 @@ public abstract class TrackInfo implements Serializable {
         return description;
     }
 
+    /**
+     * Get the codec description.
+     *
+     * @return codec description
+     */
+    public final String codecDescription() {
+        return codecDescription;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(100);
@@ -208,7 +224,8 @@ public abstract class TrackInfo implements Serializable {
         sb.append("level=").append(level).append(',');
         sb.append("bitRate=").append(bitRate).append(',');
         sb.append("language=").append(language).append(',');
-        sb.append("description=").append(description).append(']');
+        sb.append("description=").append(description).append(',');
+        sb.append("codecDescription=").append(codecDescription).append(']');
         return sb.toString();
     }
 

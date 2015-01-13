@@ -32,6 +32,11 @@ public final class LibVlcVersion {
     private static final Version VERSION = new Version(LibVlc.INSTANCE.libvlc_get_version());
 
     /**
+     * LibVlc 3.0.0 API baseline.
+     */
+    public static final Version LIBVLC_300 = new Version("3.0.0");
+
+    /**
      * LibVlc 2.1.0 API baseline.
      */
     public static final Version LIBVLC_210 = new Version("2.1.0");
