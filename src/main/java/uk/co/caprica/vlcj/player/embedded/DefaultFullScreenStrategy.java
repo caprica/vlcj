@@ -38,7 +38,7 @@ import uk.co.caprica.vlcj.logger.Logger;
  * {@link #getDisplayMode(DisplayMode[])} to do so.
  * <p>
  * Client applications may also have other requirements such as hiding other on-screen controls when
- * in full-screen mode - extend this class and over- ride {@link #onBeforeEnterFullScreenMode} and
+ * in full-screen mode - extend this class and override {@link #onBeforeEnterFullScreenMode} and
  * {@link #onAfterExitFullScreenMode()} to do so.
  * <p>
  * It may be useful to specify "-Dsun.java2d.d3d=false" on the Windows platform for performance
