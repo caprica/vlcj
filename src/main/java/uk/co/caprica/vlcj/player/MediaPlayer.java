@@ -815,6 +815,13 @@ public interface MediaPlayer {
     void setAudioOutputDevice(String output, String outputDeviceId);
 
     /**
+     * Get the available audio devices for the media player audio output.
+     *
+     * @return list of audio devices, or <code>null</code> if not available (e.g. requires LibVLC 2.2.0)
+     */
+    List<AudioDevice> getAudioOutputDevices();
+
+    /**
      * Toggle volume mute.
      */
     void mute();

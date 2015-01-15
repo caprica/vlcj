@@ -38,6 +38,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.imageio.ImageIO;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
@@ -813,6 +814,36 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public void setAudioOutputDevice(String output, String outputDeviceId) {
         Logger.debug("setAudioOutputDevice(output={},outputDeviceId={})", output, outputDeviceId);
         libvlc.libvlc_audio_output_device_set(mediaPlayerInstance, output, outputDeviceId);
+    }
+
+    @Override
+    public List<AudioDevice> getAudioOutputDevices() {
+        Logger.debug("getAudioOutputDevices()");
+        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_220)) {
+            List<AudioDevice> result = new ArrayList<AudioDevice>();
+            libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_enum(mediaPlayerInstance);
+            if (audioDevices != null) {
+                // Must prevent automatic synchronisation on the native structure, otherwise a
+                // fatal JVM crash will occur when the native release call is made - not quite
+                // sure why this is needed here
+                audioDevices.setAutoSynch(false);
+                libvlc_audio_output_device_t audioDevice = audioDevices;
+                while(audioDevice != null) {
+                    // The native strings must be copied here, but not freed (they are freed natively
+                    // in the subsequent release call)
+                    String device = NativeString.copyNativeString(libvlc, audioDevice.psz_device);
+                    String description = NativeString.copyNativeString(libvlc, audioDevice.psz_description);
+                    result.add(new AudioDevice(device, description));
+                    audioDevice = audioDevice.p_next;
+                }
+                libvlc.libvlc_audio_output_device_list_release(audioDevices);
+            }
+            return result;
+        }
+        else {
+            Logger.warn("Audio output device enumeration requires libvlc 2.2.0 or later");
+            return null;
+        }
     }
 
     @Override

@@ -37,6 +37,11 @@ public final class LibVlcVersion {
     public static final Version LIBVLC_300 = new Version("3.0.0");
 
     /**
+     * LibVlc 2.2.0 API baseline.
+     */
+    public static final Version LIBVLC_220 = new Version("2.2.0");
+
+    /**
      * LibVlc 2.1.0 API baseline.
      */
     public static final Version LIBVLC_210 = new Version("2.1.0");
