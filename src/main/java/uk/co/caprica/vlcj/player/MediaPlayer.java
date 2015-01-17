@@ -755,7 +755,7 @@ public interface MediaPlayer {
     /**
      * Set the video aspect ratio
      *
-     * @param aspectRatio aspect ratio
+     * @param aspectRatio aspect ratio, e.g. "16:9", "4:3", "185:100" for 1:85.1 and so on
      */
     void setAspectRatio(String aspectRatio);
 
