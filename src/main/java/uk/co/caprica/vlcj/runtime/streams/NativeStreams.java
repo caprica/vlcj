@@ -76,8 +76,8 @@ public final class NativeStreams {
     /**
      * Redirect native streams to files.
      *
-     * @param outputTo new stdout file name, or <code>null</code>
-     * @param errorTo new stderr file name, or <code>null</code>
+     * @param outputTo new stdout file name, or <code>null</code> for no redirection of stdout
+     * @param errorTo new stderr file name, or <code>null</code> for no redirection of stderr
      */
     public NativeStreams(String outputTo, String errorTo) {
         if (outputTo != null) {
