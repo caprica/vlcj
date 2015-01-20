@@ -2241,8 +2241,57 @@ public interface LibVlc extends Library {
      * @param p_inst libvlc instance
      * @param psz_name service name
      * @return media discover object or NULL in case of error
+     * @deprecated use {@link #libvlc_media_discoverer_new(libvlc_instance_t, String)} and {@link #libvlc_media_discoverer_start(libvlc_media_discoverer_t)}
      */
+    @Deprecated
     libvlc_media_discoverer_t libvlc_media_discoverer_new_from_name(libvlc_instance_t p_inst, String psz_name);
+
+    /**
+     * Create a media discoverer object by name.
+     *
+     * After this object is created, you should attach to events in order to be
+     * notified of the discoverer state.
+     *
+     * You should also attach to media_list events in order to be notified of new
+     * items discovered.
+     *
+     * You need to call {@link #libvlc_media_discoverer_start(libvlc_media_discoverer_t)}
+     * in order to start the discovery.
+     *
+     * @see #libvlc_media_discoverer_media_list(libvlc_media_discoverer_t)
+     * @see #libvlc_media_discoverer_event_manager(libvlc_media_discoverer_t)
+     * @see #libvlc_media_discoverer_start(libvlc_media_discoverer_t)
+     *
+     * @param p_inst libvlc instance
+     * @param psz_name service name
+     * @return media discover object or NULL in case of error
+     * @since LibVLC 3.0.0 or later
+     */
+    libvlc_media_discoverer_t libvlc_media_discoverer_new(libvlc_instance_t p_inst, String psz_name);
+
+    /**
+     * Start media discovery.
+     *
+     * To stop it, call libvlc_media_discoverer_stop() or
+     * libvlc_media_discoverer_release() directly.
+     *
+     * @see #libvlc_media_discoverer_stop(libvlc_media_discoverer_t)
+     *
+     * @param p_mdis media discover object
+     * @return -1 in case of error, 0 otherwise
+     * @since LibVLC 3.0.0 or later
+     */
+    int libvlc_media_discoverer_start(libvlc_media_discoverer_t p_mdis);
+
+    /**
+     * Stop media discovery.
+     *
+     * @see #libvlc_media_discoverer_start(libvlc_media_discoverer_t)
+     *
+     * @param p_mdis media discover object
+     * @since LibVLC 3.0.0 or later
+     */
+    void libvlc_media_discoverer_stop(libvlc_media_discoverer_t p_mdis);
 
     /**
      * Release media discover object. If the reference count reaches 0, then the object will be
