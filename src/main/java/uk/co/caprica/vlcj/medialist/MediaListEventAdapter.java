@@ -49,4 +49,8 @@ public class MediaListEventAdapter implements MediaListEventListener {
     @Override
     public void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
     }
+
+    @Override
+    public void mediaListEndReached(MediaList mediaList) {
+    }
 }

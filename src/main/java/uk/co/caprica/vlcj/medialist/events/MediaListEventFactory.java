@@ -75,6 +75,10 @@ public class MediaListEventFactory {
                 media_list_item_deleted itemDeletedEvent = ((media_list_item_deleted)event.u.getTypedValue(media_list_item_deleted.class));
                 result = new MediaListItemDeletedEvent(mediaList, itemDeletedEvent.item, itemDeletedEvent.index);
                 break;
+
+            case libvlc_MediaListEndReached:
+                result = new MediaListEndReachedEvent(mediaList);
+                break;
         }
         return result;
     }

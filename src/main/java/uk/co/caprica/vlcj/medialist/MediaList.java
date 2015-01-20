@@ -382,7 +382,7 @@ public class MediaList {
         Logger.debug("registerEventListener()");
         callback = new MediaListCallback();
         for(libvlc_event_e event : libvlc_event_e.values()) {
-            if(event.intValue() >= libvlc_event_e.libvlc_MediaListItemAdded.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListWillDeleteItem.intValue()) {
+            if(event.intValue() >= libvlc_event_e.libvlc_MediaListItemAdded.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListEndReached.intValue()) {
                 Logger.debug("event={}", event);
                 int result = libvlc.libvlc_event_attach(mediaListEventManager, event.intValue(), callback, null);
                 Logger.debug("result={}", result);
@@ -397,7 +397,7 @@ public class MediaList {
         Logger.debug("deregisterEventListener()");
         if(callback != null) {
             for(libvlc_event_e event : libvlc_event_e.values()) {
-                if(event.intValue() >= libvlc_event_e.libvlc_MediaListItemAdded.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListWillDeleteItem.intValue()) {
+                if(event.intValue() >= libvlc_event_e.libvlc_MediaListItemAdded.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListEndReached.intValue()) {
                     Logger.debug("event={}", event);
                     libvlc.libvlc_event_detach(mediaListEventManager, event.intValue(), callback, null);
                 }

@@ -62,4 +62,11 @@ public interface MediaListEventListener {
      * @param index index in the list at which the media instance was deleted
      */
     void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, int index);
+
+    /**
+     * The end of the media list was reached.
+     *
+     * @param mediaList list
+     */
+    void mediaListEndReached(MediaList mediaList);
 }

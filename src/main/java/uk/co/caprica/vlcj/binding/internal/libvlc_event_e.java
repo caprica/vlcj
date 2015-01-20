@@ -63,6 +63,7 @@ public enum libvlc_event_e {
     libvlc_MediaListWillAddItem         (0x201),
     libvlc_MediaListItemDeleted         (0x202),
     libvlc_MediaListWillDeleteItem      (0x203),
+    libvlc_MediaListEndReached          (0x204),
 
     libvlc_MediaListViewItemAdded       (0x300),
     libvlc_MediaListViewWillAddItem     (0x301),
