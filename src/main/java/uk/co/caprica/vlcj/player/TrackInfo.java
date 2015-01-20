@@ -204,6 +204,8 @@ public abstract class TrackInfo implements Serializable {
 
     /**
      * Get the codec description.
+     * <p>
+     * The codec description is only available with VLC 3.0.0 and later.
      *
      * @return codec description
      */
