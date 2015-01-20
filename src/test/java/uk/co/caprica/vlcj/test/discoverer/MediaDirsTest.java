@@ -99,4 +99,9 @@ public class MediaDirsTest extends VlcjTest implements MediaListEventListener {
     public void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
         System.out.println("ITEM DELETED: " + index + " -> " + mediaList.items());
     }
+
+    @Override
+    public void mediaListEndReached(MediaList mediaList) {
+        System.out.println("END REACHED");
+    }
 }
