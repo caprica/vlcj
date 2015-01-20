@@ -47,7 +47,7 @@ News
 ----
 
 ??/??/2015 New meta data attributes, new codec description API, new audio device enumeration API,
-minor documentation fixes.
+new media list player end reached, minor documentation fixes.
 
 26/11/2014 Made new release 3.1.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj).
 
