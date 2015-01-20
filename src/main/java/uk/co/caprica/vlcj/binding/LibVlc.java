@@ -42,6 +42,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -80,6 +81,10 @@ import com.sun.jna.ptr.PointerByReference;
  * Some functions are only available <em>after</em> version 2.0.0 of libvlc.
  * <p>
  * Some functions are only available <em>after</em> version 2.1.0 of libvlc.
+ * <p>
+ * Some functions are only available <em>after</em> version 2.2.0 of libvlc.
+ * <p>
+ * Some functions are only available <em>after</em> version 3.0.0 of libvlc.
  * <p>
  * This system property may be useful for debugging:
  * <pre>
@@ -555,8 +560,9 @@ public interface LibVlc extends Library {
     long libvlc_media_get_duration(libvlc_media_t p_md);
 
     /**
-     * Parse a media. This fetches (local) meta data and tracks information. The method is
-     * synchronous.
+     * Parse a media.
+     *
+     * This fetches (local) art, meta data and tracks information. The method is synchronous.
      *
      * @see #libvlc_media_parse_async(libvlc_media_t)
      * @see #libvlc_media_get_meta(libvlc_media_t, int)
@@ -565,10 +571,13 @@ public interface LibVlc extends Library {
     void libvlc_media_parse(libvlc_media_t media);
 
     /**
-     * Parse a media. This fetches (local) meta data and tracks information. The method is the
-     * asynchronous of libvlc_media_parse(). To track when this is over you can listen to
-     * libvlc_MediaParsedChanged event. However if the media was already parsed you will not receive
-     * this event.
+     * Parse a media.
+     *
+     * This fetches (local) art, meta data and tracks information.
+     *
+     * The method is the asynchronous of libvlc_media_parse(). To track when this is over you
+     * can listen to libvlc_MediaParsedChanged event. However if the media was already parsed
+     * you will not receive this event.
      *
      * @see #libvlc_media_parse(libvlc_media_t)
      * @see libvlc_event_e#libvlc_MediaParsedChanged
@@ -576,6 +585,33 @@ public interface LibVlc extends Library {
      * @param media media descriptor object
      */
     void libvlc_media_parse_async(libvlc_media_t media);
+
+    /**
+     * Parse the media asynchronously with options.
+     *
+     * This fetches (local or network) art, meta data and/or tracks information.
+     *
+     * This method is the extended version of libvlc_media_parse_async().
+     *
+     * To track when this is over you can listen to libvlc_MediaParsedChanged
+     * event. However if this functions returns an error, you will not receive this
+     * event.
+     *
+     * It uses a flag to specify parse options (see libvlc_media_parse_flag_t). All
+     * these flags can be combined. By default, media is parsed if it's a local
+     * file.
+     *
+     * @see libvlc_event_e#libvlc_MediaParsedChanged
+     * @see #libvlc_media_get_meta(libvlc_media_t, int)
+     * @see #libvlc_media_tracks_get(libvlc_media_t, PointerByReference)
+     * see {@link libvlc_media_parse_flag_t}
+     *
+     * @param p_md media descriptor object
+     * @param parse_flag parse options:
+     * @return -1 in case of error, 0 otherwise
+     * @since LibVLC 3.0.0 or later
+     */
+    int libvlc_media_parse_with_options(libvlc_media_t p_md, int parse_flag);
 
     /**
      * Get Parsed status for media descriptor object.
