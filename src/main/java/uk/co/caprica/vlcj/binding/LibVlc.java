@@ -604,7 +604,7 @@ public interface LibVlc extends Library {
      * @see libvlc_event_e#libvlc_MediaParsedChanged
      * @see #libvlc_media_get_meta(libvlc_media_t, int)
      * @see #libvlc_media_tracks_get(libvlc_media_t, PointerByReference)
-     * see {@link libvlc_media_parse_flag_t}
+     * @see {@link libvlc_media_parse_flag_t}
      *
      * @param p_md media descriptor object
      * @param parse_flag parse options:
