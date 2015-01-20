@@ -57,7 +57,16 @@ public final class LibVlcVersion {
      *
      * @return vlc/libvlc version
      */
-    public static final Version getVersion() {
+    public static Version getVersion() {
         return VERSION;
+    }
+
+    /**
+     * Get the run-time changeset.
+     *
+     * @return changeset
+     */
+    public static String getChangeset() {
+        return LibVlc.INSTANCE.libvlc_get_changeset();
     }
 }
