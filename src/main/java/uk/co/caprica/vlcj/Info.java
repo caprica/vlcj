@@ -60,7 +60,7 @@ public final class Info {
     private Info() {
         try {
             Properties properties = new Properties();
-            properties.load(getClass().getResourceAsStream("/build.properties"));
+            properties.load(getClass().getResourceAsStream("/uk/co/caprica/vlcj/build.properties"));
             version = new Version(properties.getProperty("build.version"));
         }
         catch(Exception e) {
