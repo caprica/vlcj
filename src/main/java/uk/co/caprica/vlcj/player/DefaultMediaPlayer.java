@@ -1814,8 +1814,9 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         // If there is a media, register a new listener...
         if(mediaInstance != null) {
             libvlc_event_manager_t mediaEventManager = libvlc.libvlc_media_event_manager(mediaInstance);
+            libvlc_event_e lastKnownMediaEvent = lastKnownMediaEvent();
             for(libvlc_event_e event : libvlc_event_e.values()) {
-                if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaStateChanged.intValue()) {
+                if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= lastKnownMediaEvent.intValue()) {
                     Logger.debug("event={}", event);
                     int result = libvlc.libvlc_event_attach(mediaEventManager, event.intValue(), callback, null);
                     Logger.debug("result={}", result);
@@ -1832,13 +1833,34 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         // If there is a media, deregister the listener...
         if(mediaInstance != null) {
             libvlc_event_manager_t mediaEventManager = libvlc.libvlc_media_event_manager(mediaInstance);
+            libvlc_event_e lastKnownMediaEvent = lastKnownMediaEvent();
             for(libvlc_event_e event : libvlc_event_e.values()) {
-                if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaStateChanged.intValue()) {
+                if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= lastKnownMediaEvent.intValue()) {
                     Logger.debug("event={}", event);
                     libvlc.libvlc_event_detach(mediaEventManager, event.intValue(), callback, null);
                 }
             }
         }
+    }
+
+    /**
+     * Get the last known media event type supported by the run-time native event manager.
+     * <p>
+     * This is required to support earlier than LibVLC 2.2.0, and can be removed when such support
+     * is no longer required.
+     *
+     * @return event type
+     */
+    private libvlc_event_e lastKnownMediaEvent() {
+        libvlc_event_e result;
+        Version version = new Version(libvlc.libvlc_get_version());
+        if(version.atLeast(new Version("2.2.0"))) {
+            result = libvlc_event_e.libvlc_MediaStateChanged;
+        }
+        else {
+            result = libvlc_event_e.libvlc_MediaSubItemTreeAdded;
+        }
+        return result;
     }
 
     /**
