@@ -263,6 +263,14 @@ public interface MediaPlayerEventListener {
      */
     void mediaStateChanged(MediaPlayer mediaPlayer, int newState);
 
+    /**
+     * A sub-item tree was added to the media.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param item media item
+     */
+    void mediaSubItemTreeAdded(MediaPlayer mediaPlayer, libvlc_media_t item);
+
     // === Synthetic/semantic events ============================================
 
     /**

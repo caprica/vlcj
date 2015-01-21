@@ -37,6 +37,7 @@ public enum MediaPlayerEventType {
     MEDIA_PARSED_CHANGED           (0X02000000),
     MEDIA_FREED                    (0X04000000),
     MEDIA_STATE_CHANGED            (0X08000000),
+    MEDIA_SUB_ITEM_TREE_ADDED      (0X00800000), // FIXME this is reusing an existing value, these bitmask values will go away or be replaced in a later version of vlcj
 
     NEW_MEDIA                      (0x10000000),
     SUB_ITEM_PLAYED                (0x20000000),

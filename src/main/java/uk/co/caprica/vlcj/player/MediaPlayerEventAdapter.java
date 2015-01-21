@@ -150,6 +150,10 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
     }
 
+    @Override
+    public void mediaSubItemTreeAdded(MediaPlayer mediaPlayer, libvlc_media_t item) {
+    }
+
     // === Synthetic/semantic events ============================================
 
     @Override

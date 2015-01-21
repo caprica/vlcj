@@ -297,6 +297,10 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
     }
 
     @Override
+    public void mediaSubItemTreeAdded(MediaPlayer mediaPlayer, libvlc_media_t item) {
+    }
+
+    @Override
     public void newMedia(MediaPlayer mediaPlayer) {
     }
 

@@ -39,6 +39,7 @@ import uk.co.caprica.vlcj.binding.internal.media_player_title_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_vout;
 import uk.co.caprica.vlcj.binding.internal.media_state_changed;
 import uk.co.caprica.vlcj.binding.internal.media_subitem_added;
+import uk.co.caprica.vlcj.binding.internal.media_subitemtree_added;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 /**
@@ -253,6 +254,12 @@ public class MediaPlayerEventFactory {
             case libvlc_MediaStateChanged:
                 if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_STATE_CHANGED)) {
                     result = new MediaStateChangedEvent(mediaPlayer, ((media_state_changed)event.u.getTypedValue(media_state_changed.class)).new_state);
+                }
+                break;
+
+            case libvlc_MediaSubItemTreeAdded:
+                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_SUB_ITEM_TREE_ADDED)) {
+                    result = new MediaSubItemTreeAddedEvent(mediaPlayer, ((media_subitemtree_added)event.u.getTypedValue(media_subitemtree_added.class)).item);
                 }
                 break;
         }

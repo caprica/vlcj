@@ -171,6 +171,11 @@ public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener 
     }
 
     @Override
+    public void mediaSubItemTreeAdded(MediaPlayer mediaPlayer, libvlc_media_t item) {
+        Logger.debug("mediaSubItemTreeAdded(mediaPlayer={},newState={})", mediaPlayer, item);
+    }
+
+    @Override
     public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
         Logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
     }

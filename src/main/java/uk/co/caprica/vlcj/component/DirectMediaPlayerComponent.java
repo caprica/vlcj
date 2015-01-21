@@ -332,6 +332,10 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     }
 
     @Override
+    public void mediaSubItemTreeAdded(MediaPlayer mediaPlayer, libvlc_media_t item) {
+    }
+
+    @Override
     public void newMedia(MediaPlayer mediaPlayer) {
     }
 
