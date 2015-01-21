@@ -1003,9 +1003,20 @@ public interface MediaPlayer {
 
     /**
      * Select the next sub-title track (or disable sub-titles).
+     * <p>
+     * This method is now deprecated and will be removed in the next major version of vlcj. The
+     * reason it is deprecated is that SPU tracks used to be identified and ordered by index,
+     * but this has changed now so that each SPU track has its own track identifier and the
+     * identifiers may not be contiguous.
+     * <p>
+     * Applications should instead use SPU track info to get the track identifiers and cycle the
+     * SPU tracks themselves.
      *
      * @return current sub-title identifier
+     * @deprecated with no replacement
+     *
      */
+    @Deprecated
     int cycleSpu();
 
     /**
