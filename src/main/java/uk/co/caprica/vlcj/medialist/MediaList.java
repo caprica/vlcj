@@ -219,6 +219,8 @@ public class MediaList {
             if(oldMediaInstance != null) {
                 // Remove the media descriptor from the media list
                 libvlc.libvlc_media_list_remove_index(mediaListInstance, index);
+                // Release the native media instance
+                libvlc.libvlc_media_release(oldMediaInstance);
             }
         }
         finally {
