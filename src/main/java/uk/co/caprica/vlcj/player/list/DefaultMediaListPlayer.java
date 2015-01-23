@@ -69,6 +69,11 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     private final ExecutorService listenersService = Executors.newSingleThreadExecutor();
 
     /**
+     * Event listener to handle next item events.
+     */
+    private final NextItemHandler nextItemHandler = new NextItemHandler();
+
+    /**
      * Native media player instance.
      */
     private libvlc_media_list_player_t mediaListPlayerInstance;
@@ -291,7 +296,7 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
 
         registerEventListener();
 
-        addMediaListPlayerEventListener(new NextItemHandler());
+        addMediaListPlayerEventListener(nextItemHandler);
     }
 
     /**
@@ -305,6 +310,9 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
         Logger.debug("Events detached.");
 
         eventListenerList.clear();
+
+        nextItemHandler.release();
+
         if(mediaListPlayerInstance != null) {
             Logger.debug("Release media list player...");
             libvlc.libvlc_media_list_player_release(mediaListPlayerInstance);
@@ -445,6 +453,7 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
             Logger.debug("registerMediaEventListener()");
             // If there is a media, register a new listener...
             if(mediaInstance != null) {
+                libvlc.libvlc_media_retain(mediaInstance);
                 libvlc_event_manager_t mediaEventManager = libvlc.libvlc_media_event_manager(mediaInstance);
                 for(libvlc_event_e event : libvlc_event_e.values()) {
                     if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaStateChanged.intValue()) {
@@ -471,6 +480,17 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
                     }
                 }
                 mediaEventManager = null;
+                libvlc.libvlc_media_release(mediaInstance);
+                mediaInstance = null;
+            }
+        }
+
+        /**
+         *
+         */
+        private void release() {
+            if (mediaInstance != null) {
+                libvlc.libvlc_media_release(mediaInstance);
             }
         }
     }
