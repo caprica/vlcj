@@ -604,7 +604,7 @@ public interface LibVlc extends Library {
      * @see libvlc_event_e#libvlc_MediaParsedChanged
      * @see #libvlc_media_get_meta(libvlc_media_t, int)
      * @see #libvlc_media_tracks_get(libvlc_media_t, PointerByReference)
-     * @see {@link libvlc_media_parse_flag_t}
+     * @see libvlc_media_parse_flag_t
      *
      * @param p_md media descriptor object
      * @param parse_flag parse options:
@@ -1716,9 +1716,9 @@ public interface LibVlc extends Library {
      * Some audio output modules require further parameters (e.g. a channels map
      * in the case of ALSA).
      *
-     * @param mp media player
-     * @param module If NULL, current audio output module; if non-NULL, name of audio output module (@see {@link libvlc_audio_output_t})
-     * @param device_id device identifier string
+     * @param p_mi media player
+     * @param psz_audio_output if NULL, current audio output module; if non-NULL, name of audio output module (@see libvlc_audio_output_t)
+     * @param psz_device_id device identifier string
      */
     void libvlc_audio_output_device_set(libvlc_media_player_t p_mi, String psz_audio_output, String psz_device_id);
 
