@@ -134,7 +134,7 @@ public class MediaPlayerFactory {
             // Only apply if the run-time version is Java 1.7.0 or later...
             Version actualJavaVersion = new Version(System.getProperty("java.version"));
             if(actualJavaVersion.atLeast(new Version("1.7.0"))) {
-                Logger.debug("Trying workaround for Java7 on Linux");
+                Logger.debug("Trying workaround for Java7+ on Linux");
                 Toolkit.getDefaultToolkit();
                 AccessController.doPrivileged(new PrivilegedAction<Object>() {
                     @Override
