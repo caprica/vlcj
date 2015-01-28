@@ -75,6 +75,14 @@ Online Javadoc is available:
 * [2.1.0](http://caprica.github.com/vlcj/javadoc/2.1.0/index.html "2.1.0 Javadoc")
 * [2.0.0](http://caprica.github.com/vlcj/javadoc/2.0.0/index.html "2.0.0 Javadoc")
 
+Examples
+--------
+
+There are many examples in the vlcj test sources showing how to use vlcj.
+
+For a more complete example of a feature-rich media player built with vlcj, 
+see [vlcj-player](https://github.com/caprica/vlcj-player).
+
 Support
 -------
 
