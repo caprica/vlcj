@@ -21,12 +21,13 @@ package uk.co.caprica.vlcj.player.embedded.windows;
 
 import java.awt.Window;
 
+import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 
 /**
  * Implementation of a full screen strategy that uses the native Win32 API.
  */
-public final class Win32FullScreenStrategy implements FullScreenStrategy {
+public class Win32FullScreenStrategy implements FullScreenStrategy {
 
     /**
      * Native full-screen implementation.
@@ -53,7 +54,8 @@ public final class Win32FullScreenStrategy implements FullScreenStrategy {
     }
 
     @Override
-    public void enterFullScreenMode() {
+    public final void enterFullScreenMode() {
+        Logger.debug("enterFullScreenMode()");
         if(!isFullScreenMode) {
             onBeforeEnterFullScreenMode();
             handler.setFullScreen(true);
@@ -62,7 +64,8 @@ public final class Win32FullScreenStrategy implements FullScreenStrategy {
     }
 
     @Override
-    public void exitFullScreenMode() {
+    public final void exitFullScreenMode() {
+        Logger.debug("exitFullScreenMode()");
         if(isFullScreenMode) {
             handler.setFullScreen(false);
             isFullScreenMode = false;
@@ -71,7 +74,8 @@ public final class Win32FullScreenStrategy implements FullScreenStrategy {
     }
 
     @Override
-    public boolean isFullScreenMode() {
+    public final boolean isFullScreenMode() {
+        Logger.debug("isFullScreenMode()");
         return isFullScreenMode;
     }
 
