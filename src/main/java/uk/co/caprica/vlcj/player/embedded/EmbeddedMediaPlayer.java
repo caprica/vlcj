@@ -76,6 +76,21 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
     void attachVideoSurface();
 
     /**
+     * Set a full-screen strategy implementation.
+     * <p>
+     * The preferred way to set a full-screen strategy is via a constructor argument, nevertheless
+     * there are scenarios where it is more convenient to set the full-screen strategy <em>after</em>
+     * creation of the media player (depends how the application UI is created).
+     * <p>
+     * <em>Applications should not change the full-screen strategy implementation after initialisation
+     * of the media player. Doing so makes no practical sense and the resultant behaviour is
+     * undefined.</em>
+     *
+     * @param fullScreenStrategy full-screen strategy
+     */
+    void setFullScreenStrategy(FullScreenStrategy fullScreenStrategy);
+
+    /**
      * Toggle whether the video display is in full-screen or not.
      * <p>
      * Setting the display into or out of full-screen mode is delegate to the

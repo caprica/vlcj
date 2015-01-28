@@ -76,7 +76,7 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
     /**
      * Full-screen strategy implementation, may be <code>null</code>.
      */
-    private final FullScreenStrategy fullScreenStrategy;
+    private FullScreenStrategy fullScreenStrategy;
 
     /**
      * Listener implementation used to keep the overlay position and size in sync with the video
@@ -164,6 +164,12 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
             // This is not necessarily an error
             Logger.debug("Can't attach video surface since no video surface has been set");
         }
+    }
+
+    @Override
+    public void setFullScreenStrategy(FullScreenStrategy fullScreenStrategy) {
+        Logger.debug("setFullScreenStrategy(fullScreenStrategy={})", fullScreenStrategy);
+        this.fullScreenStrategy = fullScreenStrategy;
     }
 
     @Override
