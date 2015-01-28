@@ -60,7 +60,7 @@ public class XFullScreenStrategy implements FullScreenStrategy {
     }
 
     @Override
-    public void enterFullScreenMode() {
+    public final void enterFullScreenMode() {
         Logger.debug("enterFullScreenMode()");
         onBeforeEnterFullScreenMode();
         LibXUtil.setFullScreenWindow(window, true);
@@ -68,7 +68,7 @@ public class XFullScreenStrategy implements FullScreenStrategy {
     }
 
     @Override
-    public void exitFullScreenMode() {
+    public final void exitFullScreenMode() {
         Logger.debug("exitFullScreenMode()");
         LibXUtil.setFullScreenWindow(window, false);
         isFullScreenMode = false;
@@ -76,7 +76,7 @@ public class XFullScreenStrategy implements FullScreenStrategy {
     }
 
     @Override
-    public boolean isFullScreenMode() {
+    public final boolean isFullScreenMode() {
         Logger.debug("isFullScreenMode()");
         return isFullScreenMode;
     }
