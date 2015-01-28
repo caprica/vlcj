@@ -67,6 +67,26 @@ public final class RuntimeUtil {
     }
 
     /**
+     * Get the runtime operating system type.
+     *
+     * @return type
+     */
+    public static RuntimeType runtimeType() {
+        if(isNix()) {
+            return RuntimeType.NIX;
+        }
+        else if(isMac()) {
+            return RuntimeType.MAC;
+        }
+        else if(isWindows()) {
+            return RuntimeType.WINDOWS;
+        }
+        else {
+            return RuntimeType.UNKNOWN;
+        }
+    }
+
+    /**
      * Try to safely convert a long value to an int.
      *
      * The current libvlc API requires a 32-bit integer value for the drawable window handle -
