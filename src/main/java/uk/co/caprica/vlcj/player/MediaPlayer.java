@@ -815,6 +815,15 @@ public interface MediaPlayer {
     void setAudioOutputDevice(String output, String outputDeviceId);
 
     /**
+     * Get the identifier of the current audio output device, if available.
+     * <p>
+     * To return a useful value, an audio output must be active (i.e. the media must be playing).
+     *
+     * @return identifier of the current audio output device, or <code>null</code> if not available (e.g. requires LibVLC 3.0.0)
+     */
+    String getAudioOutputDevice();
+
+    /**
      * Get the available audio devices for the media player audio output.
      *
      * @return list of audio devices, or <code>null</code> if not available (e.g. requires LibVLC 2.2.0)
