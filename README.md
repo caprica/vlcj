@@ -4,7 +4,7 @@ vlcj
 ====
 
 The vlcj project provides a Java framework to allow an instance of a native
-[vlc](http://www.videolan.org/vlc "vlc") media player to be embedded in a Java
+[VLC](http://www.videolan.org/vlc "VLC") media player to be embedded in a Java
 AWT Window or Swing JFrame.
 
 You get more than just simple bindings, you also get a higher level framework
@@ -19,15 +19,15 @@ This is the open source vlcj project page, see also the 'official'
 [home page](http://capricasoftware.co.uk/#/projects/vlcj "Official vlcj home page at Caprica Software")
 where you can find more information as well as some new simple tutorials.
 
-Version 3.0.0+ of vlcj requires version 2.1.0+ of vlc, earlier versions of vlc
+Version 3.0.0+ of vlcj requires version 2.1.0+ of VLC, earlier versions of VLC
 are *not* supported and will *not* work.
 
 Version 3.0.0+ of vlcj requires version 4.0.0+ of JNA.
 
 Some features of version 3.0.0+ of vlcj (such as the new audio equalizer API)
-require version 2.2.0+ of vlc (which has *not* yet been released).
+require version 2.2.0+ of VLC (which has *not* yet been released).
 
-If you still need to use vlc 2.0.x then you must stay with vlcj 2.x.x instead
+If you still need to use VLC 2.0.x then you must stay with vlcj 2.x.x instead
 of upgrading to the new vlcj 3.0.0 series.
 
 Maven Dependency
@@ -57,6 +57,12 @@ some little-used deprecated features removed, minor bugs fixed.
 
 Version 3.0.0+ of vlcj requires version 2.1.0+ of vlc, earlier versions of vlc
 are *not* supported and will *not* work.
+
+Some features provided by vlcj depend on the runtime version of vlc. The most current release of
+vlcj often tracks the bleeding edge of VLC development, consequently some features provided by
+vlcj will require a very recent version of VLC and in some cases a pre-release version of VLC
+may be needed. Where the runtime version of VLC is not new enough, in most cases vlcj attempts to
+fail-safe. 
 
 You can also follow @capricasoftware on Twitter for more vlcj news.
 
