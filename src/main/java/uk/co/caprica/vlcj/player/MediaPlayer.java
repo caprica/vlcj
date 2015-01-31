@@ -29,6 +29,7 @@ import java.util.List;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_channel_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -262,14 +263,32 @@ public interface MediaPlayer {
      * This method is asynchronous and a media player event will be raised when the parsed status
      * changes.
      * <p>
-     * Parsing media may cause an HTTP request to be made to search for cover- art.
+     * Parsing media may cause an HTTP request to be made to search for cover-art.
      * <p>
-     * If the media has already been parsed when this function calls then <em>no</em> event will be
+     * If the media has already been parsed when this function is called then <em>no</em> event will be
      * raised.
      * <p>
      * <strong>Invoking this method on a stream or DVB channel may cause a hang.</strong>
      */
     void requestParseMedia();
+
+    /**
+     * Parse meta data from the current media, with options.
+     * <p>
+     * This method is asynchronous and a media player event will be raised when the parsed status
+     * changes.
+     * <p>
+     * Parsing media may cause an HTTP request to be made to search for cover-art.
+     * <p>
+     * If the media has already been parsed when this function is called, or this function returns an
+     * error, then <em>no</em> event will be raised.
+     * <p>
+     * If no options are specified, then the file is parsed if it is a local file.
+     *
+     * @param options optional options
+     * @param <code>true</code> if successful; <code>false</code> on error (or e.g. requires LibVLC 3.0.0)
+     */
+    boolean requestParseMediaWithOptions(libvlc_media_parse_flag_t... options);
 
     /**
      * Test whether or not the current media has been parsed.

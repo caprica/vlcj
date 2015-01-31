@@ -49,6 +49,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -269,6 +270,21 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         }
         else {
             throw new IllegalStateException("No media");
+        }
+    }
+
+    @Override
+    public boolean requestParseMediaWithOptions(libvlc_media_parse_flag_t... options) {
+        Logger.debug("requestParseMediaWithOptions(options={})", options != null ? Arrays.toString(options) : "");
+        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
+            int flags = 0;
+            for (libvlc_media_parse_flag_t option : options) {
+                flags |= option.intValue();
+            }
+            return libvlc.libvlc_media_parse_with_options(mediaInstance, flags) == 0;
+        }
+        else {
+            return false;
         }
     }
 
