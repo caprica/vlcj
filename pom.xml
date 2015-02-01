@@ -199,9 +199,9 @@
                     <encoding>UTF-8</encoding>
                     <footer>(C)2015 Caprica Software Limited</footer>
                     <show>public</show>
-                    <javadocVersion>1.7</javadocVersion>
+                    <javadocVersion>1.8</javadocVersion>
                     <quiet>true</quiet>
-                    <failOnError>false</failOnError>
+                    <failOnError>true</failOnError>
                 </configuration>
                 <executions>
                     <execution>

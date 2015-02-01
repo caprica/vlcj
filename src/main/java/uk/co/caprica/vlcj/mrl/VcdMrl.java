@@ -60,9 +60,9 @@ public class VcdMrl implements Mrl {
     private String value;
 
     /**
+     * Set the VCD device.
      *
-     *
-     * @param device
+     * @param device VCD device
      * @return this
      */
     public final VcdMrl device(String device) {
@@ -71,9 +71,9 @@ public class VcdMrl implements Mrl {
     }
 
     /**
+     * Set the starting position.
      *
-     *
-     * @param startingPosition
+     * @param startingPosition starting position
      * @return this
      */
     public final VcdMrl startingPosition(String startingPosition) {
@@ -82,9 +82,9 @@ public class VcdMrl implements Mrl {
     }
 
     /**
+     * Set the number.
      *
-     *
-     * @param number
+     * @param number number
      * @return this
      */
     public final VcdMrl number(int number) {

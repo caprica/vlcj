@@ -127,11 +127,10 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
      *
      * @param libvlc native interface
      * @param instance libvlc instance
-     * @param fullScreenStrategy
+     * @param fullScreenStrategy full-screen strategy implementation
      */
     public DefaultEmbeddedMediaPlayer(LibVlc libvlc, libvlc_instance_t instance, FullScreenStrategy fullScreenStrategy) {
         super(libvlc, instance);
-
         this.fullScreenStrategy = fullScreenStrategy;
         this.overlayComponentAdapter = new OverlayComponentAdapter();
         this.overlayWindowAdapter = new OverlayWindowAdapter();

@@ -41,8 +41,8 @@ public class SwingFileFilter extends javax.swing.filechooser.FileFilter {
     /**
      * Create a Swing file filter.
      *
-     * @param description
-     * @param delegate
+     * @param description file filter description
+     * @param delegate file filter delegate
      */
     public SwingFileFilter(String description, java.io.FileFilter delegate) {
         this.description = description;

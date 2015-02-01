@@ -30,8 +30,8 @@ public interface libvlc_callback_t extends Callback {
     /**
      *
      *
-     * @param event
-     * @param userData
+     * @param event event
+     * @param userData user-data pointer
      */
     void callback(libvlc_event_t event, Pointer userData);
 }

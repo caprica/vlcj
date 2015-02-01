@@ -60,9 +60,9 @@ public class SsmMrl implements Mrl {
     private String value;
 
     /**
+     * Set the server address.
      *
-     *
-     * @param serverAddress
+     * @param serverAddress server address
      * @return this
      */
     public final SsmMrl serverAddress(String serverAddress) {
@@ -71,9 +71,9 @@ public class SsmMrl implements Mrl {
     }
 
     /**
+     * Set the multicast address.
      *
-     *
-     * @param multicastAddress
+     * @param multicastAddress multicast address
      * @return this
      */
     public final SsmMrl multicastAddress(String multicastAddress) {
@@ -82,9 +82,9 @@ public class SsmMrl implements Mrl {
     }
 
     /**
+     * Set the port number.
      *
-     *
-     * @param port
+     * @param port port number
      * @return this
      */
     public final SsmMrl port(int port) {

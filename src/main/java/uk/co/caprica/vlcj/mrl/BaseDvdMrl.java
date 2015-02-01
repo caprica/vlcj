@@ -68,9 +68,9 @@ public abstract class BaseDvdMrl implements Mrl {
     private String value;
 
     /**
+     * Set the DVD access type.
      *
-     *
-     * @param type
+     * @param type type, e.g. dvd or dvdsimple
      * @return this
      */
     public final BaseDvdMrl type(String type) {
@@ -79,9 +79,9 @@ public abstract class BaseDvdMrl implements Mrl {
     }
 
     /**
+     * Set the DVD device.
      *
-     *
-     * @param device
+     * @param device DVD device
      * @return this
      */
     public final BaseDvdMrl device(String device) {
@@ -90,9 +90,9 @@ public abstract class BaseDvdMrl implements Mrl {
     }
 
     /**
+     * Set the DVD title number.
      *
-     *
-     * @param title
+     * @param title DVD title number
      * @return this
      */
     public final BaseDvdMrl title(int title) {
@@ -101,9 +101,9 @@ public abstract class BaseDvdMrl implements Mrl {
     }
 
     /**
+     * Set the chapter number.
      *
-     *
-     * @param chapter
+     * @param chapter chapter number
      * @return this
      */
     public final BaseDvdMrl chapter(int chapter) {
@@ -112,9 +112,9 @@ public abstract class BaseDvdMrl implements Mrl {
     }
 
     /**
+     * Set the camera angle.
      *
-     *
-     * @param angle
+     * @param angle camera angle
      * @return this
      */
     public final BaseDvdMrl angle(int angle) {

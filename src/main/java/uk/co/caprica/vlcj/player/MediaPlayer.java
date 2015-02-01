@@ -739,7 +739,7 @@ public interface MediaPlayer {
      * <p>
      * To skip backwards specify a negative delta.
      *
-     * @param delta
+     * @param delta amount to skip
      */
     void skipPosition(float delta);
 

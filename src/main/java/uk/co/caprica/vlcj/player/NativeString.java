@@ -41,6 +41,7 @@ public final class NativeString {
      * <p>
      * If the native string pointer is not freed then a native memory leak will occur.
      *
+     * @param libvlc native library instance
      * @param pointer pointer to native string, may be <code>null</code>
      * @return string, or <code>null</code> if the pointer was <code>null</code>
      */
@@ -58,6 +59,7 @@ public final class NativeString {
     /**
      * Copy a String from a native string pointer, without freeing the native pointer.
      *
+     * @param libvlc native library instance
      * @param pointer pointer to native string, may be <code>null</code>
      * @return string, or <code>null</code> if the pointer was <code>null</code>
      */

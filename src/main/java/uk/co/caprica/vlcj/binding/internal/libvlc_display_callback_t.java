@@ -30,8 +30,8 @@ public interface libvlc_display_callback_t extends Callback {
     /**
      *
      *
-     * @param opaque
-     * @param picture
+     * @param opaque application-specific pointer
+     * @param picture picture pointer
      */
     void display(Pointer opaque, Pointer picture);
 }

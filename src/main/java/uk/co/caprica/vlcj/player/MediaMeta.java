@@ -280,7 +280,7 @@ public interface MediaMeta {
     /**
      * Set the artwork URL meta data.
      *
-     * @param artworkUrl
+     * @param artworkUrl artwork URL
      */
     void setArtworkUrl(String artworkUrl);
 

@@ -33,6 +33,7 @@ public interface libvlc_audio_flush_cb extends Callback {
      * (i.e. discard all pending buffers and stop playback as soon as possible).
      *
      * @param data data pointer as passed to libvlc_audio_set_callbacks()
+     * @param pts presentation time stamp
      */
     void flush(Pointer data, long pts);
 }

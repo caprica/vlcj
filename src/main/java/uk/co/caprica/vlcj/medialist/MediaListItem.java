@@ -53,7 +53,7 @@ public class MediaListItem {
      *
      * @param name name/description
      * @param mrl MRL
-     * @param subItems
+     * @param subItems list of sub-items
      */
     public MediaListItem(String name, String mrl, List<MediaListItem> subItems) {
         this.name = name;

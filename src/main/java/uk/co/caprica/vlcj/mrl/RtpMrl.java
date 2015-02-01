@@ -54,9 +54,9 @@ public class RtpMrl implements Mrl {
     private String value;
 
     /**
+     * Set the multicast address.
      *
-     *
-     * @param multicastAddress
+     * @param multicastAddress multicast address
      * @return this
      */
     public final RtpMrl multicastAddress(String multicastAddress) {
@@ -65,9 +65,9 @@ public class RtpMrl implements Mrl {
     }
 
     /**
+     * Set the port number.
      *
-     *
-     * @param port
+     * @param port port number
      * @return this
      */
     public final RtpMrl port(int port) {

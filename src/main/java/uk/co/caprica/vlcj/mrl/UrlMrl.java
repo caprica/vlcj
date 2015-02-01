@@ -61,9 +61,9 @@ public abstract class UrlMrl implements Mrl {
     private String value;
 
     /**
+     * Set the URL type.
      *
-     *
-     * @param type
+     * @param type type, e.g. http or https
      * @return this
      */
     public final UrlMrl type(String type) {
@@ -72,9 +72,9 @@ public abstract class UrlMrl implements Mrl {
     }
 
     /**
+     * Set the host name.
      *
-     *
-     * @param host
+     * @param host host name.
      * @return this
      */
     public final UrlMrl host(String host) {
@@ -83,9 +83,9 @@ public abstract class UrlMrl implements Mrl {
     }
 
     /**
+     * Set the port number.
      *
-     *
-     * @param port
+     * @param port port number
      * @return this
      */
     public final UrlMrl port(int port) {
@@ -94,9 +94,9 @@ public abstract class UrlMrl implements Mrl {
     }
 
     /**
+     * Set the request path.
      *
-     *
-     * @param path
+     * @param path request path
      * @return this
      */
     public final UrlMrl path(String path) {

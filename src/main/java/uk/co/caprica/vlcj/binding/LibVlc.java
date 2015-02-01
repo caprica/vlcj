@@ -122,6 +122,8 @@ public interface LibVlc extends Library {
      * string is valid until another error occurs (at least until the next LibVLC call).
      * <p>
      * This will be NULL if there was no error.
+     *
+     * @return error message, or <code>NULL</code>
      */
     String libvlc_errmsg();
 
@@ -273,6 +275,7 @@ public interface LibVlc extends Library {
      * Get an event's type name.
      *
      * @param event_type the desired event
+     * @return event type name
      */
     String libvlc_event_type_name(int event_type);
 
@@ -328,6 +331,8 @@ public interface LibVlc extends Library {
      * <p>
      * This function will wait for any pending callbacks invocation to complete
      * (causing a deadlock if called from within the callback).
+     *
+     * @param p_instance the instance
      *
      * @since LibVLC 2.1.0 or later
      */
@@ -386,6 +391,8 @@ public interface LibVlc extends Library {
      * monotonically (regardless of time zone changes and RTC adjustments). The origin is arbitrary
      * but consistent across the whole system (e.g. the system uptime, the time since the system was
      * booted). \note On systems that support it, the POSIX monotonic clock is used.
+     *
+     * @return clock value
      */
     long libvlc_clock();
 
@@ -475,6 +482,7 @@ public interface LibVlc extends Library {
      * Duplicate a media descriptor object.
      *
      * @param p_md a media descriptor object.
+     * @return duplicated media descriptor
      */
     libvlc_media_t libvlc_media_duplicate(libvlc_media_t p_md);
 
@@ -638,6 +646,7 @@ public interface LibVlc extends Library {
      * libvlc_media_t pointer
      *
      * @param p_md media descriptor object
+     * @return user-data pointer
      */
     Pointer libvlc_media_get_user_data(libvlc_media_t p_md);
 
@@ -1508,6 +1517,7 @@ public interface LibVlc extends Library {
      *
      * @param p_mi libvlc media player
      * @param option marq option to get @see libvlc_video_marquee_int_option_t
+     * @return marquee option value
      */
     int libvlc_video_get_marquee_int(libvlc_media_player_t p_mi, int option);
 
@@ -1516,6 +1526,7 @@ public interface LibVlc extends Library {
      *
      * @param p_mi libvlc media player
      * @param option marq option to get @see libvlc_video_marquee_string_option_t
+     * @return marquee option value
      */
     String libvlc_video_get_marquee_string(libvlc_media_player_t p_mi, int option);
 
@@ -1543,6 +1554,7 @@ public interface LibVlc extends Library {
      *
      * @param p_mi libvlc media player instance
      * @param option logo option to get, values of libvlc_video_logo_option_t
+     * @return logo option value
      */
     int libvlc_video_get_logo_int(libvlc_media_player_t p_mi, int option);
 

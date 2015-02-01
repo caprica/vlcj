@@ -78,7 +78,7 @@ public interface MediaListPlayerEventListener {
      *
      *
      * @param mediaListPlayer media list player that raised the event
-     * @param newDuration
+     * @param newDuration new duration
      */
     void mediaDurationChanged(MediaListPlayer mediaListPlayer, long newDuration);
 
@@ -86,7 +86,7 @@ public interface MediaListPlayerEventListener {
      *
      *
      * @param mediaListPlayer media list player that raised the event
-     * @param newStatus
+     * @param newStatus new status
      */
     void mediaParsedChanged(MediaListPlayer mediaListPlayer, int newStatus);
 
@@ -101,7 +101,7 @@ public interface MediaListPlayerEventListener {
      *
      *
      * @param mediaListPlayer media list player that raised the event
-     * @param newState
+     * @param newState new state
      */
     void mediaStateChanged(MediaListPlayer mediaListPlayer, int newState);
 }

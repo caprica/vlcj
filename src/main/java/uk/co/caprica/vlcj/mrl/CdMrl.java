@@ -56,9 +56,9 @@ public class CdMrl implements Mrl {
     private String value;
 
     /**
+     * Set the CD device.
      *
-     *
-     * @param device
+     * @param device CD device
      * @return this
      */
     public final CdMrl device(String device) {
@@ -67,9 +67,9 @@ public class CdMrl implements Mrl {
     }
 
     /**
+     * Set the track number.
      *
-     *
-     * @param track
+     * @param track track number
      * @return this
      */
     public final CdMrl track(int track) {

@@ -132,9 +132,9 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
      * Wait for the required condition to occur.
      *
      * @return optional result
-     * @throws InterruptedException
-     * @throws UnexpectedErrorConditionException
-     * @throws UnexpectedFinishedConditionException
+     * @throws InterruptedException if the condition was interrupted while waiting
+     * @throws UnexpectedErrorConditionException if an unexpected error occurred
+     * @throws UnexpectedFinishedConditionException if the condition finished unexpectedly
      */
     public final T await() throws InterruptedException, UnexpectedErrorConditionException, UnexpectedFinishedConditionException {
         Logger.debug("await()");

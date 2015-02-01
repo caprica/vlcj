@@ -57,9 +57,9 @@ public class UdpMrl implements Mrl {
     private String value;
 
     /**
+     * Set the group address.
      *
-     *
-     * @param groupAddress
+     * @param groupAddress group address
      * @return this
      */
     public final UdpMrl groupAddress(String groupAddress) {
@@ -68,9 +68,9 @@ public class UdpMrl implements Mrl {
     }
 
     /**
+     * Set the port number.
      *
-     *
-     * @param port
+     * @param port port number
      * @return this
      */
     public final UdpMrl port(int port) {
