@@ -286,7 +286,7 @@ public interface MediaPlayer {
      * If no options are specified, then the file is parsed if it is a local file.
      *
      * @param options optional options
-     * @param <code>true</code> if successful; <code>false</code> on error (or e.g. requires LibVLC 3.0.0)
+     * @return <code>true</code> if successful; <code>false</code> on error (or e.g. requires LibVLC 3.0.0)
      */
     boolean requestParseMediaWithOptions(libvlc_media_parse_flag_t... options);
 

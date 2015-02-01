@@ -62,8 +62,8 @@ public class BufferFormat {
      * Constructs a new BufferFormat instance with the given parameters.
      *
      * @param chroma a VLC buffer type, must be exactly 4 characters and cannot contain non-ASCII characters
-     * @param width the width, must be > 0
-     * @param height the height, must be > 0
+     * @param width the width, must be &gt; 0
+     * @param height the height, must be &gt; 0
      * @param pitches the pitch of each plane that this buffer consists of (usually a multiple of width)
      * @param lines the number of lines of each plane that this buffer consists of (usually same as height)
      * @throws IllegalArgumentException if any parameter is invalid

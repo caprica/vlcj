@@ -785,7 +785,7 @@ public class MediaPlayerFactory {
      * like streaming network addresses.
      *
      * @param mediaPath path to the local media
-     * @param parse <code>true</code> if the media should be parsed immediately</code>; otherwise <code>false</code>
+     * @param parse <code>true</code> if the media should be parsed immediately; otherwise <code>false</code>
      * @return media meta data, or <code>null</code> if the media could not be located
      */
     public MediaMeta getMediaMeta(String mediaPath, boolean parse) {

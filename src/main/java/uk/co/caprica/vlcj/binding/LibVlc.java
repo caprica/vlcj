@@ -833,7 +833,7 @@ public interface LibVlc extends Library {
      * called "macosx". The drawable is an NSObject that follow the VLCOpenGLVideoViewEmbedding
      * protocol:
      * <pre>
-     *     \@protocol VLCOpenGLVideoViewEmbedding <NSObject> - (void)addVoutSubview:(NSView*)view; - (void)removeVoutSubview:(NSView *)view; \@end
+     *     \@protocol VLCOpenGLVideoViewEmbedding &lt;NSObject&gt; - (void)addVoutSubview:(NSView*)view; - (void)removeVoutSubview:(NSView *)view; \@end
      * </pre>
      * Or it can be an NSView object. If you want to use it along with Qt4 see the
      * QMacCocoaViewContainer. Then the following code should work:

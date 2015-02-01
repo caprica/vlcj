@@ -79,7 +79,7 @@ public interface LibC extends Library {
      *
      * @param filedes file descriptor
      * @param mode open mode
-     * @return file descriptor; or <code>null<code>, setting <code>errno</code> to an error code
+     * @return file descriptor; or <code>NULL</code>, setting <code>errno</code> to an error code
      */
     Pointer fdopen(int filedes, String mode);
 
@@ -89,7 +89,7 @@ public interface LibC extends Library {
      * @param path new file path
      * @param mode open mode
      * @param stream file stream
-     * @return file descriptor; or <code>null<code>, setting <code>errno</code> to an error code
+     * @return file descriptor; or <code>NULL</code>, setting <code>errno</code> to an error code
      */
     Pointer freopen(String path, String mode, Pointer stream);
 
