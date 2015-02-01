@@ -13,7 +13,7 @@ that hides a lot of the complexities of working with LibVLC.
 vlcj is primarily developed and therefore extensively tested on Linux - it does
 also work just fine on Windows and MacOSX.
 
-At least JDK 1.6 is required, and it works without changes on JDK 1.7.
+At least JDK 1.6 is required, and it works without changes on JDK 1.7+.
 
 This is the open source vlcj project page, see also the 'official'
 [home page](http://capricasoftware.co.uk/#/projects/vlcj "Official vlcj home page at Caprica Software")
@@ -22,7 +22,7 @@ where you can find more information as well as some new simple tutorials.
 Version 3.0.0+ of vlcj requires version 2.1.0+ of VLC, earlier versions of VLC
 are *not* supported and will *not* work.
 
-Version 3.0.0+ of vlcj requires version 4.0.0+ of JNA.
+Version 3.0.0+ of vlcj requires version 3.5.2 of JNA.
 
 Some features of version 3.0.0+ of vlcj (such as the new audio equalizer API)
 require version 2.2.0+ of VLC (which has *not* yet been released).
@@ -39,15 +39,16 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
 </dependency>
 ```
 
 News
 ----
 
-??/??/2015 New meta data attributes, new codec description API, new audio device enumeration API,
-new media list player end reached event, minor documentation fixes.
+01/02/2015 Made new release 3.1.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
+New meta data attributes, new codec description API, new audio device enumeration API, new media
+list player end reached event, minor documentation fixes.
 
 26/11/2014 Made new release 3.1.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj).
 
@@ -73,7 +74,8 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available:
 
-* [3.1.0 (current)](http://caprica.github.com/vlcj/javadoc/3.1.0/index.html "3.1.0 Javadoc")
+* [3.2.0 (current)](http://caprica.github.com/vlcj/javadoc/3.2.0/index.html "3.2.0 Javadoc")
+* [3.1.0](http://caprica.github.com/vlcj/javadoc/3.1.0/index.html "3.1.0 Javadoc")
 * [3.0.0](http://caprica.github.com/vlcj/javadoc/3.0.0/index.html "3.0.0 Javadoc")
 * [2.4.0](http://caprica.github.com/vlcj/javadoc/2.4.0/index.html "2.4.0 Javadoc")
 * [2.3.0](http://caprica.github.com/vlcj/javadoc/2.3.0/index.html "2.3.0 Javadoc")
