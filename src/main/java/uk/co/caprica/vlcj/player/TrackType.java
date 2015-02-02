@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.player;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Enumeration of track types.
  */
@@ -46,10 +49,22 @@ public enum TrackType {
      */
     TEXT    ( 2);
 
+    private static final Map<Integer, TrackType> INT_MAP = new HashMap<Integer, TrackType>();
+
+    static {
+        for(TrackType value : TrackType.values()) {
+            INT_MAP.put(value.intValue, value);
+        }
+    }
+
+    public static TrackType trackType(int intValue) {
+        return INT_MAP.get(intValue);
+    }
+
     /**
      * Raw value.
      */
-    private final int value;
+    private final int intValue;
 
     /**
      * Raw value.
@@ -57,7 +72,7 @@ public enum TrackType {
      * @param value raw value
      */
     private TrackType(int value) {
-        this.value = value;
+        this.intValue = value;
     }
 
     /**
@@ -66,6 +81,6 @@ public enum TrackType {
      * @return raw value
      */
     public int value() {
-        return value;
+        return intValue;
     }
 }
