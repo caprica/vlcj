@@ -85,7 +85,7 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
-    public void pausableChanged(MediaPlayer mediaPlayer, int newSeekable) {
+    public void pausableChanged(MediaPlayer mediaPlayer, int newPausable) {
     }
 
     @Override
