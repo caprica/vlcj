@@ -46,6 +46,9 @@ Add the following Maven dependency to your own project pom.xml:
 News
 ----
 
+05/02/2015 New product announcement [vlcj-pro](http://capricasoftware.co.uk/#/projects/vlcj-pro),
+a robust out-of-process media player solution for vlcj.
+
 01/02/2015 Made new release 3.2.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
 New meta data attributes, new codec description API, new audio device enumeration API, new media
 list player end reached event, minor documentation fixes.
