@@ -1,0 +1,8 @@
+Package: [[name]]
+Version: [[version]]
+Section: devel
+Priority: extra
+Architecture: all
+Description: [[description]]
+Depends: jdk (>= 1.6), vlc (>= 2.1)
+Maintainer: mark.lee@capricasoftware.co.uk
