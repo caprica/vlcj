@@ -46,7 +46,9 @@ public class SubTitleFileFilter extends ExtensionFileFilter {
         "usf",
         "dks",
         "pjs",
-        "mpl2"
+        "mpl2",
+        "mks",
+        "vtt"
     };
 
     /**

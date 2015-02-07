@@ -31,7 +31,6 @@ public class PlayListFileFilter extends ExtensionFileFilter {
         "asx",
         "b4s",
         "cue",
-        "conf",
         "ifo",
         "m3u",
         "m3u8",
@@ -41,8 +40,10 @@ public class PlayListFileFilter extends ExtensionFileFilter {
         "sdp",
         "vlc",
         "xspf",
+        "wax",
         "wvx",
-        "zip"
+        "zip",
+        "conf"
     };
 
     /**
