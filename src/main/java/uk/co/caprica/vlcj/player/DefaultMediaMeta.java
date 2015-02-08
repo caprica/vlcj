@@ -401,6 +401,37 @@ class DefaultMediaMeta implements MediaMeta {
     }
 
     @Override
+    public MediaMetaData asMediaMetaData() {
+        MediaMetaData result = new MediaMetaData();
+        result.setTitle(getTitle());
+        result.setArtist(getArtist());
+        result.setGenre(getGenre());
+        result.setCopyright(getCopyright());
+        result.setAlbum(getAlbum());
+        result.setTrackNumber(getTrackNumber());
+        result.setDescription(getDescription());
+        result.setRating(getRating());
+        result.setDate(getDate());
+        result.setSetting(getSetting());
+        result.setUrl(getUrl());
+        result.setLanguage(getLanguage());
+        result.setNowPlaying(getNowPlaying());
+        result.setPublisher(getPublisher());
+        result.setEncodedBy(getEncodedBy());
+        result.setArtworkUrl(getArtworkUrl());
+        result.setTrackId(getTrackId());
+        result.setTrackTotal(getTrackTotal());
+        result.setDirector(getDirector());
+        result.setSeason(getSeason());
+        result.setEpisode(getEpisode());
+        result.setShowName(getShowName());
+        result.setActors(getActors());
+        result.setAlbumArtist(getAlbumArtist());
+        result.setDiscNumber(getDiscNumber());
+        return result;
+    }
+
+    @Override
     protected void finalize() throws Throwable {
         Logger.debug("finalize()");
         Logger.debug("Meta data has been garbage collected");

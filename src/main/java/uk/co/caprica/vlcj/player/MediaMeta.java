@@ -456,4 +456,11 @@ public interface MediaMeta {
      * may occur.
      */
     void release();
+
+    /**
+     * Get a detached copy of the meta data values.
+     *
+     * @return detached meta data value object
+     */
+    MediaMetaData asMediaMetaData();
 }
