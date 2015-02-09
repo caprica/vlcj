@@ -220,7 +220,7 @@ public final class Logger {
                 int token = msg.indexOf(PLACE_HOLDER, current);
                 if(token > -1) {
                     sb.append(msg.substring(current, token));
-                    sb.append(args[argIndex ++ ]);
+                    sb.append(args[argIndex ++]);
                     current = token + PLACE_HOLDER.length();
                 }
                 else {
