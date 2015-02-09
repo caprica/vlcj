@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.logger;
 
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Formatter;
 
@@ -45,9 +46,9 @@ public final class Logger {
 
     private static final Logger INSTANCE = new Logger();
 
-    private final PrintWriter out = new PrintWriter(System.out);
+    private PrintWriter out = new PrintWriter(System.out);
 
-    private final PrintWriter err = new PrintWriter(System.err);
+    private PrintWriter err = new PrintWriter(System.err);
 
     private Level threshold = Level.NONE;
 
@@ -68,6 +69,36 @@ public final class Logger {
 
     public static Level level() {
         return INSTANCE.threshold;
+    }
+
+    /**
+     * Change the destination for log messages.
+     * <p>
+     * By default log messages go to <code>System.out</code>, this can be overridden by passing an
+     * output stream here.
+     * <p>
+     * The log streams should be changed when the application starts, behaviour is undefined if they
+     * are changed subsequently.
+     *
+     * @param out output stream to use for log messages
+     */
+    public static void outputTo(OutputStream out) {
+        INSTANCE.out = new PrintWriter(out);
+    }
+
+    /**
+     * Change the destination for error messages.
+     * <p>
+     * By default error messages go to <code>System.err</code>, this can be overridden by passing an
+     * output stream here.
+     * <p>
+     * The log streams should be changed when the application starts, behaviour is undefined if they
+     * are changed subsequently.
+     *
+     * @param out output stream to use for error messages
+     */
+    public static void errorTo(OutputStream out) {
+        INSTANCE.err = new PrintWriter(out);
     }
 
     public static void trace(String msg, Object... args) {
