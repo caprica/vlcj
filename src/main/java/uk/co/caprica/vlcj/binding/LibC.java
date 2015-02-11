@@ -100,4 +100,24 @@ public interface LibC extends Library {
      * @return 0 if successful; -1 if not, setting <code>errno</code> to an error code
      */
     int fclose(Pointer stream);
+
+    /**
+     * Change or add an evironment variable.
+     * <p>
+     * The value strings are copied (natively).
+     *
+     * @param name name of environment variable
+     * @param value value of the environment variable
+     * @param overwrite non-zero to replace any existing value
+     * @return 0 if successful; -1 if not, setting <code>errno</code> to an error code
+     */
+    int setenv(String name, String value, int overwrite);
+
+    /**
+     * Unset an environment variable.
+     *
+     * @param name name of environment variable
+     * @return 0 if successful; -1 if not, setting <code>errno</code> to an error code
+     */
+    int unsetenv(String name);
 }
