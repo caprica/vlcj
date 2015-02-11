@@ -68,6 +68,9 @@ vlcj will require a very recent version of VLC and in some cases a pre-release v
 may be needed. Where the runtime version of VLC is not new enough, in most cases vlcj attempts to
 fail-safe. 
 
+See also [vlcj-info](https://github.com/caprica/vlcj-info) for a small library that can extract
+information from local media files using the MediaInfo library.
+
 You can also follow @capricasoftware on Twitter for more vlcj news.
 
 Documentation
