@@ -28,7 +28,7 @@
 
     <name>vlcj</name>
     <description>Java Framework for the vlc Media Player.</description>
-    <url>http://www.capricasoftware.co.uk/vlcj</url>
+    <url>http://capricasoftware.co.uk/#/projects/vlcj</url>
     <inceptionYear>2009</inceptionYear>
 
     <packaging>jar</packaging>
@@ -294,6 +294,22 @@
                                     <mapper>
                                         <type>perm</type>
                                         <prefix>/usr/share/vlcj/lib</prefix>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>README.md</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/doc/vlcj</prefix>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>doc/copyright</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/doc/vlcj</prefix>
                                     </mapper>
                                 </data>
                             </dataSet>
