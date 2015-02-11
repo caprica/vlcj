@@ -70,6 +70,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.manager.DefaultMediaManager;
 import uk.co.caprica.vlcj.player.manager.MediaManager;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
 import uk.co.caprica.vlcj.version.Version;
 
@@ -160,6 +161,9 @@ public class MediaPlayerFactory {
                 logger.debug("Java7 on Linux workaround complete.");
             }
         }
+        // With recent VLC/JDK it seems necessary to do this (it will be silently ignored on non-
+        // X platforms)
+        LibXUtil.initialise();
     }
 
     /**
