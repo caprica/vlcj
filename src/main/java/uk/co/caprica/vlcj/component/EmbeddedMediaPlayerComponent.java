@@ -35,8 +35,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -117,6 +119,11 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  */
 @SuppressWarnings("serial")
 public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEventListener {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(EmbeddedMediaPlayerComponent.class);
 
     /**
      * Default factory initialisation arguments.
@@ -245,10 +252,10 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * @param releaseFactory <code>true</code> if the factory should also be released; <code>false</code> if it should not
      */
     public final void release(boolean releaseFactory) {
-        Logger.debug("release(releaseFactory={})", releaseFactory);
+        logger.debug("release(releaseFactory={})", releaseFactory);
         release();
         if(releaseFactory) {
-            Logger.debug("Releasing media player factory");
+            logger.debug("Releasing media player factory");
             mediaPlayerFactory.release();
         }
     }

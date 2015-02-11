@@ -25,7 +25,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.Semaphore;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -50,6 +52,11 @@ public class DirectAudioPlayerTest extends VlcjTest {
      * Synchronisation object to wait for the audio to finish.
      */
     private static final Semaphore sync = new Semaphore(0);
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(DirectAudioPlayerTest.class);
 
     /**
      * Factory.
@@ -88,20 +95,20 @@ public class DirectAudioPlayerTest extends VlcjTest {
 
             @Override
             public void playing(MediaPlayer mediaPlayer) {
-                Logger.info("playing()");
+                logger.info("playing()");
             }
 
             @Override
             public void finished(MediaPlayer mediaPlayer) {
-                Logger.info("finished()");
-                Logger.info("Release waiter...");
+                logger.info("finished()");
+                logger.info("Release waiter...");
                 sync.release();
-                Logger.info("After release waiter");
+                logger.info("After release waiter");
             }
 
             @Override
             public void error(MediaPlayer mediaPlayer) {
-                Logger.info("error()");
+                logger.info("error()");
             }
         });
     }
@@ -114,7 +121,7 @@ public class DirectAudioPlayerTest extends VlcjTest {
     private void start(String mrl) {
         audioPlayer.playMedia(mrl);
 
-        Logger.info("Waiting for finished...");
+        logger.info("Waiting for finished...");
 
         try {
             sync.acquire(); // Slight race condition in theory possible if the audio finishes immediately (but this is just a test so it's good enough)...
@@ -123,12 +130,12 @@ public class DirectAudioPlayerTest extends VlcjTest {
             e.printStackTrace();
         }
 
-        Logger.info("Finished, releasing native resources...");
+        logger.info("Finished, releasing native resources...");
 
         audioPlayer.release();
         factory.release();
 
-        Logger.info("All done");
+        logger.info("All done");
     }
 
     /**
@@ -162,12 +169,12 @@ public class DirectAudioPlayerTest extends VlcjTest {
 
         @Override
         public void flush(DirectAudioPlayer mediaPlayer, long pts) {
-            Logger.info("flush()");
+            logger.info("flush()");
         }
 
         @Override
         public void drain(DirectAudioPlayer mediaPlayer) {
-            Logger.info("drain()");
+            logger.info("drain()");
             try {
                 out.flush();
                 out.close();

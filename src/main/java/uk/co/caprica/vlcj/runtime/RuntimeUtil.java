@@ -19,7 +19,8 @@
 
 package uk.co.caprica.vlcj.runtime;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Crude heuristics to determine the current Operating System.
@@ -27,6 +28,11 @@ import uk.co.caprica.vlcj.logger.Logger;
  * The com.sun.jna.Platform class provides similar functionality.
  */
 public final class RuntimeUtil {
+
+    /**
+     * Log.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(RuntimeUtil.class);
 
     /**
      * Operating System Name system property.
@@ -103,9 +109,9 @@ public final class RuntimeUtil {
      * @throws IllegalArgumentException if the long value can not be safely converted to an int
      */
     public static int safeLongToInt(long value) {
-        Logger.debug("nativeComponentId={}", value);
+        logger.debug("nativeComponentId={}", value);
         if(value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
-            Logger.warn("Native component id is too big for int");
+            logger.warn("Native component id is too big for int");
             throw new IllegalArgumentException("long value " + value + " cannot be safely converted to an int.");
         }
         else {

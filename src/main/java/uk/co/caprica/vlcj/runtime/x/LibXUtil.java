@@ -21,8 +21,10 @@ package uk.co.caprica.vlcj.runtime.x;
 
 import java.awt.Window;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibX11;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import com.sun.jna.Native;
@@ -43,6 +45,11 @@ import com.sun.jna.platform.unix.X11.XEvent;
  * </ul>
  */
 public final class LibXUtil {
+
+    /**
+     * Log.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(LibXUtil.class);
 
     // X window message definitions
     private static final int _NET_WM_STATE_REMOVE = 0;
@@ -78,12 +85,12 @@ public final class LibXUtil {
         }
         catch(Exception e) {
             if(!RuntimeUtil.isWindows()) {
-                Logger.debug("Did not initialise LibX11: {}", e.getMessage());
+                logger.debug("Did not initialise LibX11: {}", e.getMessage());
             }
         }
         catch(Error e) {
             if(!RuntimeUtil.isWindows()) {
-                Logger.debug("Did not initialise LibX11: {}", e.getMessage());
+                logger.debug("Did not initialise LibX11: {}", e.getMessage());
             }
         }
     }

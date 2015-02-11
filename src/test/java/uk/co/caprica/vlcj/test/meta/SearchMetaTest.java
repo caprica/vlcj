@@ -24,7 +24,9 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -36,6 +38,11 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * and the mp3 tags displayed.
  */
 public class SearchMetaTest extends VlcjTest {
+
+    /**
+     * Log.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(SearchMetaTest.class);
 
     private static final FileFilter AUDIO_FILE_FILTER = new FileFilter() {
         @Override
@@ -57,8 +64,6 @@ public class SearchMetaTest extends VlcjTest {
             System.exit(1);
         }
 
-        Logger.setLevel(Logger.Level.INFO);
-
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
         List<File> files = new ArrayList<File>(400);
@@ -70,7 +75,7 @@ public class SearchMetaTest extends VlcjTest {
         for(File file : files) {
             String mrl = file.getAbsolutePath();
             MediaMeta meta = factory.getMediaMeta(mrl, true);
-            Logger.info("{} -> {}", mrl, meta);
+            logger.info("{} -> {}", mrl, meta);
             meta.release();
         }
 
@@ -78,7 +83,7 @@ public class SearchMetaTest extends VlcjTest {
         for(File file : files) {
             String mrl = file.getAbsolutePath();
             MediaMeta meta = factory.getMediaMeta(mrl, true);
-            Logger.info("{} -> {}ms", meta.getTitle(), meta.getLength());
+            logger.info("{} -> {}ms", meta.getTitle(), meta.getLength());
             meta.release();
         }
 

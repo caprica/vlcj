@@ -26,6 +26,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
@@ -36,7 +39,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.AbstractMediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -52,6 +54,11 @@ import com.sun.jna.Pointer;
  * Implementation of a media list player.
  */
 public class DefaultMediaListPlayer extends AbstractMediaPlayer implements MediaListPlayer {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(DefaultMediaListPlayer.class);
 
     /**
      * Collection of event listeners.
@@ -128,51 +135,51 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
      */
     public DefaultMediaListPlayer(LibVlc libvlc, libvlc_instance_t instance) {
         super(libvlc, instance);
-        Logger.debug("DefaultMediaListPlayer(libvlc={}, instance={})", libvlc, instance);
+        logger.debug("DefaultMediaListPlayer(libvlc={}, instance={})", libvlc, instance);
         createInstance();
     }
 
     @Override
     public void addMediaListPlayerEventListener(MediaListPlayerEventListener listener) {
-        Logger.debug("addMediaPlayerEventListener(listener={})", listener);
+        logger.debug("addMediaPlayerEventListener(listener={})", listener);
         eventListenerList.add(listener);
     }
 
     @Override
     public void removeMediaListPlayerEventListener(MediaListPlayerEventListener listener) {
-        Logger.debug("removeMediaPlayerEventListener(listener={})", listener);
+        logger.debug("removeMediaPlayerEventListener(listener={})", listener);
         eventListenerList.remove(listener);
     }
 
     @Override
     public void enableEvents(int eventMask) {
-        Logger.debug("enableEvents(eventMask={})", eventMask);
+        logger.debug("enableEvents(eventMask={})", eventMask);
         this.eventMask = eventMask;
     }
 
     @Override
     public void setMediaPlayer(MediaPlayer mediaPlayer) {
-        Logger.debug("setMediaPlayer(mediaPlayer={})", mediaPlayer);
+        logger.debug("setMediaPlayer(mediaPlayer={})", mediaPlayer);
         this.mediaPlayer = mediaPlayer;
         libvlc.libvlc_media_list_player_set_media_player(mediaListPlayerInstance, mediaPlayer.mediaPlayerInstance());
     }
 
     @Override
     public void setMediaList(MediaList mediaList) {
-        Logger.debug("setMediaList(mediaList={})", mediaList);
+        logger.debug("setMediaList(mediaList={})", mediaList);
         libvlc.libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaList.mediaListInstance());
         this.mediaList = mediaList;
     }
 
     @Override
     public MediaList getMediaList() {
-        Logger.debug("getMediaList()");
+        logger.debug("getMediaList()");
         return mediaList;
     }
 
     @Override
     public void play() {
-        Logger.debug("play()");
+        logger.debug("play()");
         // If there is an associated media player then make sure the video surface
         // is attached
         if(mediaPlayer instanceof EmbeddedMediaPlayer) {
@@ -183,19 +190,19 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
 
     @Override
     public void pause() {
-        Logger.debug("pause()");
+        logger.debug("pause()");
         libvlc.libvlc_media_list_player_pause(mediaListPlayerInstance);
     }
 
     @Override
     public void stop() {
-        Logger.debug("stop()");
+        logger.debug("stop()");
         libvlc.libvlc_media_list_player_stop(mediaListPlayerInstance);
     }
 
     @Override
     public boolean playItem(int itemIndex) {
-        Logger.debug("playItem(itemIndex={})", itemIndex);
+        logger.debug("playItem(itemIndex={})", itemIndex);
         if(mediaList != null && itemIndex >= 0 && itemIndex < mediaList.size()) {
             return libvlc.libvlc_media_list_player_play_item_at_index(mediaListPlayerInstance, itemIndex) == 0;
         }
@@ -206,31 +213,31 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
 
     @Override
     public void playNext() {
-        Logger.debug("playNext()");
+        logger.debug("playNext()");
         libvlc.libvlc_media_list_player_next(mediaListPlayerInstance);
     }
 
     @Override
     public void playPrevious() {
-        Logger.debug("playPrevious()");
+        logger.debug("playPrevious()");
         libvlc.libvlc_media_list_player_previous(mediaListPlayerInstance);
     }
 
     @Override
     public boolean isPlaying() {
-        Logger.debug("isPlaying()");
+        logger.debug("isPlaying()");
         return libvlc.libvlc_media_list_player_is_playing(mediaListPlayerInstance) != 0;
     }
 
     @Override
     public libvlc_state_t getMediaListPlayerState() {
-        Logger.debug("getMediaListPlayerState()");
+        logger.debug("getMediaListPlayerState()");
         return libvlc_state_t.state(libvlc.libvlc_media_list_player_get_state(mediaListPlayerInstance));
     }
 
     @Override
     public void setMode(MediaListPlayerMode mode) {
-        Logger.debug("setMode(mode={})", mode);
+        logger.debug("setMode(mode={})", mode);
         libvlc_playback_mode_e playbackMode;
         switch(mode) {
             case DEFAULT:
@@ -253,31 +260,31 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
 
     @Override
     public String mrl(libvlc_media_t mediaInstance) {
-        Logger.debug("mrl(mediaInstance={})", mediaInstance);
+        logger.debug("mrl(mediaInstance={})", mediaInstance);
         return NativeString.getNativeString(libvlc, libvlc.libvlc_media_get_mrl(mediaInstance));
     }
 
     @Override
     public Object userData() {
-        Logger.debug("userData()");
+        logger.debug("userData()");
         return userData;
     }
 
     @Override
     public void userData(Object userData) {
-        Logger.debug("userData(userData={})", userData);
+        logger.debug("userData(userData={})", userData);
         this.userData = userData;
     }
 
     @Override
     public final String currentMrl() {
-        Logger.debug("currentMrl()");
+        logger.debug("currentMrl()");
         return currentMrl.get();
     }
 
     @Override
     public final void release() {
-        Logger.debug("release()");
+        logger.debug("release()");
         if(released.compareAndSet(false, true)) {
             destroyInstance();
         }
@@ -287,12 +294,12 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
      *
      */
     private void createInstance() {
-        Logger.debug("createInstance()");
+        logger.debug("createInstance()");
 
         mediaListPlayerInstance = libvlc.libvlc_media_list_player_new(instance);
 
         mediaListPlayerEventManager = libvlc.libvlc_media_list_player_event_manager(mediaListPlayerInstance);
-        Logger.debug("mediaListPlayerEventManager={}", mediaListPlayerEventManager);
+        logger.debug("mediaListPlayerEventManager={}", mediaListPlayerEventManager);
 
         registerEventListener();
 
@@ -303,40 +310,40 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
      *
      */
     private void destroyInstance() {
-        Logger.debug("destroyInstance()");
+        logger.debug("destroyInstance()");
 
-        Logger.debug("Detach events...");
+        logger.debug("Detach events...");
         deregisterEventListener();
-        Logger.debug("Events detached.");
+        logger.debug("Events detached.");
 
         eventListenerList.clear();
 
         nextItemHandler.release();
 
         if(mediaListPlayerInstance != null) {
-            Logger.debug("Release media list player...");
+            logger.debug("Release media list player...");
             libvlc.libvlc_media_list_player_release(mediaListPlayerInstance);
-            Logger.debug("Media list player released");
+            logger.debug("Media list player released");
         }
 
-        Logger.debug("Shut down listeners...");
+        logger.debug("Shut down listeners...");
         listenersService.shutdown();
-        Logger.debug("Listeners shut down.");
+        logger.debug("Listeners shut down.");
     }
 
     /**
      *
      */
     private void registerEventListener() {
-        Logger.debug("registerEventListener()");
+        logger.debug("registerEventListener()");
         callback = new VlcVideoPlayerCallback();
         for(libvlc_event_e event : libvlc_event_e.values()) {
             // The native event manager reports that it does not support
             // libvlc_MediaListPlayerPlayed
             if(event.intValue() >= libvlc_event_e.libvlc_MediaListPlayerNextItemSet.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListPlayerStopped.intValue()) {
-                Logger.debug("event={}", event);
+                logger.debug("event={}", event);
                 int result = libvlc.libvlc_event_attach(mediaListPlayerEventManager, event.intValue(), callback, null);
-                Logger.debug("result={}", result);
+                logger.debug("result={}", result);
             }
         }
     }
@@ -345,13 +352,13 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
      *
      */
     private void deregisterEventListener() {
-        Logger.debug("deregisterEventListener()");
+        logger.debug("deregisterEventListener()");
         if(callback != null) {
             for(libvlc_event_e event : libvlc_event_e.values()) {
                 // The native event manager reports that it does not support
                 // libvlc_MediaListPlayerPlayed
                 if(event.intValue() >= libvlc_event_e.libvlc_MediaListPlayerNextItemSet.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListPlayerStopped.intValue()) {
-                    Logger.debug("event={}", event);
+                    logger.debug("event={}", event);
                     libvlc.libvlc_event_detach(mediaListPlayerEventManager, event.intValue(), callback, null);
                 }
             }
@@ -379,11 +386,11 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
 
         @Override
         public void callback(libvlc_event_t event, Pointer userData) {
-            Logger.trace("callback(event={},userData={})", event, userData);
+            logger.trace("callback(event={},userData={})", event, userData);
             if(!eventListenerList.isEmpty()) {
                 // Create a new media player event for the native event
                 MediaListPlayerEvent mediaListPlayerEvent = eventFactory.newMediaListPlayerEvent(event, eventMask);
-                Logger.trace("mediaListPlayerEvent={}", mediaListPlayerEvent);
+                logger.trace("mediaListPlayerEvent={}", mediaListPlayerEvent);
                 if(mediaListPlayerEvent != null) {
                     listenersService.submit(new NotifyListenersRunnable(mediaListPlayerEvent));
                 }
@@ -412,18 +419,18 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
 
         @Override
         public void run() {
-            Logger.trace("run()");
+            logger.trace("run()");
             for(int i = eventListenerList.size() - 1; i >= 0; i -- ) {
                 MediaListPlayerEventListener listener = eventListenerList.get(i);
                 try {
                     mediaListPlayerEvent.notify(listener);
                 }
                 catch(Exception e) {
-                    Logger.warn("Event listener {} threw an exception", e, listener);
+                    logger.warn("Event listener {} threw an exception", e, listener);
                     // Continue with the next listener...
                 }
             }
-            Logger.trace("runnable exits");
+            logger.trace("runnable exits");
         }
     }
 
@@ -439,7 +446,7 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
 
         @Override
         public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
-            Logger.debug("nextItem(item={},itemMrl={})", item, itemMrl);
+            logger.debug("nextItem(item={},itemMrl={})", item, itemMrl);
             deregisterMediaEventListener();
             this.mediaInstance = item;
             currentMrl.set(itemMrl);
@@ -450,16 +457,16 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
          *
          */
         private void registerMediaEventListener() {
-            Logger.debug("registerMediaEventListener()");
+            logger.debug("registerMediaEventListener()");
             // If there is a media, register a new listener...
             if(mediaInstance != null) {
                 libvlc.libvlc_media_retain(mediaInstance);
                 libvlc_event_manager_t mediaEventManager = libvlc.libvlc_media_event_manager(mediaInstance);
                 for(libvlc_event_e event : libvlc_event_e.values()) {
                     if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaStateChanged.intValue()) {
-                        Logger.debug("event={}", event);
+                        logger.debug("event={}", event);
                         int result = libvlc.libvlc_event_attach(mediaEventManager, event.intValue(), callback, null);
-                        Logger.debug("result={}", result);
+                        logger.debug("result={}", result);
                     }
                 }
             }
@@ -469,13 +476,13 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
          *
          */
         private void deregisterMediaEventListener() {
-            Logger.debug("deregisterMediaEventListener()");
+            logger.debug("deregisterMediaEventListener()");
             // If there is a media, deregister the listener...
             if(mediaInstance != null) {
                 libvlc_event_manager_t mediaEventManager = libvlc.libvlc_media_event_manager(mediaInstance);
                 for(libvlc_event_e event : libvlc_event_e.values()) {
                     if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaStateChanged.intValue()) {
-                        Logger.debug("event={}", event);
+                        logger.debug("event={}", event);
                         libvlc.libvlc_event_detach(mediaEventManager, event.intValue(), callback, null);
                     }
                 }
@@ -497,8 +504,8 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
 
     @Override
     protected void finalize() throws Throwable {
-        Logger.debug("finalize()");
-        Logger.debug("Media list player has been garbage collected");
+        logger.debug("finalize()");
+        logger.debug("Media list player has been garbage collected");
         super.finalize();
     }
 }

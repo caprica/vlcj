@@ -21,13 +21,20 @@ package uk.co.caprica.vlcj.player.embedded.windows;
 
 import java.awt.Window;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 
 /**
  * Implementation of a full screen strategy that uses the native Win32 API.
  */
 public class Win32FullScreenStrategy implements FullScreenStrategy {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(Win32FullScreenStrategy.class);
 
     /**
      * Native full-screen implementation.
@@ -55,7 +62,7 @@ public class Win32FullScreenStrategy implements FullScreenStrategy {
 
     @Override
     public final void enterFullScreenMode() {
-        Logger.debug("enterFullScreenMode()");
+        logger.debug("enterFullScreenMode()");
         if(!isFullScreenMode) {
             onBeforeEnterFullScreenMode();
             handler.setFullScreen(true);
@@ -65,7 +72,7 @@ public class Win32FullScreenStrategy implements FullScreenStrategy {
 
     @Override
     public final void exitFullScreenMode() {
-        Logger.debug("exitFullScreenMode()");
+        logger.debug("exitFullScreenMode()");
         if(isFullScreenMode) {
             handler.setFullScreen(false);
             isFullScreenMode = false;
@@ -75,7 +82,7 @@ public class Win32FullScreenStrategy implements FullScreenStrategy {
 
     @Override
     public final boolean isFullScreenMode() {
-        Logger.debug("isFullScreenMode()");
+        logger.debug("isFullScreenMode()");
         return isFullScreenMode;
     }
 

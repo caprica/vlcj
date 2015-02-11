@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.test.meta;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -31,21 +33,24 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class UpdateMetaTest extends VlcjTest {
 
+    /**
+     * Log.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(UpdateMetaTest.class);
+
     public static void main(String[] args) {
         if(args.length != 1) {
             System.out.println("Specify a single MRL");
             System.exit(1);
         }
 
-        Logger.setLevel(Logger.Level.INFO);
-
         // Create a media player
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
         // Get the meta data and dump it out
         MediaMeta mediaMeta = factory.getMediaMeta(args[0], true);
-        Logger.info("mediaMeta={}", mediaMeta);
-        Logger.info("original description={}", mediaMeta.getDescription());
+        logger.info("mediaMeta={}", mediaMeta);
+        logger.info("original description={}", mediaMeta.getDescription());
 
         // Keep the original description to restore it later
         String originalDescription = mediaMeta.getDescription();
@@ -58,8 +63,8 @@ public class UpdateMetaTest extends VlcjTest {
 
         // Re-read to confirm the updated value
         mediaMeta = factory.getMediaMeta(args[0], true);
-        Logger.info("mediaMeta={}", mediaMeta);
-        Logger.info("updated description={}", mediaMeta.getDescription());
+        logger.info("mediaMeta={}", mediaMeta);
+        logger.info("updated description={}", mediaMeta.getDescription());
 
         // Restore the original description
         mediaMeta.setDescription(originalDescription);
@@ -69,8 +74,8 @@ public class UpdateMetaTest extends VlcjTest {
 
         // Re-read to confirm
         mediaMeta = factory.getMediaMeta(args[0], true);
-        Logger.info("mediaMeta={}", mediaMeta);
-        Logger.info("restored description={}", mediaMeta.getDescription());
+        logger.info("mediaMeta={}", mediaMeta);
+        logger.info("restored description={}", mediaMeta.getDescription());
 
         mediaMeta.release();
 

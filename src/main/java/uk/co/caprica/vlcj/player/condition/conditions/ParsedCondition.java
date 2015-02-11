@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.player.condition.conditions;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.condition.DefaultCondition;
 
@@ -28,6 +30,11 @@ import uk.co.caprica.vlcj.player.condition.DefaultCondition;
  * media has been parsed.
  */
 public class ParsedCondition extends DefaultCondition<Integer> {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(ParsedCondition.class);
 
     /**
      * Create a condition.
@@ -40,7 +47,7 @@ public class ParsedCondition extends DefaultCondition<Integer> {
 
     @Override
     public final void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-        Logger.debug("mediaParsedChange(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
+        logger.debug("mediaParsedChange(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
         ready(newStatus);
     }
 }

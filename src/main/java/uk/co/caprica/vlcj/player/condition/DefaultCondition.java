@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.player.condition;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 /**
@@ -47,6 +49,11 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
 public class DefaultCondition<T> extends Condition<T> {
 
     /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(DefaultCondition.class);
+
+    /**
      * Create a media player condition.
      *
      * @param mediaPlayer media player
@@ -57,13 +64,13 @@ public class DefaultCondition<T> extends Condition<T> {
 
     @Override
     public void error(MediaPlayer mediaPlayer) {
-        Logger.debug("error(mediaPlayer={})", mediaPlayer);
+        logger.debug("error(mediaPlayer={})", mediaPlayer);
         error();
     }
 
     @Override
     public void finished(MediaPlayer mediaPlayer) {
-        Logger.debug("finished(mediaPlayer={})", mediaPlayer);
+        logger.debug("finished(mediaPlayer={})", mediaPlayer);
         finished();
     }
 }

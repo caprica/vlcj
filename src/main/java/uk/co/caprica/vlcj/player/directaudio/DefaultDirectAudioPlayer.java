@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.player.directaudio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_drain_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_flush_cb;
@@ -26,7 +29,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_pause_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_play_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_resume_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.DefaultMediaPlayer;
 
 import com.sun.jna.Pointer;
@@ -51,6 +53,11 @@ import com.sun.jna.Pointer;
  * size" for a sample must also be considered.
  */
 public class DefaultDirectAudioPlayer extends DefaultMediaPlayer implements DirectAudioPlayer {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(DefaultDirectAudioPlayer.class);
 
     /**
      * Play callback.
@@ -126,7 +133,7 @@ public class DefaultDirectAudioPlayer extends DefaultMediaPlayer implements Dire
 
         @Override
         public void play(Pointer data, Pointer samples, int count, long pts) {
-            Logger.trace("play(count={},pts={})", count, pts);
+            logger.trace("play(count={},pts={})", count, pts);
             audioCallback.play(DefaultDirectAudioPlayer.this, samples, count, pts);
         }
     }
@@ -138,7 +145,7 @@ public class DefaultDirectAudioPlayer extends DefaultMediaPlayer implements Dire
 
         @Override
         public void pause(Pointer data, long pts) {
-            Logger.debug("pause(pts={})", pts);
+            logger.debug("pause(pts={})", pts);
             audioCallback.pause(DefaultDirectAudioPlayer.this, pts);
         }
     }
@@ -150,7 +157,7 @@ public class DefaultDirectAudioPlayer extends DefaultMediaPlayer implements Dire
 
         @Override
         public void resume(Pointer data, long pts) {
-            Logger.debug("resume(pts={})", pts);
+            logger.debug("resume(pts={})", pts);
             audioCallback.resume(DefaultDirectAudioPlayer.this, pts);
         }
     }
@@ -162,7 +169,7 @@ public class DefaultDirectAudioPlayer extends DefaultMediaPlayer implements Dire
 
         @Override
         public void flush(Pointer data, long pts) {
-            Logger.debug("flush(pts={})", pts);
+            logger.debug("flush(pts={})", pts);
             audioCallback.flush(DefaultDirectAudioPlayer.this, pts);
         }
     }
@@ -174,7 +181,7 @@ public class DefaultDirectAudioPlayer extends DefaultMediaPlayer implements Dire
 
         @Override
         public void drain(Pointer data) {
-            Logger.debug("drain()");
+            logger.debug("drain()");
             audioCallback.drain(DefaultDirectAudioPlayer.this);
         }
     }

@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.player.condition.conditions;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.condition.DefaultCondition;
 
@@ -28,6 +30,11 @@ import uk.co.caprica.vlcj.player.condition.DefaultCondition;
  * the media length has changed.
  */
 public class LengthChangedCondition extends DefaultCondition<Long> {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(LengthChangedCondition.class);
 
     /**
      * Create a condition.
@@ -40,7 +47,7 @@ public class LengthChangedCondition extends DefaultCondition<Long> {
 
     @Override
     public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
-        Logger.debug("lengthChanged(mediaPlayer={},newLength={})", mediaPlayer, newLength);
+        logger.debug("lengthChanged(mediaPlayer={},newLength={})", mediaPlayer, newLength);
         ready(newLength);
     }
 }

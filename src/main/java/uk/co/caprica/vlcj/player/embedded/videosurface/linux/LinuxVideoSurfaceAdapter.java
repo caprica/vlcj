@@ -19,8 +19,10 @@
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.linux;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
 
@@ -34,9 +36,14 @@ public class LinuxVideoSurfaceAdapter implements VideoSurfaceAdapter {
      */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(LinuxVideoSurfaceAdapter.class);
+
     @Override
     public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-        Logger.debug("attach(componentId={})", componentId);
+        logger.debug("attach(componentId={})", componentId);
         libvlc.libvlc_media_player_set_xwindow(mediaPlayer.mediaPlayerInstance(), (int)componentId);
     }
 }

@@ -23,7 +23,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
@@ -86,6 +88,11 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 public abstract class Condition<T> extends MediaPlayerEventAdapter {
 
     /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(Condition.class);
+
+    /**
      * Synchronisation object used to wait until the media player state reaches
      * the desired condition.
      */
@@ -137,7 +144,7 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
      * @throws UnexpectedFinishedConditionException if the condition finished unexpectedly
      */
     public final T await() throws InterruptedException, UnexpectedErrorConditionException, UnexpectedFinishedConditionException {
-        Logger.debug("await()");
+        logger.debug("await()");
         if(!used) {
             used = true;
             // Invoke the template method before waiting
@@ -178,7 +185,7 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
      * This is a convenience for {@link #ready(Object)} when no result is needed.
      */
     protected final void ready() {
-        Logger.debug("ready()");
+        logger.debug("ready()");
         ready(null);
     }
 
@@ -189,16 +196,16 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
      * @param result optional result, may be <code>null</code>
      */
     protected final void ready(T result) {
-        Logger.debug("ready(result={})", result);
+        logger.debug("ready(result={})", result);
         if(!finished.getAndSet(true)) {
-            Logger.debug("Finished");
+            logger.debug("Finished");
             // Store the result
             this.result.set(result);
             // Finish waiting and release the waiter
             release(ResultStatus.NORMAL);
         }
         else {
-            Logger.debug("Already finished");
+            logger.debug("Already finished");
         }
     }
 
@@ -207,7 +214,7 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
      * reports an error has occurred.
      */
     protected final void error() {
-        Logger.debug("error()");
+        logger.debug("error()");
         // Finish waiting...
         release(ResultStatus.ERROR);
     }
@@ -217,7 +224,7 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
      * reports the end of the media has been reached.
      */
     protected final void finished() {
-        Logger.debug("finished()");
+        logger.debug("finished()");
         // Finish waiting...
         release(ResultStatus.FINISHED);
     }

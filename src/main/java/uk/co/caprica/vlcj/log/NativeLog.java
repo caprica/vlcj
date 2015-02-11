@@ -26,13 +26,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_level_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
 
 import com.sun.jna.Pointer;
@@ -58,6 +60,11 @@ public class NativeLog {
      * Plus one for the null terminator.
      */
     private static final int BUFFER_SIZE = 200 + 1;
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(NativeLog.class);
 
     /**
      * List of registered event listeners.
@@ -122,7 +129,7 @@ public class NativeLog {
      * @param listener component to add
      */
     public final void addLogListener(LogEventListener listener) {
-       Logger.debug("addLogListener(listener={})", listener);
+       logger.debug("addLogListener(listener={})", listener);
        eventListenerList.add(listener);
     }
 
@@ -132,7 +139,7 @@ public class NativeLog {
      * @param listener component to remove
      */
     public final void removeLogListener(LogEventListener listener) {
-        Logger.debug("removeLogListener(listener={})", listener);
+        logger.debug("removeLogListener(listener={})", listener);
         eventListenerList.remove(listener);
     }
 
@@ -161,7 +168,7 @@ public class NativeLog {
      * Release the native log component.
      */
     public final void release() {
-        Logger.debug("release()");
+        logger.debug("release()");
         if(released.compareAndSet(false, true)) {
             destroyInstance();
         }
@@ -171,7 +178,7 @@ public class NativeLog {
      * Create the native resources and prepare the log component.
      */
     private void createInstance() {
-        Logger.debug("createInstance()");
+        logger.debug("createInstance()");
         // Create a native callback to receive log messages
         callback = new NativeLogCallback();
         // Subscribe to the native log
@@ -182,21 +189,21 @@ public class NativeLog {
      * Destroy the native resources and shut down the log component.
      */
     private void destroyInstance() {
-        Logger.debug("destroyInstance()");
+        logger.debug("destroyInstance()");
         // Stop receiving native log messages
         libvlc.libvlc_log_unset(instance);
         // Clear all registered listeners
         eventListenerList.clear();
         // Shut down the listener service
-        Logger.debug("Shut down listeners...");
+        logger.debug("Shut down listeners...");
         listenersService.shutdown();
-        Logger.debug("Listeners shut down.");
+        logger.debug("Listeners shut down.");
     }
 
     @Override
     protected void finalize() throws Throwable {
-        Logger.debug("finalize()");
-        Logger.debug("Native log has been garbage collected");
+        logger.debug("finalize()");
+        logger.debug("Native log has been garbage collected");
         super.finalize();
         // FIXME should this invoke release()?
     }
@@ -246,7 +253,7 @@ public class NativeLog {
                     }
                 }
                 else {
-                    Logger.error("Failed to format log message");
+                    logger.error("Failed to format log message");
                 }
             }
         }
@@ -276,7 +283,7 @@ public class NativeLog {
      * @param message log message
      */
     private void raiseLogEvent(libvlc_log_level_e level, String module, String file, Integer line, String name, String header, Integer id, String message) {
-        Logger.trace("raiseLogEvent(level={},module={},line={},name={},header={},id={},message={}", level, module, file, line, name, header, id, message);
+        logger.trace("raiseLogEvent(level={},module={},line={},name={},header={},id={},message={}", level, module, file, line, name, header, id, message);
         // Submit a new log event so message are sent serially and asynchronously
         listenersService.submit(new NotifyEventListenersRunnable(level, module, file, line, name, header, id, message));
 
@@ -359,18 +366,18 @@ public class NativeLog {
 
         @Override
         public void run() {
-            Logger.trace("run()");
+            logger.trace("run()");
             for(int i = eventListenerList.size() - 1; i >= 0; i -- ) {
                 LogEventListener listener = eventListenerList.get(i);
                 try {
                     listener.log(level, module, file, line, name, header, id, message);
                 }
                 catch(Exception e) {
-                    Logger.warn("Event listener {} threw an exception", e, listener);
+                    logger.warn("Event listener {} threw an exception", e, listener);
                     // Continue with the next listener...
                 }
             }
-            Logger.trace("runnable exits");
+            logger.trace("runnable exits");
         }
     }
 }

@@ -19,9 +19,11 @@
 
 package uk.co.caprica.vlcj.test.discovery;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
-import uk.co.caprica.vlcj.logger.Logger;
 
 /**
  * A trivial test to demonstrate automatic discovery of the libvlc native shared
@@ -29,13 +31,18 @@ import uk.co.caprica.vlcj.logger.Logger;
  */
 public class NativeDiscoveryTest {
 
+    /**
+     * Log.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(NativeDiscoveryTest.class);
+
     public static void main(String[] args) {
         System.setProperty("vlcj.log", "DEBUG");
         // Create a discovery component that uses the default provided discovery strategies
         boolean found = new NativeDiscovery().discover();
-        Logger.debug("found={}", found);
+        logger.debug("found={}", found);
         if(found) {
-            Logger.debug("Version: {}" + LibVlcFactory.factory().create().libvlc_get_version());
+            logger.debug("Version: {}" + LibVlcFactory.factory().create().libvlc_get_version());
         }
     }
 }

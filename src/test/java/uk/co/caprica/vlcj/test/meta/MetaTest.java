@@ -31,7 +31,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -49,6 +51,11 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class MetaTest extends VlcjTest {
 
+    /**
+     * Log.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(MetaTest.class);
+
     public static void main(String[] args) {
         if(args.length != 1) {
             System.out.println("Specify a single MRL");
@@ -60,7 +67,7 @@ public class MetaTest extends VlcjTest {
 
         // Get the meta data and dump it out
         MediaMeta mediaMeta = factory.getMediaMeta(args[0], true);
-        Logger.debug("mediaMeta={}", mediaMeta);
+        logger.debug("mediaMeta={}", mediaMeta);
 
         // Load the artwork into a buffered image (if available)
         final BufferedImage artwork = mediaMeta.getArtwork();

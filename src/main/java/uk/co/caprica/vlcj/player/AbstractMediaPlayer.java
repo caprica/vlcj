@@ -19,14 +19,21 @@
 
 package uk.co.caprica.vlcj.player;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.logger.Logger;
 
 /**
  * Base implementation for media players sharing common behaviours.
  */
 public abstract class AbstractMediaPlayer {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(AbstractMediaPlayer.class);
 
     /**
      * Native library interface.
@@ -51,8 +58,8 @@ public abstract class AbstractMediaPlayer {
 
     @Override
     protected void finalize() throws Throwable {
-        Logger.debug("finalize()");
-        Logger.debug("Media player has been garbage collected");
+        logger.debug("finalize()");
+        logger.debug("Media player has been garbage collected");
         super.finalize();
         // FIXME should this invoke release()?
     }

@@ -21,8 +21,10 @@ package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import java.awt.Canvas;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 import com.sun.jna.Native;
@@ -31,6 +33,11 @@ import com.sun.jna.Native;
  * Encapsulation of a video surface that uses a Canvas.
  */
 public class CanvasVideoSurface extends VideoSurface {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(CanvasVideoSurface.class);
 
     /**
      * Serial version.
@@ -64,12 +71,12 @@ public class CanvasVideoSurface extends VideoSurface {
 
     @Override
     public void attach(LibVlc libvlc, MediaPlayer mediaPlayer) {
-        Logger.debug("attach()");
+        logger.debug("attach()");
         if(canvas.isDisplayable()) {
             long componentId = Native.getComponentID(canvas);
-            Logger.debug("componentId={}", componentId);
+            logger.debug("componentId={}", componentId);
             videoSurfaceAdapter.attach(libvlc, mediaPlayer, componentId);
-            Logger.debug("video surface attached");
+            logger.debug("video surface attached");
         }
         else {
             throw new IllegalStateException("The video surface component must be displayable");

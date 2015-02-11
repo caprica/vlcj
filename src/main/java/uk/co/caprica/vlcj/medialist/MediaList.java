@@ -27,6 +27,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
@@ -36,7 +39,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_meta_t;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.medialist.events.MediaListEvent;
 import uk.co.caprica.vlcj.medialist.events.MediaListEventFactory;
 import uk.co.caprica.vlcj.player.MediaResourceLocator;
@@ -51,6 +53,11 @@ import com.sun.jna.Pointer;
  * media list instance is accessible via {@link #mediaListInstance}.
  */
 public class MediaList {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(MediaList.class);
 
     /**
      * Collection of media player event listeners.
@@ -134,7 +141,7 @@ public class MediaList {
      * @param listener component to add
      */
     public final void addMediaListEventListener(MediaListEventListener listener) {
-        Logger.debug("addMediaListEventListener(listener={})", listener);
+        logger.debug("addMediaListEventListener(listener={})", listener);
         eventListenerList.add(listener);
     }
 
@@ -145,7 +152,7 @@ public class MediaList {
      * @param listener component to remove
      */
     public final void removeListEventListener(MediaListEventListener listener) {
-        Logger.debug("removeMediaListEventListener(listener={})", listener);
+        logger.debug("removeMediaListEventListener(listener={})", listener);
         eventListenerList.remove(listener);
     }
 
@@ -157,7 +164,7 @@ public class MediaList {
      * @param standardMediaOptions options to apply to all subsequently played media items
      */
     public final void setStandardMediaOptions(String... standardMediaOptions) {
-        Logger.debug("setStandardMediaOptions(standardMediaOptions={})", Arrays.toString(standardMediaOptions));
+        logger.debug("setStandardMediaOptions(standardMediaOptions={})", Arrays.toString(standardMediaOptions));
         this.standardMediaOptions = standardMediaOptions;
     }
 
@@ -168,7 +175,7 @@ public class MediaList {
      * @param mediaOptions zero or more media item options
      */
     public final void addMedia(String mrl, String... mediaOptions) {
-        Logger.debug("addMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
+        logger.debug("addMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
         try {
             lock();
             // Create a new native media descriptor
@@ -191,7 +198,7 @@ public class MediaList {
      * @param mediaOptions zero or more media item options
      */
     public final void insertMedia(int index, String mrl, String... mediaOptions) {
-        Logger.debug("insertMedia(index={},mrl={},mediaOptions={})", index, mrl, Arrays.toString(mediaOptions));
+        logger.debug("insertMedia(index={},mrl={},mediaOptions={})", index, mrl, Arrays.toString(mediaOptions));
         try {
             lock();
             // Create a new native media descriptor
@@ -212,7 +219,7 @@ public class MediaList {
      * @param index item to remove (counting from zero)
      */
     public final void removeMedia(int index) {
-        Logger.debug("removeMedia(index={})", index);
+        logger.debug("removeMedia(index={})", index);
         try {
             lock();
             libvlc_media_t oldMediaInstance = libvlc.libvlc_media_list_item_at_index(mediaListInstance, index);
@@ -232,7 +239,7 @@ public class MediaList {
      * Clear the list.
      */
     public final void clear() {
-        Logger.debug("clear()");
+        logger.debug("clear()");
         try {
             lock();
             // Traverse the list from the end back to the start...
@@ -251,11 +258,11 @@ public class MediaList {
      * @return item count
      */
     public final int size() {
-        Logger.debug("size()");
+        logger.debug("size()");
         try {
             lock();
             int size = libvlc.libvlc_media_list_count(mediaListInstance);
-            Logger.debug("size={}", size);
+            logger.debug("size={}", size);
             return size;
         }
         finally {
@@ -269,7 +276,7 @@ public class MediaList {
      * @return <code>true</code> if the play-list is currently read-only, otherwise <code>false</code>
      */
     public final boolean isReadOnly() {
-        Logger.debug("isReadOnly()");
+        logger.debug("isReadOnly()");
         return libvlc.libvlc_media_list_is_readonly(mediaListInstance) == 0;
     }
 
@@ -279,7 +286,7 @@ public class MediaList {
      * @return list of items
      */
     public final List<MediaListItem> items() {
-        Logger.debug("items()");
+        logger.debug("items()");
         List<MediaListItem> result = new ArrayList<MediaListItem>();
         try {
             lock();
@@ -331,7 +338,7 @@ public class MediaList {
      * Clean up media list resources.
      */
     public final void release() {
-        Logger.debug("release()");
+        logger.debug("release()");
         if(released.compareAndSet(false, true)) {
             destroyInstance();
         }
@@ -341,7 +348,7 @@ public class MediaList {
      * Create and initialise a new media list instance.
      */
     private void createInstance(libvlc_media_list_t mediaListInstance) {
-        Logger.debug("createInstance()");
+        logger.debug("createInstance()");
         if(mediaListInstance == null) {
             mediaListInstance = libvlc.libvlc_media_list_new(instance);
         }
@@ -350,10 +357,10 @@ public class MediaList {
         }
 
         this.mediaListInstance = mediaListInstance;
-        Logger.debug("mediaListInstance={}", mediaListInstance);
+        logger.debug("mediaListInstance={}", mediaListInstance);
 
         mediaListEventManager = libvlc.libvlc_media_list_event_manager(mediaListInstance);
-        Logger.debug("mediaListEventManager={}", mediaListEventManager);
+        logger.debug("mediaListEventManager={}", mediaListEventManager);
 
         registerEventListener();
     }
@@ -362,7 +369,7 @@ public class MediaList {
      * Clean up and free the media list instance.
      */
     private void destroyInstance() {
-        Logger.debug("destroyInstance()");
+        logger.debug("destroyInstance()");
 
         deregisterEventListener();
 
@@ -370,22 +377,22 @@ public class MediaList {
             libvlc.libvlc_media_list_release(mediaListInstance);
         }
 
-        Logger.debug("Shut down listeners...");
+        logger.debug("Shut down listeners...");
         listenersService.shutdown();
-        Logger.debug("Listeners shut down.");
+        logger.debug("Listeners shut down.");
     }
 
     /**
      * Register a call-back to receive native media player events.
      */
     private void registerEventListener() {
-        Logger.debug("registerEventListener()");
+        logger.debug("registerEventListener()");
         callback = new MediaListCallback();
         for(libvlc_event_e event : libvlc_event_e.values()) {
             if(event.intValue() >= libvlc_event_e.libvlc_MediaListItemAdded.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListEndReached.intValue()) {
-                Logger.debug("event={}", event);
+                logger.debug("event={}", event);
                 int result = libvlc.libvlc_event_attach(mediaListEventManager, event.intValue(), callback, null);
-                Logger.debug("result={}", result);
+                logger.debug("result={}", result);
             }
         }
     }
@@ -394,11 +401,11 @@ public class MediaList {
      * De-register the call-back used to receive native media player events.
      */
     private void deregisterEventListener() {
-        Logger.debug("deregisterEventListener()");
+        logger.debug("deregisterEventListener()");
         if(callback != null) {
             for(libvlc_event_e event : libvlc_event_e.values()) {
                 if(event.intValue() >= libvlc_event_e.libvlc_MediaListItemAdded.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListEndReached.intValue()) {
-                    Logger.debug("event={}", event);
+                    logger.debug("event={}", event);
                     libvlc.libvlc_event_detach(mediaListEventManager, event.intValue(), callback, null);
                 }
             }
@@ -412,7 +419,7 @@ public class MediaList {
      * @param mediaListEvent event to raise, may be <code>null</code>
      */
     private void raiseEvent(MediaListEvent mediaListEvent) {
-        Logger.trace("raiseEvent(mediaListEvent={}", mediaListEvent);
+        logger.trace("raiseEvent(mediaListEvent={}", mediaListEvent);
         if(mediaListEvent != null) {
             listenersService.submit(new NotifyEventListenersRunnable(mediaListEvent));
         }
@@ -422,7 +429,7 @@ public class MediaList {
      * Acquire the media list lock.
      */
     private void lock() {
-        Logger.debug("lock()");
+        logger.debug("lock()");
         libvlc.libvlc_media_list_lock(mediaListInstance);
     }
 
@@ -430,7 +437,7 @@ public class MediaList {
      * Release the media list lock.
      */
     private void unlock() {
-        Logger.debug("unlock()");
+        logger.debug("unlock()");
         libvlc.libvlc_media_list_unlock(mediaListInstance);
     }
 
@@ -443,28 +450,28 @@ public class MediaList {
      * @throws IllegalArgumentException if the supplied MRL could not be parsed
      */
     private libvlc_media_t newMediaDescriptor(String media, String... mediaOptions) {
-        Logger.debug("newMediaDescriptor(media={},mediaOptions={})", media, Arrays.toString(mediaOptions));
+        logger.debug("newMediaDescriptor(media={},mediaOptions={})", media, Arrays.toString(mediaOptions));
         libvlc_media_t mediaDescriptor;
         // Encode the MRL if necessary (if it is a local file that contains Unicode characters)
         media = MediaResourceLocator.encodeMrl(media);
         if(MediaResourceLocator.isLocation(media)) {
-            Logger.debug("Treating mrl as a location");
+            logger.debug("Treating mrl as a location");
             mediaDescriptor = libvlc.libvlc_media_new_location(instance, media);
         }
         else {
-            Logger.debug("Treating mrl as a path");
+            logger.debug("Treating mrl as a path");
             mediaDescriptor = libvlc.libvlc_media_new_path(instance, media);
         }
-        Logger.debug("mediaDescriptor={}", mediaDescriptor);
+        logger.debug("mediaDescriptor={}", mediaDescriptor);
         if(standardMediaOptions != null) {
             for(String standardMediaOption : standardMediaOptions) {
-                Logger.debug("standardMediaOption={}", standardMediaOption);
+                logger.debug("standardMediaOption={}", standardMediaOption);
                 libvlc.libvlc_media_add_option(mediaDescriptor, standardMediaOption);
             }
         }
         if(mediaOptions != null) {
             for(String mediaOption : mediaOptions) {
-                Logger.debug("mediaOption={}", mediaOption);
+                logger.debug("mediaOption={}", mediaOption);
                 libvlc.libvlc_media_add_option(mediaDescriptor, mediaOption);
             }
         }
@@ -477,7 +484,7 @@ public class MediaList {
      * @param mediaDescripor native media instance
      */
     private void releaseMediaDescriptor(libvlc_media_t mediaDescriptor) {
-        Logger.debug("releaseMediaDescriptor(mediaDescriptor={})", mediaDescriptor);
+        logger.debug("releaseMediaDescriptor(mediaDescriptor={})", mediaDescriptor);
         libvlc.libvlc_media_release(mediaDescriptor);
     }
 
@@ -509,7 +516,7 @@ public class MediaList {
     private final class MediaListCallback implements libvlc_callback_t {
         @Override
         public void callback(libvlc_event_t event, Pointer userData) {
-            Logger.trace("callback(event={},userData={})", event, userData);
+            logger.trace("callback(event={},userData={})", event, userData);
             if(!eventListenerList.isEmpty()) {
                 // Create a new media player event for the native event
                 raiseEvent(eventFactory.createEvent(event));
@@ -543,18 +550,18 @@ public class MediaList {
 
         @Override
         public void run() {
-            Logger.trace("run()");
+            logger.trace("run()");
             for(int i = eventListenerList.size() - 1; i >= 0; i -- ) {
                 MediaListEventListener listener = eventListenerList.get(i);
                 try {
                     mediaListEvent.notify(listener);
                 }
                 catch(Exception e) {
-                    Logger.warn("Event listener {} threw an exception", e, listener);
+                    logger.warn("Event listener {} threw an exception", e, listener);
                     // Continue with the next listener...
                 }
             }
-            Logger.trace("runnable exits");
+            logger.trace("runnable exits");
         }
     }
 }

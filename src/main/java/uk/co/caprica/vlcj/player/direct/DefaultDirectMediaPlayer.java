@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.player.direct;
 
 import java.util.concurrent.Semaphore;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
@@ -28,7 +31,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.DefaultMediaPlayer;
 
 import com.sun.jna.Memory;
@@ -54,6 +56,11 @@ import com.sun.jna.ptr.PointerByReference;
  * This list is not exhaustive.
  */
 public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements DirectMediaPlayer {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(DefaultDirectMediaPlayer.class);
 
     /**
      * Use a semaphore with a single permit to ensure that the lock, display, unlock cycle goes in a
@@ -191,9 +198,9 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     private final class SetupCallback implements libvlc_video_format_cb {
         @Override
         public int format(PointerByReference opaque, PointerByReference chroma, IntByReference width, IntByReference height, PointerByReference pitches, PointerByReference lines) {
-            Logger.debug("format(chroma={},width={},height={})", chroma.getPointer().getString(0), width.getValue(), height.getValue());
+            logger.debug("format(chroma={},width={},height={})", chroma.getPointer().getString(0), width.getValue(), height.getValue());
             bufferFormat = bufferFormatCallback.getBufferFormat(width.getValue(), height.getValue());
-            Logger.debug("bufferFormat={}", bufferFormat);
+            logger.debug("bufferFormat={}", bufferFormat);
             if(bufferFormat == null) {
                 throw new IllegalStateException("buffer format can not be null");
             }
@@ -215,7 +222,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
             for(int i = 0; i < bufferFormat.getPlaneCount(); i ++ ) {
                 nativeBuffers[i] = new Memory(pitchValues[i] * lineValues[i] + 32).align(32);
             }
-            Logger.trace("format finished");
+            logger.trace("format finished");
             return pitchValues.length;
         }
     }
@@ -229,11 +236,11 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     private final class CleanupCallback implements libvlc_video_cleanup_cb {
         @Override
         public void cleanup(Pointer opaque) {
-            Logger.trace("cleanup");
+            logger.trace("cleanup");
             if(nativeBuffers != null) {
                 nativeBuffers = null;
             }
-            Logger.trace("cleanup finished");
+            logger.trace("cleanup finished");
         }
     }
 
@@ -246,15 +253,15 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     private final class LockCallback implements libvlc_lock_callback_t {
         @Override
         public Pointer lock(Pointer opaque, PointerByReference planes) {
-            Logger.trace("lock");
+            logger.trace("lock");
             // Acquire the single permit from the semaphore to ensure that the
             // memory buffer is not trashed while display() is invoked
-            Logger.trace("acquire");
+            logger.trace("acquire");
             semaphore.acquireUninterruptibly();
-            Logger.trace("acquired");
+            logger.trace("acquired");
             // Set the pre-allocated buffers to use for each plane
             planes.getPointer().write(0, nativeBuffers, 0, nativeBuffers.length);
-            Logger.trace("lock finished");
+            logger.trace("lock finished");
             return null;
         }
     }
@@ -268,12 +275,12 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     private final class UnlockCallback implements libvlc_unlock_callback_t {
         @Override
         public void unlock(Pointer opaque, Pointer picture, Pointer plane) {
-            Logger.trace("unlock");
+            logger.trace("unlock");
             // Release the semaphore
-            Logger.trace("release");
+            logger.trace("release");
             semaphore.release();
-            Logger.trace("released");
-            Logger.trace("unlock finished");
+            logger.trace("released");
+            logger.trace("unlock finished");
         }
     }
 
@@ -286,10 +293,10 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     private final class DisplayCallback implements libvlc_display_callback_t {
         @Override
         public void display(Pointer opaque, Pointer picture) {
-            Logger.trace("display");
+            logger.trace("display");
             // Invoke the callback
             DefaultDirectMediaPlayer.this.renderCallback.display(DefaultDirectMediaPlayer.this, nativeBuffers, bufferFormat);
-            Logger.trace("display finished");
+            logger.trace("display finished");
         }
     }
 

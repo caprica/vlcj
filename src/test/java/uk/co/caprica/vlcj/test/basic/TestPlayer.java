@@ -55,10 +55,12 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.AudioOutput;
 import uk.co.caprica.vlcj.player.Equalizer;
 import uk.co.caprica.vlcj.player.MediaDetails;
@@ -86,6 +88,11 @@ import com.sun.jna.platform.WindowUtils;
  */
 public class TestPlayer extends VlcjTest {
 
+    /**
+     * Log.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(TestPlayer.class);
+
     private final JFrame mainFrame;
     private final Canvas videoSurface;
     private final JPanel controlsPanel;
@@ -102,9 +109,9 @@ public class TestPlayer extends VlcjTest {
     public static void main(final String[] args) throws Exception {
         LibVlc libVlc = LibVlcFactory.factory().create();
 
-        Logger.info("  version: {}", libVlc.libvlc_get_version());
-        Logger.info(" compiler: {}", libVlc.libvlc_get_compiler());
-        Logger.info("changeset: {}", libVlc.libvlc_get_changeset());
+        logger.info("  version: {}", libVlc.libvlc_get_version());
+        logger.info(" compiler: {}", libVlc.libvlc_get_compiler());
+        logger.info("changeset: {}", libVlc.libvlc_get_changeset());
 
         setLookAndFeel();
 
@@ -150,7 +157,7 @@ public class TestPlayer extends VlcjTest {
 
         // vlcArgs.add("--plugin-path=" + System.getProperty("user.home") + "/.vlcj");
 
-        Logger.debug("vlcArgs={}", vlcArgs);
+        logger.debug("vlcArgs={}", vlcArgs);
 
         mainFrame = new JFrame("VLCJ Test Player");
         mainFrame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
@@ -161,7 +168,7 @@ public class TestPlayer extends VlcjTest {
         mediaPlayerFactory.setUserAgent("vlcj test player");
 
         List<AudioOutput> audioOutputs = mediaPlayerFactory.getAudioOutputs();
-        Logger.debug("audioOutputs={}", audioOutputs);
+        logger.debug("audioOutputs={}", audioOutputs);
 
         mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(fullScreenStrategy);
         mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(videoSurface));
@@ -184,7 +191,7 @@ public class TestPlayer extends VlcjTest {
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent evt) {
-                Logger.debug("windowClosing(evt={})", evt);
+                logger.debug("windowClosing(evt={})", evt);
 
                 if(mediaPlayer != null) {
                     mediaPlayer.release();
@@ -280,7 +287,7 @@ public class TestPlayer extends VlcjTest {
             transparentWindowsSupport = false;
         }
 
-        Logger.debug("transparentWindowsSupport={}", transparentWindowsSupport);
+        logger.debug("transparentWindowsSupport={}", transparentWindowsSupport);
 
         if(transparentWindowsSupport) {
             final Window test = new Window(null, WindowUtils.getAlphaCompatibleGraphicsConfiguration()) {
@@ -385,46 +392,46 @@ public class TestPlayer extends VlcjTest {
     private final class TestPlayerMediaPlayerEventListener extends MediaPlayerEventAdapter {
         @Override
         public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
-            Logger.debug("mediaChanged(mediaPlayer={},media={},mrl={})", mediaPlayer, media, mrl);
+            logger.debug("mediaChanged(mediaPlayer={},media={},mrl={})", mediaPlayer, media, mrl);
         }
 
         @Override
         public void finished(MediaPlayer mediaPlayer) {
-            Logger.debug("finished(mediaPlayer={})", mediaPlayer);
+            logger.debug("finished(mediaPlayer={})", mediaPlayer);
         }
 
         @Override
         public void paused(MediaPlayer mediaPlayer) {
-            Logger.debug("paused(mediaPlayer={})", mediaPlayer);
+            logger.debug("paused(mediaPlayer={})", mediaPlayer);
         }
 
         @Override
         public void playing(MediaPlayer mediaPlayer) {
-            Logger.debug("playing(mediaPlayer={})", mediaPlayer);
+            logger.debug("playing(mediaPlayer={})", mediaPlayer);
             MediaDetails mediaDetails = mediaPlayer.getMediaDetails();
-            Logger.info("mediaDetails={}", mediaDetails);
+            logger.info("mediaDetails={}", mediaDetails);
         }
 
         @Override
         public void stopped(MediaPlayer mediaPlayer) {
-            Logger.debug("stopped(mediaPlayer={})", mediaPlayer);
+            logger.debug("stopped(mediaPlayer={})", mediaPlayer);
         }
 
         @Override
         public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-            Logger.debug("videoOutput(mediaPlayer={},newCount={})", mediaPlayer, newCount);
+            logger.debug("videoOutput(mediaPlayer={},newCount={})", mediaPlayer, newCount);
             if(newCount == 0) {
                 return;
             }
 
             MediaDetails mediaDetails = mediaPlayer.getMediaDetails();
-            Logger.info("mediaDetails={}", mediaDetails);
+            logger.info("mediaDetails={}", mediaDetails);
 
             MediaMeta mediaMeta = mediaPlayer.getMediaMeta();
-            Logger.info("mediaMeta={}", mediaMeta);
+            logger.info("mediaMeta={}", mediaMeta);
 
             final Dimension dimension = mediaPlayer.getVideoDimension();
-            Logger.debug("dimension={}", dimension);
+            logger.debug("dimension={}", dimension);
             if(dimension != null) {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
@@ -479,37 +486,37 @@ public class TestPlayer extends VlcjTest {
 
         @Override
         public void error(MediaPlayer mediaPlayer) {
-            Logger.debug("error(mediaPlayer={})", mediaPlayer);
+            logger.debug("error(mediaPlayer={})", mediaPlayer);
         }
 
         @Override
         public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-            Logger.debug("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
+            logger.debug("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
         }
 
         @Override
         public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-            Logger.debug("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
+            logger.debug("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
         }
 
         @Override
         public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-            Logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
+            logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
         }
 
         @Override
         public void mediaFreed(MediaPlayer mediaPlayer) {
-            Logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
+            logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
         }
 
         @Override
         public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
-            Logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
+            logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
         }
 
         @Override
         public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
-            Logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
+            logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
         }
     }
 
@@ -520,7 +527,7 @@ public class TestPlayer extends VlcjTest {
      */
     @SuppressWarnings("unused")
     private void enableMousePointer(boolean enable) {
-        Logger.debug("enableMousePointer(enable={})", enable);
+        logger.debug("enableMousePointer(enable={})", enable);
         if(enable) {
             videoSurface.setCursor(null);
         }
@@ -536,37 +543,37 @@ public class TestPlayer extends VlcjTest {
     private final class TestPlayerMouseListener extends MouseAdapter {
         @Override
         public void mouseMoved(MouseEvent e) {
-            Logger.trace("mouseMoved(e={})", e);
+            logger.trace("mouseMoved(e={})", e);
         }
 
         @Override
         public void mousePressed(MouseEvent e) {
-            Logger.debug("mousePressed(e={})", e);
+            logger.debug("mousePressed(e={})", e);
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            Logger.debug("mouseReleased(e={})", e);
+            logger.debug("mouseReleased(e={})", e);
         }
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            Logger.debug("mouseClicked(e={})", e);
+            logger.debug("mouseClicked(e={})", e);
         }
 
         @Override
         public void mouseWheelMoved(MouseWheelEvent e) {
-            Logger.debug("mouseWheelMoved(e={})", e);
+            logger.debug("mouseWheelMoved(e={})", e);
         }
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            Logger.debug("mouseEntered(e={})", e);
+            logger.debug("mouseEntered(e={})", e);
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            Logger.debug("mouseExited(e={})", e);
+            logger.debug("mouseExited(e={})", e);
         }
     }
 
@@ -577,17 +584,17 @@ public class TestPlayer extends VlcjTest {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            Logger.debug("keyPressed(e={})", e);
+            logger.debug("keyPressed(e={})", e);
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            Logger.debug("keyReleased(e={})", e);
+            logger.debug("keyReleased(e={})", e);
         }
 
         @Override
         public void keyTyped(KeyEvent e) {
-            Logger.debug("keyTyped(e={})", e);
+            logger.debug("keyTyped(e={})", e);
         }
     }
 }

@@ -21,13 +21,20 @@ package uk.co.caprica.vlcj;
 
 import java.util.Properties;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.version.Version;
 
 /**
  * Application information banner.
  */
 public final class Info {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(Info.class);
 
     /**
      * Singleton holder.
@@ -67,10 +74,10 @@ public final class Info {
             // This can only happen if something went wrong with the build
             version = null;
         }
-        Logger.info("vlcj: {}", version != null ? version : "<version not available>");
-        Logger.info("java: {} {}", System.getProperty("java.version"), System.getProperty("java.vendor"));
-        Logger.info("java home: {}", System.getProperty("java.home"));
-        Logger.info("os: {} {} {}", System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"));
+        logger.info("vlcj: {}", version != null ? version : "<version not available>");
+        logger.info("java: {} {}", System.getProperty("java.version"), System.getProperty("java.vendor"));
+        logger.info("java home: {}", System.getProperty("java.home"));
+        logger.info("os: {} {} {}", System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"));
     }
 
     /**

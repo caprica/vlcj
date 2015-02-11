@@ -24,12 +24,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  */
 class LoggingProxy implements InvocationHandler {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(LoggingProxy.class);
 
     /**
      *
@@ -67,7 +73,7 @@ class LoggingProxy implements InvocationHandler {
      * @param args
      */
     private void before(Method method, Object[] args) {
-        Logger.trace("call {}: {}", method.getName(), Arrays.toString(args));
+        logger.trace("call {}: {}", method.getName(), Arrays.toString(args));
     }
 
     /**
@@ -78,10 +84,10 @@ class LoggingProxy implements InvocationHandler {
      */
     private void after(Method method, Object result) {
         if(!method.getReturnType().equals(Void.TYPE)) {
-            Logger.trace("return {}: {}", method.getName(), result);
+            logger.trace("return {}: {}", method.getName(), result);
         }
         else {
-            Logger.trace("return {}: void", method.getName());
+            logger.trace("return {}: void", method.getName());
         }
     }
 
@@ -92,6 +98,6 @@ class LoggingProxy implements InvocationHandler {
      * @param t
      */
     private void exception(Method method, Throwable t) {
-        Logger.trace("exception {}: {}", method.getName(), t);
+        logger.trace("exception {}: {}", method.getName(), t);
     }
 }

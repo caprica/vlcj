@@ -32,6 +32,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
@@ -42,7 +45,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
 import uk.co.caprica.vlcj.log.NativeLog;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
@@ -122,6 +124,11 @@ import uk.co.caprica.vlcj.version.Version;
 public class MediaPlayerFactory {
 
     /**
+     * Log.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(MediaPlayerFactory.class);
+
+    /**
      * Workaround for running under Java7 on Linux.
      * <p>
      * Without this (unless other client configuration changes have already been made) an
@@ -134,23 +141,23 @@ public class MediaPlayerFactory {
             // Only apply if the run-time version is Java 1.7.0 or later...
             Version actualJavaVersion = new Version(System.getProperty("java.version"));
             if(actualJavaVersion.atLeast(new Version("1.7.0"))) {
-                Logger.debug("Trying workaround for Java7+ on Linux");
+                logger.debug("Trying workaround for Java7+ on Linux");
                 Toolkit.getDefaultToolkit();
                 AccessController.doPrivileged(new PrivilegedAction<Object>() {
                     @Override
                     public Object run() {
                         try {
-                            Logger.debug("Attempting to load jawt...");
+                            logger.debug("Attempting to load jawt...");
                             System.loadLibrary("jawt");
-                            Logger.debug("...loaded jawt");
+                            logger.debug("...loaded jawt");
                         }
                         catch(UnsatisfiedLinkError e) {
-                            Logger.debug("Failed to load jawt", e);
+                            logger.debug("Failed to load jawt", e);
                         }
                         return null;
                     }
                 });
-                Logger.debug("Java7 on Linux workaround complete.");
+                logger.debug("Java7 on Linux workaround complete.");
             }
         }
     }
@@ -258,9 +265,9 @@ public class MediaPlayerFactory {
      * @param libvlcArgs initialisation arguments to pass to libvlc
      */
     public MediaPlayerFactory(LibVlc libvlc, String... libvlcArgs) {
-        Logger.debug("MediaPlayerFactory(libvlc={},libvlcArgs={})", libvlc, Arrays.toString(libvlcArgs));
+        logger.debug("MediaPlayerFactory(libvlc={},libvlcArgs={})", libvlc, Arrays.toString(libvlcArgs));
         // JNA will look for the libvlc shared library here (and also libvlccore)...
-        Logger.debug("jna.library.path={}", System.getProperty("jna.library.path"));
+        logger.debug("jna.library.path={}", System.getProperty("jna.library.path"));
         // Convenience
         if(libvlcArgs == null) {
             libvlcArgs = new String[0];
@@ -269,18 +276,18 @@ public class MediaPlayerFactory {
         // to the directory where libvlccore is loaded from, this can be overridden by explicitly
         // specifying the "VLC_PLUGIN_PATH" system property (although this should not be necessary)
         String vlcPluginPath = System.getProperty("VLC_PLUGIN_PATH");
-        Logger.debug("VLC_PLUGIN_PATH={}", vlcPluginPath);
+        logger.debug("VLC_PLUGIN_PATH={}", vlcPluginPath);
         this.libvlc = libvlc;
         this.instance = libvlc.libvlc_new(libvlcArgs.length, libvlcArgs);
-        Logger.debug("instance={}", instance);
+        logger.debug("instance={}", instance);
         if(instance == null) {
-            Logger.error("Failed to initialise libvlc");
+            logger.error("Failed to initialise libvlc");
             String msg = MessageFormat.format(PLUGIN_PATH_HELP, new Object[] {RuntimeUtil.getLibVlcName(), RuntimeUtil.getLibVlcCoreName(), RuntimeUtil.getPluginsDirectoryName()});
             throw new RuntimeException(msg);
         }
         // Cache the equalizer static data
         equalizerAvailable = LibVlcVersion.getVersion().atLeast(new Version("2.2.0"));
-        Logger.debug("equalizerAvailable={}", equalizerAvailable);
+        logger.debug("equalizerAvailable={}", equalizerAvailable);
         if(equalizerAvailable) {
             equalizerBandFrequencies = createEqualizerBandFrequencies();
             equalizerPresetNames = createEqualizerPresetNames();
@@ -322,7 +329,7 @@ public class MediaPlayerFactory {
      * Release the native resources associated with this factory.
      */
     public void release() {
-        Logger.debug("release()");
+        logger.debug("release()");
         if(!released) {
             if(instance != null) {
                 libvlc.libvlc_release(instance);
@@ -339,7 +346,7 @@ public class MediaPlayerFactory {
      * @param userAgent application name
      */
     public void setUserAgent(String userAgent) {
-        Logger.debug("setUserAgent(userAgent={})", userAgent);
+        logger.debug("setUserAgent(userAgent={})", userAgent);
         setUserAgent(userAgent, null);
     }
 
@@ -350,7 +357,7 @@ public class MediaPlayerFactory {
      * @param httpUserAgent application name for HTTP
      */
     public void setUserAgent(String userAgent, String httpUserAgent) {
-        Logger.debug("setUserAgent(userAgent={},httpUserAgent={})", userAgent, httpUserAgent);
+        logger.debug("setUserAgent(userAgent={},httpUserAgent={})", userAgent, httpUserAgent);
         libvlc.libvlc_set_user_agent(instance, userAgent, userAgent);
     }
 
@@ -364,7 +371,7 @@ public class MediaPlayerFactory {
      * @since libvlc 2.1.0
      */
     public void setApplicationId(String id, String version, String icon) {
-        Logger.debug("setApplicationId(id=" + id + ",version=" + version + ",icon=" + icon + ")");
+        logger.debug("setApplicationId(id=" + id + ",version=" + version + ",icon=" + icon + ")");
         libvlc.libvlc_set_app_id(instance, id, version, icon);
     }
 
@@ -377,7 +384,7 @@ public class MediaPlayerFactory {
      * @return collection of audio outputs
      */
     public List<AudioOutput> getAudioOutputs() {
-        Logger.debug("getAudioOutputs()");
+        logger.debug("getAudioOutputs()");
         List<AudioOutput> result = new ArrayList<AudioOutput>();
         libvlc_audio_output_t audioOutputs = libvlc.libvlc_audio_output_list_get(instance);
         if(audioOutputs != null) {
@@ -406,7 +413,7 @@ public class MediaPlayerFactory {
      * @return collection of audio output devices
      */
     private List<AudioDevice> getAudioOutputDevices(String outputName) {
-        Logger.debug("getAudioOutputDevices(outputName={})", outputName);
+        logger.debug("getAudioOutputDevices(outputName={})", outputName);
         List<AudioDevice> result = new ArrayList<AudioDevice>();
         libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_list_get(instance, outputName);
         if (audioDevices != null) {
@@ -436,7 +443,7 @@ public class MediaPlayerFactory {
      * @since libvlc 2.0.0
      */
     public List<ModuleDescription> getAudioFilters() {
-        Logger.debug("getAudioFilters()");
+        logger.debug("getAudioFilters()");
         libvlc_module_description_t moduleDescriptions = libvlc.libvlc_audio_filter_list_get(instance);
         // Without disabling auto synch on this JNA structure a fatal crash will
         // intermittently occur when the release call is made - this is the only
@@ -456,7 +463,7 @@ public class MediaPlayerFactory {
      * @since libvlc 2.0.0
      */
     public List<ModuleDescription> getVideoFilters() {
-        Logger.debug("getVideoFilters()");
+        logger.debug("getVideoFilters()");
         libvlc_module_description_t moduleDescriptions = libvlc.libvlc_video_filter_list_get(instance);
         // Without disabling auto synch on this JNA structure a fatal crash will
         // intermittently occur when the release call is made - this is the only
@@ -503,14 +510,14 @@ public class MediaPlayerFactory {
      * @return list of equalizer band frequencies
      */
     private List<Float> createEqualizerBandFrequencies() {
-        Logger.debug("createEqualizerBandFrequencies()");
+        logger.debug("createEqualizerBandFrequencies()");
         int numBands = libvlc.libvlc_audio_equalizer_get_band_count();
-        Logger.debug("numBands={}", numBands);
+        logger.debug("numBands={}", numBands);
         List<Float> result = new ArrayList<Float>(numBands);
         for(int i = 0; i < numBands; i++) {
             result.add(libvlc.libvlc_audio_equalizer_get_band_frequency(i));
         }
-        Logger.debug("result={}", result);
+        logger.debug("result={}", result);
         return Collections.unmodifiableList(result);
     }
 
@@ -520,14 +527,14 @@ public class MediaPlayerFactory {
      * @return list of equalizer preset names
      */
     private List<String> createEqualizerPresetNames() {
-        Logger.debug("createEqualizerPresetNames()");
+        logger.debug("createEqualizerPresetNames()");
         int numPresets = libvlc.libvlc_audio_equalizer_get_preset_count();
-        Logger.debug("numPresets={}", numPresets);
+        logger.debug("numPresets={}", numPresets);
         List<String> result = new ArrayList<String>(numPresets);
         for(int i = 0; i < numPresets; i++) {
             result.add(libvlc.libvlc_audio_equalizer_get_preset_name(i));
         }
-        Logger.debug("result={}", result);
+        logger.debug("result={}", result);
         return Collections.unmodifiableList(result);
     }
 
@@ -538,7 +545,7 @@ public class MediaPlayerFactory {
      * @since libvlc 2.2.0
      */
     public final List<Float> getEqualizerBandFrequencies() {
-        Logger.debug("getEqualizerBandFrequencies()");
+        logger.debug("getEqualizerBandFrequencies()");
         checkEqualizer();
         return equalizerBandFrequencies;
     }
@@ -550,7 +557,7 @@ public class MediaPlayerFactory {
      * @since libvlc 2.2.0
      */
     public final List<String> getEqualizerPresetNames() {
-        Logger.debug("getEqualizerPresetNames()");
+        logger.debug("getEqualizerPresetNames()");
         checkEqualizer();
         return equalizerPresetNames;
     }
@@ -562,7 +569,7 @@ public class MediaPlayerFactory {
      * @since libvlc 2.2.0
      */
     public final Equalizer newEqualizer() {
-        Logger.debug("newEqualizer()");
+        logger.debug("newEqualizer()");
         checkEqualizer();
         return new Equalizer(libvlc);
     }
@@ -575,7 +582,7 @@ public class MediaPlayerFactory {
      * @since libvlc 2.2.0
      */
     public final Equalizer newEqualizer(String presetName) {
-        Logger.debug("newEqualizer(presetName={})", presetName);
+        logger.debug("newEqualizer(presetName={})", presetName);
         checkEqualizer();
         int index = equalizerPresetNames.indexOf(presetName);
         if(index != -1) {
@@ -609,13 +616,13 @@ public class MediaPlayerFactory {
      * @since libvlc 2.2.0
      */
     public final Map<String, Equalizer> getAllPresetEqualizers() {
-        Logger.debug("getAllPresetEqualizers()");
+        logger.debug("getAllPresetEqualizers()");
         checkEqualizer();
         Map<String, Equalizer> result = new TreeMap<String, Equalizer>();
         for(String presetName : equalizerPresetNames) {
             result.put(presetName, newEqualizer(presetName));
         }
-        Logger.trace("result={}", result);
+        logger.trace("result={}", result);
         return result;
     }
 
@@ -642,7 +649,7 @@ public class MediaPlayerFactory {
      * @return media player instance
      */
     public EmbeddedMediaPlayer newEmbeddedMediaPlayer() {
-        Logger.debug("newEmbeddedMediaPlayer()");
+        logger.debug("newEmbeddedMediaPlayer()");
         return newEmbeddedMediaPlayer(null);
     }
 
@@ -653,7 +660,7 @@ public class MediaPlayerFactory {
      * @return media player instance
      */
     public EmbeddedMediaPlayer newEmbeddedMediaPlayer(FullScreenStrategy fullScreenStrategy) {
-        Logger.debug("newEmbeddedMediaPlayer(fullScreenStrategy={})", fullScreenStrategy);
+        logger.debug("newEmbeddedMediaPlayer(fullScreenStrategy={})", fullScreenStrategy);
         return new DefaultEmbeddedMediaPlayer(libvlc, instance, fullScreenStrategy);
     }
 
@@ -665,7 +672,7 @@ public class MediaPlayerFactory {
      * @return media player instance
      */
     public DirectMediaPlayer newDirectMediaPlayer(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback) {
-        Logger.debug("newDirectMediaPlayer(formatCallback={},renderCallback={})", bufferFormatCallback, renderCallback);
+        logger.debug("newDirectMediaPlayer(formatCallback={},renderCallback={})", bufferFormatCallback, renderCallback);
         return new DefaultDirectMediaPlayer(libvlc, instance, bufferFormatCallback, renderCallback);
     }
 
@@ -679,7 +686,7 @@ public class MediaPlayerFactory {
      * @return media player instance
      */
     public DirectAudioPlayer newDirectAudioPlayer(String format, int rate, int channels, AudioCallback audioCallback) {
-        Logger.debug("newDirectAudioPlayer(format={},rate={},channels={},audioCallback={}", format, rate, channels, audioCallback);
+        logger.debug("newDirectAudioPlayer(format={},rate={},channels={},audioCallback={}", format, rate, channels, audioCallback);
         return new DefaultDirectAudioPlayer(libvlc, instance, format, rate, channels, audioCallback);
     }
 
@@ -693,7 +700,7 @@ public class MediaPlayerFactory {
      * @return media player instance
      */
     public HeadlessMediaPlayer newHeadlessMediaPlayer() {
-        Logger.debug("newHeadlessMediaPlayer()");
+        logger.debug("newHeadlessMediaPlayer()");
         return new DefaultHeadlessMediaPlayer(libvlc, instance);
     }
 
@@ -703,7 +710,7 @@ public class MediaPlayerFactory {
      * @return media player instance
      */
     public MediaListPlayer newMediaListPlayer() {
-        Logger.debug("newMediaListPlayer()");
+        logger.debug("newMediaListPlayer()");
         return new DefaultMediaListPlayer(libvlc, instance);
     }
 
@@ -716,7 +723,7 @@ public class MediaPlayerFactory {
      * @return video surface
      */
     public CanvasVideoSurface newVideoSurface(Canvas canvas) {
-        Logger.debug("newVideoSurface(canvas={})", canvas);
+        logger.debug("newVideoSurface(canvas={})", canvas);
         VideoSurfaceAdapter videoSurfaceAdapter;
         if(RuntimeUtil.isNix()) {
             videoSurfaceAdapter = new LinuxVideoSurfaceAdapter();
@@ -731,7 +738,7 @@ public class MediaPlayerFactory {
             throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
         }
         CanvasVideoSurface videoSurface = new CanvasVideoSurface(canvas, videoSurfaceAdapter);
-        Logger.debug("videoSurface={}", videoSurface);
+        logger.debug("videoSurface={}", videoSurface);
         return videoSurface;
     }
 
@@ -742,7 +749,7 @@ public class MediaPlayerFactory {
      * @return video surface
      */
     public ComponentIdVideoSurface newVideoSurface(long componentId) {
-        Logger.debug("newVideoSurface(componentId={})", componentId);
+        logger.debug("newVideoSurface(componentId={})", componentId);
         VideoSurfaceAdapter videoSurfaceAdapter;
         if(RuntimeUtil.isNix()) {
             videoSurfaceAdapter = new LinuxVideoSurfaceAdapter();
@@ -757,7 +764,7 @@ public class MediaPlayerFactory {
             throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
         }
         ComponentIdVideoSurface videoSurface = new ComponentIdVideoSurface(componentId, videoSurfaceAdapter);
-        Logger.debug("videoSurface={}", videoSurface);
+        logger.debug("videoSurface={}", videoSurface);
         return videoSurface;
     }
 
@@ -769,7 +776,7 @@ public class MediaPlayerFactory {
      * @return media list instance
      */
     public MediaList newMediaList() {
-        Logger.debug("newMediaList()");
+        logger.debug("newMediaList()");
         return new MediaList(libvlc, instance);
     }
 
@@ -789,14 +796,14 @@ public class MediaPlayerFactory {
      * @return media meta data, or <code>null</code> if the media could not be located
      */
     public MediaMeta getMediaMeta(String mediaPath, boolean parse) {
-        Logger.debug("getMediaMeta(mediaPath={},parse={})", mediaPath, parse);
+        logger.debug("getMediaMeta(mediaPath={},parse={})", mediaPath, parse);
         libvlc_media_t media = libvlc.libvlc_media_new_path(instance, mediaPath);
-        Logger.debug("media={}", media);
+        logger.debug("media={}", media);
         if(media != null) {
             if(parse) {
-                Logger.debug("Parsing media...");
+                logger.debug("Parsing media...");
                 libvlc.libvlc_media_parse(media);
-                Logger.debug("Media parsed.");
+                logger.debug("Media parsed.");
             }
             MediaMeta mediaMeta = new DefaultMediaMeta(libvlc, media);
             // Release this native reference, the media meta instance retains its own native reference
@@ -824,7 +831,7 @@ public class MediaPlayerFactory {
             return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
         }
         else {
-            Logger.warn("Codec description not available on this platform, needs libvlc 3.0.0 or later");
+            logger.warn("Codec description not available on this platform, needs libvlc 3.0.0 or later");
             return "";
         }
     }
@@ -839,12 +846,12 @@ public class MediaPlayerFactory {
      * @return native log component, or <code>null</code> if the native log is not available
      */
     public NativeLog newLog() {
-        Logger.debug("newLog()");
+        logger.debug("newLog()");
         if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_210)) {
             return new NativeLog(libvlc, instance);
         }
         else {
-            Logger.warn("Native log not available on this platform, needs libvlc 2.1.0 or later");
+            logger.warn("Native log not available on this platform, needs libvlc 2.1.0 or later");
             return null;
         }
     }
@@ -860,7 +867,7 @@ public class MediaPlayerFactory {
      * @return native media discoverer component
      */
     public MediaDiscoverer newMediaDiscoverer(String name) {
-        Logger.debug("newMediaDiscoverer(name={})", name);
+        logger.debug("newMediaDiscoverer(name={})", name);
         return new MediaDiscoverer(libvlc, instance, name);
     }
 
@@ -872,7 +879,7 @@ public class MediaPlayerFactory {
      * @return native media discoverer component
      */
     public MediaDiscoverer newAudioMediaDiscoverer() {
-        Logger.debug("newAudioMediaDiscoverer()");
+        logger.debug("newAudioMediaDiscoverer()");
         return newMediaDiscoverer("audio");
     }
 
@@ -889,7 +896,7 @@ public class MediaPlayerFactory {
      * @return native media discoverer component
      */
     public MediaDiscoverer newVideoMediaDiscoverer() {
-        Logger.debug("newVideoMediaDiscoverer()");
+        logger.debug("newVideoMediaDiscoverer()");
         return newMediaDiscoverer("video");
     }
 
@@ -904,7 +911,7 @@ public class MediaPlayerFactory {
      * @return current clock time value, in microseconds
      */
     public long clock() {
-        Logger.trace("clock()");
+        logger.trace("clock()");
         return libvlc.libvlc_clock();
     }
 
@@ -916,7 +923,7 @@ public class MediaPlayerFactory {
      * @return media manager instance
      */
     public MediaManager newMediaManager() {
-        Logger.trace("newMediaManager()");
+        logger.trace("newMediaManager()");
         return new DefaultMediaManager(libvlc, instance);
     }
 
@@ -928,7 +935,7 @@ public class MediaPlayerFactory {
      * @return native library version
      */
     public String version() {
-        Logger.debug("version()");
+        logger.debug("version()");
         return libvlc.libvlc_get_version();
     }
 
@@ -938,7 +945,7 @@ public class MediaPlayerFactory {
      * @return compiler
      */
     public String compiler() {
-        Logger.debug("compiler()");
+        logger.debug("compiler()");
         return libvlc.libvlc_get_compiler();
     }
 
@@ -948,7 +955,7 @@ public class MediaPlayerFactory {
      * @return change-set
      */
     public String changeset() {
-        Logger.debug("changeset()");
+        logger.debug("changeset()");
         return libvlc.libvlc_get_changeset();
     }
 }

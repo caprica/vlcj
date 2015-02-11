@@ -27,7 +27,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base implementation for a component that attempts to locate the libvlc native
@@ -44,23 +45,28 @@ import uk.co.caprica.vlcj.logger.Logger;
  */
 public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscoveryStrategy {
 
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(AbstractNativeDiscoveryStrategy.class);
+
     @Override
     public final String discover() {
-        Logger.debug("discover()");
+        logger.debug("discover()");
         String result = null;
         // Get the list of directories to search
         List<String> directoryNames = new ArrayList<String>();
         getDirectoryNames(directoryNames);
-        Logger.debug("directoryNames={}", directoryNames);
+        logger.debug("directoryNames={}", directoryNames);
         // Process each declared directory name
         for(String directoryName : directoryNames) {
-            Logger.debug("directoryName={}", directoryName);
+            logger.debug("directoryName={}", directoryName);
             if(find(directoryName)) {
                 result = directoryName;
                 break;
             }
         }
-        Logger.debug("result={}", result);
+        logger.debug("result={}", result);
         return result;
     }
 
@@ -82,17 +88,17 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
                 for(Pattern pattern : patternsToMatch) {
                     Matcher matcher = pattern.matcher(file.getName());
                     if(matcher.matches()) {
-                        Logger.debug("Matched '{}' in '{}'", file.getName(), directoryName);
+                        logger.debug("Matched '{}' in '{}'", file.getName(), directoryName);
                         matchedCount++ ;
                         if(matchedCount == patternsToMatch.length) {
-                            Logger.debug("Matched all required files");
+                            logger.debug("Matched all required files");
                             return true;
                         }
                     }
                 }
             }
         }
-        Logger.debug("Failed to matched all required files");
+        logger.debug("Failed to matched all required files");
         return false;
    }
 

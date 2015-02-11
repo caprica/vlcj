@@ -21,11 +21,13 @@ package uk.co.caprica.vlcj.player.discoverer;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.NativeString;
 
@@ -37,6 +39,11 @@ import uk.co.caprica.vlcj.player.NativeString;
  * media is discovered.
  */
 public class MediaDiscoverer {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(MediaDiscoverer.class);
 
     /**
      * Native interface.
@@ -116,7 +123,7 @@ public class MediaDiscoverer {
      * Clean up media list resources.
      */
     public final void release() {
-        Logger.debug("release()");
+        logger.debug("release()");
         if(released.compareAndSet(false, true)) {
             destroyInstance();
         }
@@ -126,10 +133,10 @@ public class MediaDiscoverer {
      * Create and initialise a new media discoverer instance.
      */
     private void createInstance() {
-        Logger.debug("createInstance()");
+        logger.debug("createInstance()");
 
         mediaDiscovererInstance = libvlc.libvlc_media_discoverer_new_from_name(instance, name);
-        Logger.debug("mediaDiscovererInstance={}", mediaDiscovererInstance);
+        logger.debug("mediaDiscovererInstance={}", mediaDiscovererInstance);
 
         if(mediaDiscovererInstance == null) {
             throw new IllegalArgumentException("No media discoverer for '" + name + "' is available on this platform");
@@ -140,12 +147,12 @@ public class MediaDiscoverer {
      * Clean up and free the media list instance.
      */
     private void destroyInstance() {
-        Logger.debug("destroyInstance()");
+        logger.debug("destroyInstance()");
 
         if(mediaDiscovererInstance != null) {
-            Logger.debug("Release media discoverer...");
+            logger.debug("Release media discoverer...");
             libvlc.libvlc_media_discoverer_release(mediaDiscovererInstance);
-            Logger.debug("Media discoverer released.");
+            logger.debug("Media discoverer released.");
         }
     }
 }

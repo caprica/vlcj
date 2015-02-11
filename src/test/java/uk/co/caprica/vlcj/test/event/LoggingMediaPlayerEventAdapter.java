@@ -19,8 +19,10 @@
 
 package uk.co.caprica.vlcj.test.event;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
@@ -31,174 +33,179 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  */
 public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener {
 
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(LoggingMediaPlayerEventAdapter.class);
+
     // === Events relating to the media player ==================================
 
     @Override
     public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
-        Logger.debug("mediaChanged(mediaPlayer={},media={},mrl={})", mediaPlayer, media, mrl);
+        logger.debug("mediaChanged(mediaPlayer={},media={},mrl={})", mediaPlayer, media, mrl);
     }
 
     @Override
     public void opening(MediaPlayer mediaPlayer) {
-        Logger.debug("opening(mediaPlayer={})", mediaPlayer);
+        logger.debug("opening(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void buffering(MediaPlayer mediaPlayer, float newCache) {
-        Logger.debug("buffering(mediaPlayer={},newCache={})", mediaPlayer, newCache);
+        logger.debug("buffering(mediaPlayer={},newCache={})", mediaPlayer, newCache);
     }
 
     @Override
     public void playing(MediaPlayer mediaPlayer) {
-        Logger.debug("playing(mediaPlayer={})", mediaPlayer);
+        logger.debug("playing(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void paused(MediaPlayer mediaPlayer) {
-        Logger.debug("paused(mediaPlayer={})", mediaPlayer);
+        logger.debug("paused(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void stopped(MediaPlayer mediaPlayer) {
-        Logger.debug("stopped(mediaPlayer={})", mediaPlayer);
+        logger.debug("stopped(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void forward(MediaPlayer mediaPlayer) {
-        Logger.debug("forward(mediaPlayer={}", mediaPlayer);
+        logger.debug("forward(mediaPlayer={}", mediaPlayer);
     }
 
     @Override
     public void backward(MediaPlayer mediaPlayer) {
-        Logger.debug("backward(mediaPlayer={}", mediaPlayer);
+        logger.debug("backward(mediaPlayer={}", mediaPlayer);
     }
 
     @Override
     public void finished(MediaPlayer mediaPlayer) {
-        Logger.debug("finished(mediaPlayer={}", mediaPlayer);
+        logger.debug("finished(mediaPlayer={}", mediaPlayer);
     }
 
     @Override
     public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-        Logger.debug("timeChanged(mediaPlayer={},newTime={})", mediaPlayer, newTime);
+        logger.debug("timeChanged(mediaPlayer={},newTime={})", mediaPlayer, newTime);
     }
 
     @Override
     public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
-        Logger.debug("positionChanged(mediaPlayer={},newPosition={})", mediaPlayer, newPosition);
+        logger.debug("positionChanged(mediaPlayer={},newPosition={})", mediaPlayer, newPosition);
     }
 
     @Override
     public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-        Logger.debug("seekableChanged(mediaPlayer={},newSeekable={})", mediaPlayer, newSeekable);
+        logger.debug("seekableChanged(mediaPlayer={},newSeekable={})", mediaPlayer, newSeekable);
     }
 
     @Override
     public void pausableChanged(MediaPlayer mediaPlayer, int newPausable) {
-        Logger.debug("pausableChanged(mediaPlayer={},newPausable={})", mediaPlayer, newPausable);
+        logger.debug("pausableChanged(mediaPlayer={},newPausable={})", mediaPlayer, newPausable);
     }
 
     @Override
     public void titleChanged(MediaPlayer mediaPlayer, int newTitle) {
-        Logger.debug("titleChanged(mediaPlayer={},newTitle={})", mediaPlayer, newTitle);
+        logger.debug("titleChanged(mediaPlayer={},newTitle={})", mediaPlayer, newTitle);
     }
 
     @Override
     public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
-        Logger.debug("snapshotTaken(mediaPlayer={},filename={})", mediaPlayer, filename);
+        logger.debug("snapshotTaken(mediaPlayer={},filename={})", mediaPlayer, filename);
     }
 
     @Override
     public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
-        Logger.debug("timeChanged(mediaPlayer={},newLength={})", mediaPlayer, newLength);
+        logger.debug("timeChanged(mediaPlayer={},newLength={})", mediaPlayer, newLength);
     }
 
     @Override
     public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-        Logger.debug("videoOutput(mediaPlayer={},newCount={})", mediaPlayer, newCount);
+        logger.debug("videoOutput(mediaPlayer={},newCount={})", mediaPlayer, newCount);
     }
 
     @Override
     public void scrambledChanged(MediaPlayer mediaPlayer, int newScrambled) {
-        Logger.debug("scrambledChanged(mediaPlayer={},newScrambled={})", mediaPlayer, newScrambled);
+        logger.debug("scrambledChanged(mediaPlayer={},newScrambled={})", mediaPlayer, newScrambled);
     }
 
     @Override
     public void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id) {
-        Logger.debug("elementaryStreamAdded(mediaPlayer={},type={},id={})", mediaPlayer, type, id);
+        logger.debug("elementaryStreamAdded(mediaPlayer={},type={},id={})", mediaPlayer, type, id);
     }
 
     @Override
     public void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id) {
-        Logger.debug("elementaryStreamDeleted(mediaPlayer={},type={},id={})", mediaPlayer, type, id);
+        logger.debug("elementaryStreamDeleted(mediaPlayer={},type={},id={})", mediaPlayer, type, id);
     }
 
     @Override
     public void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id) {
-        Logger.debug("elementaryStreamSelected(mediaPlayer={},type={},id={})", mediaPlayer, type, id);
+        logger.debug("elementaryStreamSelected(mediaPlayer={},type={},id={})", mediaPlayer, type, id);
     }
 
     @Override
     public void error(MediaPlayer mediaPlayer) {
-        Logger.debug("error(mediaPlayer={})", mediaPlayer);
+        logger.debug("error(mediaPlayer={})", mediaPlayer);
     }
 
     // === Events relating to the current media =================================
 
     @Override
     public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-        Logger.debug("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
+        logger.debug("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
     }
 
     @Override
     public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-        Logger.debug("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
+        logger.debug("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
     }
 
     @Override
     public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-        Logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
+        logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
     }
 
     @Override
     public void mediaFreed(MediaPlayer mediaPlayer) {
-        Logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
+        logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
-        Logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
+        logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
     }
 
     @Override
     public void mediaSubItemTreeAdded(MediaPlayer mediaPlayer, libvlc_media_t item) {
-        Logger.debug("mediaSubItemTreeAdded(mediaPlayer={},newState={})", mediaPlayer, item);
+        logger.debug("mediaSubItemTreeAdded(mediaPlayer={},newState={})", mediaPlayer, item);
     }
 
     @Override
     public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
-        Logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
+        logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
     }
 
     // === Synthetic/semantic events ============================================
 
     @Override
     public void newMedia(MediaPlayer mediaPlayer) {
-        Logger.debug("newMedia(mediaPlayer={})", mediaPlayer);
+        logger.debug("newMedia(mediaPlayer={})", mediaPlayer);
     }
 
     @Override
     public void subItemPlayed(MediaPlayer mediaPlayer, int subItemIndex) {
-        Logger.debug("subItemPlayed(mediaPlayer={},subItemIndex={})", mediaPlayer, subItemIndex);
+        logger.debug("subItemPlayed(mediaPlayer={},subItemIndex={})", mediaPlayer, subItemIndex);
     }
 
     @Override
     public void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex) {
-        Logger.debug("subItemFinished(mediaPlayer={},subItemIndex={})", mediaPlayer, subItemIndex);
+        logger.debug("subItemFinished(mediaPlayer={},subItemIndex={})", mediaPlayer, subItemIndex);
     }
 
     @Override
     public void endOfSubItems(MediaPlayer mediaPlayer) {
-        Logger.debug("endOfSubItems(mediaPlayer={})", mediaPlayer);
+        logger.debug("endOfSubItems(mediaPlayer={})", mediaPlayer);
     }
 }

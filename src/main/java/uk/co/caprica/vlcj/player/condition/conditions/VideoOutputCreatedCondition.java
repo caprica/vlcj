@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.player.condition.conditions;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.condition.DefaultCondition;
 
@@ -28,6 +30,11 @@ import uk.co.caprica.vlcj.player.condition.DefaultCondition;
  * a video output has been created.
  */
 public class VideoOutputCreatedCondition extends DefaultCondition<Integer> {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(VideoOutputCreatedCondition.class);
 
     /**
      * Create a condition.
@@ -40,7 +47,7 @@ public class VideoOutputCreatedCondition extends DefaultCondition<Integer> {
 
     @Override
     public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-        Logger.debug("videoOutput(mediaPlayer={},newCount={})", mediaPlayer, newCount);
+        logger.debug("videoOutput(mediaPlayer={},newCount={})", mediaPlayer, newCount);
         ready(newCount);
     }
 }

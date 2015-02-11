@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.player.condition.conditions;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.condition.Condition;
 
@@ -28,6 +30,11 @@ import uk.co.caprica.vlcj.player.condition.Condition;
  * it has finished taking a snapshot.
  */
 public class SnapshotTakenCondition extends Condition<String> {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(SnapshotTakenCondition.class);
 
     /**
      * Create a condition.
@@ -40,7 +47,7 @@ public class SnapshotTakenCondition extends Condition<String> {
 
     @Override
     public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
-        Logger.debug("snapshotTaken(mediaPlayer={},filename={})", mediaPlayer, filename);
+        logger.debug("snapshotTaken(mediaPlayer={},filename={})", mediaPlayer, filename);
         ready(filename);
     }
 }

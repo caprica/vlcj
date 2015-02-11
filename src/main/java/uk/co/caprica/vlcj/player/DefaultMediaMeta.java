@@ -25,10 +25,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_meta_t;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.version.Version;
 
 /**
@@ -41,6 +43,11 @@ import uk.co.caprica.vlcj.version.Version;
  * HTTP request to be made to download artwork.
  */
 class DefaultMediaMeta implements MediaMeta {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(DefaultMediaMeta.class);
 
     /**
      * Minimum version for new meta data fields.
@@ -92,7 +99,7 @@ class DefaultMediaMeta implements MediaMeta {
 
     @Override
     public final void parse() {
-        Logger.debug("parse()");
+        logger.debug("parse()");
         libvlc.libvlc_media_parse(media);
     }
 
@@ -364,13 +371,13 @@ class DefaultMediaMeta implements MediaMeta {
 
     @Override
     public final BufferedImage getArtwork() {
-        Logger.debug("getArtwork()");
+        logger.debug("getArtwork()");
         if(artwork == null) {
             String artworkUrl = getArtworkUrl();
             if(artworkUrl != null && artworkUrl.length() > 0) {
                 try {
                     URL url = new URL(artworkUrl);
-                    Logger.debug("url={}", url);
+                    logger.debug("url={}", url);
                     artwork = ImageIO.read(url);
                 }
                 catch(Exception e) {
@@ -388,13 +395,13 @@ class DefaultMediaMeta implements MediaMeta {
 
     @Override
     public final void save() {
-        Logger.debug("save()");
+        logger.debug("save()");
         libvlc.libvlc_media_save_meta(media);
     }
 
     @Override
     public final void release() {
-        Logger.debug("release()");
+        logger.debug("release()");
         if(released.compareAndSet(false, true)) {
             libvlc.libvlc_media_release(media);
         }
@@ -433,8 +440,8 @@ class DefaultMediaMeta implements MediaMeta {
 
     @Override
     protected void finalize() throws Throwable {
-        Logger.debug("finalize()");
-        Logger.debug("Meta data has been garbage collected");
+        logger.debug("finalize()");
+        logger.debug("Meta data has been garbage collected");
         super.finalize();
         // FIXME should this invoke release()?
     }
@@ -446,7 +453,7 @@ class DefaultMediaMeta implements MediaMeta {
      * @return meta data value
      */
     private String getMeta(libvlc_meta_t metaType) {
-        Logger.trace("getMeta(metaType={},media={})", metaType, media);
+        logger.trace("getMeta(metaType={},media={})", metaType, media);
         return NativeString.getNativeString(libvlc, libvlc.libvlc_media_get_meta(media, metaType.intValue()));
     }
 
@@ -460,7 +467,7 @@ class DefaultMediaMeta implements MediaMeta {
      * @param value meta data value
      */
     private void setMeta(libvlc_meta_t metaType, String value) {
-        Logger.trace("setMeta(metaType={},media={},value={})", metaType, media, value);
+        logger.trace("setMeta(metaType={},media={},value={})", metaType, media, value);
         libvlc.libvlc_media_set_meta(media, metaType.intValue(), value);
     }
 

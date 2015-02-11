@@ -21,7 +21,9 @@ package uk.co.caprica.vlcj.player.embedded.x;
 
 import java.awt.Window;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.runtime.x.LibXUtil;
@@ -33,6 +35,11 @@ import uk.co.caprica.vlcj.runtime.x.LibXUtil;
  * see {@link EmbeddedMediaPlayer#setOverlay(Window)}.
  */
 public class XFullScreenStrategy implements FullScreenStrategy {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(XFullScreenStrategy.class);
 
     /**
      * The component that will be made full-screen.
@@ -50,7 +57,7 @@ public class XFullScreenStrategy implements FullScreenStrategy {
      * @param window component that will be made full-screen
      */
     public XFullScreenStrategy(Window window) {
-        Logger.debug("DefaultFullScreenStrategy(window={})", window);
+        logger.debug("DefaultFullScreenStrategy(window={})", window);
         if(window != null) {
             this.window = window;
         }
@@ -61,7 +68,7 @@ public class XFullScreenStrategy implements FullScreenStrategy {
 
     @Override
     public final void enterFullScreenMode() {
-        Logger.debug("enterFullScreenMode()");
+        logger.debug("enterFullScreenMode()");
         onBeforeEnterFullScreenMode();
         LibXUtil.setFullScreenWindow(window, true);
         isFullScreenMode = true;
@@ -69,7 +76,7 @@ public class XFullScreenStrategy implements FullScreenStrategy {
 
     @Override
     public final void exitFullScreenMode() {
-        Logger.debug("exitFullScreenMode()");
+        logger.debug("exitFullScreenMode()");
         LibXUtil.setFullScreenWindow(window, false);
         isFullScreenMode = false;
         onAfterExitFullScreenMode();
@@ -77,7 +84,7 @@ public class XFullScreenStrategy implements FullScreenStrategy {
 
     @Override
     public final boolean isFullScreenMode() {
-        Logger.debug("isFullScreenMode()");
+        logger.debug("isFullScreenMode()");
         return isFullScreenMode;
     }
 

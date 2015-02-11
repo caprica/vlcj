@@ -22,7 +22,10 @@ package uk.co.caprica.vlcj.test;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 
@@ -45,9 +48,9 @@ import com.sun.jna.NativeLibrary;
 public abstract class VlcjTest {
 
     /**
-     * Log level, used only if the -Dvlcj.log= system property has not already been set.
+     * Log.
      */
-    private static final String VLCJ_LOG_LEVEL = "INFO";
+    private static final Logger logger = LoggerFactory.getLogger(VlcjTest.class);
 
     /**
      * Change this to point to your own vlc installation, or comment out the code if you want to use
@@ -66,9 +69,8 @@ public abstract class VlcjTest {
      * Static initialisation.
      */
     static {
-        if(null == System.getProperty("vlcj.log")) {
-            System.setProperty("vlcj.log", VLCJ_LOG_LEVEL);
-        }
+        // Initialise Log4J (this is good enough for testing, vlcj depends on log4j only for testing here)
+        BasicConfigurator.configure();
 
         // Safely try to initialise LibX11 to reduce the opportunity for native
         // crashes - this will silently throw an Error on Windows (and maybe MacOS)
@@ -76,7 +78,7 @@ public abstract class VlcjTest {
         LibXUtil.initialise();
 
         if(null != NATIVE_LIBRARY_SEARCH_PATH) {
-            Logger.info("Explicitly adding JNA native library search path: '{}'", NATIVE_LIBRARY_SEARCH_PATH);
+            logger.info("Explicitly adding JNA native library search path: '{}'", NATIVE_LIBRARY_SEARCH_PATH);
             NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
         }
 

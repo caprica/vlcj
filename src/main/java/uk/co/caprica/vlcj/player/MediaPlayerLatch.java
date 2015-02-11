@@ -22,7 +22,8 @@ package uk.co.caprica.vlcj.player;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class implements a mechanism to play a media item and wait for it to start (or wait for it
@@ -56,6 +57,11 @@ import uk.co.caprica.vlcj.logger.Logger;
 public class MediaPlayerLatch {
 
     /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(MediaPlayerLatch.class);
+
+    /**
      * Media player instance.
      */
     private final MediaPlayer mediaPlayer;
@@ -77,7 +83,7 @@ public class MediaPlayerLatch {
      *          <em>might</em> still start)
      */
     public boolean play() {
-        Logger.debug("play()");
+        logger.debug("play()");
         // If the media player is already playing, then the latch will wait for an event that
         // will never arrive and so will block incorrectly
         if(!mediaPlayer.isPlaying()) {
@@ -86,15 +92,15 @@ public class MediaPlayerLatch {
             mediaPlayer.addMediaPlayerEventListener(listener);
             mediaPlayer.play();
             try {
-                Logger.debug("Waiting for media playing or error...");
+                logger.debug("Waiting for media playing or error...");
                 latch.await();
-                Logger.debug("Finished waiting.");
+                logger.debug("Finished waiting.");
                 boolean started = listener.playing.get();
-                Logger.debug("started={}", started);
+                logger.debug("started={}", started);
                 return started;
             }
             catch(InterruptedException e) {
-                Logger.debug("Interrupted while waiting for media player", e);
+                logger.debug("Interrupted while waiting for media player", e);
                 return false;
             }
             finally {

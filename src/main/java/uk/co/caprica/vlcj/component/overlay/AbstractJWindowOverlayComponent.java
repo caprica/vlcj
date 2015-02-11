@@ -34,7 +34,8 @@ import java.lang.reflect.Method;
 
 import javax.swing.JWindow;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.jna.platform.WindowUtils;
 
@@ -55,6 +56,11 @@ import com.sun.jna.platform.WindowUtils;
  * Best results will be obtained by <em>disabling</em> any compositing desktop window manager.
  */
 public abstract class AbstractJWindowOverlayComponent extends JWindow {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(AbstractJWindowOverlayComponent.class);
 
     /**
      * Serial version.
@@ -122,7 +128,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
                 setWindowOpaqueMethod.invoke(null, this, false);
             }
             catch(Exception e) {
-                Logger.debug("No apparent support for transparent windows", e.getMessage());
+                logger.debug("No apparent support for transparent windows", e.getMessage());
                 // Fall-back, this is the best that can be done
                 setBackground(new Color(0, 0, 0, 0));
             }

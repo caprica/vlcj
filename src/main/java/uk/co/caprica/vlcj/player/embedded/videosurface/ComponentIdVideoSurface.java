@@ -19,8 +19,10 @@
 
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 /**
@@ -35,6 +37,11 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
  * It is also not possible to get a native component ID if the component is not displayable.
  */
 public class ComponentIdVideoSurface extends VideoSurface {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(ComponentIdVideoSurface.class);
 
     /**
      * Serial version.
@@ -59,8 +66,8 @@ public class ComponentIdVideoSurface extends VideoSurface {
 
     @Override
     public void attach(LibVlc libvlc, MediaPlayer mediaPlayer) {
-        Logger.debug("attach()");
+        logger.debug("attach()");
         videoSurfaceAdapter.attach(libvlc, mediaPlayer, componentId);
-        Logger.debug("video surface attached");
+        logger.debug("video surface attached");
     }
 }

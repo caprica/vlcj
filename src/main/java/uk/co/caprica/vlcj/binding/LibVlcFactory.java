@@ -22,8 +22,10 @@ package uk.co.caprica.vlcj.binding;
 import java.lang.reflect.Proxy;
 import java.text.MessageFormat;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.version.Version;
 
@@ -43,6 +45,11 @@ import uk.co.caprica.vlcj.version.Version;
  * </pre>
  */
 public class LibVlcFactory {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(LibVlcFactory.class);
 
     /**
      * Help text if the native library failed to load.
@@ -161,32 +168,32 @@ public class LibVlcFactory {
                 instance = (LibVlc)Proxy.newProxyInstance(LibVlc.class.getClassLoader(), new Class<?>[] {LibVlc.class}, new LoggingProxy(instance));
             }
             String nativeVersion = instance.libvlc_get_version();
-            Logger.info("vlc: {}, changeset {}", nativeVersion, LibVlc.INSTANCE.libvlc_get_changeset());
-            Logger.info("libvlc: {}", getNativeLibraryPath(instance));
+            logger.info("vlc: {}, changeset {}", nativeVersion, LibVlc.INSTANCE.libvlc_get_changeset());
+            logger.info("libvlc: {}", getNativeLibraryPath(instance));
             if(requiredVersion != null) {
                 Version actualVersion;
                 try {
                     actualVersion = new Version(nativeVersion);
                 }
                 catch(Exception e) {
-                    Logger.error("Unable to parse native library version {} because of {}", nativeVersion, e);
+                    logger.error("Unable to parse native library version {} because of {}", nativeVersion, e);
                     actualVersion = null;
                 }
                 if(actualVersion != null) {
                     if(!actualVersion.atLeast(requiredVersion)) {
-                        Logger.fatal("This version of vlcj requires version {} or later of libvlc, found too old version {}", requiredVersion, actualVersion);
+                        logger.error("This version of vlcj requires version {} or later of libvlc, found too old version {}", requiredVersion, actualVersion);
                         throw new LibVlcOutOfDateException(requiredVersion, actualVersion);
                     }
                 }
                 else {
-                    Logger.fatal("Unable to check the native library version '{}'", nativeVersion);
+                    logger.error("Unable to check the native library version '{}'", nativeVersion);
                     throw new RuntimeException("Unable to check the native library version " + nativeVersion);
                 }
             }
             return instance;
         }
         catch(UnsatisfiedLinkError e) {
-            Logger.error("Failed to load native library");
+            logger.error("Failed to load native library");
             String msg = MessageFormat.format(NATIVE_LIBRARY_HELP, new Object[] {e.getMessage(), RuntimeUtil.getLibVlcName(), RuntimeUtil.getLibVlcCoreName(), RuntimeUtil.getLibVlcLibraryName()});
             throw new RuntimeException(msg);
         }

@@ -19,12 +19,14 @@
 
 package uk.co.caprica.vlcj.discovery;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.Info;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.discovery.linux.DefaultLinuxNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.discovery.mac.DefaultMacNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.discovery.windows.DefaultWindowsNativeDiscoveryStrategy;
-import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import com.sun.jna.NativeLibrary;
@@ -62,6 +64,11 @@ public class NativeDiscovery {
     private static final String JNA_SYSTEM_PROPERTY_NAME = "jna.library.path";
 
     /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(NativeDiscovery.class);
+
+    /**
      * Strategy implementations.
      */
     private final NativeDiscoveryStrategy[] discoveryStrategies;
@@ -95,33 +102,33 @@ public class NativeDiscovery {
      * @return <code>true</code> if the native libraries were found; otherwise <code>false</code>
      */
     public final boolean discover() {
-        Logger.debug("discover()");
+        logger.debug("discover()");
         // Check if the JNA system property is set - if so, this trumps discovery
         String jnaLibraryPath = System.getProperty(JNA_SYSTEM_PROPERTY_NAME);
-        Logger.debug("jnaLibraryPath={}", jnaLibraryPath);
+        logger.debug("jnaLibraryPath={}", jnaLibraryPath);
         // JNA system property not set...
         if(jnaLibraryPath == null) {
             // Try each strategy in turn...
             for(NativeDiscoveryStrategy discoveryStrategy : discoveryStrategies) {
-                Logger.debug("discoveryStrategy={}", discoveryStrategy);
+                logger.debug("discoveryStrategy={}", discoveryStrategy);
                 // Is this strategy supported for this run-time?
                 boolean supported = discoveryStrategy.supported();
-                Logger.debug("supported={}", supported);
+                logger.debug("supported={}", supported);
                 if(supported) {
                     String path = discoveryStrategy.discover();
-                    Logger.debug("path={}", path);
+                    logger.debug("path={}", path);
                     if(path != null) {
-                        Logger.info("Discovery found libvlc at '{}'", path);
+                        logger.info("Discovery found libvlc at '{}'", path);
                         // Register the discovered library path with JNA
                         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), path);
                         return true;
                     }
                 }
             }
-            Logger.warn("Discovery did not find libvlc");
+            logger.warn("Discovery did not find libvlc");
         }
         else {
-            Logger.info("Skipped discovery as system property '{}' already set to '{}'", JNA_SYSTEM_PROPERTY_NAME, jnaLibraryPath);
+            logger.info("Skipped discovery as system property '{}' already set to '{}'", JNA_SYSTEM_PROPERTY_NAME, jnaLibraryPath);
         }
         return false;
     }

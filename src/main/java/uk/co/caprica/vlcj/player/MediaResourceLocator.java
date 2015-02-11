@@ -24,7 +24,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.regex.Pattern;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility class to help detect the type of media resource locator.
@@ -35,6 +36,11 @@ import uk.co.caprica.vlcj.logger.Logger;
  * This is essentially an internal class.
  */
 public final class MediaResourceLocator {
+
+    /**
+     * Log.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(MediaResourceLocator.class);
 
     /**
      * Simple pattern to detect locations.
@@ -80,36 +86,36 @@ public final class MediaResourceLocator {
      * @return the original MRL if no encoding is required, or a percent-encoded file URL
      */
     public static String encodeMrl(String mrl) {
-        Logger.debug("encodeMrl(mrl={})", mrl);
+        logger.debug("encodeMrl(mrl={})", mrl);
         // Assume no change needed
         String result = mrl;
         // If the supplied MRL contains any Unicode characters...
         if (containsUnicode(mrl)) {
-            Logger.debug("MRL contains Unicode characters");
+            logger.debug("MRL contains Unicode characters");
             try {
                 URI uri = new URI(mrl);
-                Logger.debug("uri={}", uri);
+                logger.debug("uri={}", uri);
                 String scheme = uri.getScheme();
-                Logger.debug("scheme={}", uri.getScheme());
+                logger.debug("scheme={}", uri.getScheme());
                 // If there is no URI scheme, then this is a local file...
                 if (scheme == null) {
-                    Logger.debug("MRL has no scheme, assuming a local file name that should be encoded");
+                    logger.debug("MRL has no scheme, assuming a local file name that should be encoded");
                     // Encode the local file as ASCII, and fix the scheme prefix
                     result = new File(mrl).toURI().toASCIIString().replaceFirst("file:/", "file:///");
                 }
                 else {
-                    Logger.debug("Ignoring MRL with scheme '{}'", scheme);
+                    logger.debug("Ignoring MRL with scheme '{}'", scheme);
                 }
             }
             catch(URISyntaxException e) {
                 // Can't do anything, return the original string
-                Logger.debug("Can not obtain a valid URI from the MRL");
+                logger.debug("Can not obtain a valid URI from the MRL");
             }
         }
         else {
-            Logger.debug("MRL does not contain any Unicode characters");
+            logger.debug("MRL does not contain any Unicode characters");
         }
-        Logger.debug("result={}", result);
+        logger.debug("result={}", result);
         return result;
     }
 

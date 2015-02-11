@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.player.condition.conditions;
 
-import uk.co.caprica.vlcj.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.condition.DefaultCondition;
 
@@ -28,6 +30,11 @@ import uk.co.caprica.vlcj.player.condition.DefaultCondition;
  * it has reached/passed a particular point in time.
  */
 public class TimeReachedCondition extends DefaultCondition<Long> {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(TimeReachedCondition.class);
 
     /**
      * Target time (number of milliseconds since start of media).
@@ -48,7 +55,7 @@ public class TimeReachedCondition extends DefaultCondition<Long> {
     @Override
     public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
         if(newTime >= targetTime) {
-            Logger.debug("Target time {} reached", targetTime);
+            logger.debug("Target time {} reached", targetTime);
             ready(targetTime);
         }
     }
