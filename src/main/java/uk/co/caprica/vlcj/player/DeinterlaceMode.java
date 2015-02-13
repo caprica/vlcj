@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.player;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Enumeration of deinterlace modes.
  * <p>
@@ -76,6 +79,18 @@ public enum DeinterlaceMode {
      */
     IVTC("ivtc");
 
+    private static final Map<String, DeinterlaceMode> STRING_MAP = new HashMap<String, DeinterlaceMode>();
+
+    static {
+        for(DeinterlaceMode value : DeinterlaceMode.values()) {
+            STRING_MAP.put(value.mode, value);
+        }
+    }
+
+    public static DeinterlaceMode deinterlaceMode(String stringValue) {
+        return STRING_MAP.get(stringValue);
+    }
+
     /**
      * Native mode value.
      */
@@ -95,6 +110,7 @@ public enum DeinterlaceMode {
      *
      * @return mode value
      */
+    // FIXME ideally this would  have been value(), not mode()
     public final String mode() {
         return mode;
     }
