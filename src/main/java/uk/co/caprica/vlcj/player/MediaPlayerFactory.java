@@ -575,7 +575,7 @@ public class MediaPlayerFactory {
     public final Equalizer newEqualizer() {
         logger.debug("newEqualizer()");
         checkEqualizer();
-        return new Equalizer(libvlc);
+        return new Equalizer(libvlc.libvlc_audio_equalizer_get_band_count());
     }
 
     /**
@@ -592,7 +592,7 @@ public class MediaPlayerFactory {
         if(index != -1) {
             libvlc_equalizer_t presetEqualizer = libvlc.libvlc_audio_equalizer_new_from_preset(index);
             if(presetEqualizer != null) {
-                Equalizer equalizer = new Equalizer(libvlc);
+                Equalizer equalizer = new Equalizer(libvlc.libvlc_audio_equalizer_get_band_count());
                 equalizer.setPreamp(libvlc.libvlc_audio_equalizer_get_preamp(presetEqualizer));
                 for(int i = 0; i < libvlc.libvlc_audio_equalizer_get_band_count(); i++) {
                     equalizer.setAmp(i, libvlc.libvlc_audio_equalizer_get_amp_at_index(presetEqualizer, i));

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcConst;
 
 /**
@@ -63,10 +62,10 @@ public final class Equalizer {
     /**
      * Create an audio equalizer.
      *
-     * @param libvlc native library instance
+     * @param bandCount number of unique frequency bands (not including pre-amp)
      */
-    Equalizer(LibVlc libvlc) {
-        this.bandCount = libvlc.libvlc_audio_equalizer_get_band_count();
+    Equalizer(int bandCount) {
+        this.bandCount = bandCount;
         this.bandAmps = new float[bandCount];
     }
 
