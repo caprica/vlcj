@@ -64,7 +64,7 @@ public final class Equalizer {
      *
      * @param bandCount number of unique frequency bands (not including pre-amp)
      */
-    public Equalizer(int bandCount) {
+    Equalizer(int bandCount) {
         this.bandCount = bandCount;
         this.bandAmps = new float[bandCount];
     }
