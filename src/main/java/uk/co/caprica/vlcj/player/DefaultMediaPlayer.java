@@ -202,13 +202,23 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public void addMediaPlayerEventListener(MediaPlayerEventListener listener) {
         logger.debug("addMediaPlayerEventListener(listener={})", listener);
-        eventListenerList.add(listener);
+        if (listener != null) {
+            eventListenerList.add(listener);
+        }
+        else {
+            throw new IllegalArgumentException("listener can not be null");
+        }
     }
 
     @Override
     public void removeMediaPlayerEventListener(MediaPlayerEventListener listener) {
         logger.debug("removeMediaPlayerEventListener(listener={})", listener);
-        eventListenerList.remove(listener);
+        if (listener != null) {
+            eventListenerList.remove(listener);
+        }
+        else {
+            throw new IllegalArgumentException("listener can not be null");
+        }
     }
 
     @Override
