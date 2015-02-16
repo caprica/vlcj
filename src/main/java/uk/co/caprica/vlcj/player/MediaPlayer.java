@@ -1413,6 +1413,13 @@ public interface MediaPlayer {
     void setLogoImage(RenderedImage logoImage);
 
     /**
+     * Set a logo.
+     *
+     * @param logo logo
+     */
+    void setLogo(Logo logo);
+
+    /**
      * Enable/disable the marquee.
      * <p>
      * The marquee will not be enabled if there is currently no video being played.
@@ -1527,6 +1534,13 @@ public interface MediaPlayer {
      * @param position position
      */
     void setMarqueePosition(libvlc_marquee_position_e position);
+
+    /**
+     * Set a marquee.
+     *
+     * @param marquee
+     */
+    void setMarquee(Marquee marquee);
 
     /**
      * Set the de-interlace filter to use.

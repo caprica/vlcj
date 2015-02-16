@@ -1482,6 +1482,12 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         }
     }
 
+    @Override
+    public void setLogo(Logo logo) {
+        logger.debug("setLogo(logo={})", logo);
+        logo.apply(this);
+    }
+
     // === Marquee Controls =====================================================
 
     @Override
@@ -1545,6 +1551,12 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public void setMarqueePosition(libvlc_marquee_position_e position) {
         logger.debug("setMarqueePosition(position={})", position);
         libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Position.intValue(), position.intValue());
+    }
+
+    @Override
+    public void setMarquee(Marquee marquee) {
+        logger.debug("setMarquee(marquee={})", marquee);
+        marquee.apply(this);
     }
 
     // === Filter Controls ======================================================
