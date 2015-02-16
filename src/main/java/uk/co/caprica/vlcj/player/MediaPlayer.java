@@ -1538,7 +1538,7 @@ public interface MediaPlayer {
     /**
      * Set a marquee.
      *
-     * @param marquee
+     * @param marquee marquee
      */
     void setMarquee(Marquee marquee);
 
