@@ -293,6 +293,105 @@ public final class Marquee {
     }
 
     /**
+     * Get the text.
+     *
+     * @return text
+     */
+    public String getText() {
+        return text;
+    }
+
+    /**
+     * Get the colour if set as Color.
+     *
+     * @return colour
+     */
+    public Color getColour() {
+        return colour;
+    }
+
+    /**
+     * Get the colour if set as RGB.
+     *
+     * @return RGB
+     */
+    public Integer getRgb() {
+        return rgb;
+    }
+
+    /**
+     * Get the opacity if set as integer.
+     *
+     * @return opacity
+     */
+    public Integer getIntegerOpacity() {
+        return intOpacity;
+    }
+
+    /**
+     * Get the opacity if set as float.
+     *
+     * @return opacity
+     */
+    public Float getFloatOpacity() {
+        return floatOpacity;
+    }
+
+    /**
+     * Get the text size.
+     *
+     * @return text size
+     */
+    public Integer getSize() {
+        return size;
+    }
+
+    /**
+     * Get the timeout.
+     *
+     * @return timeout
+     */
+    public Integer getTimeout() {
+        return timeout;
+    }
+
+    /**
+     * Get the location x co-ordinate.
+     *
+     * @return location x
+     */
+    public Integer getX() {
+        return x;
+    }
+
+    /**
+     * Get the location y co-ordinate.
+     *
+     * @return location y
+     */
+    public Integer getY() {
+        return y;
+    }
+
+    /**
+     * Get the position.
+     *
+     * @return position
+     */
+    public libvlc_marquee_position_e getPosition() {
+        return position;
+    }
+
+    /**
+     * Get the enabled flag.
+     *
+     * @return enabled/disabled
+     */
+    public boolean getEnable() {
+        return enable;
+    }
+
+    /**
      * Apply the marquee to the media player.
      *
      * @param mediaPlayer media player
@@ -328,5 +427,23 @@ public final class Marquee {
         if(enable) {
             mediaPlayer.enableMarquee(true);
         }
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder()
+            .append(getClass().getSimpleName()).append('[')
+            .append("text=").append(text).append(',')
+            .append("colour=").append(colour).append(',')
+            .append("rgb=").append(rgb).append(',')
+            .append("intOpacity=").append(intOpacity).append(',')
+            .append("floatOpacity=").append(floatOpacity).append(',')
+            .append("size=").append(size).append(',')
+            .append("timeout=").append(timeout).append(',')
+            .append("x=").append(x).append(',')
+            .append("y=").append(y).append(',')
+            .append("position=").append(position).append(',')
+            .append("enable=").append(enable).append(']')
+            .toString();
     }
 }

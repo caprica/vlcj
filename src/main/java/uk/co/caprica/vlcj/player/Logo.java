@@ -216,6 +216,78 @@ public final class Logo {
     }
 
     /**
+     * Get the opacity if set as integer.
+     *
+     * @return opacity
+     */
+    public Integer getIntegerOpacity() {
+        return intOpacity;
+    }
+
+    /**
+     * Get the opacity if set as float.
+     *
+     * @return opacity
+     */
+    public Float getFloatOpacity() {
+        return floatOpacity;
+    }
+
+    /**
+     * Get the location x co-ordinate.
+     *
+     * @return location x
+     */
+    public Integer getX() {
+        return x;
+    }
+
+    /**
+     * Get the location y co-ordinate.
+     *
+     * @return location y
+     */
+    public Integer getY() {
+        return y;
+    }
+
+    /**
+     * Get the position.
+     *
+     * @return position
+     */
+    public libvlc_logo_position_e getPosition() {
+        return position;
+    }
+
+    /**
+     * Get the file name.
+     *
+     * @return file name
+     */
+    public String getFile() {
+        return file;
+    }
+
+    /**
+     * Get the image.
+     *
+     * @return image
+     */
+    public RenderedImage getImage() {
+        return image;
+    }
+
+    /**
+     * Get the enabled flag.
+     *
+     * @return enabled/disabled
+     */
+    public boolean getEnable() {
+        return enable;
+    }
+
+    /**
      * Apply the logo to the media player.
      * <p>
      * All previously applied properties will be set on the media player.
@@ -244,5 +316,20 @@ public final class Logo {
         if(enable) {
             mediaPlayer.enableLogo(true);
         }
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder()
+            .append(getClass().getSimpleName()).append('[')
+            .append("intOpacity=").append(intOpacity).append(',')
+            .append("floatOpacity=").append(floatOpacity).append(',')
+            .append("x=").append(x).append(',')
+            .append("y=").append(y).append(',')
+            .append("position=").append(position).append(',')
+            .append("file=").append(file).append(',')
+            .append("image=").append(image).append(',')
+            .append("enable=").append(enable).append(']')
+            .toString();
     }
 }
