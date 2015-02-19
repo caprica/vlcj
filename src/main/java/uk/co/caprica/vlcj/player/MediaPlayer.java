@@ -1407,6 +1407,13 @@ public interface MediaPlayer {
      * The image will first be written to a temporary file, before invoking
      * {@link #setLogoFile(String)}. This is not optimal, but creating a temporary file for the logo
      * in this way is unavoidable.
+     * <p>
+     * The temporary file will persist until the JVM exits. The file can not be deleted immediately
+     * due to the asynchronous nature of the native API call that sets the logo from the file.
+     * <p>
+     * There are circumstances under which this temporary file may <em>fail</em> to be deleted, as
+     * per {@link File#deleteOnExit()} - i.e. "Deletion will be attempted only for normal termination
+     * of the virtual machine".
      *
      * @param logoImage logo image
      */

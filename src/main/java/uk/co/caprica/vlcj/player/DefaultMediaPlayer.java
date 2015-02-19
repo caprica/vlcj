@@ -1468,17 +1468,17 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             // Create a temporary file for the logo...
             file = File.createTempFile("vlcj-logo-", ".png");
             ImageIO.write(logoImage, "png", file);
-            // ...then set the logo as normal
-            setLogoFile(file.getAbsolutePath());
+            if (file.exists()) {
+                // ...then set the logo as normal
+                setLogoFile(file.getAbsolutePath());
+                // Flag the temporary file to be deleted when the JVM exits - the file can not be
+                // deleted immediately because setLogoFile ultimately invokes an asynchronous
+                // native method to set the logo from the file
+                file.deleteOnExit();
+            }
         }
         catch(IOException e) {
             throw new RuntimeException("Failed to set logo image", e);
-        }
-        finally {
-            if(file != null) {
-                boolean deleted = file.delete();
-                logger.debug("deleted={}", deleted);
-            }
         }
     }
 
