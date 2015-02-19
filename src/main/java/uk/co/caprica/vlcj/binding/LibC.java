@@ -120,4 +120,11 @@ public interface LibC extends Library {
      * @return 0 if successful; -1 if not, setting <code>errno</code> to an error code
      */
     int unsetenv(String name);
+
+    /**
+     * Get the current process id.
+     *
+     * @return process id
+     */
+    int getpid();
 }
