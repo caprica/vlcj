@@ -863,8 +863,10 @@ public interface MediaPlayer {
 
     /**
      * Toggle volume mute.
+     *
+     * @return mute <code>true</code> if the volume is muted, <code>false</code> if the volume is not muted
      */
-    void mute();
+    boolean mute();
 
     /**
      * Mute or un-mute the volume.

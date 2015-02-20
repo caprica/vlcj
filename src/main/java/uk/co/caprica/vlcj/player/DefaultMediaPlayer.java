@@ -897,9 +897,10 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
 
     @Override
-    public void mute() {
+    public boolean mute() {
         logger.debug("mute()");
         libvlc.libvlc_audio_toggle_mute(mediaPlayerInstance);
+        return isMute();
     }
 
     @Override
