@@ -29,7 +29,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_pause_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_play_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_resume_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.player.DefaultMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
 
 import com.sun.jna.Pointer;
 
@@ -52,7 +52,7 @@ import com.sun.jna.Pointer;
  * number of audio samples does <em>not</em> equate to the size of the audio buffer, the "block
  * size" for a sample must also be considered.
  */
-public class DefaultDirectAudioPlayer extends DefaultMediaPlayer implements DirectAudioPlayer {
+public class DefaultDirectAudioPlayer extends DefaultEmbeddedMediaPlayer implements DirectAudioPlayer {
 
     /**
      * Log.

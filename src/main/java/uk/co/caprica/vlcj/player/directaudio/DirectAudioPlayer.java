@@ -19,10 +19,10 @@
 
 package uk.co.caprica.vlcj.player.directaudio;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
  * Specification for a media player that provides direct access to the audio buffer data.
  */
-public interface DirectAudioPlayer extends MediaPlayer {
+public interface DirectAudioPlayer extends EmbeddedMediaPlayer {
 }
