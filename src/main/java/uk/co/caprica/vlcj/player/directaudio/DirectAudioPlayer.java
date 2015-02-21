@@ -23,6 +23,11 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
  * Specification for a media player that provides direct access to the audio buffer data.
+ * <p>
+ * It is possible to use a direct audio player to also play embedded video - in this case
+ * the video will be played like a regular EmbeddedMediaPlayer but the raw audio buffer
+ * will be made available (e.g. for analysis) before it is sent to a Java API (e.g.
+ * JavaSound) to actually play the audio.
  */
 public interface DirectAudioPlayer extends EmbeddedMediaPlayer {
 }
