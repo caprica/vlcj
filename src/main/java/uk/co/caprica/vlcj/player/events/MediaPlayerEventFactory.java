@@ -73,7 +73,7 @@ public class MediaPlayerEventFactory {
      * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
      * @return media player event, or <code>null</code> if the native event type is not enabled or otherwise could not be handled
      */
-    public MediaPlayerEvent createEvent(libvlc_event_t event, int eventMask) {
+    public MediaPlayerEvent createEvent(libvlc_event_t event, long eventMask) {
         // Create an event suitable for the native event type...
         MediaPlayerEvent result = null;
         switch(libvlc_event_e.event(event.type)) {
@@ -272,7 +272,7 @@ public class MediaPlayerEventFactory {
      * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
      * @return media player event, or <code>null</code> if the event type is not enabled
      */
-    public MediaPlayerEvent createMediaNewEvent(int eventMask) {
+    public MediaPlayerEvent createMediaNewEvent(long eventMask) {
         if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.NEW_MEDIA)) {
             return new MediaNewEvent(mediaPlayer);
         }
@@ -286,7 +286,7 @@ public class MediaPlayerEventFactory {
      * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
      * @return media player event, or <code>null</code> if the event type is not enabled
      */
-    public MediaPlayerEvent createMediaSubItemPlayedEvent(int subItemIndex, int eventMask) {
+    public MediaPlayerEvent createMediaSubItemPlayedEvent(int subItemIndex, long eventMask) {
         if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.SUB_ITEM_PLAYED)) {
             return new MediaSubItemPlayedEvent(mediaPlayer, subItemIndex);
         }
@@ -300,7 +300,7 @@ public class MediaPlayerEventFactory {
      * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
      * @return media player event, or <code>null</code> if the event type is not enabled
      */
-    public MediaPlayerEvent createMediaSubItemFinishedEvent(int subItemIndex, int eventMask) {
+    public MediaPlayerEvent createMediaSubItemFinishedEvent(int subItemIndex, long eventMask) {
         if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.SUB_ITEM_FINISHED)) {
             return new MediaSubItemFinishedEvent(mediaPlayer, subItemIndex);
         }
@@ -313,7 +313,7 @@ public class MediaPlayerEventFactory {
      * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
      * @return media player event, or <code>null</code> if the event type is not enabled
      */
-    public MediaPlayerEvent createMediaEndOfSubItemsEvent(int eventMask) {
+    public MediaPlayerEvent createMediaEndOfSubItemsEvent(long eventMask) {
         if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.END_OF_SUB_ITEMS)) {
             return new MediaEndOfSubItemsEvent(mediaPlayer);
         }

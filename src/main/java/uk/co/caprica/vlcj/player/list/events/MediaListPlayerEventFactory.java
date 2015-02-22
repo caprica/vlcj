@@ -57,7 +57,7 @@ public class MediaListPlayerEventFactory {
      * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
      * @return media player event, or <code>null</code> if the native event type is not enabled or otherwise could not be handled
      */
-    public MediaListPlayerEvent newMediaListPlayerEvent(libvlc_event_t event, int eventMask) {
+    public MediaListPlayerEvent newMediaListPlayerEvent(libvlc_event_t event, long eventMask) {
         // Create an event suitable for the native event type...
         MediaListPlayerEvent result = null;
         switch(libvlc_event_e.event(event.type)) {

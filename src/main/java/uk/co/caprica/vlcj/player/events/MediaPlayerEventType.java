@@ -8,55 +8,57 @@ package uk.co.caprica.vlcj.player.events;
  */
 public enum MediaPlayerEventType {
 
-    MEDIA_CHANGED                  (0x00000001),
-    OPENING                        (0x00000002),
-    BUFFERING                      (0x00000004),
-    PLAYING                        (0x00000008),
-    PAUSED                         (0x00000010),
-    STOPPED                        (0x00000020),
-    FORWARD                        (0x00000040),
-    BACKWARD                       (0x00000080),
-    FINISHED                       (0x00000100),
-    TIME_CHANGED                   (0x00000200),
-    POSITION_CHANGED               (0x00000400),
-    SEEKABLE_CHANGED               (0x00000800),
-    PAUSABLE_CHANGED               (0x00001000),
-    TITLE_CHANGED                  (0x00002000),
-    SNAPSHOT_TAKEN                 (0x00004000),
-    LENGTH_CHANGED                 (0x00008000),
-    VIDEO_OUTPUT                   (0x00010000),
-    SCRAMBLED_CHANGED              (0x00020000),
-    ES_ADDED                       (0x00040000),
-    ES_DELETED                     (0x00080000),
-    ES_SELECTED                    (0x00100000),
-    ERROR                          (0x00200000),
+    NONE                           (0x0000000000000000L),
 
-    MEDIA_META_CHANGED             (0X00400000),
-    MEDIA_SUB_ITEM_ADDED           (0X00800000),
-    MEDIA_DURATION_CHANGED         (0X01000000),
-    MEDIA_PARSED_CHANGED           (0X02000000),
-    MEDIA_FREED                    (0X04000000),
-    MEDIA_STATE_CHANGED            (0X08000000),
-    MEDIA_SUB_ITEM_TREE_ADDED      (0X00800000), // FIXME this is reusing an existing value, these bitmask values will go away or be replaced in a later version of vlcj
+    MEDIA_CHANGED                  (0x0000000000000001L),
+    OPENING                        (0x0000000000000002L),
+    BUFFERING                      (0x0000000000000004L),
+    PLAYING                        (0x0000000000000008L),
+    PAUSED                         (0x0000000000000010L),
+    STOPPED                        (0x0000000000000020L),
+    FORWARD                        (0x0000000000000040L),
+    BACKWARD                       (0x0000000000000080L),
+    FINISHED                       (0x0000000000000100L),
+    TIME_CHANGED                   (0x0000000000000200L),
+    POSITION_CHANGED               (0x0000000000000400L),
+    SEEKABLE_CHANGED               (0x0000000000000800L),
+    PAUSABLE_CHANGED               (0x0000000000001000L),
+    TITLE_CHANGED                  (0x0000000000002000L),
+    SNAPSHOT_TAKEN                 (0x0000000000004000L),
+    LENGTH_CHANGED                 (0x0000000000008000L),
+    VIDEO_OUTPUT                   (0x0000000000010000L),
+    SCRAMBLED_CHANGED              (0x0000000000020000L),
+    ES_ADDED                       (0x0000000000040000L),
+    ES_DELETED                     (0x0000000000080000L),
+    ES_SELECTED                    (0x0000000000100000L),
+    ERROR                          (0x0000000000200000L),
 
-    NEW_MEDIA                      (0x10000000),
-    SUB_ITEM_PLAYED                (0x20000000),
-    SUB_ITEM_FINISHED              (0x40000000),
-    END_OF_SUB_ITEMS               (0x80000000),
+    MEDIA_META_CHANGED             (0x0000000000400000L),
+    MEDIA_SUB_ITEM_ADDED           (0x0000000000800000L),
+    MEDIA_DURATION_CHANGED         (0x0000000001000000L),
+    MEDIA_PARSED_CHANGED           (0x0000000002000000L),
+    MEDIA_FREED                    (0x0000000004000000L),
+    MEDIA_STATE_CHANGED            (0x0000000008000000L),
+    MEDIA_SUB_ITEM_TREE_ADDED      (0x0000000010000000L),
 
-    ALL                            (0xffffffff);
+    NEW_MEDIA                      (0x0000000020000000L),
+    SUB_ITEM_PLAYED                (0x0000000040000000L),
+    SUB_ITEM_FINISHED              (0x0000000080000000L),
+    END_OF_SUB_ITEMS               (0x0000000100000000L),
+
+    ALL                            (0xffffffffffffffffL);
 
     /**
      * Bit-mask.
      */
-    private int value;
+    private long value;
 
     /**
      * Create an enumerated value.
      *
      * @param value bit-mask
      */
-    private MediaPlayerEventType(int value) {
+    private MediaPlayerEventType(long value) {
         this.value = value;
     }
 
@@ -65,7 +67,7 @@ public enum MediaPlayerEventType {
      *
      * @return value
      */
-    public final int value() {
+    public final long value() {
         return value;
     }
 
@@ -75,8 +77,8 @@ public enum MediaPlayerEventType {
      * @param types one or more event types
      * @return bit-mask
      */
-    public static int events(MediaPlayerEventType... types) {
-        int eventMask = 0;
+    public static long events(MediaPlayerEventType... types) {
+        long eventMask = 0;
         for(MediaPlayerEventType type : types) {
             eventMask |= type.value();
         }
@@ -89,8 +91,8 @@ public enum MediaPlayerEventType {
      * @param types one or more event types
      * @return bit-mask
      */
-    public static int notEvents(MediaPlayerEventType... types) {
-        int eventMask = ALL.value;
+    public static long notEvents(MediaPlayerEventType... types) {
+        long eventMask = ALL.value;
         for(MediaPlayerEventType type : types) {
             eventMask &= type.value() ^ -1;
         }
@@ -104,7 +106,7 @@ public enum MediaPlayerEventType {
      * @param type event type to test for
      * @return <code>true</code> if the type value is set in the bit-mask, otherwise <code>false</code>
      */
-    public static boolean set(int value, MediaPlayerEventType type) {
+    public static boolean set(long value, MediaPlayerEventType type) {
         return (value & type.value()) != 0;
     }
 
@@ -115,7 +117,7 @@ public enum MediaPlayerEventType {
      * @param type event type to test for
      * @return <code>false</code> if the type value is set in the bit-mask, otherwise <code>true</code>
      */
-    public static boolean notSet(int value, MediaPlayerEventType type) {
+    public static boolean notSet(long value, MediaPlayerEventType type) {
         return (value & type.value()) == 0;
     }
 }

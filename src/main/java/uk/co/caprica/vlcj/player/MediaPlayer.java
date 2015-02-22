@@ -194,7 +194,7 @@ public interface MediaPlayer {
      *
      * @param eventMask bit mask of events to enable
      */
-    void enableEvents(int eventMask);
+    void enableEvents(long eventMask);
 
     /**
      * Set standard media options for all media items subsequently played.

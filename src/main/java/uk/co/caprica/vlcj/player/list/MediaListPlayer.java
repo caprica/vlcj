@@ -84,7 +84,7 @@ public interface MediaListPlayer {
      *
      * @param eventMask bit mask of events to enable
      */
-    void enableEvents(int eventMask);
+    void enableEvents(long eventMask);
 
     /**
      * Associate an actual media player with the media list player.

@@ -105,7 +105,7 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     /**
      * Mask of the native events that will cause notifications to be sent to listeners.
      */
-    private int eventMask = MediaListPlayerEventType.ALL.value();
+    private long eventMask = MediaListPlayerEventType.ALL.value();
 
     /**
      * Media list.
@@ -152,7 +152,7 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     }
 
     @Override
-    public void enableEvents(int eventMask) {
+    public void enableEvents(long eventMask) {
         logger.debug("enableEvents(eventMask={})", eventMask);
         this.eventMask = eventMask;
     }

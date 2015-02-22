@@ -8,24 +8,29 @@ public enum MediaListPlayerEventType {
     /**
      *
      */
-    NEXT_ITEM_SET(0x00000001),
+    NONE          (0x0000000000000000L),
 
     /**
      *
      */
-    ALL(0xffffffff);
+    NEXT_ITEM_SET (0x0000000000000001L),
+
+    /**
+     *
+     */
+    ALL           (0xffffffffffffffffL);
 
     /**
      * Bit-mask.
      */
-    private int value;
+    private long value;
 
     /**
      * Create an enumerated value.
      *
      * @param value bit-mask
      */
-    private MediaListPlayerEventType(int value) {
+    private MediaListPlayerEventType(long value) {
         this.value = value;
     }
 
@@ -34,7 +39,7 @@ public enum MediaListPlayerEventType {
      *
      * @return value
      */
-    public final int value() {
+    public final long value() {
         return value;
     }
 
@@ -44,8 +49,8 @@ public enum MediaListPlayerEventType {
      * @param types one or more event types
      * @return bit-mask
      */
-    public static int events(MediaListPlayerEventType... types) {
-        int eventMask = 0;
+    public static long events(MediaListPlayerEventType... types) {
+        long eventMask = 0;
         for(MediaListPlayerEventType type : types) {
             eventMask |= type.value();
         }
@@ -58,8 +63,8 @@ public enum MediaListPlayerEventType {
      * @param types one or more event types
      * @return bit-mask
      */
-    public static int notEvents(MediaListPlayerEventType... types) {
-        int eventMask = ALL.value;
+    public static long notEvents(MediaListPlayerEventType... types) {
+        long eventMask = ALL.value;
         for(MediaListPlayerEventType type : types) {
             eventMask &= type.value() ^ -1;
         }
@@ -73,7 +78,7 @@ public enum MediaListPlayerEventType {
      * @param type event type to test for
      * @return <code>true</code> if the type value is set in the bit-mask, otherwise <code>false</code>
      */
-    public static boolean set(int value, MediaListPlayerEventType type) {
+    public static boolean set(long value, MediaListPlayerEventType type) {
         return (value & type.value()) != 0;
     }
 
@@ -84,7 +89,7 @@ public enum MediaListPlayerEventType {
      * @param type event type to test for
      * @return <code>false</code> if the type value is set in the bit-mask, otherwise <code>true</code>
      */
-    public static boolean notSet(int value, MediaListPlayerEventType type) {
+    public static boolean notSet(long value, MediaListPlayerEventType type) {
         return (value & type.value()) == 0;
     }
 }
