@@ -105,6 +105,8 @@ public interface LibC extends Library {
      * Change or add an evironment variable.
      * <p>
      * The value strings are copied (natively).
+     * <p>
+     * <em>Not available on Windows.</em>
      *
      * @param name name of environment variable
      * @param value value of the environment variable
@@ -115,6 +117,8 @@ public interface LibC extends Library {
 
     /**
      * Unset an environment variable.
+     * <p>
+     * <em>Not available on Windows.</em>
      *
      * @param name name of environment variable
      * @return 0 if successful; -1 if not, setting <code>errno</code> to an error code
@@ -123,6 +127,8 @@ public interface LibC extends Library {
 
     /**
      * Get the current process id.
+     * <p>
+     * <em>Not available on Windows.</em>
      *
      * @return process id
      */
