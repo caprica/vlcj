@@ -87,7 +87,6 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      */
     protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
         "--no-snapshot-preview",
-        "--quiet",
         "--quiet-synchro",
         "--sub-filter=logo:marq",
         "--intf=dummy"

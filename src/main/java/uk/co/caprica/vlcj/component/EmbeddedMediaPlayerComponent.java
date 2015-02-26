@@ -137,7 +137,6 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
         "--video-title=vlcj video output",
         "--no-snapshot-preview",
-        "--quiet",
         "--quiet-synchro",
         "--sub-filter=logo:marq",
         "--intf=dummy"

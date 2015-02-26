@@ -53,7 +53,6 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
      * required.
      */
     protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
-        "--quiet",
         "--quiet-synchro",
         "--intf=dummy"
     };
