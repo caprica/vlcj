@@ -39,12 +39,15 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>3.3.0</version>
+    <version>3.4.0</version>
 </dependency>
 ```
 
 News
 ----
+
+26/02/2015 Made new release 3.4.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
+check the github issues milestone for details.
 
 13/02/2015 Made new release 3.3.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
 use SLF4J API rather than bespoke logger, minor bug fixes.
@@ -83,7 +86,8 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available:
 
-* [3.3.0 (current)](http://caprica.github.com/vlcj/javadoc/3.3.0/index.html "3.3.0 Javadoc")
+* [3.4.0 (current)](http://caprica.github.com/vlcj/javadoc/3.4.0/index.html "3.4.0 Javadoc")
+* [3.3.0](http://caprica.github.com/vlcj/javadoc/3.3.0/index.html "3.3.0 Javadoc")
 * [3.2.0](http://caprica.github.com/vlcj/javadoc/3.2.0/index.html "3.2.0 Javadoc")
 * [3.1.0](http://caprica.github.com/vlcj/javadoc/3.1.0/index.html "3.1.0 Javadoc")
 * [3.0.0](http://caprica.github.com/vlcj/javadoc/3.0.0/index.html "3.0.0 Javadoc")
