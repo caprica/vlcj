@@ -1047,21 +1047,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
 
     @Override
-    public int cycleSpu() {
-        logger.debug("cycleSpu()");
-        int spu = getSpu();
-        int spuCount = getSpuCount();
-        logger.debug("spuCount={}", spuCount);
-        if(spu >= spuCount) {
-            spu = 0;
-        }
-        else {
-            spu ++ ;
-        }
-        return setSpu(spu);
-    }
-
-    @Override
     public long getSpuDelay() {
         logger.debug("getSpuDelay()");
         return libvlc.libvlc_video_get_spu_delay(mediaPlayerInstance);
