@@ -188,6 +188,16 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     private final AtomicBoolean released = new AtomicBoolean();
 
     /**
+     * MRL that was last played.
+     */
+    private String lastPlayedMedia;
+
+    /**
+     * Media options for the MRL that was last played.
+     */
+    private String[] lastPlayedMediaOptions;
+
+    /**
      * Create a new media player.
      *
      * @param libvlc native library interface
@@ -1771,6 +1781,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         eventListenerList.add(new NewMediaEventHandler());
         eventListenerList.add(new RepeatPlayEventHandler());
         eventListenerList.add(new SubItemEventHandler());
+        eventListenerList.add(new ResetMediaHandler());
     }
 
     /**
@@ -1950,6 +1961,9 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
      */
     private boolean setMedia(String media, String... mediaOptions) {
         logger.debug("setMedia(media={},mediaOptions={})", media, Arrays.toString(mediaOptions));
+        // Remember the new MRL and options for possible replay later
+        this.lastPlayedMedia = media;
+        this.lastPlayedMediaOptions = mediaOptions;
         // If there is a current media, clean it up
         if(mediaInstance != null) {
             // Release the media event listener
@@ -2185,6 +2199,28 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                 playNextSubItem();
             }
         }
+    }
+
+    /**
+     * Event listener implementation that resets the media ready for replay after is has finished.
+     * <p>
+     * This enables an application to invoke play() after the media is finished.
+     * <p>
+     * Without this, an application must invoke stop(), then play().
+     */
+    private final class ResetMediaHandler extends MediaPlayerEventAdapter {
+        @Override
+        public void finished(MediaPlayer mediaPlayer) {
+            resetMedia();
+        }
+    }
+
+    /**
+     * Reset the media so it can be replayed.
+     */
+    private void resetMedia() {
+        logger.debug("resetMedia()");
+        setMedia(lastPlayedMedia, lastPlayedMediaOptions);
     }
 
     /**
