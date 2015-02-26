@@ -49,7 +49,7 @@ public class TextTrackInfo extends TrackInfo {
      * @param encoding encoding
      * @param codecDescription codec description
      */
-    protected TextTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String encoding, String codecDescription) {
+    public TextTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String encoding, String codecDescription) {
         super(codec, originalCodec, id, profile, level, bitRate, language, description, codecDescription);
         this.encoding = encoding;
     }

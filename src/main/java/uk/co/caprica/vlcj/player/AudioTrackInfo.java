@@ -54,7 +54,7 @@ public class AudioTrackInfo extends TrackInfo {
      * @param rate rate
      * @param codecDescription codec description
      */
-    protected AudioTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int channels, int rate, String codecDescription) {
+    public AudioTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int channels, int rate, String codecDescription) {
         super(codec, originalCodec, id, profile, level, bitRate, language, description, codecDescription);
         this.channels = channels;
         this.rate = rate;

@@ -41,7 +41,7 @@ public class UnknownTrackInfo extends TrackInfo {
      * @param description description
      * @param codecDescription codec description
      */
-    protected UnknownTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String codecDescription) {
+    public UnknownTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String codecDescription) {
         super(codec, originalCodec, id, profile, level, bitRate, language, description, codecDescription);
     }
 }
