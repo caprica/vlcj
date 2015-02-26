@@ -19,6 +19,11 @@
 
 package uk.co.caprica.vlcj.component;
 
+import java.util.Arrays;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
@@ -33,6 +38,11 @@ import com.sun.jna.Pointer;
  * Encapsulation of a direct audio player.
  */
 public class DirectAudioPlayerComponent implements MediaPlayerEventListener, AudioCallback {
+
+    /**
+     * Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(DirectAudioPlayerComponent.class);
 
     /**
      * Default factory initialisation arguments.
@@ -132,12 +142,16 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
      * @return media player factory
      */
     protected MediaPlayerFactory onGetMediaPlayerFactory() {
-        return new MediaPlayerFactory(onGetMediaPlayerFactoryArgs());
+        String[] args = Arguments.mergeArguments(onGetMediaPlayerFactoryArgs(), onGetMediaPlayerFactoryExtraArgs());
+        logger.debug("args={}", Arrays.toString(args));
+        return new MediaPlayerFactory(args);
     }
 
     /**
      * Template method to obtain the initialisation arguments used to create the media player
      * factory instance.
+     * <p>
+     * This can be used to provide arguments to use <em>instead</em> of the defaults.
      * <p>
      * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
      * guarantee that {@link #onGetMediaPlayerFactoryArgs()} will be called.
@@ -146,6 +160,21 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
      */
     protected String[] onGetMediaPlayerFactoryArgs() {
         return DEFAULT_FACTORY_ARGUMENTS;
+    }
+
+    /**
+     * Template method to obtain the extra initialisation arguments used to create the media player
+     * factory instance.
+     * <p>
+     * This can be used to provide <em>additional</em> arguments to add to the hard-coded defaults.
+     * <p>
+     * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
+     * guarantee that {@link #onGetMediaPlayerFactoryExtraArgs()} will be called.
+     *
+     * @return media player factory initialisation arguments, or <code>null</code>
+     */
+    protected String[] onGetMediaPlayerFactoryExtraArgs() {
+        return null;
     }
 
     /**

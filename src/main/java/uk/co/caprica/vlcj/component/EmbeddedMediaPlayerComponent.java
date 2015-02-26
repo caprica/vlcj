@@ -30,6 +30,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -282,12 +283,16 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * @return media player factory
      */
     protected MediaPlayerFactory onGetMediaPlayerFactory() {
-        return new MediaPlayerFactory(onGetMediaPlayerFactoryArgs());
+        String[] args = Arguments.mergeArguments(onGetMediaPlayerFactoryArgs(), onGetMediaPlayerFactoryExtraArgs());
+        logger.debug("args={}", Arrays.toString(args));
+        return new MediaPlayerFactory(args);
     }
 
     /**
      * Template method to obtain the initialisation arguments used to create the media player
      * factory instance.
+     * <p>
+     * This can be used to provide arguments to use <em>instead</em> of the defaults.
      * <p>
      * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
      * guarantee that {@link #onGetMediaPlayerFactoryArgs()} will be called.
@@ -296,6 +301,21 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      */
     protected String[] onGetMediaPlayerFactoryArgs() {
         return DEFAULT_FACTORY_ARGUMENTS;
+    }
+
+    /**
+     * Template method to obtain the extra initialisation arguments used to create the media player
+     * factory instance.
+     * <p>
+     * This can be used to provide <em>additional</em> arguments to add to the hard-coded defaults.
+     * <p>
+     * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
+     * guarantee that {@link #onGetMediaPlayerFactoryExtraArgs()} will be called.
+     *
+     * @return media player factory initialisation arguments, or <code>null</code>
+     */
+    protected String[] onGetMediaPlayerFactoryExtraArgs() {
+        return null;
     }
 
     /**
