@@ -2026,7 +2026,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
      *
      * @param <T> type of result
      * @param subItemsHandler handler implementation
-     * @return result
+     * @return result, will never be <code>null</code>
+     * @throws IllegalStateException if no current media
      */
     private <T> T handleSubItems(SubItemsHandler<T> subItemsHandler) {
         logger.debug("handleSubItems()");

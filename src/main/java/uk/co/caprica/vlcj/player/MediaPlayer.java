@@ -317,7 +317,7 @@ public interface MediaPlayer {
      * See {@link #getMediaMeta()}, the same notes with regard to parsing hold here.
      *
      * @param mediaInstance media instance, may be a sub-item
-     * @return meta data
+     * @return meta data, never <code>null</code>
      */
     MediaMeta getMediaMeta(libvlc_media_t mediaInstance);
 
@@ -326,7 +326,7 @@ public interface MediaPlayer {
      * <p>
      * See {@link #getMediaMeta()}, the same notes with regard to parsing hold here.
      *
-     * @return collection of meta data for the media sub-items
+     * @return collection of meta data for the media sub-items, may be empty but never <code>null</code>
      */
     List<MediaMeta> getSubItemMediaMeta();
 
@@ -338,7 +338,7 @@ public interface MediaPlayer {
      * This function returns the meta data in a "detached" value object, i.e. there is no link to
      * the native media handle (so the meta data can <em>not</em> be updated using this function.
      *
-     * @return meta data
+     * @return meta data, never <code>null</code>
      */
     MediaMetaData getMediaMetaData();
 
@@ -350,7 +350,7 @@ public interface MediaPlayer {
      * This function returns the meta data in a "detached" value object, i.e. there is no link to
      * the native media handle (so the meta data can <em>not</em> be updated using this function.
      *
-     * @return collection of meta data for the media sub-items
+     * @return collection of meta data for the media sub-items, may be empty but never <code>null</code>
      */
     List<MediaMetaData> getSubItemMediaMetaData();
 
@@ -596,7 +596,7 @@ public interface MediaPlayer {
      * Statistics are only updated if the video is playing.
      *
      * @param media media item
-     * @return media statistics
+     * @return media statistics, never <code>null</code>
      */
     // FIXME For now I'll simply return the internal binding structure but I don't really want to do
     // that do I?
@@ -1110,7 +1110,7 @@ public interface MediaPlayer {
      * <p>
      * The media must be playing before this information is available.
      *
-     * @return list of descriptions
+     * @return list of descriptions, may be empty but will never be <code>null</code>
      */
     List<TrackDescription> getTitleDescriptions();
 
@@ -1119,7 +1119,7 @@ public interface MediaPlayer {
      * <p>
      * The media must be playing before this information is available.
      *
-     * @return list of descriptions
+     * @return list of descriptions, may be empty but will never be <code>null</code>
      */
     List<TrackDescription> getVideoDescriptions();
 
@@ -1128,7 +1128,7 @@ public interface MediaPlayer {
      * <p>
      * The media must be playing before this information is available.
      *
-     * @return list of descriptions
+     * @return list of descriptions, may be empty but will never be <code>null</code>
      */
     List<TrackDescription> getAudioDescriptions();
 
@@ -1137,7 +1137,7 @@ public interface MediaPlayer {
      * <p>
      * The media must be playing before this information is available.
      *
-     * @return list of descriptions
+     * @return list of descriptions, may be empty but will never be <code>null</code>
      */
     List<TrackDescription> getSpuDescriptions();
 
@@ -1147,7 +1147,7 @@ public interface MediaPlayer {
      * The media must be playing before this information is available.
      *
      * @param title title number
-     * @return list of descriptions, or <code>null</code> if there is no such title
+     * @return list of descriptions (which may be empty), or <code>null</code> if there is no such title
      */
     List<String> getChapterDescriptions(int title);
 
@@ -1156,7 +1156,7 @@ public interface MediaPlayer {
      * <p>
      * The media must be playing before this information is available.
      *
-     * @return list of descriptions
+     * @return list of descriptions (which may be empty), or <code>null</code> if there is no current title
      */
     List<String> getChapterDescriptions();
 
@@ -1165,7 +1165,7 @@ public interface MediaPlayer {
      * <p>
      * The media must be playing before this information is available.
      *
-     * @return a collection of chapter description lists, one list for each title
+     * @return a collection of chapter description lists, one list for each title (may be empty, but never <code>null</code>)
      */
     List<List<String>> getAllChapterDescriptions();
 
