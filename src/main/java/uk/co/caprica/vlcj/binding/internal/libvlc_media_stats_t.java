@@ -82,4 +82,26 @@ public class libvlc_media_stats_t extends Structure {
     protected List<String> getFieldOrder() {
         return FIELD_ORDER;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(100);
+        sb.append(getClass().getSimpleName()).append('[');
+        sb.append("i_read_bytes=").append(i_read_bytes).append(',');
+        sb.append("f_input_bitrate=").append(f_input_bitrate).append(',');
+        sb.append("i_demux_read_bytes=").append(i_demux_read_bytes).append(',');
+        sb.append("f_demux_bitrate=").append(f_demux_bitrate).append(',');
+        sb.append("i_demux_corrupted=").append(i_demux_corrupted).append(',');
+        sb.append("i_demux_discontinuity=").append(i_demux_discontinuity).append(',');
+        sb.append("i_decoded_video=").append(i_decoded_video).append(',');
+        sb.append("i_decoded_audio=").append(i_decoded_audio).append(',');
+        sb.append("i_displayed_pictures=").append(i_displayed_pictures).append(',');
+        sb.append("i_lost_pictures=").append(i_lost_pictures).append(',');
+        sb.append("i_played_abuffers=").append(i_played_abuffers).append(',');
+        sb.append("i_lost_abuffers=").append(i_lost_abuffers).append(',');
+        sb.append("i_sent_packets=").append(i_sent_packets).append(',');
+        sb.append("i_sent_bytes=").append(i_sent_bytes).append(',');
+        sb.append("f_send_bitrate=").append(f_send_bitrate).append(']');
+        return sb.toString();
+    }
 }
