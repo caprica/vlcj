@@ -1169,7 +1169,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public List<List<String>> getAllChapterDescriptions() {
         logger.debug("getAllChapterDescriptions()");
         int titleCount = getTitleCount();
-        List<List<String>> result = new ArrayList<List<String>>(titleCount);
+        List<List<String>> result = new ArrayList<List<String>>(Math.max(titleCount, 0));
         for(int i = 0; i < titleCount; i ++ ) {
             result.add(getChapterDescriptions(i));
         }
