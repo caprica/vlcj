@@ -283,7 +283,7 @@ public final class MediaMetaData {
     public String toString() {
         StringBuilder sb = new StringBuilder(300);
         sb.append(getClass().getSimpleName()).append('[');
-        sb.append("title=").append(title).append('[');
+        sb.append("title=").append(title).append(',');
         sb.append("artist=").append(artist).append(',');
         sb.append("genre=").append(genre).append(',');
         sb.append("copyright=").append(copyright).append(',');
