@@ -343,6 +343,18 @@ public interface MediaPlayer {
     MediaMetaData getMediaMetaData();
 
     /**
+     * Get local meta data for all of the current media sub-items (if there are any).
+     * <p>
+     * See {@link #getMediaMeta()}, the same notes with regard to parsing hold here.
+     * <p>
+     * This function returns the meta data in a "detached" value object, i.e. there is no link to
+     * the native media handle (so the meta data can <em>not</em> be updated using this function.
+     *
+     * @return collection of meta data for the media sub-items
+     */
+    List<MediaMetaData> getSubItemMediaMetaData();
+
+    /**
      * Add options to the current media.
      *
      * @param mediaOptions media options

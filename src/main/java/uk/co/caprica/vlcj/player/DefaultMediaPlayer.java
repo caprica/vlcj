@@ -365,6 +365,23 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
 
     @Override
+    public List<MediaMetaData> getSubItemMediaMetaData() {
+        logger.debug("getSubItemMediaMetaData()");
+        List<MediaMetaData> result;
+        List<MediaMeta> metas = getSubItemMediaMeta();
+        if(metas != null) {
+            result = new ArrayList<MediaMetaData>(metas.size());
+            for(MediaMeta meta : getSubItemMediaMeta()) {
+                result.add(meta.asMediaMetaData());
+            }
+        }
+        else {
+            result = null;
+        }
+        return result;
+    }
+
+    @Override
     public void addMediaOptions(String... mediaOptions) {
         logger.debug("addMediaOptions(mediaOptions={})", Arrays.toString(mediaOptions));
         if(mediaInstance != null) {
