@@ -1873,8 +1873,11 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     private libvlc_event_e lastKnownEvent() {
         libvlc_event_e result;
         Version version = new Version(libvlc.libvlc_get_version());
-        if(version.atLeast(new Version("2.2.0"))) {
+        if(version.atLeast(new Version("3.0.0"))) {
             result = libvlc_event_e.libvlc_MediaPlayerESSelected;
+        }
+        else if(version.atLeast(new Version("2.2.0"))) {
+            result = libvlc_event_e.libvlc_MediaPlayerScrambledChanged;
         }
         else {
             result = libvlc_event_e.libvlc_MediaPlayerVout;
