@@ -46,6 +46,9 @@ Add the following Maven dependency to your own project pom.xml:
 News
 ----
 
+02/03/2015 vlcj-pro released, free time-limited trial packages are available from the official
+[vlcj-pro](http://t.co/Gv04rAta9c) product page.
+
 01/03/2015 Made new release 3.5.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
 check the github issues milestone for details. Mostly minor changes to support vlcj-pro.
 
