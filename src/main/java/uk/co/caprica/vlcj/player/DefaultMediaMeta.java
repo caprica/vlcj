@@ -55,6 +55,11 @@ class DefaultMediaMeta implements MediaMeta {
     private static final Version VERSION_220 = new Version("2.2.0");
 
     /**
+     * Minimum version for new meta data fields.
+     */
+    private static final Version VERSION_300 = new Version("3.0.0");
+
+    /**
      * Set to true when the player has been released.
      */
     private final AtomicBoolean released = new AtomicBoolean();
@@ -347,25 +352,25 @@ class DefaultMediaMeta implements MediaMeta {
 
     @Override
     public String getAlbumArtist() {
-        checkVersion(VERSION_220);
+        checkVersion(VERSION_300);
         return getMeta(libvlc_meta_t.libvlc_meta_AlbumArtist);
     }
 
     @Override
     public void setAlbumArtist(String albumArtist) {
-        checkVersion(VERSION_220);
+        checkVersion(VERSION_300);
         setMeta(libvlc_meta_t.libvlc_meta_AlbumArtist, albumArtist);
     }
 
     @Override
     public String getDiscNumber() {
-        checkVersion(VERSION_220);
+        checkVersion(VERSION_300);
         return getMeta(libvlc_meta_t.libvlc_meta_DiscNumber);
     }
 
     @Override
     public void setDiscNumber(String discNumber) {
-        checkVersion(VERSION_220);
+        checkVersion(VERSION_300);
         setMeta(libvlc_meta_t.libvlc_meta_DiscNumber, discNumber);
     }
 
@@ -427,14 +432,18 @@ class DefaultMediaMeta implements MediaMeta {
         result.setEncodedBy(getEncodedBy());
         result.setArtworkUrl(getArtworkUrl());
         result.setTrackId(getTrackId());
-        result.setTrackTotal(getTrackTotal());
-        result.setDirector(getDirector());
-        result.setSeason(getSeason());
-        result.setEpisode(getEpisode());
-        result.setShowName(getShowName());
-        result.setActors(getActors());
-        result.setAlbumArtist(getAlbumArtist());
-        result.setDiscNumber(getDiscNumber());
+        if (actualVersion.atLeast(VERSION_220)) {
+            result.setTrackTotal(getTrackTotal());
+            result.setDirector(getDirector());
+            result.setSeason(getSeason());
+            result.setEpisode(getEpisode());
+            result.setShowName(getShowName());
+            result.setActors(getActors());
+        }
+        if (actualVersion.atLeast(VERSION_300)) {
+            result.setAlbumArtist(getAlbumArtist());
+            result.setDiscNumber(getDiscNumber());
+        }
         return result;
     }
 
@@ -513,7 +522,10 @@ class DefaultMediaMeta implements MediaMeta {
             sb.append("episode=").append(getEpisode()).append(',');
             sb.append("showName=").append(getShowName()).append(',');
             sb.append("actors=").append(getActors()).append(',');
+        }
+        if (actualVersion.atLeast(VERSION_300)) {
             sb.append("albumArtist=").append(getAlbumArtist()).append(',');
+            sb.append("discNumber=").append(getDiscNumber()).append(',');
         }
         sb.append("length=").append(getLength()).append(']');
         return sb.toString();
