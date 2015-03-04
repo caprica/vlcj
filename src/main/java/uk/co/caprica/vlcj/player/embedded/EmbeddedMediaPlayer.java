@@ -153,6 +153,10 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
      * should use <code>JWindow</code> so that your updates will be double-buffered and there will
      * be no tearing or flickering when you paint the overlay. If you do this, you must take care to
      * erase the overlay background before you paint it.
+     * <p>
+     * <strong>When the overlay is no longer needed it is your responsibility to {@link Window#dispose()}
+     * it - if you do not do this you may leak resources. If you set multiple different overlays you
+     * must remember to dispose the old overlay.</strong>
      *
      * @param overlay overlay component, may be <code>null</code>
      */
