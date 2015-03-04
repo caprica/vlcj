@@ -93,19 +93,13 @@ public class OverlayTest extends VlcjTest {
         f.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
         f.setSize(800, 600);
         f.setBackground(Color.black);
-        f.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
 
         f.setLayout(new BorderLayout());
         Canvas vs = new Canvas();
         f.add(vs, BorderLayout.CENTER);
         f.setVisible(true);
 
-        MediaPlayerFactory factory = new MediaPlayerFactory();
+        final MediaPlayerFactory factory = new MediaPlayerFactory();
 
         final EmbeddedMediaPlayer mediaPlayer = factory.newEmbeddedMediaPlayer();
         mediaPlayer.setVideoSurface(factory.newVideoSurface(vs));
@@ -122,6 +116,15 @@ public class OverlayTest extends VlcjTest {
                         mediaPlayer.pause();
                         break;
                 }
+            }
+        });
+
+        f.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mediaPlayer.release();
+                factory.release();
+                System.exit(0);
             }
         });
 
