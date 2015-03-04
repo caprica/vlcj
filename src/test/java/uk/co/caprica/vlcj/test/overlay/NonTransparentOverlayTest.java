@@ -39,7 +39,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
- * This example shows how to create simple overlays if you do not want per- pixel translucency or
+ * This example shows how to create simple overlays if you do not want per-pixel translucency or
  * full transparency in your overlays.
  * <p>
  * The key trick is to make sure that the video surface Canvas is added to the container
