@@ -157,6 +157,8 @@ public interface EmbeddedMediaPlayer extends MediaPlayer {
      * <strong>When the overlay is no longer needed it is your responsibility to {@link Window#dispose()}
      * it - if you do not do this you may leak resources. If you set multiple different overlays you
      * must remember to dispose the old overlay.</strong>
+     * <p>
+     * It is recommended to set the overlay once as early as possible in your application.
      *
      * @param overlay overlay component, may be <code>null</code>
      */
