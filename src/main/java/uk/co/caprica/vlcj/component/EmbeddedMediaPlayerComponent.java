@@ -278,6 +278,12 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
 
     /**
      * Enable or disable the mouse cursor when it is over the component.
+     * <p>
+     * Note that you may see glitchy behaviour if you try and disable the cursor <em>after</em> you
+     * show the window/frame that contains your video surface.
+     * <p>
+     * If you want to disable the cursor for this component you should do so before you show the
+     * window.
      *
      * @param enabled <code>true</code> to enable (show) the cursor; <code>false</code> to disable (hide) it
      */
