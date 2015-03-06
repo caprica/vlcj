@@ -29,6 +29,13 @@ import java.awt.Panel;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
@@ -46,6 +53,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
  * Encapsulation of an embedded media player.
@@ -108,6 +116,16 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  *     }
  * };
  * </pre>
+ * This component also provides template methods for mouse and keyboard events - these are events
+ * for the <em>video surface</em> and not for the <code>Panel</code> that this component is itself
+ * contained in. If for some reason you need events for the <code>Panel</code> you can just add
+ * them by calling the usual add listener methods.
+ * <p>
+ * You can use template methods and/or add your own listeners depending on your needs.
+ * <p>
+ * Key events will only be delivered if the video surface has the focus. It is up to you to manage
+ * that.
+ * <p>
  * When the media player component is no longer needed, it should be released by invoking the
  * {@link #release()} method.
  * <p>
@@ -119,7 +137,31 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  * and destroying instances.
  */
 @SuppressWarnings("serial")
-public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEventListener {
+public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEventListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
+
+    /**
+     * Enumeration of flags for controller input (mouse and keyboard) event handling for the video
+     * surface.
+     */
+    public enum InputEvents {
+
+        /**
+         * No input event handling, no mouse or keyboard listener events will fire.
+         */
+        NONE,
+
+        /**
+         * Default input event handling, mouse and keyboard listener events will fire.
+         */
+        DEFAULT,
+
+        /**
+         * Disable native input event handling, mouse and keyboard listener events will fire.
+         * <p>
+         * This is the mode that is usually required on Windows.
+         */
+        DISABLE_NATIVE
+    }
 
     /**
      * Log.
@@ -183,6 +225,20 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
         add(canvas, BorderLayout.CENTER);
         // Register listeners
         mediaPlayer.addMediaPlayerEventListener(this);
+        switch (onGetInputEvents()) {
+            case NONE:
+                break;
+            case DISABLE_NATIVE:
+                mediaPlayer.setEnableKeyInputHandling(false);
+                mediaPlayer.setEnableMouseInputHandling(false);
+                // Case fall-through is by design
+            case DEFAULT:
+                canvas.addMouseListener(this);
+                canvas.addMouseMotionListener(this);
+                canvas.addMouseWheelListener(this);
+                canvas.addKeyListener(this);
+                break;
+        }
         // Set the overlay
         mediaPlayer.setOverlay(onGetOverlay());
         // Sub-class initialisation
@@ -339,6 +395,32 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
         Canvas canvas = new Canvas();
         canvas.setBackground(Color.black);
         return canvas;
+    }
+
+    /**
+     * Template method to determine how input events should be processed by the component.
+     * <p>
+     * By default keyboard and mouse listener events from the video surface will be dispatched to
+     * the corresponding template methods in this component.
+     * <p>
+     * In addition, by Default on Windows the native input handling is disabled. This is usually
+     * what you always want if you want mouse and/or keyboard events from the video surface on
+     * Windows).
+     * <p>
+     * Override this method to change the default handling.
+     * <p>
+     * No matter what is chosen here, an application can still add its own listeners the usual way
+     * and can still choose to disable (or not) the native input handling.
+     *
+     * @return value describing how to handle input events, never <code>null</code>
+     */
+    protected InputEvents onGetInputEvents() {
+        if (RuntimeUtil.isNix() || RuntimeUtil.isMac()) {
+            return InputEvents.DEFAULT;
+        }
+        else {
+            return InputEvents.DISABLE_NATIVE;
+        }
     }
 
     /**
@@ -507,5 +589,57 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
 
     @Override
     public void endOfSubItems(MediaPlayer mediaPlayer) {
+    }
+
+    // === MouseListener ========================================================
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+
+    // === MouseMotionListener ==================================================
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+    }
+
+    // === MouseWheelListener ===================================================
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+    }
+
+    // === KeyListener ==========================================================
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }
