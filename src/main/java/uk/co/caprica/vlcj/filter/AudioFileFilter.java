@@ -73,6 +73,7 @@ public class AudioFileFilter extends ExtensionFileFilter {
         "s3m",
         "sid",
         "spx",
+        "tak",
         "thd",
         "tta",
         "voc",
