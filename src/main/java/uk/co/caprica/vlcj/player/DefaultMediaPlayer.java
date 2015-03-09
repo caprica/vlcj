@@ -2016,7 +2016,9 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         }
         // Prepare a new statistics object to re-use for the new media item
         libvlcMediaStats = new libvlc_media_stats_t();
-        return mediaInstance != null;
+        boolean result = mediaInstance != null;
+        logger.debug("result={}", result);
+        return result;
     }
 
     /**
