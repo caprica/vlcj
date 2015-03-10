@@ -583,9 +583,6 @@ public interface MediaPlayer {
      * Get the current media statistics.
      * <p>
      * Statistics are only updated if the video is playing.
-     * <p>
-     * <em>For LibVLC 2.2.0 and later the stats are no longer available unless you pass "--stats"
-     * when you create the media player factory.</em>
      *
      * @return media statistics
      */
@@ -597,9 +594,6 @@ public interface MediaPlayer {
      * Get the current media statistics for a media item (e.g. a sub-item).
      * <p>
      * Statistics are only updated if the video is playing.
-     * <p>
-     * <em>For LibVLC 2.2.0 and later the stats are no longer available unless you pass "--stats"
-     * when you create the media player factory.</em>
      *
      * @param media media item
      * @return media statistics, never <code>null</code>
