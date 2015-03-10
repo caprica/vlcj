@@ -72,10 +72,10 @@ public class VideoTrackInfo extends TrackInfo {
      * @param description description
      * @param width width
      * @param height height
-     * @param sampleAspectRatio
-     * @param sampleAspectRatioBase
-     * @param frameRate
-     * @param frameRateBase
+     * @param sampleAspectRatio sample aspect ratio
+     * @param sampleAspectRatioBase sample aspect ratio base
+     * @param frameRate frame rate
+     * @param frameRateBase frame rate base
      * @param codecDescription codec description
      */
     public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, String codecDescription) {

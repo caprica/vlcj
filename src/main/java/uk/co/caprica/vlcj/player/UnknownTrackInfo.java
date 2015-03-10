@@ -33,6 +33,7 @@ public class UnknownTrackInfo extends TrackInfo {
      * Create an unknown track info.
      *
      * @param codec codec
+     * @param originalCodec original codec
      * @param id track id
      * @param profile profile
      * @param level level

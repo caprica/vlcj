@@ -40,6 +40,7 @@ public class TextTrackInfo extends TrackInfo {
      * Create a new SPU (subtitle) track info.
      *
      * @param codec codec
+     * @param originalCodec original codec
      * @param id track id
      * @param profile profile
      * @param level level
