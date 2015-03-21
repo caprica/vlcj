@@ -121,6 +121,8 @@ public class NativeDiscovery {
                         logger.info("Discovery found libvlc at '{}'", path);
                         // Register the discovered library path with JNA
                         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), path);
+                        // Chance for post processing
+                        discoveryStrategy.onFound(path);
                         return true;
                     }
                 }

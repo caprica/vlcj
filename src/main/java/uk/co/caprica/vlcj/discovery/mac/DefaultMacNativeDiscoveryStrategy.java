@@ -22,8 +22,10 @@ package uk.co.caprica.vlcj.discovery.mac;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.discovery.StandardNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.version.LibVlcVersion;
 
 /**
  * Default implementation of a native library discovery strategy that searches in
@@ -39,6 +41,16 @@ public class DefaultMacNativeDiscoveryStrategy extends StandardNativeDiscoverySt
         Pattern.compile("libvlccore\\.dylib")
     };
 
+    /**
+     * Name of the VLC plugin-path environment variable.
+     */
+    private static final String PLUGIN_ENV_NAME = "VLC_PLUGIN_PATH";
+
+    /**
+     * Format string to prepare the plugin path environment variable value.
+     */
+    private static final String PLUGIN_PATH_FORMAT = "%s/../plugins";
+
     @Override
     protected Pattern[] getFilenamePatterns() {
         return FILENAME_PATTERNS;
@@ -52,5 +64,12 @@ public class DefaultMacNativeDiscoveryStrategy extends StandardNativeDiscoverySt
     @Override
     protected void onGetDirectoryNames(List<String> directoryNames) {
         directoryNames.add("/Applications/VLC.app/Contents/MacOS/lib");
+    }
+
+    @Override
+    public void onFound(String path) {
+        if (LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_220)) {
+            LibC.INSTANCE.setenv(PLUGIN_ENV_NAME, String.format(PLUGIN_PATH_FORMAT, path), 1);
+        }
     }
 }

@@ -41,4 +41,11 @@ public interface NativeDiscoveryStrategy {
      * @return path containing the shared libraries, or <code>null</code> if this strategy did not find them
      */
     String discover();
+
+    /**
+     * Invoked when native shared libraries find.
+     *
+     * @param path directory containing the shared libraries
+     */
+    void onFound(String path);
 }

@@ -131,4 +131,9 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
      * @return collection of directories to search
      */
     protected abstract void getDirectoryNames(List<String> directoryNames);
+
+    @Override
+    public void onFound(String path) {
+        // Default implementation does nothing
+    }
 }
