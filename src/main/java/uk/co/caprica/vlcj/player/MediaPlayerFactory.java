@@ -42,6 +42,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_type_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
 import uk.co.caprica.vlcj.log.NativeLog;
@@ -813,6 +814,28 @@ public class MediaPlayerFactory {
             // Release this native reference, the media meta instance retains its own native reference
             libvlc.libvlc_media_release(media);
             return mediaMeta;
+        }
+        else {
+            return null;
+        }
+    }
+
+    // === MediaType ============================================================
+
+    /**
+     * Get the media type for the media.
+     * <p>
+     * This is a medium type rather than e.g. a specific file type.
+     * <p>
+     * Requires LibVLC 3.0.0 or later.
+     *
+     * @param media media
+     * @return media type, or <code>null</code> if <code>media</code> is <code>null</code>
+     */
+    public libvlc_media_type_e getMediaType(libvlc_media_t media) {
+        logger.debug("getMediaType(media={})", media);
+        if (media != null) {
+            return libvlc_media_type_e.mediaType(libvlc.libvlc_media_get_type(media));
         }
         else {
             return null;

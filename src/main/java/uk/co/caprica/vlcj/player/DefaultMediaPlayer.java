@@ -57,6 +57,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_type_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
@@ -1304,6 +1305,23 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             libvlc.libvlc_media_tracks_release(tracksPointer.getValue(), numberOfTracks);
         }
         return result;
+    }
+
+    @Override
+    public libvlc_media_type_e getMediaType() {
+        logger.debug("getMediaType()");
+        return getMediaType(mediaInstance);
+    }
+
+    @Override
+    public libvlc_media_type_e getMediaType(libvlc_media_t media) {
+        logger.debug("getMediaType(media={})", media);
+        if (media != null) {
+            return libvlc_media_type_e.mediaType(libvlc.libvlc_media_get_type(media));
+        }
+        else {
+            return null;
+        }
     }
 
     @Override

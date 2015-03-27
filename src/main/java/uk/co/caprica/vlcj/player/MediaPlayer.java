@@ -33,6 +33,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_type_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
@@ -1197,6 +1198,29 @@ public interface MediaPlayer {
      * @return collection of track information, or <code>null</code> if there is no current media
      */
     List<TrackInfo> getTrackInfo(libvlc_media_t media, TrackType... types);
+
+    /**
+     * Get the media type for the current media.
+     * <p>
+     * This is a medium type rather than e.g. a specific file type.
+     * <p>
+     * Requires LibVLC 3.0.0 or later.
+     *
+     * @return media type, or <code>null</code> if the current media is <code>null</code>
+     */
+    libvlc_media_type_e getMediaType();
+
+    /**
+     * Get the media type for a specific media.
+     * <p>
+     * This is a medium type rather than e.g. a specific file type.
+     * <p>
+     * Requires LibVLC 3.0.0 or later.
+     *
+     * @param media media
+     * @return media type, or <code>null</code> if <code>media</code> is <code>null</code>
+     */
+    libvlc_media_type_e getMediaType(libvlc_media_t media);
 
     /**
      * Get a description for a FourCC codec value.
