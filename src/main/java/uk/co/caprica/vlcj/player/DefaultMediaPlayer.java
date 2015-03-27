@@ -1301,6 +1301,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                         break;
                 }
             }
+            libvlc.libvlc_media_tracks_release(tracksPointer.getValue(), numberOfTracks);
         }
         return result;
     }
