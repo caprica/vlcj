@@ -854,6 +854,7 @@ public class MediaPlayerFactory {
      * @since libvlc 3.0.0
      */
     public String getCodecDescription(libvlc_track_type_t type, int codec) {
+        logger.debug("getCodecDescription(type={},codec={})", type, codec);
         if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
             return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
         }
