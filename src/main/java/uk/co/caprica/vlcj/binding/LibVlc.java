@@ -680,6 +680,16 @@ public interface LibVlc extends Library {
     void libvlc_media_tracks_release(Pointer p_tracks, int i_count);
 
     /**
+     * Get the media type of the media descriptor object.
+     *
+     * @since LibVLC 3.0.0 and later.
+     *
+     * @param p_md media descriptor object
+     * @return media type
+     */
+    int libvlc_media_get_type(libvlc_media_t p_md);
+
+    /**
      * Get codec description from media elementary stream.
      *
      * @param i_type i_type from libvlc_media_track_t
