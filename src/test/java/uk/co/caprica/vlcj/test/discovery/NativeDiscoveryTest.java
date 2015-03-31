@@ -43,7 +43,7 @@ public class NativeDiscoveryTest {
         boolean found = new NativeDiscovery().discover();
         logger.debug("found={}", found);
         if(found) {
-            logger.debug("Version: {}" + LibVlcFactory.factory().create().libvlc_get_version());
+            logger.debug("Version: {}", LibVlcFactory.factory().create().libvlc_get_version());
         }
     }
 }
