@@ -39,11 +39,15 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_close_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_open_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_read_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_seek_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
@@ -419,6 +423,33 @@ public interface LibVlc extends Library {
      * @return the newly created media or NULL on error
      */
     libvlc_media_t libvlc_media_new_path(libvlc_instance_t p_instance, String path);
+
+    /**
+     * Create a media with custom callbacks to read the data from.
+     * <p>
+     * If open_cb is NULL, the opaque pointer will be passed to read_cb,
+     * seek_cb and close_cb, and the stream size will be treated as unknown.
+     * <p>
+     * The callbacks may be called asynchronously (from another thread).
+     * A single stream instance need not be reentrant. However the open_cb needs to
+     * be reentrant if the media is used by multiple player instances.
+     * <p>
+     * <strong>The callbacks may be used until all or any player instances
+     * that were supplied the media item are stopped.</strong>
+     * <p>
+     * @see #libvlc_media_release(libvlc_media_t)
+     *
+     * @since LibVLC 3.0.0 and later.
+     *
+     * @param instance LibVLC instance
+     * @param open_cb callback to open the custom bitstream input media
+     * @param read_cb callback to read data (must not be NULL)
+     * @param seek_cb callback to seek, or NULL if seeking is not supported
+     * @param close_cb callback to close the media, or NULL if unnecessary
+     * @param opaque data pointer for the open callback
+     * @return the newly created media or NULL on error
+     */
+    libvlc_media_t libvlc_media_new_callbacks(libvlc_instance_t instance, libvlc_media_open_cb open_cb, libvlc_media_read_cb read_cb, libvlc_media_seek_cb seek_cb, libvlc_media_close_cb close_cb, Pointer opaque);
 
     /**
      * Create a media as an empty node with a given name.
