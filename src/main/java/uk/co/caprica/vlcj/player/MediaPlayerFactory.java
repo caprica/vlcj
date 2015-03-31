@@ -178,7 +178,7 @@ public class MediaPlayerFactory {
         "For libvlc to function correctly the vlc plugins must be available, there are a number of different ways to achieve this:\n" +
         " 1. Make sure the plugins are installed in the \"<libvlc-path>/{2}\" directory, this should be the case with a normal vlc installation.\n" +
         " 2. Set the VLC_PLUGIN_PATH operating system environment variable to point to \"<plugins-path>\".\n\n" +
-        "More information may be available in the log, specify -Dvlcj.log=DEBUG on the command-line when starting your application.\n\n";
+        "More information may be available in the log.\n\n";
 
     /**
      * Native library interface.

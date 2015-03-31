@@ -70,7 +70,7 @@ public class LibVlcFactory {
         "LD_LIBRARY_PATH is the only one that would not require root privileges.\n\n" +
         "Finally, it is not possible to mix CPU architectures - it is not possible for a 64-bit Java Virtual Machine to load\n" +
         "32-bit native libraries.\n\n" +
-        "More information may be available in the log, specify -Dvlcj.log=DEBUG on the command-line when starting your application.\n";
+        "More information may be available in the log.\n";
 
     /**
      * True if the access to the native library should be synchronised.

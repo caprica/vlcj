@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.test.discovery;
 
+import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +38,7 @@ public class NativeDiscoveryTest {
     private static final Logger logger = LoggerFactory.getLogger(NativeDiscoveryTest.class);
 
     public static void main(String[] args) {
-        System.setProperty("vlcj.log", "DEBUG");
+        BasicConfigurator.configure();
         // Create a discovery component that uses the default provided discovery strategies
         boolean found = new NativeDiscovery().discover();
         logger.debug("found={}", found);
