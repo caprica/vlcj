@@ -40,7 +40,7 @@ public class FileInputStreamMedia extends NonSeekableInputStreamMedia {
      * @param file file to read media data from
      * @param mediaOptions zero or more media options
      */
-    public FileInputStreamMedia(File file, String mediaOptions) {
+    public FileInputStreamMedia(File file, String... mediaOptions) {
         super(mediaOptions);
         this.file = file;
     }
@@ -52,7 +52,7 @@ public class FileInputStreamMedia extends NonSeekableInputStreamMedia {
      * @param ioBufferSize IO buffer size
      * @param mediaOptions zero or more media options
      */
-    public FileInputStreamMedia(File file, int ioBufferSize, String mediaOptions) {
+    public FileInputStreamMedia(File file, int ioBufferSize, String... mediaOptions) {
         super(ioBufferSize, mediaOptions);
         this.file = file;
     }
