@@ -73,6 +73,9 @@ import uk.co.caprica.vlcj.player.condition.BeforeConditionAbortedException;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventFactory;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
+import uk.co.caprica.vlcj.player.media.Media;
+import uk.co.caprica.vlcj.player.media.callback.CallbackMedia;
+import uk.co.caprica.vlcj.player.media.simple.SimpleMedia;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
 import uk.co.caprica.vlcj.version.Version;
 
@@ -189,14 +192,12 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     private final AtomicBoolean released = new AtomicBoolean();
 
     /**
-     * MRL that was last played.
+     * Media that was last played (including media options).
+     * <p>
+     * This reference also serves to keep the media instance pinned and prevented from garbage
+     * collection - this is critical if the media is using native callbacks.
      */
-    private String lastPlayedMedia;
-
-    /**
-     * Media options for the MRL that was last played.
-     */
-    private String[] lastPlayedMediaOptions;
+    private Media lastPlayedMedia;
 
     /**
      * Create a new media player.
@@ -249,8 +250,14 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public boolean playMedia(String mrl, String... mediaOptions) {
         logger.debug("playMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
+        return playMedia(new SimpleMedia(mrl, mediaOptions));
+    }
+
+    @Override
+    public boolean playMedia(Media media) {
+        logger.debug("playMedia(media={})", media);
         // First 'prepare' the media...
-        if(prepareMedia(mrl, mediaOptions)) {
+        if(prepareMedia(media)) {
             // ...then play it
             play();
             return true;
@@ -263,14 +270,26 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public boolean prepareMedia(String mrl, String... mediaOptions) {
         logger.debug("prepareMedia(mrl={},mediaOptions={})", mrl, Arrays.toString(mediaOptions));
-        return setMedia(mrl, mediaOptions);
+        return prepareMedia(new SimpleMedia(mrl, mediaOptions));
+    }
+
+    @Override
+    public boolean prepareMedia(Media media) {
+        logger.debug("prepareMedia(media={})", media);
+        return setMedia(media);
     }
 
     @Override
     public boolean startMedia(String mrl, String... mediaOptions) {
         logger.debug("startMedia(mrl={}, mediaOptions={})", mrl, Arrays.toString(mediaOptions));
+        return startMedia(new SimpleMedia(mrl, mediaOptions));
+    }
+
+    @Override
+    public boolean startMedia(Media media) {
+        logger.debug("startMedia(media={})", media);
         // First 'prepare' the media...
-        if(prepareMedia(mrl, mediaOptions)) {
+        if(prepareMedia(media)) {
             // ...then play it and wait for it to start (or error)
             return new MediaPlayerLatch(this).play();
         }
@@ -1980,15 +1999,15 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
      * This method cleans up the previous media if there was one before associating new media with
      * the media player.
      *
-     * @param media media resource locator (MRL)
-     * @param mediaOptions zero or more media options
+     * @param media media and options
      * @throws IllegalArgumentException if the supplied MRL could not be parsed
      */
-    private boolean setMedia(String media, String... mediaOptions) {
-        logger.debug("setMedia(media={},mediaOptions={})", media, Arrays.toString(mediaOptions));
-        // Remember the new MRL and options for possible replay later
+    private boolean setMedia(Media media) {
+        logger.debug("setMedia(media={})", media);
+        // Remember the the media and options for possible replay later (also to keep the media
+        // instance pinned to prevent it from being garbage collected - critical when using the
+        // native media callbacks)
         this.lastPlayedMedia = media;
-        this.lastPlayedMediaOptions = mediaOptions;
         // If there is a current media, clean it up
         if(mediaInstance != null) {
             // Release the media event listener
@@ -1999,17 +2018,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         }
         // Reset sub-items
         subItemIndex = -1;
-        // Encode the MRL if necessary (if it is a local file that contains Unicode characters)
-        media = MediaResourceLocator.encodeMrl(media);
-        // Create new media...
-        if(MediaResourceLocator.isLocation(media)) {
-            logger.debug("Treating mrl as a location");
-            mediaInstance = libvlc.libvlc_media_new_location(instance, media);
-        }
-        else {
-            logger.debug("Treating mrl as a path");
-            mediaInstance = libvlc.libvlc_media_new_path(instance, media);
-        }
+        // Create the native media handle for the given media
+        mediaInstance = createMediaInstance(media);
         logger.debug("mediaInstance={}", mediaInstance);
         if(mediaInstance != null) {
             // Set the standard media options (if any)...
@@ -2020,8 +2030,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                 }
             }
             // Set the particular media options (if any)...
-            if(mediaOptions != null) {
-                for(String mediaOption : mediaOptions) {
+            if(media.mediaOptions() != null) {
+                for(String mediaOption : media.mediaOptions()) {
                     logger.debug("mediaOption={}", mediaOption);
                     libvlc.libvlc_media_add_option(mediaInstance, mediaOption);
                 }
@@ -2038,6 +2048,43 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         libvlcMediaStats = new libvlc_media_stats_t();
         boolean result = mediaInstance != null;
         logger.debug("result={}", result);
+        return result;
+    }
+
+    /**
+     * Create a native media handle for the given media.
+     *
+     * @param media media
+     * @return native media handle
+     */
+    private libvlc_media_t createMediaInstance(Media media) {
+        logger.debug("createMediaInstance(media={})", media);
+        // Create new media...
+        libvlc_media_t result;
+        if (media instanceof SimpleMedia) {
+            String mrl = ((SimpleMedia) media).mrl();
+            if(MediaResourceLocator.isLocation(mrl)) {
+                logger.debug("Treating mrl as a location");
+                result = libvlc.libvlc_media_new_location(instance, mrl);
+            }
+            else {
+                logger.debug("Treating mrl as a path");
+                result = libvlc.libvlc_media_new_path(instance, mrl);
+            }
+        }
+        else if (media instanceof CallbackMedia) {
+            CallbackMedia callbackMedia = (CallbackMedia)media;
+            result = libvlc.libvlc_media_new_callbacks(instance,
+                callbackMedia.getOpen(),
+                callbackMedia.getRead(),
+                callbackMedia.getSeek(),
+                callbackMedia.getClose(),
+                callbackMedia.getOpaque()
+            );
+        }
+        else {
+            throw new IllegalStateException("Don't know about media type " + media);
+        }
         return result;
     }
 
@@ -2248,7 +2295,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
      */
     private void resetMedia() {
         logger.debug("resetMedia()");
-        setMedia(lastPlayedMedia, lastPlayedMediaOptions);
+        setMedia(lastPlayedMedia);
     }
 
     /**

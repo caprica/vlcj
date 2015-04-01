@@ -40,6 +40,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
+import uk.co.caprica.vlcj.player.media.Media;
 
 /**
  * Specification for a media player component.
@@ -225,6 +226,24 @@ public interface MediaPlayer {
     boolean playMedia(String mrl, String... mediaOptions);
 
     /**
+     * Play a new media item.
+     * <p>
+     * The new media will begin play-back <em>asynchronously</em>. This means that some
+     * media player functions will likely not work if you invoke them immediately after
+     * invoking this method - you will in some circumstances need to wait for an appropriate
+     * event to be fired before some API functions will have an effect.
+     *
+     * <p>
+     * When playing files, depending on the run-time Operating System it may be necessary
+     * to pass a URL here (beginning with "file://") rather than a local file path. This
+     * should actually <em>not</em> be required.
+     *
+     * @param media media, with options
+     * @return <code>true</code> if the media item was created; <code>false</code> otherwise
+     */
+    boolean playMedia(Media media);
+
+    /**
      * Prepare a new media item for play-back, but do not begin playing.
      * <p>
      * When playing files, depending on the run-time Operating System it may be necessary
@@ -237,6 +256,17 @@ public interface MediaPlayer {
     boolean prepareMedia(String mrl, String... mediaOptions);
 
     /**
+     * Prepare a new media item for play-back, but do not begin playing.
+     * <p>
+     * When playing files, depending on the run-time Operating System it may be necessary
+     * to pass a URL here (beginning with "file://") rather than a local file path.
+     *
+     * @param media media, with options
+     * @return <code>true</code> if the media item was created; <code>false</code> otherwise
+     */
+    boolean prepareMedia(Media media);
+
+    /**
      * Play a new media item, with options, and wait for it to start playing or error.
      * <p>
      * This call will <strong>block</strong> until the media starts or errors.
@@ -246,6 +276,16 @@ public interface MediaPlayer {
      * @return <code>true</code> if the media started playing, <code>false</code> if the media failed to start because of an error
      */
     boolean startMedia(String mrl, String... mediaOptions);
+
+    /**
+     * Play a new media item, with options, and wait for it to start playing or error.
+     * <p>
+     * This call will <strong>block</strong> until the media starts or errors.
+     *
+     * @param media media, with options
+     * @return <code>true</code> if the media started playing, <code>false</code> if the media failed to start because of an error
+     */
+    boolean startMedia(Media media);
 
     /**
      * Parse local meta data from the current media.
