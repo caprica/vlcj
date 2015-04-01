@@ -46,6 +46,10 @@ Add the following Maven dependency to your own project pom.xml:
 News
 ----
 
+??/??/2015 Made new release 3.7.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
+check the github issues milestone for details. Play media using Java IO (LibVLC 3.0.0+)! Minor
+fixes and improvements.
+
 10/03/2015 Made new release 3.6.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
 check the github issues milestone for details. Minor fixes and improvements.
 
