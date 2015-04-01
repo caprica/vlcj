@@ -2190,7 +2190,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                     mediaPlayerEvent.notify(listener);
                 }
                 catch(Exception e) {
-                    logger.warn("Event listener {} threw an exception", e, listener);
+                    logger.warn("Event listener {} threw an exception {}", listener, e.getMessage());
                     // Continue with the next listener...
                 }
             }
