@@ -39,14 +39,14 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>3.6.0</version>
+    <version>3.7.0</version>
 </dependency>
 ```
 
 News
 ----
 
-??/??/2015 Made new release 3.7.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
+25/04/2015 Made new release 3.7.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
 check the github issues milestone for details. Play media using Java IO (LibVLC 3.0.0+)! Minor
 fixes and improvements.
 
@@ -55,28 +55,6 @@ check the github issues milestone for details. Minor fixes and improvements.
 
 02/03/2015 vlcj-pro released, free time-limited trial packages are available from the official
 [vlcj-pro](http://t.co/Gv04rAta9c) product page.
-
-01/03/2015 Made new release 3.5.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
-check the github issues milestone for details. Mostly minor changes to support vlcj-pro.
-
-26/02/2015 Made new release 3.4.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
-check the github issues milestone for details.
-
-13/02/2015 Made new release 3.3.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
-use SLF4J API rather than bespoke logger, minor bug fixes.
-
-05/02/2015 New product announcement [vlcj-pro](http://capricasoftware.co.uk/#/projects/vlcj-pro),
-a robust out-of-process media player solution for vlcj.
-
-01/02/2015 Made new release 3.2.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
-New meta data attributes, new codec description API, new audio device enumeration API, new media
-list player end reached event, minor documentation fixes.
-
-26/11/2014 Made new release 3.1.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj).
-
-10/01/2014 Made new release 3.0.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
-new audio equalizer API, new native full-screen implementation for Windows,
-some little-used deprecated features removed, minor bugs fixed.
 
 Version 3.0.0+ of vlcj requires version 2.1.0+ of vlc, earlier versions of vlc
 are *not* supported and will *not* work.
