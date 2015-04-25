@@ -163,8 +163,14 @@ public class MediaPlayerFactory {
             }
         }
         // With recent VLC/JDK it seems necessary to do this (it will be silently ignored on non-
-        // X platforms)
-        LibXUtil.initialise();
+        // X platforms) - it can however cause problems if using the JVM splash-screen options
+        // Ultimately this needs more investigation, it may no longer be necessary to do this with
+        // VLC 3.0.0+
+        String initX = System.getProperty("VLCJ_INITX");
+        logger.debug("initX={}", initX);
+        if(!"no".equalsIgnoreCase(initX)) {
+            LibXUtil.initialise();
+        }
     }
 
     /**
