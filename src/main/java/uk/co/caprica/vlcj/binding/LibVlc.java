@@ -1449,7 +1449,57 @@ public interface LibVlc extends Library {
      * @param p_mi the media player
      * @return list containing description of available titles
      */
+    @Deprecated
     libvlc_track_description_t libvlc_video_get_title_description(libvlc_media_player_t p_mi);
+
+    /**
+     * Get the full description of available titles
+     *
+     * @since LibVLC 3.0.0 and later.
+     *
+     * @param p_mi the media player
+     * @param address to store an allocated array of title descriptions
+     *        descriptions (must be freed with libvlc_title_descriptions_release()
+     *        by the caller) [OUT]
+     *
+     * @return the number of titles (-1 on error)
+     */
+    int libvlc_media_player_get_full_title_descriptions(libvlc_media_player_t p_mi, Pointer titles);
+
+    /**
+     * Release title descriptions.
+     *
+     * @param title description array to release
+     * @param number of title descriptions to release
+     *
+     * @since LibVLC 3.0.0 and later
+     */
+    void libvlc_title_descriptions_release(Pointer p_titles, int i_count);
+
+    /**
+     * Get the full description of available chapters.
+     *
+     * @param p_mi the media player
+     * @param index of the title to query for chapters
+     * @param address to store an allocated array of chapter descriptions
+     *        descriptions (must be freed with libvlc_chapter_descriptions_release()
+     *        by the caller) [OUT]
+     *
+     * @return the number of chapters (-1 on error)
+     *
+     * @since LibVLC 3.0.0 and later.
+     */
+    int libvlc_media_player_get_full_chapter_descriptions(libvlc_media_player_t p_mi, int i_chapters_of_title, Pointer pp_chapters);
+
+    /**
+     * Release chapter descriptions.
+     *
+     * @param chapter description array to release
+     * @param number of chapter descriptions to release
+     *
+     * @since LibVLC 3.0.0 and later
+     */
+    void libvlc_chapter_descriptions_release(Pointer p_chapters, int i_count);
 
     /**
      * Get the description of available chapters for specific title.
@@ -1458,6 +1508,7 @@ public interface LibVlc extends Library {
      * @param i_title selected title
      * @return list containing description of available chapter for title i_title
      */
+    @Deprecated
     libvlc_track_description_t libvlc_video_get_chapter_description(libvlc_media_player_t p_mi, int i_title);
 
     /**
