@@ -40,7 +40,7 @@ public class AudioTrackInfo extends TrackInfo {
     private final int rate;
 
     /**
-     * Create a new audio track info
+     * Create a new audio track info.
      *
      * @param codec audio codec
      * @param originalCodec original audio codec
