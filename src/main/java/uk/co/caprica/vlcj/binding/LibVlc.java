@@ -1464,7 +1464,7 @@ public interface LibVlc extends Library {
      *
      * @return the number of titles (-1 on error)
      */
-    int libvlc_media_player_get_full_title_descriptions(libvlc_media_player_t p_mi, Pointer titles);
+    int libvlc_media_player_get_full_title_descriptions(libvlc_media_player_t p_mi, PointerByReference titles);
 
     /**
      * Release title descriptions.
@@ -1489,7 +1489,7 @@ public interface LibVlc extends Library {
      *
      * @since LibVLC 3.0.0 and later.
      */
-    int libvlc_media_player_get_full_chapter_descriptions(libvlc_media_player_t p_mi, int i_chapters_of_title, Pointer pp_chapters);
+    int libvlc_media_player_get_full_chapter_descriptions(libvlc_media_player_t p_mi, int i_chapters_of_title, PointerByReference pp_chapters);
 
     /**
      * Release chapter descriptions.

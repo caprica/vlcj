@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 /**
@@ -36,7 +37,7 @@ public class libvlc_chapter_description_t extends Structure {
 
     public long i_time_offset; // ms
     public long i_duration; // ms
-    public String psz_name;
+    public Pointer psz_name;
 
     @Override
     protected List<String> getFieldOrder() {

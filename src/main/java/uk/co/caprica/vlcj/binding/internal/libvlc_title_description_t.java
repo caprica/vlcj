@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 /**
@@ -35,8 +36,8 @@ public class libvlc_title_description_t extends Structure {
     public static class ByReference extends libvlc_title_description_t implements Structure.ByReference {}
 
     public long i_duration; // ms
-    public String psz_name;
-    boolean b_menu;
+    public Pointer psz_name;
+    public byte b_menu;
 
     @Override
     protected List<String> getFieldOrder() {
