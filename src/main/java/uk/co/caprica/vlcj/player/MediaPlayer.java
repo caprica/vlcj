@@ -1211,6 +1211,28 @@ public interface MediaPlayer {
     List<List<String>> getAllChapterDescriptions();
 
     /**
+     * Get the extended (or "full") title descriptions for the current title.
+     *
+     * @return collection of title descriptions
+     */
+    List<TitleDescription> getExtendedTitleDescriptions();
+
+    /**
+     * Get the extended (or "full") chapter descriptions for the current title.
+     *
+     * @return collection of chapter descriptions
+     */
+    List<ChapterDescription> getExtendedChapterDescriptions();
+
+    /**
+     * Get the extended (or "full") chapter descriptions for a particular title.
+     *
+     * @param title title id (this is <em>not</em> an index from zero, it must be a valid title identifier)
+     * @return collection of chapter descriptions
+     */
+    List<ChapterDescription> getExtendedChapterDescriptions(int title);
+
+    /**
      * Get the track (i.e. "elementary streams") information for the current media.
      * <p>
      * The media (if local) should first be parsed, see {@link #parseMedia()}, or be already

@@ -44,6 +44,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_chapter_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
@@ -62,6 +63,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_subtitle_track_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_title_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
@@ -80,6 +82,7 @@ import uk.co.caprica.vlcj.version.LibVlcVersion;
 import uk.co.caprica.vlcj.version.Version;
 
 import com.sun.jna.Pointer;
+import com.sun.jna.Structure;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
 
@@ -1192,6 +1195,56 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         List<List<String>> result = new ArrayList<List<String>>(Math.max(titleCount, 0));
         for(int i = 0; i < titleCount; i ++ ) {
             result.add(getChapterDescriptions(i));
+        }
+        return result;
+    }
+
+    @Override
+    public List<TitleDescription> getExtendedTitleDescriptions() {
+        logger.debug("getExtendedTitleDescriptions()");
+        List<TitleDescription> result;
+        PointerByReference titles = new PointerByReference();
+        int titleCount = libvlc.libvlc_media_player_get_full_title_descriptions(mediaPlayerInstance, titles);
+        if (titleCount != -1) {
+            result = new ArrayList<TitleDescription>(titleCount);
+            Pointer[] pointers = titles.getValue().getPointerArray(0, titleCount);
+            for (Pointer pointer : pointers) {
+                libvlc_title_description_t titleDescription = (libvlc_title_description_t) Structure.newInstance(libvlc_title_description_t.class, pointer);
+                titleDescription.read();
+                result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(libvlc, titleDescription.psz_name), titleDescription.b_menu != 0));
+            }
+            libvlc.libvlc_title_descriptions_release(titles.getValue(), titleCount);
+        }
+        else {
+            result = null;
+        }
+        return result;
+    }
+
+    @Override
+    public List<ChapterDescription> getExtendedChapterDescriptions() {
+        logger.debug("getExtendedChapterDescriptions()");
+        return getExtendedChapterDescriptions(getTitle());
+    }
+
+    @Override
+    public List<ChapterDescription> getExtendedChapterDescriptions(int title) {
+        logger.debug("getExtendedChapterDescriptions(title={})", title);
+        List<ChapterDescription> result;
+        PointerByReference chapters = new PointerByReference();
+        int chapterCount = libvlc.libvlc_media_player_get_full_chapter_descriptions(mediaPlayerInstance, title, chapters);
+        if (chapterCount != -1) {
+            result = new ArrayList<ChapterDescription>(chapterCount);
+            Pointer[] pointers = chapters.getValue().getPointerArray(0, chapterCount);
+            for (Pointer pointer : pointers) {
+                libvlc_chapter_description_t chapterDescription = (libvlc_chapter_description_t) Structure.newInstance(libvlc_chapter_description_t.class, pointer);
+                chapterDescription.read();
+                result.add(new ChapterDescription(chapterDescription.i_time_offset, chapterDescription.i_duration, NativeString.getNativeString(libvlc, chapterDescription.psz_name)));
+            }
+            libvlc.libvlc_chapter_descriptions_release(chapters.getValue(), chapterCount);
+        }
+        else {
+            result = null;
         }
         return result;
     }
