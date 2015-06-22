@@ -60,7 +60,7 @@ public class MediaInfoTest extends VlcjTest {
                     System.out.println("Chapter Descriptions " + i + ": " + mediaPlayer.getChapterDescriptions(i));
                 }
                 System.out.println("       Extended Titles: " + mediaPlayer.getExtendedTitleDescriptions());
-                System.out.println("     Extended Chapters: " + mediaPlayer.getExtendedChapterDescriptions(0));
+                System.out.println("     Extended Chapters: " + mediaPlayer.getExtendedChapterDescriptions());
             }
         });
 
