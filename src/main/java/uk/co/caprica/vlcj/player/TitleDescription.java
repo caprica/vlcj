@@ -90,7 +90,7 @@ public class TitleDescription implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder(60);
         sb.append(getClass().getSimpleName()).append('[');
-        sb.append("duration=").append(duration).append(']');
+        sb.append("duration=").append(duration).append(',');
         sb.append("name=").append(name).append(',');
         sb.append("menu=").append(menu).append(']');
         return sb.toString();
