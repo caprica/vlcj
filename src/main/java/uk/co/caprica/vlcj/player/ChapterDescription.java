@@ -91,7 +91,7 @@ public class ChapterDescription implements Serializable {
         StringBuilder sb = new StringBuilder(60);
         sb.append(getClass().getSimpleName()).append('[');
         sb.append("offset=").append(offset).append(',');
-        sb.append("duration=").append(duration).append(']');
+        sb.append("duration=").append(duration).append(',');
         sb.append("name=").append(name).append(']');
         return sb.toString();
     }
