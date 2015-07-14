@@ -19,12 +19,6 @@
 
 package uk.co.caprica.vlcj.binding;
 
-import com.sun.jna.Library;
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import com.sun.jna.ptr.IntByReference;
-import com.sun.jna.ptr.PointerByReference;
-
 import uk.co.caprica.vlcj.Info;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_drain_cb;
@@ -63,6 +57,12 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+
+import com.sun.jna.Library;
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
+import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
 
 /**
  * JNA interface to the libvlc native library.
@@ -1458,7 +1458,7 @@ public interface LibVlc extends Library {
      * @since LibVLC 3.0.0 and later.
      *
      * @param p_mi the media player
-     * @param address to store an allocated array of title descriptions
+     * @param titles address to store an allocated array of title descriptions
      *        descriptions (must be freed with libvlc_title_descriptions_release()
      *        by the caller) [OUT]
      *
@@ -1469,8 +1469,8 @@ public interface LibVlc extends Library {
     /**
      * Release title descriptions.
      *
-     * @param title description array to release
-     * @param number of title descriptions to release
+     * @param p_titles title description array to release
+     * @param i_count number of title descriptions to release
      *
      * @since LibVLC 3.0.0 and later
      */
@@ -1480,8 +1480,8 @@ public interface LibVlc extends Library {
      * Get the full description of available chapters.
      *
      * @param p_mi the media player
-     * @param index of the title to query for chapters (uses current title if set to -1)
-     * @param address to store an allocated array of chapter descriptions
+     * @param i_chapters_of_title index of the title to query for chapters (uses current title if set to -1)
+     * @param pp_chapters address to store an allocated array of chapter descriptions
      *        descriptions (must be freed with libvlc_chapter_descriptions_release()
      *        by the caller) [OUT]
      *
@@ -1494,8 +1494,8 @@ public interface LibVlc extends Library {
     /**
      * Release chapter descriptions.
      *
-     * @param chapter description array to release
-     * @param number of chapter descriptions to release
+     * @param p_chapters chapter description array to release
+     * @param i_count number of chapter descriptions to release
      *
      * @since LibVLC 3.0.0 and later
      */
