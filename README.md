@@ -11,7 +11,8 @@ You get more than just simple bindings, you also get a higher level framework
 that hides a lot of the complexities of working with LibVLC.
 
 vlcj is primarily developed and therefore extensively tested on Linux - it does
-also work just fine on Windows and MacOSX.
+also work just fine on Windows and MacOSX, although there may be some
+limitations on OSX.
 
 At least JDK 1.6 is required, and it works without changes on JDK 1.7+.
 
@@ -25,7 +26,7 @@ are *not* supported and will *not* work.
 Version 3.0.0+ of vlcj requires version 3.5.2 of JNA.
 
 Some features of version 3.0.0+ of vlcj (such as the new audio equalizer API)
-require version 2.2.0+ of VLC (which has *not* yet been released).
+require version 2.2.0+ of VLC.
 
 If you still need to use VLC 2.0.x then you must stay with vlcj 2.x.x instead
 of upgrading to the new vlcj 3.0.0 series.
