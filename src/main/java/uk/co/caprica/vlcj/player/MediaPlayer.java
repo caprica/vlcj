@@ -1213,14 +1213,14 @@ public interface MediaPlayer {
     /**
      * Get the extended (or "full") title descriptions for the current title.
      *
-     * @return collection of title descriptions
+     * @return collection of title descriptions, may be empty (but not <code>null</code>)
      */
     List<TitleDescription> getExtendedTitleDescriptions();
 
     /**
      * Get the extended (or "full") chapter descriptions for the current title.
      *
-     * @return collection of chapter descriptions
+     * @return collection of chapter descriptions, may be empty (but not <code>null</code>)
      */
     List<ChapterDescription> getExtendedChapterDescriptions();
 
@@ -1228,7 +1228,7 @@ public interface MediaPlayer {
      * Get the extended (or "full") chapter descriptions for a particular title.
      *
      * @param title title id (this is <em>not</em> an index from zero, it must be a valid title identifier)
-     * @return collection of chapter descriptions
+     * @return collection of chapter descriptions, may be empty (but not <code>null</code>)
      */
     List<ChapterDescription> getExtendedChapterDescriptions(int title);
 
