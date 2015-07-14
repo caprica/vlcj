@@ -1203,17 +1203,22 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public List<TitleDescription> getExtendedTitleDescriptions() {
         logger.debug("getExtendedTitleDescriptions()");
         List<TitleDescription> result;
-        PointerByReference titles = new PointerByReference();
-        int titleCount = libvlc.libvlc_media_player_get_full_title_descriptions(mediaPlayerInstance, titles);
-        if (titleCount != -1) {
-            result = new ArrayList<TitleDescription>(titleCount);
-            Pointer[] pointers = titles.getValue().getPointerArray(0, titleCount);
-            for (Pointer pointer : pointers) {
-                libvlc_title_description_t titleDescription = (libvlc_title_description_t) Structure.newInstance(libvlc_title_description_t.class, pointer);
-                titleDescription.read();
-                result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(libvlc, titleDescription.psz_name), titleDescription.b_menu != 0));
+        if (LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
+            PointerByReference titles = new PointerByReference();
+            int titleCount = libvlc.libvlc_media_player_get_full_title_descriptions(mediaPlayerInstance, titles);
+            if (titleCount != -1) {
+                result = new ArrayList<TitleDescription>(titleCount);
+                Pointer[] pointers = titles.getValue().getPointerArray(0, titleCount);
+                for (Pointer pointer : pointers) {
+                    libvlc_title_description_t titleDescription = (libvlc_title_description_t) Structure.newInstance(libvlc_title_description_t.class, pointer);
+                    titleDescription.read();
+                    result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(libvlc, titleDescription.psz_name), titleDescription.b_menu != 0));
+                }
+                libvlc.libvlc_title_descriptions_release(titles.getValue(), titleCount);
             }
-            libvlc.libvlc_title_descriptions_release(titles.getValue(), titleCount);
+            else {
+                result = new ArrayList<TitleDescription>(0);
+            }
         }
         else {
             result = new ArrayList<TitleDescription>(0);
@@ -1231,17 +1236,22 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public List<ChapterDescription> getExtendedChapterDescriptions(int title) {
         logger.debug("getExtendedChapterDescriptions(title={})", title);
         List<ChapterDescription> result;
-        PointerByReference chapters = new PointerByReference();
-        int chapterCount = libvlc.libvlc_media_player_get_full_chapter_descriptions(mediaPlayerInstance, title, chapters);
-        if (chapterCount != -1) {
-            result = new ArrayList<ChapterDescription>(chapterCount);
-            Pointer[] pointers = chapters.getValue().getPointerArray(0, chapterCount);
-            for (Pointer pointer : pointers) {
-                libvlc_chapter_description_t chapterDescription = (libvlc_chapter_description_t) Structure.newInstance(libvlc_chapter_description_t.class, pointer);
-                chapterDescription.read();
-                result.add(new ChapterDescription(chapterDescription.i_time_offset, chapterDescription.i_duration, NativeString.getNativeString(libvlc, chapterDescription.psz_name)));
+        if (LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
+            PointerByReference chapters = new PointerByReference();
+            int chapterCount = libvlc.libvlc_media_player_get_full_chapter_descriptions(mediaPlayerInstance, title, chapters);
+            if (chapterCount != -1) {
+                result = new ArrayList<ChapterDescription>(chapterCount);
+                Pointer[] pointers = chapters.getValue().getPointerArray(0, chapterCount);
+                for (Pointer pointer : pointers) {
+                    libvlc_chapter_description_t chapterDescription = (libvlc_chapter_description_t) Structure.newInstance(libvlc_chapter_description_t.class, pointer);
+                    chapterDescription.read();
+                    result.add(new ChapterDescription(chapterDescription.i_time_offset, chapterDescription.i_duration, NativeString.getNativeString(libvlc, chapterDescription.psz_name)));
+                }
+                libvlc.libvlc_chapter_descriptions_release(chapters.getValue(), chapterCount);
             }
-            libvlc.libvlc_chapter_descriptions_release(chapters.getValue(), chapterCount);
+            else {
+                result = new ArrayList<ChapterDescription>(0);
+            }
         }
         else {
             result = new ArrayList<ChapterDescription>(0);
