@@ -40,12 +40,16 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>3.7.0</version>
+    <version>3.8.0</version>
 </dependency>
 ```
 
 News
 ----
+
+14/07/2015 Made new release 3.8.0 (New Horizons edition) at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
+check the github issues milestone for details. New extended chapter and title information
+(LibVLC 3.0.0+). Minor bug fixes and improvements.
 
 25/04/2015 Made new release 3.7.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
 check the github issues milestone for details. Play media using Java IO (LibVLC 3.0.0+)! Minor
@@ -80,7 +84,8 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available:
 
-* [3.7.0 (current)](http://caprica.github.com/vlcj/javadoc/3.7.0/index.html "3.7.0 Javadoc")
+* [3.8.0 (current)](http://caprica.github.com/vlcj/javadoc/3.8.0/index.html "3.8.0 Javadoc")
+* [3.7.0](http://caprica.github.com/vlcj/javadoc/3.7.0/index.html "3.7.0 Javadoc")
 * [3.6.0](http://caprica.github.com/vlcj/javadoc/3.6.0/index.html "3.6.0 Javadoc")
 * [3.5.0](http://caprica.github.com/vlcj/javadoc/3.5.0/index.html "3.5.0 Javadoc")
 * [3.4.0](http://caprica.github.com/vlcj/javadoc/3.4.0/index.html "3.4.0 Javadoc")
