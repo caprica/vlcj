@@ -19,6 +19,12 @@
 
 package uk.co.caprica.vlcj.binding;
 
+import com.sun.jna.Library;
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
+import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
+
 import uk.co.caprica.vlcj.Info;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_drain_cb;
@@ -57,12 +63,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-
-import com.sun.jna.Library;
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import com.sun.jna.ptr.IntByReference;
-import com.sun.jna.ptr.PointerByReference;
 
 /**
  * JNA interface to the libvlc native library.
@@ -1480,7 +1480,7 @@ public interface LibVlc extends Library {
      * Get the full description of available chapters.
      *
      * @param p_mi the media player
-     * @param index of the title to query for chapters
+     * @param index of the title to query for chapters (uses current title if set to -1)
      * @param address to store an allocated array of chapter descriptions
      *        descriptions (must be freed with libvlc_chapter_descriptions_release()
      *        by the caller) [OUT]
