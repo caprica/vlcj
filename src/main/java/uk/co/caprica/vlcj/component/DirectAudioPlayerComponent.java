@@ -297,6 +297,22 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
     }
 
     @Override
+    public void corked(MediaPlayer mediaPlayer, boolean corked) {
+    }
+
+    @Override
+    public void muted(MediaPlayer mediaPlayer, boolean muted) {
+    }
+
+    @Override
+    public void volumeChanged(MediaPlayer mediaPlayer, float volume) {
+    }
+
+    @Override
+    public void audioDeviceChanged(MediaPlayer mediaPlayer, String audioDevice) {
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
     }
 

@@ -146,6 +146,26 @@ public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener 
     }
 
     @Override
+    public void corked(MediaPlayer mediaPlayer, boolean corked) {
+        logger.debug("corked(mediaPlayer={},corked={})", mediaPlayer, corked);
+    }
+
+    @Override
+    public void muted(MediaPlayer mediaPlayer, boolean muted) {
+        logger.debug("muted(mediaPlayer={},muted={})", mediaPlayer, muted);
+    }
+
+    @Override
+    public void volumeChanged(MediaPlayer mediaPlayer, float volume) {
+        logger.debug("volumeChanged(mediaPlayer={},volume={})", mediaPlayer, volume);
+    }
+
+    @Override
+    public void audioDeviceChanged(MediaPlayer mediaPlayer, String audioDevice) {
+        logger.debug("audioDeviceChanged(mediaPlayer={},audioDevice={})", mediaPlayer, audioDevice);
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
         logger.debug("error(mediaPlayer={})", mediaPlayer);
     }

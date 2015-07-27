@@ -208,6 +208,41 @@ public interface MediaPlayerEventListener {
     void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id);
 
     /**
+     * The media player was corked/un-corked.
+     * <p>
+     * Corking/un-corking can occur e.g. when another media player (or some
+     * other application) starts/stops playing media.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param corked <code>true</code> if corked; otherwise <code>false</code>
+     */
+    void corked(MediaPlayer mediaPlayer, boolean corked);
+
+    /**
+     * The audio was muted/un-muted.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param muted <code>true</code> if muted; otherwise <code>false</code>
+     */
+    void muted(MediaPlayer mediaPlayer, boolean muted);
+
+    /**
+     * The volume changed.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param volume new volume
+     */
+    void volumeChanged(MediaPlayer mediaPlayer, float volume);
+
+    /**
+     * The audio device changed.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param audioDevice new audio device
+     */
+    void audioDeviceChanged(MediaPlayer mediaPlayer, String audioDevice);
+
+    /**
      * An error occurred.
      *
      * @param mediaPlayer media player that raised the event

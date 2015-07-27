@@ -25,6 +25,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
 import uk.co.caprica.vlcj.binding.internal.media_meta_changed;
 import uk.co.caprica.vlcj.binding.internal.media_parsed_changed;
+import uk.co.caprica.vlcj.binding.internal.media_player_audio_device;
+import uk.co.caprica.vlcj.binding.internal.media_player_audio_volume;
 import uk.co.caprica.vlcj.binding.internal.media_player_buffering;
 import uk.co.caprica.vlcj.binding.internal.media_player_es_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
@@ -219,6 +221,42 @@ public class MediaPlayerEventFactory {
                 }
                 break;
 
+            case libvlc_MediaPlayerCorked:
+                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PLAYER_CORKED)) {
+                    result = new MediaPlayerCorkedEvent(mediaPlayer, true);
+                }
+                break;
+
+            case libvlc_MediaPlayerUncorked:
+                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PLAYER_CORKED)) {
+                    result = new MediaPlayerCorkedEvent(mediaPlayer, false);
+                }
+                break;
+
+            case libvlc_MediaPlayerMuted:
+                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PLAYER_MUTED)) {
+                    result = new MediaPlayerMutedEvent(mediaPlayer, true);
+                }
+                break;
+
+            case libvlc_MediaPlayerUnmuted:
+                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PLAYER_MUTED)) {
+                    result = new MediaPlayerMutedEvent(mediaPlayer, false);
+                }
+                break;
+
+            case libvlc_MediaPlayerAudioVolume:
+                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PLAYER_AUDIO_VOLUME)) {
+                    result = new MediaPlayerAudioVolumeEvent(mediaPlayer, ((media_player_audio_volume)event.u.getTypedValue(media_player_audio_volume.class)).volume);
+                }
+                break;
+
+            case libvlc_MediaPlayerAudioDevice:
+                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PLAYER_AUDIO_DEVICE)) {
+                    result = new MediaPlayerAudioDeviceEvent(mediaPlayer, ((media_player_audio_device)event.u.getTypedValue(media_player_audio_device.class)).device);
+                }
+                break;
+
             // === Events relating to the current media =============================
 
             case libvlc_MediaMetaChanged:
@@ -262,6 +300,7 @@ public class MediaPlayerEventFactory {
                     result = new MediaSubItemTreeAddedEvent(mediaPlayer, ((media_subitemtree_added)event.u.getTypedValue(media_subitemtree_added.class)).item);
                 }
                 break;
+
         }
         return result;
     }
