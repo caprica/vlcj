@@ -2349,7 +2349,9 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     private final class ResetMediaHandler extends MediaPlayerEventAdapter {
         @Override
         public void finished(MediaPlayer mediaPlayer) {
-            resetMedia();
+            if (subItemCount() == 0) {
+                resetMedia();
+            }
         }
     }
 
