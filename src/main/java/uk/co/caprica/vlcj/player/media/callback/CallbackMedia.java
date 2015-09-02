@@ -37,6 +37,8 @@ import com.sun.jna.Pointer;
  * implemented in Java code - steps must be taken to prevent instances of implementation classes
  * from being garbage collected otherwise the native code will crash when the Java object
  * disappears.</strong>
+ * <p>
+ * <em>Callback media requires LibVLC 3.0.0 or later.</em>
  */
 public interface CallbackMedia {
 
