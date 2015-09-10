@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.list;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
@@ -197,6 +198,15 @@ public interface MediaListPlayer {
      * @return MRL of the current item, or <code>null</code>
      */
     String currentMrl();
+
+    /**
+     * Get the native media player instance associated with this media list player.
+     * <p>
+     * Requires LibVLC 3.0.0 or later.
+     *
+     * @return handle to the native media player
+     */
+    libvlc_media_player_t getMediaPlayerInstance();
 
     /**
      * Release the media list player resources.
