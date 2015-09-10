@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.list;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
@@ -201,6 +202,9 @@ public interface MediaListPlayer {
 
     /**
      * Get the native media player instance associated with this media list player.
+     * <p>
+     * The returned media player instance must be released when it is no longer needed,
+     * see {@link LibVlc#libvlc_media_player_release(libvlc_media_player_t)}.
      * <p>
      * Requires LibVLC 3.0.0 or later.
      *
