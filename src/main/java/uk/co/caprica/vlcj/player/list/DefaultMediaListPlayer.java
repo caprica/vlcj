@@ -181,11 +181,7 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     @Override
     public void play() {
         logger.debug("play()");
-        // If there is an associated media player then make sure the video surface
-        // is attached
-        if(mediaPlayer instanceof EmbeddedMediaPlayer) {
-            ((EmbeddedMediaPlayer)mediaPlayer).attachVideoSurface();
-        }
+        attachVideoSurface();
         libvlc.libvlc_media_list_player_play(mediaListPlayerInstance);
     }
 
@@ -205,6 +201,7 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     public boolean playItem(int itemIndex) {
         logger.debug("playItem(itemIndex={})", itemIndex);
         if(mediaList != null && itemIndex >= 0 && itemIndex < mediaList.size()) {
+            attachVideoSurface();
             return libvlc.libvlc_media_list_player_play_item_at_index(mediaListPlayerInstance, itemIndex) == 0;
         }
         else {
@@ -370,6 +367,15 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
                 }
             }
             callback = null;
+        }
+    }
+
+    /**
+     * If there is an associated media player then make sure the video surface is attached.
+     */
+    private void attachVideoSurface() {
+        if(mediaPlayer instanceof EmbeddedMediaPlayer) {
+            ((EmbeddedMediaPlayer)mediaPlayer).attachVideoSurface();
         }
     }
 
