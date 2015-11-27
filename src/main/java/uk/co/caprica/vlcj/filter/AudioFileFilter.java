@@ -38,6 +38,7 @@ public class AudioFileFilter extends ExtensionFileFilter {
         "aif",
         "aifc",
         "aiff",
+        "amb",
         "amr",
         "aob",
         "ape",
