@@ -79,6 +79,8 @@ public final class MediaMetaData {
 
     private String discNumber;
 
+    private String discTotal;
+
     public String getTitle() {
         return title;
     }
@@ -279,6 +281,14 @@ public final class MediaMetaData {
         this.discNumber = discNumber;
     }
 
+    public String getDiscTotal() {
+        return discTotal;
+    }
+
+    public void setDiscTotal(String discTotal) {
+        this.discTotal = discTotal;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(300);
@@ -307,7 +317,8 @@ public final class MediaMetaData {
         sb.append("showName=").append(showName).append(',');
         sb.append("actors=").append(actors).append(',');
         sb.append("albumArtist=").append(albumArtist).append(',');
-        sb.append("discNumber=").append(discNumber).append(']');
+        sb.append("discNumber=").append(discNumber).append(',');
+        sb.append("discTotal=").append(discTotal).append(']');
         return sb.toString();
    }
 }

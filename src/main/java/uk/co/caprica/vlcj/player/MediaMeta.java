@@ -398,7 +398,7 @@ public interface MediaMeta {
      * Get the album artist meta data.
      *
      * @return album artist
-     * @since LibVLC 2.2.0
+     * @since LibVLC 3.0.0
      */
     String getAlbumArtist();
 
@@ -406,7 +406,7 @@ public interface MediaMeta {
      * Set the album artist meta data.
      *
      * @param albumArtist album artist
-     * @since LibVLC 2.2.0
+     * @since LibVLC 3.0.0
      */
     void setAlbumArtist(String albumArtist);
 
@@ -414,7 +414,7 @@ public interface MediaMeta {
      * Get the disc number meta data.
      *
      * @return disc number
-     * @since LibVLC 2.2.0
+     * @since LibVLC 3.0.0
      */
     String getDiscNumber();
 
@@ -422,9 +422,25 @@ public interface MediaMeta {
      * Set the disc number meta data.
      *
      * @param discNumber disc number
-     * @since LibVLC 2.2.0
+     * @since LibVLC 3.0.0
      */
     void setDiscNumber(String discNumber);
+
+    /**
+     * Get the disc total meta data.
+     *
+     * @return disc total
+     * @since LibVLC 3.0.0
+     */
+    String getDiscTotal();
+
+    /**
+     * Set the disc total meta data.
+     *
+     * @param discTotal disc total
+     * @since LibVLC 3.0.0
+     */
+    void setDiscTotal(String discTotal);
 
     /**
      * Load the artwork associated with this media.

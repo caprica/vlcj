@@ -375,6 +375,18 @@ class DefaultMediaMeta implements MediaMeta {
     }
 
     @Override
+    public String getDiscTotal() {
+        checkVersion(VERSION_300);
+        return getMeta(libvlc_meta_t.libvlc_meta_DiscTotal);
+    }
+
+    @Override
+    public void setDiscTotal(String discTotal) {
+        checkVersion(VERSION_300);
+        setMeta(libvlc_meta_t.libvlc_meta_DiscTotal, discTotal);
+    }
+
+    @Override
     public final BufferedImage getArtwork() {
         logger.debug("getArtwork()");
         if(artwork == null) {
@@ -443,6 +455,7 @@ class DefaultMediaMeta implements MediaMeta {
         if (actualVersion.atLeast(VERSION_300)) {
             result.setAlbumArtist(getAlbumArtist());
             result.setDiscNumber(getDiscNumber());
+            result.setDiscTotal(getDiscTotal());
         }
         return result;
     }
