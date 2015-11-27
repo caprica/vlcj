@@ -28,6 +28,7 @@ import uk.co.caprica.vlcj.binding.internal.media_parsed_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_audio_device;
 import uk.co.caprica.vlcj.binding.internal.media_player_audio_volume;
 import uk.co.caprica.vlcj.binding.internal.media_player_buffering;
+import uk.co.caprica.vlcj.binding.internal.media_player_chapter_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_es_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_media_changed;
@@ -254,6 +255,12 @@ public class MediaPlayerEventFactory {
             case libvlc_MediaPlayerAudioDevice:
                 if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PLAYER_AUDIO_DEVICE)) {
                     result = new MediaPlayerAudioDeviceEvent(mediaPlayer, ((media_player_audio_device)event.u.getTypedValue(media_player_audio_device.class)).device);
+                }
+                break;
+
+            case libvlc_MediaPlayerChapterChanged:
+                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PLAYER_CHAPTER_CHANGED)) {
+                    result = new MediaPlayerChapterChangedEvent(mediaPlayer, ((media_player_chapter_changed)event.u.getTypedValue(media_player_chapter_changed.class)).new_chapter);
                 }
                 break;
 

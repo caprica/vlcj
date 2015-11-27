@@ -348,6 +348,10 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     }
 
     @Override
+    public void chapterChanged(MediaPlayer mediaPlayer, int newChapter) {
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
     }
 

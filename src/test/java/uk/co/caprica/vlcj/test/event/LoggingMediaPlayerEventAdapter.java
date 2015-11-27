@@ -166,6 +166,11 @@ public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener 
     }
 
     @Override
+    public void chapterChanged(MediaPlayer mediaPlayer, int newChapter) {
+        logger.debug("chapterChanged(mediaPlayer={},newChapter={})", mediaPlayer, newChapter);
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
         logger.debug("error(mediaPlayer={})", mediaPlayer);
     }

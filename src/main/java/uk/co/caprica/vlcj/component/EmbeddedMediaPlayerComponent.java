@@ -566,6 +566,10 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     }
 
     @Override
+    public void chapterChanged(MediaPlayer mediaPlayer, int newChapter) {
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
     }
 

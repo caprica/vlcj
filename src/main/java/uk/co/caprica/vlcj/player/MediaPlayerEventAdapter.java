@@ -137,6 +137,10 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
+    public void chapterChanged(MediaPlayer mediaPlayer, int newChapter) {
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
     }
 

@@ -243,6 +243,14 @@ public interface MediaPlayerEventListener {
     void audioDeviceChanged(MediaPlayer mediaPlayer, String audioDevice);
 
     /**
+     * The chapter changed.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param newChapter new chapter
+     */
+    void chapterChanged(MediaPlayer mediaPlayer, int newChapter);
+
+    /**
      * An error occurred.
      *
      * @param mediaPlayer media player that raised the event

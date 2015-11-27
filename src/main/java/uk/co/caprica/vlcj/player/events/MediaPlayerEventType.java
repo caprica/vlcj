@@ -46,10 +46,12 @@ public enum MediaPlayerEventType {
     MEDIA_PLAYER_AUDIO_VOLUME      (0x0000000080000000L),
     MEDIA_PLAYER_AUDIO_DEVICE      (0x0000000100000000L),
 
-    NEW_MEDIA                      (0x0000000200000000L),
-    SUB_ITEM_PLAYED                (0x0000000400000000L),
-    SUB_ITEM_FINISHED              (0x0000000800000000L),
-    END_OF_SUB_ITEMS               (0x0000001000000000L),
+    MEDIA_PLAYER_CHAPTER_CHANGED   (0x0000000200000000L),
+
+    NEW_MEDIA                      (0x0000000400000000L),
+    SUB_ITEM_PLAYED                (0x0000000800000000L),
+    SUB_ITEM_FINISHED              (0x0000001000000000L),
+    END_OF_SUB_ITEMS               (0x0000002000000000L),
 
     ALL                            (0xffffffffffffffffL);
 
