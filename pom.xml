@@ -75,7 +75,7 @@
     </scm>
 
     <properties>
-        <jna.version>3.5.2</jna.version>
+        <jna.version>4.1.0</jna.version>
         <slf4j.version>1.7.10</slf4j.version>
         <sonar.exclusions>**/package-info.java,uk/co/caprica/vlcj/binding/**</sonar.exclusions>
         <sonar.language>java</sonar.language>
@@ -89,7 +89,7 @@
         </dependency>
         <dependency>
             <groupId>net.java.dev.jna</groupId>
-            <artifactId>platform</artifactId>
+            <artifactId>jna-platform</artifactId>
             <version>${jna.version}</version>
         </dependency>
         <dependency>
