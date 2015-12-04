@@ -1289,7 +1289,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     /**
      * Get track info using the new libvlc 2.1.0+ implementation.
      *
-     * @param set of desired track types
+     * @param types set of desired track types
      * @param media media descriptor
      * @return track info
      */
