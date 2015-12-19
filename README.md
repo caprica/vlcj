@@ -47,8 +47,12 @@ Add the following Maven dependency to your own project pom.xml:
 News
 ----
 
-12/08/2015 Made new release 3.9.0 (Mal edition) at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), fixes a
-YouTube issue, adds supports for new LibVLC 3.x audio volume/mute/cork events.
+20/12/2015 Made new release 3.10.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
+uses JNA 4.1.0, support new meta data and event exposed by LibVLC 3.x (not yet released), minor
+Javadoc update, minor fix to the media list player.
+
+12/08/2015 Made new release 3.9.0 (Mal edition) at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
+fixes a YouTube issue, adds supports for new LibVLC 3.x audio volume/mute/cork events.
 
 14/07/2015 Made new release 3.8.0 (New Horizons edition) at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
 check the github issues milestone for details. New extended chapter and title information
