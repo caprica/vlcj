@@ -50,6 +50,13 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
      */
     private final Logger logger = LoggerFactory.getLogger(AbstractNativeDiscoveryStrategy.class);
 
+    /**
+     * Name of the system environment variable containing the VLC plugin path location.
+     * <p>
+     * This is optional, and might not be set.
+     */
+    protected static final String PLUGIN_ENV_NAME = "VLC_PLUGIN_PATH";
+
     @Override
     public final String discover() {
         logger.debug("discover()");

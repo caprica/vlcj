@@ -42,11 +42,6 @@ public class DefaultMacNativeDiscoveryStrategy extends StandardNativeDiscoverySt
     };
 
     /**
-     * Name of the VLC plugin-path environment variable.
-     */
-    private static final String PLUGIN_ENV_NAME = "VLC_PLUGIN_PATH";
-
-    /**
      * Format string to prepare the plugin path environment variable value.
      */
     private static final String PLUGIN_PATH_FORMAT = "%s/../plugins";

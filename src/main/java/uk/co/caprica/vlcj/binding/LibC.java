@@ -133,4 +133,19 @@ public interface LibC extends Library {
      * @return process id
      */
     int getpid();
+
+    /**
+     * Closest Windows equivalent to {@link #setenv(String, String, int)}.
+     * <p>
+     * Note that after setting an environment variable, it will <em>not</em> show up via
+     * System#getenv even if it was successfully set.
+     * <p>
+     * Use with case, it is not guaranteed to be thread-safe.
+     * <p>
+     * <em>Only available on Windows.</em>
+     *
+     * @param envstring variable and value to set, in the format "variable=value", without quotes.
+     * @return zero on success, non-zero on error
+     */
+    int _putenv(String envstring);
 }
