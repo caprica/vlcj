@@ -40,12 +40,15 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>3.10.0</version>
+    <version>3.10.1</version>
 </dependency>
 ```
 
 News
 ----
+
+30/12/2015 Made new release 3.10.1 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
+fixes a problem finding VLC plugins on Windows after the upgrade to JNA 4.1.0.
 
 20/12/2015 Made new release 3.10.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
 uses JNA 4.1.0, support new meta data and event exposed by LibVLC 3.x (not yet released), minor
@@ -91,7 +94,8 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available:
 
-* [3.10.0 (current)](http://caprica.github.com/vlcj/javadoc/3.10.0/index.html "3.10.0 Javadoc")
+* [3.10.1 (current)](http://caprica.github.com/vlcj/javadoc/3.10.1/index.html "3.10.1 Javadoc")
+* [3.10.0](http://caprica.github.com/vlcj/javadoc/3.10.0/index.html "3.10.0 Javadoc")
 * [3.9.0](http://caprica.github.com/vlcj/javadoc/3.9.0/index.html "3.9.0 Javadoc")
 * [3.8.0](http://caprica.github.com/vlcj/javadoc/3.8.0/index.html "3.8.0 Javadoc")
 * [3.7.0](http://caprica.github.com/vlcj/javadoc/3.7.0/index.html "3.7.0 Javadoc")
