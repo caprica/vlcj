@@ -481,7 +481,7 @@ public class MediaList {
     /**
      * Release a native media instance.
      *
-     * @param mediaDescripor native media instance
+     * @param mediaDescriptor native media instance
      */
     private void releaseMediaDescriptor(libvlc_media_t mediaDescriptor) {
         logger.debug("releaseMediaDescriptor(mediaDescriptor={})", mediaDescriptor);
@@ -542,7 +542,7 @@ public class MediaList {
         /**
          * Create a runnable.
          *
-         * @param mediaPlayerEvent event to notify
+         * @param mediaListEvent event to notify
          */
         private NotifyEventListenersRunnable(MediaListEvent mediaListEvent) {
             this.mediaListEvent = mediaListEvent;
