@@ -2297,7 +2297,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                     // It is not sufficient to simply call play(), the MRL must explicitly
                     // be played again - this is the reason why the repeat play might not
                     // be seamless
-                    mediaPlayer.playMedia(mrl);
+                    mediaPlayer.playMedia(mrl, lastPlayedMedia.mediaOptions());
                 }
                 else {
                     logger.debug("Sub-items handling repeat");
