@@ -19,11 +19,14 @@
 
 package uk.co.caprica.vlcj.player.direct;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.concurrent.Semaphore;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import sun.nio.ch.DirectBuffer;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
@@ -127,7 +130,12 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     /**
      * Native memory buffers, one for each plane.
      */
-    private Memory[] nativeBuffers;
+    private ByteBuffer[] nativeBuffers;
+
+    /**
+     * Native memory pointers to each byte buffer.
+     */
+    private Pointer[] pointers;
 
     /**
      * Create a new media player.
@@ -179,7 +187,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     }
 
     @Override
-    public final Memory[] lock() {
+    public final ByteBuffer[] lock() {
         semaphore.acquireUninterruptibly();
         return nativeBuffers;
     }
@@ -218,9 +226,12 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
             // Memory must be aligned correctly (on a 32-byte boundary) for the libvlc
             // API functions (extra bytes are allocated to allow for enough memory if
             // the alignment needs to be changed)
-            nativeBuffers = new Memory[bufferFormat.getPlaneCount()];
+            nativeBuffers = new ByteBuffer[bufferFormat.getPlaneCount()];
+            pointers = new Pointer[bufferFormat.getPlaneCount()];
             for(int i = 0; i < bufferFormat.getPlaneCount(); i ++ ) {
-                nativeBuffers[i] = new Memory(pitchValues[i] * lineValues[i] + 32).align(32);
+                ByteBuffer buffer = ByteBufferFactory.allocateAlignedBuffer(pitchValues[i] * lineValues[i]);
+                nativeBuffers[i] = buffer;
+                pointers[i] = Pointer.createConstant(((DirectBuffer) buffer).address());
             }
             logger.trace("format finished");
             return pitchValues.length;
@@ -260,7 +271,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
             semaphore.acquireUninterruptibly();
             logger.trace("acquired");
             // Set the pre-allocated buffers to use for each plane
-            planes.getPointer().write(0, nativeBuffers, 0, nativeBuffers.length);
+            planes.getPointer().write(0, pointers, 0, pointers.length);
             logger.trace("lock finished");
             return null;
         }

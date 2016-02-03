@@ -33,6 +33,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import javax.swing.ImageIcon;
@@ -44,7 +45,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
-import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
+import uk.co.caprica.vlcj.player.direct.RenderCallback;
 import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -163,14 +164,11 @@ public class DirectTestPlayer extends VlcjTest {
         }
     }
 
-    private final class TestRenderCallback extends RenderCallbackAdapter {
-
-        public TestRenderCallback() {
-            super(((DataBufferInt) image.getRaster().getDataBuffer()).getData());
-        }
+    private final class TestRenderCallback implements RenderCallback {
 
         @Override
-        public void onDisplay(DirectMediaPlayer mediaPlayer, int[] data) {
+        public void display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
+            // FIXME make this work again
             // The image data could be manipulated here...
 
             /* RGB to GRAYScale conversion example */

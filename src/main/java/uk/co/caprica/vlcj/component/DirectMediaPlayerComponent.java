@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.component;
 
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
@@ -32,7 +33,6 @@ import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
-import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
 
 import com.sun.jna.Memory;
 
@@ -214,10 +214,9 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      * Template method to obtain a render callback implementation.
      * <p>
      * The default behaviour is simply to return this component instance itself so that sub-classes
-     * may override {@link #display(Memory)}.
+     * may override {@link #display(DirectMediaPlayer, ByteBuffer[], BufferFormat)}.
      * <p>
-     * A sub-class may provide any implementation of {@link RenderCallback} - including
-     * {@link RenderCallbackAdapter}.
+     * A sub-class may provide any implementation of {@link RenderCallback}.
      *
      * @return render callback implementation
      */
@@ -402,7 +401,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     // === RenderCallback =======================================================
 
     @Override
-    public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
+    public void display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
         // Default implementation does nothing, sub-classes should override this or
         // provide their own implementation of a RenderCallback
     }

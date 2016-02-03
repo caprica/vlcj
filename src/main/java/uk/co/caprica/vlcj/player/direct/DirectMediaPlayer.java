@@ -19,9 +19,12 @@
 
 package uk.co.caprica.vlcj.player.direct;
 
+import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 
 import com.sun.jna.Memory;
+
+import java.nio.ByteBuffer;
 
 /**
  * Specification for a media player that provides direct access to the video frame data.
@@ -52,7 +55,7 @@ public interface DirectMediaPlayer extends MediaPlayer {
      *
      * @return native memory buffers, may be <code>null</code>
      */
-    Memory[] lock();
+    ByteBuffer[] lock();
 
     /**
      * Unlock the native memory buffers.

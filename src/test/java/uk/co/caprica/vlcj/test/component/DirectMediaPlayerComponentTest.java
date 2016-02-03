@@ -27,6 +27,7 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.nio.ByteBuffer;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -38,7 +39,6 @@ import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
-import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
 import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -144,7 +144,15 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
         mediaPlayerComponent = new DirectMediaPlayerComponent(bufferFormatCallback) {
             @Override
             protected RenderCallback onGetRenderCallback() {
-                return new TestRenderCallbackAdapter();
+                return new RenderCallback() {
+                    @Override
+                    public void display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
+                        // FIXME test!
+                        int[] rgbBuffer = nativeBuffers[0].asIntBuffer().array();
+                        image.setRGB(0, 0, width, height, rgbBuffer, 0, width);
+                        panel.repaint();
+                    }
+                };
             }
         };
 
@@ -164,19 +172,5 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
     private void start(String mrl) {
         // One line of vlcj code to play the media...
         mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
-    }
-
-    private class TestRenderCallbackAdapter extends RenderCallbackAdapter {
-
-        private TestRenderCallbackAdapter() {
-            super(new int[width * height]);
-        }
-
-        @Override
-        protected void onDisplay(DirectMediaPlayer mediaPlayer, int[] rgbBuffer) {
-            // Simply copy buffer to the image and repaint
-            image.setRGB(0, 0, width, height, rgbBuffer, 0, width);
-            panel.repaint();
-        }
     }
 }

@@ -1,5 +1,23 @@
 ![vlcj](https://github.com/caprica/vlcj/raw/master/etc/vlcj-logo.png "vlcj")
 
+vlcj experimental branch
+========================
+
+This is an experimental branch of vlcj, used to test improvements to the direct
+rendering media players.
+
+Currently this is limited to using direct ByteBuffers to provide access to the
+video data. LibVLC can render directly into the ByteBuffer, thereby removing at
+least one full frame copy. An application can render the contents of the
+ByteBuffer in whatever way it sees fit - e.g. it could copy the data to a
+BufferedImage or a PixelWriter.
+
+There is still one 'extra' copy here, ideally LibVLC would render directly into
+the BufferedImage or PixelWriter.
+
+Nevertheless, initial performance testing shows considerable improvement over
+that in vlcj 3.x.
+
 vlcj
 ====
 
