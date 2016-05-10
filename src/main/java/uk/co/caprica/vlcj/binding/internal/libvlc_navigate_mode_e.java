@@ -31,7 +31,8 @@ public enum libvlc_navigate_mode_e {
     libvlc_navigate_up      (1),
     libvlc_navigate_down    (2),
     libvlc_navigate_left    (3),
-    libvlc_navigate_right   (4);
+    libvlc_navigate_right   (4),
+    libvlc_navigate_popup   (5);
 
     private static final Map<Integer, libvlc_navigate_mode_e> INT_MAP = new HashMap<Integer, libvlc_navigate_mode_e>();
 
