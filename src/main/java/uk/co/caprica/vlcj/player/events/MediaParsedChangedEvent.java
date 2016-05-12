@@ -36,7 +36,7 @@ class MediaParsedChangedEvent extends AbstractMediaPlayerEvent {
      * Create a media player event.
      *
      * @param mediaPlayer media player the event relates to
-     * @param newDuration duration
+     * @param newStatus status
      */
     MediaParsedChangedEvent(MediaPlayer mediaPlayer, int newStatus) {
         super(mediaPlayer);
