@@ -372,6 +372,10 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     }
 
     @Override
+    public void mediaParsedStatus(MediaPlayer mediaPlayer, int newStatus) {
+    }
+
+    @Override
     public void mediaFreed(MediaPlayer mediaPlayer) {
     }
 

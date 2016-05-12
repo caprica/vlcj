@@ -590,6 +590,10 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     }
 
     @Override
+    public void mediaParsedStatus(MediaPlayer mediaPlayer, int newStatus) {
+    }
+
+    @Override
     public void mediaFreed(MediaPlayer mediaPlayer) {
     }
 
