@@ -31,6 +31,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_resume_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_set_volume_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_setup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_cbs;
 import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
@@ -2408,6 +2409,80 @@ public interface LibVlc extends Library {
     void libvlc_media_list_player_set_playback_mode(libvlc_media_list_player_t p_mlp, int e_mode);
 
     // === libvlc_media_list_player.h ===========================================
+
+    // === libvlc_dialog.h ======================================================
+
+    /**
+     * Register callbacks in order to handle VLC dialogs.
+     *
+     * @since LibVLC 3.0.0 and later.
+     *
+     * @param p_cbs a pointer to callbacks, or NULL to unregister callbacks.
+     * @param p_data opaque pointer for the callback
+     */
+    void libvlc_dialog_set_callbacks(libvlc_instance_t p_instance, libvlc_dialog_cbs p_cbs, Pointer p_data);
+
+    /**
+     * Associate an opaque pointer with the dialog id.
+     *
+     * @since LibVLC 3.0.0 and later.
+     */
+    void libvlc_dialog_set_context(Pointer p_id, Pointer p_context);
+
+    /**
+     * Return the opaque pointer associated with the dialog id.
+     *
+     * @since LibVLC 3.0.0 and later.
+     */
+    Pointer libvlc_dialog_get_context(Pointer p_id);
+
+    /**
+     * Post a login answer.
+     * <p>
+     * After this call, p_id won't be valid anymore
+     *
+     * @see libvlc_dialog_cbs#pf_display_login
+     *
+     * @since LibVLC 3.0.0 and later.
+     *
+     * @param p_id id of the dialog
+     * @param psz_username valid and non empty string
+     * @param psz_password valid string (can be empty)
+     * @param b_store if true, store the credentials
+     * @return 0 on success, or -1 on error
+     */
+    int libvlc_dialog_post_login(Pointer p_id, String psz_username, String psz_password, int b_store);
+
+    /**
+     * Post a question answer.
+     * <p>
+     * After this call, p_id won't be valid anymore
+     *
+     * @see libvlc_dialog_cbs#pf_display_question
+     *
+     * @since LibVLC 3.0.0 and later.
+     *
+     * @param p_id id of the dialog
+     * @param i_action 1 for action1, 2 for action2
+     * @return 0 on success, or -1 on error
+     */
+    int libvlc_dialog_post_action(Pointer p_id, int i_action);
+
+    /**
+     * Dismiss a dialog.
+     * <p>
+     * After this call, p_id won't be valid anymore
+     *
+     * @see libvlc_dialog_cbs#pf_cancel
+     *
+     * @since LibVLC 3.0.0 and later.
+     *
+     * @param p_id id of the dialog
+     * @return 0 on success, or -1 on error
+     */
+    int libvlc_dialog_dismiss(Pointer p_id);
+
+    // === libvlc_dialog.h ======================================================
 
     // === libvlc_media_discoverer.h ============================================
 
