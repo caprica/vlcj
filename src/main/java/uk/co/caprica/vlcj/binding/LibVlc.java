@@ -2417,6 +2417,7 @@ public interface LibVlc extends Library {
      *
      * @since LibVLC 3.0.0 and later.
      *
+     * @param p_instance the instance
      * @param p_cbs a pointer to callbacks, or NULL to unregister callbacks.
      * @param p_data opaque pointer for the callback
      */
@@ -2426,6 +2427,9 @@ public interface LibVlc extends Library {
      * Associate an opaque pointer with the dialog id.
      *
      * @since LibVLC 3.0.0 and later.
+     *
+     * @param p_id id of the dialog
+     * @param p_context opaque pointer associated with the dialog id
      */
     void libvlc_dialog_set_context(Pointer p_id, Pointer p_context);
 
@@ -2433,6 +2437,9 @@ public interface LibVlc extends Library {
      * Return the opaque pointer associated with the dialog id.
      *
      * @since LibVLC 3.0.0 and later.
+     *
+     * @param p_id id of the dialog
+     * @return opaque pointer associated with the dialog id
      */
     Pointer libvlc_dialog_get_context(Pointer p_id);
 
