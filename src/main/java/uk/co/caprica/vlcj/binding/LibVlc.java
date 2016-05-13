@@ -2591,6 +2591,30 @@ public interface LibVlc extends Library {
      */
     int libvlc_media_discoverer_is_running(libvlc_media_discoverer_t p_mdis);
 
+    /**
+     * Get media discoverer services by category
+     *
+     * @since LibVLC 3.0.0 and later.
+     *
+     * @param p_inst libvlc instance
+     * @param i_cat category of services to fetch
+     * @param ppp_services address to store an allocated array of media discoverer services (must be freed with libvlc_media_discoverer_services_release() by the caller) [OUT]
+     * @return the number of media discoverer services (zero on error)
+     */
+    int libvlc_media_discoverer_services_get(libvlc_instance_t p_inst, int i_cat, Pointer ppp_services);
+
+    /**
+     * Release an array of media discoverer services
+     *
+     * @since LibVLC 3.0.0 and later.
+     *
+     * @see #libvlc_media_discoverer_services_get(libvlc_instance_t, int, Pointer)
+     *
+     * @param pp_services array to release
+     * @param i_count number of elements in the array
+     */
+    void libvlc_media_discoverer_services_release(Pointer pp_services, int i_count);
+
     // === libvlc_media_discoverer.h ============================================
 
     // === libvlc_vlm.h =========================================================
