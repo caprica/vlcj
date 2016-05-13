@@ -30,9 +30,9 @@ public interface update_progress extends Callback {
     /**
      * Called when an error message needs to be displayed
      *
+     * @param p_data opaque pointer for the callback
      * @param psz_title title of the diaog
      * @param psz_text text of the dialog
-     * @param p_data opaque pointer for the callback
      */
-    void display_error(String psz_title, String psz_text, Pointer p_data);
+    void display_error(Pointer p_data, String psz_title, String psz_text);
 }

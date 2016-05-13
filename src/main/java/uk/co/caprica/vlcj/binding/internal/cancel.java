@@ -33,8 +33,8 @@ public interface cancel extends Callback {
      * The implementation must call libvlc_dialog_dismiss() to really release
      * the dialog.
      *
-     * @param p_id id of the dialog
      * @param p_data opaque pointer for the callback
+     * @param p_id id of the dialog
      */
-    void cancel(Pointer p_id, Pointer p_data);
+    void cancel(Pointer p_data, Pointer p_id);
 }

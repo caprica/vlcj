@@ -35,12 +35,12 @@ public interface display_login extends Callback {
      * <p>
      * <em>to receive this callack, libvlc_dialog_cbs.pf_cancel should not be NULL.</em>
      *
+     * @param p_data opaque pointer for the callback
      * @param p_id id used to interact with the dialog
      * @param psz_title title of the diaog
      * @param psz_text text of the dialog
      * @param psz_default_username user name that should be set on the user form
      * @param b_ask_store if true, ask the user if he wants to save the credentials
-     * @param p_data opaque pointer for the callback
      */
-    void display_login(Pointer p_id, String psz_title, String psz_text, String psz_default_username, int b_ask_store, Pointer p_data);
+    void display_login(Pointer p_data, Pointer p_id, String psz_title, String psz_text, String psz_default_username, int b_ask_store);
 }

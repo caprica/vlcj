@@ -36,6 +36,7 @@ public interface display_question extends Callback {
      * <em>to receive this callack, libvlc_dialog_cbs.pf_cancel should not be
      * NULL.</em>
      *
+     * @param p_data opaque pointer for the callback
      * @param p_id id used to interact with the dialog
      * @param psz_title title of the dialog
      * @param psz_text text of the dialog
@@ -43,7 +44,6 @@ public interface display_question extends Callback {
      * @param psz_cancel text of the cancel button
      * @param psz_action1 text of the first button, if NULL, don't display this button
      * @param psz_action2 text of the second button, if NULL, don't display this button
-     * @param p_data opaque pointer for the callback
      */
-    void display_question(Pointer p_id, String psz_title, String psz_text, int i_type, String psz_cancel, String psz_action1, String psz_action2, Pointer p_data);
+    void display_question(Pointer p_data, Pointer p_id, String psz_title, String psz_text, int i_type, String psz_cancel, String psz_action1, String psz_action2);
 }
