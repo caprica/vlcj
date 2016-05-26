@@ -633,7 +633,7 @@ public interface LibVlc extends Library {
      *
      * This method is the extended version of libvlc_media_parse_async().
      *
-     * To track when this is over you can listen to libvlc_MediaParsedStatus
+     * To track when this is over you can listen to libvlc_MediaParsedChanged
      * event. However if this functions returns an error, you will not receive this
      * event.
      *
@@ -642,7 +642,6 @@ public interface LibVlc extends Library {
      * file.
      *
      * @see libvlc_event_e#libvlc_MediaParsedChanged
-     * @see libvlc_event_e#libvlc_MediaParsedStatus
      * @see #libvlc_media_get_meta(libvlc_media_t, int)
      * @see #libvlc_media_tracks_get(libvlc_media_t, PointerByReference)
      * @see libvlc_media_parse_flag_t

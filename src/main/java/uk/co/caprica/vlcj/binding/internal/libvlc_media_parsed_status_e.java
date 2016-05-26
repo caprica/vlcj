@@ -27,10 +27,10 @@ import java.util.Map;
  */
 public enum libvlc_media_parsed_status_e {
 
-    libvlc_media_parse_init   (0),
-    libvlc_media_parse_skipped(1),
-    libvlc_media_parse_failed (2),
-    libvlc_media_parse_done   (3);
+    libvlc_media_parsed_status_init   (0),
+    libvlc_media_parsed_status_skipped(1),
+    libvlc_media_parsed_status_failed (2),
+    libvlc_media_parsed_status_done   (3);
 
     private static final Map<Integer, libvlc_media_parsed_status_e> INT_MAP = new HashMap<Integer, libvlc_media_parsed_status_e>();
 
