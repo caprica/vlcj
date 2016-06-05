@@ -650,7 +650,7 @@ public interface LibVlc extends Library {
      * @param parse_flag parse options
      * @param timeout maximum time allowed to preparse the media. If -1, the default
      *                "preparse-timeout" option will be used as a timeout. If 0, it
-     *                will wait indefinitely. If > 0, the timeout will be used (in
+     *                will wait indefinitely. If &gt; 0, the timeout will be used (in
      *                milliseconds).
      * @return -1 in case of error, 0 otherwise
      * @since LibVLC 3.0.0 or later
