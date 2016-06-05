@@ -647,11 +647,15 @@ public interface LibVlc extends Library {
      * @see libvlc_media_parse_flag_t
      *
      * @param p_md media descriptor object
-     * @param parse_flag parse options:
+     * @param parse_flag parse options
+     * @param timeout maximum time allowed to preparse the media. If -1, the default
+     *                "preparse-timeout" option will be used as a timeout. If 0, it
+     *                will wait indefinitely. If > 0, the timeout will be used (in
+     *                milliseconds).
      * @return -1 in case of error, 0 otherwise
      * @since LibVLC 3.0.0 or later
      */
-    int libvlc_media_parse_with_options(libvlc_media_t p_md, int parse_flag);
+    int libvlc_media_parse_with_options(libvlc_media_t p_md, int parse_flag, int timeout);
 
     /**
      * Get Parsed status for media descriptor object.

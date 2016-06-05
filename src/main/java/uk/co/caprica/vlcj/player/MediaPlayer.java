@@ -326,10 +326,11 @@ public interface MediaPlayer {
      * <p>
      * If no options are specified, then the file is parsed if it is a local file.
      *
+     * @param timeout -1 to use the default preparse timeout, 0 to wait indefinitely, otherwise number of milliseconds
      * @param options optional options
      * @return <code>true</code> if successful; <code>false</code> on error (or e.g. requires LibVLC 3.0.0)
      */
-    boolean requestParseMediaWithOptions(libvlc_media_parse_flag_t... options);
+    boolean requestParseMediaWithOptions(int timeout, libvlc_media_parse_flag_t... options);
 
     /**
      * Test whether or not the current media has been parsed.
