@@ -325,6 +325,27 @@ public interface MediaPlayer {
      * error, then <em>no</em> event will be raised.
      * <p>
      * If no options are specified, then the file is parsed if it is a local file.
+     * <p>
+     * This method, while always asynchronous, will cause the media parsing to wait indefinitely, in contrast with
+     * {@link #requestParseMediaWithOptions(int, libvlc_media_parse_flag_t...)}
+     *
+     * @param options optional options
+     * @return <code>true</code> if successful; <code>false</code> on error (or e.g. requires LibVLC 3.0.0)
+     */
+    boolean requestParseMediaWithOptions(libvlc_media_parse_flag_t... options);
+
+    /**
+     * Parse meta data from the current media, with options and a timeout.
+     * <p>
+     * This method is asynchronous and a media player event will be raised when the parsed status
+     * changes.
+     * <p>
+     * Parsing media may cause an HTTP request to be made to search for cover-art.
+     * <p>
+     * If the media has already been parsed when this function is called, or this function returns an
+     * error, then <em>no</em> event will be raised.
+     * <p>
+     * If no options are specified, then the file is parsed if it is a local file.
      *
      * @param timeout -1 to use the default preparse timeout, 0 to wait indefinitely, otherwise number of milliseconds
      * @param options optional options

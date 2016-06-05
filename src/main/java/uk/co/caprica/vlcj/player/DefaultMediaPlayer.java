@@ -324,8 +324,14 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
 
     @Override
-    public boolean requestParseMediaWithOptions(int timeout, libvlc_media_parse_flag_t... options) {
+    public boolean requestParseMediaWithOptions(libvlc_media_parse_flag_t... options) {
         logger.debug("requestParseMediaWithOptions(options={})", options != null ? Arrays.toString(options) : "");
+        return requestParseMediaWithOptions(0, options);
+    }
+
+    @Override
+    public boolean requestParseMediaWithOptions(int timeout, libvlc_media_parse_flag_t... options) {
+        logger.debug("requestParseMediaWithOptions(timeout={},options={})", timeout, options != null ? Arrays.toString(options) : "");
         if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
             int flags = 0;
             for (libvlc_media_parse_flag_t option : options) {
