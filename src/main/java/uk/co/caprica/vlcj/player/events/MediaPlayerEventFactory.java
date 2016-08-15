@@ -25,6 +25,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
 import uk.co.caprica.vlcj.binding.internal.media_meta_changed;
 import uk.co.caprica.vlcj.binding.internal.media_parsed_changed;
+import uk.co.caprica.vlcj.binding.internal.media_parsed_status;
 import uk.co.caprica.vlcj.binding.internal.media_player_audio_device;
 import uk.co.caprica.vlcj.binding.internal.media_player_audio_volume;
 import uk.co.caprica.vlcj.binding.internal.media_player_buffering;
@@ -287,6 +288,12 @@ public class MediaPlayerEventFactory {
             case libvlc_MediaParsedChanged:
                 if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PARSED_CHANGED)) {
                     result = new MediaParsedChangedEvent(mediaPlayer, ((media_parsed_changed)event.u.getTypedValue(media_parsed_changed.class)).new_status);
+                }
+                break;
+
+            case libvlc_MediaParsedStatus:
+                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PARSED_STATUS)) {
+                    result = new MediaParsedStatusEvent(mediaPlayer, ((media_parsed_status)event.u.getTypedValue(media_parsed_status.class)).new_status);
                 }
                 break;
 

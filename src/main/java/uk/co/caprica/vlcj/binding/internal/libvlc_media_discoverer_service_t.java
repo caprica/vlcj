@@ -17,34 +17,36 @@
  * Copyright 2009-2016 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.events;
+package uk.co.caprica.vlcj.binding.internal;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import com.sun.jna.Pointer;
+import com.sun.jna.Structure;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
  */
-class MediaParsedChangedEvent extends AbstractMediaPlayerEvent {
+public class libvlc_media_discoverer_service_t extends Structure {
 
-    /**
-     * Status.
-     */
-    private final int newStatus;
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("psz_name", "psz_longname", "i_cat"));
 
-    /**
-     * Create a media player event.
-     *
-     * @param mediaPlayer media player the event relates to
-     * @param newStatus status
-     */
-    MediaParsedChangedEvent(MediaPlayer mediaPlayer, int newStatus) {
-        super(mediaPlayer);
-        this.newStatus = newStatus;
+    public libvlc_media_discoverer_service_t() {
     }
 
+    public libvlc_media_discoverer_service_t(Pointer value) {
+        super(value);
+        read();
+    }
+
+    public String psz_name;
+    public String psz_longname;
+    public int    i_cat;
+
     @Override
-    public void notify(MediaPlayerEventListener listener) {
-        listener.mediaParsedChanged(mediaPlayer, newStatus);
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
     }
 }

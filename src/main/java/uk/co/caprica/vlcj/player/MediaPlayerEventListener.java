@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player;
 
 import javax.swing.SwingUtilities;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 
 /**
@@ -290,6 +291,18 @@ public interface MediaPlayerEventListener {
      * @param newStatus new parsed status
      */
     void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus);
+
+    /**
+     * The current media parsed status changed.
+     * <p>
+     * This event is always sent after
+     * {@link MediaPlayer#requestParseMediaWithOptions(libvlc_media_parse_flag_t...)}
+     * is successfully called..
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param newStatus new parsed status
+     */
+    void mediaParsedStatus(MediaPlayer mediaPlayer, int newStatus);
 
     /**
      * The current media was freed.

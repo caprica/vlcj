@@ -326,12 +326,18 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public boolean requestParseMediaWithOptions(libvlc_media_parse_flag_t... options) {
         logger.debug("requestParseMediaWithOptions(options={})", options != null ? Arrays.toString(options) : "");
+        return requestParseMediaWithOptions(0, options);
+    }
+
+    @Override
+    public boolean requestParseMediaWithOptions(int timeout, libvlc_media_parse_flag_t... options) {
+        logger.debug("requestParseMediaWithOptions(timeout={},options={})", timeout, options != null ? Arrays.toString(options) : "");
         if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
             int flags = 0;
             for (libvlc_media_parse_flag_t option : options) {
                 flags |= option.intValue();
             }
-            return libvlc.libvlc_media_parse_with_options(mediaInstance, flags) == 0;
+            return libvlc.libvlc_media_parse_with_options(mediaInstance, flags, timeout) == 0;
         }
         else {
             return false;
@@ -2035,7 +2041,10 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     private libvlc_event_e lastKnownMediaEvent() {
         libvlc_event_e result;
         Version version = new Version(libvlc.libvlc_get_version());
-        if(version.atLeast(new Version("2.1.5"))) {
+        if(version.atLeast(new Version("3.0.0"))) {
+            result = libvlc_event_e.libvlc_MediaParsedStatus;
+        }
+        else if(version.atLeast(new Version("2.1.5"))) {
             result = libvlc_event_e.libvlc_MediaSubItemTreeAdded;
         }
         else {

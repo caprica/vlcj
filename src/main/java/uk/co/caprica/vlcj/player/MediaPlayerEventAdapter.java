@@ -159,6 +159,10 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
+    public void mediaParsedStatus(MediaPlayer mediaPlayer, int newStatus) {
+    }
+
+    @Override
     public void mediaFreed(MediaPlayer mediaPlayer) {
     }
 

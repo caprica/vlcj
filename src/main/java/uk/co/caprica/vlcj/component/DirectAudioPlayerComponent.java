@@ -337,6 +337,10 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
     }
 
     @Override
+    public void mediaParsedStatus(MediaPlayer mediaPlayer, int newStatus) {
+    }
+
+    @Override
     public void mediaFreed(MediaPlayer mediaPlayer) {
     }
 

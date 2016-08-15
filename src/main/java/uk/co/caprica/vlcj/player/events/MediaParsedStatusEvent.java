@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 /**
  *
  */
-class MediaParsedChangedEvent extends AbstractMediaPlayerEvent {
+class MediaParsedStatusEvent extends AbstractMediaPlayerEvent {
 
     /**
      * Status.
@@ -38,13 +38,13 @@ class MediaParsedChangedEvent extends AbstractMediaPlayerEvent {
      * @param mediaPlayer media player the event relates to
      * @param newStatus status
      */
-    MediaParsedChangedEvent(MediaPlayer mediaPlayer, int newStatus) {
+    MediaParsedStatusEvent(MediaPlayer mediaPlayer, int newStatus) {
         super(mediaPlayer);
         this.newStatus = newStatus;
     }
 
     @Override
     public void notify(MediaPlayerEventListener listener) {
-        listener.mediaParsedChanged(mediaPlayer, newStatus);
+        listener.mediaParsedStatus(mediaPlayer, newStatus);
     }
 }

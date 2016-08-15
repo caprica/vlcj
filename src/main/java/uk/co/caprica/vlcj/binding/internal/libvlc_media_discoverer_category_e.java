@@ -23,32 +23,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of DVD navigation modes.
+ * Enumeration of media discover categories.
  */
-public enum libvlc_navigate_mode_e {
+public enum libvlc_media_discoverer_category_e {
 
-    libvlc_navigate_activate(0),
-    libvlc_navigate_up      (1),
-    libvlc_navigate_down    (2),
-    libvlc_navigate_left    (3),
-    libvlc_navigate_right   (4),
-    libvlc_navigate_popup   (5);
+    libvlc_media_discoverer_devices  (0), // devices, like portable music player
+    libvlc_media_discoverer_lan      (1), // LAN/WAN services, like Upnp, SMB, or SAP
+    libvlc_media_discoverer_podcasts (2), // Podcasts
+    libvlc_media_discoverer_localdirs(3); // Local directories, like Video, Music or Pictures directories
 
-    private static final Map<Integer, libvlc_navigate_mode_e> INT_MAP = new HashMap<Integer, libvlc_navigate_mode_e>();
+    private static final Map<Integer, libvlc_media_discoverer_category_e> INT_MAP = new HashMap<Integer, libvlc_media_discoverer_category_e>();
 
     static {
-        for(libvlc_navigate_mode_e value : libvlc_navigate_mode_e.values()) {
+        for(libvlc_media_discoverer_category_e value : libvlc_media_discoverer_category_e.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static libvlc_navigate_mode_e event(int intValue) {
+    public static libvlc_media_discoverer_category_e mediaDiscovererCategory(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_navigate_mode_e(int intValue) {
+    private libvlc_media_discoverer_category_e(int intValue) {
         this.intValue = intValue;
     }
 
