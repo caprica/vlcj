@@ -65,6 +65,10 @@ Add the following Maven dependency to your own project pom.xml:
 News
 ----
 
+03/02/2016 [Experimental branch](https://github.com/caprica/vlcj/tree/experimental) with direct
+rendering media player improvements, removing a full frame memory copy. This branch is *not* backwardly
+compatibly with vlcj 3.x.
+
 30/12/2015 Made new release 3.10.1 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
 fixes a problem finding VLC plugins on Windows after the upgrade to JNA 4.1.0.
 
