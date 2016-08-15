@@ -17,34 +17,24 @@
  * Copyright 2009-2016 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.events;
+package uk.co.caprica.vlcj.binding.internal;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import com.sun.jna.Callback;
+import com.sun.jna.Pointer;
 
 /**
  *
  */
-class MediaParsedChangedEvent extends AbstractMediaPlayerEvent {
+public interface cancel extends Callback {
 
     /**
-     * Status.
-     */
-    private final int newStatus;
-
-    /**
-     * Create a media player event.
+     * Called when a displayed dialog needs to be cancelled
      *
-     * @param mediaPlayer media player the event relates to
-     * @param newStatus status
+     * The implementation must call libvlc_dialog_dismiss() to really release
+     * the dialog.
+     *
+     * @param p_data opaque pointer for the callback
+     * @param p_id id of the dialog
      */
-    MediaParsedChangedEvent(MediaPlayer mediaPlayer, int newStatus) {
-        super(mediaPlayer);
-        this.newStatus = newStatus;
-    }
-
-    @Override
-    public void notify(MediaPlayerEventListener listener) {
-        listener.mediaParsedChanged(mediaPlayer, newStatus);
-    }
+    void cancel(Pointer p_data, Pointer p_id);
 }

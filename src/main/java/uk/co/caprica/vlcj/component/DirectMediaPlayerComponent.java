@@ -33,13 +33,14 @@ import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
+import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
 
 import com.sun.jna.Memory;
 
 /**
  * Encapsulation of a direct-rendering media player.
  * <p>
- * The default behaviour is to provide the video data via the {@link #display(DirectMediaPlayer, Memory[], BufferFormat)} method.
+ * The default behaviour is to provide the video data via the {@link #display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat)} method.
  * <p>
  * Sub-classes may override this method to implement their own processing, or alternately return an
  * implementation of a {@link RenderCallback} by overriding the {@link #onGetRenderCallback()}
@@ -216,7 +217,8 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      * The default behaviour is simply to return this component instance itself so that sub-classes
      * may override {@link #display(DirectMediaPlayer, ByteBuffer[], BufferFormat)}.
      * <p>
-     * A sub-class may provide any implementation of {@link RenderCallback}.
+     * A sub-class may provide any implementation of {@link RenderCallback} - including
+     * {@link RenderCallbackAdapter}.
      *
      * @return render callback implementation
      */
@@ -368,6 +370,10 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
 
     @Override
     public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
+    }
+
+    @Override
+    public void mediaParsedStatus(MediaPlayer mediaPlayer, int newStatus) {
     }
 
     @Override

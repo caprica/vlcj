@@ -23,32 +23,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of DVD navigation modes.
+ * Enumeration of media parsed statuses.
  */
-public enum libvlc_navigate_mode_e {
+public enum libvlc_media_parsed_status_e {
 
-    libvlc_navigate_activate(0),
-    libvlc_navigate_up      (1),
-    libvlc_navigate_down    (2),
-    libvlc_navigate_left    (3),
-    libvlc_navigate_right   (4),
-    libvlc_navigate_popup   (5);
+    libvlc_media_parsed_status_skipped(1),
+    libvlc_media_parsed_status_failed (2),
+    libvlc_media_parsed_status_timeout(3),
+    libvlc_media_parsed_status_done   (4);
 
-    private static final Map<Integer, libvlc_navigate_mode_e> INT_MAP = new HashMap<Integer, libvlc_navigate_mode_e>();
+    private static final Map<Integer, libvlc_media_parsed_status_e> INT_MAP = new HashMap<Integer, libvlc_media_parsed_status_e>();
 
     static {
-        for(libvlc_navigate_mode_e value : libvlc_navigate_mode_e.values()) {
+        for(libvlc_media_parsed_status_e value : libvlc_media_parsed_status_e.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static libvlc_navigate_mode_e event(int intValue) {
+    public static libvlc_media_parsed_status_e mediaParsedStatus(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_navigate_mode_e(int intValue) {
+    private libvlc_media_parsed_status_e(int intValue) {
         this.intValue = intValue;
     }
 
