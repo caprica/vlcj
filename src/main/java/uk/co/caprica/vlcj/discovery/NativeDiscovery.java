@@ -30,6 +30,8 @@ import uk.co.caprica.vlcj.discovery.windows.DefaultWindowsNativeDiscoveryStrateg
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import com.sun.jna.NativeLibrary;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A component that uses discovery strategies to locate the libvlc native
@@ -76,21 +78,80 @@ public class NativeDiscovery {
     /**
      * Create a discovery component with bespoke strategies.
      *
+     * @param discoveryStrategy first strategy implementation
      * @param discoveryStrategies strategy implementations
      */
-    public NativeDiscovery(NativeDiscoveryStrategy... discoveryStrategies) {
-        this.discoveryStrategies = discoveryStrategies;
+    public NativeDiscovery(NativeDiscoveryStrategy discoveryStrategy, NativeDiscoveryStrategy... discoveryStrategies) {
+        List<NativeDiscoveryStrategy> list = Arrays.asList(discoveryStrategies);
+        list.add(0, discoveryStrategy);
+        this.discoveryStrategies = list.toArray(new NativeDiscoveryStrategy[1 + discoveryStrategies.length]);
     }
-
+    
     /**
-     * Create a discovery component with the default platform strategies.
-     */
-    public NativeDiscovery() {
-        this(
-            new DefaultLinuxNativeDiscoveryStrategy(),
+     * Create a discovery component with optional explicit paths and default platform strategy.
+     * 
+     * @param explicitPaths explicit paths
+     */ 
+    public NativeDiscovery(String... explicitPaths){
+        StandardNativeDiscoveryStrategy[] array = new StandardNativeDiscoveryStrategy[]{
             new DefaultWindowsNativeDiscoveryStrategy(),
+            new DefaultLinuxNativeDiscoveryStrategy(),
             new DefaultMacNativeDiscoveryStrategy()
-        );
+        };
+        if(explicitPaths.length == 0){
+            this.discoveryStrategies = array;
+        }
+        else{
+            int supportedOS = -1;
+            for(int i = 0; i<array.length; i++){
+                if(array[i].supported()){
+                    supportedOS = i;
+                    break;
+                }
+            }
+            final List<String> pathList = Arrays.asList(explicitPaths);
+            switch(supportedOS){
+                case 0:{
+                    array[supportedOS] = new DefaultWindowsNativeDiscoveryStrategy(){
+                        @Override
+                        protected void onGetDirectoryNames(List<String> directoryNames) {
+                            super.onGetDirectoryNames(directoryNames);
+                            directoryNames.addAll(0, pathList);
+                        }
+                    };
+                    break;
+                }
+                case 1:{
+                    array[supportedOS] = new DefaultLinuxNativeDiscoveryStrategy(){
+                        @Override
+                        protected void onGetDirectoryNames(List<String> directoryNames) {
+                            super.onGetDirectoryNames(directoryNames);
+                            directoryNames.addAll(0, pathList);
+                        }
+                    };
+                    break;
+                }
+                case 2:{
+                    array[supportedOS] = new DefaultMacNativeDiscoveryStrategy(){
+                        @Override
+                        protected void onGetDirectoryNames(List<String> directoryNames) { 
+                            super.onGetDirectoryNames(directoryNames);
+                            directoryNames.addAll(0, pathList);
+                        }
+                    };
+                    break;
+                }
+                default:{
+                    //unsupported OS?
+                } 
+            }
+            if(supportedOS != -1){
+                this.discoveryStrategies = new StandardNativeDiscoveryStrategy[]{array[supportedOS]};
+            }
+            else{
+                this.discoveryStrategies = array;
+            }
+        }
     }
 
     /**
