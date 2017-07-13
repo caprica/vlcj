@@ -70,6 +70,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_orient_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_projection_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_track_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.condition.BeforeConditionAbortedException;
@@ -1348,6 +1349,11 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                                     trackInfo.u.video.i_frame_rate_num,
                                     trackInfo.u.video.i_frame_rate_den,
                                     libvlc_video_orient_e.orientation(trackInfo.u.video.i_orientation),
+                                    libvlc_video_projection_e.projection(trackInfo.u.video.i_projection),
+                                    trackInfo.u.video.f_yaw_degrees,
+                                    trackInfo.u.video.f_pitch_degrees,
+                                    trackInfo.u.video.f_roll_degrees,
+                                    trackInfo.u.video.f_fov_degrees,
                                     getCodecDescription(libvlc_track_type_t.libvlc_track_video, trackInfo.i_codec)
                                 ));
                             }
@@ -1368,6 +1374,11 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                                     trackInfo.u.video.i_frame_rate_num,
                                     trackInfo.u.video.i_frame_rate_den,
                                     null,
+                                    null,
+                                    0.f,
+                                    0.f,
+                                    0.f,
+                                    0.f,
                                     getCodecDescription(libvlc_track_type_t.libvlc_track_video, trackInfo.i_codec)
                                 ));
                             }

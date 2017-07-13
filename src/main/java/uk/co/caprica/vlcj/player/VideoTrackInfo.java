@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_orient_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_projection_e;
 
 /**
  * Video track info.
@@ -67,6 +68,31 @@ public class VideoTrackInfo extends TrackInfo {
     private final libvlc_video_orient_e orientation;
 
     /**
+     * Video projection.
+     */
+    private final libvlc_video_projection_e projection;
+
+    /**
+     * Yaw, degrees, for spherical video.
+     */
+    private final float yaw;
+
+    /**
+     * Pitch, degrees, for spherical video.
+     */
+    private final float pitch;
+
+    /**
+     * Roll, degrees, for spherical video.
+     */
+    private final float roll;
+
+    /**
+     * Field of View, degrees, for spherical video.
+     */
+    private final float fov;
+
+    /**
      * Create a new video track info.
      *
      * @param codec video codec
@@ -84,9 +110,14 @@ public class VideoTrackInfo extends TrackInfo {
      * @param frameRate frame rate
      * @param frameRateBase frame rate base
      * @param orientation video orientation
+     * @param projection video projection
+     * @param yaw yaw (degrees)
+     * @param pitch pitch (degrees)
+     * @param roll roll (degrees)
+     * @param fov field of view (degrees)
      * @param codecDescription codec description
      */
-    public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, libvlc_video_orient_e orientation, String codecDescription) {
+    public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, libvlc_video_orient_e orientation, libvlc_video_projection_e projection, float yaw, float pitch, float roll, float fov, String codecDescription) {
         super(codec, originalCodec, id, profile, level, bitRate, language, description, codecDescription);
         this.width = width;
         this.height = height;
@@ -95,6 +126,11 @@ public class VideoTrackInfo extends TrackInfo {
         this.frameRate = frameRate;
         this.frameRateBase = frameRateBase;
         this.orientation = orientation;
+        this.projection = projection;
+        this.yaw = yaw;
+        this.pitch = pitch;
+        this.roll = roll;
+        this.fov = fov;
     }
 
     /**
@@ -161,6 +197,56 @@ public class VideoTrackInfo extends TrackInfo {
         return orientation;
     }
 
+    /**
+     * Get the video projection.
+     *
+     * @return video projection
+     * @since LibVLC 3.0.0
+     */
+    public final libvlc_video_projection_e projection() {
+        return projection;
+    }
+
+    /**
+     * Get the yaw, for spherical video.
+     *
+     * @return yaw (degrees)
+     * @since LibVLC 3.0.0
+     */
+    public final float yaw() {
+        return yaw;
+    }
+
+    /**
+     * Get the pitch, for spherical video.
+     *
+     * @return pitch (degrees)
+     * @since LibVLC 3.0.0
+     */
+    public final float pitch() {
+        return pitch;
+    }
+
+    /**
+     * Get the roll, for spherical video.
+     *
+     * @return roll (degrees)
+     * @since LibVLC 3.0.0
+     */
+    public final float roll() {
+        return roll;
+    }
+
+    /**
+     * Get the field of view, for spherical video.
+     *
+     * @return field of view (degrees)
+     * @since LibVLC 3.0.0
+     */
+    public final float fov() {
+        return fov;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(200);
@@ -171,7 +257,12 @@ public class VideoTrackInfo extends TrackInfo {
         sb.append("sampleAspectRatioBase=").append(sampleAspectRatioBase).append(',');
         sb.append("frameRate=").append(frameRate).append(',');
         sb.append("frameRateBase=").append(frameRateBase).append(',');
-        sb.append("orientation=").append(orientation).append(']');
+        sb.append("orientation=").append(orientation).append(',');
+        sb.append("projection=").append(projection).append(',');
+        sb.append("yaw=").append(yaw).append(',');
+        sb.append("pitch=").append(pitch).append(',');
+        sb.append("roll=").append(roll).append(',');
+        sb.append("fov=").append(fov).append(']');
         return sb.toString();
     }
 }
