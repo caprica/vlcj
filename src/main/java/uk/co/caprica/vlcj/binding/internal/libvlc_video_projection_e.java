@@ -28,7 +28,7 @@ import java.util.Map;
 public enum libvlc_video_projection_e {
 
     libvlc_video_projection_rectangular            (0),
-    libvlc_video_projection_equirectangular        (1),     /**< 360 spherical */
+    libvlc_video_projection_equirectangular        (1),     /* 360 spherical */
     libvlc_video_projection_cubemap_layout_standard(0x100);
 
     private static final Map<Integer, libvlc_video_projection_e> INT_MAP = new HashMap<Integer, libvlc_video_projection_e>();

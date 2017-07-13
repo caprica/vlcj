@@ -47,10 +47,10 @@ public class libvlc_video_track_t extends Structure {
 
     public int i_orientation;
     public int i_projection;
-    public float f_yaw_degrees;    /**< Viewpoint yaw in degrees -180 to 180  */
-    public float f_pitch_degrees;  /**< Viewpoint pitch in degrees -90 to 90  */
-    public float f_roll_degrees;   /**< Viewpoint roll in degrees -180 to 180 */
-    public float f_fov_degrees;    /**< Viewpoint fov in degrees 0 to 180     */
+    public float f_yaw_degrees;    /* Viewpoint yaw in degrees -180 to 180  */
+    public float f_pitch_degrees;  /* Viewpoint pitch in degrees -90 to 90  */
+    public float f_roll_degrees;   /* Viewpoint roll in degrees -180 to 180 */
+    public float f_fov_degrees;    /* Viewpoint fov in degrees 0 to 180     */
 
     @Override
     protected List<String> getFieldOrder() {

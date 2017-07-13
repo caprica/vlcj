@@ -27,14 +27,14 @@ import java.util.Map;
  */
 public enum libvlc_video_orient_e {
 
-    libvlc_video_orient_top_left    (0),   /**< Normal. Top line represents top, left column left. */
-    libvlc_video_orient_top_right   (1),   /**< Flipped horizontally */
-    libvlc_video_orient_bottom_left (2),   /**< Flipped vertically */
-    libvlc_video_orient_bottom_right(3),   /**< Rotated 180 degrees */
-    libvlc_video_orient_left_top    (4),   /**< Transposed */
-    libvlc_video_orient_left_bottom (5),   /**< Rotated 90 degrees clockwise (or 270 anti-clockwise) */
-    libvlc_video_orient_right_top   (6),   /**< Rotated 90 degrees anti-clockwise */
-    libvlc_video_orient_right_bottom(7);   /**< Anti-transposed */
+    libvlc_video_orient_top_left    (0),   /* Normal. Top line represents top, left column left. */
+    libvlc_video_orient_top_right   (1),   /* Flipped horizontally */
+    libvlc_video_orient_bottom_left (2),   /* Flipped vertically */
+    libvlc_video_orient_bottom_right(3),   /* Rotated 180 degrees */
+    libvlc_video_orient_left_top    (4),   /* Transposed */
+    libvlc_video_orient_left_bottom (5),   /* Rotated 90 degrees clockwise (or 270 anti-clockwise) */
+    libvlc_video_orient_right_top   (6),   /* Rotated 90 degrees anti-clockwise */
+    libvlc_video_orient_right_bottom(7);   /* Anti-transposed */
 
     private static final Map<Integer, libvlc_video_orient_e> INT_MAP = new HashMap<Integer, libvlc_video_orient_e>();
 
