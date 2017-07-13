@@ -1544,7 +1544,9 @@ public interface LibVlc extends Library {
      * Set new teletext page to retrieve.
      *
      * @param p_mi the media player
-     * @param i_page teletex page number requested
+     * @param i_page teletex page number requested.
+     *               This value can be -1 to disable teletext or a number in the range 0 to 1000 to show the requested
+     *               page. 100 is the default teletext page.
      */
     void libvlc_video_set_teletext(libvlc_media_player_t p_mi, int i_page);
 
