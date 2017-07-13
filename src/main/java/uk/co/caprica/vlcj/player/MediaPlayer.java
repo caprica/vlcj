@@ -1166,6 +1166,8 @@ public interface MediaPlayer {
 
     /**
      * Set ("press") a teletext key.
+     * <p>
+     * Requires LibVLC 3.0.0 or later.
      *
      * @param key teletext key
      */
