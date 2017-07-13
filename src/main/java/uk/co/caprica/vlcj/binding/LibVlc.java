@@ -2586,6 +2586,7 @@ public interface LibVlc extends Library {
      * @param p_mdis media service discover object
      * @return event manager object
      */
+    @Deprecated
     libvlc_event_manager_t libvlc_media_discoverer_event_manager(libvlc_media_discoverer_t p_mdis);
 
     /**

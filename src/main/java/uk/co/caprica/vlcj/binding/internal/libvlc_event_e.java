@@ -82,7 +82,9 @@ public enum libvlc_event_e {
     libvlc_MediaListPlayerNextItemSet   (0x401),
     libvlc_MediaListPlayerStopped       (0x402),
 
+    @Deprecated
     libvlc_MediaDiscovererStarted       (0x500),
+    @Deprecated
     libvlc_MediaDiscovererEnded         (0x501),
 
     libvlc_VlmMediaAdded                (0x600),
