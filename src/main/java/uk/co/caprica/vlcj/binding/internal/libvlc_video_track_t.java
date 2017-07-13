@@ -45,6 +45,8 @@ public class libvlc_video_track_t extends Structure {
     public int i_frame_rate_num;
     public int i_frame_rate_den;
 
+    public int i_orientation;
+
     @Override
     protected List<String> getFieldOrder() {
         return FIELD_ORDER;

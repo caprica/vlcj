@@ -69,6 +69,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_orient_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_track_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.condition.BeforeConditionAbortedException;
@@ -1330,23 +1331,46 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                         if(types == null || types.contains(TrackType.VIDEO)) {
                             trackInfo.u.setType(libvlc_video_track_t.class);
                             trackInfo.u.read();
-                            result.add(new VideoTrackInfo(
-                                trackInfo.i_codec,
-                                trackInfo.i_original_fourcc,
-                                trackInfo.i_id,
-                                trackInfo.i_profile,
-                                trackInfo.i_level,
-                                trackInfo.i_bitrate,
-                                NativeString.copyNativeString(libvlc, trackInfo.psz_language),
-                                NativeString.copyNativeString(libvlc, trackInfo.psz_description),
-                                trackInfo.u.video.i_width,
-                                trackInfo.u.video.i_height,
-                                trackInfo.u.video.i_sar_num,
-                                trackInfo.u.video.i_sar_den,
-                                trackInfo.u.video.i_frame_rate_num,
-                                trackInfo.u.video.i_frame_rate_den,
-                                getCodecDescription(libvlc_track_type_t.libvlc_track_video, trackInfo.i_codec)
-                            ));
+                            if (LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
+                                result.add(new VideoTrackInfo(
+                                    trackInfo.i_codec,
+                                    trackInfo.i_original_fourcc,
+                                    trackInfo.i_id,
+                                    trackInfo.i_profile,
+                                    trackInfo.i_level,
+                                    trackInfo.i_bitrate,
+                                    NativeString.copyNativeString(libvlc, trackInfo.psz_language),
+                                    NativeString.copyNativeString(libvlc, trackInfo.psz_description),
+                                    trackInfo.u.video.i_width,
+                                    trackInfo.u.video.i_height,
+                                    trackInfo.u.video.i_sar_num,
+                                    trackInfo.u.video.i_sar_den,
+                                    trackInfo.u.video.i_frame_rate_num,
+                                    trackInfo.u.video.i_frame_rate_den,
+                                    libvlc_video_orient_e.orientation(trackInfo.u.video.i_orientation),
+                                    getCodecDescription(libvlc_track_type_t.libvlc_track_video, trackInfo.i_codec)
+                                ));
+                            }
+                            else {
+                                result.add(new VideoTrackInfo(
+                                    trackInfo.i_codec,
+                                    trackInfo.i_original_fourcc,
+                                    trackInfo.i_id,
+                                    trackInfo.i_profile,
+                                    trackInfo.i_level,
+                                    trackInfo.i_bitrate,
+                                    NativeString.copyNativeString(libvlc, trackInfo.psz_language),
+                                    NativeString.copyNativeString(libvlc, trackInfo.psz_description),
+                                    trackInfo.u.video.i_width,
+                                    trackInfo.u.video.i_height,
+                                    trackInfo.u.video.i_sar_num,
+                                    trackInfo.u.video.i_sar_den,
+                                    trackInfo.u.video.i_frame_rate_num,
+                                    trackInfo.u.video.i_frame_rate_den,
+                                    null,
+                                    getCodecDescription(libvlc_track_type_t.libvlc_track_video, trackInfo.i_codec)
+                                ));
+                            }
                         }
                         break;
 

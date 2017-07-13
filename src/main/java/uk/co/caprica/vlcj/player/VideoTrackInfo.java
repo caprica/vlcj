@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_orient_e;
+
 /**
  * Video track info.
  */
@@ -60,6 +62,11 @@ public class VideoTrackInfo extends TrackInfo {
     private final int frameRateBase;
 
     /**
+     * Video orientation.
+     */
+    private final libvlc_video_orient_e orientation;
+
+    /**
      * Create a new video track info.
      *
      * @param codec video codec
@@ -76,9 +83,10 @@ public class VideoTrackInfo extends TrackInfo {
      * @param sampleAspectRatioBase sample aspect ratio base
      * @param frameRate frame rate
      * @param frameRateBase frame rate base
+     * @param orientation video orientation
      * @param codecDescription codec description
      */
-    public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, String codecDescription) {
+    public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, libvlc_video_orient_e orientation, String codecDescription) {
         super(codec, originalCodec, id, profile, level, bitRate, language, description, codecDescription);
         this.width = width;
         this.height = height;
@@ -86,6 +94,7 @@ public class VideoTrackInfo extends TrackInfo {
         this.sampleAspectRatioBase = sampleAspectRatioBase;
         this.frameRate = frameRate;
         this.frameRateBase = frameRateBase;
+        this.orientation = orientation;
     }
 
     /**
@@ -142,6 +151,16 @@ public class VideoTrackInfo extends TrackInfo {
         return frameRateBase;
     }
 
+    /**
+     * Get the video orientation.
+     *
+     * @return video orientation
+     * @since LibVLC 3.0.0
+     */
+    public final libvlc_video_orient_e orientation() {
+        return orientation;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(200);
@@ -151,7 +170,8 @@ public class VideoTrackInfo extends TrackInfo {
         sb.append("sampleAspectRatio=").append(sampleAspectRatio).append(',');
         sb.append("sampleAspectRatioBase=").append(sampleAspectRatioBase).append(',');
         sb.append("frameRate=").append(frameRate).append(',');
-        sb.append("frameRateBase=").append(frameRateBase).append(']');
+        sb.append("frameRateBase=").append(frameRateBase).append(',');
+        sb.append("orientation=").append(orientation).append(']');
         return sb.toString();
     }
 }
