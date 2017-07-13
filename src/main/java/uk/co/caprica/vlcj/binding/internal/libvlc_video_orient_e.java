@@ -39,8 +39,8 @@ public enum libvlc_video_orient_e {
     private static final Map<Integer, libvlc_video_orient_e> INT_MAP = new HashMap<Integer, libvlc_video_orient_e>();
 
     static {
-        for(libvlc_video_orient_e event : libvlc_video_orient_e.values()) {
-            INT_MAP.put(event.intValue, event);
+        for(libvlc_video_orient_e orientation : libvlc_video_orient_e.values()) {
+            INT_MAP.put(orientation.intValue, orientation);
         }
     }
 
