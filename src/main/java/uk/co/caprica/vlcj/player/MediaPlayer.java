@@ -36,6 +36,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_type_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_teletext_key_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.medialist.MediaList;
@@ -1162,6 +1163,13 @@ public interface MediaPlayer {
      * @param pageNumber page number
      */
     void setTeletextPage(int pageNumber);
+
+    /**
+     * Set ("press") a teletext key.
+     *
+     * @param key teletext key
+     */
+    void setTeletextKey(libvlc_teletext_key_e key);
 
     /**
      * Toggle teletext status.

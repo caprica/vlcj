@@ -63,6 +63,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_subtitle_track_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_teletext_key_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_title_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
@@ -1130,6 +1131,12 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public void setTeletextPage(int pageNumber) {
         logger.debug("setTeletextPage(pageNumber={})", pageNumber);
         libvlc.libvlc_video_set_teletext(mediaPlayerInstance, pageNumber);
+    }
+
+    @Override
+    public void setTeletextKey(libvlc_teletext_key_e key) {
+        logger.debug("setTeletextKey(key={})", key);
+        libvlc.libvlc_video_set_teletext(mediaPlayerInstance, key.intValue());
     }
 
     @Override
