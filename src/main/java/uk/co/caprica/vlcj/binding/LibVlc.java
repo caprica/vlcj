@@ -1555,6 +1555,7 @@ public interface LibVlc extends Library {
      *
      * @param p_mi the media player
      */
+    @Deprecated
     void libvlc_toggle_teletext(libvlc_media_player_t p_mi);
 
     /**
