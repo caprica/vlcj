@@ -1533,7 +1533,7 @@ public interface LibVlc extends Library {
     void libvlc_video_set_crop_geometry(libvlc_media_player_t p_mi, String psz_geometry);
 
     /**
-     * Get current teletext page requested.
+     * Get current teletext page requested or 0 if it's disabled.
      *
      * @param p_mi the media player
      * @return the current teletext page requested.
@@ -1545,7 +1545,7 @@ public interface LibVlc extends Library {
      *
      * @param p_mi the media player
      * @param i_page teletex page number requested.
-     *               This value can be -1 to disable teletext or a number in the range 0 to 1000 to show the requested
+     *               This value can be 0 to disable teletext or a number in the range 0 to 1000 to show the requested
      *               page or a libvlc_teletext_key_e. 100 is the default teletext page.
      */
     void libvlc_video_set_teletext(libvlc_media_player_t p_mi, int i_page);
