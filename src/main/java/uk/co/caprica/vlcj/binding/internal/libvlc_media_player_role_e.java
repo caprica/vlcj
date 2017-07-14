@@ -27,6 +27,7 @@ import java.util.Map;
  */
 public enum libvlc_media_player_role_e {
 
+    libvlc_role_None         (0), /* Don't use a media player role */
     libvlc_role_Music        (1), /* Music (or radio) playback */
     libvlc_role_Video        (2), /* Video playback */
     libvlc_role_Communication(3), /* Speech, real-time communication */
