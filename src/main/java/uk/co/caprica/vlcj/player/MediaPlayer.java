@@ -30,6 +30,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_channel_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_role_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -1815,6 +1816,24 @@ public interface MediaPlayer {
      * @param equalizer equalizer, or <code>null</code> to disable the audio equalizer
      */
     void setEqualizer(Equalizer equalizer);
+
+    /**
+     * Get the media player role.
+     * <p>
+     * <strong>Requires vlc 3.0.0 or later.</strong>
+     *
+     * @return media player role
+     */
+    libvlc_media_player_role_e getRole();
+
+    /**
+     * Set the media player role.
+     * <p>
+     * <strong>Requires vlc 3.0.0 or later.</strong>
+     *
+     * @param role media player role
+     */
+    void setRole(libvlc_media_player_role_e role);
 
     /**
      * Get the media resource locator for the current media instance.

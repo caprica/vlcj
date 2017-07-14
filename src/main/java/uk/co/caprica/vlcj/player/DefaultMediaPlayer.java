@@ -54,6 +54,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_role_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -1854,6 +1855,20 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             logger.trace("Disable equalizer");
             libvlc.libvlc_media_player_set_equalizer(mediaPlayerInstance, null);
         }
+    }
+
+    // === Media Player Role ====================================================
+
+    @Override
+    public libvlc_media_player_role_e getRole() {
+        logger.debug("getRole()");
+        return libvlc_media_player_role_e.role(libvlc.libvlc_media_player_get_role(mediaPlayerInstance));
+    }
+
+    @Override
+    public void setRole(libvlc_media_player_role_e role) {
+        logger.debug("setRole(role={})", role);
+        libvlc.libvlc_media_player_set_role(mediaPlayerInstance, role.intValue());
     }
 
     // === Implementation =======================================================

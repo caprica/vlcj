@@ -2128,6 +2128,25 @@ public interface LibVlc extends Library {
      */
     int libvlc_media_player_set_equalizer(libvlc_media_player_t p_mi, libvlc_equalizer_t p_equalizer);
 
+    /**
+     * Gets the media role.
+     *
+     * @param p_mi opaque media player handle
+     * @return the media player role (libvlc_media_player_role_e)
+     * @since LibVLC 3.0.0 or later
+     */
+    int libvlc_media_player_get_role(libvlc_media_player_t p_mi);
+
+    /**
+     * Sets the media role.
+     *
+     * @param p_mi opaque media player handle
+     * @param role the media player role (libvlc_media_player_role_e)
+     * @return 0 on success, -1 on error
+     * @since LibVLC 3.0.0 or later
+     */
+    int libvlc_media_player_set_role(libvlc_media_player_t p_mi, int role);
+
     // === libvlc_media_player.h ================================================
 
     // === libvlc_media_list.h ==================================================
