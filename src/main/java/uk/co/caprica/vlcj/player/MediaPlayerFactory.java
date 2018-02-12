@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.player;
 import java.awt.Canvas;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.text.MessageFormat;
@@ -56,11 +57,14 @@ import uk.co.caprica.vlcj.player.directaudio.DefaultDirectAudioPlayer;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 import uk.co.caprica.vlcj.player.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.DefaultWindowedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.WindowedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.ComponentIdVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
+import uk.co.caprica.vlcj.player.embedded.videosurface.WindowVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.linux.LinuxVideoSurfaceAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.mac.MacVideoSurfaceAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.windows.WindowsVideoSurfaceAdapter;
@@ -677,6 +681,17 @@ public class MediaPlayerFactory {
         logger.debug("newEmbeddedMediaPlayer(fullScreenStrategy={})", fullScreenStrategy);
         return new DefaultEmbeddedMediaPlayer(libvlc, instance, fullScreenStrategy);
     }
+    
+    /**
+     * Create a new embedded media player.
+     *
+     * @param fullScreenStrategy full screen implementation, may be <code>null</code>
+     * @return media player instance
+     */
+    public WindowedMediaPlayer newWindowedMediaPlayer(FullScreenStrategy fullScreenStrategy) {
+	    	logger.debug("newWindowedMediaPlayer(fullScreenStrategy={})", fullScreenStrategy);
+	    	return new DefaultWindowedMediaPlayer(libvlc, instance, fullScreenStrategy);
+    }
 
     /**
      * Create a new direct video rendering media player.
@@ -754,6 +769,32 @@ public class MediaPlayerFactory {
         CanvasVideoSurface videoSurface = new CanvasVideoSurface(canvas, videoSurfaceAdapter);
         logger.debug("videoSurface={}", videoSurface);
         return videoSurface;
+    }
+
+    /**
+     * Create a new video surface from an AWT Window.
+     *
+     * @param window video surface
+     * @return video surface
+     */
+    public WindowVideoSurface newVideoSurface(Window window) {
+	    	logger.debug("newVideoSurface(canvas={})", window);
+	    	VideoSurfaceAdapter videoSurfaceAdapter;
+	    	if(RuntimeUtil.isNix()) {
+	    		videoSurfaceAdapter = new LinuxVideoSurfaceAdapter();
+	    	}
+	    	else if(RuntimeUtil.isWindows()) {
+	    		videoSurfaceAdapter = new WindowsVideoSurfaceAdapter();
+	    	}
+	    	else if(RuntimeUtil.isMac()) {
+	    		videoSurfaceAdapter = new MacVideoSurfaceAdapter();
+	    	}
+	    	else {
+	    		throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
+	    	}
+	    	WindowVideoSurface videoSurface = new WindowVideoSurface(window, videoSurfaceAdapter);
+	    	logger.debug("videoSurface={}", videoSurface);
+	    	return videoSurface;
     }
 
     /**
