@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2016 Caprica Software Limited.
+ * Copyright 2009-2018 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.embedded.windows;
@@ -41,6 +41,7 @@ import com.sun.jna.platform.win32.WinDef.LPARAM;
 import com.sun.jna.platform.win32.WinDef.RECT;
 import com.sun.jna.platform.win32.WinDef.WPARAM;
 import com.sun.jna.platform.win32.WinUser;
+import com.sun.jna.platform.win32.WinUser.MONITORINFO;
 
 /**
  * Native full-screen implementation.

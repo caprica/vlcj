@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2016 Caprica Software Limited.
+ * Copyright 2009-2018 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.condition;
