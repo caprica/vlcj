@@ -75,7 +75,7 @@
     </scm>
 
     <properties>
-        <jna.version>4.1.0</jna.version>
+        <jna.version>4.5.1</jna.version>
         <slf4j.version>1.7.10</slf4j.version>
         <sonar.exclusions>**/package-info.java,uk/co/caprica/vlcj/binding/**</sonar.exclusions>
         <sonar.language>java</sonar.language>
