@@ -141,7 +141,7 @@ public class MediaPlayerFactory {
         // Only apply for Linux, but not for a headless environment...
         if(RuntimeUtil.isNix() && !GraphicsEnvironment.isHeadless()) {
             // Only apply if the run-time version is Java 1.7.0 or later...
-            Version actualJavaVersion = new Version(System.getProperty("java.version"));
+            Version actualJavaVersion = new Version(getJavaVersion());
             if(actualJavaVersion.atLeast(new Version("1.7.0"))) {
                 logger.debug("Trying workaround for Java7+ on Linux");
                 Toolkit.getDefaultToolkit();
@@ -222,6 +222,23 @@ public class MediaPlayerFactory {
      * True when the factory has been released.
      */
     private boolean released;
+
+    /**
+     * Get the runtime Java version.
+     * <p>
+     * This is a temporary workaround, because the "java.version" system property changed format from "1.9.0"
+     * to a simple "10" with Java10, and will be revisited with something more robust later.
+     *
+     * @return version string
+     */
+    private static String getJavaVersion() {
+        String result = System.getProperty("java.version");
+        if (!result.contains(".")) {
+            // I know, it's not great, but change e.g. "10" to "10.0.0"
+            result += ".0.0";
+        }
+        return result;
+    }
 
     /**
      * Create a new media player factory.
