@@ -89,18 +89,18 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
         File dir = new File(directoryName);
         File[] files = dir.listFiles();
         if(files != null) {
-            Pattern[] patternsToMatch = getFilenamePatterns();
-            int matchedCount = 0;
+            List<Pattern> patternsToMatch = new ArrayList<Pattern>(Arrays.asList(getFilenamePatterns()));
             for(File file : files) {
                 for(Pattern pattern : patternsToMatch) {
                     Matcher matcher = pattern.matcher(file.getName());
                     if(matcher.matches()) {
                         logger.debug("Matched '{}' in '{}'", file.getName(), directoryName);
-                        matchedCount++ ;
-                        if(matchedCount == patternsToMatch.length) {
+                        patternsToMatch.remove(pattern);
+                        if(patternsToMatch.isEmpty()) {
                             logger.debug("Matched all required files");
                             return true;
                         }
+                        break;
                     }
                 }
             }
