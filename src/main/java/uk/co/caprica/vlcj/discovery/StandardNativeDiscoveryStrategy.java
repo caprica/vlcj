@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.discovery;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,7 +29,13 @@ import java.util.List;
  * This strategy should be supported across all platforms.
  */
 public abstract class StandardNativeDiscoveryStrategy extends AbstractNativeDiscoveryStrategy {
-
+    
+    private final String[] extraPaths;
+    
+    public StandardNativeDiscoveryStrategy(String[] extraPaths) {
+        this.extraPaths = extraPaths;
+    }
+    
     @Override
     public boolean supported() {
         return true;
@@ -40,6 +47,8 @@ public abstract class StandardNativeDiscoveryStrategy extends AbstractNativeDisc
         directoryNames.add(System.getProperty("user.dir"));
         // Look in the directories on the system path
         directoryNames.addAll(getSystemPath());
+        // Look in extra directories supplied in constructor
+        directoryNames.addAll(Arrays.asList(extraPaths));
         // Look in the extra directories supplied by the sub-class
         onGetDirectoryNames(directoryNames);
     }

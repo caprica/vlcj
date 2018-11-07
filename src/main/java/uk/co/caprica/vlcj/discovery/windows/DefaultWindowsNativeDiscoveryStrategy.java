@@ -38,6 +38,10 @@ import uk.co.caprica.vlcj.version.LibVlcVersion;
  * VLC installation.
  */
 public class DefaultWindowsNativeDiscoveryStrategy extends StandardNativeDiscoveryStrategy {
+    
+    public DefaultWindowsNativeDiscoveryStrategy(String... extraPaths) {
+        super(extraPaths);
+    }
 
     /**
      * Filename patterns to search for.

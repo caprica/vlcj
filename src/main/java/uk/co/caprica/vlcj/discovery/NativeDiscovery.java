@@ -85,11 +85,11 @@ public class NativeDiscovery {
     /**
      * Create a discovery component with the default platform strategies.
      */
-    public NativeDiscovery() {
+    public NativeDiscovery(String... extraPaths) {
         this(
-            new DefaultLinuxNativeDiscoveryStrategy(),
-            new DefaultWindowsNativeDiscoveryStrategy(),
-            new DefaultMacNativeDiscoveryStrategy()
+            new DefaultLinuxNativeDiscoveryStrategy(extraPaths),
+            new DefaultWindowsNativeDiscoveryStrategy(extraPaths),
+            new DefaultMacNativeDiscoveryStrategy(extraPaths)
         );
     }
 

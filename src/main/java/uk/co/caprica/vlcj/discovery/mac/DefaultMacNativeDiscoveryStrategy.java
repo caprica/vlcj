@@ -32,6 +32,10 @@ import uk.co.caprica.vlcj.version.LibVlcVersion;
  * standard well-known directory locations on MacOS.
  */
 public class DefaultMacNativeDiscoveryStrategy extends StandardNativeDiscoveryStrategy {
+    
+    public DefaultMacNativeDiscoveryStrategy(String... extraPaths) {
+        super(extraPaths);
+    }
 
     /**
      * Filename patterns to search for.

@@ -30,7 +30,11 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * standard well-known directory locations on Linux.
  */
 public class DefaultLinuxNativeDiscoveryStrategy extends StandardNativeDiscoveryStrategy {
-
+    
+    public DefaultLinuxNativeDiscoveryStrategy(String... extraPaths) {
+        super(extraPaths);
+    }
+    
     /**
      * Filename patterns to search for.
      * <p>
