@@ -32,7 +32,7 @@ public abstract class StandardNativeDiscoveryStrategy extends AbstractNativeDisc
     
     private final String[] extraPaths;
     
-    public StandardNativeDiscoveryStrategy(String[] extraPaths) {
+    public StandardNativeDiscoveryStrategy(String... extraPaths) {
         this.extraPaths = extraPaths;
     }
     
