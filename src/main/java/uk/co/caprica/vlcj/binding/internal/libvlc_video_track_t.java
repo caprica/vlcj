@@ -33,7 +33,7 @@ public class libvlc_video_track_t extends Structure {
     /**
      *
      */
-    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("i_height", "i_width", "i_sar_num", "i_sar_den", "i_frame_rate_num", "i_frame_rate_den"));
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("i_height", "i_width", "i_sar_num", "i_sar_den", "i_frame_rate_num", "i_frame_rate_den", "i_orientation", "i_projection", "f_yaw_degrees", "f_pitch_degrees", "f_roll_degrees", "f_fov_degrees"));
 
     public static class ByValue extends libvlc_video_track_t implements Structure.ByValue {}
 
