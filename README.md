@@ -1,10 +1,5 @@
 ![vlcj](https://github.com/caprica/vlcj/raw/master/etc/vlcj-logo.png "vlcj")
 
-IMPORTANT NEWS
-==============
-
-Due to toxic Microsoft's impending acquisition of Github, we will be moving all of our projects elsewhere very soon, most likely GitLab. This will happen in the coming weeks after we plan it out.
-
 vlcj
 ====
 
