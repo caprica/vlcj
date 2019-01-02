@@ -27,6 +27,8 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+
 /**
  * Utility class to help detect the type of media resource locator.
  * <p>
@@ -86,6 +88,8 @@ public final class MediaResourceLocator {
      * @return the original MRL if no encoding is required, or a percent-encoded file URL
      */
     public static String encodeMrl(String mrl) {
+        // FIXME it may be possible that this can be simplified greatly, in particular it may not be necessary to use
+        //       the URI workaround for absolute paths on the inferior OS
         logger.debug("encodeMrl(mrl={})", mrl);
         // Assume no change needed
         String result = mrl;
@@ -101,7 +105,7 @@ public final class MediaResourceLocator {
                 if (scheme == null) {
                     logger.debug("MRL has no scheme, assuming a local file name that should be encoded");
                     // Encode the local file as ASCII, and fix the scheme prefix
-                    result = new File(mrl).toURI().toASCIIString().replaceFirst("file:/", "file:///");
+                    result = encode(mrl);
                 }
                 else {
                     logger.debug("Ignoring MRL with scheme '{}'", scheme);
@@ -110,6 +114,13 @@ public final class MediaResourceLocator {
             catch(URISyntaxException e) {
                 // Can't do anything, return the original string
                 logger.debug("Can not obtain a valid URI from the MRL");
+                // On the inferior OS, sometimes an absolute local path with unicode characters must be encoded,
+                // relative paths do in fact work...
+                if (RuntimeUtil.isWindows()) {
+                    if (isAbsolutePath(mrl)) {
+                        result = encode(mrl);
+                    }
+                }
             }
         }
         else {
@@ -134,5 +145,32 @@ public final class MediaResourceLocator {
             }
         }
         return result;
+    }
+
+    /**
+     * Tests if the supplied value represents an absolute filesystem path.
+     *
+     * @param value value to test
+     * @return <code>true</code> if the supplied String represents an absolute filesystem path; <code>false</code> for a local path
+     */
+    private static boolean isAbsolutePath(String value) {
+        logger.debug("isAbsolutePath(value={})", value);
+        boolean result = new File(value).isAbsolute();
+        logger.debug("result={}", result);
+        return result;
+    }
+
+    /**
+     * Encode a string using ASCII escape sequences as necessary.
+     *
+     * @param value value to encode
+     * @return encoded value
+     */
+    private static String encode(String value) {
+        logger.debug("encode(value={})", value);
+        String result = new File(value).toURI().toASCIIString().replaceFirst("file:/", "file:///");
+        logger.debug("result={}", result);
+        return result;
+
     }
 }
