@@ -457,6 +457,7 @@ class DefaultMediaMeta implements MediaMeta {
             result.setDiscNumber(getDiscNumber());
             result.setDiscTotal(getDiscTotal());
         }
+        result.setLength(getLength());
         return result;
     }
 
