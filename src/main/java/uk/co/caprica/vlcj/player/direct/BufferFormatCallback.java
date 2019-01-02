@@ -27,6 +27,11 @@ public interface BufferFormatCallback {
     /**
      * Returns a {@link BufferFormat} instance specifying how the {@link DirectMediaPlayer}
      * should structure its buffers.
+     * <p>
+     * Note that it is possible that some versions of VLC provide the wrong value for the sourceHeight parameter, and
+     * more than that it might invoke this callback multiple times with different values for the sourceHeight. Your own
+     * callback implementation may need to mitigate this (e.g. by ignoring the sourceHeight changes on subsequent
+     * invocations of your callback).
      *
      * @param sourceWidth video width
      * @param sourceHeight video height
