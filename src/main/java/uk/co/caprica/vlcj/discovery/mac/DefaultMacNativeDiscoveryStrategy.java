@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.discovery.mac;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import com.sun.jna.NativeLibrary;
 import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.discovery.StandardNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -63,6 +64,12 @@ public class DefaultMacNativeDiscoveryStrategy extends StandardNativeDiscoverySt
 
     @Override
     public void onFound(String path) {
+        // On later versions of OSX, it is necessary to force-load libvlccore before libvlc, otherwise libvlc will fail
+        // to load
+        String coreLibraryName = RuntimeUtil.getLibVlcLibraryName() + "core";
+        NativeLibrary.addSearchPath(coreLibraryName, path);
+        NativeLibrary.getInstance(coreLibraryName);
+
         if (LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_220)) {
             LibC.INSTANCE.setenv(PLUGIN_ENV_NAME, String.format(PLUGIN_PATH_FORMAT, path), 1);
         }
