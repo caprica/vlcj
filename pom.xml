@@ -211,9 +211,9 @@
                     <encoding>UTF-8</encoding>
                     <footer>(C)2019 Caprica Software Limited</footer>
                     <show>public</show>
-                    <javadocVersion>1.8</javadocVersion>
                     <quiet>true</quiet>
                     <failOnError>true</failOnError>
+                    <additionalOptions>-html5</additionalOptions>
                 </configuration>
                 <executions>
                     <execution>
