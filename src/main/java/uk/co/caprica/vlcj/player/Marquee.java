@@ -127,39 +127,10 @@ public final class Marquee {
      *  %M = minute
      *  %S = second
      * </pre>
-     * Meta data related:
-     * <pre>
-     *  $a = artist
-     *  $b = album
-     *  $c = copyright
-     *  $d = description
-     *  $e = encoded by
-     *  $g = genre
-     *  $l = language
-     *  $n = track num
-     *  $p = now playing
-     *  $r = rating
-     *  $s = subtitles language
-     *  $t = title
-     *  $u = url
-     *  $A = date
-     *  $B = audio bitrate (in kb/s)
-     *  $C = chapter
-     *  $D = duration
-     *  $F = full name with path
-     *  $I = title
-     *  $L = time left
-     *  $N = name
-     *  $O = audio language
-     *  $P = position (in %)
-     *  $R = rate
-     *  $S = audio sample rate (in kHz)
-     *  $T = time
-     *  $U = publisher
-     *  $V = volume
-     *  $_ = new line
-     * </pre>
      * See <code>http://wiki.videolan.org/index.php?title=Documentation:Modules/marq</code>.
+     * <p>
+     * If you want to use new-lines in the marquee text make sure you use the "\r\n" escape sequence - "\n" on its own
+     * will not work.
      *
      * @param text text
      * @return this
