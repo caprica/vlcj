@@ -47,6 +47,13 @@ Add the following Maven dependency to your own project pom.xml:
 News
 ----
 
+02/01/2019 Happy new year! This project is still very much alive - but why hasn't there been a new release for a while?
+Well, this project is stable and mature and we very rarely get any significant bug reports. LibVLC also does not add
+significant new features all that often and it too has a slow release cycle. The latest release version of vlcj works
+just fine with the latest VLC 3.x. So we don't just push out new releases for the sake of it. Nevertheless, development
+is still active and ongoing and we expect to push out new releases this year, fixing small issues, and looking at the
+latest LibVLC to see if there's anything new there worth adding.
+
 03/02/2016 [Experimental branch](https://github.com/caprica/vlcj/tree/experimental) with direct
 rendering media player improvements, removing a full frame memory copy. This branch is *not* backwardly
 compatibly with vlcj 3.x.
