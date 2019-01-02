@@ -32,6 +32,7 @@ public class VersionTest {
      * @param args command-line arguments
      */
     public static void main(String[] args) {
+        test("1.7.0", "10.0.0");
         test("2.0.0", "2.0.0");
         test("1.2.0", "2.0.0");
         test("1.2.0", "1.2.1");
