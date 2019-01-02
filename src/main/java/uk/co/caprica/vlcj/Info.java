@@ -24,6 +24,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.version.Version;
 
 /**
@@ -78,6 +79,9 @@ public final class Info {
         logger.info("java: {} {}", System.getProperty("java.version"), System.getProperty("java.vendor"));
         logger.info("java home: {}", System.getProperty("java.home"));
         logger.info("os: {} {} {}", System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"));
+        if (RuntimeUtil.isNix()) {
+            logger.info("LD_LIBRARY_PATH: {}", System.getenv("LD_LIBRARY_PATH"));
+        }
     }
 
     /**
