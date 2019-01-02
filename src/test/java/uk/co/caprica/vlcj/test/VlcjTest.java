@@ -26,6 +26,7 @@ import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 
@@ -58,7 +59,7 @@ public abstract class VlcjTest {
      * <p>
      * This is a bit more explicit than using the -Djna.library.path= system property.
      */
-    private static final String NATIVE_LIBRARY_SEARCH_PATH = "/disks/store/linux/vlc/install/lib";
+    private static final String NATIVE_LIBRARY_SEARCH_PATH = null;
 
     /**
      * Set to true to dump out native JNA memory structures.
