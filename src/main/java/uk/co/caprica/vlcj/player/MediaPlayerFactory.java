@@ -75,6 +75,8 @@ import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
 import uk.co.caprica.vlcj.version.Version;
 
+import javax.swing.*;
+
 /**
  * Factory for media player instances.
  * <p>
@@ -150,6 +152,9 @@ public class MediaPlayerFactory {
                     public Object run() {
                         try {
                             logger.debug("Attempting to load jawt...");
+                            // To prevent crashses in some applications, we must seemingly make sure that Swing is
+                            // initialised before force-loading libjawt - empirically both of these things are required
+                            new JPanel();
                             System.loadLibrary("jawt");
                             logger.debug("...loaded jawt");
                         }
