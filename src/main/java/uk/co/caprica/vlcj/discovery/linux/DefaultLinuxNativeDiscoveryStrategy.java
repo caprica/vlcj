@@ -58,6 +58,10 @@ public class DefaultLinuxNativeDiscoveryStrategy extends StandardNativeDiscovery
 
     @Override
     protected void onGetDirectoryNames(List<String> directoryNames) {
+        directoryNames.add("/usr/lib/x86_64-linux-gnu");
+        directoryNames.add("/usr/lib64");
+        directoryNames.add("/usr/local/lib64");
+        directoryNames.add("/usr/lib/i386-linux-gnu");
         directoryNames.add("/usr/lib");
         directoryNames.add("/usr/local/lib");
     }

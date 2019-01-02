@@ -87,6 +87,9 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
      */
     private boolean find(String directoryName) {
         File dir = new File(directoryName);
+        if (!dir.exists()) {
+            return false;
+        }
         File[] files = dir.listFiles();
         if(files != null) {
             Pattern[] patternsToMatch = getFilenamePatterns();
