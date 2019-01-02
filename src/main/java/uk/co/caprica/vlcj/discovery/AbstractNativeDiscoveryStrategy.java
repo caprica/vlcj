@@ -23,7 +23,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,14 +95,16 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
         File[] files = dir.listFiles();
         if(files != null) {
             Pattern[] patternsToMatch = getFilenamePatterns();
-            int matchedCount = 0;
+            Set<String> matches = new HashSet<String>(patternsToMatch.length);
             for(File file : files) {
                 for(Pattern pattern : patternsToMatch) {
                     Matcher matcher = pattern.matcher(file.getName());
                     if(matcher.matches()) {
+                        // A match was found for this pattern (note that it may be possible to match multiple times, any
+                        // one of those matches will do so a Set is used to ignore duplicates)
                         logger.debug("Matched '{}' in '{}'", file.getName(), directoryName);
-                        matchedCount++ ;
-                        if(matchedCount == patternsToMatch.length) {
+                        matches.add(pattern.pattern());
+                        if(matches.size() == patternsToMatch.length) {
                             logger.debug("Matched all required files");
                             return true;
                         }
@@ -110,7 +114,7 @@ public abstract class AbstractNativeDiscoveryStrategy implements NativeDiscovery
         }
         logger.debug("Failed to matched all required files");
         return false;
-   }
+    }
 
     /**
      * Get the system search path components.
