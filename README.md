@@ -40,12 +40,16 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>3.10.1</version>
+    <version>3.11.0</version>
 </dependency>
 ```
 
 News
 ----
+
+03/01/2019 Made new release 3.11.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), various small issues
+addressed, see [milestone issues](https://github.com/caprica/vlcj/milestone/27?closed=1) for more details. This release
+bumps 3rd party library dependencies to the latest versions, including JNA, so beware!
 
 02/01/2019 Happy new year! This project is still very much alive - but why hasn't there been a new release for a while?
 Well, this project is stable and mature and we very rarely get any significant bug reports. LibVLC also does not add
@@ -105,7 +109,8 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available:
 
-* [3.10.1 (current)](http://caprica.github.com/vlcj/javadoc/3.10.1/index.html "3.10.1 Javadoc")
+* [3.11.0 (current)](http://caprica.github.com/vlcj/javadoc/3.11.0/index.html "3.11.0 Javadoc")
+* [3.10.1](http://caprica.github.com/vlcj/javadoc/3.10.1/index.html "3.10.1 Javadoc")
 * [3.10.0](http://caprica.github.com/vlcj/javadoc/3.10.0/index.html "3.10.0 Javadoc")
 * [3.9.0](http://caprica.github.com/vlcj/javadoc/3.9.0/index.html "3.9.0 Javadoc")
 * [3.8.0](http://caprica.github.com/vlcj/javadoc/3.8.0/index.html "3.8.0 Javadoc")
