@@ -73,7 +73,6 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
-import com.sun.awt.AWTUtilities;
 import com.sun.jna.platform.WindowUtils;
 
 /**
@@ -308,9 +307,6 @@ public class TestPlayer extends VlcjTest {
                 }
             };
 
-            AWTUtilities.setWindowOpaque(test, false); // Doesn't work in full-screen exclusive
-                                                       // mode, you would have to use 'simulated'
-                                                       // full-screen - requires Sun/Oracle JDK
             test.setBackground(new Color(0, 0, 0, 0)); // This is what you do in JDK7
 
             // mediaPlayer.setOverlay(test);
