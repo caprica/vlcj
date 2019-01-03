@@ -161,6 +161,10 @@ import uk.co.caprica.vlcj.player.media.Media;
  * via {@link #setPlaySubItems(boolean)}, otherwise {@link #playNextSubItem(String...)} can be
  * invoked in response to a {@link MediaPlayerEventListener#finished(MediaPlayer)} event.
  * <p>
+ * When using options, generally any options that enable/disable modules (e.g. video/audio filters) must be set via the
+ * factory instance and not when invoking {@link MediaPlayer#playMedia(String, String...)}. However, the filter-specific
+ * options <em>may</em> be able to be passed and be effective via a playMedia call.
+ * <p>
  * It is always a better strategy to reuse media player instances, rather than repeatedly creating
  * and destroying instances.
  * <p>
