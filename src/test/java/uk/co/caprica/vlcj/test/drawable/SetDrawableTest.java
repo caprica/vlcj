@@ -29,6 +29,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.peer.ComponentPeer;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import javax.swing.ImageIcon;
@@ -280,7 +281,6 @@ public class SetDrawableTest extends VlcjTest {
             this.mediaPlayer = mediaPlayer;
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             setSize(320, 180);
-            pack();
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -301,7 +301,7 @@ public class SetDrawableTest extends VlcjTest {
         System.out.println();
         System.out.println(s);
         System.out.println("        component: " + c);
-        System.out.println("   component peer: " + c.getPeer());
+        System.out.println("   component peer: " + getComponentPeer(c));
         System.out.println("component pointer: " + Native.getComponentPointer(c));
         System.out.println("   native pointer: " + Pointer.nativeValue(Native.getComponentPointer(c)));
         System.out.println("     component id: " + Native.getComponentID(c));
@@ -329,9 +329,8 @@ public class SetDrawableTest extends VlcjTest {
      */
     private long getViewPointer(Component component) {
         try {
-            @SuppressWarnings("deprecation")
-            ComponentPeer peer = component.getPeer();
-            Method method = peer.getClass().getMethod("getViewPtr");
+            ComponentPeer peer = getComponentPeer(component);
+            Method method = peer.getClass().getMethod("getWindow");
             Object result = method.invoke(peer);
             System.out.println("result: " + result);
             if(result != null) {
@@ -344,6 +343,17 @@ public class SetDrawableTest extends VlcjTest {
         }
         catch(Throwable t) {
             throw new RuntimeException(t);
+        }
+    }
+
+    private ComponentPeer getComponentPeer(Component component) {
+        try {
+            Field field = Component.class.getDeclaredField("peer");
+            field.setAccessible(true);
+            return (ComponentPeer) field.get(component);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
