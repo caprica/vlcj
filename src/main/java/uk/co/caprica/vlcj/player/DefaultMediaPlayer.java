@@ -2420,14 +2420,14 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                 resetMedia();
             }
         }
-    }
 
-    /**
-     * Reset the media so it can be replayed.
-     */
-    private void resetMedia() {
-        logger.debug("resetMedia()");
-        setMedia(lastPlayedMedia);
+        /**
+         * Reset the media so it can be replayed.
+         */
+        private void resetMedia() {
+            logger.debug("resetMedia()");
+            setMedia(lastPlayedMedia);
+        }
     }
 
     /**
