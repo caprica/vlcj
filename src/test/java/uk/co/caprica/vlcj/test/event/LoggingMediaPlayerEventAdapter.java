@@ -175,6 +175,11 @@ public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener 
         logger.debug("error(mediaPlayer={})", mediaPlayer);
     }
 
+    @Override
+    public void mediaPlayerReady(MediaPlayer mediaPlayer) {
+        logger.debug("ready(mediaPlayer={})", mediaPlayer);
+    }
+
     // === Events relating to the current media =================================
 
     @Override

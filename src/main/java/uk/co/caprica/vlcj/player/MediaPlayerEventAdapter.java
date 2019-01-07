@@ -144,6 +144,10 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     public void error(MediaPlayer mediaPlayer) {
     }
 
+    @Override
+    public void mediaPlayerReady(MediaPlayer mediaPlayer) {
+    }
+
     // === Events relating to the current media =================================
 
     @Override

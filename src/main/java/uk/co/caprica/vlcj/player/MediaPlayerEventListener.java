@@ -258,6 +258,24 @@ public interface MediaPlayerEventListener {
      */
     void error(MediaPlayer mediaPlayer);
 
+    /**
+     * Media player is ready (to enable features like logo and marquee) after
+     * the media has started playing.
+     * <p>
+     * The implementation will fire this event once on receipt of the first
+     * native position-changed event with a position value greater than zero.
+     * <p>
+     * The event will be fired again if the media is played again after a native
+     * stopped or finished event is received.
+     * <p>
+     * Waiting for this event may be more reliable than using {@link #playing(MediaPlayer)}
+     * or {@link #videoOutput(MediaPlayer, int)} in some cases (logo and marquee
+     * already mentioned, also setting audio tracks, sub-title tracks and so on).
+     *
+     * @param mediaPlayer media player that raised the event
+     */
+    void mediaPlayerReady(MediaPlayer mediaPlayer);
+
     // === Events relating to the current media =================================
 
     /**

@@ -372,4 +372,16 @@ public class MediaPlayerEventFactory {
         }
         return null;
     }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public MediaPlayerEvent createMediaPlayerReadyEvent(long eventMask) {
+        if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PLAYER_READY)) {
+            return new MediaPlayerReadyEvent(mediaPlayer);
+        }
+        return null;
+    }
 }

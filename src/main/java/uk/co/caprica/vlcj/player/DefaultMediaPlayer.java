@@ -1949,6 +1949,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         eventListenerList.add(new RepeatPlayEventHandler());
         eventListenerList.add(new SubItemEventHandler());
         eventListenerList.add(new ResetMediaHandler());
+        eventListenerList.add(new MediaPlayerReadyHandler());
     }
 
     /**
@@ -2427,6 +2428,48 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     private void resetMedia() {
         logger.debug("resetMedia()");
         setMedia(lastPlayedMedia);
+    }
+
+    /**
+     * Event listener implementation that waits for the first position changed event and raises a
+     * synthetic media player ready event.
+     * <p>
+     * Some media player operations require that the media be definitively playing before they are
+     * effective (things like setting logo and marquee amongst others) and the playing event itself
+     * does not guarantee this.
+     */
+    private final class MediaPlayerReadyHandler extends MediaPlayerEventAdapter {
+
+        /**
+         * Flag if the event has fired since the media was last started or not.
+         */
+        private boolean fired;
+
+        @Override
+        public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
+            if (!fired && newPosition > 0) {
+                fired = true;
+                mediaPlayerReady();
+            }
+        }
+
+        @Override
+        public void stopped(MediaPlayer mediaPlayer) {
+            fired = false;
+        }
+
+        @Override
+        public void finished(MediaPlayer mediaPlayer) {
+            fired = false;
+        }
+
+        /**
+         * Raise the synthetic media player ready event.
+         */
+        private void mediaPlayerReady() {
+            logger.debug("mediaPlayerReady()");
+            raiseEvent(eventFactory.createMediaPlayerReadyEvent(eventMask));
+        }
     }
 
     /**

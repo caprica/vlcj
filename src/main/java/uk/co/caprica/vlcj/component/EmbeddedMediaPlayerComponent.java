@@ -574,6 +574,10 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     }
 
     @Override
+    public void mediaPlayerReady(MediaPlayer mediaPlayer) {
+    }
+
+    @Override
     public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
     }
 
