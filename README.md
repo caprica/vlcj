@@ -17,7 +17,7 @@ limitations on OSX.
 At least JDK 1.6 is required, and it works without changes on JDK 1.7+.
 
 This is the open source vlcj project page, see also the 'official'
-[home page](http://capricasoftware.co.uk/#/projects/vlcj "Official vlcj home page at Caprica Software")
+[home page](http://capricasoftware.co.uk/projects/vlcj "Official vlcj home page at Caprica Software")
 where you can find more information as well as some new simple tutorials.
 
 Version 3.0.0+ of vlcj requires version 2.1.0+ of VLC, earlier versions of VLC
