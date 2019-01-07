@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player.events;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+
 /**
  *
  */
