@@ -2489,7 +2489,6 @@ public interface LibVlc extends Library {
      * in order to start the discovery.
      *
      * @see #libvlc_media_discoverer_media_list(libvlc_media_discoverer_t)
-     * @see #libvlc_media_discoverer_event_manager(libvlc_media_discoverer_t)
      * @see #libvlc_media_discoverer_start(libvlc_media_discoverer_t)
      *
      * @param p_inst libvlc instance
