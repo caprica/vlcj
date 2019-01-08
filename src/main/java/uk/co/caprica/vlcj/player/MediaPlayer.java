@@ -1172,11 +1172,6 @@ public interface MediaPlayer {
     void setTeletextKey(libvlc_teletext_key_e key);
 
     /**
-     * Toggle teletext status.
-     */
-    void toggleTeletext();
-
-    /**
      * Get the title descriptions.
      * <p>
      * The media must be playing before this information is available.

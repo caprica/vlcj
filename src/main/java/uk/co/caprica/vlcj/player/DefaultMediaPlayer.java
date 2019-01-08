@@ -1118,12 +1118,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         libvlc.libvlc_video_set_teletext(mediaPlayerInstance, key.intValue());
     }
 
-    @Override
-    public void toggleTeletext() {
-        logger.debug("toggleTeletext()");
-        libvlc.libvlc_toggle_teletext(mediaPlayerInstance);
-    }
-
     // === Description Controls =================================================
 
     @Override

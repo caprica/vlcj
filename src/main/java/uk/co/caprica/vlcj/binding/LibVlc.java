@@ -1517,14 +1517,6 @@ public interface LibVlc extends Library {
     void libvlc_video_set_teletext(libvlc_media_player_t p_mi, int i_page);
 
     /**
-     * Toggle teletext transparent status on video output.
-     *
-     * @param p_mi the media player
-     */
-    @Deprecated
-    void libvlc_toggle_teletext(libvlc_media_player_t p_mi);
-
-    /**
      * Get number of available video tracks.
      *
      * @param p_mi media player
