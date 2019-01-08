@@ -277,14 +277,6 @@ public interface LibVlc extends Library {
     void libvlc_event_detach(libvlc_event_manager_t p_event_manager, int i_event_type, libvlc_callback_t f_callback, Pointer p_user_data);
 
     /**
-     * Get an event's type name.
-     *
-     * @param event_type the desired event
-     * @return event type name
-     */
-    String libvlc_event_type_name(int event_type);
-
-    /**
      * Gets debugging informations about a log message: the name of the VLC module
      * emitting the message and the message location within the source code.
      * <p>
