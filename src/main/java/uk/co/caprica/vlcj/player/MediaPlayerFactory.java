@@ -68,8 +68,6 @@ import uk.co.caprica.vlcj.player.headless.DefaultHeadlessMediaPlayer;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 import uk.co.caprica.vlcj.player.list.DefaultMediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.manager.DefaultMediaManager;
-import uk.co.caprica.vlcj.player.manager.MediaManager;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
@@ -923,18 +921,6 @@ public class MediaPlayerFactory {
     public long clock() {
         logger.trace("clock()");
         return libvlc.libvlc_clock();
-    }
-
-    // === Media Manager ========================================================
-
-    /**
-     * Create a new media manager.
-     *
-     * @return media manager instance
-     */
-    public MediaManager newMediaManager() {
-        logger.trace("newMediaManager()");
-        return new DefaultMediaManager(libvlc, instance);
     }
 
     // === Build Information ====================================================
