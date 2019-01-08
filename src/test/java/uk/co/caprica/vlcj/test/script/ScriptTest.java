@@ -139,23 +139,15 @@ public class ScriptTest extends VlcjTest {
 
         mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventHandler());
 
-        if(mediaPlayerFactory.isEqualizerAvailable()) {
-            equalizer = mediaPlayerFactory.newEqualizer();
-            presets = mediaPlayerFactory.getAllPresetEqualizers();
-        }
-        else {
-            equalizer = null;
-            presets = null;
-        }
+        equalizer = mediaPlayerFactory.newEqualizer();
+        presets = mediaPlayerFactory.getAllPresetEqualizers();
 
         scriptEngine.put("vlcj", Info.getInstance().version());
         scriptEngine.put("mediaPlayerFactory", mediaPlayerFactory);
         scriptEngine.put("mediaPlayer", mediaPlayer);
 
-        if(mediaPlayerFactory.isEqualizerAvailable()) {
-            scriptEngine.put("equalizer", equalizer);
-            scriptEngine.put("presets", presets);
-        }
+        scriptEngine.put("equalizer", equalizer);
+        scriptEngine.put("presets", presets);
 
         // Add some examples (not exhaustive by any means)
         scriptTextArea.append("vlcj\n");
@@ -168,10 +160,8 @@ public class ScriptTest extends VlcjTest {
         scriptTextArea.append("mediaPlayerFactory.getVideoFilters()\n");
         scriptTextArea.append("mediaPlayerFactory.getAudioOutputs()\n");
         scriptTextArea.append("mediaPlayerFactory.isEqualizerAvailable()\n");
-        if(mediaPlayerFactory.isEqualizerAvailable()) {
-            scriptTextArea.append("mediaPlayerFactory.getEqualizerPresetNames()\n");
-            scriptTextArea.append("mediaPlayerFactory.getAllPresetEqualizers()\n");
-        }
+        scriptTextArea.append("mediaPlayerFactory.getEqualizerPresetNames()\n");
+        scriptTextArea.append("mediaPlayerFactory.getAllPresetEqualizers()\n");
         scriptTextArea.append("\n");
 
         scriptTextArea.append("mediaPlayer.playMedia(\"<filename>\", null)\n");
@@ -197,27 +187,25 @@ public class ScriptTest extends VlcjTest {
         scriptTextArea.append("mediaPlayer.isMute()\n");
         scriptTextArea.append("\n");
 
-        if(mediaPlayerFactory.isEqualizerAvailable()) {
-            scriptTextArea.append("mediaPlayer.enableAudioFilter(\"equalizer\",true)\n");
-            scriptTextArea.append("mediaPlayer.enableAudioFilter(\"equalizer\",false)\n");
-            scriptTextArea.append("\n");
+        scriptTextArea.append("mediaPlayer.enableAudioFilter(\"equalizer\",true)\n");
+        scriptTextArea.append("mediaPlayer.enableAudioFilter(\"equalizer\",false)\n");
+        scriptTextArea.append("\n");
 
-            scriptTextArea.append("mediaPlayer.getEqualizer()\n");
-            scriptTextArea.append("mediaPlayer.setEqualizer(null)\n");
-            scriptTextArea.append("mediaPlayer.setEqualizer(equalizer)\n");
-            for(String name : mediaPlayerFactory.getEqualizerPresetNames()) {
-                scriptTextArea.append(String.format("mediaPlayer.setEqualizer(presets.get(\"%s\"))\n", name));
-            }
-            scriptTextArea.append("\n");
-
-            scriptTextArea.append("equalizer\n");
-
-            scriptTextArea.append("equalizer.setPreamp(10.0)\n");
-            for(int i = 0; i < equalizer.getBandCount(); i ++ ) {
-                scriptTextArea.append(String.format("equalizer.setAmp(%d,15.0)%n", i));
-            }
-            scriptTextArea.append("\n");
+        scriptTextArea.append("mediaPlayer.getEqualizer()\n");
+        scriptTextArea.append("mediaPlayer.setEqualizer(null)\n");
+        scriptTextArea.append("mediaPlayer.setEqualizer(equalizer)\n");
+        for(String name : mediaPlayerFactory.getEqualizerPresetNames()) {
+            scriptTextArea.append(String.format("mediaPlayer.setEqualizer(presets.get(\"%s\"))\n", name));
         }
+        scriptTextArea.append("\n");
+
+        scriptTextArea.append("equalizer\n");
+
+        scriptTextArea.append("equalizer.setPreamp(10.0)\n");
+        for(int i = 0; i < equalizer.getBandCount(); i ++ ) {
+            scriptTextArea.append(String.format("equalizer.setAmp(%d,15.0)%n", i));
+        }
+        scriptTextArea.append("\n");
 
         scriptTextArea.append("mediaPlayer.getTrackInfo()\n");
         scriptTextArea.append("mediaPlayer.getTitleCount()\n");

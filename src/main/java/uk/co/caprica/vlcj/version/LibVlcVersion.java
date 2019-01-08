@@ -37,19 +37,18 @@ public final class LibVlcVersion {
     public static final Version LIBVLC_300 = new Version("3.0.0");
 
     /**
-     * LibVlc 2.2.0 API baseline.
-     */
-    public static final Version LIBVLC_220 = new Version("2.2.0");
-
-    /**
-     * LibVlc 2.1.0 API baseline.
-     */
-    public static final Version LIBVLC_210 = new Version("2.1.0");
-
-    /**
      * Prevent direct instantiation by others.
      */
     private LibVlcVersion() {
+    }
+
+    /**
+     * Is the run-time version of VLC the minimum supported version?
+     *
+     * @return <code>true</code> if supported; otherwise <code>false</code>
+     */
+    public static boolean isSupported() {
+        return VERSION.atLeast(LIBVLC_300);
     }
 
     /**

@@ -68,11 +68,9 @@ public class DefaultWindowsNativeDiscoveryStrategy extends StandardNativeDiscove
 
     @Override
     public void onFound(String path) {
-        if (LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_220)) {
-            if (System.getenv(PLUGIN_ENV_NAME) == null) {
-                String pluginPath = String.format("%s\\%s", path, "plugins");
-                LibC.INSTANCE._putenv(String.format("%s=%s", PLUGIN_ENV_NAME, pluginPath));
-            }
+        if (System.getenv(PLUGIN_ENV_NAME) == null) {
+            String pluginPath = String.format("%s\\%s", path, "plugins");
+            LibC.INSTANCE._putenv(String.format("%s=%s", PLUGIN_ENV_NAME, pluginPath));
         }
     }
 }

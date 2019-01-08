@@ -144,6 +144,9 @@ public class MediaPlayerFactory {
      * video in an embedded media player.
      */
     static {
+        if(!LibVlcVersion.isSupported()) {
+            throw new RuntimeException(String.format("This version of vlcj requires VLC 3.x or later, but VLC %s was found.", LibVlcVersion.getVersion()));
+        }
         // Only apply for Linux, but not for a headless environment...
         if(RuntimeUtil.isNix() && !GraphicsEnvironment.isHeadless()) {
             // Only apply if the run-time version is Java 1.7.0 or later...
@@ -207,15 +210,6 @@ public class MediaPlayerFactory {
      * Native library instance.
      */
     protected final libvlc_instance_t instance;
-
-    /**
-     * Flag if the native equalizer is available or not.
-     * <p>
-     * Requires libvlc 2.2.0 or later.
-     * <p>
-     * This flag will be removed eventually when 2.1.0 and earlier are no longer supported.
-     */
-    private final boolean equalizerAvailable;
 
     /**
      * Cached equalizer band frequencies.
@@ -326,16 +320,8 @@ public class MediaPlayerFactory {
             throw new RuntimeException(msg);
         }
         // Cache the equalizer static data
-        equalizerAvailable = LibVlcVersion.getVersion().atLeast(new Version("2.2.0"));
-        logger.debug("equalizerAvailable={}", equalizerAvailable);
-        if(equalizerAvailable) {
-            equalizerBandFrequencies = createEqualizerBandFrequencies();
-            equalizerPresetNames = createEqualizerPresetNames();
-        }
-        else {
-            equalizerBandFrequencies = null;
-            equalizerPresetNames = null;
-        }
+        equalizerBandFrequencies = createEqualizerBandFrequencies();
+        equalizerPresetNames = createEqualizerPresetNames();
     }
 
     /**
@@ -534,17 +520,6 @@ public class MediaPlayerFactory {
     // === Equalizer ============================================================
 
     /**
-     * Is the audio equalizer available?
-     *
-     * This will be removed when libvlc 2.1.x is no longer supported.
-     *
-     * @return <code>true</code> if the equalizer is available; <code>false</code> otherwise
-     */
-    public final boolean isEqualizerAvailable() {
-        return equalizerAvailable;
-    }
-
-    /**
      * Create the available equalizer band frequency values.
      *
      * @return list of equalizer band frequencies
@@ -586,7 +561,6 @@ public class MediaPlayerFactory {
      */
     public final List<Float> getEqualizerBandFrequencies() {
         logger.debug("getEqualizerBandFrequencies()");
-        checkEqualizer();
         return equalizerBandFrequencies;
     }
 
@@ -598,7 +572,6 @@ public class MediaPlayerFactory {
      */
     public final List<String> getEqualizerPresetNames() {
         logger.debug("getEqualizerPresetNames()");
-        checkEqualizer();
         return equalizerPresetNames;
     }
 
@@ -610,7 +583,6 @@ public class MediaPlayerFactory {
      */
     public final Equalizer newEqualizer() {
         logger.debug("newEqualizer()");
-        checkEqualizer();
         return new Equalizer(libvlc.libvlc_audio_equalizer_get_band_count());
     }
 
@@ -623,7 +595,6 @@ public class MediaPlayerFactory {
      */
     public final Equalizer newEqualizer(String presetName) {
         logger.debug("newEqualizer(presetName={})", presetName);
-        checkEqualizer();
         int index = equalizerPresetNames.indexOf(presetName);
         if(index != -1) {
             libvlc_equalizer_t presetEqualizer = libvlc.libvlc_audio_equalizer_new_from_preset(index);
@@ -657,24 +628,12 @@ public class MediaPlayerFactory {
      */
     public final Map<String, Equalizer> getAllPresetEqualizers() {
         logger.debug("getAllPresetEqualizers()");
-        checkEqualizer();
         Map<String, Equalizer> result = new TreeMap<String, Equalizer>();
         for(String presetName : equalizerPresetNames) {
             result.put(presetName, newEqualizer(presetName));
         }
         logger.trace("result={}", result);
         return result;
-    }
-
-    /**
-     * Check whether or not the audio equalizer is available.
-     *
-     * @throws UnsupportedOperationException if the equalizer is not available
-     */
-    private void checkEqualizer() {
-        if(!equalizerAvailable) {
-            throw new UnsupportedOperationException("Equalizer is not available, you need libvlc 2.2.0 or later");
-        }
     }
 
     // === Media Player =========================================================
@@ -890,13 +849,7 @@ public class MediaPlayerFactory {
      */
     public String getCodecDescription(libvlc_track_type_t type, int codec) {
         logger.debug("getCodecDescription(type={},codec={})", type, codec);
-        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
-            return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
-        }
-        else {
-            logger.warn("Codec description not available on this platform, needs libvlc 3.0.0 or later");
-            return "";
-        }
+        return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
     }
 
     // === Log ==================================================================
@@ -910,13 +863,7 @@ public class MediaPlayerFactory {
      */
     public NativeLog newLog() {
         logger.debug("newLog()");
-        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_210)) {
-            return new NativeLog(libvlc, instance);
-        }
-        else {
-            logger.warn("Native log not available on this platform, needs libvlc 2.1.0 or later");
-            return null;
-        }
+        return new NativeLog(libvlc, instance);
     }
 
     // === Media Discoverer =====================================================

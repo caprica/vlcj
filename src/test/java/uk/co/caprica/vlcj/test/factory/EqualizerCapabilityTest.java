@@ -34,11 +34,6 @@ public class EqualizerCapabilityTest extends VlcjTest {
     public static void main(String[] args) {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
-        if(!factory.isEqualizerAvailable()) {
-            System.out.println("Equalizer not available on this platform");
-            System.exit(0);
-        }
-
         System.out.println("Preset names:");
         List<String> presetNames = factory.getEqualizerPresetNames();
         for(String presetName : presetNames) {

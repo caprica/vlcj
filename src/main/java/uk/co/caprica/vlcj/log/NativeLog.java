@@ -113,14 +113,9 @@ public class NativeLog {
      * @param instance libvlc instance
      */
     public NativeLog(LibVlc libvlc, libvlc_instance_t instance) {
-        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_210)) {
-            this.libvlc = libvlc;
-            this.instance = instance;
-            createInstance();
-        }
-        else {
-            throw new RuntimeException("Native log requires libvlc 2.1.0 or later");
-        }
+        this.libvlc = libvlc;
+        this.instance = instance;
+        createInstance();
     }
 
     /**

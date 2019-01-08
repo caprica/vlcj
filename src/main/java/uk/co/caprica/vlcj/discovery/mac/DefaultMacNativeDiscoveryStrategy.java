@@ -70,8 +70,7 @@ public class DefaultMacNativeDiscoveryStrategy extends StandardNativeDiscoverySt
         NativeLibrary.addSearchPath(coreLibraryName, path);
         NativeLibrary.getInstance(coreLibraryName);
 
-        if (LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_220)) {
-            LibC.INSTANCE.setenv(PLUGIN_ENV_NAME, String.format(PLUGIN_PATH_FORMAT, path), 1);
-        }
+        // FIXME this is likely ineffective on current versions of OSX
+        LibC.INSTANCE.setenv(PLUGIN_ENV_NAME, String.format(PLUGIN_PATH_FORMAT, path), 1);
     }
 }

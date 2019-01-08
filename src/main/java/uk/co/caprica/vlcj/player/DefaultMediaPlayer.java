@@ -336,16 +336,11 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public boolean requestParseMediaWithOptions(int timeout, libvlc_media_parse_flag_t... options) {
         logger.debug("requestParseMediaWithOptions(timeout={},options={})", timeout, options != null ? Arrays.toString(options) : "");
-        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
-            int flags = 0;
-            for (libvlc_media_parse_flag_t option : options) {
-                flags |= option.intValue();
-            }
-            return libvlc.libvlc_media_parse_with_options(mediaInstance, flags, timeout) == 0;
+        int flags = 0;
+        for (libvlc_media_parse_flag_t option : options) {
+            flags |= option.intValue();
         }
-        else {
-            return false;
-        }
+        return libvlc.libvlc_media_parse_with_options(mediaInstance, flags, timeout) == 0;
     }
 
     @Override
@@ -918,42 +913,31 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public String getAudioOutputDevice() {
         logger.debug("getAudioOutputDevice()");
-        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
-            return NativeString.getNativeString(libvlc, libvlc.libvlc_audio_output_device_get(mediaPlayerInstance));
-        }
-        else {
-            return null;
-        }
+        return NativeString.getNativeString(libvlc, libvlc.libvlc_audio_output_device_get(mediaPlayerInstance));
     }
 
     @Override
     public List<AudioDevice> getAudioOutputDevices() {
         logger.debug("getAudioOutputDevices()");
-        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_220)) {
-            List<AudioDevice> result = new ArrayList<AudioDevice>();
-            libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_enum(mediaPlayerInstance);
-            if (audioDevices != null) {
-                // Must prevent automatic synchronisation on the native structure, otherwise a
-                // fatal JVM crash will occur when the native release call is made - not quite
-                // sure why this is needed here
-                audioDevices.setAutoSynch(false);
-                libvlc_audio_output_device_t audioDevice = audioDevices;
-                while(audioDevice != null) {
-                    // The native strings must be copied here, but not freed (they are freed natively
-                    // in the subsequent release call)
-                    String device = NativeString.copyNativeString(libvlc, audioDevice.psz_device);
-                    String description = NativeString.copyNativeString(libvlc, audioDevice.psz_description);
-                    result.add(new AudioDevice(device, description));
-                    audioDevice = audioDevice.p_next;
-                }
-                libvlc.libvlc_audio_output_device_list_release(audioDevices);
+        List<AudioDevice> result = new ArrayList<AudioDevice>();
+        libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_enum(mediaPlayerInstance);
+        if (audioDevices != null) {
+            // Must prevent automatic synchronisation on the native structure, otherwise a
+            // fatal JVM crash will occur when the native release call is made - not quite
+            // sure why this is needed here
+            audioDevices.setAutoSynch(false);
+            libvlc_audio_output_device_t audioDevice = audioDevices;
+            while(audioDevice != null) {
+                // The native strings must be copied here, but not freed (they are freed natively
+                // in the subsequent release call)
+                String device = NativeString.copyNativeString(libvlc, audioDevice.psz_device);
+                String description = NativeString.copyNativeString(libvlc, audioDevice.psz_description);
+                result.add(new AudioDevice(device, description));
+                audioDevice = audioDevice.p_next;
             }
-            return result;
+            libvlc.libvlc_audio_output_device_list_release(audioDevices);
         }
-        else {
-            logger.warn("Audio output device enumeration requires libvlc 2.2.0 or later");
-            return null;
-        }
+        return result;
     }
 
     @Override
@@ -1219,22 +1203,17 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public List<TitleDescription> getExtendedTitleDescriptions() {
         logger.debug("getExtendedTitleDescriptions()");
         List<TitleDescription> result;
-        if (LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
-            PointerByReference titles = new PointerByReference();
-            int titleCount = libvlc.libvlc_media_player_get_full_title_descriptions(mediaPlayerInstance, titles);
-            if (titleCount != -1) {
-                result = new ArrayList<TitleDescription>(titleCount);
-                Pointer[] pointers = titles.getValue().getPointerArray(0, titleCount);
-                for (Pointer pointer : pointers) {
-                    libvlc_title_description_t titleDescription = (libvlc_title_description_t) Structure.newInstance(libvlc_title_description_t.class, pointer);
-                    titleDescription.read();
-                    result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(libvlc, titleDescription.psz_name), titleDescription.b_menu != 0));
-                }
-                libvlc.libvlc_title_descriptions_release(titles.getValue(), titleCount);
+        PointerByReference titles = new PointerByReference();
+        int titleCount = libvlc.libvlc_media_player_get_full_title_descriptions(mediaPlayerInstance, titles);
+        if (titleCount != -1) {
+            result = new ArrayList<TitleDescription>(titleCount);
+            Pointer[] pointers = titles.getValue().getPointerArray(0, titleCount);
+            for (Pointer pointer : pointers) {
+                libvlc_title_description_t titleDescription = (libvlc_title_description_t) Structure.newInstance(libvlc_title_description_t.class, pointer);
+                titleDescription.read();
+                result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(libvlc, titleDescription.psz_name), titleDescription.b_menu != 0));
             }
-            else {
-                result = new ArrayList<TitleDescription>(0);
-            }
+            libvlc.libvlc_title_descriptions_release(titles.getValue(), titleCount);
         }
         else {
             result = new ArrayList<TitleDescription>(0);
@@ -1252,22 +1231,17 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public List<ChapterDescription> getExtendedChapterDescriptions(int title) {
         logger.debug("getExtendedChapterDescriptions(title={})", title);
         List<ChapterDescription> result;
-        if (LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
-            PointerByReference chapters = new PointerByReference();
-            int chapterCount = libvlc.libvlc_media_player_get_full_chapter_descriptions(mediaPlayerInstance, title, chapters);
-            if (chapterCount != -1) {
-                result = new ArrayList<ChapterDescription>(chapterCount);
-                Pointer[] pointers = chapters.getValue().getPointerArray(0, chapterCount);
-                for (Pointer pointer : pointers) {
-                    libvlc_chapter_description_t chapterDescription = (libvlc_chapter_description_t) Structure.newInstance(libvlc_chapter_description_t.class, pointer);
-                    chapterDescription.read();
-                    result.add(new ChapterDescription(chapterDescription.i_time_offset, chapterDescription.i_duration, NativeString.getNativeString(libvlc, chapterDescription.psz_name)));
-                }
-                libvlc.libvlc_chapter_descriptions_release(chapters.getValue(), chapterCount);
+        PointerByReference chapters = new PointerByReference();
+        int chapterCount = libvlc.libvlc_media_player_get_full_chapter_descriptions(mediaPlayerInstance, title, chapters);
+        if (chapterCount != -1) {
+            result = new ArrayList<ChapterDescription>(chapterCount);
+            Pointer[] pointers = chapters.getValue().getPointerArray(0, chapterCount);
+            for (Pointer pointer : pointers) {
+                libvlc_chapter_description_t chapterDescription = (libvlc_chapter_description_t) Structure.newInstance(libvlc_chapter_description_t.class, pointer);
+                chapterDescription.read();
+                result.add(new ChapterDescription(chapterDescription.i_time_offset, chapterDescription.i_duration, NativeString.getNativeString(libvlc, chapterDescription.psz_name)));
             }
-            else {
-                result = new ArrayList<ChapterDescription>(0);
-            }
+            libvlc.libvlc_chapter_descriptions_release(chapters.getValue(), chapterCount);
         }
         else {
             result = new ArrayList<ChapterDescription>(0);
@@ -1340,56 +1314,29 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                         if(types == null || types.contains(TrackType.VIDEO)) {
                             trackInfo.u.setType(libvlc_video_track_t.class);
                             trackInfo.u.read();
-                            if (LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
-                                result.add(new VideoTrackInfo(
-                                    trackInfo.i_codec,
-                                    trackInfo.i_original_fourcc,
-                                    trackInfo.i_id,
-                                    trackInfo.i_profile,
-                                    trackInfo.i_level,
-                                    trackInfo.i_bitrate,
-                                    NativeString.copyNativeString(libvlc, trackInfo.psz_language),
-                                    NativeString.copyNativeString(libvlc, trackInfo.psz_description),
-                                    trackInfo.u.video.i_width,
-                                    trackInfo.u.video.i_height,
-                                    trackInfo.u.video.i_sar_num,
-                                    trackInfo.u.video.i_sar_den,
-                                    trackInfo.u.video.i_frame_rate_num,
-                                    trackInfo.u.video.i_frame_rate_den,
-                                    libvlc_video_orient_e.orientation(trackInfo.u.video.i_orientation),
-                                    libvlc_video_projection_e.projection(trackInfo.u.video.i_projection),
-                                    trackInfo.u.video.f_yaw_degrees,
-                                    trackInfo.u.video.f_pitch_degrees,
-                                    trackInfo.u.video.f_roll_degrees,
-                                    trackInfo.u.video.f_fov_degrees,
-                                    getCodecDescription(libvlc_track_type_t.libvlc_track_video, trackInfo.i_codec)
-                                ));
-                            }
-                            else {
-                                result.add(new VideoTrackInfo(
-                                    trackInfo.i_codec,
-                                    trackInfo.i_original_fourcc,
-                                    trackInfo.i_id,
-                                    trackInfo.i_profile,
-                                    trackInfo.i_level,
-                                    trackInfo.i_bitrate,
-                                    NativeString.copyNativeString(libvlc, trackInfo.psz_language),
-                                    NativeString.copyNativeString(libvlc, trackInfo.psz_description),
-                                    trackInfo.u.video.i_width,
-                                    trackInfo.u.video.i_height,
-                                    trackInfo.u.video.i_sar_num,
-                                    trackInfo.u.video.i_sar_den,
-                                    trackInfo.u.video.i_frame_rate_num,
-                                    trackInfo.u.video.i_frame_rate_den,
-                                    null,
-                                    null,
-                                    0.f,
-                                    0.f,
-                                    0.f,
-                                    0.f,
-                                    getCodecDescription(libvlc_track_type_t.libvlc_track_video, trackInfo.i_codec)
-                                ));
-                            }
+                            result.add(new VideoTrackInfo(
+                                trackInfo.i_codec,
+                                trackInfo.i_original_fourcc,
+                                trackInfo.i_id,
+                                trackInfo.i_profile,
+                                trackInfo.i_level,
+                                trackInfo.i_bitrate,
+                                NativeString.copyNativeString(libvlc, trackInfo.psz_language),
+                                NativeString.copyNativeString(libvlc, trackInfo.psz_description),
+                                trackInfo.u.video.i_width,
+                                trackInfo.u.video.i_height,
+                                trackInfo.u.video.i_sar_num,
+                                trackInfo.u.video.i_sar_den,
+                                trackInfo.u.video.i_frame_rate_num,
+                                trackInfo.u.video.i_frame_rate_den,
+                                libvlc_video_orient_e.orientation(trackInfo.u.video.i_orientation),
+                                libvlc_video_projection_e.projection(trackInfo.u.video.i_projection),
+                                trackInfo.u.video.f_yaw_degrees,
+                                trackInfo.u.video.f_pitch_degrees,
+                                trackInfo.u.video.f_roll_degrees,
+                                trackInfo.u.video.f_fov_degrees,
+                                getCodecDescription(libvlc_track_type_t.libvlc_track_video, trackInfo.i_codec)
+                            ));
                         }
                         break;
 
@@ -1458,12 +1405,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public String getCodecDescription(libvlc_track_type_t type, int codec) {
         logger.debug("getCodecDescription(type={},codec={})", type, codec);
-        if(LibVlcVersion.getVersion().atLeast(LibVlcVersion.LIBVLC_300)) {
-            return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
-        }
-        else {
-            return "";
-        }
+        return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
     }
 
     @Override

@@ -204,13 +204,8 @@ public class TestPlayer extends VlcjTest {
             }
         });
 
-        if(mediaPlayerFactory.isEqualizerAvailable()) {
-            equalizer = mediaPlayerFactory.newEqualizer();
-            equalizerFrame = new EqualizerFrame(mediaPlayerFactory.getEqualizerBandFrequencies(), mediaPlayerFactory.getEqualizerPresetNames(), mediaPlayerFactory, mediaPlayer, equalizer);
-        }
-        else {
-            equalizerFrame = null;
-        }
+        equalizer = mediaPlayerFactory.newEqualizer();
+        equalizerFrame = new EqualizerFrame(mediaPlayerFactory.getEqualizerBandFrequencies(), mediaPlayerFactory.getEqualizerPresetNames(), mediaPlayerFactory, mediaPlayer, equalizer);
 
         // Global AWT key handler, you're better off using Swing's InputMap and
         // ActionMap with a JFrame - that would solve all sorts of focus issues too
@@ -270,10 +265,8 @@ public class TestPlayer extends VlcjTest {
 
         mainFrame.setVisible(true);
 
-        if(mediaPlayerFactory.isEqualizerAvailable()) {
-            equalizerFrame.pack();
-            equalizerFrame.setVisible(true);
-        }
+        equalizerFrame.pack();
+        equalizerFrame.setVisible(true);
 
         mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
 
