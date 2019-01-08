@@ -40,12 +40,22 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>3.11.0</version>
+    <version>3.12.0</version>
 </dependency>
 ```
 
 News
 ----
+
+_The 3.12.0 release of vlcj will likely by the last of the 3.x series. New development will switch to vlcj 4.x, which
+may make breaking API changes such as removing native functions no longer supported by LibVLC. As a minimum, LibVLC 3.x
+will be required for vlcj 4, LibVLC 2.x will not be supported. We may also bump the JDK dependency which is currently at
+JDK 6._
+
+03/08/2019 Made new release 3.12.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), only change was to add
+a potentially very useful new "media player ready" event to the media player event listener which is fired once when the
+media has *definitely* started playing - this can be useful to properly enable logo/marquee at the right time, select
+tracks and so on. Counter-intuitively, the "playing" event can *not* be used for this!
 
 03/01/2019 Made new release 3.11.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), various small issues
 addressed, see [milestone issues](https://github.com/caprica/vlcj/milestone/27?closed=1) for more details. This release
