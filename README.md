@@ -47,12 +47,16 @@ Add the following Maven dependency to your own project pom.xml:
 News
 ----
 
+Development on vlcj 4.x has begun! If you are looking for the latest stable release of vlcj, you should
+switch to the vlcj-3.x branch. There will not be wholesale API changes, but some API breakage will occur. vlcj 4.x will
+require VLC 3.x as a minimum. If you want to use VLC 2.x, use the vlcj 3.x branch.
+
 _The 3.12.0 release of vlcj will likely by the last of the 3.x series. New development will switch to vlcj 4.x, which
 may make breaking API changes such as removing native functions no longer supported by LibVLC. As a minimum, LibVLC 3.x
 will be required for vlcj 4, LibVLC 2.x will not be supported. We may also bump the JDK dependency which is currently at
 JDK 6._
 
-03/08/2019 Made new release 3.12.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), only change was to add
+08/01/2019 Made new release 3.12.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), only change was to add
 a potentially very useful new "media player ready" event to the media player event listener which is fired once when the
 media has *definitely* started playing - this can be useful to properly enable logo/marquee at the right time, select
 tracks and so on. Counter-intuitively, the "playing" event can *not* be used for this!
