@@ -192,6 +192,12 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     }
 
     @Override
+    public void setPause(boolean pause) {
+        logger.debug("pause(pause={})", pause);
+        libvlc.libvlc_media_list_player_set_pause(mediaListPlayerInstance, pause ? 1 : 0);
+    }
+
+    @Override
     public void stop() {
         logger.debug("stop()");
         libvlc.libvlc_media_list_player_stop(mediaListPlayerInstance);

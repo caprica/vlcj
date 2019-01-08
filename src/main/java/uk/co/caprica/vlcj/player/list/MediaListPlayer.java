@@ -120,6 +120,13 @@ public interface MediaListPlayer {
     void pause();
 
     /**
+     * Pause/un-pause the media list.
+     *
+     * @param pause <code>true</code> to pause; <code>false</code> to un-pause
+     */
+    void setPause(boolean pause);
+
+    /**
      * Stop the media list.
      */
     void stop();
