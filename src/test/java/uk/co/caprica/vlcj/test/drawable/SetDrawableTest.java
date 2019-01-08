@@ -60,9 +60,8 @@ import com.sun.jna.Pointer;
  * Any particular test only works if the video is played correctly embedded inside the frame and no
  * native video window is opened.
  * <p>
- * The three available methods to set the video surface are:
+ * The available methods to set the video surface are:
  * <ul>
- * <li>libvlc_media_player_set_agl</li>
  * <li>libvlc_media_player_set_nsobject</li>
  * <li>libvlc_media_player_set_xwindow, this is what is used on Linux</li>
  * </ul>
@@ -82,29 +81,24 @@ import com.sun.jna.Pointer;
 public class SetDrawableTest extends VlcjTest {
 
     private final MediaPlayerFactory mediaPlayerFactory;
-    private final EmbeddedMediaPlayer aglMediaPlayer;
     private final EmbeddedMediaPlayer nsobjectMediaPlayer;
     private final EmbeddedMediaPlayer nsviewMediaPlayer;
     private final EmbeddedMediaPlayer xwindowMediaPlayer;
 
-    private final Canvas aglCanvas;
     private final Canvas nsobjectCanvas;
     private final Canvas nsviewCanvas;
     private final Canvas xwindowCanvas;
 
-    private final CanvasVideoSurface aglVideoSurface;
     private final CanvasVideoSurface nsobjectVideoSurface;
     private final CanvasVideoSurface nsviewVideoSurface;
     private final CanvasVideoSurface xwindowVideoSurface;
 
     private final JPanel mainFrameContentPane;
-    private final JButton aglButton;
     private final JButton nsobjectButton;
     private final JButton nsviewButton;
     private final JButton xwindowButton;
 
     private final JFrame mainFrame;
-    private final VideoFrame aglFrame;
     private final VideoFrame nsobjectFrame;
     private final VideoFrame nsviewFrame;
     private final VideoFrame xwindowFrame;
@@ -128,13 +122,9 @@ public class SetDrawableTest extends VlcjTest {
         final String mrl = args[0];
 
         mediaPlayerFactory = new MediaPlayerFactory();
-        aglMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
         nsobjectMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
         nsviewMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
         xwindowMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
-
-        aglCanvas = new Canvas();
-        aglCanvas.setBackground(Color.black);
 
         nsobjectCanvas = new Canvas();
         nsobjectCanvas.setBackground(Color.black);
@@ -144,14 +134,6 @@ public class SetDrawableTest extends VlcjTest {
 
         xwindowCanvas = new Canvas();
         xwindowCanvas.setBackground(Color.black);
-
-        aglVideoSurface = new CanvasVideoSurface(aglCanvas, new VideoSurfaceAdapter() {
-            @Override
-            public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-                dump("AGL", aglCanvas);
-                libvlc.libvlc_media_player_set_agl(aglMediaPlayer.mediaPlayerInstance(), RuntimeUtil.safeLongToInt(componentId));
-            }
-        });
 
         nsobjectVideoSurface = new CanvasVideoSurface(nsobjectCanvas, new VideoSurfaceAdapter() {
             @Override
@@ -185,18 +167,13 @@ public class SetDrawableTest extends VlcjTest {
             }
         });
 
-        aglMediaPlayer.setVideoSurface(aglVideoSurface);
         nsobjectMediaPlayer.setVideoSurface(nsobjectVideoSurface);
         nsviewMediaPlayer.setVideoSurface(nsviewVideoSurface);
         xwindowMediaPlayer.setVideoSurface(xwindowVideoSurface);
 
-        aglFrame = new VideoFrame("AGL", aglMediaPlayer);
         nsobjectFrame = new VideoFrame("NSObject", nsobjectMediaPlayer);
         nsviewFrame = new VideoFrame("NSView", nsviewMediaPlayer);
         xwindowFrame = new VideoFrame("XWindow", xwindowMediaPlayer);
-
-        aglFrame.getContentPane().setLayout(new BorderLayout());
-        aglFrame.getContentPane().add(aglCanvas, BorderLayout.CENTER);
 
         nsobjectFrame.getContentPane().setLayout(new BorderLayout());
         nsobjectFrame.getContentPane().add(nsobjectCanvas, BorderLayout.CENTER);
@@ -207,19 +184,9 @@ public class SetDrawableTest extends VlcjTest {
         xwindowFrame.getContentPane().setLayout(new BorderLayout());
         xwindowFrame.getContentPane().add(xwindowCanvas, BorderLayout.CENTER);
 
-        aglFrame.setLocation(50, 150);
         nsobjectFrame.setLocation(50, 350);
         nsviewFrame.setLocation(50, 550);
         xwindowFrame.setLocation(50, 750);
-
-        aglButton = new JButton("AGL");
-        aglButton.setMnemonic('a');
-        aglButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                aglFrame.start(mrl);
-            }
-        });
 
         nsobjectButton = new JButton("NSObject");
         nsobjectButton.setMnemonic('n');
@@ -251,7 +218,6 @@ public class SetDrawableTest extends VlcjTest {
         mainFrameContentPane = new JPanel();
         mainFrameContentPane.setBorder(new EmptyBorder(16, 16, 16, 16));
         mainFrameContentPane.setLayout(new GridLayout(1, 3, 16, 0));
-        mainFrameContentPane.add(aglButton);
         mainFrameContentPane.add(nsobjectButton);
         mainFrameContentPane.add(nsviewButton);
         mainFrameContentPane.add(xwindowButton);
@@ -264,7 +230,6 @@ public class SetDrawableTest extends VlcjTest {
         mainFrame.pack();
         mainFrame.setVisible(true);
 
-        aglFrame.setVisible(true);
         nsobjectFrame.setVisible(true);
         nsviewFrame.setVisible(true);
         xwindowFrame.setVisible(true);

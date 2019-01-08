@@ -917,22 +917,6 @@ public interface LibVlc extends Library {
     Pointer libvlc_media_player_get_nsobject(libvlc_media_player_t p_mi);
 
     /**
-     * Set the agl handler where the media player should render its video output.
-     *
-     * @param p_mi the Media Player
-     * @param drawable the agl handler
-     */
-    void libvlc_media_player_set_agl(libvlc_media_player_t p_mi, int drawable);
-
-    /**
-     * Get the agl handler previously set with libvlc_media_player_set_agl().
-     *
-     * @param p_mi the Media Player
-     * @return the agl handler or 0 if none where set
-     */
-    int libvlc_media_player_get_agl(libvlc_media_player_t p_mi);
-
-    /**
      * Set an X Window System drawable where the media player should render its video output. If
      * LibVLC was built without X11 output support, then this has no effects. The specified
      * identifier must correspond to an existing Input/Output class X11 window. Pixmaps are
