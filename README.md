@@ -119,7 +119,8 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available:
 
-* [3.11.0 (current)](http://caprica.github.com/vlcj/javadoc/3.11.0/index.html "3.11.0 Javadoc")
+* [3.12.0 (current)](http://caprica.github.com/vlcj/javadoc/3.12.0/index.html "3.12.0 Javadoc")
+* [3.11.0](http://caprica.github.com/vlcj/javadoc/3.11.0/index.html "3.11.0 Javadoc")
 * [3.10.1](http://caprica.github.com/vlcj/javadoc/3.10.1/index.html "3.10.1 Javadoc")
 * [3.10.0](http://caprica.github.com/vlcj/javadoc/3.10.0/index.html "3.10.0 Javadoc")
 * [3.9.0](http://caprica.github.com/vlcj/javadoc/3.9.0/index.html "3.9.0 Javadoc")
