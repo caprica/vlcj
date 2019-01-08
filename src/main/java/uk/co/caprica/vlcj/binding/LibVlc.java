@@ -1415,15 +1415,6 @@ public interface LibVlc extends Library {
     int libvlc_video_set_spu_delay(libvlc_media_player_t p_mi, long i_delay);
 
     /**
-     * Get the description of available titles.
-     *
-     * @param p_mi the media player
-     * @return list containing description of available titles
-     */
-    @Deprecated
-    libvlc_track_description_t libvlc_video_get_title_description(libvlc_media_player_t p_mi);
-
-    /**
      * Get the full description of available titles
      *
      * @since LibVLC 3.0.0 and later.

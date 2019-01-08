@@ -56,7 +56,7 @@ public class MediaDetails implements Serializable {
     /**
      * Collection of title descriptions.
      */
-    private List<TrackDescription> titleDescriptions;
+    private List<TitleDescription> titleDescriptions;
 
     /**
      * Collection of video track descriptions.
@@ -110,11 +110,11 @@ public class MediaDetails implements Serializable {
         this.spuCount = spuCount;
     }
 
-    public List<TrackDescription> getTitleDescriptions() {
+    public List<TitleDescription> getTitleDescriptions() {
         return titleDescriptions;
     }
 
-    public void setTitleDescriptions(List<TrackDescription> titleDescriptions) {
+    public void setTitleDescriptions(List<TitleDescription> titleDescriptions) {
         this.titleDescriptions = titleDescriptions;
     }
 

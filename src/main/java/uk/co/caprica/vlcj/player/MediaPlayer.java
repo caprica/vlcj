@@ -1178,7 +1178,7 @@ public interface MediaPlayer {
      *
      * @return list of descriptions, may be empty but will never be <code>null</code>
      */
-    List<TrackDescription> getTitleDescriptions();
+    List<TitleDescription> getTitleDescriptions();
 
     /**
      * Get the video (i.e. "title") track descriptions.
@@ -1234,13 +1234,6 @@ public interface MediaPlayer {
      * @return a collection of chapter description lists, one list for each title (may be empty, but never <code>null</code>)
      */
     List<List<String>> getAllChapterDescriptions();
-
-    /**
-     * Get the extended (or "full") title descriptions for the current title.
-     *
-     * @return collection of title descriptions, may be empty (but not <code>null</code>)
-     */
-    List<TitleDescription> getExtendedTitleDescriptions();
 
     /**
      * Get the extended (or "full") chapter descriptions for the current title.

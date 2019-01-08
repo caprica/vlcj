@@ -82,7 +82,6 @@ import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
 import uk.co.caprica.vlcj.player.media.Media;
 import uk.co.caprica.vlcj.player.media.callback.CallbackMedia;
 import uk.co.caprica.vlcj.player.media.simple.SimpleMedia;
-import uk.co.caprica.vlcj.version.LibVlcVersion;
 import uk.co.caprica.vlcj.version.Version;
 
 import com.sun.jna.Pointer;
@@ -1121,10 +1120,25 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     // === Description Controls =================================================
 
     @Override
-    public List<TrackDescription> getTitleDescriptions() {
+    public List<TitleDescription> getTitleDescriptions() {
         logger.debug("getTitleDescriptions()");
-        libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_title_description(mediaPlayerInstance);
-        return getTrackDescriptions(trackDescriptions);
+        List<TitleDescription> result;
+        PointerByReference titles = new PointerByReference();
+        int titleCount = libvlc.libvlc_media_player_get_full_title_descriptions(mediaPlayerInstance, titles);
+        if (titleCount != -1) {
+            result = new ArrayList<TitleDescription>(titleCount);
+            Pointer[] pointers = titles.getValue().getPointerArray(0, titleCount);
+            for (Pointer pointer : pointers) {
+                libvlc_title_description_t titleDescription = Structure.newInstance(libvlc_title_description_t.class, pointer);
+                titleDescription.read();
+                result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(libvlc, titleDescription.psz_name), titleDescription.b_menu != 0));
+            }
+            libvlc.libvlc_title_descriptions_release(titles.getValue(), titleCount);
+        }
+        else {
+            result = new ArrayList<TitleDescription>(0);
+        }
+        return result;
     }
 
     @Override
@@ -1183,28 +1197,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
         List<List<String>> result = new ArrayList<List<String>>(Math.max(titleCount, 0));
         for(int i = 0; i < titleCount; i ++ ) {
             result.add(getChapterDescriptions(i));
-        }
-        return result;
-    }
-
-    @Override
-    public List<TitleDescription> getExtendedTitleDescriptions() {
-        logger.debug("getExtendedTitleDescriptions()");
-        List<TitleDescription> result;
-        PointerByReference titles = new PointerByReference();
-        int titleCount = libvlc.libvlc_media_player_get_full_title_descriptions(mediaPlayerInstance, titles);
-        if (titleCount != -1) {
-            result = new ArrayList<TitleDescription>(titleCount);
-            Pointer[] pointers = titles.getValue().getPointerArray(0, titleCount);
-            for (Pointer pointer : pointers) {
-                libvlc_title_description_t titleDescription = (libvlc_title_description_t) Structure.newInstance(libvlc_title_description_t.class, pointer);
-                titleDescription.read();
-                result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(libvlc, titleDescription.psz_name), titleDescription.b_menu != 0));
-            }
-            libvlc.libvlc_title_descriptions_release(titles.getValue(), titleCount);
-        }
-        else {
-            result = new ArrayList<TitleDescription>(0);
         }
         return result;
     }
