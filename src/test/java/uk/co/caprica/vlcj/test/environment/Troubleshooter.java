@@ -153,7 +153,7 @@ public class Troubleshooter {
     private static void loadLibrary() {
         System.out.println("Load Library:");
         try {
-            libvlc = (LibVlc)Native.loadLibrary(libvlcLibraryName, LibVlc.class);
+            libvlc = Native.load(libvlcLibraryName, LibVlc.class);
             System.out.println(" Successfully loaded libvlc: " + libvlc);
         }
         catch(Throwable t) {
@@ -265,7 +265,7 @@ public class Troubleshooter {
 
                     System.setProperty("jna.library.path", file.getParent());
                     try {
-                        libvlc = (LibVlc)Native.loadLibrary(libvlcLibraryName, LibVlc.class);
+                        libvlc = Native.load(libvlcLibraryName, LibVlc.class);
                         System.out.println(" Successfully loaded libvlc: " + libvlc);
                         System.out.println();
                         System.out.println(" This WORKED! This means you can load libvlc with the described configuration.");

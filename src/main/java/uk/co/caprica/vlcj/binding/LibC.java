@@ -35,7 +35,7 @@ public interface LibC extends Library {
     /**
      * Native library instance.
      */
-    LibC INSTANCE = (LibC)Native.loadLibrary((Platform.isWindows() ? "msvcrt" : "c"), LibC.class);
+    LibC INSTANCE = Native.load((Platform.isWindows() ? "msvcrt" : "c"), LibC.class);
 
     /**
      * Format a string with a variable arguments list into a fixed size buffer.

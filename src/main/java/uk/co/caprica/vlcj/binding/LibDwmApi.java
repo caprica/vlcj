@@ -42,7 +42,7 @@ public interface LibDwmApi extends Library {
     /**
      * Native library instance.
      */
-    LibDwmApi INSTANCE = (LibDwmApi)Native.loadLibrary("dwmapi", LibDwmApi.class);
+    LibDwmApi INSTANCE = Native.load("dwmapi", LibDwmApi.class);
 
     /**
      * Disable composition.

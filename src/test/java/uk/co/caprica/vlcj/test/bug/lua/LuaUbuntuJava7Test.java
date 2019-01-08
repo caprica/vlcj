@@ -84,7 +84,7 @@ public class LuaUbuntuJava7Test {
      */
     public interface LibLua extends Library {
 
-        LibLua INSTANCE = (LibLua)Native.loadLibrary("lua5.1", LibLua.class);
+        LibLua INSTANCE = Native.load("lua5.1", LibLua.class);
 
         static int LUA_MULTRET = -1;
 

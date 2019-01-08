@@ -32,7 +32,7 @@ public interface ExtendedUser32 extends User32 {
     /**
      * Native library instance.
      */
-    ExtendedUser32 INSTANCE = (ExtendedUser32)Native.loadLibrary("user32", ExtendedUser32.class, W32APIOptions.DEFAULT_OPTIONS);
+    ExtendedUser32 INSTANCE = Native.load("user32", ExtendedUser32.class, W32APIOptions.DEFAULT_OPTIONS);
 
     int SC_RESTORE = 0x0000f120;
 
