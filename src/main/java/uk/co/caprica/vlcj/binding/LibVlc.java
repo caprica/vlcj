@@ -49,6 +49,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_read_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_seek_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_type_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
@@ -729,6 +730,61 @@ public interface LibVlc extends Library {
      */
      String libvlc_media_get_codec_description(int i_type, int i_codec);
 
+    /**
+     * Add a slave to the current media.
+     *
+     * A slave is an external input source that may contains an additional subtitle
+     * track (like a .srt) or an additional audio track (like a .ac3).
+     *
+     * \note This function must be called before the media is parsed (via
+     * libvlc_media_parse_with_options()) or before the media is played (via
+     * libvlc_media_player_play())
+     *
+     * @param p_md media descriptor object
+     * @param i_type subtitle or audio
+     * @param i_priority from 0 (low priority) to 4 (high priority)
+     * @param psz_uri Uri of the slave (should contain a valid scheme).
+     * @return 0 on success, -1 on error.
+     *
+     * @since LibVLC 3.0.0 and later.
+     */
+    int libvlc_media_slaves_add(libvlc_media_t p_md, libvlc_media_slave_type_t i_type, int i_priority, String psz_uri);
+
+    /**
+     * Clear all slaves previously added by libvlc_media_slaves_add() or
+     * internally.
+     *
+     * @param p_md media descriptor object
+     *
+     * @since LibVLC 3.0.0 and later.
+     */
+    void libvlc_media_slaves_clear(libvlc_media_t p_md);
+
+    /**
+     * Get a media descriptor's slave list
+     *
+     * The list will contain slaves parsed by VLC or previously added by
+     * libvlc_media_slaves_add(). The typical use case of this function is to save
+     * a list of slave in a database for a later use.
+     *
+     * @param p_md media descriptor object
+     * @param ppp_slaves address to store an allocated array of slaves (must be freed with libvlc_media_slaves_release()) [OUT]
+     *
+     * @return the number of slaves (zero on error)
+     * @since LibVLC 3.0.0 and later.
+     */
+    int libvlc_media_slaves_get(libvlc_media_t p_md, PointerByReference ppp_slaves);
+
+    /**
+     * Release a media descriptor's slave list
+     *
+     * @since LibVLC 3.0.0 and later.
+     *
+     * @param pp_slaves slave array to release
+     * @param i_count number of elements in the array
+     */
+    void libvlc_media_slaves_release(PointerByReference pp_slaves, int i_count);
+
     // === libvlc_media.h =======================================================
 
     // === libvlc_media_player.h ================================================
@@ -1206,6 +1262,24 @@ public interface LibVlc extends Library {
      * @since libVLC 2.1.0 or later
      */
     void libvlc_media_player_set_video_title_display(libvlc_media_player_t p_mi, int position, int timeout);
+
+    /**
+     * Add a slave to the current media player.
+     *
+     * If the player is playing, the slave will be added directly. This call
+     * will also update the slave list of the attached libvlc_media_t.
+     *
+     * @see #libvlc_media_slaves_add(libvlc_media_t, libvlc_media_slave_type_t, int, String)
+     *
+     * @param p_mi the media player
+     * @param i_type subtitle or audio
+     * @param psz_uri Uri of the slave (should contain a valid scheme).
+     * @param b_select True if this slave should be selected when it's loaded
+     *
+     * @return 0 on success, -1 on error.
+     * @since LibVLC 3.0.0 and later.
+     */
+    int libvlc_media_player_add_slave(libvlc_media_player_t p_mi, int i_type, String psz_uri, int b_select);
 
     /**
      * Release (free) libvlc_track_description_t
@@ -2310,9 +2384,9 @@ public interface LibVlc extends Library {
     /**
      * Pause or resume media list
      *
-     * \param p_mlp media list player instance
-     * \param do_pause play/resume if zero, pause if non-zero
-     * \version LibVLC 3.0.0 or later
+     * @param p_mlp media list player instance
+     * @param do_pause play/resume if zero, pause if non-zero
+     * @since LibVLC 3.0.0 or later
      */
     void libvlc_media_list_player_set_pause(libvlc_media_list_player_t p_mlp, int do_pause);
 

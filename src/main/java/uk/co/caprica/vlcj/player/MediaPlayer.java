@@ -32,6 +32,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_role_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_type_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_type_e;
@@ -1775,6 +1776,16 @@ public interface MediaPlayer {
      * @param role media player role
      */
     void setRole(libvlc_media_player_role_e role);
+
+    /**
+     * Add an input slave to the current media.
+     *
+     * @param type type of slave to add
+     * @param uri URI of the slave to add
+     * @param select <code>true</code> if this slave should be automatically selected when added
+     * @return <code>true</code> on success; <code>false</code> otherwise
+     */
+    boolean addSlave(libvlc_media_slave_type_t type, String uri, boolean select);
 
     /**
      * Get the media resource locator for the current media instance.

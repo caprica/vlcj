@@ -56,6 +56,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_role_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_type_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
@@ -1088,7 +1089,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public void setSubTitleFile(String subTitleFileName) {
         logger.debug("setSubTitleFile(subTitleFileName={})", subTitleFileName);
-        libvlc.libvlc_video_set_subtitle_file(mediaPlayerInstance, subTitleFileName);
+        addSlave(libvlc_media_slave_type_t.libvlc_media_slave_type_subtitle, subTitleFileName, true);
     }
 
     @Override
@@ -1763,6 +1764,14 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     public void setRole(libvlc_media_player_role_e role) {
         logger.debug("setRole(role={})", role);
         libvlc.libvlc_media_player_set_role(mediaPlayerInstance, role.intValue());
+    }
+
+    // === Input Slave ==========================================================
+
+    @Override
+    public boolean addSlave(libvlc_media_slave_type_t type, String uri, boolean select) {
+        logger.debug("addSlave(type={},uri={})", type, uri);
+        return libvlc.libvlc_media_player_add_slave(mediaPlayerInstance, type.intValue(), uri, select ? 1 : 0) == 0;
     }
 
     // === Implementation =======================================================
