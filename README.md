@@ -52,7 +52,7 @@ may make breaking API changes such as removing native functions no longer suppor
 will be required for vlcj 4, LibVLC 2.x will not be supported. We may also bump the JDK dependency which is currently at
 JDK 6._
 
-01/08/2019 Made new release 3.12.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), only change was to add
+08/01/2019 Made new release 3.12.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), only change was to add
 a potentially very useful new "media player ready" event to the media player event listener which is fired once when the
 media has *definitely* started playing - this can be useful to properly enable logo/marquee at the right time, select
 tracks and so on. Counter-intuitively, the "playing" event can *not* be used for this!
