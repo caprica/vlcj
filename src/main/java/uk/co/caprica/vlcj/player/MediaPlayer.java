@@ -1215,16 +1215,16 @@ public interface MediaPlayer {
      * @param title title number
      * @return list of descriptions (which may be empty), or <code>null</code> if there is no such title
      */
-    List<String> getChapterDescriptions(int title);
+    List<ChapterDescription> getChapterDescriptions(int title);
 
     /**
      * Get the chapter descriptions for the current title.
      * <p>
      * The media must be playing before this information is available.
      *
-     * @return list of descriptions (which may be empty), or <code>null</code> if there is no current title
+     * @return collection of chapter descriptions, may be empty (but not <code>null</code>)
      */
-    List<String> getChapterDescriptions();
+    List<ChapterDescription> getChapterDescriptions();
 
     /**
      * Get all of the chapter descriptions for all available titles.
@@ -1233,22 +1233,7 @@ public interface MediaPlayer {
      *
      * @return a collection of chapter description lists, one list for each title (may be empty, but never <code>null</code>)
      */
-    List<List<String>> getAllChapterDescriptions();
-
-    /**
-     * Get the extended (or "full") chapter descriptions for the current title.
-     *
-     * @return collection of chapter descriptions, may be empty (but not <code>null</code>)
-     */
-    List<ChapterDescription> getExtendedChapterDescriptions();
-
-    /**
-     * Get the extended (or "full") chapter descriptions for a particular title.
-     *
-     * @param title title id (this is <em>not</em> an index from zero, it must be a valid title identifier)
-     * @return collection of chapter descriptions, may be empty (but not <code>null</code>)
-     */
-    List<ChapterDescription> getExtendedChapterDescriptions(int title);
+    List<List<ChapterDescription>> getAllChapterDescriptions();
 
     /**
      * Get the track (i.e. "elementary streams") information for the current media.

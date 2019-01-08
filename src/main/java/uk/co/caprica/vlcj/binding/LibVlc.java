@@ -1464,16 +1464,6 @@ public interface LibVlc extends Library {
     void libvlc_chapter_descriptions_release(Pointer p_chapters, int i_count);
 
     /**
-     * Get the description of available chapters for specific title.
-     *
-     * @param p_mi the media player
-     * @param i_title selected title
-     * @return list containing description of available chapter for title i_title
-     */
-    @Deprecated
-    libvlc_track_description_t libvlc_video_get_chapter_description(libvlc_media_player_t p_mi, int i_title);
-
-    /**
      * Get current crop filter geometry.
      *
      * @param p_mi the media player

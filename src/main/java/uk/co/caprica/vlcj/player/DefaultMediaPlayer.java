@@ -1163,53 +1163,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
 
     @Override
-    public List<String> getChapterDescriptions(int title) {
+    public List<ChapterDescription> getChapterDescriptions(int title) {
         logger.debug("getChapterDescriptions(title={})", title);
-        List<String> trackDescriptionList;
-        if(title >= 0 && title < getTitleCount()) {
-            trackDescriptionList = new ArrayList<String>();
-            libvlc_track_description_t trackDescriptions = libvlc.libvlc_video_get_chapter_description(mediaPlayerInstance, title);
-            libvlc_track_description_t trackDescription = trackDescriptions;
-            while(trackDescription != null) {
-                trackDescriptionList.add(trackDescription.psz_name);
-                trackDescription = trackDescription.p_next;
-            }
-            if(trackDescriptions != null) {
-                libvlc.libvlc_track_description_list_release(trackDescriptions.getPointer());
-            }
-        }
-        else {
-            trackDescriptionList = null;
-        }
-        return trackDescriptionList;
-    }
-
-    @Override
-    public List<String> getChapterDescriptions() {
-        logger.debug("getChapterDescriptions()");
-        return getChapterDescriptions(getTitle());
-    }
-
-    @Override
-    public List<List<String>> getAllChapterDescriptions() {
-        logger.debug("getAllChapterDescriptions()");
-        int titleCount = getTitleCount();
-        List<List<String>> result = new ArrayList<List<String>>(Math.max(titleCount, 0));
-        for(int i = 0; i < titleCount; i ++ ) {
-            result.add(getChapterDescriptions(i));
-        }
-        return result;
-    }
-
-    @Override
-    public List<ChapterDescription> getExtendedChapterDescriptions() {
-        logger.debug("getExtendedChapterDescriptions()");
-        return getExtendedChapterDescriptions(getTitle());
-    }
-
-    @Override
-    public List<ChapterDescription> getExtendedChapterDescriptions(int title) {
-        logger.debug("getExtendedChapterDescriptions(title={})", title);
         List<ChapterDescription> result;
         PointerByReference chapters = new PointerByReference();
         int chapterCount = libvlc.libvlc_media_player_get_full_chapter_descriptions(mediaPlayerInstance, title, chapters);
@@ -1219,12 +1174,29 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             for (Pointer pointer : pointers) {
                 libvlc_chapter_description_t chapterDescription = (libvlc_chapter_description_t) Structure.newInstance(libvlc_chapter_description_t.class, pointer);
                 chapterDescription.read();
-                result.add(new ChapterDescription(chapterDescription.i_time_offset, chapterDescription.i_duration, NativeString.getNativeString(libvlc, chapterDescription.psz_name)));
+                result.add(new ChapterDescription(chapterDescription.i_time_offset, chapterDescription.i_duration, NativeString.copyNativeString(libvlc, chapterDescription.psz_name)));
             }
             libvlc.libvlc_chapter_descriptions_release(chapters.getValue(), chapterCount);
         }
         else {
             result = new ArrayList<ChapterDescription>(0);
+        }
+        return result;
+    }
+
+    @Override
+    public List<ChapterDescription> getChapterDescriptions() {
+        logger.debug("getChapterDescriptions()");
+        return getChapterDescriptions(getTitle());
+    }
+
+    @Override
+    public List<List<ChapterDescription>> getAllChapterDescriptions() {
+        logger.debug("getAllChapterDescriptions()");
+        int titleCount = getTitleCount();
+        List<List<ChapterDescription>> result = new ArrayList<List<ChapterDescription>>(Math.max(titleCount, 0));
+        for(int i = 0; i < titleCount; i ++ ) {
+            result.add(getChapterDescriptions(i));
         }
         return result;
     }

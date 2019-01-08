@@ -19,11 +19,10 @@
 
 package uk.co.caprica.vlcj.test.info;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.TrackType;
+import uk.co.caprica.vlcj.player.*;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import java.util.List;
 
 /**
  * A test for the various media information functions.
@@ -51,15 +50,12 @@ public class MediaInfoTest extends VlcjTest {
 
         mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
-            public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
+            public void mediaPlayerReady(MediaPlayer mediaPlayer) {
                 System.out.println("     Track Information: " + mediaPlayer.getTrackInfo());
                 System.out.println("    Title Descriptions: " + mediaPlayer.getTitleDescriptions());
                 System.out.println("    Video Descriptions: " + mediaPlayer.getVideoDescriptions());
                 System.out.println("    Audio Descriptions: " + mediaPlayer.getAudioDescriptions());
-                for(int i = 0; i < mediaPlayer.getTitleDescriptions().size(); i ++ ) {
-                    System.out.println("Chapter Descriptions " + i + ": " + mediaPlayer.getChapterDescriptions(i));
-                }
-                System.out.println("     Extended Chapters: " + mediaPlayer.getExtendedChapterDescriptions());
+                System.out.println("Chapter Descriptions: " + mediaPlayer.getAllChapterDescriptions());
             }
         });
 

@@ -76,7 +76,7 @@ public class MediaDetails implements Serializable {
     /**
      * Collection of chapter descriptions for each title.
      */
-    private List<List<String>> chapterDescriptions = new ArrayList<List<String>>();
+    private List<List<ChapterDescription>> chapterDescriptions = new ArrayList<List<ChapterDescription>>();
 
     public int getTitleCount() {
         return titleCount;
@@ -142,11 +142,11 @@ public class MediaDetails implements Serializable {
         this.spuDescriptions = spuDescriptions;
     }
 
-    public List<List<String>> getChapterDescriptions() {
+    public List<List<ChapterDescription>> getChapterDescriptions() {
         return chapterDescriptions;
     }
 
-    public void setChapterDescriptions(List<List<String>> chapterDescriptions) {
+    public void setChapterDescriptions(List<List<ChapterDescription>> chapterDescriptions) {
         this.chapterDescriptions = chapterDescriptions;
     }
 
