@@ -135,7 +135,7 @@ public class MediaDiscoverer {
     private void createInstance() {
         logger.debug("createInstance()");
 
-        mediaDiscovererInstance = libvlc.libvlc_media_discoverer_new_from_name(instance, name);
+        mediaDiscovererInstance = libvlc.libvlc_media_discoverer_new(instance, name);
         logger.debug("mediaDiscovererInstance={}", mediaDiscovererInstance);
 
         if(mediaDiscovererInstance == null) {

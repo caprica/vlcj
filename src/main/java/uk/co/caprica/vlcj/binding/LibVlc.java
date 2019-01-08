@@ -2519,17 +2519,6 @@ public interface LibVlc extends Library {
     // === libvlc_media_discoverer.h ============================================
 
     /**
-     * Discover media service by name.
-     *
-     * @param p_inst libvlc instance
-     * @param psz_name service name
-     * @return media discover object or NULL in case of error
-     * @deprecated use {@link #libvlc_media_discoverer_new(libvlc_instance_t, String)} and {@link #libvlc_media_discoverer_start(libvlc_media_discoverer_t)}
-     */
-    @Deprecated
-    libvlc_media_discoverer_t libvlc_media_discoverer_new_from_name(libvlc_instance_t p_inst, String psz_name);
-
-    /**
      * Create a media discoverer object by name.
      *
      * After this object is created, you should attach to events in order to be
@@ -2599,15 +2588,6 @@ public interface LibVlc extends Library {
      * @return list of media items
      */
     libvlc_media_list_t libvlc_media_discoverer_media_list(libvlc_media_discoverer_t p_mdis);
-
-    /**
-     * Get event manager from media service discover object.
-     *
-     * @param p_mdis media service discover object
-     * @return event manager object
-     */
-    @Deprecated
-    libvlc_event_manager_t libvlc_media_discoverer_event_manager(libvlc_media_discoverer_t p_mdis);
 
     /**
      * Query if media service discover object is running.
