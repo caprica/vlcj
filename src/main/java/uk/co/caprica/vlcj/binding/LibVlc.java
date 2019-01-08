@@ -1149,16 +1149,6 @@ public interface LibVlc extends Library {
     int libvlc_media_player_get_state(libvlc_media_player_t p_mi);
 
     /**
-     * Get movie fps rate
-     *
-     * @param p_mi the Media Player
-     * @return frames per second (fps) for this playing movie, or 0 if unspecified
-     */
-    float libvlc_media_player_get_fps(libvlc_media_player_t p_mi);
-
-    /** end bug */
-
-    /**
      * How many video outputs does this media player have?
      *
      * @param p_mi the media player

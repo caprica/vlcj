@@ -587,13 +587,6 @@ public interface MediaPlayer {
     float getPosition();
 
     /**
-     * Get the current play-back frames-per-second.
-     *
-     * @return number of frames-per-second
-     */
-    float getFps();
-
-    /**
      * Get the current video play rate.
      *
      * @return rate, where 1.0 is normal speed, 0.5 is half speed, 2.0 is double speed and so on

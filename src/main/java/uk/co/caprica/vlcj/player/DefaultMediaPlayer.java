@@ -628,12 +628,6 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     }
 
     @Override
-    public float getFps() {
-        logger.trace("getFps()");
-        return libvlc.libvlc_media_player_get_fps(mediaPlayerInstance);
-    }
-
-    @Override
     public float getRate() {
         logger.trace("getRate()");
         return libvlc.libvlc_media_player_get_rate(mediaPlayerInstance);
