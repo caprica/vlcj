@@ -33,8 +33,8 @@ public final class AudioService extends BaseService {
             audioOutputs.setAutoSynch(false);
             libvlc_audio_output_t audioOutput = audioOutputs;
             while (audioOutput != null) {
-                String name = NativeString.copyNativeString(libvlc, audioOutput.psz_name);
-                String description = NativeString.copyNativeString(libvlc, audioOutput.psz_description);
+                String name = NativeString.copyNativeString(audioOutput.psz_name);
+                String description = NativeString.copyNativeString(audioOutput.psz_description);
                 result.add(new AudioOutput(name, description, getAudioOutputDevices(name)));
                 audioOutput = audioOutput.p_next;
             }
@@ -59,8 +59,8 @@ public final class AudioService extends BaseService {
             audioDevices.setAutoSynch(false);
             libvlc_audio_output_device_t audioDevice = audioDevices;
             while(audioDevice != null) {
-                String device = NativeString.copyNativeString(libvlc, audioDevice.psz_device);
-                String description = NativeString.copyNativeString(libvlc, audioDevice.psz_description);
+                String device = NativeString.copyNativeString(audioDevice.psz_device);
+                String description = NativeString.copyNativeString(audioDevice.psz_description);
                 result.add(new AudioDevice(device, description));
                 audioDevice = audioDevice.p_next;
             }

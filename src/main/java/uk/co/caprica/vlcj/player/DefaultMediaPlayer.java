@@ -924,8 +924,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             while(audioDevice != null) {
                 // The native strings must be copied here, but not freed (they are freed natively
                 // in the subsequent release call)
-                String device = NativeString.copyNativeString(libvlc, audioDevice.psz_device);
-                String description = NativeString.copyNativeString(libvlc, audioDevice.psz_description);
+                String device = NativeString.copyNativeString(audioDevice.psz_device);
+                String description = NativeString.copyNativeString(audioDevice.psz_description);
                 result.add(new AudioDevice(device, description));
                 audioDevice = audioDevice.p_next;
             }
@@ -1132,7 +1132,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             for (Pointer pointer : pointers) {
                 libvlc_title_description_t titleDescription = Structure.newInstance(libvlc_title_description_t.class, pointer);
                 titleDescription.read();
-                result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(libvlc, titleDescription.psz_name), titleDescription.b_menu != 0));
+                result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(titleDescription.psz_name), titleDescription.b_menu != 0));
             }
             libvlc.libvlc_title_descriptions_release(titles.getValue(), titleCount);
         }
@@ -1175,7 +1175,7 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
             for (Pointer pointer : pointers) {
                 libvlc_chapter_description_t chapterDescription = (libvlc_chapter_description_t) Structure.newInstance(libvlc_chapter_description_t.class, pointer);
                 chapterDescription.read();
-                result.add(new ChapterDescription(chapterDescription.i_time_offset, chapterDescription.i_duration, NativeString.copyNativeString(libvlc, chapterDescription.psz_name)));
+                result.add(new ChapterDescription(chapterDescription.i_time_offset, chapterDescription.i_duration, NativeString.copyNativeString(chapterDescription.psz_name)));
             }
             libvlc.libvlc_chapter_descriptions_release(chapters.getValue(), chapterCount);
         }
@@ -1256,8 +1256,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                                 trackInfo.i_profile,
                                 trackInfo.i_level,
                                 trackInfo.i_bitrate,
-                                NativeString.copyNativeString(libvlc, trackInfo.psz_language),
-                                NativeString.copyNativeString(libvlc, trackInfo.psz_description),
+                                NativeString.copyNativeString(trackInfo.psz_language),
+                                NativeString.copyNativeString(trackInfo.psz_description),
                                 getCodecDescription(libvlc_track_type_t.libvlc_track_unknown, trackInfo.i_codec)
                             ));
                         }
@@ -1274,8 +1274,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                                 trackInfo.i_profile,
                                 trackInfo.i_level,
                                 trackInfo.i_bitrate,
-                                NativeString.copyNativeString(libvlc, trackInfo.psz_language),
-                                NativeString.copyNativeString(libvlc, trackInfo.psz_description),
+                                NativeString.copyNativeString(trackInfo.psz_language),
+                                NativeString.copyNativeString(trackInfo.psz_description),
                                 trackInfo.u.video.i_width,
                                 trackInfo.u.video.i_height,
                                 trackInfo.u.video.i_sar_num,
@@ -1304,8 +1304,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                                 trackInfo.i_profile,
                                 trackInfo.i_level,
                                 trackInfo.i_bitrate,
-                                NativeString.copyNativeString(libvlc, trackInfo.psz_language),
-                                NativeString.copyNativeString(libvlc, trackInfo.psz_description),
+                                NativeString.copyNativeString(trackInfo.psz_language),
+                                NativeString.copyNativeString(trackInfo.psz_description),
                                 trackInfo.u.audio.i_channels,
                                 trackInfo.u.audio.i_rate,
                                 getCodecDescription(libvlc_track_type_t.libvlc_track_audio, trackInfo.i_codec)
@@ -1324,9 +1324,9 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
                                 trackInfo.i_profile,
                                 trackInfo.i_level,
                                 trackInfo.i_bitrate,
-                                NativeString.copyNativeString(libvlc, trackInfo.psz_language),
-                                NativeString.copyNativeString(libvlc, trackInfo.psz_description),
-                                NativeString.copyNativeString(libvlc, trackInfo.u.subtitle.psz_encoding),
+                                NativeString.copyNativeString(trackInfo.psz_language),
+                                NativeString.copyNativeString(trackInfo.psz_description),
+                                NativeString.copyNativeString(trackInfo.u.subtitle.psz_encoding),
                                 getCodecDescription(libvlc_track_type_t.libvlc_track_text, trackInfo.i_codec)
                             ));
                         }
