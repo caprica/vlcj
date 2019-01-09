@@ -20,9 +20,8 @@
 package uk.co.caprica.vlcj.test.info;
 
 import uk.co.caprica.vlcj.player.*;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
-
-import java.util.List;
 
 /**
  * A test for the various media information functions.
@@ -46,7 +45,7 @@ public class MediaInfoTest extends VlcjTest {
         }
 
         MediaPlayerFactory factory = new MediaPlayerFactory();
-        MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
+        MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
 
         mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override

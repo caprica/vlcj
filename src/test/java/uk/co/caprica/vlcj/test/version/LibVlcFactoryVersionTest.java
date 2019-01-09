@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.test.version;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.LibVlcFactory;
+//import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -34,7 +34,7 @@ public class LibVlcFactoryVersionTest extends VlcjTest {
      * @param args command-line arguments
      */
     public static void main(String[] args) {
-        LibVlc libvlc = LibVlcFactory.factory().atLeast("2.0.0").create();
-        System.out.println(libvlc);
+//        LibVlc libvlc = LibVlcFactory.factory().atLeast("2.0.0").create();
+//        System.out.println(libvlc);
     }
 }

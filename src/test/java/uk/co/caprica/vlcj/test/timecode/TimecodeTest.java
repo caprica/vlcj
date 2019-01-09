@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.test.timecode;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.TextTrackInfo;
 import uk.co.caprica.vlcj.player.TrackInfo;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -81,7 +81,7 @@ public class TimecodeTest extends VlcjTest {
             "--timecode-fps", "25/1"            // <--- Tweak this to suit
         );
 
-        player = factory.newHeadlessMediaPlayer();
+        player = factory.mediaPlayers().newHeadlessMediaPlayer();
     }
 
     /**

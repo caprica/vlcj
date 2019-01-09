@@ -30,7 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -78,7 +78,7 @@ public class ScreenRecorder extends VlcjTest {
 
     public ScreenRecorder(final String destination) {
         mediaPlayerFactory = new MediaPlayerFactory(OPTIONS);
-        mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newHeadlessMediaPlayer();
         JPanel cp = new JPanel();
         JButton recordButton = new JButton("Record");
         cp.add(recordButton);

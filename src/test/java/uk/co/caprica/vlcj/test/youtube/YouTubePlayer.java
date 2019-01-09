@@ -41,7 +41,7 @@ import javax.swing.border.EmptyBorder;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -147,8 +147,8 @@ public class YouTubePlayer extends VlcjTest {
 
         factory = new MediaPlayerFactory();
 
-        mediaPlayer = factory.newEmbeddedMediaPlayer();
-        mediaPlayer.setVideoSurface(factory.newVideoSurface(vs));
+        mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
+        mediaPlayer.setVideoSurface(factory.videoSurfaces().newVideoSurface(vs));
 
         mediaPlayer.setPlaySubItems(true); // <--- This is very important for YouTube media
 

@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.player.MediaMeta;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -48,7 +48,7 @@ public class UpdateMetaTest extends VlcjTest {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
         // Get the meta data and dump it out
-        MediaMeta mediaMeta = factory.getMediaMeta(args[0], true);
+        MediaMeta mediaMeta = factory.media().getMediaMeta(args[0], true);
         logger.info("mediaMeta={}", mediaMeta);
         logger.info("original description={}", mediaMeta.getDescription());
 
@@ -62,7 +62,7 @@ public class UpdateMetaTest extends VlcjTest {
         mediaMeta.release();
 
         // Re-read to confirm the updated value
-        mediaMeta = factory.getMediaMeta(args[0], true);
+        mediaMeta = factory.media().getMediaMeta(args[0], true);
         logger.info("mediaMeta={}", mediaMeta);
         logger.info("updated description={}", mediaMeta.getDescription());
 
@@ -73,7 +73,7 @@ public class UpdateMetaTest extends VlcjTest {
         mediaMeta.release();
 
         // Re-read to confirm
-        mediaMeta = factory.getMediaMeta(args[0], true);
+        mediaMeta = factory.media().getMediaMeta(args[0], true);
         logger.info("mediaMeta={}", mediaMeta);
         logger.info("restored description={}", mediaMeta.getDescription());
 

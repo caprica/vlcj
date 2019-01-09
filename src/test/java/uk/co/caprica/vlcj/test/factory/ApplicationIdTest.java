@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.factory;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -34,8 +34,8 @@ public class ApplicationIdTest extends VlcjTest {
     public static void main(String[] args) {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
-        factory.setUserAgent("Test Application", "Test Application HTTP");
-        factory.setApplicationId("Test Application Id", "1.0.0", "icon.png");
+        factory.application().setUserAgent("Test Application", "Test Application HTTP");
+        factory.application().setApplicationId("Test Application Id", "1.0.0", "icon.png");
 
         factory.release();
     }

@@ -46,7 +46,7 @@ import javax.swing.event.ChangeListener;
 import uk.co.caprica.vlcj.binding.LibVlcConst;
 import uk.co.caprica.vlcj.player.Equalizer;
 import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 
 /**
  * Separate frame to hold audio equalizer controls.
@@ -191,7 +191,7 @@ public class EqualizerFrame extends JFrame implements ChangeListener, ActionList
         String presetName = (String)presetComboBox.getSelectedItem();
         if(e.getStateChange() == ItemEvent.SELECTED) {
             if(presetName != null) {
-                Equalizer presetEqualizer = mediaPlayerFactory.newEqualizer(presetName);
+                Equalizer presetEqualizer = mediaPlayerFactory.equalizers().newEqualizer(presetName);
                 if(presetEqualizer != null) {
                     applyingPreset = true;
                     preampControl.getSlider().setValue((int)(presetEqualizer.getPreamp() * 100f)); // FIXME

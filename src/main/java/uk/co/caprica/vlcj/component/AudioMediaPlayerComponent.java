@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 
 /**
  * Encapsulation of an audio player.
@@ -107,7 +107,7 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
      */
     public AudioMediaPlayerComponent() {
         mediaPlayerFactory = onGetMediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newHeadlessMediaPlayer();
         // Sub-class initialisation
         onAfterConstruct();
         // Register listeners

@@ -25,7 +25,7 @@ import java.util.Map;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -107,7 +107,7 @@ public class RipDvdTest extends VlcjTest {
         String mediaOptions = sb.toString();
 
         final MediaPlayerFactory factory = new MediaPlayerFactory();
-        final HeadlessMediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
+        final HeadlessMediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
         mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             DecimalFormat df = new DecimalFormat("0.00");
 

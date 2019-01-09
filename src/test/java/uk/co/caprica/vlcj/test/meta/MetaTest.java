@@ -35,7 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.player.MediaMeta;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -66,7 +66,7 @@ public class MetaTest extends VlcjTest {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
         // Get the meta data and dump it out
-        MediaMeta mediaMeta = factory.getMediaMeta(args[0], true);
+        MediaMeta mediaMeta = factory.media().getMediaMeta(args[0], true);
         logger.debug("mediaMeta={}", mediaMeta);
 
         // Load the artwork into a buffered image (if available)

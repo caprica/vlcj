@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 import uk.co.caprica.vlcj.medialist.MediaListItem;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -41,7 +41,7 @@ public class MediaDirsTest extends VlcjTest implements MediaListEventListener {
     public MediaDirsTest() throws Exception {
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
 
-        MediaDiscoverer videoMediaDiscoverer = mediaPlayerFactory.newMediaDiscoverer("video_dir");
+        MediaDiscoverer videoMediaDiscoverer = mediaPlayerFactory.discoverers().newMediaDiscoverer("video_dir");
         Thread.sleep(500); // FIXME not acceptable
         MediaList videoFileList = videoMediaDiscoverer.getMediaList();
 //        videoFileList.addMediaListEventListener(this);
@@ -51,7 +51,7 @@ public class MediaDirsTest extends VlcjTest implements MediaListEventListener {
 
         System.out.println();
 
-        MediaDiscoverer audioMediaDiscoverer = mediaPlayerFactory.newMediaDiscoverer("audio_dir");
+        MediaDiscoverer audioMediaDiscoverer = mediaPlayerFactory.discoverers().newMediaDiscoverer("audio_dir");
         Thread.sleep(500); // FIXME not acceptable
         MediaList audioFileList = audioMediaDiscoverer.getMediaList();
 //        audioFileList.addMediaListEventListener(this);
@@ -61,7 +61,7 @@ public class MediaDirsTest extends VlcjTest implements MediaListEventListener {
 
         System.out.println();
 
-        MediaDiscoverer pictureMediaDiscoverer = mediaPlayerFactory.newMediaDiscoverer("picture_dir");
+        MediaDiscoverer pictureMediaDiscoverer = mediaPlayerFactory.discoverers().newMediaDiscoverer("picture_dir");
         Thread.sleep(500); // FIXME not acceptable
         MediaList pictureFileList = pictureMediaDiscoverer.getMediaList();
 //        pictureFileList.addMediaListEventListener(this);

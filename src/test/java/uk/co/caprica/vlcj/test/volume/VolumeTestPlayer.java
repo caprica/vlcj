@@ -31,7 +31,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -63,8 +63,8 @@ public class VolumeTestPlayer extends VlcjTest {
 
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
-        EmbeddedMediaPlayer mediaPlayer = factory.newEmbeddedMediaPlayer();
-        mediaPlayer.setVideoSurface(factory.newVideoSurface(vs));
+        EmbeddedMediaPlayer mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
+        mediaPlayer.setVideoSurface(factory.videoSurfaces().newVideoSurface(vs));
 
         List<File> files = scanMedia(new File("/movies"));
 

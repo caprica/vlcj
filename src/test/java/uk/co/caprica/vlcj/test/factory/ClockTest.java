@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.test.factory;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -38,7 +38,7 @@ public class ClockTest extends VlcjTest {
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                System.out.printf("Clock: %d\n", factory.clock());
+                System.out.printf("Clock: %d\n", factory.application().clock());
             }
         }, 0, 1, TimeUnit.SECONDS);
 

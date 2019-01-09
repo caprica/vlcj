@@ -39,7 +39,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -122,8 +122,8 @@ public class ChatTest extends VlcjTest {
 
     public ChatTest() {
         mediaPlayerFactory = new MediaPlayerFactory();
-        localMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
-        remoteMediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+        localMediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
+        remoteMediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(16, 16, 16, 16));
@@ -174,7 +174,7 @@ public class ChatTest extends VlcjTest {
         sendSnapshotButton.setMnemonic('n');
         localStreamControls.add(sendSnapshotButton);
 
-        localVideoSurface = mediaPlayerFactory.newVideoSurface(localCanvas);
+        localVideoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(localCanvas);
         localMediaPlayer.setVideoSurface(localVideoSurface);
 
         localPanel = new JPanel();
@@ -209,7 +209,7 @@ public class ChatTest extends VlcjTest {
         receiveSnapshotButton.setMnemonic('a');
         remoteStreamControls.add(receiveSnapshotButton);
 
-        remoteVideoSurface = mediaPlayerFactory.newVideoSurface(remoteCanvas);
+        remoteVideoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(remoteCanvas);
         remoteMediaPlayer.setVideoSurface(remoteVideoSurface);
 
         remotePanel = new JPanel();

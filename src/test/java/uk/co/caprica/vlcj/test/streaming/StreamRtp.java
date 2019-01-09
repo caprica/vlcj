@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.streaming;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -42,7 +42,7 @@ public class StreamRtp extends VlcjTest {
         System.out.println("Streaming '" + media + "' to '" + options + "'");
 
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(args);
-        HeadlessMediaPlayer mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
+        HeadlessMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newHeadlessMediaPlayer();
 
         mediaPlayer.playMedia(media,
             options,

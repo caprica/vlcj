@@ -23,7 +23,7 @@ import java.util.List;
 
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListItem;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.discoverer.MediaDiscoverer;
 
 /**
@@ -34,7 +34,7 @@ public class CaptureDevicesTest {
     public static void main(String[] args) {
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
 
-        MediaDiscoverer audioMediaDiscoverer = mediaPlayerFactory.newAudioMediaDiscoverer();
+        MediaDiscoverer audioMediaDiscoverer = mediaPlayerFactory.discoverers().newAudioMediaDiscoverer();
         MediaList audioDeviceList = audioMediaDiscoverer.getMediaList();
         List<MediaListItem> audioDevices = audioDeviceList.items();
         System.out.println("Audio Devices:");
@@ -42,7 +42,7 @@ public class CaptureDevicesTest {
 
         System.out.println();
 
-        MediaDiscoverer videoMediaDiscoverer = mediaPlayerFactory.newVideoMediaDiscoverer();
+        MediaDiscoverer videoMediaDiscoverer = mediaPlayerFactory.discoverers().newVideoMediaDiscoverer();
         MediaList videoDeviceList = videoMediaDiscoverer.getMediaList();
         List<MediaListItem> videoDevices = videoDeviceList.items();
         System.out.println("Video Devices:");

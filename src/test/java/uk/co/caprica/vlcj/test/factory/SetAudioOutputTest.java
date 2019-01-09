@@ -44,7 +44,7 @@ import javax.swing.border.EmptyBorder;
 
 import uk.co.caprica.vlcj.player.AudioDevice;
 import uk.co.caprica.vlcj.player.AudioOutput;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -97,8 +97,8 @@ public class SetAudioOutputTest extends VlcjTest {
 
     public SetAudioOutputTest(final String mrl) {
         factory = new MediaPlayerFactory();
-        mediaPlayer = factory.newEmbeddedMediaPlayer();
-        audioOutputs = factory.getAudioOutputs();
+        mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
+        audioOutputs = factory.audio().audioOutputs();
 
         canvas = new Canvas();
         canvas.setBackground(Color.black);
@@ -146,7 +146,7 @@ public class SetAudioOutputTest extends VlcjTest {
         contentPane.add(canvas, BorderLayout.CENTER);
         contentPane.add(controlsPanel, BorderLayout.SOUTH);
 
-        videoSurface = factory.newVideoSurface(canvas);
+        videoSurface = factory.videoSurfaces().newVideoSurface(canvas);
         mediaPlayer.setVideoSurface(videoSurface);
 
         menuBar = new JMenuBar();

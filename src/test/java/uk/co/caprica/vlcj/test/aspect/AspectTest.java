@@ -42,7 +42,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -121,7 +121,7 @@ public class AspectTest extends VlcjTest {
     @SuppressWarnings("serial")
     public AspectTest() {
         factory = new MediaPlayerFactory();
-        mediaPlayer = factory.newEmbeddedMediaPlayer();
+        mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
 
         videoPane = new JPanel();
         videoPane.setBorder(new CompoundBorder(new LineBorder(Color.black, 2), new EmptyBorder(16, 16, 16, 16)));
@@ -134,7 +134,7 @@ public class AspectTest extends VlcjTest {
 
         videoPane.add(videoCanvas, BorderLayout.CENTER);
 
-        videoSurface = factory.newVideoSurface(videoCanvas);
+        videoSurface = factory.videoSurfaces().newVideoSurface(videoCanvas);
 
         mediaPlayer.setVideoSurface(videoSurface);
 

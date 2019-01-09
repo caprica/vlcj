@@ -25,7 +25,7 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -53,11 +53,11 @@ public class StreamRtpDuplicate extends VlcjTest {
         System.out.println("Streaming '" + media + "' to '" + options + "'");
 
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(args);
-        EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+        EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
 
         Canvas canvas = new Canvas();
         canvas.setBackground(Color.black);
-        CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
+        CanvasVideoSurface videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
         mediaPlayer.setVideoSurface(videoSurface);
 
         JFrame f = new JFrame("vlcj duplicate output test");

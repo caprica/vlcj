@@ -39,7 +39,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 import javax.swing.border.LineBorder;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -86,13 +86,13 @@ public class DropVideoPlayer extends VlcjTest {
         javaFileListFlavor = DataFlavor.javaFileListFlavor;
 
         mediaPlayerFactory = new MediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
         mediaPlayer.setPlaySubItems(true);
 
         canvas = new Canvas();
         canvas.setBackground(Color.black);
 
-        videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
+        videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
         mediaPlayer.setVideoSurface(videoSurface);
 
         contentPane = new JPanel();

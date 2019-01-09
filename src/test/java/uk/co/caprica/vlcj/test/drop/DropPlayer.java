@@ -39,7 +39,7 @@ import javax.swing.TransferHandler;
 import javax.swing.border.LineBorder;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -90,7 +90,7 @@ public class DropPlayer extends VlcjTest {
         javaFileListFlavor = DataFlavor.javaFileListFlavor;
 
         mediaPlayerFactory = new MediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newHeadlessMediaPlayer();
         mediaPlayer.setPlaySubItems(true); // <--- very important!
 
         contentPane = new JPanel();

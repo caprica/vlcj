@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
@@ -110,7 +110,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     public DirectMediaPlayerComponent(BufferFormatCallback bufferFormatCallback) {
         // Create the native resources
         mediaPlayerFactory = onGetMediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.newDirectMediaPlayer(bufferFormatCallback, onGetRenderCallback());
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newDirectMediaPlayer(bufferFormatCallback, onGetRenderCallback());
         // Register listeners
         mediaPlayer.addMediaPlayerEventListener(this);
         // Sub-class initialisation

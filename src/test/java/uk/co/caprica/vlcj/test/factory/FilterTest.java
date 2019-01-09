@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.factory;
 
 import java.util.List;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.ModuleDescription;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -37,8 +37,8 @@ public class FilterTest extends VlcjTest {
     public static void main(String[] args) throws Exception {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
-        List<ModuleDescription> audioFilters = factory.getAudioFilters();
-        List<ModuleDescription> videoFilters = factory.getVideoFilters();
+        List<ModuleDescription> audioFilters = factory.modules().audioFilters();
+        List<ModuleDescription> videoFilters = factory.modules().videoFilters();
 
         System.out.println("Audio Filters:");
         System.out.println();

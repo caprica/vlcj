@@ -19,30 +19,6 @@
 
 package uk.co.caprica.vlcj.test.script;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
-
-import uk.co.caprica.vlcj.Info;
-import uk.co.caprica.vlcj.player.Equalizer;
-import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -64,7 +40,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * You can clear the output window with CTRL+DELETE when it is focused.
  */
 public class ScriptTest extends VlcjTest {
-
+/*
     private final JFrame mainFrame;
     private final JTextArea scriptTextArea;
     private final JTextArea outputTextArea;
@@ -156,8 +132,8 @@ public class ScriptTest extends VlcjTest {
         scriptTextArea.append("mediaPlayerFactory.version()\n");
         scriptTextArea.append("mediaPlayerFactory.changeset()\n");
         scriptTextArea.append("mediaPlayerFactory.compiler()\n");
-        scriptTextArea.append("mediaPlayerFactory.getAudioFilters()\n");
-        scriptTextArea.append("mediaPlayerFactory.getVideoFilters()\n");
+        scriptTextArea.append("mediaPlayerFactory.audioFilters()\n");
+        scriptTextArea.append("mediaPlayerFactory.videoFilters()\n");
         scriptTextArea.append("mediaPlayerFactory.getAudioOutputs()\n");
         scriptTextArea.append("mediaPlayerFactory.isEqualizerAvailable()\n");
         scriptTextArea.append("mediaPlayerFactory.getEqualizerPresetNames()\n");
@@ -351,5 +327,5 @@ public class ScriptTest extends VlcjTest {
             eventTextArea.append("\n");
             eventTextArea.setCaretPosition(eventTextArea.getText().length() - 1);
         }
-    }
+    }*/
 }

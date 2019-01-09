@@ -52,7 +52,7 @@ public class NativeLogTest extends VlcjTest {
         // "finished" event is raised
         final CountDownLatch latch = new CountDownLatch(1);
 
-        NativeLog log = mediaPlayerComponent.getMediaPlayerFactory().newLog();
+        NativeLog log = mediaPlayerComponent.getMediaPlayerFactory().application().newLog();
         if (log == null) {
             System.out.println("Native log not available on this platform");
             System.exit(1);

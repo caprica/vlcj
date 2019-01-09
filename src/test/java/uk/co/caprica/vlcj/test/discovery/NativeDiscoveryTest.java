@@ -23,7 +23,7 @@ import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.caprica.vlcj.binding.LibVlcFactory;
+//import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 
 /**
@@ -43,7 +43,7 @@ public class NativeDiscoveryTest {
         boolean found = new NativeDiscovery().discover();
         logger.debug("found={}", found);
         if(found) {
-            logger.debug("Version: {}", LibVlcFactory.factory().create().libvlc_get_version());
+//            logger.debug("Version: {}", LibVlcFactory.factory().create().libvlc_get_version());
         }
     }
 }

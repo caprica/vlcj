@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.directaudio.DefaultAudioCallbackAdapter;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -90,7 +90,7 @@ public class DirectAudioPlayerTest extends VlcjTest {
      */
     public DirectAudioPlayerTest() throws IOException {
         factory = new MediaPlayerFactory();
-        audioPlayer = factory.newDirectAudioPlayer("S16N", 44100, 2, new TestAudioCallbackAdapter(new File("test.raw")));
+        audioPlayer = factory.mediaPlayers().newDirectAudioPlayer("S16N", 44100, 2, new TestAudioCallbackAdapter(new File("test.raw")));
         audioPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 
             @Override

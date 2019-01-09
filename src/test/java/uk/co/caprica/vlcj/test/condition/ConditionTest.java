@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.test.condition;
 import java.io.File;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.condition.Condition;
 import uk.co.caprica.vlcj.player.condition.UnexpectedErrorConditionException;
 import uk.co.caprica.vlcj.player.condition.UnexpectedFinishedConditionException;
@@ -69,7 +69,7 @@ public class ConditionTest extends VlcjTest {
         final int period = Integer.parseInt(args[1]) * 1000;
 
         MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
-        MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
+        MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
 
         mediaPlayer.setSnapshotDirectory(new File(".").getAbsolutePath());
 

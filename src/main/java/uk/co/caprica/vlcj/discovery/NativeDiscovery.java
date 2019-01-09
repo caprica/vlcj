@@ -19,11 +19,13 @@
 
 package uk.co.caprica.vlcj.discovery;
 
+import com.sun.jna.Native;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.Info;
-import uk.co.caprica.vlcj.binding.LibVlcFactory;
+import uk.co.caprica.vlcj.binding.LibVlc;
+//import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.discovery.linux.DefaultLinuxNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.discovery.mac.DefaultMacNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.discovery.windows.DefaultWindowsNativeDiscoveryStrategy;
@@ -134,4 +136,5 @@ public class NativeDiscovery {
         }
         return false;
     }
+
 }

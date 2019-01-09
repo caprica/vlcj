@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
@@ -215,9 +215,9 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     public EmbeddedMediaPlayerComponent() {
         // Create the native resources
         mediaPlayerFactory = onGetMediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(onGetFullScreenStrategy());
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer(onGetFullScreenStrategy());
         canvas = onGetCanvas();
-        videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
+        videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
         mediaPlayer.setVideoSurface(videoSurface);
         // Prepare the user interface
         setBackground(Color.black);

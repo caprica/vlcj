@@ -23,7 +23,7 @@ import java.util.List;
 
 import uk.co.caprica.vlcj.player.AudioDevice;
 import uk.co.caprica.vlcj.player.AudioOutput;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -36,7 +36,7 @@ public class AudioOutputsTest extends VlcjTest {
     public static void main(String[] args) throws Exception {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
-        List<AudioOutput> audioOutputs = factory.getAudioOutputs();
+        List<AudioOutput> audioOutputs = factory.audio().audioOutputs();
 
         System.out.println("Audio Outputs:");
         System.out.println();

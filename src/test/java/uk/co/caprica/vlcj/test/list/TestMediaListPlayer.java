@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.list;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
@@ -38,7 +38,7 @@ public class TestMediaListPlayer extends VlcjTest {
     public static void main(String[] args) throws Exception {
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
 
-        MediaListPlayer mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
+        MediaListPlayer mediaListPlayer = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
 
         mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
             @Override
@@ -47,7 +47,7 @@ public class TestMediaListPlayer extends VlcjTest {
             }
         });
 
-        MediaList mediaList = mediaPlayerFactory.newMediaList();
+        MediaList mediaList = mediaPlayerFactory.media().newMediaList();
         mediaList.addMedia("/home/movies/one.mp4");
         mediaList.addMedia("/home/movies/two.mp4");
         mediaList.addMedia("/home/movies/three.mp4");

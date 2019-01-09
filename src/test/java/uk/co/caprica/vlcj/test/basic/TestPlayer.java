@@ -24,14 +24,9 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.AWTEventListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -58,8 +53,7 @@ import javax.swing.SwingUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.LibVlcFactory;
+//import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.AudioOutput;
 import uk.co.caprica.vlcj.player.Equalizer;
@@ -67,13 +61,11 @@ import uk.co.caprica.vlcj.player.MediaDetails;
 import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.test.VlcjTest;
-
-import com.sun.jna.platform.WindowUtils;
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
@@ -106,11 +98,11 @@ public class TestPlayer extends VlcjTest {
     private Equalizer equalizer;
 
     public static void main(final String[] args) throws Exception {
-        LibVlc libVlc = LibVlcFactory.factory().create();
+//        LibVlc libVlc = LibVlcFactory.factory().create();
 
-        logger.info("  version: {}", libVlc.libvlc_get_version());
-        logger.info(" compiler: {}", libVlc.libvlc_get_compiler());
-        logger.info("changeset: {}", libVlc.libvlc_get_changeset());
+//        logger.info("  version: {}", libVlc.libvlc_get_version());
+//        logger.info(" compiler: {}", libVlc.libvlc_get_compiler());
+//        logger.info("changeset: {}", libVlc.libvlc_get_changeset());
 
         setLookAndFeel();
 
@@ -164,13 +156,13 @@ public class TestPlayer extends VlcjTest {
         FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
 
         mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));
-        mediaPlayerFactory.setUserAgent("vlcj test player");
+        mediaPlayerFactory.application().setUserAgent("vlcj test player");
 
-        List<AudioOutput> audioOutputs = mediaPlayerFactory.getAudioOutputs();
+        List<AudioOutput> audioOutputs = mediaPlayerFactory.audio().audioOutputs();
         logger.debug("audioOutputs={}", audioOutputs);
 
-        mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(fullScreenStrategy);
-        mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(videoSurface));
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer(fullScreenStrategy);
+        mediaPlayer.setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(videoSurface));
         mediaPlayer.setPlaySubItems(true);
 
         mediaPlayer.setEnableKeyInputHandling(false);
@@ -204,8 +196,8 @@ public class TestPlayer extends VlcjTest {
             }
         });
 
-        equalizer = mediaPlayerFactory.newEqualizer();
-        equalizerFrame = new EqualizerFrame(mediaPlayerFactory.getEqualizerBandFrequencies(), mediaPlayerFactory.getEqualizerPresetNames(), mediaPlayerFactory, mediaPlayer, equalizer);
+        equalizer = mediaPlayerFactory.equalizers().newEqualizer();
+        equalizerFrame = new EqualizerFrame(mediaPlayerFactory.equalizers().bands(), mediaPlayerFactory.equalizers().presets(), mediaPlayerFactory, mediaPlayer, equalizer);
 
         // Global AWT key handler, you're better off using Swing's InputMap and
         // ActionMap with a JFrame - that would solve all sorts of focus issues too
@@ -271,40 +263,40 @@ public class TestPlayer extends VlcjTest {
         mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
 
         // Won't work with OpenJDK or JDK1.7, requires a Sun/Oracle JVM (currently)
-        boolean transparentWindowsSupport = true;
-        try {
-            Class.forName("com.sun.awt.AWTUtilities");
-        }
-        catch(Exception e) {
-            transparentWindowsSupport = false;
-        }
-
-        logger.debug("transparentWindowsSupport={}", transparentWindowsSupport);
-
-        if(transparentWindowsSupport) {
-            final Window test = new Window(null, WindowUtils.getAlphaCompatibleGraphicsConfiguration()) {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void paint(Graphics g) {
-                    Graphics2D g2 = (Graphics2D)g;
-
-                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-
-                    g.setColor(Color.white);
-                    g.fillRoundRect(100, 150, 100, 100, 32, 32);
-
-                    g.setFont(new Font("Sans", Font.BOLD, 32));
-                    g.drawString("Heavyweight overlay test", 100, 300);
-                }
-            };
-
-            test.setBackground(new Color(0, 0, 0, 0)); // This is what you do in JDK7
-
-            // mediaPlayer.setOverlay(test);
-            // mediaPlayer.enableOverlay(true);
-        }
+//        boolean transparentWindowsSupport = true;
+//        try {
+//            Class.forName("com.sun.awt.AWTUtilities");
+//        }
+//        catch(Exception e) {
+//            transparentWindowsSupport = false;
+//        }
+//
+//        logger.debug("transparentWindowsSupport={}", transparentWindowsSupport);
+//
+//        if(transparentWindowsSupport) {
+//            final Window test = new Window(null, WindowUtils.getAlphaCompatibleGraphicsConfiguration()) {
+//                private static final long serialVersionUID = 1L;
+//
+//                @Override
+//                public void paint(Graphics g) {
+//                    Graphics2D g2 = (Graphics2D)g;
+//
+//                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//                    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+//
+//                    g.setColor(Color.white);
+//                    g.fillRoundRect(100, 150, 100, 100, 32, 32);
+//
+//                    g.setFont(new Font("Sans", Font.BOLD, 32));
+//                    g.drawString("Heavyweight overlay test", 100, 300);
+//                }
+//            };
+//
+//            test.setBackground(new Color(0, 0, 0, 0)); // This is what you do in JDK7
+//
+//            // mediaPlayer.setOverlay(test);
+//            // mediaPlayer.enableOverlay(true);
+//        }
 
         // This might be useful
         // enableMousePointer(false);

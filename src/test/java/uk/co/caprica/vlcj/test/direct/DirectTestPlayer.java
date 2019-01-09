@@ -40,7 +40,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
@@ -114,7 +114,7 @@ public class DirectTestPlayer extends VlcjTest {
         });
 
         factory = new MediaPlayerFactory(args);
-        mediaPlayer = factory.newDirectMediaPlayer(new TestBufferFormatCallback(), new TestRenderCallback());
+        mediaPlayer = factory.mediaPlayers().newDirectMediaPlayer(new TestBufferFormatCallback(), new TestRenderCallback());
         mediaPlayer.playMedia(media);
 
         // Just to show regular media player functions still work...

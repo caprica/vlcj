@@ -35,7 +35,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -98,8 +98,8 @@ public class FullScreenMultiMediaTest extends VlcjTest {
         f.setSize(800, 600);
 
         final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
-        final EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(new DefaultFullScreenStrategy(f));
-        mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(c));
+        final EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer(new DefaultFullScreenStrategy(f));
+        mediaPlayer.setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(c));
 
         f.setVisible(true);
 

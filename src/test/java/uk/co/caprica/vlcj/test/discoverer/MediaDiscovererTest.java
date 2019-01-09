@@ -25,7 +25,7 @@ import java.util.Map;
 
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListItem;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -60,7 +60,7 @@ public class MediaDiscovererTest extends VlcjTest {
     private void run() {
         for(String name : NAMES) {
             System.out.println("Creating discoverer for '" + name + "'");
-            MediaDiscoverer discoverer = mediaPlayerFactory.newMediaDiscoverer(name);
+            MediaDiscoverer discoverer = mediaPlayerFactory.discoverers().newMediaDiscoverer(name);
             discoverers.put(name, discoverer);
         }
         System.out.println();

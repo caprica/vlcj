@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import uk.co.caprica.vlcj.player.Equalizer;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -35,14 +35,14 @@ public class EqualizerCapabilityTest extends VlcjTest {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
         System.out.println("Preset names:");
-        List<String> presetNames = factory.getEqualizerPresetNames();
+        List<String> presetNames = factory.equalizers().presets();
         for(String presetName : presetNames) {
             System.out.printf(" %s%n", presetName);
         }
         System.out.println();
 
         System.out.println("Band frequencies:");
-        List<Float> bandFrequencies = factory.getEqualizerBandFrequencies();
+        List<Float> bandFrequencies = factory.equalizers().bands();
         for(Float freq : bandFrequencies) {
             System.out.printf(" %f Hz%n", freq);
         }
@@ -50,7 +50,7 @@ public class EqualizerCapabilityTest extends VlcjTest {
 
         // You can get individual presets by name, or get them all in one call as is done here...
 
-        Map<String, Equalizer> allPresets = factory.getAllPresetEqualizers();
+        Map<String, Equalizer> allPresets = factory.equalizers().allPresetEqualizers();
         for(String presetName : allPresets.keySet()) {
             System.out.printf("%s:%n", presetName);
             Equalizer preset = allPresets.get(presetName);

@@ -31,7 +31,7 @@ import javax.swing.JPanel;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 import uk.co.caprica.vlcj.test.thumbs.ThumbsTest;
 
@@ -50,7 +50,7 @@ public class SnapshotTest extends VlcjTest {
         }
 
         MediaPlayerFactory factory = new MediaPlayerFactory();
-        MediaPlayer mediaPlayer = factory.newEmbeddedMediaPlayer();
+        MediaPlayer mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
         mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {

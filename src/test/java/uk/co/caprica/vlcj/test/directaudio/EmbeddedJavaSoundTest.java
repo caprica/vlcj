@@ -61,7 +61,7 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
         f.setVisible(true);
 
         audioPlayerComponent = new JavaSoundDirectAudioPlayerComponent(FORMAT, RATE, CHANNELS);
-        audioPlayerComponent.getMediaPlayer().setVideoSurface(audioPlayerComponent.getMediaPlayerFactory().newVideoSurface(canvas));
+        audioPlayerComponent.getMediaPlayer().setVideoSurface(audioPlayerComponent.getMediaPlayerFactory().videoSurfaces().newVideoSurface(canvas));
     }
 
     private void play(String mrl) throws Exception {

@@ -24,7 +24,7 @@ import java.util.List;
 import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -41,7 +41,7 @@ public class DvbSubItemTest extends VlcjTest {
         }
 
         final MediaPlayerFactory factory = new MediaPlayerFactory();
-        final MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
+        final MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
 
         mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override

@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.player.MediaMeta;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -74,7 +74,7 @@ public class SearchMetaTest extends VlcjTest {
         // Dump out the meta
         for(File file : files) {
             String mrl = file.getAbsolutePath();
-            MediaMeta meta = factory.getMediaMeta(mrl, true);
+            MediaMeta meta = factory.media().getMediaMeta(mrl, true);
             logger.info("{} -> {}", mrl, meta);
             meta.release();
         }
@@ -82,7 +82,7 @@ public class SearchMetaTest extends VlcjTest {
         // Dump out only the title and the length
         for(File file : files) {
             String mrl = file.getAbsolutePath();
-            MediaMeta meta = factory.getMediaMeta(mrl, true);
+            MediaMeta meta = factory.media().getMediaMeta(mrl, true);
             logger.info("{} -> {}ms", meta.getTitle(), meta.getLength());
             meta.release();
         }

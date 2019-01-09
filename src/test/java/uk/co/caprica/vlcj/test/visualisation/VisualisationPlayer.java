@@ -39,7 +39,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -92,7 +92,7 @@ public class VisualisationPlayer extends VlcjTest {
         this.mrl = mrl;
 
         factory = new MediaPlayerFactory();
-        mediaPlayer = factory.newEmbeddedMediaPlayer();
+        mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
 
         canvas = new Canvas();
         canvas.setBackground(Color.black);
@@ -150,7 +150,7 @@ public class VisualisationPlayer extends VlcjTest {
             }
         });
 
-        videoSurface = factory.newVideoSurface(canvas);
+        videoSurface = factory.videoSurfaces().newVideoSurface(canvas);
         mediaPlayer.setVideoSurface(videoSurface);
 
         widthTextField.setText("1000");

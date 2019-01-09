@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.test.list;
 
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
@@ -52,10 +52,10 @@ public class StaticImageTest extends VlcjTest {
 
     public static void main(String[] args) throws Exception {
         MediaPlayerFactory factory = new MediaPlayerFactory();
-        MediaList playlist = factory.newMediaList();
+        MediaList playlist = factory.media().newMediaList();
         playlist.addMedia("/home/mark/1.jpg", "image-duration=5"); // Play picture for 5 seconds
         playlist.addMedia("/home/mark/2.jpg", "image-duration=5");
-        MediaListPlayer player = factory.newMediaListPlayer();
+        MediaListPlayer player = factory.mediaPlayers().newMediaListPlayer();
         player.setMediaList(playlist);
         player.setMode(MediaListPlayerMode.LOOP);
         player.play();

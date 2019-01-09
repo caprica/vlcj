@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.player.headless;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 
 /**
  * Specification for a media player component that is not intended to display the media.

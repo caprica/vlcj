@@ -24,7 +24,7 @@ import java.util.concurrent.CountDownLatch;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -72,7 +72,7 @@ public class ThumbsTest extends VlcjTest {
         File snapshotFile = new File(args[2]);
 
         MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
-        MediaPlayer mediaPlayer = factory.newHeadlessMediaPlayer();
+        MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
 
         final CountDownLatch inPositionLatch = new CountDownLatch(1);
         final CountDownLatch snapshotTakenLatch = new CountDownLatch(1);

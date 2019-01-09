@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
@@ -50,8 +50,8 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaPlayerCompone
     public EmbeddedMediaListPlayerComponent() {
         // Create the native resources
         MediaPlayerFactory mediaPlayerFactory = getMediaPlayerFactory();
-        mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
-        mediaList = mediaPlayerFactory.newMediaList();
+        mediaListPlayer = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
+        mediaList = mediaPlayerFactory.media().newMediaList();
         mediaListPlayer.setMediaList(mediaList);
         mediaListPlayer.setMediaPlayer(getMediaPlayer());
         // Register listeners

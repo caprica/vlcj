@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
 import uk.co.caprica.vlcj.player.directaudio.AudioCallbackAdapter;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
@@ -76,7 +76,7 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
      */
     public DirectAudioPlayerComponent(String format, int rate, int channels) {
         mediaPlayerFactory = onGetMediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.newDirectAudioPlayer(format, rate, channels, onGetAudioCallback());
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newDirectAudioPlayer(format, rate, channels, onGetAudioCallback());
         // Register listeners
         mediaPlayer.addMediaPlayerEventListener(this);
         // Sub-class initialisation

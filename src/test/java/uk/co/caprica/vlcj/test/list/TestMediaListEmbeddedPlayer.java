@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
@@ -47,12 +47,12 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
 
         Canvas canvas = new Canvas();
         canvas.setBackground(Color.black);
-        CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
+        CanvasVideoSurface videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
 
-        EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+        EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
         mediaPlayer.setVideoSurface(videoSurface);
 
-        MediaListPlayer mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
+        MediaListPlayer mediaListPlayer = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
 
         mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
             @Override
@@ -75,7 +75,7 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
 
-        MediaList mediaList = mediaPlayerFactory.newMediaList();
+        MediaList mediaList = mediaPlayerFactory.media().newMediaList();
         mediaList.addMedia("/movies/1.mp4");
         mediaList.addMedia("/movies/2.mp4");
         mediaList.addMedia("/movies/3.mp4");
