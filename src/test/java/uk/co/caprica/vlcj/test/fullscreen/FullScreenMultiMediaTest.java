@@ -98,12 +98,13 @@ public class FullScreenMultiMediaTest extends VlcjTest {
         f.setSize(800, 600);
 
         final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
-        final EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer(new DefaultFullScreenStrategy(f));
-        mediaPlayer.setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(c));
+        final EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
+        mediaPlayer.fullScreen().setFullScreenStrategy(new DefaultFullScreenStrategy(f));
+        mediaPlayer.videoSurface().setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(c));
 
         f.setVisible(true);
 
-        mediaPlayer.setFullScreen(true);
+        mediaPlayer.fullScreen().setFullScreen(true);
 
         final List<File> files = scan(new File(args[0]));
 
@@ -114,7 +115,7 @@ public class FullScreenMultiMediaTest extends VlcjTest {
             public void actionPerformed(ActionEvent e) {
                 currentIndex ++ ;
                 if(currentIndex < files.size()) {
-                    mediaPlayer.playMedia(files.get(currentIndex).getAbsolutePath());
+                    mediaPlayer.media().playMedia(files.get(currentIndex).getAbsolutePath());
                 }
             }
         });
@@ -126,7 +127,7 @@ public class FullScreenMultiMediaTest extends VlcjTest {
             System.exit(1);
         }
 
-        mediaPlayer.playMedia(files.get(0).getAbsolutePath());
+        mediaPlayer.media().playMedia(files.get(0).getAbsolutePath());
     }
 
     private static List<File> scan(File root) {

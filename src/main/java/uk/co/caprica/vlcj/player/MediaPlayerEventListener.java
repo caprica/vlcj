@@ -23,6 +23,7 @@ import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Specification for a component that is interested in receiving event notifications from the media
@@ -43,12 +44,10 @@ public interface MediaPlayerEventListener {
 
     /**
      * The media changed.
-     *
-     * @param mediaPlayer media player that raised the event
+     *  @param mediaPlayer media player that raised the event
      * @param media new media instance
-     * @param mrl media resource locator
      */
-    void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl);
+    void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media);
 
     /**
      * Opening the media.

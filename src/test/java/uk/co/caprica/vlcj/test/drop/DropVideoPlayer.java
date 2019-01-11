@@ -42,6 +42,7 @@ import javax.swing.border.LineBorder;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -60,7 +61,7 @@ public class DropVideoPlayer extends VlcjTest {
 
     private final MediaPlayerFactory mediaPlayerFactory;
     private final EmbeddedMediaPlayer mediaPlayer;
-    private final CanvasVideoSurface videoSurface;
+    private final VideoSurface videoSurface;
     private final JFrame frame;
     private final JPanel contentPane;
     private final Canvas canvas;
@@ -87,13 +88,13 @@ public class DropVideoPlayer extends VlcjTest {
 
         mediaPlayerFactory = new MediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.setPlaySubItems(true);
+// FIXME        mediaPlayer.setPlaySubItems(true);
 
         canvas = new Canvas();
         canvas.setBackground(Color.black);
 
         videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
-        mediaPlayer.setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
 
         contentPane = new JPanel();
         contentPane.setBackground(Color.black);
@@ -149,14 +150,14 @@ public class DropVideoPlayer extends VlcjTest {
                         if(uris.length > 0) {
                             // Play the first MRL that was dropped (the others are discarded)
                             String uri = uris[0];
-                            mediaPlayer.playMedia(uri);
+                            mediaPlayer.media().playMedia(uri);
                         }
                         return true;
                     }
                     else if(transferData instanceof URL) {
                         URL value = (URL)transferData;
                         String uri = value.toExternalForm();
-                        mediaPlayer.playMedia(uri);
+                        mediaPlayer.media().playMedia(uri);
                     }
                     else if(transferData instanceof List) {
                         List<?> value = (List<?>)transferData;
@@ -164,7 +165,7 @@ public class DropVideoPlayer extends VlcjTest {
                             // Play the first MRL that was dropped (the others are discarded)
                             File file = (File)value.get(0);
                             String uri = file.getAbsolutePath();
-                            mediaPlayer.playMedia(uri);
+                            mediaPlayer.media().playMedia(uri);
                         }
                     }
                 }

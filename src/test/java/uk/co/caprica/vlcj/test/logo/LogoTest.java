@@ -103,7 +103,7 @@ public class LogoTest extends VlcjTest {
 
     public void start(String mrl) {
         frame.setVisible(true);
-        mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
     }
 
     @SuppressWarnings("serial")
@@ -182,14 +182,14 @@ public class LogoTest extends VlcjTest {
             enableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mediaPlayerComponent.getMediaPlayer().enableLogo(true);
+                    mediaPlayerComponent.getMediaPlayer().logo().enableLogo(true);
                 }
             });
 
             disableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mediaPlayerComponent.getMediaPlayer().enableLogo(false);
+                    mediaPlayerComponent.getMediaPlayer().logo().enableLogo(false);
                 }
             });
 

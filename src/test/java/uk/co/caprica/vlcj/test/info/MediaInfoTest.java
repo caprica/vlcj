@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.test.info;
 
 import uk.co.caprica.vlcj.player.*;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -39,6 +40,8 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class MediaInfoTest extends VlcjTest {
 
     public static void main(String[] args) {
+        args = new String[] {"/disks/big/video/dvd-iso/Inception.iso"};
+
         if(args.length != 1) {
             System.out.println("Specify an MRL");
             System.exit(1);
@@ -47,38 +50,38 @@ public class MediaInfoTest extends VlcjTest {
         MediaPlayerFactory factory = new MediaPlayerFactory();
         MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
 
-        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void mediaPlayerReady(MediaPlayer mediaPlayer) {
-                System.out.println("     Track Information: " + mediaPlayer.getTrackInfo());
-                System.out.println("    Title Descriptions: " + mediaPlayer.getTitleDescriptions());
-                System.out.println("    Video Descriptions: " + mediaPlayer.getVideoDescriptions());
-                System.out.println("    Audio Descriptions: " + mediaPlayer.getAudioDescriptions());
-                System.out.println("Chapter Descriptions: " + mediaPlayer.getAllChapterDescriptions());
+//                System.out.println("     Track Information: " + mediaPlayer.getTrackInfo());
+                System.out.println("    Title Descriptions: " + mediaPlayer.titles().getTitleDescriptions());
+//                System.out.println("    Video Descriptions: " + mediaPlayer.video().getVideoDescriptions());
+//                System.out.println("    Audio Descriptions: " + mediaPlayer.audio().getAudioDescriptions());
+                System.out.println("Chapter Descriptions: " + mediaPlayer.chapters().getAllChapterDescriptions());
             }
         });
 
-        mediaPlayer.prepareMedia(args[0]);
+        mediaPlayer.media().prepareMedia(args[0]);
 
-        mediaPlayer.parseMedia();
+//        mediaPlayer.parseMedia();
 
-        mediaPlayer.start();
+        mediaPlayer.controls().start();
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(5000);
         }
         catch(InterruptedException e) {
         }
 
-        System.out.println("Track Information before end: " + mediaPlayer.getTrackInfo());
+//        System.out.println("Track Information before end: " + mediaPlayer.getTrackInfo());
+//
+//        System.out.println("    UNKNOWN: " +  mediaPlayer.getTrackInfo(TrackType.UNKNOWN));
+//        System.out.println("      AUDIO: " +  mediaPlayer.getTrackInfo(TrackType.AUDIO));
+//        System.out.println("      VIDEO: " +  mediaPlayer.getTrackInfo(TrackType.VIDEO));
+//        System.out.println("       TEXT: " +  mediaPlayer.getTrackInfo(TrackType.TEXT));
+//        System.out.println("AUDIO+VIDEO: " +  mediaPlayer.getTrackInfo(TrackType.AUDIO, TrackType.VIDEO));
 
-        System.out.println("    UNKNOWN: " +  mediaPlayer.getTrackInfo(TrackType.UNKNOWN));
-        System.out.println("      AUDIO: " +  mediaPlayer.getTrackInfo(TrackType.AUDIO));
-        System.out.println("      VIDEO: " +  mediaPlayer.getTrackInfo(TrackType.VIDEO));
-        System.out.println("       TEXT: " +  mediaPlayer.getTrackInfo(TrackType.TEXT));
-        System.out.println("AUDIO+VIDEO: " +  mediaPlayer.getTrackInfo(TrackType.AUDIO, TrackType.VIDEO));
-
-        mediaPlayer.stop();
+        mediaPlayer.controls().stop();
 
         mediaPlayer.release();
         factory.release();

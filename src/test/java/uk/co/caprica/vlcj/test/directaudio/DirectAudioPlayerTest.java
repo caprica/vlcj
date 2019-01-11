@@ -28,7 +28,7 @@ import java.util.concurrent.Semaphore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.directaudio.DefaultAudioCallbackAdapter;
@@ -91,7 +91,7 @@ public class DirectAudioPlayerTest extends VlcjTest {
     public DirectAudioPlayerTest() throws IOException {
         factory = new MediaPlayerFactory();
         audioPlayer = factory.mediaPlayers().newDirectAudioPlayer("S16N", 44100, 2, new TestAudioCallbackAdapter(new File("test.raw")));
-        audioPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        audioPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 
             @Override
             public void playing(MediaPlayer mediaPlayer) {
@@ -119,7 +119,7 @@ public class DirectAudioPlayerTest extends VlcjTest {
      * @param mrl media resource locator
      */
     private void start(String mrl) {
-        audioPlayer.playMedia(mrl);
+        audioPlayer.media().playMedia(mrl);
 
         logger.info("Waiting for finished...");
 

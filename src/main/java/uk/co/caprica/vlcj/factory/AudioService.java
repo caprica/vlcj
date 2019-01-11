@@ -27,10 +27,6 @@ public final class AudioService extends BaseService {
         List<AudioOutput> result = new ArrayList<AudioOutput>();
         libvlc_audio_output_t audioOutputs = libvlc.libvlc_audio_output_list_get(instance);
         if (audioOutputs != null) {
-            // Must prevent automatic synchronisation on the native structure, otherwise a
-            // fatal JVM crash will occur when the native release call is made - not quite
-            // sure why this is needed here
-            audioOutputs.setAutoSynch(false);
             libvlc_audio_output_t audioOutput = audioOutputs;
             while (audioOutput != null) {
                 String name = NativeString.copyNativeString(audioOutput.psz_name);
@@ -53,10 +49,6 @@ public final class AudioService extends BaseService {
         List<AudioDevice> result = new ArrayList<AudioDevice>();
         libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_list_get(instance, outputName);
         if (audioDevices != null) {
-            // Must prevent automatic synchronisation on the native structure, otherwise a
-            // fatal JVM crash will occur when the native release call is made - not quite
-            // sure why this is needed here
-            audioDevices.setAutoSynch(false);
             libvlc_audio_output_device_t audioDevice = audioDevices;
             while(audioDevice != null) {
                 String device = NativeString.copyNativeString(audioDevice.psz_device);

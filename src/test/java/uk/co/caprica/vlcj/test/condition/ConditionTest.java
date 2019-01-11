@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.condition;
 
 import java.io.File;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.condition.Condition;
 import uk.co.caprica.vlcj.player.condition.UnexpectedErrorConditionException;
@@ -52,7 +52,7 @@ public class ConditionTest extends VlcjTest {
         "--no-audio",               /* we don't want audio (decoding) */
         "--no-osd",
         "--no-spu",
-        "--no-stats",               /* no stats */
+        "--no-statistics",               /* no statistics */
         "--no-sub-autodetect-file", /* we don't want subtitles */
         "--no-inhibit",             /* we don't want interfaces */
         "--no-disable-screensaver", /* we don't want interfaces */
@@ -71,7 +71,7 @@ public class ConditionTest extends VlcjTest {
         MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
         MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
 
-        mediaPlayer.setSnapshotDirectory(new File(".").getAbsolutePath());
+        mediaPlayer.snapshots().setSnapshotDirectory(new File(".").getAbsolutePath());
 
         // The sequence for creating the snapshots is...
         //
@@ -95,7 +95,7 @@ public class ConditionTest extends VlcjTest {
                 protected boolean onBefore() {
                     // You do not have to use onBefore(), but sometimes it is very convenient, and guarantees
                     // that the required media player event listener is added before your condition is tested
-                    mediaPlayer.startMedia(mrl);
+                    mediaPlayer.media().startMedia(mrl);
                     return true;
                 }
             };
@@ -110,7 +110,7 @@ public class ConditionTest extends VlcjTest {
                 // 1. The duration may not be available yet, even if the media player is playing
                 // 2. For some media types it is not possible to set the position past the end - this
                 //    means that you would have to wait for playback to reach the end normally
-                long duration = mediaPlayer.getLength();
+                long duration = mediaPlayer.status().getLength();
                 if(duration > 0 && time >= duration) {
                     break;
                 }
@@ -120,7 +120,7 @@ public class ConditionTest extends VlcjTest {
                 Condition<?> timeReachedCondition = new TimeReachedCondition(mediaPlayer, time) {
                     @Override
                     protected boolean onBefore() {
-                        mediaPlayer.setTime(targetTime);
+                        mediaPlayer.controls().setTime(targetTime);
                         return true;
                     }
                 };
@@ -129,7 +129,7 @@ public class ConditionTest extends VlcjTest {
                 Condition<?> pausedCondition = new PausedCondition(mediaPlayer) {
                     @Override
                     protected boolean onBefore() {
-                        mediaPlayer.pause();
+                        mediaPlayer.controls().pause();
                         return true;
                     }
                 };
@@ -138,7 +138,7 @@ public class ConditionTest extends VlcjTest {
                 Condition<?> snapshotTakenCondition = new SnapshotTakenCondition(mediaPlayer) {
                     @Override
                     protected boolean onBefore() {
-                        mediaPlayer.saveSnapshot();
+                        mediaPlayer.snapshots().saveSnapshot();
                         return true;
                     }
                 };
@@ -147,7 +147,7 @@ public class ConditionTest extends VlcjTest {
                 playingCondition = new PlayingCondition(mediaPlayer) {
                     @Override
                     protected boolean onBefore() {
-                        mediaPlayer.play();
+                        mediaPlayer.controls().play();
                         return true;
                     }
                 };

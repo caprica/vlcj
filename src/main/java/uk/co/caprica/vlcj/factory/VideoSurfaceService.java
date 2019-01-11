@@ -1,7 +1,7 @@
 package uk.co.caprica.vlcj.factory;
 
-import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.ComponentIdVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.ComponentVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.linux.LinuxVideoSurfaceAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.mac.MacVideoSurfaceAdapter;
@@ -17,27 +17,27 @@ public final class VideoSurfaceService extends BaseService {
     }
 
     /**
-     * Create a new video surface for a Canvas.
+     * Create a new video surface for a Component.
+     * <p>
+     * The optimal component in a {@link Canvas}, {@link Window} can be used, as can any other AWT {@link Component}, at
+     * least in principle.
+     * </p>
      *
-     * @param canvas canvas
+     * @param component component
      * @return video surface
      */
-    public CanvasVideoSurface newVideoSurface(Canvas canvas) {
+    public ComponentVideoSurface newVideoSurface(Component component) {
         VideoSurfaceAdapter videoSurfaceAdapter;
-        if(RuntimeUtil.isNix()) {
+        if (RuntimeUtil.isNix()) {
             videoSurfaceAdapter = new LinuxVideoSurfaceAdapter();
-        }
-        else if(RuntimeUtil.isWindows()) {
+        } else if(RuntimeUtil.isWindows()) {
             videoSurfaceAdapter = new WindowsVideoSurfaceAdapter();
-        }
-        else if(RuntimeUtil.isMac()) {
+        } else if(RuntimeUtil.isMac()) {
             videoSurfaceAdapter = new MacVideoSurfaceAdapter();
-        }
-        else {
+        } else {
             throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
         }
-        CanvasVideoSurface videoSurface = new CanvasVideoSurface(canvas, videoSurfaceAdapter);
-        return videoSurface;
+        return new ComponentVideoSurface(component, videoSurfaceAdapter);
     }
 
     /**
@@ -63,4 +63,5 @@ public final class VideoSurfaceService extends BaseService {
         ComponentIdVideoSurface videoSurface = new ComponentIdVideoSurface(componentId, videoSurfaceAdapter);
         return videoSurface;
     }
+
 }

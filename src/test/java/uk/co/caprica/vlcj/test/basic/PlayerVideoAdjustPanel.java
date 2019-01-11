@@ -34,7 +34,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import uk.co.caprica.vlcj.binding.LibVlcConst;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 public class PlayerVideoAdjustPanel extends JPanel {
 
@@ -121,11 +121,11 @@ public class PlayerVideoAdjustPanel extends JPanel {
         gammaSlider.setToolTipText("Change ");
         gammaSlider.setEnabled(false);
 
-        contrastSlider.setValue(Math.round(mediaPlayer.getBrightness() * 100.0f));
-        brightnessSlider.setValue(Math.round(mediaPlayer.getContrast() * 100.0f));
-        hueSlider.setValue(mediaPlayer.getHue());
-        saturationSlider.setValue(Math.round(mediaPlayer.getSaturation() * 100.0f));
-        gammaSlider.setValue(Math.round(mediaPlayer.getGamma() * 100.0f));
+        contrastSlider.setValue(Math.round(mediaPlayer.video().getBrightness() * 100.0f));
+        brightnessSlider.setValue(Math.round(mediaPlayer.video().getContrast() * 100.0f));
+        hueSlider.setValue(mediaPlayer.video().getHue());
+        saturationSlider.setValue(Math.round(mediaPlayer.video().getSaturation() * 100.0f));
+        gammaSlider.setValue(Math.round(mediaPlayer.video().getGamma() * 100.0f));
     }
 
     private void layoutControls() {
@@ -160,7 +160,7 @@ public class PlayerVideoAdjustPanel extends JPanel {
                 hueSlider.setEnabled(enabled);
                 saturationSlider.setEnabled(enabled);
                 gammaSlider.setEnabled(enabled);
-                mediaPlayer.setAdjustVideo(enabled);
+                mediaPlayer.video().setAdjustVideo(enabled);
             }
         });
 
@@ -169,7 +169,7 @@ public class PlayerVideoAdjustPanel extends JPanel {
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider)e.getSource();
                 // if(!source.getValueIsAdjusting()) {
-                mediaPlayer.setContrast(source.getValue() / 100.0f);
+                mediaPlayer.video().setContrast(source.getValue() / 100.0f);
                 // }
             }
         });
@@ -179,7 +179,7 @@ public class PlayerVideoAdjustPanel extends JPanel {
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider)e.getSource();
                 // if(!source.getValueIsAdjusting()) {
-                mediaPlayer.setBrightness(source.getValue() / 100.0f);
+                mediaPlayer.video().setBrightness(source.getValue() / 100.0f);
                 // }
             }
         });
@@ -189,7 +189,7 @@ public class PlayerVideoAdjustPanel extends JPanel {
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider)e.getSource();
                 // if(!source.getValueIsAdjusting()) {
-                mediaPlayer.setHue(source.getValue());
+                mediaPlayer.video().setHue(source.getValue());
                 // }
             }
         });
@@ -199,7 +199,7 @@ public class PlayerVideoAdjustPanel extends JPanel {
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider)e.getSource();
                 // if(!source.getValueIsAdjusting()) {
-                mediaPlayer.setSaturation(source.getValue() / 100.0f);
+                mediaPlayer.video().setSaturation(source.getValue() / 100.0f);
                 // }
             }
         });
@@ -209,7 +209,7 @@ public class PlayerVideoAdjustPanel extends JPanel {
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider)e.getSource();
                 // if(!source.getValueIsAdjusting()) {
-                mediaPlayer.setGamma(source.getValue() / 100.0f);
+                mediaPlayer.video().setGamma(source.getValue() / 100.0f);
                 // }
             }
         });

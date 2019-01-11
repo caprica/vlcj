@@ -36,6 +36,7 @@ import javax.swing.SwingUtilities;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -154,12 +155,12 @@ public class NonTransparentOverlayTest extends VlcjTest {
         factory = new MediaPlayerFactory();
         mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
 
-        CanvasVideoSurface cvs = factory.videoSurfaces().newVideoSurface(c);
-        mediaPlayer.setVideoSurface(cvs);
+        VideoSurface cvs = factory.videoSurfaces().newVideoSurface(c);
+        mediaPlayer.videoSurface().setVideoSurface(cvs);
     }
 
     private void start(String mrl) {
         f.setVisible(true);
-        mediaPlayer.playMedia(mrl);
+        mediaPlayer.media().playMedia(mrl);
     }
 }

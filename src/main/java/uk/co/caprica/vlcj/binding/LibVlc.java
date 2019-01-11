@@ -114,12 +114,7 @@ public interface LibVlc extends Library {
     /**
      * Native library instance.
      */
-    LibVlc INSTANCE = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-
-    /**
-     * Synchronised native library instance.
-     */
-    LibVlc SYNC_INSTANCE = (LibVlc)Native.synchronizedLibrary(INSTANCE);
+    LibVlc INSTANCE = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class); // FIXME must be removed (used by LibVlcVersion)
 
     // === libvlc.h =============================================================
 

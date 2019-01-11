@@ -35,6 +35,7 @@ public enum libvlc_event_e {
     libvlc_MediaStateChanged            (0x005),
     libvlc_MediaSubItemTreeAdded        (0x006),
     libvlc_MediaParsedStatus            (0x007),
+    libvlc_MediaThumbnailGenerated      (0x008),
 
     libvlc_MediaPlayerMediaChanged      (0x100),
     libvlc_MediaPlayerNothingSpecial    (0x101),
@@ -82,22 +83,8 @@ public enum libvlc_event_e {
     libvlc_MediaListPlayerNextItemSet   (0x401),
     libvlc_MediaListPlayerStopped       (0x402),
 
-    @Deprecated
-    libvlc_MediaDiscovererStarted       (0x500),
-    @Deprecated
-    libvlc_MediaDiscovererEnded         (0x501),
-
-    libvlc_VlmMediaAdded                (0x600),
-    libvlc_VlmMediaRemoved              (0x601),
-    libvlc_VlmMediaChanged              (0x602),
-    libvlc_VlmMediaInstanceStarted      (0x603),
-    libvlc_VlmMediaInstanceStopped      (0x604),
-    libvlc_VlmMediaInstanceStatusInit   (0x605),
-    libvlc_VlmMediaInstanceStatusOpening(0x606),
-    libvlc_VlmMediaInstanceStatusPlaying(0x607),
-    libvlc_VlmMediaInstanceStatusPause  (0x608),
-    libvlc_VlmMediaInstanceStatusEnd    (0x609),
-    libvlc_VlmMediaInstanceStatusError  (0x60a);
+    libvlc_RendererDiscovererItemAdded  (0x502),
+    libvlc_RendererDiscovererItemDeleted(0x503);
 
     private static final Map<Integer, libvlc_event_e> INT_MAP = new HashMap<Integer, libvlc_event_e>();
 

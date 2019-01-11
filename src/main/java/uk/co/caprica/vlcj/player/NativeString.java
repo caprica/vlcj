@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 
 import com.sun.jna.Pointer;
 
+// FIXME move package, it's probably a binding/internal class? not sure...
 /**
  * Encapsulation of access to native strings.
  * <p>

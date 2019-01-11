@@ -4,9 +4,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_type_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.player.DefaultMediaMeta;
 import uk.co.caprica.vlcj.player.MediaMeta;
-
-//import uk.co.caprica.vlcj.player.DefaultMediaMeta;
 
 public final class MediaService extends BaseService {
 
@@ -38,18 +37,15 @@ public final class MediaService extends BaseService {
      */
     public MediaMeta getMediaMeta(String mediaPath, boolean parse) {
         libvlc_media_t media = libvlc.libvlc_media_new_path(instance, mediaPath);
-        if(media != null) {
+        if (media != null) {
             if(parse) {
                 libvlc.libvlc_media_parse(media);
             }
-//            MediaMeta mediaMeta = new DefaultMediaMeta(libvlc, media); //            FIXME not public
-
+            MediaMeta mediaMeta = new DefaultMediaMeta(libvlc, media);
             // Release this native reference, the media meta instance retains its own native reference
             libvlc.libvlc_media_release(media);
-//            return mediaMeta;
-            return null;
-        }
-        else {
+            return mediaMeta;
+        } else {
             return null;
         }
     }

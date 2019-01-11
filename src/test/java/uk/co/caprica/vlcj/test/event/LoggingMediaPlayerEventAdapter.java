@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
 /**
@@ -41,8 +41,8 @@ public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener 
     // === Events relating to the media player ==================================
 
     @Override
-    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
-        logger.debug("mediaChanged(mediaPlayer={},media={},mrl={})", mediaPlayer, media, mrl);
+    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
+        logger.debug("mediaChanged(mediaPlayer={},media={})", mediaPlayer, media);
     }
 
     @Override

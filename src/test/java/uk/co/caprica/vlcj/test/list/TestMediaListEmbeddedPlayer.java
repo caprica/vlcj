@@ -32,6 +32,7 @@ import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
@@ -47,10 +48,10 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
 
         Canvas canvas = new Canvas();
         canvas.setBackground(Color.black);
-        CanvasVideoSurface videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
+        VideoSurface videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
 
         EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
 
         MediaListPlayer mediaListPlayer = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
 
@@ -89,7 +90,7 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
         // not do this of course
         for(;;) {
             Thread.sleep(500);
-            mediaPlayer.setChapter(3);
+            mediaPlayer.chapters().setChapter(3);
 
             Thread.sleep(5000);
             mediaListPlayer.playNext();

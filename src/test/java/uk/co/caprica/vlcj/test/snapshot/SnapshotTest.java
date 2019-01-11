@@ -29,7 +29,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -51,16 +51,16 @@ public class SnapshotTest extends VlcjTest {
 
         MediaPlayerFactory factory = new MediaPlayerFactory();
         MediaPlayer mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
                 System.out.println("snapshotTaken(filename=" + filename + ")");
             }
         });
 
-        mediaPlayer.startMedia(args[0]);
+        mediaPlayer.media().startMedia(args[0]);
 
-        mediaPlayer.setPosition(0.25f);
+        mediaPlayer.controls().setPosition(0.25f);
         Thread.sleep(1000); // Don't do this, use events instead
 
         // I might get around to this some day
@@ -69,23 +69,23 @@ public class SnapshotTest extends VlcjTest {
 
         File file3 = new File("vlcj-snapshot1.png");
         file3.deleteOnExit();
-        mediaPlayer.saveSnapshot(file3);
+        mediaPlayer.snapshots().saveSnapshot(file3);
         BufferedImage image3 = ImageIO.read(file3);
 
         File file4 = new File("vlcj-snapshot2.png");
         file4.deleteOnExit();
-        mediaPlayer.saveSnapshot(file4, 500, 0);
+        mediaPlayer.snapshots().saveSnapshot(file4, 500, 0);
         BufferedImage image4 = ImageIO.read(file4);
 
-        BufferedImage image5 = mediaPlayer.getSnapshot();
-        BufferedImage image6 = mediaPlayer.getSnapshot(300, 600);
+        BufferedImage image5 = mediaPlayer.snapshots().getSnapshot();
+        BufferedImage image6 = mediaPlayer.snapshots().getSnapshot(300, 600);
 
         show("Named file saveSnapshot", image3, 3);
         show("Named file sized saveSnapshot", image4, 4);
         show("Image getSnapshot", image5, 5);
         show("Image sized getSnapshot", image6, 6);
 
-        mediaPlayer.stop();
+        mediaPlayer.controls().stop();
     }
 
     @SuppressWarnings("serial")

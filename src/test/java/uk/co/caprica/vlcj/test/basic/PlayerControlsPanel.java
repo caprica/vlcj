@@ -46,7 +46,7 @@ import javax.swing.filechooser.FileFilter;
 
 import uk.co.caprica.vlcj.binding.LibVlcConst;
 import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
@@ -239,7 +239,7 @@ public class PlayerControlsPanel extends JPanel {
      * Broken out position setting, handles updating mediaPlayer
      */
     private void setSliderBasedPosition() {
-        if(!mediaPlayer.isSeekable()) {
+        if(!mediaPlayer.status().isSeekable()) {
             return;
         }
         float positionValue = positionSlider.getValue() / 1000.0f;
@@ -247,13 +247,13 @@ public class PlayerControlsPanel extends JPanel {
         if(positionValue > 0.99f) {
             positionValue = 0.99f;
         }
-        mediaPlayer.setPosition(positionValue);
+        mediaPlayer.controls().setPosition(positionValue);
     }
 
     private void updateUIState() {
-        if(!mediaPlayer.isPlaying()) {
+        if(!mediaPlayer.status().isPlaying()) {
             // Resume play or play a few frames then pause to show current position in video
-            mediaPlayer.play();
+            mediaPlayer.controls().play();
             if(!mousePressedPlaying) {
                 try {
                     // Half a second probably gets an iframe
@@ -262,13 +262,13 @@ public class PlayerControlsPanel extends JPanel {
                 catch(InterruptedException e) {
                     // Don't care if unblocked early
                 }
-                mediaPlayer.pause();
+                mediaPlayer.controls().pause();
             }
         }
-        long time = mediaPlayer.getTime();
-        int position = (int)(mediaPlayer.getPosition() * 1000.0f);
-        int chapter = mediaPlayer.getChapter();
-        int chapterCount = mediaPlayer.getChapterCount();
+        long time = mediaPlayer.status().getTime();
+        int position = (int)(mediaPlayer.status().getPosition() * 1000.0f);
+        int chapter = mediaPlayer.chapters().getChapter();
+        int chapterCount = mediaPlayer.chapters().getChapterCount();
         updateTime(time);
         updatePosition(position);
         updateChapter(chapter, chapterCount);
@@ -276,14 +276,14 @@ public class PlayerControlsPanel extends JPanel {
 
     private void skip(int skipTime) {
         // Only skip time if can handle time setting
-        if(mediaPlayer.getLength() > 0) {
-            mediaPlayer.skip(skipTime);
+        if(mediaPlayer.status().getLength() > 0) {
+            mediaPlayer.controls().skip(skipTime);
             updateUIState();
         }
     }
 
     private void registerListeners() {
-        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void playing(MediaPlayer mediaPlayer) {
 //                updateVolume(mediaPlayer.getVolume());
@@ -293,9 +293,9 @@ public class PlayerControlsPanel extends JPanel {
         positionSlider.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if(mediaPlayer.isPlaying()) {
+                if(mediaPlayer.status().isPlaying()) {
                     mousePressedPlaying = true;
-                    mediaPlayer.pause();
+                    mediaPlayer.controls().pause();
                 }
                 else {
                     mousePressedPlaying = false;
@@ -313,7 +313,7 @@ public class PlayerControlsPanel extends JPanel {
         previousChapterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.previousChapter();
+                mediaPlayer.chapters().previousChapter();
             }
         });
 
@@ -327,21 +327,21 @@ public class PlayerControlsPanel extends JPanel {
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.stop();
+                mediaPlayer.controls().stop();
             }
         });
 
         pauseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.pause();
+                mediaPlayer.controls().pause();
             }
         });
 
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.play();
+                mediaPlayer.controls().play();
             }
         });
 
@@ -355,14 +355,14 @@ public class PlayerControlsPanel extends JPanel {
         nextChapterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.nextChapter();
+                mediaPlayer.chapters().nextChapter();
             }
         });
 
         toggleMuteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.mute();
+                mediaPlayer.audio().mute();
             }
         });
 
@@ -371,7 +371,7 @@ public class PlayerControlsPanel extends JPanel {
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider)e.getSource();
                 // if(!source.getValueIsAdjusting()) {
-                mediaPlayer.setVolume(source.getValue());
+                mediaPlayer.audio().setVolume(source.getValue());
                 // }
             }
         });
@@ -379,54 +379,54 @@ public class PlayerControlsPanel extends JPanel {
         captureButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.saveSnapshot();
+                mediaPlayer.snapshots().saveSnapshot();
             }
         });
 
         ejectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.enableOverlay(false);
+                mediaPlayer.overlay().enableOverlay(false);
                 if(JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(PlayerControlsPanel.this)) {
-                    mediaPlayer.playMedia(fileChooser.getSelectedFile().getAbsolutePath());
+                    mediaPlayer.media().playMedia(fileChooser.getSelectedFile().getAbsolutePath());
                 }
-                mediaPlayer.enableOverlay(true);
+                mediaPlayer.overlay().enableOverlay(true);
             }
         });
 
         connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.enableOverlay(false);
+                mediaPlayer.overlay().enableOverlay(false);
                 String mediaUrl = JOptionPane.showInputDialog(PlayerControlsPanel.this, "Enter a media URL", "Connect to media", JOptionPane.QUESTION_MESSAGE);
                 if(mediaUrl != null && mediaUrl.length() > 0) {
-                    mediaPlayer.playMedia(mediaUrl);
+                    mediaPlayer.media().playMedia(mediaUrl);
                 }
-                mediaPlayer.enableOverlay(true);
+                mediaPlayer.overlay().enableOverlay(true);
             }
         });
 
         fullScreenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.toggleFullScreen();
+                mediaPlayer.fullScreen().toggleFullScreen();
             }
         });
 
         subTitlesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int spu = mediaPlayer.getSpu();
+                int spu = mediaPlayer.subpictures().getSpu();
                 if(spu > -1) {
                     spu ++ ;
-                    if(spu > mediaPlayer.getSpuCount()) {
+                    if(spu > mediaPlayer.subpictures().getSpuCount()) {
                         spu = -1;
                     }
                 }
                 else {
                     spu = 0;
                 }
-                mediaPlayer.setSpu(spu);
+                mediaPlayer.subpictures().setSpu(spu);
             }
         });
     }
@@ -441,17 +441,17 @@ public class PlayerControlsPanel extends JPanel {
 
         @Override
         public void run() {
-            final long time = mediaPlayer.getTime();
-            final int position = (int)(mediaPlayer.getPosition() * 1000.0f);
-            final int chapter = mediaPlayer.getChapter();
-            final int chapterCount = mediaPlayer.getChapterCount();
+            final long time = mediaPlayer.status().getTime();
+            final int position = (int)(mediaPlayer.status().getPosition() * 1000.0f);
+            final int chapter = mediaPlayer.chapters().getChapter();
+            final int chapterCount = mediaPlayer.chapters().getChapterCount();
 
             // Updates to user interface components must be executed on the Event
             // Dispatch Thread
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    if(mediaPlayer.isPlaying()) {
+                    if(mediaPlayer.status().isPlaying()) {
                         updateTime(time);
                         updatePosition(position);
                         updateChapter(chapter, chapterCount);

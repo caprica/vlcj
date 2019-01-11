@@ -32,6 +32,7 @@ public class libvlc_event_u extends Union {
     public media_parsed_changed            media_parsed_changed;
     public media_freed                     media_freed;
     public media_state_changed             media_state_changed;
+    public media_thumbnail_generated       media_thumbnail_generated;
     public media_player_buffering          media_player_buffering;
     public media_player_position_changed   media_player_position_changed;
     public media_player_time_changed       media_player_time_changed;

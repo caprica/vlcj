@@ -31,7 +31,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
-import uk.co.caprica.vlcj.player.DefaultMediaPlayer;
+import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
 
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;

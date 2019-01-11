@@ -42,7 +42,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.AbstractMediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.NativeString;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEvent;
@@ -381,7 +381,7 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
      */
     private void attachVideoSurface() {
         if(mediaPlayer instanceof EmbeddedMediaPlayer) {
-            ((EmbeddedMediaPlayer)mediaPlayer).attachVideoSurface();
+            ((EmbeddedMediaPlayer)mediaPlayer).videoSurface().attachVideoSurface();
         }
     }
 

@@ -19,17 +19,37 @@
 
 package uk.co.caprica.vlcj.player.events;
 
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
 /**
  * Specification for a media player event.
  */
-public interface MediaPlayerEvent {
+public abstract class MediaPlayerEvent {
+
+    /**
+     * The media player the event relates to.
+     */
+    protected final MediaPlayer mediaPlayer;
+
+    /**
+     * Create a media player event.
+     *
+     * @param mediaPlayer media player that the event relates to
+     */
+    protected MediaPlayerEvent(MediaPlayer mediaPlayer) {
+        this.mediaPlayer = mediaPlayer;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
+    }
 
     /**
      * Notify a listener of the event.
      *
      * @param listener event listener to notify
      */
-    void notify(MediaPlayerEventListener listener);
+    abstract public void notify(MediaPlayerEventListener listener);
 }

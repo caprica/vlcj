@@ -29,7 +29,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -104,11 +104,11 @@ public class ScreenRecorder extends VlcjTest {
 
     private void go(String destination) {
         frame.setState(JFrame.ICONIFIED);
-        mediaPlayer.playMedia(MRL, getMediaOptions(destination));
+        mediaPlayer.media().playMedia(MRL, getMediaOptions(destination));
     }
 
     private void stop() {
-        mediaPlayer.stop();
+        mediaPlayer.controls().stop();
         mediaPlayer.release();
         mediaPlayerFactory.release();
     }

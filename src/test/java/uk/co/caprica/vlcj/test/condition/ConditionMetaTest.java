@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.condition;
 
 import java.io.File;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.condition.Condition;
 import uk.co.caprica.vlcj.player.condition.conditions.ParsedCondition;
@@ -45,7 +45,7 @@ public class ConditionMetaTest extends VlcjTest {
         "--intf", "dummy",          /* no interface */
         "--vout", "dummy",          /* we don't want video (output) */
         "--no-audio",               /* we don't want audio (decoding) */
-        "--no-stats",               /* no stats */
+        "--no-statistics",               /* no statistics */
         "--no-sub-autodetect-file", /* we don't want subtitles */
         "--no-inhibit",             /* we don't want interfaces */
         "--no-disable-screensaver", /* we don't want interfaces */
@@ -63,7 +63,7 @@ public class ConditionMetaTest extends VlcjTest {
         MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
         MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
 
-        mediaPlayer.setSnapshotDirectory(new File(".").getAbsolutePath());
+        mediaPlayer.snapshots().setSnapshotDirectory(new File(".").getAbsolutePath());
 
         // The sequence for getting the meta is...
         //
@@ -79,14 +79,14 @@ public class ConditionMetaTest extends VlcjTest {
             @Override
             protected boolean onBefore() {
                 // Some media, such as mpg, must be played before all meta data (e.g. duration) is available
-                mediaPlayer.startMedia(mrl); // "start" waits until the media is playing before returning
-                mediaPlayer.requestParseMedia(); // asynchronous invocation
+                mediaPlayer.media().startMedia(mrl); // "start" waits until the media is playing before returning
+                mediaPlayer.parsing().requestParseMedia(); // asynchronous invocation
                 return true;
             }
 
             @Override
             protected void onAfter(Integer result) {
-                mediaPlayer.stop();
+                mediaPlayer.controls().stop();
             }
         };
         parsedCondition.await();
@@ -98,7 +98,7 @@ public class ConditionMetaTest extends VlcjTest {
         mediaPlayer.stop();
         */
 
-        System.out.println(mediaPlayer.getMediaMeta());
+//FIXME        System.out.println(mediaPlayer.meta().getMediaMeta());
 
         mediaPlayer.release();
         factory.release();

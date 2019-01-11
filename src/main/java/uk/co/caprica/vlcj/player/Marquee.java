@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.player;
 import java.awt.Color;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Builder for a Marquee.
@@ -369,34 +370,34 @@ public final class Marquee {
      */
     public void apply(MediaPlayer mediaPlayer) {
         if(text != null) {
-            mediaPlayer.setMarqueeText(text);
+            mediaPlayer.marquee().setMarqueeText(text);
         }
         if(colour != null) {
-            mediaPlayer.setMarqueeColour(colour);
+            mediaPlayer.marquee().setMarqueeColour(colour);
         }
         if(rgb != null) {
-            mediaPlayer.setMarqueeColour(rgb);
+            mediaPlayer.marquee().setMarqueeColour(rgb);
         }
         if(intOpacity != null) {
-            mediaPlayer.setMarqueeOpacity(intOpacity);
+            mediaPlayer.marquee().setMarqueeOpacity(intOpacity);
         }
         if(floatOpacity != null) {
-            mediaPlayer.setMarqueeOpacity(floatOpacity);
+            mediaPlayer.marquee().setMarqueeOpacity(floatOpacity);
         }
         if(size != null) {
-            mediaPlayer.setMarqueeSize(size);
+            mediaPlayer.marquee().setMarqueeSize(size);
         }
         if(timeout != null) {
-            mediaPlayer.setMarqueeTimeout(timeout);
+            mediaPlayer.marquee().setMarqueeTimeout(timeout);
         }
         if(x != null && y != null && x >= 0 && y >= 0) {
-            mediaPlayer.setMarqueeLocation(x, y);
+            mediaPlayer.marquee().setMarqueeLocation(x, y);
         }
         if(position != null) {
-            mediaPlayer.setMarqueePosition(position);
+            mediaPlayer.marquee().setMarqueePosition(position);
         }
         if(enable) {
-            mediaPlayer.enableMarquee(true);
+            mediaPlayer.marquee().enableMarquee(true);
         }
     }
 

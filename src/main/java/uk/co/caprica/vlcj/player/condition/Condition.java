@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
@@ -132,7 +132,7 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
     public Condition(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
         // Listen for media player events
-        mediaPlayer.addMediaPlayerEventListener(this);
+        mediaPlayer.events().addMediaPlayerEventListener(this);
     }
 
     /**
@@ -257,7 +257,7 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
      */
     private void release(ResultStatus resultStatus) {
         // Stop listening for media player events
-        mediaPlayer.removeMediaPlayerEventListener(this);
+        mediaPlayer.events().removeMediaPlayerEventListener(this);
         // Store the result status
         this.resultStatus.set(resultStatus);
         // Trigger the completion latch to release the waiter

@@ -163,7 +163,7 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
      */
     private void start(String mrl) {
         // One line of vlcj code to play the media...
-        mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
     }
 
     private class TestRenderCallbackAdapter extends RenderCallbackAdapter {

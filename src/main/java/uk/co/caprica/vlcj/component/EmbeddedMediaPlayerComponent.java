@@ -47,12 +47,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
@@ -202,7 +203,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     /**
      * Video surface encapsulation.
      */
-    private final CanvasVideoSurface videoSurface;
+    private final VideoSurface videoSurface;
 
     /**
      * Blank cursor to use when the cursor is disabled.
@@ -215,22 +216,23 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     public EmbeddedMediaPlayerComponent() {
         // Create the native resources
         mediaPlayerFactory = onGetMediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer(onGetFullScreenStrategy());
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
+        mediaPlayer.fullScreen().setFullScreenStrategy(onGetFullScreenStrategy());
         canvas = onGetCanvas();
         videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
-        mediaPlayer.setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
         // Prepare the user interface
         setBackground(Color.black);
         setLayout(new BorderLayout());
         add(canvas, BorderLayout.CENTER);
         // Register listeners
-        mediaPlayer.addMediaPlayerEventListener(this);
+        mediaPlayer.events().addMediaPlayerEventListener(this);
         switch (onGetInputEvents()) {
             case NONE:
                 break;
             case DISABLE_NATIVE:
-                mediaPlayer.setEnableKeyInputHandling(false);
-                mediaPlayer.setEnableMouseInputHandling(false);
+                mediaPlayer.input().setEnableKeyInputHandling(false);
+                mediaPlayer.input().setEnableMouseInputHandling(false);
                 // Case fall-through is by design
             case DEFAULT:
                 canvas.addMouseListener(this);
@@ -240,7 +242,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
                 break;
         }
         // Set the overlay
-        mediaPlayer.setOverlay(onGetOverlay());
+        mediaPlayer.overlay().setOverlay(onGetOverlay());
         // Sub-class initialisation
         onAfterConstruct();
     }
@@ -466,7 +468,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     // === MediaPlayerEventListener =============================================
 
     @Override
-    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
+    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
     }
 
     @Override

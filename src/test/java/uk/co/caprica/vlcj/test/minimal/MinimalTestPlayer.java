@@ -34,6 +34,8 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class MinimalTestPlayer extends VlcjTest {
 
     public static void main(String[] args) throws Exception {
+        args = new String[] {"https://www.youtube.com/watch?v=d4GGZluIqJo"};
+
         if(args.length != 1) {
             System.out.println("Specify an MRL to play");
             System.exit(1);
@@ -54,7 +56,8 @@ public class MinimalTestPlayer extends VlcjTest {
         f.setContentPane(mediaPlayerComponent);
         f.setVisible(true);
 
-        mediaPlayerComponent.getMediaPlayer().playMedia(args[0]);
+        mediaPlayerComponent.getMediaPlayer().subItems().setPlaySubItems(true);
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(args[0]);
 
         Thread.currentThread().join();
     }

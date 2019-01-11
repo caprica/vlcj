@@ -42,6 +42,7 @@ import javax.swing.border.EmptyBorder;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -56,7 +57,7 @@ public class VisualisationPlayer extends VlcjTest {
 
     private final MediaPlayerFactory factory;
     private final EmbeddedMediaPlayer mediaPlayer;
-    private final CanvasVideoSurface videoSurface;
+    private final VideoSurface videoSurface;
 
     private final String mrl;
 
@@ -151,7 +152,7 @@ public class VisualisationPlayer extends VlcjTest {
         });
 
         videoSurface = factory.videoSurfaces().newVideoSurface(canvas);
-        mediaPlayer.setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
 
         widthTextField.setText("1000");
         heightTextField.setText("100");
@@ -163,6 +164,6 @@ public class VisualisationPlayer extends VlcjTest {
 
     private void doPlay() {
         String[] options = {"audio-visual=visual", "effect-list=" + comboBox.getSelectedItem(), "effect-width=" + widthTextField.getText(), "effect-height=" + heightTextField.getText()};
-        mediaPlayer.playMedia(mrl, options);
+        mediaPlayer.media().playMedia(mrl, options);
     }
 }

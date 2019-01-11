@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.player.headless;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.player.DefaultMediaPlayer;
+import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
 
 /**
  * A media player implementation with no user interface component to render the video to.

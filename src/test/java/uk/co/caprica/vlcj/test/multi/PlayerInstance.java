@@ -23,7 +23,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
@@ -41,7 +41,7 @@ public class PlayerInstance extends MediaPlayerEventAdapter {
         this.videoSurface = new Canvas();
         this.videoSurface.setBackground(Color.black);
 
-        mediaPlayer.addMediaPlayerEventListener(this);
+        mediaPlayer.events().addMediaPlayerEventListener(this);
     }
 
     public EmbeddedMediaPlayer mediaPlayer() {
@@ -53,7 +53,7 @@ public class PlayerInstance extends MediaPlayerEventAdapter {
     }
 
     @Override
-    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
+    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
         System.out.println("mediaChanged");
     }
 

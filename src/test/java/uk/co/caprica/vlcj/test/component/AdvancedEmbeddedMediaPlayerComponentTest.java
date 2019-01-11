@@ -25,7 +25,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -139,6 +139,6 @@ public class AdvancedEmbeddedMediaPlayerComponentTest extends VlcjTest {
      * @param mrl mrl
      */
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
     }
 }

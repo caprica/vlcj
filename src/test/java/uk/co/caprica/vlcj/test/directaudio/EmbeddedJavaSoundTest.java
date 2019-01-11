@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.component.DirectAudioPlayerComponent;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -61,12 +61,12 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
         f.setVisible(true);
 
         audioPlayerComponent = new JavaSoundDirectAudioPlayerComponent(FORMAT, RATE, CHANNELS);
-        audioPlayerComponent.getMediaPlayer().setVideoSurface(audioPlayerComponent.getMediaPlayerFactory().videoSurfaces().newVideoSurface(canvas));
+        audioPlayerComponent.getMediaPlayer().videoSurface().setVideoSurface(audioPlayerComponent.getMediaPlayerFactory().videoSurfaces().newVideoSurface(canvas));
     }
 
     private void play(String mrl) throws Exception {
         audioPlayerComponent.start();
-        audioPlayerComponent.getMediaPlayer().playMedia(mrl);
+        audioPlayerComponent.getMediaPlayer().media().playMedia(mrl);
         try {
             sync.acquire(); // Potential race if the media has already finished, but very unlikely, and good enough for a test
         }

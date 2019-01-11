@@ -103,7 +103,7 @@ public class MarqueeTest extends VlcjTest {
 
     public void start(String mrl) {
         frame.setVisible(true);
-        mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
     }
 
     @SuppressWarnings("serial")
@@ -182,14 +182,14 @@ public class MarqueeTest extends VlcjTest {
             enableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mediaPlayerComponent.getMediaPlayer().enableMarquee(true);
+                    mediaPlayerComponent.getMediaPlayer().marquee().enableMarquee(true);
                 }
             });
 
             disableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mediaPlayerComponent.getMediaPlayer().enableMarquee(false);
+                    mediaPlayerComponent.getMediaPlayer().marquee().enableMarquee(false);
                 }
             });
         }

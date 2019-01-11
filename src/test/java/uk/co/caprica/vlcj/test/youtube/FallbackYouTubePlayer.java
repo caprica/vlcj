@@ -19,15 +19,13 @@
 
 package uk.co.caprica.vlcj.test.youtube;
 
-import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import javax.swing.*;
+import java.util.List;
 
 /**
  * This test demonstrates how to manually handle the playing of YouTube videos.
@@ -69,7 +67,7 @@ public class FallbackYouTubePlayer extends VlcjTest {
     private final JFrame frame;
 
     public static void main(String[] args) throws Exception {
-        final String mrl = "http://www.youtube.com/watch?v=gOTyD6ZYcP0";
+        final String mrl = "https://www.youtube.com/watch?v=d4GGZluIqJo";
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -87,7 +85,7 @@ public class FallbackYouTubePlayer extends VlcjTest {
             @Override
             public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
                 // Show the sub-item being added for purposes of the test...
-                System.out.println("mediaSubItemAdded: " + mediaPlayerComponent.getMediaPlayer().mrl(subItem));
+//                System.out.println("mediaSubItemAdded: " + mediaPlayerComponent.getMediaPlayer().mrl(subItem));
             }
 
             @Override
@@ -97,13 +95,13 @@ public class FallbackYouTubePlayer extends VlcjTest {
                 // This is key...
                 //
                 // On receipt of a "finished" event, check if sub-items have been created...
-                List<String> subItems = mediaPlayer.subItems();
+                List<String> subItems = mediaPlayer.subItems().subItems();
                 System.out.println("subItems=" + subItems);
                 // If sub-items were created...
                 if(subItems != null && !subItems.isEmpty()) {
                     // Pick the first sub-item, and play it...
                     String subItemMrl = subItems.get(0);
-                    mediaPlayer.playMedia(subItemMrl);
+                    mediaPlayer.media().playMedia(subItemMrl);
                     // What will happen next...
                     //
                     // 1. if the vlc lua script finds the streaming MRL via the normal i.e.
@@ -138,6 +136,6 @@ public class FallbackYouTubePlayer extends VlcjTest {
     }
 
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
     }
 }

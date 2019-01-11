@@ -103,12 +103,12 @@ public class ExclusiveFullScreenTest extends VlcjTest {
         final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
         final EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
 
-        mediaPlayer.setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(c));
+        mediaPlayer.videoSurface().setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(c));
 
         p.getActionMap().put("start", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.play();
+                mediaPlayer.controls().play();
             }
         });
 
@@ -119,6 +119,6 @@ public class ExclusiveFullScreenTest extends VlcjTest {
         // need to provide a way to choose the desired screen device here
         GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(f);
 
-        mediaPlayer.prepareMedia(args[0]);
+        mediaPlayer.media().prepareMedia(args[0]);
     }
 }

@@ -101,18 +101,18 @@ public class OverlayTest extends VlcjTest {
         final MediaPlayerFactory factory = new MediaPlayerFactory();
 
         final EmbeddedMediaPlayer mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.setVideoSurface(factory.videoSurfaces().newVideoSurface(vs));
+        mediaPlayer.videoSurface().setVideoSurface(factory.videoSurfaces().newVideoSurface(vs));
 
         f.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 switch(e.getKeyCode()) {
                     case KeyEvent.VK_F11:
-                        mediaPlayer.enableOverlay(!mediaPlayer.overlayEnabled());
+                        mediaPlayer.overlay().enableOverlay(!mediaPlayer.overlay().overlayEnabled());
                         break;
 
                     case KeyEvent.VK_SPACE:
-                        mediaPlayer.pause();
+                        mediaPlayer.controls().pause();
                         break;
                 }
             }
@@ -127,10 +127,10 @@ public class OverlayTest extends VlcjTest {
             }
         });
 
-        mediaPlayer.setOverlay(new Overlay(f));
-        mediaPlayer.enableOverlay(true);
+        mediaPlayer.overlay().setOverlay(new Overlay(f));
+        mediaPlayer.overlay().enableOverlay(true);
 
-        mediaPlayer.playMedia(mrl);
+        mediaPlayer.media().playMedia(mrl);
 
         LibXUtil.setFullScreenWindow(f, true);
     }

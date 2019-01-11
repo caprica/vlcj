@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player.embedded.videosurface;
 import java.io.Serializable;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Specification for a component that can attach a video surface to a native media player instance.

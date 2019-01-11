@@ -31,6 +31,7 @@ import javax.swing.SwingUtilities;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -61,7 +62,7 @@ public class ScreenTestPlayer extends VlcjTest {
 
     private final EmbeddedMediaPlayer mediaPlayer;
 
-    private final CanvasVideoSurface videoSurface;
+    private final VideoSurface videoSurface;
 
     public static void main(final String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -93,7 +94,7 @@ public class ScreenTestPlayer extends VlcjTest {
 
         videoSurface = factory.videoSurfaces().newVideoSurface(canvas);
 
-        mediaPlayer.setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
     }
 
     private void start() {
@@ -106,6 +107,6 @@ public class ScreenTestPlayer extends VlcjTest {
             ":screen-caching=100"
         };
 
-        mediaPlayer.playMedia(mrl, options);
+        mediaPlayer.media().playMedia(mrl, options);
     }
 }

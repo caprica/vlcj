@@ -47,6 +47,7 @@ import uk.co.caprica.vlcj.player.AudioOutput;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -63,7 +64,7 @@ public class SetAudioOutputTest extends VlcjTest {
 
     private final MediaPlayerFactory factory;
     private final EmbeddedMediaPlayer mediaPlayer;
-    private final CanvasVideoSurface videoSurface;
+    private final VideoSurface videoSurface;
     private final List<AudioOutput> audioOutputs;
 
     private final JFrame frame;
@@ -147,7 +148,7 @@ public class SetAudioOutputTest extends VlcjTest {
         contentPane.add(controlsPanel, BorderLayout.SOUTH);
 
         videoSurface = factory.videoSurfaces().newVideoSurface(canvas);
-        mediaPlayer.setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
 
         menuBar = new JMenuBar();
 
@@ -161,9 +162,9 @@ public class SetAudioOutputTest extends VlcjTest {
                 String audioOutputName = (String)source.getClientProperty("AudioOutputName");
                 String audioDeviceId = (String)source.getClientProperty("AudioDeviceId");
 
-                mediaPlayer.setAudioOutput(audioOutputName);
+                mediaPlayer.audio().setAudioOutput(audioOutputName);
                 if(audioDeviceId != null) {
-                    mediaPlayer.setAudioOutputDevice(audioOutputName, audioDeviceId);
+                    mediaPlayer.audio().setAudioOutputDevice(audioOutputName, audioDeviceId);
                 }
 
                 audioOutputTextField.setText(audioOutputName);
@@ -215,14 +216,14 @@ public class SetAudioOutputTest extends VlcjTest {
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.stop();
+                mediaPlayer.controls().stop();
             }
         });
 
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.playMedia(mrl);
+                mediaPlayer.media().playMedia(mrl);
             }
         });
     }

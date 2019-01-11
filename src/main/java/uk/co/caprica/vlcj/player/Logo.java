@@ -24,6 +24,7 @@ import java.io.File;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Builder for a Logo.
@@ -296,25 +297,25 @@ public final class Logo {
      */
     public void apply(MediaPlayer mediaPlayer) {
         if(intOpacity != null) {
-            mediaPlayer.setLogoOpacity(intOpacity);
+            mediaPlayer.logo().setLogoOpacity(intOpacity);
         }
         if(floatOpacity != null) {
-            mediaPlayer.setLogoOpacity(floatOpacity);
+            mediaPlayer.logo().setLogoOpacity(floatOpacity);
         }
         if(x != null && y != null && x >= 0 && y >= 0) {
-            mediaPlayer.setLogoLocation(x, y);
+            mediaPlayer.logo().setLogoLocation(x, y);
         }
         if(position != null) {
-            mediaPlayer.setLogoPosition(position);
+            mediaPlayer.logo().setLogoPosition(position);
         }
         if(file != null) {
-            mediaPlayer.setLogoFile(file);
+            mediaPlayer.logo().setLogoFile(file);
         }
         if(image != null) {
-            mediaPlayer.setLogoImage(image);
+            mediaPlayer.logo().setLogoImage(image);
         }
         if(enable) {
-            mediaPlayer.enableLogo(true);
+            mediaPlayer.logo().enableLogo(true);
         }
     }
 

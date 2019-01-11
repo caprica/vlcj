@@ -64,20 +64,20 @@ public class VolumeTestPlayer extends VlcjTest {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
         EmbeddedMediaPlayer mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.setVideoSurface(factory.videoSurfaces().newVideoSurface(vs));
+        mediaPlayer.videoSurface().setVideoSurface(factory.videoSurfaces().newVideoSurface(vs));
 
         List<File> files = scanMedia(new File("/movies"));
 
         Thread.sleep(3000);
 
         for(File file : files) {
-            mediaPlayer.playMedia(file.getAbsolutePath());
+            mediaPlayer.media().playMedia(file.getAbsolutePath());
             Thread.sleep(500);
-            mediaPlayer.setChapter(4);
+            mediaPlayer.chapters().setChapter(4);
             Thread.sleep(2000);
         }
 
-        mediaPlayer.stop();
+        mediaPlayer.controls().stop();
         mediaPlayer.release();
         factory.release();
 

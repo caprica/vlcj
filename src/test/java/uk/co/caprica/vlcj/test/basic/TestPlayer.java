@@ -58,8 +58,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.AudioOutput;
 import uk.co.caprica.vlcj.player.Equalizer;
 import uk.co.caprica.vlcj.player.MediaDetails;
-import uk.co.caprica.vlcj.player.MediaMeta;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
@@ -161,12 +160,13 @@ public class TestPlayer extends VlcjTest {
         List<AudioOutput> audioOutputs = mediaPlayerFactory.audio().audioOutputs();
         logger.debug("audioOutputs={}", audioOutputs);
 
-        mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer(fullScreenStrategy);
-        mediaPlayer.setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(videoSurface));
-        mediaPlayer.setPlaySubItems(true);
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
+        mediaPlayer.fullScreen().setFullScreenStrategy(fullScreenStrategy);
+        mediaPlayer.videoSurface().setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(videoSurface));
+// FIXME        mediaPlayer.setPlaySubItems(true);
 
-        mediaPlayer.setEnableKeyInputHandling(false);
-        mediaPlayer.setEnableMouseInputHandling(false);
+        mediaPlayer.input().setEnableKeyInputHandling(false);
+        mediaPlayer.input().setEnableMouseInputHandling(false);
 
         controlsPanel = new PlayerControlsPanel(mediaPlayer);
         videoAdjustPanel = new PlayerVideoAdjustPanel(mediaPlayer);
@@ -215,40 +215,40 @@ public class TestPlayer extends VlcjTest {
                             mainFrame.validate();
                         }
                         else if(keyEvent.getKeyCode() == KeyEvent.VK_A) {
-                            mediaPlayer.setAudioDelay(mediaPlayer.getAudioDelay() - 50000);
+                            mediaPlayer.audio().setAudioDelay(mediaPlayer.audio().getAudioDelay() - 50000);
                         }
                         else if(keyEvent.getKeyCode() == KeyEvent.VK_S) {
-                            mediaPlayer.setAudioDelay(mediaPlayer.getAudioDelay() + 50000);
+                            mediaPlayer.audio().setAudioDelay(mediaPlayer.audio().getAudioDelay() + 50000);
                         }
                         // else if(keyEvent.getKeyCode() == KeyEvent.VK_N) {
                         // mediaPlayer.nextFrame();
                         // }
                         else if(keyEvent.getKeyCode() == KeyEvent.VK_1) {
-                            mediaPlayer.setTime(60000 * 1);
+                            mediaPlayer.controls().setTime(60000 * 1);
                         }
                         else if(keyEvent.getKeyCode() == KeyEvent.VK_2) {
-                            mediaPlayer.setTime(60000 * 2);
+                            mediaPlayer.controls().setTime(60000 * 2);
                         }
                         else if(keyEvent.getKeyCode() == KeyEvent.VK_3) {
-                            mediaPlayer.setTime(60000 * 3);
+                            mediaPlayer.controls().setTime(60000 * 3);
                         }
                         else if(keyEvent.getKeyCode() == KeyEvent.VK_4) {
-                            mediaPlayer.setTime(60000 * 4);
+                            mediaPlayer.controls().setTime(60000 * 4);
                         }
                         else if(keyEvent.getKeyCode() == KeyEvent.VK_5) {
-                            mediaPlayer.setTime(60000 * 5);
+                            mediaPlayer.controls().setTime(60000 * 5);
                         }
                         else if(keyEvent.getKeyCode() == KeyEvent.VK_6) {
-                            mediaPlayer.setTime(60000 * 6);
+                            mediaPlayer.controls().setTime(60000 * 6);
                         }
                         else if(keyEvent.getKeyCode() == KeyEvent.VK_7) {
-                            mediaPlayer.setTime(60000 * 7);
+                            mediaPlayer.controls().setTime(60000 * 7);
                         }
                         else if(keyEvent.getKeyCode() == KeyEvent.VK_8) {
-                            mediaPlayer.setTime(60000 * 8);
+                            mediaPlayer.controls().setTime(60000 * 8);
                         }
                         else if(keyEvent.getKeyCode() == KeyEvent.VK_9) {
-                            mediaPlayer.setTime(60000 * 9);
+                            mediaPlayer.controls().setTime(60000 * 9);
                         }
                     }
                 }
@@ -260,7 +260,7 @@ public class TestPlayer extends VlcjTest {
         equalizerFrame.pack();
         equalizerFrame.setVisible(true);
 
-        mediaPlayer.addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
+        mediaPlayer.events().addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
 
         // Won't work with OpenJDK or JDK1.7, requires a Sun/Oracle JVM (currently)
 //        boolean transparentWindowsSupport = true;
@@ -372,8 +372,8 @@ public class TestPlayer extends VlcjTest {
 
     private final class TestPlayerMediaPlayerEventListener extends MediaPlayerEventAdapter {
         @Override
-        public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
-            logger.debug("mediaChanged(mediaPlayer={},media={},mrl={})", mediaPlayer, media, mrl);
+        public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
+            logger.debug("mediaChanged(mediaPlayer={},media={})", mediaPlayer, media);
         }
 
         @Override
@@ -389,7 +389,7 @@ public class TestPlayer extends VlcjTest {
         @Override
         public void playing(MediaPlayer mediaPlayer) {
             logger.debug("playing(mediaPlayer={})", mediaPlayer);
-            MediaDetails mediaDetails = mediaPlayer.getMediaDetails();
+            MediaDetails mediaDetails = mediaPlayer.info().getMediaDetails();
             logger.info("mediaDetails={}", mediaDetails);
         }
 
@@ -405,13 +405,13 @@ public class TestPlayer extends VlcjTest {
                 return;
             }
 
-            MediaDetails mediaDetails = mediaPlayer.getMediaDetails();
+            MediaDetails mediaDetails = mediaPlayer.info().getMediaDetails();
             logger.info("mediaDetails={}", mediaDetails);
 
-            MediaMeta mediaMeta = mediaPlayer.getMediaMeta();
-            logger.info("mediaMeta={}", mediaMeta);
+// FIXME            MediaMeta mediaMeta = mediaPlayer.getMediaMeta();
+//            logger.info("mediaMeta={}", mediaMeta);
 
-            final Dimension dimension = mediaPlayer.getVideoDimension();
+            final Dimension dimension = mediaPlayer.video().getVideoDimension();
             logger.debug("dimension={}", dimension);
             if(dimension != null) {
                 SwingUtilities.invokeLater(new Runnable() {
@@ -426,20 +426,20 @@ public class TestPlayer extends VlcjTest {
             // You can set a logo like this if you like...
             File logoFile = new File("./etc/vlcj-logo.png");
             if(logoFile.exists()) {
-                mediaPlayer.setLogoFile(logoFile.getAbsolutePath());
-                mediaPlayer.setLogoOpacity(0.5f);
-                mediaPlayer.setLogoLocation(10, 10);
-                mediaPlayer.enableLogo(true);
+                mediaPlayer.logo().setLogoFile(logoFile.getAbsolutePath());
+                mediaPlayer.logo().setLogoOpacity(0.5f);
+                mediaPlayer.logo().setLogoLocation(10, 10);
+                mediaPlayer.logo().enableLogo(true);
             }
 
             // Demo the marquee
-            mediaPlayer.setMarqueeText("vlcj java bindings for vlc");
-            mediaPlayer.setMarqueeSize(40);
-            mediaPlayer.setMarqueeOpacity(95);
-            mediaPlayer.setMarqueeColour(Color.white);
-            mediaPlayer.setMarqueeTimeout(5000);
-            mediaPlayer.setMarqueeLocation(50, 120);
-            mediaPlayer.enableMarquee(true);
+            mediaPlayer.marquee().setMarqueeText("vlcj java bindings for vlc");
+            mediaPlayer.marquee().setMarqueeSize(40);
+            mediaPlayer.marquee().setMarqueeOpacity(95);
+            mediaPlayer.marquee().setMarqueeColour(Color.white);
+            mediaPlayer.marquee().setMarqueeTimeout(5000);
+            mediaPlayer.marquee().setMarqueeLocation(50, 120);
+            mediaPlayer.marquee().enableMarquee(true);
 
             // Not quite sure how crop geometry is supposed to work...
             //

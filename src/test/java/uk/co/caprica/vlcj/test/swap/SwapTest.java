@@ -41,6 +41,7 @@ import javax.swing.border.EmptyBorder;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -69,8 +70,8 @@ public class SwapTest extends VlcjTest {
 
     private final MediaPlayerFactory factory;
     private final EmbeddedMediaPlayer mediaPlayer;
-    private final CanvasVideoSurface previewVideoSurface;
-    private final CanvasVideoSurface mainVideoSurface;
+    private final VideoSurface previewVideoSurface;
+    private final VideoSurface mainVideoSurface;
 
     public static void main(final String[] args) throws Exception {
         if(args.length != 1) {
@@ -152,37 +153,37 @@ public class SwapTest extends VlcjTest {
         showPreviewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.setVideoSurface(previewVideoSurface);
-                mediaPlayer.attachVideoSurface();
+                mediaPlayer.videoSurface().setVideoSurface(previewVideoSurface);
+                mediaPlayer.videoSurface().attachVideoSurface();
             }
         });
 
         showMainButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.setVideoSurface(mainVideoSurface);
-                mediaPlayer.attachVideoSurface();
+                mediaPlayer.videoSurface().setVideoSurface(mainVideoSurface);
+                mediaPlayer.videoSurface().attachVideoSurface();
             }
         });
 
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.play();
+                mediaPlayer.controls().play();
             }
         });
 
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.stop();
+                mediaPlayer.controls().stop();
             }
         });
 
         pauseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.pause();
+                mediaPlayer.controls().pause();
             }
         });
 
@@ -196,6 +197,6 @@ public class SwapTest extends VlcjTest {
 
     private void start(String mrl) {
         frame.setVisible(true);
-        mediaPlayer.prepareMedia(mrl);
+        mediaPlayer.media().prepareMedia(mrl);
     }
 }

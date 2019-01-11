@@ -25,8 +25,9 @@ import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.version.LibVlcVersion;
 
 /**
  * Factory for creating media player instances and associated components.
@@ -58,15 +59,14 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 public class MediaPlayerFactory {
 
     static {
-        LibVlcVersionCheck.check();
         LinuxNativeInit.init();
     }
 
     private final Logger logger = LoggerFactory.getLogger(MediaPlayerFactory.class);
 
-    private final LibVlc libvlc;
+    private final LibVlc libvlc; // FIXME maybe just protected and get rid of the getter?
 
-    private final libvlc_instance_t instance;
+    private final libvlc_instance_t libvlcInstance; // FIXME maybe just protected and get rid of the getter?
 
     private final ApplicationService applicationService;
 
@@ -93,21 +93,17 @@ public class MediaPlayerFactory {
     public MediaPlayerFactory(NativeDiscovery discovery, String... libvlcArgs) {
         logger.debug("MediaPlayerFactory(discovery={},libvlcArgs={})", discovery, libvlcArgs);
 
-        this.libvlc   = discoverNativeLibrary(discovery);
-        this.instance = libvlc.libvlc_new(libvlcArgs.length, libvlcArgs);
+        this.libvlc         = discoverNativeLibrary(discovery);
+        this.libvlcInstance = newLibVlcInstance();
 
-        if (this.instance != null) {
-            this.applicationService  = new ApplicationService (this);
-            this.audioService        = new AudioService       (this);
-            this.discovererService   = new DiscovererService  (this);
-            this.equalizerService    = new EqualizerService   (this);
-            this.mediaPlayerService  = new MediaPlayerService (this);
-            this.mediaService        = new MediaService       (this);
-            this.moduleService       = new ModuleService      (this);
-            this.videoSurfaceService = new VideoSurfaceService(this);
-        } else {
-            throw new RuntimeException("Failed to initialise LibVLC");
-        }
+        this.applicationService  = new ApplicationService (this);
+        this.audioService        = new AudioService       (this);
+        this.discovererService   = new DiscovererService  (this);
+        this.equalizerService    = new EqualizerService   (this);
+        this.mediaPlayerService  = new MediaPlayerService (this);
+        this.mediaService        = new MediaService       (this);
+        this.moduleService       = new ModuleService      (this);
+        this.videoSurfaceService = new VideoSurfaceService(this);
     }
 
     /**
@@ -119,6 +115,40 @@ public class MediaPlayerFactory {
      */
     public MediaPlayerFactory(String... libvlcArgs) {
         this(new NativeDiscovery(), libvlcArgs);
+    }
+
+    private LibVlc discoverNativeLibrary(NativeDiscovery discovery) {
+        logger.debug("discoverNativeLibrary()");
+        if (discovery != null) {
+            boolean found = discovery.discover();
+            logger.debug("found={}", found);
+        } else {
+            logger.debug("skipping native discovery");
+        }
+        LibVlc nativeLibrary = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+        logger.info("nativeLibrary={}", NativeLibraryPath.getNativeLibraryPath(nativeLibrary));
+        checkVersion(nativeLibrary);
+        // FIXME likely we must use a synchronized instance
+        return nativeLibrary;
+    }
+
+    private void checkVersion(LibVlc nativeLibrary) {
+        LibVlcVersion version = new LibVlcVersion(nativeLibrary);
+        if (!version.isSupported()) {
+            throw new RuntimeException(String.format("Failed to find minimum required VLC version %s, found %s in %s",
+                version.getRequiredVersion(),
+                version.getVersion(),
+                NativeLibraryPath.getNativeLibraryPath(nativeLibrary)));
+        }
+    }
+
+    private libvlc_instance_t newLibVlcInstance(String... libvlcArgs) {
+        libvlc_instance_t result = libvlc.libvlc_new(libvlcArgs.length, libvlcArgs);
+        if (result != null) {
+            return result;
+        } else {
+            throw new RuntimeException("Failed to get a new native library instance");
+        }
     }
 
     public final ApplicationService application() {
@@ -160,8 +190,8 @@ public class MediaPlayerFactory {
      */
     public final void release() {
         logger.debug("release()");
-        if (this.instance != null) {
-            libvlc.libvlc_release(this.instance);
+        if (this.libvlcInstance != null) {
+            libvlc.libvlc_release(this.libvlcInstance);
         }
     }
 
@@ -170,20 +200,7 @@ public class MediaPlayerFactory {
     }
 
     protected final libvlc_instance_t instance() {
-        return instance;
-    }
-
-    private LibVlc discoverNativeLibrary(NativeDiscovery discovery) {
-        logger.debug("discoverNativeLibrary()");
-        if (discovery != null) {
-            boolean found = discovery.discover();
-            logger.debug("found={}", found);
-        } else {
-            logger.debug("skipping native discovery");
-        }
-        LibVlc nativeLibrary = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-        logger.info("nativeLibrary={}", NativeLibraryPath.getNativeLibraryPath(nativeLibrary));
-        return nativeLibrary;
+        return libvlcInstance;
     }
 
 }

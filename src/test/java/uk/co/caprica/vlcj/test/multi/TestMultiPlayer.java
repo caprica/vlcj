@@ -116,7 +116,7 @@ public class TestMultiPlayer extends VlcjTest {
             @Override
             public void keyPressed(KeyEvent e) {
                 for(int i = 0; i < players.size(); i ++ ) {
-                    players.get(i).mediaPlayer().pause();
+                    players.get(i).mediaPlayer().controls().pause();
                 }
             }
         });
@@ -126,7 +126,8 @@ public class TestMultiPlayer extends VlcjTest {
         FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
 
         for(int i = 0; i < medias.length; i ++ ) {
-            EmbeddedMediaPlayer player = factory.mediaPlayers().newEmbeddedMediaPlayer(fullScreenStrategy);
+            EmbeddedMediaPlayer player = factory.mediaPlayers().newEmbeddedMediaPlayer();
+            player.fullScreen().setFullScreenStrategy(fullScreenStrategy);
             PlayerInstance playerInstance = new PlayerInstance(player);
             players.add(playerInstance);
 
@@ -146,8 +147,8 @@ public class TestMultiPlayer extends VlcjTest {
             @Override
             public void run() {
                 for(int i = 0; i < medias.length; i ++ ) {
-                    players.get(i).mediaPlayer().setVideoSurface(factory.videoSurfaces().newVideoSurface(players.get(i).videoSurface()));
-                    players.get(i).mediaPlayer().prepareMedia(medias[i]);
+                    players.get(i).mediaPlayer().videoSurface().setVideoSurface(factory.videoSurfaces().newVideoSurface(players.get(i).videoSurface()));
+                    players.get(i).mediaPlayer().media().prepareMedia(medias[i]);
                 }
 
                 // There is a race condition somewhere when invoking libvlc_media_player_play()
@@ -166,7 +167,7 @@ public class TestMultiPlayer extends VlcjTest {
                 // for the hard VM crash to occur - but it still might
                 for(int i = 0; i < medias.length; i ++ ) {
                     EmbeddedMediaPlayer mediaPlayer = players.get(i).mediaPlayer();
-                    mediaPlayer.start();
+                    mediaPlayer.controls().start();
                 }
             }
         });

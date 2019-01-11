@@ -75,12 +75,14 @@ public final class Info {
             // This can only happen if something went wrong with the build
             version = null;
         }
-        logger.info("vlcj: {}", version != null ? version : "<version not available>");
-        logger.info("java: {} {}", System.getProperty("java.version"), System.getProperty("java.vendor"));
-        logger.info("java home: {}", System.getProperty("java.home"));
-        logger.info("os: {} {} {}", System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"));
+        logger.info("vlcj             : {}", version != null ? version : "<version not available>");
+        logger.info("os               : {} {} {}", System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"));
+        logger.info("java             : {} {}", System.getProperty("java.version"), System.getProperty("java.vendor"));
+        logger.info("java.home        : {}", property("java.home"));
+        logger.info("jna.library.path : {}", property("jna.library.path"));
+        logger.info("java.library.path: {}", property("java.library.path"));
         if (RuntimeUtil.isNix()) {
-            logger.info("LD_LIBRARY_PATH: {}", System.getenv("LD_LIBRARY_PATH"));
+            logger.info("LD_LIBRARY_PATH  : {}", env("LD_LIBRARY_PATH"));
         }
     }
 
@@ -91,5 +93,15 @@ public final class Info {
      */
     public final Version version() {
         return version;
+    }
+
+    private String property(String name) {
+        String result = System.getProperty(name);
+        return result != null ? result : "<not set>";
+    }
+
+    private String env(String name) {
+        String result = System.getenv(name);
+        return result != null ? result : "<not set>";
     }
 }

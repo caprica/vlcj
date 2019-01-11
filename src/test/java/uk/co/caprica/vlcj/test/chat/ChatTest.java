@@ -42,6 +42,7 @@ import javax.swing.border.TitledBorder;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -106,8 +107,8 @@ public class ChatTest extends VlcjTest {
     private final JButton receiveButton;
     private final JButton receiveSnapshotButton;
 
-    private final CanvasVideoSurface localVideoSurface;
-    private final CanvasVideoSurface remoteVideoSurface;
+    private final VideoSurface localVideoSurface;
+    private final VideoSurface remoteVideoSurface;
 
     public static void main(String[] args) throws Exception {
         setLookAndFeel();
@@ -175,7 +176,7 @@ public class ChatTest extends VlcjTest {
         localStreamControls.add(sendSnapshotButton);
 
         localVideoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(localCanvas);
-        localMediaPlayer.setVideoSurface(localVideoSurface);
+        localMediaPlayer.videoSurface().setVideoSurface(localVideoSurface);
 
         localPanel = new JPanel();
         localPanel.setBorder(new TitledBorder("Local"));
@@ -210,7 +211,7 @@ public class ChatTest extends VlcjTest {
         remoteStreamControls.add(receiveSnapshotButton);
 
         remoteVideoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(remoteCanvas);
-        remoteMediaPlayer.setVideoSurface(remoteVideoSurface);
+        remoteMediaPlayer.videoSurface().setVideoSurface(remoteVideoSurface);
 
         remotePanel = new JPanel();
         remotePanel.setBorder(new TitledBorder("Remote"));
@@ -239,7 +240,7 @@ public class ChatTest extends VlcjTest {
         sendSnapshotButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                localMediaPlayer.saveSnapshot();
+                localMediaPlayer.snapshots().saveSnapshot();
             }
         });
 
@@ -253,7 +254,7 @@ public class ChatTest extends VlcjTest {
         receiveSnapshotButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                remoteMediaPlayer.saveSnapshot();
+                remoteMediaPlayer.snapshots().saveSnapshot();
             }
         });
     }
@@ -279,7 +280,7 @@ public class ChatTest extends VlcjTest {
 
                 String[] localOptions = {formatRtpStream(host, port), ":no-sout-rtp-sap", ":no-sout-standard-sap", ":sout-all", ":sout-keep",};
 
-                localMediaPlayer.playMedia(mrl, localOptions);
+                localMediaPlayer.media().playMedia(mrl, localOptions);
             }
             else {
                 JOptionPane.showMessageDialog(frame, "You must specify host:port to stream to.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -292,7 +293,7 @@ public class ChatTest extends VlcjTest {
 
     private void receive() {
         String mrl = streamFromTextField.getText();
-        remoteMediaPlayer.playMedia("rtp://@" + mrl);
+        remoteMediaPlayer.media().playMedia("rtp://@" + mrl);
     }
 
     private static String formatRtpStream(String serverAddress, int serverPort) {

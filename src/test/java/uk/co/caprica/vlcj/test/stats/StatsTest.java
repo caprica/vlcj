@@ -30,8 +30,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.MediaStatistics;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -75,6 +75,8 @@ public class StatsTest extends VlcjTest {
     private final JLabel sendBitRateValueLabel;
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+    private final MediaStatistics mediaStatistics = new MediaStatistics();
 
     public static void main(String[] args) {
         if(args.length != 1) {
@@ -185,8 +187,8 @@ public class StatsTest extends VlcjTest {
             @Override
             public void run() {
                 for(;;) {
-                    if(mediaPlayerComponent.getMediaPlayer().isPlaying()) {
-                        updateStats(mediaPlayerComponent.getMediaPlayer().getMediaStatistics());
+                    if(mediaPlayerComponent.getMediaPlayer().status().isPlaying()) {
+                        updateStats(mediaPlayerComponent.getMediaPlayer().statistics().getMediaStatistics(mediaStatistics));
                     }
                     try {
                         // Update statistics every second, choose more/less if you want
@@ -200,24 +202,24 @@ public class StatsTest extends VlcjTest {
     }
 
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
     }
 
-    private void updateStats(libvlc_media_stats_t stats) {
-        readBytesValueLabel.setText(String.valueOf(stats.i_read_bytes));
-        inputBitrateValueLabel.setText(String.valueOf(stats.f_input_bitrate));
-        demuxReadBytesValueLabel.setText(String.valueOf(stats.i_demux_read_bytes));
-        demuxBitrateValueLabel.setText(String.valueOf(stats.f_demux_bitrate));
-        demuxCorruptedValueLabel.setText(String.valueOf(stats.i_demux_corrupted));
-        demuxDiscontinuityValueLabel.setText(String.valueOf(stats.i_demux_discontinuity));
-        decodedVideoValueLabel.setText(String.valueOf(stats.i_decoded_video));
-        decodedAudioValueLabel.setText(String.valueOf(stats.i_decoded_audio));
-        displayedPicturesValueLabel.setText(String.valueOf(stats.i_displayed_pictures));
-        lostPicturesValueLabel.setText(String.valueOf(stats.i_lost_pictures));
-        playedABuffersValueLabel.setText(String.valueOf(stats.i_played_abuffers));
-        lostABuffersValueLabel.setText(String.valueOf(stats.i_lost_abuffers));
-        sentPacketsValueLabel.setText(String.valueOf(stats.i_sent_packets));
-        sentBytesValueLabel.setText(String.valueOf(stats.i_sent_bytes));
-        sendBitRateValueLabel.setText(String.valueOf(stats.f_send_bitrate));
+    private void updateStats(MediaStatistics stats) {
+        readBytesValueLabel.setText(String.valueOf(stats.inputBytesRead()));
+        inputBitrateValueLabel.setText(String.valueOf(stats.inputBitrate()));
+        demuxReadBytesValueLabel.setText(String.valueOf(stats.demuxBytesRead()));
+        demuxBitrateValueLabel.setText(String.valueOf(stats.demuxBitRate()));
+        demuxCorruptedValueLabel.setText(String.valueOf(stats.demuxCorrupted()));
+        demuxDiscontinuityValueLabel.setText(String.valueOf(stats.demuxDiscontinuity()));
+        decodedVideoValueLabel.setText(String.valueOf(stats.decodedVideo()));
+        decodedAudioValueLabel.setText(String.valueOf(stats.decodedAudio()));
+        displayedPicturesValueLabel.setText(String.valueOf(stats.picturesDisplayed()));
+        lostPicturesValueLabel.setText(String.valueOf(stats.picturesLost()));
+        playedABuffersValueLabel.setText(String.valueOf(stats.audioBuffersPlayed()));
+        lostABuffersValueLabel.setText(String.valueOf(stats.audioBuffersLost()));
+        sentPacketsValueLabel.setText(String.valueOf(stats.sentPackets()));
+        sentBytesValueLabel.setText(String.valueOf(stats.sentBytes()));
+        sendBitRateValueLabel.setText(String.valueOf(stats.sendBitrate()));
     }
 }

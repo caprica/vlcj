@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.test.minimalmp3;
 
 import uk.co.caprica.vlcj.component.AudioMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -51,7 +51,7 @@ public class Mp3Test extends VlcjTest {
         };
 
         // Play the MRL specified by the first command-line argument
-        audioPlayer.getMediaPlayer().playMedia(args[0]);
+        audioPlayer.getMediaPlayer().media().playMedia(args[0]);
         // Wait forever
         Thread.currentThread().join();
     }

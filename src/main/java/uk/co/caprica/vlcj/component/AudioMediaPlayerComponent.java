@@ -24,7 +24,7 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 
@@ -111,7 +111,7 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
         // Sub-class initialisation
         onAfterConstruct();
         // Register listeners
-        mediaPlayer.addMediaPlayerEventListener(this);
+        mediaPlayer.events().addMediaPlayerEventListener(this);
     }
 
     /**

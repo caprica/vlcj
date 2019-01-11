@@ -19,24 +19,12 @@
 
 package uk.co.caprica.vlcj.player.embedded;
 
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Window;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-
-import javax.swing.SwingUtilities;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.player.DefaultMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
+
+// FIXME remember we need to abstract out Canvas i think
+//  in the attach method it checks isVisible, that should probably go in the CanvasVideoSurface implementation, not in this class
 
 /**
  * Implementation of a media player that renders video to an embedded Canvas component.
@@ -76,46 +64,19 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements EmbeddedMediaPlayer {
 
     /**
-     * Log.
+     * Native library interface.
      */
-    private final Logger logger = LoggerFactory.getLogger(DefaultEmbeddedMediaPlayer.class);
+    protected final LibVlc libvlc;
 
     /**
-     * Full-screen strategy implementation, may be <code>null</code>.
+     * Libvlc instance.
      */
-    private FullScreenStrategy fullScreenStrategy;
+    protected final libvlc_instance_t libvlcInstance;
 
-    /**
-     * Listener implementation used to keep the overlay position and size in sync with the video
-     * surface.
-     */
-    private final OverlayComponentAdapter overlayComponentAdapter;
-
-    /**
-     * Listener implementation used to keep the overlay visibility state in sync with the video
-     * surface.
-     */
-    private final OverlayWindowAdapter overlayWindowAdapter;
-
-    /**
-     * Component to render the video to.
-     */
-    private CanvasVideoSurface videoSurface;
-
-    /**
-     * Optional overlay component.
-     */
-    private Window overlay;
-
-    /**
-     * Track the requested overlay enabled/disabled state so it can be restored when needed.
-     */
-    private boolean requestedOverlay;
-
-    /**
-     * Track whether or not the overlay should be restored when the video surface is shown/hidden.
-     */
-    private boolean restoreOverlay;
+    private final FullScreenService   fullScreenService;
+    private final InputService        inputService;
+    private final OverlayService      overlayService;
+    private final VideoSurfaceService videoSurfaceService;
 
     /**
      * Create a new media player.
@@ -126,289 +87,48 @@ public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements Em
      * @param instance libvlc instance
      */
     public DefaultEmbeddedMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
-        this(libvlc, instance, null);
-    }
-
-    /**
-     * Create a new media player.
-     *
-     * @param libvlc native interface
-     * @param instance libvlc instance
-     * @param fullScreenStrategy full-screen strategy implementation
-     */
-    public DefaultEmbeddedMediaPlayer(LibVlc libvlc, libvlc_instance_t instance, FullScreenStrategy fullScreenStrategy) {
         super(libvlc, instance);
-        this.fullScreenStrategy = fullScreenStrategy;
-        this.overlayComponentAdapter = new OverlayComponentAdapter();
-        this.overlayWindowAdapter = new OverlayWindowAdapter();
+
+        this.libvlc = libvlc;
+        this.libvlcInstance = instance;
+
+        this.fullScreenService   = new FullScreenService  (this);
+        this.inputService        = new InputService       (this);
+        this.overlayService      = new OverlayService     (this);
+        this.videoSurfaceService = new VideoSurfaceService(this);
     }
 
     @Override
-    public void setVideoSurface(CanvasVideoSurface videoSurface) {
-        logger.debug("setVideoSurface(videoSurface={})", videoSurface);
-        // Keep a hard reference to the video surface component
-        this.videoSurface = videoSurface;
-        // The video surface is not actually attached to the media player until the
-        // media is played
+    public FullScreenService fullScreen() { // FIXME or fullscreen ?
+        return fullScreenService;
     }
 
     @Override
-    public void attachVideoSurface() {
-        logger.debug("attachVideoSurface()");
-        if(videoSurface != null) {
-            // The canvas component must be visible at this point otherwise the call
-            // to the native library will fail
-            if(videoSurface.canvas().isVisible()) {
-                videoSurface.attach(libvlc, this);
-            }
-            else {
-                // This is an error
-                throw new IllegalStateException("The video surface is not visible");
-            }
-        }
-        else {
-            // This is not necessarily an error
-            logger.debug("Can't attach video surface since no video surface has been set");
-        }
+    public InputService input() {
+        return inputService;
     }
 
     @Override
-    public void setFullScreenStrategy(FullScreenStrategy fullScreenStrategy) {
-        logger.debug("setFullScreenStrategy(fullScreenStrategy={})", fullScreenStrategy);
-        this.fullScreenStrategy = fullScreenStrategy;
+    public OverlayService overlay() {
+        return overlayService;
     }
 
     @Override
-    public void toggleFullScreen() {
-        logger.debug("toggleFullScreen()");
-        if(fullScreenStrategy != null) {
-            setFullScreen(!fullScreenStrategy.isFullScreenMode());
-        }
-    }
-
-    @Override
-    public void setFullScreen(boolean fullScreen) {
-        logger.debug("setFullScreen(fullScreen={})", fullScreen);
-        if(fullScreenStrategy != null) {
-            if(fullScreen) {
-                fullScreenStrategy.enterFullScreenMode();
-            }
-            else {
-                fullScreenStrategy.exitFullScreenMode();
-            }
-        }
-    }
-
-    @Override
-    public boolean isFullScreen() {
-        logger.debug("isFullScreen()");
-        if(fullScreenStrategy != null) {
-            return fullScreenStrategy.isFullScreenMode();
-        }
-        else {
-            return false;
-        }
-    }
-
-    @Override
-    public BufferedImage getVideoSurfaceContents() {
-        logger.debug("getVideoSurfaceContents()");
-        try {
-            Rectangle bounds = videoSurface.canvas().getBounds();
-            bounds.setLocation(videoSurface.canvas().getLocationOnScreen());
-            return new Robot().createScreenCapture(bounds);
-        }
-        catch(Exception e) {
-            throw new RuntimeException("Failed to get video surface contents", e);
-        }
-    }
-
-    @Override
-    public Window getOverlay() {
-        logger.debug("getOverlay()");
-        return overlay;
-    }
-
-    @Override
-    public void setOverlay(Window overlay) {
-        logger.debug("setOverlay(overlay={})", overlay);
-        if(videoSurface != null) {
-            // Disable the current overlay if there is one
-            enableOverlay(false);
-            // Remove the existing overlay if there is one
-            removeOverlay();
-            // Add the new overlay, but do not enable it
-            addOverlay(overlay);
-        }
-        else {
-            throw new IllegalStateException("Can't set an overlay when there's no video surface");
-        }
-    }
-
-    @Override
-    public void enableOverlay(boolean enable) {
-        logger.debug("enableOverlay(enable={})", enable);
-        requestedOverlay = enable;
-        if(overlay != null) {
-            if(enable) {
-                if(!overlay.isVisible()) {
-                    overlay.setLocation(videoSurface.canvas().getLocationOnScreen());
-                    overlay.setSize(videoSurface.canvas().getSize());
-                    Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface.canvas());
-                    window.addComponentListener(overlayComponentAdapter);
-                    overlay.setVisible(true);
-                }
-            }
-            else {
-                if(overlay.isVisible()) {
-                    overlay.setVisible(false);
-                    Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface.canvas());
-                    window.removeComponentListener(overlayComponentAdapter);
-                }
-            }
-        }
-    }
-
-    @Override
-    public boolean overlayEnabled() {
-        logger.debug("overlayEnabled()");
-        return overlay != null && overlay.isVisible();
-    }
-
-    @Override
-    public void setEnableMouseInputHandling(boolean enable) {
-        logger.debug("setEnableMouseInputHandling(enable={})", enable);
-        libvlc.libvlc_video_set_mouse_input(mediaPlayerInstance(), enable ? 1 : 0);
-    }
-
-    @Override
-    public void setEnableKeyInputHandling(boolean enable) {
-        logger.debug("setEnableKeyInputHandling(enable={})", enable);
-        libvlc.libvlc_video_set_key_input(mediaPlayerInstance(), enable ? 1 : 0);
-    }
-
-    /**
-     * Install an overlay component.
-     *
-     * @param overlay overlay window
-     */
-    private void addOverlay(Window overlay) {
-        logger.debug("addOverlay(overlay={})", overlay);
-        if(overlay != null) {
-            this.overlay = overlay;
-            Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface.canvas());
-            if(window != null) {
-                window.addWindowListener(overlayWindowAdapter);
-            }
-            else {
-                // This should not be possible
-                logger.warn("Failed to find a Window ancestor for the video surface Canvas");
-            }
-        }
-    }
-
-    /**
-     * Remove the overlay component.
-     *
-     * @param overlay overlay window
-     */
-    private void removeOverlay() {
-        logger.debug("removeOverlay()");
-        if(overlay != null) {
-            Window window = (Window)SwingUtilities.getAncestorOfClass(Window.class, videoSurface.canvas());
-            window.removeWindowListener(overlayWindowAdapter);
-            overlay = null;
-        }
+    public VideoSurfaceService videoSurface() {
+        return videoSurfaceService;
     }
 
     @Override
     protected final void onBeforePlay() {
-        logger.debug("onBeforePlay()");
-        attachVideoSurface();
+        videoSurface().attachVideoSurface();
     }
 
-    /**
-     * Component event listener to keep the overlay component in sync with the video surface
-     * component.
-     */
-    private final class OverlayComponentAdapter extends ComponentAdapter {
-
-        @Override
-        public void componentResized(ComponentEvent e) {
-            logger.trace("componentResized(e={})", e);
-            overlay.setSize(videoSurface.canvas().getSize());
-        }
-
-        @Override
-        public void componentMoved(ComponentEvent e) {
-            logger.trace("componentMoved(e={})", e);
-            overlay.setLocation(videoSurface.canvas().getLocationOnScreen());
-        }
-
-        @Override
-        public void componentShown(ComponentEvent e) {
-            logger.trace("componentShown(e={})", e);
-            showOverlay();
-        }
-
-        @Override
-        public void componentHidden(ComponentEvent e) {
-            logger.trace("componentHidden(e={})", e);
-            hideOverlay();
-        }
+    @Override
+    protected void onBeforeRelease() {
+        fullScreenService  .release();
+        inputService       .release();
+        overlayService     .release();
+        videoSurfaceService.release();
     }
 
-    /**
-     * Window event listener to hide the overlay when the video window is hidden, and vice versa.
-     */
-    private final class OverlayWindowAdapter extends WindowAdapter {
-
-        @Override
-        public void windowIconified(WindowEvent e) {
-            logger.trace("windowIconified(e={})", e);
-            // Nothing, this is taken care of by "windowDeactivated"
-        }
-
-        @Override
-        public void windowDeiconified(WindowEvent e) {
-            logger.trace("windowDeiconified(e={})", e);
-            showOverlay();
-        }
-
-        @Override
-        public void windowDeactivated(WindowEvent e) {
-            logger.trace("windowDeactivated(e={})", e);
-            hideOverlay();
-        }
-
-        @Override
-        public void windowActivated(WindowEvent e) {
-            logger.trace("windowActivated(e={})", e);
-            showOverlay();
-        }
-    }
-
-    /**
-     * Make the overlay visible.
-     */
-    private void showOverlay() {
-        logger.trace("showOverlay()");
-        if(restoreOverlay) {
-            enableOverlay(true);
-        }
-    }
-
-    /**
-     * Hide the overlay.
-     */
-    private void hideOverlay() {
-        logger.trace("hideOverlay()");
-        if(requestedOverlay) {
-            restoreOverlay = true;
-            enableOverlay(false);
-        }
-        else {
-            restoreOverlay = false;
-        }
-    }
 }

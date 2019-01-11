@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
@@ -112,7 +112,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
         mediaPlayerFactory = onGetMediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.mediaPlayers().newDirectMediaPlayer(bufferFormatCallback, onGetRenderCallback());
         // Register listeners
-        mediaPlayer.addMediaPlayerEventListener(this);
+        mediaPlayer.events().addMediaPlayerEventListener(this);
         // Sub-class initialisation
         onAfterConstruct();
     }
@@ -248,7 +248,7 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     // === MediaPlayerEventListener =============================================
 
     @Override
-    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media, String mrl) {
+    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
     }
 
     @Override

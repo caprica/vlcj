@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  */
+// FIXME unused
 class LoggingProxy implements InvocationHandler {
 
     /**

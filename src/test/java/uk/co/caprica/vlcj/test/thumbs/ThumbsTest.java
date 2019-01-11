@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.test.thumbs;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -52,7 +52,7 @@ public class ThumbsTest extends VlcjTest {
         "--no-audio",               /* we don't want audio (decoding) */
         "--no-osd",
         "--no-spu",
-        "--no-stats",               /* no stats */
+        "--no-statistics",               /* no statistics */
         "--no-sub-autodetect-file", /* we don't want subtitles */
         "--no-inhibit",             /* we don't want interfaces */
         "--no-disable-screensaver", /* we don't want interfaces */
@@ -77,7 +77,7 @@ public class ThumbsTest extends VlcjTest {
         final CountDownLatch inPositionLatch = new CountDownLatch(1);
         final CountDownLatch snapshotTakenLatch = new CountDownLatch(1);
 
-        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 
             @Override
             public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
@@ -93,14 +93,14 @@ public class ThumbsTest extends VlcjTest {
             }
         });
 
-        if(mediaPlayer.startMedia(mrl)) {
-            mediaPlayer.setPosition(VLC_THUMBNAIL_POSITION);
+        if(mediaPlayer.media().startMedia(mrl)) {
+            mediaPlayer.controls().setPosition(VLC_THUMBNAIL_POSITION);
             inPositionLatch.await(); // Might wait forever if error
 
-            mediaPlayer.saveSnapshot(snapshotFile, imageWidth, 0);
+            mediaPlayer.snapshots().saveSnapshot(snapshotFile, imageWidth, 0);
             snapshotTakenLatch.await(); // Might wait forever if error
 
-            mediaPlayer.stop();
+            mediaPlayer.controls().stop();
         }
 
         mediaPlayer.release();

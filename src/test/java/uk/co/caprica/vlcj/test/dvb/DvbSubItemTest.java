@@ -19,13 +19,13 @@
 
 package uk.co.caprica.vlcj.test.dvb;
 
-import java.util.List;
-
-import uk.co.caprica.vlcj.player.MediaMeta;
-import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.MediaMeta;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import java.util.List;
 
 /**
  * A simple test to dump out a DVB play-list from a channels.conf file.
@@ -43,25 +43,25 @@ public class DvbSubItemTest extends VlcjTest {
         final MediaPlayerFactory factory = new MediaPlayerFactory();
         final MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
 
-        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void finished(MediaPlayer mediaPlayer) {
-                int subItemCount = mediaPlayer.subItemCount();
+                int subItemCount = mediaPlayer.subItems().subItemCount();
                 System.out.println("subItemCount=" + subItemCount);
 
                 System.out.println("Getting sub-items...");
 
-                List<String> subItems = mediaPlayer.subItems();
+                List<String> subItems = mediaPlayer.subItems().subItems();
                 for(String subItem : subItems) {
                     System.out.println(subItem);
                 }
 
                 System.out.println("Getting sub-item meta data...");
 
-                List<MediaMeta> metas = mediaPlayer.getSubItemMediaMeta();
-                for(MediaMeta meta : metas) {
-                    System.out.println("title -> " + meta.getTitle());
-                }
+//                List<MediaMeta> metas = mediaPlayer.getSubItemMediaMeta();
+//                for(MediaMeta meta : metas) {
+//                    System.out.println("title -> " + meta.getTitle());
+//                } FIXME
 
                 System.out.println("Done.");
 
@@ -71,7 +71,7 @@ public class DvbSubItemTest extends VlcjTest {
             }
         });
 
-        mediaPlayer.playMedia(args[0]);
+        mediaPlayer.media().playMedia(args[0]);
 
         Thread.currentThread().join();
     }

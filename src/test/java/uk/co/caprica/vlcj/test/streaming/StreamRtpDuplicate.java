@@ -28,6 +28,7 @@ import javax.swing.JFrame;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -57,8 +58,8 @@ public class StreamRtpDuplicate extends VlcjTest {
 
         Canvas canvas = new Canvas();
         canvas.setBackground(Color.black);
-        CanvasVideoSurface videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
-        mediaPlayer.setVideoSurface(videoSurface);
+        VideoSurface videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
+        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
 
         JFrame f = new JFrame("vlcj duplicate output test");
         f.setIconImage(new ImageIcon(StreamRtpDuplicate.class.getResource("/icons/vlcj-logo.png")).getImage());
@@ -67,7 +68,7 @@ public class StreamRtpDuplicate extends VlcjTest {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
 
-        mediaPlayer.playMedia(media,
+        mediaPlayer.media().playMedia(media,
             options,
             ":no-sout-rtp-sap",
             ":no-sout-standard-sap",

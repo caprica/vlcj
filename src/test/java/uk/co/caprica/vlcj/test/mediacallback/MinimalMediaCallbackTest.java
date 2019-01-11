@@ -60,7 +60,7 @@ public class MinimalMediaCallbackTest extends VlcjTest {
 
         Media media = new RandomAccessFileMedia(new File(args[0]));
 
-        mediaPlayerComponent.getMediaPlayer().playMedia(media);
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(media);
 
         Thread.currentThread().join();
     }

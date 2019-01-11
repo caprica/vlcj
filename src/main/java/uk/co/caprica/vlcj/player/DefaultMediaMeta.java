@@ -42,7 +42,7 @@ import uk.co.caprica.vlcj.version.Version;
  * Invoking {@link #getArtworkUrl()}, {@link #getArtwork()} or {@link #toString()} may cause an
  * HTTP request to be made to download artwork.
  */
-class DefaultMediaMeta implements MediaMeta {
+public class DefaultMediaMeta implements MediaMeta {
 
     /**
      * Log.
@@ -94,7 +94,8 @@ class DefaultMediaMeta implements MediaMeta {
      * @param libvlc native library instance
      * @param media media instance
      */
-    DefaultMediaMeta(LibVlc libvlc, libvlc_media_t media) {
+    // FIXME really don't want this public (due to packages, damn...)
+    public DefaultMediaMeta(LibVlc libvlc, libvlc_media_t media) {
         this.libvlc = libvlc;
         this.media = media;
         this.actualVersion = new Version(libvlc.libvlc_get_version());

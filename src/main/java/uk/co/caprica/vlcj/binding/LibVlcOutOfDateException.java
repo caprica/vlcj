@@ -24,6 +24,7 @@ import uk.co.caprica.vlcj.version.Version;
 /**
  * Exception thrown when the detected run-time version of LibVLC is too old.
  */
+// FIXME unused
 public class LibVlcOutOfDateException extends RuntimeException {
 
     /**

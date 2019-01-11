@@ -45,6 +45,7 @@ import javax.swing.border.LineBorder;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -88,7 +89,7 @@ public class CropTest extends VlcjTest {
 
     private MediaPlayerFactory factory;
     private EmbeddedMediaPlayer mediaPlayer;
-    private CanvasVideoSurface videoSurface;
+    private VideoSurface videoSurface;
 
     private JFrame frame;
     private JPanel contentPane;
@@ -138,7 +139,7 @@ public class CropTest extends VlcjTest {
 
         videoSurface = factory.videoSurfaces().newVideoSurface(videoCanvas);
 
-        mediaPlayer.setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
 
         standardCropLabel = new JLabel("Standard Crop:");
         standardCropLabel.setDisplayedMnemonic('s');
@@ -199,7 +200,7 @@ public class CropTest extends VlcjTest {
                 Object selectedItem = standardCropComboBox.getSelectedItem();
                 if(selectedItem != null) {
                     String[] value = (String[])selectedItem;
-                    mediaPlayer.setCropGeometry(value[1]);
+                    mediaPlayer.video().setCropGeometry(value[1]);
                 }
             }
         });
@@ -208,20 +209,20 @@ public class CropTest extends VlcjTest {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String value = customCropTextField.getText();
-                mediaPlayer.setCropGeometry(value);
+                mediaPlayer.video().setCropGeometry(value);
             }
         });
 
         pauseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.pause();
+                mediaPlayer.controls().pause();
             }
         });
     }
 
     private void start(String mrl) {
         frame.setVisible(true);
-        mediaPlayer.playMedia(mrl);
+        mediaPlayer.media().playMedia(mrl);
     }
 }

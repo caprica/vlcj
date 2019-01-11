@@ -115,11 +115,11 @@ public class DirectTestPlayer extends VlcjTest {
 
         factory = new MediaPlayerFactory(args);
         mediaPlayer = factory.mediaPlayers().newDirectMediaPlayer(new TestBufferFormatCallback(), new TestRenderCallback());
-        mediaPlayer.playMedia(media);
+        mediaPlayer.media().playMedia(media);
 
         // Just to show regular media player functions still work...
         Thread.sleep(5000);
-        mediaPlayer.nextChapter();
+        mediaPlayer.chapters().nextChapter();
     }
 
     public static void main(String[] args) throws InterruptedException, InvocationTargetException {

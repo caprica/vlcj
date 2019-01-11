@@ -3,8 +3,8 @@
  *
  * VLCJ is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * the Free Software Foundation, either actualVersion 3 of the License, or
+ * (at your option) any later actualVersion.
  *
  * VLCJ is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,42 +22,48 @@ package uk.co.caprica.vlcj.version;
 import uk.co.caprica.vlcj.binding.LibVlc;
 
 /**
- * Holder for run-time libvlc version information.
+ * Holder for run-time libvlc actualVersion information.
  */
 public final class LibVlcVersion {
 
     /**
-     * Run-time version of vlc/libvlc.
-     */
-    private static final Version VERSION = new Version(LibVlc.INSTANCE.libvlc_get_version());
-
-    /**
      * LibVlc 3.0.0 API baseline.
      */
-    public static final Version LIBVLC_300 = new Version("3.0.0");
+    public static final Version requiredVersion = new Version("3.0.0");
+
+    /**
+     * Run-time actualVersion of vlc/libvlc.
+     */
+    private final Version actualVersion;
+
+    /**
+     *
+     */
+    private final String changeset;
 
     /**
      * Prevent direct instantiation by others.
      */
-    private LibVlcVersion() {
+    public LibVlcVersion(LibVlc libvlc) {
+        this.actualVersion = new Version(libvlc.libvlc_get_version());
+        this.changeset = libvlc.libvlc_get_changeset();
     }
 
     /**
-     * Is the run-time version of VLC the minimum supported version?
      *
-     * @return <code>true</code> if supported; otherwise <code>false</code>
+     * @return
      */
-    public static boolean isSupported() {
-        return VERSION.atLeast(LIBVLC_300);
+    public Version getRequiredVersion() {
+        return requiredVersion;
     }
 
     /**
-     * Get the run-time version.
+     * Get the run-time actualVersion.
      *
-     * @return vlc/libvlc version
+     * @return vlc/libvlc actualVersion
      */
-    public static Version getVersion() {
-        return VERSION;
+    public Version getVersion() {
+        return actualVersion;
     }
 
     /**
@@ -65,7 +71,17 @@ public final class LibVlcVersion {
      *
      * @return changeset
      */
-    public static String getChangeset() {
-        return LibVlc.INSTANCE.libvlc_get_changeset();
+    public String getChangeset() {
+        return changeset;
     }
+
+    /**
+     * Is the run-time actualVersion of VLC the minimum supported actualVersion?
+     *
+     * @return <code>true</code> if supported; otherwise <code>false</code>
+     */
+    public boolean isSupported() {
+        return actualVersion.atLeast(requiredVersion);
+    }
+
 }

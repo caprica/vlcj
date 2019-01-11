@@ -43,7 +43,7 @@ public class StreamRtsp extends VlcjTest {
 
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(args);
         HeadlessMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newHeadlessMediaPlayer();
-        mediaPlayer.playMedia(media,
+        mediaPlayer.media().playMedia(media,
             options,
             ":no-sout-rtp-sap",
             ":no-sout-standard-sap",

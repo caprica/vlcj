@@ -15,8 +15,6 @@ import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 import uk.co.caprica.vlcj.player.list.DefaultMediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
-// e.g. return factory.created(someobjecthatimplementsrelease);
-
 public final class MediaPlayerService extends BaseService {
 
     MediaPlayerService(MediaPlayerFactory factory) {
@@ -33,17 +31,7 @@ public final class MediaPlayerService extends BaseService {
      * @return media player instance
      */
     public EmbeddedMediaPlayer newEmbeddedMediaPlayer() {
-        return newEmbeddedMediaPlayer(null);
-    }
-
-    /**
-     * Create a new embedded media player.
-     *
-     * @param fullScreenStrategy full screen implementation, may be <code>null</code>
-     * @return media player instance
-     */
-    public EmbeddedMediaPlayer newEmbeddedMediaPlayer(FullScreenStrategy fullScreenStrategy) {
-        return new DefaultEmbeddedMediaPlayer(libvlc, instance, fullScreenStrategy);
+        return new DefaultEmbeddedMediaPlayer(libvlc, instance);
     }
 
     /**

@@ -16,16 +16,9 @@ public final class ModuleService extends BaseService {
      * Get the available audio filters.
      *
      * @return collection of audio filter descriptions
-     *
-     * @since libvlc 2.0.0
      */
     public List<ModuleDescription> audioFilters() {
         libvlc_module_description_t moduleDescriptions = libvlc.libvlc_audio_filter_list_get(instance);
-        // Without disabling auto synch on this JNA structure a fatal crash will
-        // intermittently occur when the release call is made - this is the only
-        // time (filters) in all of the vlcj bindings that this is required and I
-        // do not understand why it is needed only in this case
-        moduleDescriptions.setAutoSynch(false);
         List<ModuleDescription> result = getModuleDescriptions(moduleDescriptions);
         libvlc.libvlc_module_description_list_release(moduleDescriptions);
         return result;
@@ -35,16 +28,9 @@ public final class ModuleService extends BaseService {
      * Get the available video filters.
      *
      * @return collection of video filter descriptions
-     *
-     * @since libvlc 2.0.0
      */
     public List<ModuleDescription> videoFilters() {
         libvlc_module_description_t moduleDescriptions = libvlc.libvlc_video_filter_list_get(instance);
-        // Without disabling auto synch on this JNA structure a fatal crash will
-        // intermittently occur when the release call is made - this is the only
-        // time (filters) in all of the vlcj bindings that this is required and I
-        // do not understand why it is needed only in this case
-        moduleDescriptions.setAutoSynch(false);
         List<ModuleDescription> result = getModuleDescriptions(moduleDescriptions);
         libvlc.libvlc_module_description_list_release(moduleDescriptions);
         return result;

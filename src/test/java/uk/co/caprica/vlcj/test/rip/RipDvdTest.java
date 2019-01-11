@@ -23,7 +23,7 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
@@ -108,7 +108,7 @@ public class RipDvdTest extends VlcjTest {
 
         final MediaPlayerFactory factory = new MediaPlayerFactory();
         final HeadlessMediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
-        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             DecimalFormat df = new DecimalFormat("0.00");
 
             @Override
@@ -153,8 +153,8 @@ public class RipDvdTest extends VlcjTest {
         System.out.println("          MRL: " + mrl);
         System.out.println("Media Options: " + mediaOptions);
 
-        mediaPlayer.prepareMedia(mrl, mediaOptions);
-        boolean started = mediaPlayer.start();
+        mediaPlayer.media().prepareMedia(mrl, mediaOptions);
+        boolean started = mediaPlayer.controls().start();
         if(!started) {
             System.out.println("Failed to start");
             System.exit(1);

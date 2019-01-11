@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.direct;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import com.sun.jna.Memory;
 

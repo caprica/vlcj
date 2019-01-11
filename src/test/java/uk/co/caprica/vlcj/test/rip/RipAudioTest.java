@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.rip;
 
 import java.util.concurrent.CountDownLatch;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -60,7 +60,7 @@ public class RipAudioTest extends VlcjTest {
         // Create the media player
         mediaPlayerFactory = new MediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.mediaPlayers().newHeadlessMediaPlayer();
-        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void finished(MediaPlayer mediaPlayer) {
                 System.out.println("Rip completed successfully");
@@ -82,7 +82,7 @@ public class RipAudioTest extends VlcjTest {
         // encoding results you want. Of course "dummy" is not a real video codec
         // but specifying it here prevents any video output being created (there
         // may be a better way)
-        mediaPlayer.playMedia(args[0], "sout=#transcode{acodec=mp3,channels=2,ab=192,samplerate=44100,vcodec=dummy}:standard{dst=" + args[1] + ",mux=raw,access=file}");
+        mediaPlayer.media().playMedia(args[0], "sout=#transcode{acodec=mp3,channels=2,ab=192,samplerate=44100,vcodec=dummy}:standard{dst=" + args[1] + ",mux=raw,access=file}");
 
         try {
             // Wait here until finished or error

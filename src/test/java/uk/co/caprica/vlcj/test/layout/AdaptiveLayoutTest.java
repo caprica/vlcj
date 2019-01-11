@@ -49,7 +49,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -155,7 +155,7 @@ public class AdaptiveLayoutTest extends VlcjTest {
         frame.setVisible(true);
 
         for(int i = 0; i < videoPanes.size() && i < mrls.length; i++) {
-            videoPanes.get(i).mediaPlayer().startMedia(mrls[i]);
+            videoPanes.get(i).mediaPlayer().media().startMedia(mrls[i]);
         }
     }
 
@@ -207,7 +207,7 @@ public class AdaptiveLayoutTest extends VlcjTest {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if(e.getButton() == MouseEvent.BUTTON3) {
-                        mediaPlayer.getMediaPlayer().skip(10000);
+                        mediaPlayer.getMediaPlayer().controls().skip(10000);
                     }
                     else {
                         layoutManager.focus(VideoPane.this.id);

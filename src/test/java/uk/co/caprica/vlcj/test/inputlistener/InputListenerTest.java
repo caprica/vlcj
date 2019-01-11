@@ -91,8 +91,8 @@ public class InputListenerTest extends VlcjTest {
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
 
         // You *must* do this...
-        mediaPlayerComponent.getMediaPlayer().setEnableKeyInputHandling(false);
-        mediaPlayerComponent.getMediaPlayer().setEnableMouseInputHandling(false);
+        mediaPlayerComponent.getMediaPlayer().input().setEnableKeyInputHandling(false);
+        mediaPlayerComponent.getMediaPlayer().input().setEnableMouseInputHandling(false);
 
         // Add regular Java listeners, no native hook or global event listener shenanigans...
         MouseHandler mouseHandler = new MouseHandler();
@@ -123,7 +123,7 @@ public class InputListenerTest extends VlcjTest {
     }
 
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
     }
 
     private class MouseHandler extends MouseAdapter {

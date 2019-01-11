@@ -113,7 +113,7 @@ public class ScriptTest extends VlcjTest {
         mediaPlayerFactory = new MediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
 
-        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventHandler());
+        mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventHandler());
 
         equalizer = mediaPlayerFactory.newEqualizer();
         presets = mediaPlayerFactory.getAllPresetEqualizers();

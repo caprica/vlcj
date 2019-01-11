@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_log_level_e;
 import uk.co.caprica.vlcj.component.AudioMediaPlayerComponent;
 import uk.co.caprica.vlcj.log.LogEventListener;
 import uk.co.caprica.vlcj.log.NativeLog;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -66,7 +66,7 @@ public class NativeLogTest extends VlcjTest {
             }
         });
 
-        mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        mediaPlayerComponent.getMediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void finished(MediaPlayer mediaPlayer) {
                 latch.countDown();
@@ -78,7 +78,7 @@ public class NativeLogTest extends VlcjTest {
             }
         });
 
-        mediaPlayerComponent.getMediaPlayer().playMedia(args[0]);
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(args[0]);
 
         // Wait for finished/error
         latch.await();

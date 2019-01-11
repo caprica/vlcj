@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player.condition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Default implementation of a media player condition that triggers if the media

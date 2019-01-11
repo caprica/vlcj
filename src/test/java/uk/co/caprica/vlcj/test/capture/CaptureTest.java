@@ -35,6 +35,7 @@ import javax.swing.SwingUtilities;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -76,7 +77,7 @@ public class CaptureTest extends VlcjTest {
     private final Canvas canvas;
     private final MediaPlayerFactory factory;
     private final EmbeddedMediaPlayer mediaPlayer;
-    private final CanvasVideoSurface videoSurface;
+    private final VideoSurface videoSurface;
 
     public static void main(final String[] args) {
         if(args.length != 1) {
@@ -113,7 +114,7 @@ public class CaptureTest extends VlcjTest {
 
         videoSurface = factory.videoSurfaces().newVideoSurface(canvas);
 
-        mediaPlayer.setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
     }
 
     private void start(String mrl) {
@@ -131,6 +132,6 @@ public class CaptureTest extends VlcjTest {
         // capture device (ALSA is not likely to work on Windows of course)
         String[] options = {":sout=#transcode{vcodec=mp4v,vb=4096,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=file{dst=" + fileName + "},dst=display}", ":input-slave=alsa://hw:0,0"};
 
-        mediaPlayer.playMedia(mrl, options);
+        mediaPlayer.media().playMedia(mrl, options);
     }
 }

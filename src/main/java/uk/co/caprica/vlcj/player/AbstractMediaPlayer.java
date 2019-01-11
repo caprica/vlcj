@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 
+// FIXME this class is redundant and should be removed
 /**
  * Base implementation for media players sharing common behaviours.
  */
@@ -56,11 +57,4 @@ public abstract class AbstractMediaPlayer {
         this.instance = instance;
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        logger.debug("finalize()");
-        logger.debug("Media player has been garbage collected");
-        super.finalize();
-        // FIXME should this invoke release()?
-    }
 }

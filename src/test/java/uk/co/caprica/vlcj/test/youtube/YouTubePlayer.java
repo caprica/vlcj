@@ -39,7 +39,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -148,11 +148,11 @@ public class YouTubePlayer extends VlcjTest {
         factory = new MediaPlayerFactory();
 
         mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.setVideoSurface(factory.videoSurfaces().newVideoSurface(vs));
+        mediaPlayer.videoSurface().setVideoSurface(factory.videoSurfaces().newVideoSurface(vs));
 
-        mediaPlayer.setPlaySubItems(true); // <--- This is very important for YouTube media
+        mediaPlayer.subItems().setPlaySubItems(true); // <--- This is very important for YouTube media
 
-        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void buffering(MediaPlayer mediaPlayer, float newCache) {
                 System.out.println("Buffering " + newCache);
@@ -160,8 +160,8 @@ public class YouTubePlayer extends VlcjTest {
 
             @Override
             public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-                List<String> items = mediaPlayer.subItems();
-                System.out.println(items);
+                 List<String> items = mediaPlayer.subItems().subItems();
+                 System.out.println(items);
             }
         });
     }
@@ -172,11 +172,11 @@ public class YouTubePlayer extends VlcjTest {
 
     private void play() {
         String mrl = urlTextField.getText();
-        mediaPlayer.playMedia(mrl);
+        mediaPlayer.media().playMedia(mrl);
     }
 
     private void exit(int value) {
-        mediaPlayer.stop();
+        mediaPlayer.controls().stop();
         mediaPlayer.release();
         factory.release();
         System.exit(value);

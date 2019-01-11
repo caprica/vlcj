@@ -19,15 +19,18 @@
 
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
-import java.awt.Canvas;
+import java.awt.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import com.sun.jna.Native;
+
+// FIXME can this just be java.awt.Component... then it would work for Window, also Button ! !?
+// FIXME obsolete, remove it
 
 /**
  * Encapsulation of a video surface that uses a Canvas.
@@ -65,7 +68,7 @@ public class CanvasVideoSurface extends VideoSurface {
      *
      * @return canvas
      */
-    public final Canvas canvas() {
+    public final Component canvas() {
         return canvas;
     }
 

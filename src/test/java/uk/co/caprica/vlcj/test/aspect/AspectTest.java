@@ -45,6 +45,7 @@ import javax.swing.border.LineBorder;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -86,7 +87,7 @@ public class AspectTest extends VlcjTest {
 
     private MediaPlayerFactory factory;
     private EmbeddedMediaPlayer mediaPlayer;
-    private CanvasVideoSurface videoSurface;
+    private VideoSurface videoSurface;
 
     private JFrame frame;
     private JPanel contentPane;
@@ -136,7 +137,7 @@ public class AspectTest extends VlcjTest {
 
         videoSurface = factory.videoSurfaces().newVideoSurface(videoCanvas);
 
-        mediaPlayer.setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
 
         standardAspectLabel = new JLabel("Standard Aspect:");
         standardAspectLabel.setDisplayedMnemonic('s');
@@ -197,7 +198,7 @@ public class AspectTest extends VlcjTest {
                 Object selectedItem = standardAspectComboBox.getSelectedItem();
                 if(selectedItem != null) {
                     String[] value = (String[])selectedItem;
-                    mediaPlayer.setAspectRatio(value[1]);
+                    mediaPlayer.video().setAspectRatio(value[1]);
                 }
             }
         });
@@ -206,14 +207,14 @@ public class AspectTest extends VlcjTest {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String value = customAspectTextField.getText();
-                mediaPlayer.setAspectRatio(value);
+                mediaPlayer.video().setAspectRatio(value);
             }
         });
 
         pauseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.pause();
+                mediaPlayer.controls().pause();
             }
         });
     }
@@ -221,6 +222,6 @@ public class AspectTest extends VlcjTest {
     private void start(String mrl) {
         frame.setVisible(true);
 
-        mediaPlayer.playMedia(mrl);
+        mediaPlayer.media().playMedia(mrl);
     }
 }

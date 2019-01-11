@@ -28,7 +28,7 @@ import uk.co.caprica.vlcj.binding.internal.media_meta_changed;
 import uk.co.caprica.vlcj.binding.internal.media_parsed_changed;
 import uk.co.caprica.vlcj.binding.internal.media_state_changed;
 import uk.co.caprica.vlcj.binding.internal.media_subitem_added;
-import uk.co.caprica.vlcj.player.events.MediaPlayerEventType;
+import uk.co.caprica.vlcj.player.events.standard.MediaPlayerEventType;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 /**
