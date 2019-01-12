@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_multiview_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_orient_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_projection_e;
 
@@ -93,6 +94,16 @@ public class VideoTrackInfo extends TrackInfo {
     private final float fov;
 
     /**
+     *
+     */
+    private final float zoom;
+
+    /**
+     *
+     */
+    private final libvlc_video_multiview_e multiview;
+
+    /**
      * Create a new video track info.
      *
      * @param codec video codec
@@ -115,9 +126,10 @@ public class VideoTrackInfo extends TrackInfo {
      * @param pitch pitch (degrees)
      * @param roll roll (degrees)
      * @param fov field of view (degrees)
+     * @param multiview
      * @param codecDescription codec description
      */
-    public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, libvlc_video_orient_e orientation, libvlc_video_projection_e projection, float yaw, float pitch, float roll, float fov, String codecDescription) {
+    public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, libvlc_video_orient_e orientation, libvlc_video_projection_e projection, float yaw, float pitch, float roll, float fov, float zoom, libvlc_video_multiview_e multiview, String codecDescription) {
         super(codec, originalCodec, id, profile, level, bitRate, language, description, codecDescription);
         this.width = width;
         this.height = height;
@@ -131,6 +143,8 @@ public class VideoTrackInfo extends TrackInfo {
         this.pitch = pitch;
         this.roll = roll;
         this.fov = fov;
+        this.zoom = zoom;
+        this.multiview = multiview;
     }
 
     /**
@@ -247,6 +261,24 @@ public class VideoTrackInfo extends TrackInfo {
         return fov;
     }
 
+    /**
+     *
+     *
+     * @return
+     */
+    public final float zoom() {
+        return zoom;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public final libvlc_video_multiview_e multiview() {
+        return multiview;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(200);
@@ -262,7 +294,9 @@ public class VideoTrackInfo extends TrackInfo {
         sb.append("yaw=").append(yaw).append(',');
         sb.append("pitch=").append(pitch).append(',');
         sb.append("roll=").append(roll).append(',');
-        sb.append("fov=").append(fov).append(']');
+        sb.append("fov=").append(fov).append(',');
+        sb.append("zoom=").append(zoom).append(',');
+        sb.append("multiview=").append(multiview).append(']');
         return sb.toString();
     }
 }

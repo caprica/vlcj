@@ -19,36 +19,29 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
+import com.sun.jna.Structure;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.sun.jna.Structure;
-
 /**
  *
  */
-public class libvlc_video_track_t extends Structure {
+public class libvlc_video_viewpoint_t extends Structure {
 
     /**
      *
      */
-    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("i_height", "i_width", "i_sar_num", "i_sar_den", "i_frame_rate_num", "i_frame_rate_den", "i_orientation", "i_projection", "pose", "i_multiview"));
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("f_yaw", "f_pitch", "f_roll", "f_field_of_view", "f_zoom"));
 
-    public static class ByValue extends libvlc_video_track_t implements Structure.ByValue {}
+    public static class ByValue extends libvlc_video_viewpoint_t implements Structure.ByValue {}
 
-    public int i_height;
-    public int i_width;
-
-    public int i_sar_num;
-    public int i_sar_den;
-    public int i_frame_rate_num;
-    public int i_frame_rate_den;
-
-    public int i_orientation;
-    public int i_projection;
-    public libvlc_video_viewpoint_t.ByValue pose;
-    public int i_multiview;
+    public float f_yaw;           /**< view point yaw in degrees */
+    public float f_pitch;         /**< view point pitch in degrees */
+    public float f_roll;          /**< view point roll in degrees */
+    public float f_field_of_view; /**< field of view in degrees (default 80.0f) */
+    public float f_zoom;          /**< zoom factor, [-1.f, 1.f] range, default to 0.f */
 
     @Override
     protected List<String> getFieldOrder() {

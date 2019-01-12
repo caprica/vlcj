@@ -58,6 +58,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import com.sun.jna.Library;
@@ -1416,6 +1417,30 @@ public interface LibVlc extends Library {
      * @param psz_aspect new video aspect-ratio or NULL to reset to default
      */
     void libvlc_video_set_aspect_ratio(libvlc_media_player_t p_mi, String psz_aspect);
+
+    /**
+     * Create a video viewpoint structure.
+     *
+     * @return video viewpoint or NULL (the result must be released with free() or libvlc_free()).
+     * @since LibVLC 3.0.0 and later
+     */
+    libvlc_video_viewpoint_t libvlc_video_new_viewpoint();
+
+    /**
+     * Update the video viewpoint information.
+     * <p>
+     * It is safe to call this function before the media player is started.
+     * <p>
+     * The values are set asynchronously, it will be used by the next frame displayed.
+     *
+     * @param p_mi the media player
+     * @param p_viewpoint video viewpoint allocated via libvlc_video_new_viewpoint()
+     * @param b_absolute if true replace the old viewpoint with the new one. If false, increase/decrease it.
+     * @return -1 in case of error, 0 otherwise
+     *
+     * @since LibVLC 3.0.0 and later
+     */
+    int libvlc_video_update_viewpoint(libvlc_media_player_t p_mi, libvlc_video_viewpoint_t p_viewpoint, int b_absolute);
 
     /**
      * Get current video subtitle.

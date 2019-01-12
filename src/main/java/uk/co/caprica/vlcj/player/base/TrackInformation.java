@@ -111,10 +111,12 @@ final class TrackInformation {
             track.u.video.i_frame_rate_den,
             libvlc_video_orient_e.orientation(track.u.video.i_orientation),
             libvlc_video_projection_e.projection(track.u.video.i_projection),
-            track.u.video.f_yaw_degrees,
-            track.u.video.f_pitch_degrees,
-            track.u.video.f_roll_degrees,
-            track.u.video.f_fov_degrees,
+            track.u.video.pose.f_yaw,
+            track.u.video.pose.f_pitch,
+            track.u.video.pose.f_roll,
+            track.u.video.pose.f_field_of_view,
+            track.u.video.pose.f_zoom,
+            libvlc_video_multiview_e.multiview(track.u.video.i_multiview),
             codecDescription(libvlc, libvlc_track_type_t.libvlc_track_video, track.i_codec)
         );
     }
