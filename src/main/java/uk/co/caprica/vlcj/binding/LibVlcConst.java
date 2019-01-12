@@ -44,4 +44,11 @@ public interface LibVlcConst {
 
     float MIN_GAIN = -20.0f;
     float MAX_GAIN = 20.0f;
+
+    // FIXME not sure the best location for these...
+    /** The renderer can render audio */
+    int LIBVLC_RENDERER_CAN_AUDIO = 0x0001;
+    /** The renderer can render video */
+    int LIBVLC_RENDERER_CAN_VIDEO = 0x0002;
+
 }

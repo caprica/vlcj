@@ -53,12 +53,16 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_type_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_rd_description_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
+import uk.co.caprica.vlcj.binding.support.size_t;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import com.sun.jna.Library;
@@ -150,7 +154,7 @@ public interface LibVlc extends Library {
      *
      * @param argc the number of arguments
      * @param argv command-line-type arguments
-     * @param builtins a NULL terminated array of \see vlc_plugin.
+     * @param builtins a NULL terminated array of @see vlc_plugin.
      * @return the libvlc instance or NULL in case of error
      *
      * <pre>
@@ -882,6 +886,22 @@ public interface LibVlc extends Library {
      * @param p_mi the Media Player
      */
     void libvlc_media_player_stop(libvlc_media_player_t p_mi);
+
+    /**
+     * Set a renderer to the media player
+     *
+     * Must be called before the first call of libvlc_media_player_play() to
+     * take effect.
+     *
+     * @see libvlc_renderer_discoverer_new
+     *
+     * @param p_mi the Media Player
+     * @param p_item an item discovered by libvlc_renderer_discoverer_start()
+     * @return 0 on success, -1 on error.
+     *
+     * @since LibVLC 3.0.0 or later
+     */
+    int libvlc_media_player_set_renderer(libvlc_media_player_t p_mi, libvlc_renderer_item_t p_item);
 
     /**
      * Set callbacks and private data to render decoded video to a custom area in memory.
@@ -2654,5 +2674,172 @@ public interface LibVlc extends Library {
     void libvlc_media_discoverer_services_release(Pointer pp_services, int i_count);
 
     // === libvlc_media_discoverer.h ============================================
+
+    // === libvlc_renderer_discoverer.h =========================================
+
+    /**
+     * Hold a renderer item, i.e. creates a new reference
+     *
+     * This functions need to called from the libvlc_RendererDiscovererItemAdded
+     * callback if the libvlc user wants to use this item after. (for display or
+     * for passing it to the mediaplayer for example).
+     *
+     * @return the current item
+     *
+     * @since LibVLC 3.0.0 or later
+     */
+    libvlc_renderer_item_t libvlc_renderer_item_hold(libvlc_renderer_item_t p_item);
+
+    /**
+     * Releases a renderer item, i.e. decrements its reference counter
+     *
+     * @since LibVLC 3.0.0 or later
+     */
+    void libvlc_renderer_item_release(libvlc_renderer_item_t p_item);
+
+    /**
+     * Get the human readable name of a renderer item
+     *
+     * @return the name of the item (can't be NULL, must *not* be freed)
+     *
+     * @since LibVLC 3.0.0 or later
+     */
+    String libvlc_renderer_item_name(libvlc_renderer_item_t p_item);
+
+    /**
+     * Get the type (not translated) of a renderer item. For now, the type can only
+     * be "chromecast" ("upnp", "airplay" may come later).
+     *
+     * @return the type of the item (can't be NULL, must *not* be freed)
+     *
+     * @since LibVLC 3.0.0 or later
+     */
+    String libvlc_renderer_item_type(libvlc_renderer_item_t p_item);
+
+    /**
+     * Get the icon uri of a renderer item
+     *
+     * @return the uri of the item's icon (can be NULL, must *not* be freed)
+     *
+     * @since LibVLC 3.0.0 or later
+     */
+    String libvlc_renderer_item_icon_uri(libvlc_renderer_item_t p_item);
+
+    /**
+     * Get the flags of a renderer item
+     *
+     * @see LIBVLC_RENDERER_CAN_AUDIO
+     * @see LIBVLC_RENDERER_CAN_VIDEO
+     *
+     * @return bitwise flag: capabilities of the renderer, see
+     *
+     * @since LibVLC 3.0.0 or later
+     */
+    int libvlc_renderer_item_flags(libvlc_renderer_item_t p_item);
+
+    /**
+     * Create a renderer discoverer object by name
+     *
+     * After this object is created, you should attach to events in order to be
+     * notified of the discoverer events.
+     *
+     * You need to call libvlc_renderer_discoverer_start() in order to start the
+     * discovery.
+     *
+     * @see libvlc_renderer_discoverer_event_manager()
+     * @see libvlc_renderer_discoverer_start()
+     *
+     * @param p_inst libvlc instance
+     * @param psz_name service name; use libvlc_renderer_discoverer_list_get() to
+     * get a list of the discoverer names available in this libVLC instance
+     * @return media discover object or NULL in case of error
+     *
+     * @since LibVLC 3.0.0 or later
+     */
+    libvlc_renderer_discoverer_t libvlc_renderer_discoverer_new(libvlc_instance_t p_inst, String psz_name);
+
+    /**
+     * Release a renderer discoverer object
+     *
+     * @param p_rd renderer discoverer object
+     *
+     * @since LibVLC 3.0.0 or later
+     */
+    void libvlc_renderer_discoverer_release(libvlc_renderer_discoverer_t p_rd);
+
+    /**
+     * Start renderer discovery
+     *
+     * To stop it, call libvlc_renderer_discoverer_stop() or
+     * libvlc_renderer_discoverer_release() directly.
+     *
+     * @see libvlc_renderer_discoverer_stop()
+     *
+     * @param p_rd renderer discoverer object
+     * @return -1 in case of error, 0 otherwise
+     *
+     * @since LibVLC 3.0.0 or later
+     */
+    int libvlc_renderer_discoverer_start(libvlc_renderer_discoverer_t p_rd);
+
+    /**
+     * Stop renderer discovery.
+     *
+     * @see libvlc_renderer_discoverer_start()
+     *
+     * @param p_rd renderer discoverer object
+     *
+     * @since LibVLC 3.0.0 or later
+     */
+    void libvlc_renderer_discoverer_stop(libvlc_renderer_discoverer_t p_rd);
+
+    /**
+     * Get the event manager of the renderer discoverer
+     *
+     * The possible events to attach are @ref libvlc_RendererDiscovererItemAdded
+     * and @ref libvlc_RendererDiscovererItemDeleted.
+     *
+     * The @ref libvlc_renderer_item_t struct passed to event callbacks is owned by
+     * VLC, users should take care of holding/releasing this struct for their
+     * internal usage.
+     *
+     * @see libvlc_event_t.u.renderer_discoverer_item_added.item
+     * @see libvlc_event_t.u.renderer_discoverer_item_removed.item
+     *
+     * @return a valid event manager (can't fail)
+     *
+     * @since LibVLC 3.0.0 or later
+     */
+    libvlc_event_manager_t libvlc_renderer_discoverer_event_manager(libvlc_renderer_discoverer_t p_rd);
+
+    /**
+     * Get media discoverer services
+     *
+     * @see libvlc_renderer_list_release()
+     *
+     * @param p_inst libvlc instance
+     * @param ppp_services address to store an allocated array of renderer
+     * discoverer services (must be freed with libvlc_renderer_list_release() by
+     * the caller) [OUT]
+     *
+     * @return the number of media discoverer services (0 on error)
+     *
+     * @since LibVLC 3.0.0 and later
+     */
+    size_t libvlc_renderer_discoverer_list_get(libvlc_instance_t p_inst, libvlc_rd_description_t PointerByReference);
+
+    /**
+     * Release an array of media discoverer services
+     *
+     * @see libvlc_renderer_discoverer_list_get()
+     *
+     * @param pp_services array to release
+     * @param i_count number of elements in the array
+     *
+     * @since LibVLC 3.0.0 and later
+     */
+    void libvlc_renderer_discoverer_list_release(PointerByReference pp_services, size_t i_count);
+
+    // === libvlc_renderer_discoverer.h =========================================
 
 }
