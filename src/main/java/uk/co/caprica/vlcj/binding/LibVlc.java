@@ -2826,7 +2826,7 @@ public interface LibVlc extends Library {
      *
      * @since LibVLC 3.0.0 and later
      */
-    size_t libvlc_renderer_discoverer_list_get(libvlc_instance_t p_inst, libvlc_rd_description_t PointerByReference);
+    size_t libvlc_renderer_discoverer_list_get(libvlc_instance_t p_inst, PointerByReference ppp_services);
 
     /**
      * Release an array of media discoverer services
@@ -2838,7 +2838,7 @@ public interface LibVlc extends Library {
      *
      * @since LibVLC 3.0.0 and later
      */
-    void libvlc_renderer_discoverer_list_release(PointerByReference pp_services, size_t i_count);
+    void libvlc_renderer_discoverer_list_release(Pointer pp_services, size_t i_count);
 
     // === libvlc_renderer_discoverer.h =========================================
 

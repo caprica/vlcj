@@ -82,6 +82,8 @@ public class MediaPlayerFactory {
 
     private final ModuleService moduleService;
 
+    private final RendererService rendererService;
+
     private final VideoSurfaceService videoSurfaceService;
 
     /**
@@ -103,6 +105,7 @@ public class MediaPlayerFactory {
         this.mediaPlayerService  = new MediaPlayerService (this);
         this.mediaService        = new MediaService       (this);
         this.moduleService       = new ModuleService      (this);
+        this.rendererService     = new RendererService    (this);
         this.videoSurfaceService = new VideoSurfaceService(this);
     }
 
@@ -179,6 +182,10 @@ public class MediaPlayerFactory {
         return moduleService;
     }
 
+    public final RendererService renderers() {
+        return rendererService;
+    }
+
     public final VideoSurfaceService videoSurfaces() {
         return videoSurfaceService;
     }
@@ -189,10 +196,7 @@ public class MediaPlayerFactory {
      * The factory must not be used again after it has been released.
      */
     public final void release() {
-        logger.debug("release()");
-        if (this.libvlcInstance != null) {
-            libvlc.libvlc_release(this.libvlcInstance);
-        }
+        libvlc.libvlc_release(this.libvlcInstance);
     }
 
     protected final LibVlc libvlc() {
