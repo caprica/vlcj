@@ -1,11 +1,14 @@
 package uk.co.caprica.vlcj.player.base;
 
 import com.sun.jna.ptr.IntByReference;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 import uk.co.caprica.vlcj.player.DeinterlaceMode;
 import uk.co.caprica.vlcj.player.NativeString;
 import uk.co.caprica.vlcj.player.TrackDescription;
+import uk.co.caprica.vlcj.player.Viewpoint;
 
 import java.awt.*;
 
@@ -283,6 +286,31 @@ public final class VideoService extends BaseService {
     public int setVideoTrack(int track) {
         libvlc.libvlc_video_set_track(mediaPlayerInstance, track);
         return getVideoTrack(); // FIXME does this actually update synchronously?
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public Viewpoint newViewpoint() {
+        libvlc_video_viewpoint_t viewpoint = libvlc.libvlc_video_new_viewpoint();
+        if (viewpoint != null) {
+            return new Viewpoint(libvlc, viewpoint);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     *
+     *
+     * @param viewpoint
+     * @param absolute
+     * @return
+     */
+    public boolean updateViewpoint(Viewpoint viewpoint, boolean absolute) {
+        return libvlc.libvlc_video_update_viewpoint(mediaPlayerInstance, viewpoint.viewpoint(), absolute ? 1 : 0) == 0;
     }
 
     /**
