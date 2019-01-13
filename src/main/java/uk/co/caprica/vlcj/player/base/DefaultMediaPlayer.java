@@ -56,6 +56,11 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     protected final libvlc_instance_t libvlcInstance;
 
     /**
+     * Native media player instance.
+     */
+    private final libvlc_media_player_t mediaPlayerInstance;
+
+    /**
      * Single-threaded service to execute tasks that need to be off-loaded from a native callback thread.
      * <p>
      * Native events are generated on a native event callback thread. It is not allowed to call back into LibVLC from
@@ -67,11 +72,6 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
      * See {@link #submit(Runnable)}.
      */
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-
-    /**
-     * Native media player instance.
-     */
-    private final libvlc_media_player_t mediaPlayerInstance;
 
     private final AudioService      audioService;
     private final ChapterService    chapterService;
@@ -102,7 +102,7 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
      * @param instance libvlc instance
      */
     protected DefaultMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
-        this.libvlc   = libvlc;
+        this.libvlc         = libvlc;
         this.libvlcInstance = instance;
 
         this.mediaPlayerInstance = newNativeMediaPlayer();

@@ -17,19 +17,30 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.medialist.events;
+package uk.co.caprica.vlcj.player.list.events;
 
-import uk.co.caprica.vlcj.medialist.MediaListEventListener;
+import uk.co.caprica.vlcj.player.list.MediaListPlayer;
+import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 /**
- * Specification for a media list event.
+ *
  */
-public interface MediaListEvent {
+final class MediaListPlayerPlayedEvent extends AbstractMediaListPlayerEvent {
 
     /**
-     * Notify a listener of the event.
+     * Create a media player event.
      *
-     * @param listener event listener to notify
+     * @param mediaListPlayer media player the event relates to
+     * @param metaType meta data type
+     * @param mrl media resource locator
      */
-    void notify(MediaListEventListener listener);
+    MediaListPlayerPlayedEvent(MediaListPlayer mediaListPlayer) {
+        super(mediaListPlayer);
+    }
+
+    @Override
+    public void notify(MediaListPlayerEventListener listener) {
+        listener.mediaListPlayerFinished(mediaListPlayer);
+    }
+
 }

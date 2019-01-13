@@ -17,27 +17,30 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.medialist.events;
+package uk.co.caprica.vlcj.player.list.events;
 
-import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.medialist.MediaListEventListener;
+import uk.co.caprica.vlcj.player.list.MediaListPlayer;
+import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 /**
- * Encapsulation of a media list end reached event.
+ *
  */
-class MediaListEndReachedEvent extends AbstractMediaListEvent {
+final class MediaListPlayerStoppedEvent extends AbstractMediaListPlayerEvent {
 
     /**
-     * Create a media list event.
+     * Create a media player event.
      *
-     * @param mediaList media list the event relates to
+     * @param mediaListPlayer media player the event relates to
+     * @param metaType meta data type
+     * @param mrl media resource locator
      */
-    MediaListEndReachedEvent(MediaList mediaList) {
-        super(mediaList);
+    MediaListPlayerStoppedEvent(MediaListPlayer mediaListPlayer) {
+        super(mediaListPlayer);
     }
 
     @Override
-    public void notify(MediaListEventListener listener) {
-        listener.mediaListEndReached(mediaList);
+    public void notify(MediaListPlayerEventListener listener) {
+        listener.stopped(mediaListPlayer);
     }
+
 }

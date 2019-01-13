@@ -40,7 +40,7 @@ public class SimpleMedia extends AbstractMedia {
      */
     public SimpleMedia(String mrl, String... mediaOptions) {
         super(mediaOptions);
-        // Encode the MRL if necessary (e.g. if it is a local file that contains Unicode characters)
+        // Encode the MRL if necessary (e.g. if it is a local file that contains Unicode characters) FIXME isn't it better if this is done when it is pulled OUT of here just prior to playing?
         this.mrl = MediaResourceLocator.encodeMrl(mrl);
     }
 

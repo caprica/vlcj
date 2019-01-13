@@ -86,10 +86,10 @@ public class StreamingAudioPlayListTest extends VlcjTest {
     public StreamingAudioPlayListTest() {
         factory = new MediaPlayerFactory();
         mediaListPlayer = factory.mediaPlayers().newMediaListPlayer();
-        mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
+        mediaListPlayer.events().addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
             @Override
-            public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
-                System.out.println("Playing next item: " + itemMrl + " (" + item + ")");
+            public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
+                System.out.println("Playing next item: " + item + ")");
             }
         });
         playList = factory.media().newMediaList();
@@ -110,11 +110,11 @@ public class StreamingAudioPlayListTest extends VlcjTest {
             playList.addMedia(file.getAbsolutePath(), mediaOptions);
         }
         // Loop the play-list over and over
-        mediaListPlayer.setMode(MediaListPlayerMode.LOOP);
+        mediaListPlayer.mode().setMode(MediaListPlayerMode.LOOP);
         // Attach the play-list to the media list player
-        mediaListPlayer.setMediaList(playList);
+        mediaListPlayer.list().setMediaList(playList);
         // Finally, start the media player
-        mediaListPlayer.play();
+        mediaListPlayer.controls().play();
         System.out.println("Streaming started at rtp://" + address + ":" + port);
         // Wait forever...
         Thread.currentThread().join();

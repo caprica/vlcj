@@ -28,43 +28,17 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
  */
 public class MediaListPlayerEventAdapter implements MediaListPlayerEventListener {
 
-    // === Events relating to the media player ==================================
-
     @Override
-    public void played(MediaListPlayer mediaListPlayer) {
+    public void mediaListPlayerFinished(MediaListPlayer mediaListPlayer) {
     }
 
     @Override
-    public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
+    public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
     }
 
     @Override
     public void stopped(MediaListPlayer mediaListPlayer) {
     }
 
-    // === Events relating to the current media =================================
-
-    @Override
-    public void mediaMetaChanged(MediaListPlayer mediaListPlayer, int metaType) {
-    }
-
-    @Override
-    public void mediaSubItemAdded(MediaListPlayer mediaListPlayer, libvlc_media_t subItem) {
-    }
-
-    @Override
-    public void mediaDurationChanged(MediaListPlayer mediaListPlayer, long newDuration) {
-    }
-
-    @Override
-    public void mediaParsedChanged(MediaListPlayer mediaListPlayer, int newStatus) {
-    }
-
-    @Override
-    public void mediaFreed(MediaListPlayer mediaListPlayer) {
-    }
-
-    @Override
-    public void mediaStateChanged(MediaListPlayer mediaListPlayer, int newState) {
-    }
 }
+

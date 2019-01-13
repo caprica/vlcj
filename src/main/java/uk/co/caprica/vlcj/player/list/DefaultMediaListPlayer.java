@@ -19,67 +19,33 @@
 
 package uk.co.caprica.vlcj.player.list;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_playback_mode_e;
-import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
-import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.player.AbstractMediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.NativeString;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEvent;
-import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventFactory;
-import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
 
-import com.sun.jna.Pointer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Implementation of a media list player.
+ * <p>
+ * The native media list player will automatically deal properly with media that has sub-items (like YouTube movies), so
+ * simply adding an ordinary MRL/URL is all that is needed for such media.
  */
-public class DefaultMediaListPlayer extends AbstractMediaPlayer implements MediaListPlayer {
+public class DefaultMediaListPlayer implements MediaListPlayer {
 
     /**
-     * Log.
+     * Native library interface.
      */
-    private final Logger logger = LoggerFactory.getLogger(DefaultMediaListPlayer.class);
+    protected final LibVlc libvlc;
 
     /**
-     * Collection of event listeners.
+     * Libvlc instance.
      */
-    private final List<MediaListPlayerEventListener> eventListenerList = new ArrayList<MediaListPlayerEventListener>();
-
-    /**
-     * Factory to create media player events from native events.
-     */
-    private final MediaListPlayerEventFactory eventFactory = new MediaListPlayerEventFactory(this);
-
-    /**
-     * Background service to notify event listeners.
-     */
-    private final ExecutorService listenersService = Executors.newSingleThreadExecutor();
-
-    /**
-     * Event listener to handle next item events.
-     */
-    private final NextItemHandler nextItemHandler = new NextItemHandler();
+    protected final libvlc_instance_t libvlcInstance;
 
     /**
      * Native media player instance.
@@ -87,14 +53,17 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
     private libvlc_media_list_player_t mediaListPlayerInstance;
 
     /**
-     * Native event manager instance.
+     * Single-threaded service to execute tasks that need to be off-loaded from a native callback thread.
+     * <p>
+     * Native events are generated on a native event callback thread. It is not allowed to call back into LibVLC from
+     * this thread, if you do either the call will be ineffective, strange behaviour will happen, or a fatal JVM crash
+     * may occur.
+     * <p>
+     * To mitigate this, tasks can be serialised and executed using this service.
+     * <p>
+     * See {@link #submit(Runnable)}.
      */
-    private libvlc_event_manager_t mediaListPlayerEventManager;
-
-    /**
-     * Native event call-back.
-     */
-    private libvlc_callback_t callback;
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     /**
      * Associated native media player instance.
@@ -103,428 +72,162 @@ public class DefaultMediaListPlayer extends AbstractMediaPlayer implements Media
      */
     private MediaPlayer mediaPlayer;
 
-    /**
-     * Mask of the native events that will cause notifications to be sent to listeners.
-     */
-    private long eventMask = MediaListPlayerEventType.ALL.value();
-
-    /**
-     * Media list.
-     */
-    private MediaList mediaList;
-
-    /**
-     * Opaque reference to user/application-specific data associated with this media player.
-     */
-    private Object userData;
-
-    /**
-     * MRL of the current media item.
-     */
-    private final AtomicReference<String> currentMrl = new AtomicReference<String>();
-
-    /**
-     * Set to true when the player has been released.
-     */
-    private final AtomicBoolean released = new AtomicBoolean();
+    private final ControlsService    controlsService;
+    private final EventService       eventService;
+    private final ListService        listService;
+    private final MediaPlayerService mediaPlayerService;
+    private final ModeService        modeService;
+    private final StatusService      statusService;
+    private final UserDataService    userDataService;
 
     /**
      * Create a new media list player.
      *
      * @param libvlc native library interface
-     * @param instance libvlc instance
+     * @param libvlcInstance libvlc instance
      */
-    public DefaultMediaListPlayer(LibVlc libvlc, libvlc_instance_t instance) {
-        super(libvlc, instance);
-        logger.debug("DefaultMediaListPlayer(libvlc={}, instance={})", libvlc, instance);
-        createInstance();
+    public DefaultMediaListPlayer(LibVlc libvlc, libvlc_instance_t libvlcInstance) {
+        this.libvlc         = libvlc;
+        this.libvlcInstance = libvlcInstance;
+
+        // Add event handlers for internal implementation - the order in which these are added (and therefore the order
+        // in which they execute) is important in some cases (as per the individual class Javadoc)
+        this.mediaListPlayerInstance = newNativeMediaListPlayer();
+
+        this.controlsService    = new ControlsService   (this);
+        this.eventService       = new EventService      (this);
+        this.listService        = new ListService       (this);
+        this.mediaPlayerService = new MediaPlayerService(this);
+        this.modeService        = new ModeService       (this);
+        this.statusService      = new StatusService     (this);
+        this.userDataService    = new UserDataService   (this);
     }
 
-    @Override
-    public void addMediaListPlayerEventListener(MediaListPlayerEventListener listener) {
-        logger.debug("addMediaPlayerEventListener(listener={})", listener);
-        eventListenerList.add(listener);
-    }
-
-    @Override
-    public void removeMediaListPlayerEventListener(MediaListPlayerEventListener listener) {
-        logger.debug("removeMediaPlayerEventListener(listener={})", listener);
-        eventListenerList.remove(listener);
-    }
-
-    @Override
-    public void enableEvents(long eventMask) {
-        logger.debug("enableEvents(eventMask={})", eventMask);
-        this.eventMask = eventMask;
-    }
-
-    @Override
-    public void setMediaPlayer(MediaPlayer mediaPlayer) {
-        logger.debug("setMediaPlayer(mediaPlayer={})", mediaPlayer);
-        this.mediaPlayer = mediaPlayer;
-        libvlc.libvlc_media_list_player_set_media_player(mediaListPlayerInstance, mediaPlayer.mediaPlayerInstance());
-    }
-
-    @Override
-    public void setMediaList(MediaList mediaList) {
-        logger.debug("setMediaList(mediaList={})", mediaList);
-        libvlc.libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaList.mediaListInstance());
-        this.mediaList = mediaList;
-    }
-
-    @Override
-    public MediaList getMediaList() {
-        logger.debug("getMediaList()");
-        return mediaList;
-    }
-
-    @Override
-    public void play() {
-        logger.debug("play()");
-        attachVideoSurface();
-        libvlc.libvlc_media_list_player_play(mediaListPlayerInstance);
-    }
-
-    @Override
-    public void pause() {
-        logger.debug("pause()");
-        libvlc.libvlc_media_list_player_pause(mediaListPlayerInstance);
-    }
-
-    @Override
-    public void setPause(boolean pause) {
-        logger.debug("pause(pause={})", pause);
-        libvlc.libvlc_media_list_player_set_pause(mediaListPlayerInstance, pause ? 1 : 0);
-    }
-
-    @Override
-    public void stop() {
-        logger.debug("stop()");
-        libvlc.libvlc_media_list_player_stop(mediaListPlayerInstance);
-    }
-
-    @Override
-    public boolean playItem(int itemIndex) {
-        logger.debug("playItem(itemIndex={})", itemIndex);
-        if(mediaList != null && itemIndex >= 0 && itemIndex < mediaList.size()) {
-            attachVideoSurface();
-            return libvlc.libvlc_media_list_player_play_item_at_index(mediaListPlayerInstance, itemIndex) == 0;
-        }
-        else {
-            throw new IllegalArgumentException("Item index is out of bounds");
+    private libvlc_media_list_player_t newNativeMediaListPlayer() {
+        libvlc_media_list_player_t result = libvlc.libvlc_media_list_player_new(libvlcInstance);
+        if (result != null) {
+            return result;
+        } else {
+            throw new RuntimeException("Failed to get a new native media list player instance");
         }
     }
 
     @Override
-    public void playNext() {
-        logger.debug("playNext()");
-        libvlc.libvlc_media_list_player_next(mediaListPlayerInstance);
+    public ControlsService controls() {
+        return controlsService;
     }
 
     @Override
-    public void playPrevious() {
-        logger.debug("playPrevious()");
-        libvlc.libvlc_media_list_player_previous(mediaListPlayerInstance);
+    public EventService events() {
+        return eventService;
     }
 
     @Override
-    public boolean isPlaying() {
-        logger.debug("isPlaying()");
-        return libvlc.libvlc_media_list_player_is_playing(mediaListPlayerInstance) != 0;
+    public ListService list() {
+        return listService;
     }
 
     @Override
-    public libvlc_state_t getMediaListPlayerState() {
-        logger.debug("getMediaListPlayerState()");
-        return libvlc_state_t.state(libvlc.libvlc_media_list_player_get_state(mediaListPlayerInstance));
+    public MediaPlayerService mediaPlayer() {
+        return mediaPlayerService;
     }
 
     @Override
-    public void setMode(MediaListPlayerMode mode) {
-        logger.debug("setMode(mode={})", mode);
-        libvlc_playback_mode_e playbackMode;
-        switch(mode) {
-            case DEFAULT:
-                playbackMode = libvlc_playback_mode_e.libvlc_playback_mode_default;
-                break;
-
-            case LOOP:
-                playbackMode = libvlc_playback_mode_e.libvlc_playback_mode_loop;
-                break;
-
-            case REPEAT:
-                playbackMode = libvlc_playback_mode_e.libvlc_playback_mode_repeat;
-                break;
-
-            default:
-                throw new IllegalArgumentException("Invalid mode " + mode);
-        }
-        libvlc.libvlc_media_list_player_set_playback_mode(mediaListPlayerInstance, playbackMode.intValue());
+    public ModeService mode() {
+        return modeService;
     }
 
     @Override
-    public String mrl(libvlc_media_t mediaInstance) {
-        logger.debug("mrl(mediaInstance={})", mediaInstance);
-        return NativeString.getNativeString(libvlc, libvlc.libvlc_media_get_mrl(mediaInstance));
+    public StatusService status() {
+        return statusService;
     }
 
     @Override
-    public Object userData() {
-        logger.debug("userData()");
-        return userData;
-    }
-
-    @Override
-    public void userData(Object userData) {
-        logger.debug("userData(userData={})", userData);
-        this.userData = userData;
-    }
-
-    @Override
-    public final String currentMrl() {
-        logger.debug("currentMrl()");
-        return currentMrl.get();
-    }
-
-    @Override
-    public libvlc_media_player_t getMediaPlayerInstance() {
-        logger.debug("getMediaPlayerInstance()");
-        return libvlc.libvlc_media_list_player_get_media_player(mediaListPlayerInstance);
+    public UserDataService userData() {
+        return userDataService;
     }
 
     @Override
     public final void release() {
-        logger.debug("release()");
-        if(released.compareAndSet(false, true)) {
-            destroyInstance();
+        shutdownExecutor();
+
+        onBeforeRelease();
+
+        controlsService   .release();
+        eventService      .release();
+        listService       .release();
+        mediaPlayerService.release();
+        modeService       .release();
+        statusService     .release();
+        userDataService   .release();
+
+        libvlc.libvlc_media_list_player_release(mediaListPlayerInstance);
+
+        onAfterRelease();
+    }
+
+    /**
+     * Shutdown the task executor service.
+     * <p>
+     * Care must be taken to prevent fatal JVM crashes during shutdown due to tasks that may be still be waiting in the
+     * queue to be executed (e.g. we do not want to destroy the native media player if a task is running that is going
+     * to invoke a call on the native media player).
+     * <p>
+     * So, we first shutdown the executor service then await termination of all tasks. If there are no pending tasks we
+     * will terminate immediately as normal. If there are tasks, we wait for a short timeout period before forcing a
+     * termination anyway.
+     * <p>
+     * We should never really be waiting any significant amount of time for the queued tasks to terminate because they
+     * will be very few in number, and should execute very quickly anyway. Even the short wait before timeout may be
+     * useful to avoid any hard crashes during clean-up.
+     */
+    private void shutdownExecutor() {
+        executor.shutdownNow();
+        try {
+            executor.awaitTermination(5, TimeUnit.SECONDS);
+        }
+        catch (InterruptedException e) {
         }
     }
 
     /**
      *
+     *
+     * @param r
      */
-    private void createInstance() {
-        logger.debug("createInstance()");
-
-        mediaListPlayerInstance = libvlc.libvlc_media_list_player_new(instance);
-
-        mediaListPlayerEventManager = libvlc.libvlc_media_list_player_event_manager(mediaListPlayerInstance);
-        logger.debug("mediaListPlayerEventManager={}", mediaListPlayerEventManager);
-
-        registerEventListener();
-
-        addMediaListPlayerEventListener(nextItemHandler);
+    @Override
+    public final void submit(Runnable r) {
+        executor.submit(r);
     }
 
     /**
-     *
+     * Provided to enable sub-classes to implement their own clean-up immediately before the media player resources will
+     * be freed.
      */
-    private void destroyInstance() {
-        logger.debug("destroyInstance()");
-
-        logger.debug("Detach events...");
-        deregisterEventListener();
-        logger.debug("Events detached.");
-
-        eventListenerList.clear();
-
-        nextItemHandler.release();
-
-        if(mediaListPlayerInstance != null) {
-            logger.debug("Release media list player...");
-            libvlc.libvlc_media_list_player_release(mediaListPlayerInstance);
-            logger.debug("Media list player released");
-        }
-
-        logger.debug("Shut down listeners...");
-        listenersService.shutdown();
-        logger.debug("Listeners shut down.");
+    protected void onBeforeRelease() {
+        // Base implementation does nothing
     }
 
     /**
-     *
+     * Provided to enable sub-classes to implement their own clean-up immediately after the media player resources have
+     * been freed.
      */
-    private void registerEventListener() {
-        logger.debug("registerEventListener()");
-        callback = new VlcVideoPlayerCallback();
-        for(libvlc_event_e event : libvlc_event_e.values()) {
-            // The native event manager reports that it does not support
-            // libvlc_MediaListPlayerPlayed
-            if(event.intValue() >= libvlc_event_e.libvlc_MediaListPlayerNextItemSet.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListPlayerStopped.intValue()) {
-                logger.debug("event={}", event);
-                int result = libvlc.libvlc_event_attach(mediaListPlayerEventManager, event.intValue(), callback, null);
-                logger.debug("result={}", result);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    private void deregisterEventListener() {
-        logger.debug("deregisterEventListener()");
-        if(callback != null) {
-            for(libvlc_event_e event : libvlc_event_e.values()) {
-                // The native event manager reports that it does not support
-                // libvlc_MediaListPlayerPlayed
-                if(event.intValue() >= libvlc_event_e.libvlc_MediaListPlayerNextItemSet.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListPlayerStopped.intValue()) {
-                    logger.debug("event={}", event);
-                    libvlc.libvlc_event_detach(mediaListPlayerEventManager, event.intValue(), callback, null);
-                }
-            }
-            callback = null;
-        }
+    protected void onAfterRelease() {
+        // Base implementation does nothing
     }
 
     /**
      * If there is an associated media player then make sure the video surface is attached.
      */
-    private void attachVideoSurface() {
-        if(mediaPlayer instanceof EmbeddedMediaPlayer) {
-            ((EmbeddedMediaPlayer)mediaPlayer).videoSurface().attachVideoSurface();
-        }
-    }
-
-    /**
-     * A call-back to handle events from the native media player.
-     * <p>
-     * There are some important implementation details for this callback:
-     * <ul>
-     * <li>First, the event notifications are off-loaded to a different thread so as to prevent
-     * application code re-entering libvlc in an event call-back which may lead to a deadlock in the
-     * native code;</li>
-     * <li>Second, the native event union structure refers to natively allocated memory which will
-     * not be in the scope of the thread used to actually dispatch the event notifications.</li>
-     * </ul>
-     * Without copying the fields at this point from the native union structure, the native memory
-     * referred to by the native event is likely to get deallocated and overwritten by the time the
-     * notification thread runs. This would lead to unreliable data being sent with the
-     * notification, or even a fatal JVM crash.
-     */
-    private final class VlcVideoPlayerCallback implements libvlc_callback_t {
-
-        @Override
-        public void callback(libvlc_event_t event, Pointer userData) {
-            logger.trace("callback(event={},userData={})", event, userData);
-            if(!eventListenerList.isEmpty()) {
-                // Create a new media player event for the native event
-                MediaListPlayerEvent mediaListPlayerEvent = eventFactory.newMediaListPlayerEvent(event, eventMask);
-                logger.trace("mediaListPlayerEvent={}", mediaListPlayerEvent);
-                if(mediaListPlayerEvent != null) {
-                    listenersService.submit(new NotifyListenersRunnable(mediaListPlayerEvent));
-                }
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    private final class NotifyListenersRunnable implements Runnable {
-
-        /**
-         *
-         */
-        private final MediaListPlayerEvent mediaListPlayerEvent;
-
-        /**
-         *
-         *
-         * @param mediaListPlayerEvent
-         */
-        private NotifyListenersRunnable(MediaListPlayerEvent mediaListPlayerEvent) {
-            this.mediaListPlayerEvent = mediaListPlayerEvent;
-        }
-
-        @Override
-        public void run() {
-            logger.trace("run()");
-            for(int i = eventListenerList.size() - 1; i >= 0; i -- ) {
-                MediaListPlayerEventListener listener = eventListenerList.get(i);
-                try {
-                    mediaListPlayerEvent.notify(listener);
-                }
-                catch(Exception e) {
-                    logger.warn("Event listener {} threw an exception", e, listener);
-                    // Continue with the next listener...
-                }
-            }
-            logger.trace("runnable exits");
-        }
-    }
-
-    /**
-     *
-     */
-    private class NextItemHandler extends MediaListPlayerEventAdapter {
-
-        /**
-         * Current media instance.
-         */
-        private libvlc_media_t mediaInstance;
-
-        @Override
-        public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
-            logger.debug("nextItem(item={},itemMrl={})", item, itemMrl);
-            deregisterMediaEventListener();
-            this.mediaInstance = item;
-            currentMrl.set(itemMrl);
-            registerMediaEventListener();
-        }
-
-        /**
-         *
-         */
-        private void registerMediaEventListener() {
-            logger.debug("registerMediaEventListener()");
-            // If there is a media, register a new listener...
-            if(mediaInstance != null) {
-                libvlc.libvlc_media_retain(mediaInstance);
-                libvlc_event_manager_t mediaEventManager = libvlc.libvlc_media_event_manager(mediaInstance);
-                for(libvlc_event_e event : libvlc_event_e.values()) {
-                    if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaStateChanged.intValue()) {
-                        logger.debug("event={}", event);
-                        int result = libvlc.libvlc_event_attach(mediaEventManager, event.intValue(), callback, null);
-                        logger.debug("result={}", result);
-                    }
-                }
-            }
-        }
-
-        /**
-         *
-         */
-        private void deregisterMediaEventListener() {
-            logger.debug("deregisterMediaEventListener()");
-            // If there is a media, deregister the listener...
-            if(mediaInstance != null) {
-                libvlc_event_manager_t mediaEventManager = libvlc.libvlc_media_event_manager(mediaInstance);
-                for(libvlc_event_e event : libvlc_event_e.values()) {
-                    if(event.intValue() >= libvlc_event_e.libvlc_MediaMetaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaStateChanged.intValue()) {
-                        logger.debug("event={}", event);
-                        libvlc.libvlc_event_detach(mediaEventManager, event.intValue(), callback, null);
-                    }
-                }
-                mediaEventManager = null;
-                libvlc.libvlc_media_release(mediaInstance);
-                mediaInstance = null;
-            }
-        }
-
-        /**
-         *
-         */
-        private void release() {
-            if (mediaInstance != null) {
-                libvlc.libvlc_media_release(mediaInstance);
-            }
+    void attachVideoSurface() {
+        if (mediaPlayer instanceof EmbeddedMediaPlayer) {
+            ((EmbeddedMediaPlayer) mediaPlayer).videoSurface().attachVideoSurface();
         }
     }
 
     @Override
-    protected void finalize() throws Throwable {
-        logger.debug("finalize()");
-        logger.debug("Media list player has been garbage collected");
-        super.finalize();
-    }
+    public final libvlc_media_list_player_t mediaListPlayerInstance() {
+        return mediaListPlayerInstance;
+    } // FIXME check it has to be public and on the interface, ideally no...
+
 }

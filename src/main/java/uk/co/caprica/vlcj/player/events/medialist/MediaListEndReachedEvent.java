@@ -17,42 +17,27 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.medialist.events;
+package uk.co.caprica.vlcj.player.events.medialist;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 
 /**
- * Encapsulation of a media list item added event.
+ * Encapsulation of a media list end reached event.
  */
-class MediaListItemAddedEvent extends AbstractMediaListEvent {
-
-    /**
-     * Native media instance that was added.
-     */
-    private final libvlc_media_t mediaInstance;
-
-    /**
-     * Index at which the item was added.
-     */
-    private final int index;
+final class MediaListEndReachedEvent extends MediaListEvent {
 
     /**
      * Create a media list event.
      *
      * @param mediaList media list the event relates to
-     * @param mediaInstance native media instance that was added
-     * @param index index at which the item was added
      */
-    MediaListItemAddedEvent(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+    MediaListEndReachedEvent(MediaList mediaList) {
         super(mediaList);
-        this.mediaInstance = mediaInstance;
-        this.index = index;
     }
 
     @Override
     public void notify(MediaListEventListener listener) {
-        listener.mediaListItemAdded(mediaList, mediaInstance, index);
+        listener.mediaListEndReached(mediaList);
     }
 }

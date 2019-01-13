@@ -17,24 +17,26 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.medialist.events;
+package uk.co.caprica.vlcj.player.events.medialist;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.media_list_item_added;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 
 /**
- * Encapsulation of a media list will delete item event.
+ * Encapsulation of a media list item added event.
  */
-class MediaListWillDeleteItemEvent extends AbstractMediaListEvent {
+final class MediaListItemAddedEvent extends MediaListEvent {
 
     /**
-     * Native media instance that will deleted.
+     * Native media instance that was added.
      */
     private final libvlc_media_t mediaInstance;
 
     /**
-     * Index from which the item will be deleted.
+     * Index at which the item was added.
      */
     private final int index;
 
@@ -42,17 +44,20 @@ class MediaListWillDeleteItemEvent extends AbstractMediaListEvent {
      * Create a media list event.
      *
      * @param mediaList media list the event relates to
-     * @param mediaInstance native media instance that will be added
-     * @param index index from which the item will be deleted
+     * @param mediaInstance native media instance that was added
+     * @param index index at which the item was added
      */
-    MediaListWillDeleteItemEvent(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+    MediaListItemAddedEvent(MediaList mediaList, libvlc_event_t event) {
         super(mediaList);
-        this.mediaInstance = mediaInstance;
-        this.index = index;
+
+        media_list_item_added itemAddedEvent = ((media_list_item_added) event.u.getTypedValue(media_list_item_added.class));
+
+        this.mediaInstance = itemAddedEvent.item;
+        this.index         = itemAddedEvent.index;
     }
 
     @Override
     public void notify(MediaListEventListener listener) {
-        listener.mediaListWillDeleteItem(mediaList, mediaInstance, index);
+        listener.mediaListItemAdded(mediaList, mediaInstance, index);
     }
 }

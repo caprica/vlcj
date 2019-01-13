@@ -17,27 +17,29 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.list.events;
+package uk.co.caprica.vlcj.binding.internal;
 
-import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
+import com.sun.jna.Structure;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
  */
-class MediaListMediaFreedEvent extends AbstractMediaListPlayerEvent {
+public class libvlc_media_discoverer_description_t extends Structure {
 
-    /**
-     * Create a media list player event.
-     *
-     * @param mediaListPlayer media list player the event relates to
-     */
-    MediaListMediaFreedEvent(MediaListPlayer mediaListPlayer) {
-        super(mediaListPlayer);
-    }
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("psz_name", "psz_longname", "i_cat"));
+
+    public static class ByReference extends libvlc_media_discoverer_description_t implements Structure.ByReference {}
+
+    public String psz_name;
+    public String psz_longname;
+    public int i_cat;
 
     @Override
-    public void notify(MediaListPlayerEventListener listener) {
-        listener.mediaFreed(mediaListPlayer);
+    protected List<String> getFieldOrder() {
+        return FIELD_ORDER;
     }
 }

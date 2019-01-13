@@ -19,13 +19,8 @@
 
 package uk.co.caprica.vlcj.player.list;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
-import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
 
 /**
  * Specification for a media list player component.
@@ -61,166 +56,27 @@ import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventType;
  */
 public interface MediaListPlayer {
 
-    /**
-     * Add a component to be notified of media list player events.
-     *
-     * @param listener component to notify
-     */
-    void addMediaListPlayerEventListener(MediaListPlayerEventListener listener);
+    ControlsService controls();
 
-    /**
-     * Remove a component that was previously interested in notifications of media list player
-     * events.
-     *
-     * @param listener component to stop notifying
-     */
-    void removeMediaListPlayerEventListener(MediaListPlayerEventListener listener);
+    EventService events();
 
-    /**
-     * Restrict the set of media list player events that generate event notifications to listeners.
-     * <p>
-     * If a set of events is not explicitly enabled, then it is expected that <strong>all</strong>
-     * events be enabled.
-     * <p>
-     * See {@link MediaListPlayerEventType}.
-     *
-     * @param eventMask bit mask of events to enable
-     */
-    void enableEvents(long eventMask);
+    ListService list();
 
-    /**
-     * Associate an actual media player with the media list player.
-     *
-     * @param mediaPlayer media player
-     */
-    void setMediaPlayer(MediaPlayer mediaPlayer);
+    MediaPlayerService mediaPlayer();
 
-    /**
-     * Set the media list (i.e. the "play" list).
-     *
-     * @param mediaList media list
-     */
-    void setMediaList(MediaList mediaList);
+    ModeService mode();
 
-    /**
-     * Get the media list.
-     *
-     * @return media list
-     */
-    MediaList getMediaList();
+    StatusService status();
 
-    /**
-     * Play the media list.
-     */
-    void play();
-
-    /**
-     * Pause the media list.
-     */
-    void pause();
-
-    /**
-     * Pause/un-pause the media list.
-     *
-     * @param pause <code>true</code> to pause; <code>false</code> to un-pause
-     */
-    void setPause(boolean pause);
-
-    /**
-     * Stop the media list.
-     */
-    void stop();
-
-    /**
-     * Play a particular item on the media list.
-     * <p>
-     * <strong>There is a bug in vlc that prevents proper operation of this method,
-     * and may cause a fatal JVM failure. This is resolved in vlc 2.0.2 and later.</strong>
-     *
-     * @param itemIndex index of the item to play
-     * @return <code>true</code> if the item could be played, otherwise <code>false</code>
-     */
-    boolean playItem(int itemIndex);
-
-    /**
-     * Play the next item in the media list.
-     */
-    void playNext();
-
-    /**
-     * Play the previous item in the media list.
-     */
-    void playPrevious();
-
-    /**
-     * Determine whether or not the media list is playing.
-     *
-     * @return <code>true</code> if playing, otherwise <code>false</code>
-     */
-    boolean isPlaying();
-
-    /**
-     * Get the media list player state.
-     *
-     * @return state
-     */
-    libvlc_state_t getMediaListPlayerState();
-
-    /**
-     * Set the media list play mode.
-     * <p>
-     * Note that if you set the play mode to REPEAT before you have played any media then play-back
-     * will never start.
-     *
-     * @param mode mode
-     */
-    void setMode(MediaListPlayerMode mode);
-
-    /**
-     * Get the media resource locator for a media instance.
-     * <p>
-     * The native media instance may be an automatically/scripted added sub-item.
-     *
-     * @param mediaInstance native media instance
-     * @return URL-encoded media resource locator
-     */
-    String mrl(libvlc_media_t mediaInstance);
-
-    /**
-     * Get the user data associated with the media player.
-     *
-     * @return user data
-     */
-    Object userData();
-
-    /**
-     * Set user data to associate with the media player.
-     *
-     * @param userData user data
-     */
-    void userData(Object userData);
-
-    /**
-     * Get the current MRL.
-     *
-     * @return MRL of the current item, or <code>null</code>
-     */
-    String currentMrl();
-
-    /**
-     * Get the native media player instance associated with this media list player.
-     * <p>
-     * The returned media player instance must be released when it is no longer needed,
-     * see {@link LibVlc#libvlc_media_player_release(libvlc_media_player_t)}.
-     * <p>
-     * Requires LibVLC 3.0.0 or later.
-     *
-     * @return handle to the native media player
-     */
-    libvlc_media_player_t getMediaPlayerInstance();
+    UserDataService userData();
 
     /**
      * Release the media list player resources.
      */
     void release();
+
+    void submit(Runnable r);
+
+    libvlc_media_list_player_t mediaListPlayerInstance(); // FIXME check this needs to be on interface
+
 }

@@ -17,35 +17,41 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.list.events;
+package uk.co.caprica.vlcj.test.event;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 /**
- *
+ * Implementation of a {@link MediaPlayerEventListener} that logs all invocations.
+ * <p>
+ * Useful only for testing.
  */
-class MediaListMediaSubItemAddedEvent extends AbstractMediaListPlayerEvent {
+public class LoggingMediaListPlayerEventAdapter implements MediaListPlayerEventListener {
 
     /**
-     * Item added.
+     * Log.
      */
-    private final libvlc_media_t subItem;
+    private final Logger logger = LoggerFactory.getLogger(LoggingMediaListPlayerEventAdapter.class);
 
-    /**
-     * Create a media list player event.
-     *
-     * @param mediaListPlayer media list player the event relates to
-     * @param subItem item added
-     */
-    MediaListMediaSubItemAddedEvent(MediaListPlayer mediaListPlayer, libvlc_media_t subItem) {
-        super(mediaListPlayer);
-        this.subItem = subItem;
+    @Override
+    public void mediaListPlayerFinished(MediaListPlayer mediaListPlayer) {
+        logger.debug("mediaListFinished()");
     }
 
     @Override
-    public void notify(MediaListPlayerEventListener listener) {
-        listener.mediaSubItemAdded(mediaListPlayer, subItem);
+    public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
+        logger.debug("nextItem()");
     }
+
+    @Override
+    public void stopped(MediaListPlayer mediaListPlayer) {
+        logger.debug("stopped()");
+    }
+
 }

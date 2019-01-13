@@ -20,12 +20,20 @@
 package uk.co.caprica.vlcj.test.list;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.medialist.MediaListEventAdapter;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 import uk.co.caprica.vlcj.test.VlcjTest;
+import uk.co.caprica.vlcj.test.event.LoggingMediaListPlayerEventAdapter;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.*;
 
 /**
  * A simple example showing how to use a media list player.
@@ -35,32 +43,248 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class TestMediaListPlayer extends VlcjTest {
 
+    private final MediaPlayerFactory mediaPlayerFactory;
+
+    private final EmbeddedMediaPlayer mediaPlayer;
+
+    private final Canvas canvas;
+
+    private final VideoSurface videoSurface;
+
+    private final MediaList mediaList;
+
+    private final MediaListPlayer mediaListPlayer;
+
+    private final JFrame mainFrame;
+
+    private final JFrame listFrame;
+
     public static void main(String[] args) throws Exception {
-        MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+        UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 
-        MediaListPlayer mediaListPlayer = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
+        TestMediaListPlayer app = new TestMediaListPlayer();
+    }
 
-        mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
+    public TestMediaListPlayer() {
+        this.mediaPlayerFactory = new MediaPlayerFactory();
+        this.mediaPlayer        = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
+        this.canvas             = new Canvas();
+        this.videoSurface       = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
+        this.mediaList          = mediaPlayerFactory.media().newMediaList();
+        this.mediaListPlayer    = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
+
+        mediaPlayer.subItems().setPlaySubItems(false);
+
+        mediaListPlayer.list().setMediaList(mediaList);
+        mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer);
+        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
+
+        mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer);
+
+        this.mainFrame = new MainFrame();
+        this.listFrame = new ListFrame();
+
+        mainFrame.addWindowListener(new WindowAdapter() {
             @Override
-            public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
-                System.out.println("nextItem()");
+            public void windowIconified(WindowEvent e) {
+                listFrame.setVisible(false);
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+                listFrame.setVisible(true);
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mediaListPlayer.release();
+                mediaList.release();
+                mediaPlayer.release();
+                System.exit(0);
             }
         });
 
-        MediaList mediaList = mediaPlayerFactory.media().newMediaList();
-        mediaList.addMedia("/home/movies/one.mp4");
-        mediaList.addMedia("/home/movies/two.mp4");
-        mediaList.addMedia("/home/movies/three.mp4");
+        mainFrame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                listFrame.setLocation(mainFrame.getX() + mainFrame.getWidth() + 4, mainFrame.getY());
+                listFrame.setSize(listFrame.getWidth(), mainFrame.getHeight());
+            }
 
-        mediaListPlayer.setMediaList(mediaList);
-        mediaListPlayer.setMode(MediaListPlayerMode.LOOP);
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                listFrame.setLocation(mainFrame.getX() + mainFrame.getWidth() + 4, mainFrame.getY());
+            }
 
-        mediaListPlayer.play();
+            @Override
+            public void componentShown(ComponentEvent e) {
+                listFrame.setVisible(true);
+            }
 
-        Thread.currentThread().join();
+            @Override
+            public void componentHidden(ComponentEvent e) {
+                listFrame.setVisible(false);
+            }
 
-        // mediaList.release();
-        // mediaListPlayer.release();
-        // mediaPlayerFactory.release();
+        });
+
+        mainFrame.setVisible(true);
     }
+
+    private class MainFrame extends JFrame {
+
+        public MainFrame() {
+            setTitle("MediaListPlayer Test");
+            setBounds(100, 100, 800, 600);
+
+            JPanel contentPane = new JPanel();
+            contentPane.setLayout(new BorderLayout());
+            canvas.setBackground(Color.black);
+            contentPane.add(canvas, BorderLayout.CENTER);
+            setContentPane(contentPane);
+        }
+
+    }
+
+    private class ListFrame extends JFrame {
+
+        public ListFrame() {
+            setTitle("Playlist");
+            setBounds(904, 100, 400, 600);
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+            JPanel contentPane = new JPanel();
+            contentPane.setLayout(new BorderLayout());
+
+            JList list = new JList();
+            list.setModel(new PlaylistModel());
+
+            JScrollPane scrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setViewportView(list);
+            contentPane.add(scrollPane, BorderLayout.CENTER);
+
+            JPanel controlsPane = new JPanel();
+            controlsPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JButton playButton = new JButton("Play");
+            controlsPane.add(playButton);
+            JButton nextButton = new JButton("Next");
+            controlsPane.add(nextButton);
+            JButton previousButton = new JButton("Previous");
+            controlsPane.add(previousButton);
+            JButton pauseButton = new JButton("Pause");
+            controlsPane.add(pauseButton);
+            JButton stopButton = new JButton("Stop");
+            controlsPane.add(stopButton);
+            JButton clearButton = new JButton("Clear");
+            controlsPane.add(clearButton);
+            contentPane.add(controlsPane, BorderLayout.SOUTH);
+
+            setContentPane(contentPane);
+
+            list.setTransferHandler(new MediaTransferHandler() {
+                @Override
+                protected void onMediaDropped(String[] uris) {
+                    for (String uri : uris) {
+                        mediaList.addMedia(uri);
+                    }
+                }
+            });
+
+            list.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                }
+            });
+
+            list.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JList list = (JList) e.getSource();
+                    if (e.getClickCount() == 2) {
+                        int index = list.locationToIndex(e.getPoint());
+                        if (index != -1) {
+                            mediaListPlayer.controls().playItem(index);
+                        }
+                    }
+                }
+            });
+
+            playButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    mediaListPlayer.controls().play();
+                }
+            });
+
+            nextButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    mediaListPlayer.controls().playNext();
+                }
+            });
+
+            previousButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    mediaListPlayer.controls().playPrevious();
+                }
+            });
+
+            pauseButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    mediaListPlayer.controls().pause();
+                }
+            });
+
+            stopButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    mediaListPlayer.controls().stop();
+                }
+            });
+
+            // FIXME this is hanging... sometimes
+            clearButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    mediaList.clear();
+                }
+            });
+
+//            mediaPlayer.events().addMediaPlayerEventListener(new LoggingMediaPlayerEventAdapter());
+            mediaListPlayer.events().addMediaListPlayerEventListener(new LoggingMediaListPlayerEventAdapter());
+        }
+    }
+
+    // FIXME
+    // This is not really ideal, there could be an update from a native thread between getSize() and something else...
+    // it's almost like each change should copy the native list to a java list really.
+    private class PlaylistModel extends AbstractListModel {
+
+        private PlaylistModel() {
+            mediaList.addMediaListEventListener(new MediaListEventAdapter() {
+                @Override
+                public void mediaListItemAdded(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+                    fireIntervalAdded(this, index, index);
+                }
+
+                @Override
+                public void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+                    fireIntervalRemoved(this, index, index);
+                }
+            });
+        }
+
+        @Override
+        public int getSize() {
+            return mediaList.size();
+        }
+
+        @Override
+        public Object getElementAt(int i) {
+            return mediaList.mrl(i);
+        }
+    }
+
 }

@@ -1,94 +1,66 @@
-/*
- * This file is part of VLCJ.
- *
- * VLCJ is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * VLCJ is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Copyright 2009-2019 Caprica Software Limited.
- */
-
 package uk.co.caprica.vlcj.test.discoverer;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_category_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.discoverer.MediaDiscoverer;
+import uk.co.caprica.vlcj.discoverer.MediaDiscovererDescription;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.medialist.MediaListItem;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.discoverer.MediaDiscoverer;
-import uk.co.caprica.vlcj.test.VlcjTest;
+import uk.co.caprica.vlcj.medialist.MediaListEventAdapter;
+
+import java.util.List;
 
 /**
- * Test of basic media discoverer functionality.
- * <p>
- * This test simply dumps out the (possibly nested) list of audio/video devices.
- * <p>
- * There are other native media discoverers available (depending on available vlc
- * service discovery plugins) but audio and video at least seem reliable - the
- * others may not be as reliable.
+ * A simple test of the media discoverer.
  */
-public class MediaDiscovererTest extends VlcjTest {
-
-    private static final String[] NAMES = {
-        "audio",
-        "video",
-    };
-
-    private final MediaPlayerFactory mediaPlayerFactory;
-
-    private final Map<String, MediaDiscoverer> discoverers = new LinkedHashMap<String, MediaDiscoverer>();
+public class MediaDiscovererTest {
 
     public static void main(String[] args) throws Exception {
-        new MediaDiscovererTest().run();
-    }
+        MediaPlayerFactory factory = new MediaPlayerFactory();
 
-    public MediaDiscovererTest() {
-        this.mediaPlayerFactory = new MediaPlayerFactory();
-    }
+        List<MediaDiscovererDescription> discoverers = factory.discoverers().discoverers(libvlc_media_discoverer_category_e.libvlc_media_discoverer_localdirs);
+        System.out.println("discoverers=" + discoverers);
 
-    private void run() {
-        for(String name : NAMES) {
-            System.out.println("Creating discoverer for '" + name + "'");
-            MediaDiscoverer discoverer = mediaPlayerFactory.discoverers().newMediaDiscoverer(name);
-            discoverers.put(name, discoverer);
+        if (discoverers.size() == 0) {
+            return;
         }
-        System.out.println();
 
-        refresh();
+        for (MediaDiscovererDescription description : discoverers) {
+            String name = description.name();
+            System.out.println("name=" + name);
+            MediaDiscoverer discoverer = factory.discoverers().discoverer(name);
+            System.out.println("discoverer=" + discoverer);
 
-        for(String name : NAMES) {
-            System.out.println("Releasing '" + name + "'");
-            MediaDiscoverer discoverer = discoverers.get(name);
-            discoverer.release();
+            MediaList list = discoverer.mediaList();
+            System.out.println("read only = " + list.isReadOnly());
+
+            list.addMediaListEventListener(new MediaListEventAdapter() {
+                @Override
+                public void mediaListWillAddItem(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+                    System.out.println("will add " + mediaInstance);
+                }
+
+                @Override
+                public void mediaListItemAdded(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+                    System.out.println("added " + mediaInstance);
+                }
+
+                @Override
+                public void mediaListWillDeleteItem(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+                    System.out.println("will delete " + mediaInstance);
+                }
+
+                @Override
+                public void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+                    System.out.println("deleted " + mediaInstance);
+                }
+            });
+
+            boolean started = discoverer.start();
+            System.out.println("started=" + started);
         }
+
+        Thread.currentThread().join();
     }
 
-    private void refresh() {
-        for(String name : NAMES) {
-            System.out.println("Testing '" + name + "'");
-            MediaDiscoverer discoverer = discoverers.get(name);
-            MediaList mediaList = discoverer.getMediaList();
-            List<MediaListItem> items = mediaList.items();
-            dumpItems(items, 1);
-            System.out.println();
-        }
-    }
-
-    private void dumpItems(List<MediaListItem> items, int indent) {
-        for(MediaListItem item : items) {
-            System.out.printf("%" + indent + "s%s%n", " ", item);
-            dumpItems(item.subItems(), indent+1);
-        }
-    }
 }

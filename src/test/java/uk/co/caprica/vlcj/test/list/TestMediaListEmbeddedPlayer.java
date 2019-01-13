@@ -31,7 +31,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
@@ -55,14 +54,14 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
 
         MediaListPlayer mediaListPlayer = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
 
-        mediaListPlayer.addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
+        mediaListPlayer.events().addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
             @Override
-            public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
+            public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
                 System.out.println("nextItem()");
             }
         });
 
-        mediaListPlayer.setMediaPlayer(mediaPlayer); // <--- Important, associate the media player with the media list player
+        mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer); // <--- Important, associate the media player with the media list player
 
         JPanel cp = new JPanel();
         cp.setBackground(Color.black);
@@ -81,10 +80,10 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
         mediaList.addMedia("/movies/2.mp4");
         mediaList.addMedia("/movies/3.mp4");
 
-        mediaListPlayer.setMediaList(mediaList);
-        mediaListPlayer.setMode(MediaListPlayerMode.LOOP);
+        mediaListPlayer.list().setMediaList(mediaList);
+        mediaListPlayer.mode().setMode(MediaListPlayerMode.LOOP);
 
-        mediaListPlayer.play();
+        mediaListPlayer.controls().play();
 
         // This looping is just for purposes of demonstration, ordinarily you would
         // not do this of course
@@ -93,7 +92,7 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
             mediaPlayer.chapters().setChapter(3);
 
             Thread.sleep(5000);
-            mediaListPlayer.playNext();
+            mediaListPlayer.controls().playNext();
         }
 
         // mediaList.release();

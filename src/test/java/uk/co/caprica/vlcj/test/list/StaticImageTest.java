@@ -56,9 +56,9 @@ public class StaticImageTest extends VlcjTest {
         playlist.addMedia("/home/mark/1.jpg", "image-duration=5"); // Play picture for 5 seconds
         playlist.addMedia("/home/mark/2.jpg", "image-duration=5");
         MediaListPlayer player = factory.mediaPlayers().newMediaListPlayer();
-        player.setMediaList(playlist);
-        player.setMode(MediaListPlayerMode.LOOP);
-        player.play();
+        player.list().setMediaList(playlist);
+        player.mode().setMode(MediaListPlayerMode.LOOP);
+        player.controls().play();
         Thread.currentThread().join();
     }
 }

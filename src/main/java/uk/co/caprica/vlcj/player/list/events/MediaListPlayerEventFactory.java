@@ -21,94 +21,30 @@ package uk.co.caprica.vlcj.player.list.events;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
-import uk.co.caprica.vlcj.binding.internal.media_list_player_next_item_set;
-import uk.co.caprica.vlcj.binding.internal.media_meta_changed;
-import uk.co.caprica.vlcj.binding.internal.media_parsed_changed;
-import uk.co.caprica.vlcj.binding.internal.media_state_changed;
-import uk.co.caprica.vlcj.binding.internal.media_subitem_added;
-import uk.co.caprica.vlcj.player.events.standard.MediaPlayerEventType;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 /**
- * A factory that creates a media player event instance for a native media list player event.
+ * A factory that creates a media list player event instance for a native media list player event.
  */
-public class MediaListPlayerEventFactory {
+public final class MediaListPlayerEventFactory {
 
     /**
-     * Media player to create events for.
-     */
-    private final MediaListPlayer mediaListPlayer;
-
-    /**
-     * Create a media player event factory.
-     *
-     * @param mediaPlayer media list player to create events for
-     */
-    public MediaListPlayerEventFactory(MediaListPlayer mediaPlayer) {
-        this.mediaListPlayer = mediaPlayer;
-    }
-
-    /**
-     * Create a new media player event for a given native event.
+     * Create a new media list player event for a given native event.
      *
      * @param event native event
-     * @param eventMask bit mask of enabled events (i.e. events to send notifications for)
-     * @return media player event, or <code>null</code> if the native event type is not enabled or otherwise could not be handled
+     * @return media list player event, or <code>null</code> if not a known event
      */
-    public MediaListPlayerEvent newMediaListPlayerEvent(libvlc_event_t event, long eventMask) {
-        // Create an event suitable for the native event type...
-        MediaListPlayerEvent result = null;
-        switch(libvlc_event_e.event(event.type)) {
+    public static MediaListPlayerEvent createEvent(MediaListPlayer mediaListPlayer, libvlc_event_t event) {
+        switch (libvlc_event_e.event(event.type)) {
+            case libvlc_MediaListPlayerPlayed     : return new MediaListPlayerPlayedEvent        (mediaListPlayer);
+            case libvlc_MediaListPlayerNextItemSet: return new MediaListPlayerNextItemSetEvent   (mediaListPlayer, event);
+            case libvlc_MediaListPlayerStopped    : return new MediaListPlayerStoppedEvent       (mediaListPlayer);
 
-        // === Events relating to the media list player =========================
-
-            case libvlc_MediaListPlayerNextItemSet:
-                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_CHANGED)) {
-                    libvlc_media_t media = ((media_list_player_next_item_set)event.u.getTypedValue(media_list_player_next_item_set.class)).item;
-                    result = new MediaListPlayerNextItemSetEvent(mediaListPlayer, media, mediaListPlayer.mrl(media));
-                }
-                break;
-
-            // === Events relating to the current media =============================
-
-            case libvlc_MediaMetaChanged:
-                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_META_CHANGED)) {
-                    result = new MediaListMediaMetaChangedEvent(mediaListPlayer, ((media_meta_changed)event.u.getTypedValue(media_meta_changed.class)).meta_type);
-                }
-                break;
-
-            case libvlc_MediaSubItemAdded:
-                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_SUB_ITEM_ADDED)) {
-                    result = new MediaListMediaSubItemAddedEvent(mediaListPlayer, ((media_subitem_added)event.u.getTypedValue(media_subitem_added.class)).new_child);
-                }
-                break;
-
-            case libvlc_MediaDurationChanged:
-                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_DURATION_CHANGED)) {
-                    result = new MediaListMediaDurationChangedEvent(mediaListPlayer, ((media_duration_changed)event.u.getTypedValue(media_duration_changed.class)).new_duration);
-                }
-                break;
-
-            case libvlc_MediaParsedChanged:
-                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_PARSED_CHANGED)) {
-                    result = new MediaListMediaParsedChangedEvent(mediaListPlayer, ((media_parsed_changed)event.u.getTypedValue(media_parsed_changed.class)).new_status);
-                }
-                break;
-
-            case libvlc_MediaFreed:
-                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_FREED)) {
-                    result = new MediaListMediaFreedEvent(mediaListPlayer);
-                }
-                break;
-
-            case libvlc_MediaStateChanged:
-                if(MediaPlayerEventType.set(eventMask, MediaPlayerEventType.MEDIA_STATE_CHANGED)) {
-                    result = new MediaListMediaStateChangedEvent(mediaListPlayer, ((media_state_changed)event.u.getTypedValue(media_state_changed.class)).new_state);
-                }
-                break;
+            default                               : return null;
         }
-        return result;
     }
+
+    private MediaListPlayerEventFactory() {
+    }
+
 }

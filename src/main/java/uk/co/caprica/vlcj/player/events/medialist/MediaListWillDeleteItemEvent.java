@@ -17,24 +17,26 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.medialist.events;
+package uk.co.caprica.vlcj.player.events.medialist;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.media_list_will_delete_item;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 
 /**
- * Encapsulation of a media list item deleted event.
+ * Encapsulation of a media list will delete item event.
  */
-class MediaListItemDeletedEvent extends AbstractMediaListEvent {
+final class MediaListWillDeleteItemEvent extends MediaListEvent {
 
     /**
-     * Native media instance that was deleted.
+     * Native media instance that will deleted.
      */
     private final libvlc_media_t mediaInstance;
 
     /**
-     * Index from which the item was deleted.
+     * Index from which the item will be deleted.
      */
     private final int index;
 
@@ -42,17 +44,20 @@ class MediaListItemDeletedEvent extends AbstractMediaListEvent {
      * Create a media list event.
      *
      * @param mediaList media list the event relates to
-     * @param mediaInstance native media instance that was deleted
-     * @param index index from which the item was deleted
+     * @param mediaInstance native media instance that will be added
+     * @param index index from which the item will be deleted
      */
-    MediaListItemDeletedEvent(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+    MediaListWillDeleteItemEvent(MediaList mediaList, libvlc_event_t event) {
         super(mediaList);
-        this.mediaInstance = mediaInstance;
-        this.index = index;
+
+        media_list_will_delete_item deleteItemEvent = ((media_list_will_delete_item) event.u.getTypedValue(media_list_will_delete_item.class));
+
+        this.mediaInstance = deleteItemEvent.item;
+        this.index         = deleteItemEvent.index;
     }
 
     @Override
     public void notify(MediaListEventListener listener) {
-        listener.mediaListItemDeleted(mediaList, mediaInstance, index);
+        listener.mediaListWillDeleteItem(mediaList, mediaInstance, index);
     }
 }

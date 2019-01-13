@@ -51,10 +51,10 @@ public class AudioMediaListPlayerComponent extends AudioMediaPlayerComponent imp
         MediaPlayerFactory mediaPlayerFactory = getMediaPlayerFactory();
         mediaListPlayer = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
         mediaList = mediaPlayerFactory.media().newMediaList();
-        mediaListPlayer.setMediaList(mediaList);
-        mediaListPlayer.setMediaPlayer(getMediaPlayer());
+        mediaListPlayer.list().setMediaList(mediaList);
+        mediaListPlayer.mediaPlayer().setMediaPlayer(getMediaPlayer());
         // Register listeners
-        mediaListPlayer.addMediaListPlayerEventListener(this);
+        mediaListPlayer.events().addMediaListPlayerEventListener(this);
         // Sub-class initialisation
         onAfterConstruct();
     }
@@ -95,38 +95,15 @@ public class AudioMediaListPlayerComponent extends AudioMediaPlayerComponent imp
     // === MediaListPlayerEventListener =========================================
 
     @Override
-    public void played(MediaListPlayer mediaListPlayer) {
+    public void mediaListPlayerFinished(MediaListPlayer mediaListPlayer) {
     }
 
     @Override
-    public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item, String itemMrl) {
+    public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
     }
 
     @Override
     public void stopped(MediaListPlayer mediaListPlayer) {
     }
 
-    @Override
-    public void mediaMetaChanged(MediaListPlayer mediaListPlayer, int metaType) {
-    }
-
-    @Override
-    public void mediaSubItemAdded(MediaListPlayer mediaListPlayer, libvlc_media_t subItem) {
-    }
-
-    @Override
-    public void mediaDurationChanged(MediaListPlayer mediaListPlayer, long newDuration) {
-    }
-
-    @Override
-    public void mediaParsedChanged(MediaListPlayer mediaListPlayer, int newStatus) {
-    }
-
-    @Override
-    public void mediaFreed(MediaListPlayer mediaListPlayer) {
-    }
-
-    @Override
-    public void mediaStateChanged(MediaListPlayer mediaListPlayer, int newState) {
-    }
 }

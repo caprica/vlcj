@@ -31,9 +31,6 @@ import uk.co.caprica.vlcj.player.events.*;
  */
 public final class SemanticEventFactory {
 
-    private SemanticEventFactory() {
-    }
-
     /**
      * Create a new semantic event for new media.
      *
@@ -81,6 +78,9 @@ public final class SemanticEventFactory {
      */
     public static MediaPlayerEvent createMediaPlayerReadyEvent(MediaPlayer mediaPlayer) {
         return new MediaPlayerReadyEvent(mediaPlayer);
+    }
+
+    private SemanticEventFactory() {
     }
 
 }

@@ -2589,6 +2589,7 @@ public interface LibVlc extends Library {
      * @param p_inst libvlc instance
      * @param psz_name service name
      * @return media discover object or NULL in case of error
+     *
      * @since LibVLC 3.0.0 or later
      */
     libvlc_media_discoverer_t libvlc_media_discoverer_new(libvlc_instance_t p_inst, String psz_name);
@@ -2603,6 +2604,7 @@ public interface LibVlc extends Library {
      *
      * @param p_mdis media discover object
      * @return -1 in case of error, 0 otherwise
+     *
      * @since LibVLC 3.0.0 or later
      */
     int libvlc_media_discoverer_start(libvlc_media_discoverer_t p_mdis);
@@ -2613,6 +2615,7 @@ public interface LibVlc extends Library {
      * @see #libvlc_media_discoverer_start(libvlc_media_discoverer_t)
      *
      * @param p_mdis media discover object
+     *
      * @since LibVLC 3.0.0 or later
      */
     void libvlc_media_discoverer_stop(libvlc_media_discoverer_t p_mdis);
@@ -2624,14 +2627,6 @@ public interface LibVlc extends Library {
      * @param p_mdis media service discover object
      */
     void libvlc_media_discoverer_release(libvlc_media_discoverer_t p_mdis);
-
-    /**
-     * Get media service discover object its localized name.
-     *
-     * @param p_mdis media discover object
-     * @return localized name
-     */
-    Pointer libvlc_media_discoverer_localized_name(libvlc_media_discoverer_t p_mdis);
 
     /**
      * Get media service discover media list.
@@ -2652,26 +2647,26 @@ public interface LibVlc extends Library {
     /**
      * Get media discoverer services by category
      *
-     * @since LibVLC 3.0.0 and later.
-     *
      * @param p_inst libvlc instance
      * @param i_cat category of services to fetch
-     * @param ppp_services address to store an allocated array of media discoverer services (must be freed with libvlc_media_discoverer_services_release() by the caller) [OUT]
-     * @return the number of media discoverer services (zero on error)
+     * @param ppp_services address to store an allocated array of media discoverer services (must be freed with libvlc_media_discoverer_list_release() by the caller) [OUT]
+     * @return the number of media discoverer services (0 on error)
+     *
+     * @since LibVLC 3.0.0 and later.
      */
-    int libvlc_media_discoverer_services_get(libvlc_instance_t p_inst, int i_cat, Pointer ppp_services);
+    size_t libvlc_media_discoverer_list_get(libvlc_instance_t p_inst, int i_cat, PointerByReference ppp_services);
 
     /**
      * Release an array of media discoverer services
      *
-     * @since LibVLC 3.0.0 and later.
-     *
-     * @see #libvlc_media_discoverer_services_get(libvlc_instance_t, int, Pointer)
+     * @see libvlc_media_discoverer_list_get()
      *
      * @param pp_services array to release
      * @param i_count number of elements in the array
+     *
+     * @since LibVLC 3.0.0 and later.
      */
-    void libvlc_media_discoverer_services_release(Pointer pp_services, int i_count);
+    void libvlc_media_discoverer_list_release(Pointer pp_services, size_t i_count);
 
     // === libvlc_media_discoverer.h ============================================
 

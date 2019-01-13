@@ -21,8 +21,6 @@ package uk.co.caprica.vlcj.test.cue;
 
 import uk.co.caprica.vlcj.component.AudioMediaPlayerComponent;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.medialist.MediaListItem;
-import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -76,8 +74,8 @@ public class CueTest extends VlcjTest {
 //        } FIXME
         // Dump the media list
         MediaList mediaList = player.getMediaPlayer().subItems().subItemsMediaList();
-        List<MediaListItem> items = mediaList.items();
-        for(MediaListItem item : items) {
+        List<String> items = mediaList.items();
+        for(String item : items) {
             System.out.println(item);
         }
     }

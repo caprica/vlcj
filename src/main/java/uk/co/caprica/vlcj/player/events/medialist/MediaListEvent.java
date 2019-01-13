@@ -17,34 +17,37 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.list.events;
+package uk.co.caprica.vlcj.player.events.medialist;
 
-import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
+import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 
 /**
- *
+ * Base implementation for media list events.
+ * <p>
+ * Every instance of an event refers to an associated media list.
  */
-class MediaListMediaStateChangedEvent extends AbstractMediaListPlayerEvent {
+abstract public class MediaListEvent {
 
     /**
-     * State.
+     * The media list the event relates to.
      */
-    private final int newState;
+    protected final MediaList mediaList;
 
     /**
-     * Create a media list player event.
+     * Create a media list event.
      *
-     * @param mediaListPlayer media list player the event relates to
-     * @param newState state
+     * @param mediaList media list that the event relates to
      */
-    MediaListMediaStateChangedEvent(MediaListPlayer mediaListPlayer, int newState) {
-        super(mediaListPlayer);
-        this.newState = newState;
+    protected MediaListEvent(MediaList mediaList) {
+        this.mediaList = mediaList;
     }
 
-    @Override
-    public void notify(MediaListPlayerEventListener listener) {
-        listener.mediaStateChanged(mediaListPlayer, newState);
-    }
+    /**
+     * Notify a listener of the event.
+     *
+     * @param listener event listener to notify
+     */
+    abstract public void notify(MediaListEventListener listener);
+
 }
