@@ -25,7 +25,7 @@ import com.sun.jna.Pointer;
 /**
  *
  */
-public interface display_login extends Callback {
+public interface libvlc_dialog_display_login_cb extends Callback {
 
     /**
      * Called when a login dialog needs to be displayed
@@ -42,5 +42,5 @@ public interface display_login extends Callback {
      * @param psz_default_username user name that should be set on the user form
      * @param b_ask_store if true, ask the user if he wants to save the credentials
      */
-    void display_login(Pointer p_data, Pointer p_id, String psz_title, String psz_text, String psz_default_username, int b_ask_store);
+    void callback(Pointer p_data, libvlc_dialog_id p_id, String psz_title, String psz_text, String psz_default_username, int b_ask_store);
 }

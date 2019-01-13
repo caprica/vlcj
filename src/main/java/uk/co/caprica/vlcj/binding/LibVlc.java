@@ -32,6 +32,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_set_volume_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_setup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_cbs;
+import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_id;
 import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
@@ -53,7 +54,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_type_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_rd_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
@@ -2509,7 +2509,7 @@ public interface LibVlc extends Library {
      * @param p_id id of the dialog
      * @param p_context opaque pointer associated with the dialog id
      */
-    void libvlc_dialog_set_context(Pointer p_id, Pointer p_context);
+    void libvlc_dialog_set_context(libvlc_dialog_id p_id, Pointer p_context);
 
     /**
      * Return the opaque pointer associated with the dialog id.
@@ -2519,7 +2519,7 @@ public interface LibVlc extends Library {
      * @param p_id id of the dialog
      * @return opaque pointer associated with the dialog id
      */
-    Pointer libvlc_dialog_get_context(Pointer p_id);
+    Pointer libvlc_dialog_get_context(libvlc_dialog_id p_id);
 
     /**
      * Post a login answer.
@@ -2536,7 +2536,7 @@ public interface LibVlc extends Library {
      * @param b_store if true, store the credentials
      * @return 0 on success, or -1 on error
      */
-    int libvlc_dialog_post_login(Pointer p_id, String psz_username, String psz_password, int b_store);
+    int libvlc_dialog_post_login(libvlc_dialog_id p_id, String psz_username, String psz_password, int b_store);
 
     /**
      * Post a question answer.
@@ -2551,7 +2551,7 @@ public interface LibVlc extends Library {
      * @param i_action 1 for action1, 2 for action2
      * @return 0 on success, or -1 on error
      */
-    int libvlc_dialog_post_action(Pointer p_id, int i_action);
+    int libvlc_dialog_post_action(libvlc_dialog_id p_id, int i_action);
 
     /**
      * Dismiss a dialog.
@@ -2565,7 +2565,7 @@ public interface LibVlc extends Library {
      * @param p_id id of the dialog
      * @return 0 on success, or -1 on error
      */
-    int libvlc_dialog_dismiss(Pointer p_id);
+    int libvlc_dialog_dismiss(libvlc_dialog_id p_id);
 
     // === libvlc_dialog.h ======================================================
 

@@ -72,6 +72,8 @@ public class MediaPlayerFactory {
 
     private final AudioService audioService;
 
+    private final DialogsService dialogsService;
+
     private final DiscovererService discovererService;
 
     private final EqualizerService equalizerService;
@@ -100,6 +102,7 @@ public class MediaPlayerFactory {
 
         this.applicationService  = new ApplicationService (this);
         this.audioService        = new AudioService       (this);
+        this.dialogsService      = new DialogsService     (this);
         this.discovererService   = new DiscovererService  (this);
         this.equalizerService    = new EqualizerService   (this);
         this.mediaPlayerService  = new MediaPlayerService (this);
@@ -160,6 +163,10 @@ public class MediaPlayerFactory {
 
     public final AudioService audio() {
         return audioService;
+    }
+
+    public final DialogsService dialogs() {
+        return dialogsService;
     }
 
     public final DiscovererService discoverers() {

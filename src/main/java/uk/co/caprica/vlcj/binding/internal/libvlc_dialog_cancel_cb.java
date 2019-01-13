@@ -25,7 +25,7 @@ import com.sun.jna.Pointer;
 /**
  *
  */
-public interface cancel extends Callback {
+public interface libvlc_dialog_cancel_cb extends Callback {
 
     /**
      * Called when a displayed dialog needs to be cancelled
@@ -36,5 +36,5 @@ public interface cancel extends Callback {
      * @param p_data opaque pointer for the callback
      * @param p_id id of the dialog
      */
-    void cancel(Pointer p_data, Pointer p_id);
+    void callback(Pointer p_data, libvlc_dialog_id p_id);
 }

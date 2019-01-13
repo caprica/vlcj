@@ -25,7 +25,7 @@ import com.sun.jna.Pointer;
 /**
  *
  */
-public interface display_question extends Callback {
+public interface libvlc_dialog_display_question_cb extends Callback {
 
     /**
      * Called when a question dialog needs to be displayed
@@ -45,5 +45,5 @@ public interface display_question extends Callback {
      * @param psz_action1 text of the first button, if NULL, don't display this button
      * @param psz_action2 text of the second button, if NULL, don't display this button
      */
-    void display_question(Pointer p_data, Pointer p_id, String psz_title, String psz_text, int i_type, String psz_cancel, String psz_action1, String psz_action2);
+    void callback(Pointer p_data, libvlc_dialog_id p_id, String psz_title, String psz_text, int i_type, String psz_cancel, String psz_action1, String psz_action2);
 }

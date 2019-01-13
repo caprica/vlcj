@@ -19,20 +19,11 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import com.sun.jna.Callback;
-import com.sun.jna.Pointer;
+import com.sun.jna.PointerType;
 
 /**
  *
  */
-public interface update_progress extends Callback {
+public class libvlc_dialog_id extends PointerType {
 
-    /**
-     * Called when an error message needs to be displayed
-     *
-     * @param p_data opaque pointer for the callback
-     * @param psz_title title of the diaog
-     * @param psz_text text of the dialog
-     */
-    void display_error(Pointer p_data, String psz_title, String psz_text);
 }
