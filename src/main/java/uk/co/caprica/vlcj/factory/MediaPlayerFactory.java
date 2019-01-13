@@ -96,7 +96,7 @@ public class MediaPlayerFactory {
         logger.debug("MediaPlayerFactory(discovery={},libvlcArgs={})", discovery, libvlcArgs);
 
         this.libvlc         = discoverNativeLibrary(discovery);
-        this.libvlcInstance = newLibVlcInstance();
+        this.libvlcInstance = newLibVlcInstance(libvlcArgs != null ? libvlcArgs : new String[0]);
 
         this.applicationService  = new ApplicationService (this);
         this.audioService        = new AudioService       (this);
