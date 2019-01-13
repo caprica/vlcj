@@ -462,14 +462,6 @@ public class DefaultMediaMeta implements MediaMeta {
         return result;
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        logger.debug("finalize()");
-        logger.debug("Meta data has been garbage collected");
-        super.finalize();
-        // FIXME should this invoke release()?
-    }
-
     /**
      * Get a local meta data value for a media instance.
      *

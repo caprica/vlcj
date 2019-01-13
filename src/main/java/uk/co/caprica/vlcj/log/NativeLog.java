@@ -195,14 +195,6 @@ public class NativeLog {
         logger.debug("Listeners shut down.");
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        logger.debug("finalize()");
-        logger.debug("Native log has been garbage collected");
-        super.finalize();
-        // FIXME should this invoke release()?
-    }
-
     /**
      *
      *

@@ -224,13 +224,6 @@ public abstract class AbstractCallbackMedia extends AbstractMedia implements Cal
     }
 
     @Override
-    protected void finalize() throws Throwable {
-        logger.debug("finalize()");
-        logger.debug("Callback media has been garbage collected");
-        super.finalize();
-    }
-
-    @Override
     public final libvlc_media_open_cb getOpen() {
         return open;
     }
