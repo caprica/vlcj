@@ -73,7 +73,7 @@ You can follow @capricasoftware on Twitter for more vlcj news.
 Documentation
 -------------
 
-Some new tutorials are available at the [official project page](http://capricasoftware.co.uk/projects/vlcj/tutorial).
+Some new tutorials are available at the [official project page](http://capricasoftware.co.uk/projects/vlcj/tutorials).
 
 The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at github").
 
