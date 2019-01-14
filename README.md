@@ -1,35 +1,54 @@
 ![vlcj](https://github.com/caprica/vlcj/raw/master/etc/vlcj-logo.png "vlcj")
 
+*You are currently looking at the development branch for vlcj-4.0.0, if you want a stable version of vlcj you should
+switch to the [vlcj-3.x branch](https://github.com/caprica/vlcj/tree/vlcj-3.x).* 
+
 vlcj
 ====
 
-The vlcj project provides a Java framework to allow an instance of a native
-[VLC](http://www.videolan.org/vlc "VLC") media player to be embedded in a Java
-AWT Window or Swing JFrame.
+The vlcj project provides a Java framework to allow an instance of a native [VLC](http://www.videolan.org/vlc "VLC")
+media player to be embedded in a Java application.
 
-You get more than just simple bindings, you also get a higher level framework
-that hides a lot of the complexities of working with LibVLC.
+You get more than just simple bindings, you also get a higher level framework that hides a lot of the complexities of
+working with LibVLC.
 
-vlcj is primarily developed and therefore extensively tested on Linux - it does
-also work just fine on Windows and MacOSX, although there may be some
-limitations on OSX.
+vlcj is primarily developed and therefore extensively tested on Linux - it does also work just fine on Windows and
+OSX, although there may be some limitations on OSX.
 
-At least JDK 1.6 is required, and it works without changes on JDK 1.7+.
+At least JDK 1.6 is required.
+
+*This version of vlcj requires VLC 3.0.0 as a minimum, no earlier version is supported.*
 
 This is the open source vlcj project page, see also the 'official'
-[home page](http://capricasoftware.co.uk/projects/vlcj "Official vlcj home page at Caprica Software")
-where you can find more information as well as some new simple tutorials.
+[home page](http://capricasoftware.co.uk/projects/vlcj "Official vlcj home page at Caprica Software") where you can find
+more information as well as some new simple tutorials.
 
-Version 3.0.0+ of vlcj requires version 2.1.0+ of VLC, earlier versions of VLC
-are *not* supported and will *not* work.
+vlcj-4
+======
 
-Version 3.0.0+ of vlcj requires version 3.5.2 of JNA.
+This is the new development branch for the next major release of vlcj. Most things will stay the same but vlcj is
+undergoing a significant refactoring exercise for the long-term health of the project and ease of further development.
 
-Some features of version 3.0.0+ of vlcj (such as the new audio equalizer API)
-require version 2.2.0+ of VLC.
+As such, at the present time the API is fluid and completely subject to change. If you are migraging from vlcj-3 then
+you will have to make changes to your own code. The implementation behind the API is pretty much the same as it ever
+was, although there have been and will continue to be significant improvements in some areas, nevertheless if you are
+using this branch you do so at your own risk.
 
-If you still need to use VLC 2.0.x then you must stay with vlcj 2.x.x instead
-of upgrading to the new vlcj 3.0.0 series.
+Any issues raised pertaining to these API changes will be summarily deleted, perhaps with a snarky comment, although
+sensible suggestions for improvements and genuine problems (i.e. problems other than "why did this change?" and "my code
+doesn't compile any more") are still welcome. 
+
+At the present time there is no cut-off for API changes or in fact any other breaking changes, so use this branch at
+your own risk!
+
+This branch will also introduce significant new features with new API, some headline new features are:
+
+ - 360 degree video, changing pitch, yaw, roll etc
+ - new API for alternate renderers (e.g. you can now send your media to Chromecast)
+ - integrated native dialog callbacks (e.g. you can now be prompted for credentials when accessing a protected stream)
+ - use any AWT Component as a video surface, not just a Canvas (Window should work on OSX)
+
+For a full list of changes in this release, check the [release milestone](https://github.com/caprica/vlcj/milestone/14).
 
 Maven Dependency
 ----------------
@@ -40,115 +59,34 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>3.12.0</version>
+    <version>4.0.0</version>
 </dependency>
 ```
+
+*This artefact may not be available for quite some time, we do not push snapshot releases to Maven Central.*
 
 News
 ----
 
-Development on vlcj 4.x has begun! If you are looking for the latest stable release of vlcj, you should
-switch to the vlcj-3.x branch. There will not be wholesale API changes, but some API breakage will occur. vlcj 4.x will
-require VLC 3.x as a minimum. If you want to use VLC 2.x, use the vlcj 3.x branch.
-
-_The 3.12.0 release of vlcj will likely by the last of the 3.x series. New development will switch to vlcj 4.x, which
-may make breaking API changes such as removing native functions no longer supported by LibVLC. As a minimum, LibVLC 3.x
-will be required for vlcj 4, LibVLC 2.x will not be supported. We may also bump the JDK dependency which is currently at
-JDK 6._
-
-08/01/2019 Made new release 3.12.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), only change was to add
-a potentially very useful new "media player ready" event to the media player event listener which is fired once when the
-media has *definitely* started playing - this can be useful to properly enable logo/marquee at the right time, select
-tracks and so on. Counter-intuitively, the "playing" event can *not* be used for this!
-
-03/01/2019 Made new release 3.11.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj), various small issues
-addressed, see [milestone issues](https://github.com/caprica/vlcj/milestone/27?closed=1) for more details. This release
-bumps 3rd party library dependencies to the latest versions, including JNA, so beware!
-
-02/01/2019 Happy new year! This project is still very much alive - but why hasn't there been a new release for a while?
-Well, this project is stable and mature and we very rarely get any significant bug reports. LibVLC also does not add
-significant new features all that often and it too has a slow release cycle. The latest release version of vlcj works
-just fine with the latest VLC 3.x. So we don't just push out new releases for the sake of it. Nevertheless, development
-is still active and ongoing and we expect to push out new releases this year, fixing small issues, and looking at the
-latest LibVLC to see if there's anything new there worth adding.
-
-03/02/2016 [Experimental branch](https://github.com/caprica/vlcj/tree/experimental) with direct
-rendering media player improvements, removing a full frame memory copy. This branch is *not* backwardly
-compatibly with vlcj 3.x.
-
-30/12/2015 Made new release 3.10.1 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
-fixes a problem finding VLC plugins on Windows after the upgrade to JNA 4.1.0.
-
-20/12/2015 Made new release 3.10.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
-uses JNA 4.1.0, support new meta data and event exposed by LibVLC 3.x (not yet released), minor
-Javadoc update, minor fix to the media list player.
-
-12/08/2015 Made new release 3.9.0 (Mal edition) at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
-fixes a YouTube issue, adds supports for new LibVLC 3.x audio volume/mute/cork events.
-
-14/07/2015 Made new release 3.8.0 (New Horizons edition) at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
-check the github issues milestone for details. New extended chapter and title information
-(LibVLC 3.0.0+). Minor bug fixes and improvements.
-
-25/04/2015 Made new release 3.7.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
-check the github issues milestone for details. Play media using Java IO (LibVLC 3.0.0+)! Minor
-fixes and improvements.
-
-10/03/2015 Made new release 3.6.0 at [Maven Central](http://search.maven.org/#search|ga|1|vlcj),
-check the github issues milestone for details. Minor fixes and improvements.
-
-02/03/2015 vlcj-pro released, free time-limited trial packages are available from the official
-[vlcj-pro](http://t.co/Gv04rAta9c) product page.
-
-Version 3.0.0+ of vlcj requires version 2.1.0+ of vlc, earlier versions of vlc
-are *not* supported and will *not* work.
-
-Some features provided by vlcj depend on the runtime version of vlc. The most current release of
-vlcj often tracks the bleeding edge of VLC development, consequently some features provided by
-vlcj will require a very recent version of VLC and in some cases a pre-release version of VLC
-may be needed. Where the runtime version of VLC is not new enough, in most cases vlcj attempts to
-fail-safe. 
-
-See also [vlcj-info](https://github.com/caprica/vlcj-info) for a small library that can extract
-information from local media files using the MediaInfo library.
-
-You can also follow @capricasoftware on Twitter for more vlcj news.
+You can follow @capricasoftware on Twitter for more vlcj news.
 
 Documentation
 -------------
 
-Some new tutorials are available at the [official project page](http://capricasoftware.co.uk/#/projects/vlcj/tutorial).
+Some new tutorials are available at the [official project page](http://capricasoftware.co.uk/projects/vlcj/tutorial).
 
 The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at github").
 
-Online Javadoc is available:
+Online Javadoc is *not yet available* but will appear here in due course:
 
-* [3.12.0 (current)](http://caprica.github.com/vlcj/javadoc/3.12.0/index.html "3.12.0 Javadoc")
-* [3.11.0](http://caprica.github.com/vlcj/javadoc/3.11.0/index.html "3.11.0 Javadoc")
-* [3.10.1](http://caprica.github.com/vlcj/javadoc/3.10.1/index.html "3.10.1 Javadoc")
-* [3.10.0](http://caprica.github.com/vlcj/javadoc/3.10.0/index.html "3.10.0 Javadoc")
-* [3.9.0](http://caprica.github.com/vlcj/javadoc/3.9.0/index.html "3.9.0 Javadoc")
-* [3.8.0](http://caprica.github.com/vlcj/javadoc/3.8.0/index.html "3.8.0 Javadoc")
-* [3.7.0](http://caprica.github.com/vlcj/javadoc/3.7.0/index.html "3.7.0 Javadoc")
-* [3.6.0](http://caprica.github.com/vlcj/javadoc/3.6.0/index.html "3.6.0 Javadoc")
-* [3.5.0](http://caprica.github.com/vlcj/javadoc/3.5.0/index.html "3.5.0 Javadoc")
-* [3.4.0](http://caprica.github.com/vlcj/javadoc/3.4.0/index.html "3.4.0 Javadoc")
-* [3.3.0](http://caprica.github.com/vlcj/javadoc/3.3.0/index.html "3.3.0 Javadoc")
-* [3.2.0](http://caprica.github.com/vlcj/javadoc/3.2.0/index.html "3.2.0 Javadoc")
-* [3.1.0](http://caprica.github.com/vlcj/javadoc/3.1.0/index.html "3.1.0 Javadoc")
-* [3.0.0](http://caprica.github.com/vlcj/javadoc/3.0.0/index.html "3.0.0 Javadoc")
-* [2.4.0](http://caprica.github.com/vlcj/javadoc/2.4.0/index.html "2.4.0 Javadoc")
-* [2.3.0](http://caprica.github.com/vlcj/javadoc/2.3.0/index.html "2.3.0 Javadoc")
-* [2.2.0](http://caprica.github.com/vlcj/javadoc/2.2.0/index.html "2.2.0 Javadoc")
-* [2.1.0](http://caprica.github.com/vlcj/javadoc/2.1.0/index.html "2.1.0 Javadoc")
-* [2.0.0](http://caprica.github.com/vlcj/javadoc/2.0.0/index.html "2.0.0 Javadoc")
+* [4.0.0 (current)](http://caprica.github.com/vlcj/javadoc/4.0.0/index.html "4.0.0 Javadoc")
 
 Examples
 --------
 
 There are many examples in the vlcj test sources showing how to use vlcj.
 
-For a more complete example of a feature-rich media player built with vlcj, 
+For a more complete example of a feature-rich media player built with vlcj,
 see [vlcj-player](https://github.com/caprica/vlcj-player).
 
 Support
@@ -156,12 +94,11 @@ Support
 
 Development of vlcj is carried out by [Caprica Software](http://www.capricasoftware.co.uk).
 
-Free support for Open Source and non-commercial projects is generally provided - you
-can use [github issues](https://github.com/caprica/vlcj/issues "vlcj github issues")
-for this purpose.
+Free support for Open Source and non-commercial projects is generally provided - you can
+use [github issues](https://github.com/caprica/vlcj/issues "vlcj github issues") for this purpose.
 
-Support for commercial projects is provided exclusively on commercial terms -
-send an email to the following address for more information:
+Support for commercial projects is provided exclusively on commercial terms - send an email to the following address for
+more information:
 
 > mark [dot] lee [at] capricasoftware [dot] co [dot] uk
 
@@ -170,7 +107,7 @@ License
 
 The vlcj framework is provided under the GPL, version 3 or later.
 
-If you want to consider a commercial license for vlcj that allows you to use and
-redistribute vlcj without complying with the GPL then send your proposal to:
+If you want to consider a commercial license for vlcj that allows you to use and redistribute vlcj without complying
+with the GPL then send an email to the address below:
 
 > mark [dot] lee [at] capricasoftware [dot] co [dot] uk
