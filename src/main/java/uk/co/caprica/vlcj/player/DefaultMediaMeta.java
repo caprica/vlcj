@@ -50,16 +50,6 @@ public class DefaultMediaMeta implements MediaMeta {
     private final Logger logger = LoggerFactory.getLogger(DefaultMediaMeta.class);
 
     /**
-     * Minimum version for new meta data fields.
-     */
-    private static final Version VERSION_220 = new Version("2.2.0");
-
-    /**
-     * Minimum version for new meta data fields.
-     */
-    private static final Version VERSION_300 = new Version("3.0.0");
-
-    /**
      * Set to true when the player has been released.
      */
     private final AtomicBoolean released = new AtomicBoolean();
@@ -282,109 +272,91 @@ public class DefaultMediaMeta implements MediaMeta {
 
     @Override
     public final String getTrackTotal() {
-        checkVersion(VERSION_220);
         return getMeta(libvlc_meta_t.libvlc_meta_TrackTotal);
     }
 
     @Override
     public final void setTrackTotal(String trackTotal) {
-        checkVersion(VERSION_220);
         setMeta(libvlc_meta_t.libvlc_meta_TrackTotal, trackTotal);
     }
 
     @Override
     public final String getDirector() {
-        checkVersion(VERSION_220);
         return getMeta(libvlc_meta_t.libvlc_meta_Director);
     }
 
     @Override
     public final void setDirector(String director) {
-        checkVersion(VERSION_220);
         setMeta(libvlc_meta_t.libvlc_meta_Director, director);
     }
 
     @Override
     public final String getSeason() {
-        checkVersion(VERSION_220);
         return getMeta(libvlc_meta_t.libvlc_meta_Season);
     }
 
     @Override
     public final void setSeason(String season) {
-        checkVersion(VERSION_220);
         setMeta(libvlc_meta_t.libvlc_meta_Season, season);
     }
 
     @Override
     public final String getEpisode() {
-        checkVersion(VERSION_220);
         return getMeta(libvlc_meta_t.libvlc_meta_Episode);
     }
 
     @Override
     public final void setEpisode(String episode) {
-        checkVersion(VERSION_220);
         setMeta(libvlc_meta_t.libvlc_meta_Episode, episode);
     }
 
     @Override
     public final String getShowName() {
-        checkVersion(VERSION_220);
         return getMeta(libvlc_meta_t.libvlc_meta_ShowName);
     }
 
     @Override
     public final void setShowName(String showName) {
-        checkVersion(VERSION_220);
         setMeta(libvlc_meta_t.libvlc_meta_ShowName, showName);
     }
 
     @Override
     public final String getActors() {
-        checkVersion(VERSION_220);
         return getMeta(libvlc_meta_t.libvlc_meta_Actors);
     }
 
     @Override
     public final void setActors(String actors) {
-        checkVersion(VERSION_220);
         setMeta(libvlc_meta_t.libvlc_meta_Actors, actors);
     }
 
     @Override
     public String getAlbumArtist() {
-        checkVersion(VERSION_300);
         return getMeta(libvlc_meta_t.libvlc_meta_AlbumArtist);
     }
 
     @Override
     public void setAlbumArtist(String albumArtist) {
-        checkVersion(VERSION_300);
         setMeta(libvlc_meta_t.libvlc_meta_AlbumArtist, albumArtist);
     }
 
     @Override
     public String getDiscNumber() {
-        checkVersion(VERSION_300);
         return getMeta(libvlc_meta_t.libvlc_meta_DiscNumber);
     }
 
     @Override
     public void setDiscNumber(String discNumber) {
-        checkVersion(VERSION_300);
         setMeta(libvlc_meta_t.libvlc_meta_DiscNumber, discNumber);
     }
 
     @Override
     public String getDiscTotal() {
-        checkVersion(VERSION_300);
         return getMeta(libvlc_meta_t.libvlc_meta_DiscTotal);
     }
 
     @Override
     public void setDiscTotal(String discTotal) {
-        checkVersion(VERSION_300);
         setMeta(libvlc_meta_t.libvlc_meta_DiscTotal, discTotal);
     }
 
@@ -446,19 +418,15 @@ public class DefaultMediaMeta implements MediaMeta {
         result.setEncodedBy(getEncodedBy());
         result.setArtworkUrl(getArtworkUrl());
         result.setTrackId(getTrackId());
-        if (actualVersion.atLeast(VERSION_220)) {
-            result.setTrackTotal(getTrackTotal());
-            result.setDirector(getDirector());
-            result.setSeason(getSeason());
-            result.setEpisode(getEpisode());
-            result.setShowName(getShowName());
-            result.setActors(getActors());
-        }
-        if (actualVersion.atLeast(VERSION_300)) {
-            result.setAlbumArtist(getAlbumArtist());
-            result.setDiscNumber(getDiscNumber());
-            result.setDiscTotal(getDiscTotal());
-        }
+        result.setTrackTotal(getTrackTotal());
+        result.setDirector(getDirector());
+        result.setSeason(getSeason());
+        result.setEpisode(getEpisode());
+        result.setShowName(getShowName());
+        result.setActors(getActors());
+        result.setAlbumArtist(getAlbumArtist());
+        result.setDiscNumber(getDiscNumber());
+        result.setDiscTotal(getDiscTotal());
         result.setLength(getLength());
         return result;
     }
@@ -488,20 +456,6 @@ public class DefaultMediaMeta implements MediaMeta {
         libvlc.libvlc_media_set_meta(media, metaType.intValue(), value);
     }
 
-    /**
-     * Assert that the current runtime version of LibVLC is at least a particular version.
-     * <p>
-     * This is required because some meta data fields are only available after certain versions of
-     * LibVLC.
-     *
-     * @param checkVersion minimum version to check
-     */
-    private void checkVersion(Version checkVersion) {
-        if (!actualVersion.atLeast(checkVersion)) {
-            throw new RuntimeException("Requires at least VLC version " + checkVersion);
-        }
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(200);
@@ -523,18 +477,14 @@ public class DefaultMediaMeta implements MediaMeta {
         sb.append("encodedBy=").append(getEncodedBy()).append(',');
         sb.append("artworkUrl=").append(getArtworkUrl()).append(',');
         sb.append("trackId=").append(getTrackId()).append(',');
-        if (actualVersion.atLeast(VERSION_220)) {
-            sb.append("trackTotal=").append(getTrackTotal()).append(',');
-            sb.append("director=").append(getDirector()).append(',');
-            sb.append("season=").append(getSeason()).append(',');
-            sb.append("episode=").append(getEpisode()).append(',');
-            sb.append("showName=").append(getShowName()).append(',');
-            sb.append("actors=").append(getActors()).append(',');
-        }
-        if (actualVersion.atLeast(VERSION_300)) {
-            sb.append("albumArtist=").append(getAlbumArtist()).append(',');
-            sb.append("discNumber=").append(getDiscNumber()).append(',');
-        }
+        sb.append("trackTotal=").append(getTrackTotal()).append(',');
+        sb.append("director=").append(getDirector()).append(',');
+        sb.append("season=").append(getSeason()).append(',');
+        sb.append("episode=").append(getEpisode()).append(',');
+        sb.append("showName=").append(getShowName()).append(',');
+        sb.append("actors=").append(getActors()).append(',');
+        sb.append("albumArtist=").append(getAlbumArtist()).append(',');
+        sb.append("discNumber=").append(getDiscNumber()).append(',');
         sb.append("length=").append(getLength()).append(']');
         return sb.toString();
     }

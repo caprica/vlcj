@@ -3,6 +3,10 @@ package uk.co.caprica.vlcj.player.base;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 
+// FIXME shouldn't all this be working on a Media object? the media object should encapsulate parsing?
+//  unfortunate since we already have a Media object for playing media (MRL, callback, options etc)
+//  shouldn't the media listen for its own events, and not be in the mediaplayer!?
+
 public final class ParseService extends BaseService {
 
     ParseService(DefaultMediaPlayer mediaPlayer) {
@@ -18,15 +22,13 @@ public final class ParseService extends BaseService {
      * <p>
      * <strong>Invoking this method on a stream or DVB channel may cause a hang.</strong>
      */
-    // FIXME maybe return boolean
-    public void parseMedia() {
+    public boolean parseMedia() {
         libvlc_media_t media = media();
         if (media != null) {
             // FIXME, options come from libvlc_parse_flag_t, timeout  0 means indefinite
-            libvlc.libvlc_media_parse_with_options(media, 0, 0);
-        }
-        else {
-            throw new IllegalStateException("No media"); // FIXME don't like throwing
+            return libvlc.libvlc_media_parse_with_options(media, 0, 0) == 0;
+        } else {
+            return false;
         }
     }
 
@@ -43,14 +45,13 @@ public final class ParseService extends BaseService {
      * <p>
      * <strong>Invoking this method on a stream or DVB channel may cause a hang.</strong>
      */
-    // FIXME maybe return boolean
-    public void requestParseMedia() {
+    public boolean requestParseMedia() {
         libvlc_media_t media = media();
         if (media != null) {
             libvlc.libvlc_media_parse_async(media);
-        }
-        else {
-            throw new IllegalStateException("No media"); // FIXME don't like throwing
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -104,18 +105,18 @@ public final class ParseService extends BaseService {
         return libvlc.libvlc_media_parse_with_options(media(), flags, timeout) == 0;
     }
 
+    // FIXME shouldn't i have a media Object?
     /**
      * Test whether or not the current media has been parsed.
      *
-     * @return <code>true</code> if the current media has been parsed, otherwise <code>false</code>
+     * @return <code>true</code> if the current media has been parsed, otherwise (or if no media) <code>false</code>
      */
     public boolean isMediaParsed() {
         libvlc_media_t media = media();
         if (media != null) {
-            return 0 != libvlc.libvlc_media_is_parsed(media);
-        }
-        else {
-            throw new IllegalStateException("No media"); // FIXME don't like throwing
+            return libvlc.libvlc_media_is_parsed(media) != 0;
+        } else {
+            return false;
         }
     }
 
