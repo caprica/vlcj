@@ -39,7 +39,8 @@ public final class MediaService extends BaseService {
         libvlc_media_t media = libvlc.libvlc_media_new_path(instance, mediaPath);
         if (media != null) {
             if(parse) {
-                libvlc.libvlc_media_parse(media);
+                // FIXME, options come from libvlc_parse_flag_t, timeout  0 means indefinite
+                libvlc.libvlc_media_parse_with_options(media, 0, 0);
             }
             MediaMeta mediaMeta = new DefaultMediaMeta(libvlc, media);
             // Release this native reference, the media meta instance retains its own native reference

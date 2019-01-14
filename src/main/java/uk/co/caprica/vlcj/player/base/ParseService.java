@@ -22,7 +22,8 @@ public final class ParseService extends BaseService {
     public void parseMedia() {
         libvlc_media_t media = media();
         if (media != null) {
-            libvlc.libvlc_media_parse(media);
+            // FIXME, options come from libvlc_parse_flag_t, timeout  0 means indefinite
+            libvlc.libvlc_media_parse_with_options(media, 0, 0);
         }
         else {
             throw new IllegalStateException("No media"); // FIXME don't like throwing

@@ -45,7 +45,8 @@ public class BareBonesParseTest extends VlcjTest {
 
         libvlc_media_t media = libvlc.libvlc_media_new_path(instance, args[0]);
 
-        libvlc.libvlc_media_parse(media); // <--- FATAL VM CRASH IF RUNNING on 32-bit Ubuntu and Java7
+        // FIXME, options come from libvlc_parse_flag_t, timeout  0 means indefinite
+        libvlc.libvlc_media_parse_with_options(media, 0, 0); // <--- FATAL VM CRASH IF RUNNING on 32-bit Ubuntu and Java7
 
         Thread.sleep(1000);
 

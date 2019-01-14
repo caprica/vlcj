@@ -106,7 +106,8 @@ public class DefaultMediaMeta implements MediaMeta {
     @Override
     public final void parse() {
         logger.debug("parse()");
-        libvlc.libvlc_media_parse(media);
+        // FIXME, options come from libvlc_parse_flag_t, timeout  0 means indefinite
+        libvlc.libvlc_media_parse_with_options(media, 0, 0);
     }
 
     @Override

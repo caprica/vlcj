@@ -595,17 +595,6 @@ public interface LibVlc extends Library {
     /**
      * Parse a media.
      *
-     * This fetches (local) art, meta data and tracks information. The method is synchronous.
-     *
-     * @see #libvlc_media_parse_async(libvlc_media_t)
-     * @see #libvlc_media_get_meta(libvlc_media_t, int)
-     * @param media media descriptor object
-     */
-    void libvlc_media_parse(libvlc_media_t media);
-
-    /**
-     * Parse a media.
-     *
      * This fetches (local) art, meta data and tracks information.
      *
      * The method is the asynchronous of libvlc_media_parse(). To track when this is over you
@@ -624,15 +613,17 @@ public interface LibVlc extends Library {
      *
      * This fetches (local or network) art, meta data and/or tracks information.
      *
-     * This method is the extended version of libvlc_media_parse_async().
+     * This method is the extended version of libvlc_media_parse_with_options().
      *
      * To track when this is over you can listen to libvlc_MediaParsedChanged
-     * event. However if this functions returns an error, you will not receive this
-     * event.
+     * event. However if this functions returns an error, you will not receive any
+     * events.
      *
      * It uses a flag to specify parse options (see libvlc_media_parse_flag_t). All
      * these flags can be combined. By default, media is parsed if it's a local
      * file.
+     *
+     * Parsing can be aborted with libvlc_media_parse_stop().
      *
      * @see libvlc_event_e#libvlc_MediaParsedChanged
      * @see #libvlc_media_get_meta(libvlc_media_t, int)
@@ -646,9 +637,24 @@ public interface LibVlc extends Library {
      *                will wait indefinitely. If &gt; 0, the timeout will be used (in
      *                milliseconds).
      * @return -1 in case of error, 0 otherwise
+     *
      * @since LibVLC 3.0.0 or later
      */
     int libvlc_media_parse_with_options(libvlc_media_t p_md, int parse_flag, int timeout);
+
+    /**
+     * Stop the parsing of the media
+     *
+     * When the media parsing is stopped, the libvlc_MediaParsedChanged event will
+     * be sent with the libvlc_media_parsed_status_timeout status.
+     *
+     * @see libvlc_media_parse_with_options
+     *
+     * @param p_md media descriptor object
+     *
+     * @Since version LibVLC 3.0.0 or later
+     */
+    void libvlc_media_parse_stop(libvlc_media_t p_md);
 
     /**
      * Get Parsed status for media descriptor object.
