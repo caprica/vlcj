@@ -29,7 +29,7 @@ public enum libvlc_state_t {
 
     libvlc_NothingSpecial(0),
     libvlc_Opening       (1),
-    libvlc_Buffering     (2),
+    libvlc_Buffering     (2), // Deprecated, use  libvlc_MediaPlayerBuffering events instead
     libvlc_Playing       (3),
     libvlc_Paused        (4),
     libvlc_Stopped       (5),
