@@ -17,26 +17,23 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.events.semantic;
+package uk.co.caprica.vlcj.player.events.media;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
+import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.media_meta_changed;
+import uk.co.caprica.vlcj.media.Media;
 
-/**
- *
- */
-class MediaNewEvent extends MediaPlayerEvent {
+final class MediaMetaChangedEvent extends MediaEvent {
 
-    /**
-     * Create a media player event.
-     */
-    MediaNewEvent(MediaPlayer mediaPlayer) {
-        super(mediaPlayer);
+    private final int metaType;
+
+    MediaMetaChangedEvent(Media media, libvlc_event_t event) {
+        super(media);
+        this.metaType = ((media_meta_changed) event.u.getTypedValue(media_meta_changed.class)).meta_type;
     }
 
     @Override
-    public void notify(MediaPlayerEventListener listener) {
-        listener.newMedia(mediaPlayer);
+    public void notify(MediaEventListener listener) {
+        listener.mediaMetaChanged(media, metaType);
     }
 }

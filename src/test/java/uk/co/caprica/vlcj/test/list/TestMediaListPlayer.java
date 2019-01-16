@@ -75,6 +75,8 @@ public class TestMediaListPlayer extends VlcjTest {
 
         mediaPlayer.subItems().setPlaySubItems(false);
 
+        mediaList.items().addMedia(mediaPlayerFactory.media().newMedia("https://www.youtube.com/watch?v=zGt444zwSAM"));
+
         mediaListPlayer.list().setMediaList(mediaList);
         mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer);
         mediaPlayer.videoSurface().setVideoSurface(videoSurface);
@@ -185,8 +187,9 @@ public class TestMediaListPlayer extends VlcjTest {
                 @Override
                 protected void onMediaDropped(String[] uris) {
                     for (String uri : uris) {
-                        mediaList.addMedia(uri);
+                        mediaList.items().addMedia(mediaPlayerFactory.media().newMedia(uri));
                     }
+                    System.out.println("IS READ ONLY RETURNS " + mediaList.items().isReadOnly());
                 }
             });
 
@@ -248,7 +251,7 @@ public class TestMediaListPlayer extends VlcjTest {
             clearButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    mediaList.clear();
+                    mediaList.items().clear();
                 }
             });
 
@@ -262,28 +265,39 @@ public class TestMediaListPlayer extends VlcjTest {
     // it's almost like each change should copy the native list to a java list really.
     private class PlaylistModel extends AbstractListModel {
 
+        // FIXME document this, remember we're on a native thread here, not the EDT!
         private PlaylistModel() {
-            mediaList.addMediaListEventListener(new MediaListEventAdapter() {
+            mediaList.events().addMediaListEventListener(new MediaListEventAdapter() {
                 @Override
-                public void mediaListItemAdded(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
-                    fireIntervalAdded(this, index, index);
+                public void mediaListItemAdded(MediaList mediaList, libvlc_media_t mediaInstance, final int index) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            fireIntervalAdded(this, index, index);
+                        }
+                    });
                 }
 
                 @Override
-                public void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
-                    fireIntervalRemoved(this, index, index);
+                public void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, final int index) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            fireIntervalRemoved(this, index, index);
+                        }
+                    });
                 }
             });
         }
 
         @Override
         public int getSize() {
-            return mediaList.size();
+            return mediaList.items().count();
         }
 
         @Override
         public Object getElementAt(int i) {
-            return mediaList.mrl(i);
+            return mediaList.items().mrl(i);
         }
     }
 

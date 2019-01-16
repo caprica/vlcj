@@ -60,7 +60,7 @@ public class ConditionMetaTest extends VlcjTest {
 
         final String mrl = args[0];
 
-        MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
+        final MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
         MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
 
         mediaPlayer.snapshots().setSnapshotDirectory(new File(".").getAbsolutePath());
@@ -79,8 +79,9 @@ public class ConditionMetaTest extends VlcjTest {
             @Override
             protected boolean onBefore() {
                 // Some media, such as mpg, must be played before all meta data (e.g. duration) is available
-                mediaPlayer.media().startMedia(mrl); // "start" waits until the media is playing before returning
-                mediaPlayer.parsing().requestParseMedia(); // asynchronous invocation
+                mediaPlayer.media().set(factory.media().newMedia(mrl)); // "start" waits until the media is playing before returning
+                mediaPlayer.controls().start();
+                mediaPlayer.media().get().parsing().parse(); // asynchronous invocation
                 return true;
             }
 

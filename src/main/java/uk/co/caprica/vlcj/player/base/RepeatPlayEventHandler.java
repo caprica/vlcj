@@ -4,8 +4,6 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 
 /**
  * Event listener implementation that handles auto-repeat.
- * <p>
- * This listener <em>must</em> be added <em>after</em> {@link ResetMediaEventHandler} to ensure correct operation.
  */
 final class RepeatPlayEventHandler extends MediaPlayerEventAdapter {
 
@@ -27,7 +25,9 @@ final class RepeatPlayEventHandler extends MediaPlayerEventAdapter {
 
         @Override
         public void run() {
+            mediaPlayer.media().reset();
             mediaPlayer.controls().play();
         }
     }
+
 }

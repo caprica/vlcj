@@ -38,7 +38,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.discovery.linux.DefaultLinuxNativeDiscoveryStrategy;
+import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
@@ -88,6 +92,8 @@ public class YouTubePlayer extends VlcjTest {
                 new YouTubePlayer().start();
             }
         });
+
+        Thread.currentThread().join();
     }
 
     public YouTubePlayer() {
@@ -119,6 +125,8 @@ public class YouTubePlayer extends VlcjTest {
         playButton = new JButton("Play");
         playButton.setMnemonic('p');
 
+        urlTextField.setText("https://www.youtube.com/watch?v=zGt444zwSAM");
+
         ip.add(urlLabel);
         ip.add(urlTextField);
         ip.add(playButton);
@@ -145,10 +153,26 @@ public class YouTubePlayer extends VlcjTest {
             }
         });
 
+//        factory = new MediaPlayerFactory("-vv");
+//        factory = new MediaPlayerFactory(new NativeDiscovery(new DefaultLinuxNativeDiscoveryStrategy() {
+//            @Override
+//            protected void onGetDirectoryNames(List<String> directoryNames) {
+//                directoryNames.add("/disks/data/build/install/test");
+//            }
+//
+//            @Override
+//            public void onFound(String path) {
+//                String plugins = String.format("%s/plugins", path);
+//                LibC.INSTANCE.setenv("VLC_PLUGIN_PATH", plugins, 1);
+//            }
+//        }), "-vv");
+
         factory = new MediaPlayerFactory();
 
         mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
         mediaPlayer.videoSurface().setVideoSurface(factory.videoSurfaces().newVideoSurface(vs));
+
+        mediaPlayer.media().setRepeat(false);
 
         mediaPlayer.subItems().setPlaySubItems(true); // <--- This is very important for YouTube media
 
@@ -158,11 +182,11 @@ public class YouTubePlayer extends VlcjTest {
                 System.out.println("Buffering " + newCache);
             }
 
-            @Override
-            public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-                 List<String> items = mediaPlayer.subItems().subItems();
-                 System.out.println(items);
-            }
+//            @Override
+//            public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
+//                 List<String> items = mediaPlayer.subItems().subItems();
+//                 System.out.println(items);
+//            } FIXME
         });
     }
 
@@ -171,8 +195,11 @@ public class YouTubePlayer extends VlcjTest {
     }
 
     private void play() {
-        String mrl = urlTextField.getText();
-        mediaPlayer.media().playMedia(mrl);
+        final Media media = factory.media().newMedia(urlTextField.getText());
+        mediaPlayer.media().set(media);
+        System.out.println(mediaPlayer.media().get().info().mrl());
+        System.out.println(mediaPlayer.media().get().info().type());
+        mediaPlayer.controls().play();
     }
 
     private void exit(int value) {

@@ -1,4 +1,4 @@
-package uk.co.caprica.vlcj.player.base;
+package uk.co.caprica.vlcj.media;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
@@ -157,7 +157,6 @@ final class TrackInformation {
     private static String codecDescription(LibVlc libvlc, libvlc_track_type_t type, int codec) {
         return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
     }
-
 
     private TrackInformation() {
     }

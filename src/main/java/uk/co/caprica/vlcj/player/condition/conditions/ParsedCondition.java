@@ -45,9 +45,9 @@ public class ParsedCondition extends DefaultCondition<Integer> {
         super(mediaPlayer);
     }
 
-    @Override
-    public final void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-        logger.debug("mediaParsedChange(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
-        ready(newStatus);
-    }
+//    @Override
+//    public final void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
+//        logger.debug("mediaParsedChange(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
+//        ready(newStatus);
+//    } // FIXME
 }

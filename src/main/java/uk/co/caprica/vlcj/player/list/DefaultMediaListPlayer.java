@@ -65,13 +65,6 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
      */
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    /**
-     * Associated native media player instance.
-     * <p>
-     * This may be <code>null</code>.
-     */
-    private MediaPlayer mediaPlayer;
-
     private final ControlsService    controlsService;
     private final EventService       eventService;
     private final ListService        listService;
@@ -214,15 +207,6 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
      */
     protected void onAfterRelease() {
         // Base implementation does nothing
-    }
-
-    /**
-     * If there is an associated media player then make sure the video surface is attached.
-     */
-    void attachVideoSurface() {
-        if (mediaPlayer instanceof EmbeddedMediaPlayer) {
-            ((EmbeddedMediaPlayer) mediaPlayer).videoSurface().attachVideoSurface();
-        }
     }
 
     @Override

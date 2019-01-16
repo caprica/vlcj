@@ -1,6 +1,7 @@
 package uk.co.caprica.vlcj.player.list;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 public final class MediaPlayerService extends BaseService {
 
@@ -30,6 +31,15 @@ public final class MediaPlayerService extends BaseService {
      */
     public MediaPlayer mediaPlayer() {
         return mediaPlayer;
+    }
+
+    /**
+     * If there is an associated media player then make sure the video surface is attached.
+     */
+    void attachVideoSurface() {
+        if (mediaPlayer instanceof EmbeddedMediaPlayer) {
+            ((EmbeddedMediaPlayer) mediaPlayer).videoSurface().attachVideoSurface();
+        }
     }
 
 }

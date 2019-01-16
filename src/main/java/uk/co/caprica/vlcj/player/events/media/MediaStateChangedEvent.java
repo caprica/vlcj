@@ -17,25 +17,24 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.events.standard;
+package uk.co.caprica.vlcj.player.events.media;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.media_meta_changed;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
+import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
+import uk.co.caprica.vlcj.binding.internal.media_state_changed;
+import uk.co.caprica.vlcj.media.Media;
 
-final class MediaMetaChangedEvent extends MediaPlayerEvent {
+final class MediaStateChangedEvent extends MediaEvent {
 
-    private final int metaType;
+    private final int newState;
 
-    MediaMetaChangedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
-        super(mediaPlayer);
-        this.metaType = ((media_meta_changed) event.u.getTypedValue(media_meta_changed.class)).meta_type;
+    MediaStateChangedEvent(Media media, libvlc_event_t event) {
+        super(media);
+        this.newState = ((media_state_changed) event.u.getTypedValue(media_state_changed.class)).new_state;
     }
 
     @Override
-    public void notify(MediaPlayerEventListener listener) {
-        listener.mediaMetaChanged(mediaPlayer, metaType);
+    public void notify(MediaEventListener listener) {
+        listener.mediaStateChanged(media, libvlc_state_t.state(newState));
     }
 }

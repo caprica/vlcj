@@ -659,11 +659,15 @@ public interface LibVlc extends Library {
     /**
      * Get Parsed status for media descriptor object.
      *
-     * @see libvlc_event_e#libvlc_MediaParsedChanged
+     * @see libvlc_MediaParsedChanged
+     * @see libvlc_media_parsed_status_t
+     *
      * @param p_md media descriptor object
-     * @return true if media object has been parsed otherwise it returns false
+     * @return a value of the libvlc_media_parsed_status_t enum
+     *
+     * @since LibVLC 3.0.0 or later
      */
-    int libvlc_media_is_parsed(libvlc_media_t p_md);
+    int libvlc_media_get_parsed_status(libvlc_media_t p_md);
 
     /**
      * Sets media descriptor's user_data. user_data is specialized data accessed by the host
@@ -754,7 +758,7 @@ public interface LibVlc extends Library {
      *
      * @since LibVLC 3.0.0 and later.
      */
-    int libvlc_media_slaves_add(libvlc_media_t p_md, libvlc_media_slave_type_t i_type, int i_priority, String psz_uri);
+    int libvlc_media_slaves_add(libvlc_media_t p_md, int i_type, int i_priority, String psz_uri);
 
     /**
      * Clear all slaves previously added by libvlc_media_slaves_add() or
@@ -789,7 +793,7 @@ public interface LibVlc extends Library {
      * @param pp_slaves slave array to release
      * @param i_count number of elements in the array
      */
-    void libvlc_media_slaves_release(PointerByReference pp_slaves, int i_count);
+    void libvlc_media_slaves_release(Pointer pp_slaves, int i_count);
 
     // === libvlc_media.h =======================================================
 
@@ -2310,6 +2314,8 @@ public interface LibVlc extends Library {
      *
      * @param p_ml media list instance
      * @return 0 on readonly, 1 on readwrite
+     *
+     * FIXME I am pretty sure the documented return values are the wrong way around
      */
     int libvlc_media_list_is_readonly(libvlc_media_list_t p_ml);
 

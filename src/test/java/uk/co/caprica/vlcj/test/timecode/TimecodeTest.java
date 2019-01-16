@@ -90,7 +90,8 @@ public class TimecodeTest extends VlcjTest {
      * @param mrl mrl
      */
     private void start(String mrl) {
-        player.media().startMedia(mrl);
+        player.media().set(factory.media().newMedia(mrl));
+        player.controls().start();
         showTimecode();
     }
 
@@ -100,14 +101,10 @@ public class TimecodeTest extends VlcjTest {
     private void showTimecode() {
         // We have to search for the text/spu track containing the timecode...
         Integer timecodeTrack = null;
-        for (TrackInfo trackInfo : player.info().getTrackInfo()) {
-            System.out.println("trackInfo: " + trackInfo);
-            if (trackInfo instanceof TextTrackInfo) {
-                TextTrackInfo textTrackInfo = (TextTrackInfo) trackInfo;
-                if (TIMECODE_CODEC.equals(textTrackInfo.codecName())) {
-                    timecodeTrack = textTrackInfo.id();
-                    break;
-                }
+        for (TextTrackInfo trackInfo : player.media().get().info().textTracks()) {
+            if (TIMECODE_CODEC.equals(trackInfo.codecName())) {
+                timecodeTrack = trackInfo.id();
+                break;
             }
         }
 

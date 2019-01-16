@@ -28,21 +28,18 @@ public abstract class NonSeekableCallbackMedia extends DefaultCallbackMedia  {
 
     /**
      * Create a media instance with a default IO buffer size.
-     *
-     * @param mediaOptions zero or more media options
      */
-    public NonSeekableCallbackMedia(String... mediaOptions) {
-        super(false, mediaOptions);
+    public NonSeekableCallbackMedia() {
+        super(false);
     }
 
     /**
      * Create a media instance.
      *
      * @param ioBufferSize IO buffer size
-     * @param mediaOptions zero or more media options
      */
-    public NonSeekableCallbackMedia(int ioBufferSize, String... mediaOptions) {
-        super(false, ioBufferSize, mediaOptions);
+    public NonSeekableCallbackMedia(int ioBufferSize) {
+        super(false, ioBufferSize);
     }
 
     @Override

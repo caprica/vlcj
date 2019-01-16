@@ -39,47 +39,47 @@ public class UpdateMetaTest extends VlcjTest {
     private static final Logger logger = LoggerFactory.getLogger(UpdateMetaTest.class);
 
     public static void main(String[] args) {
-        if(args.length != 1) {
-            System.out.println("Specify a single MRL");
-            System.exit(1);
-        }
-
-        // Create a media player
-        MediaPlayerFactory factory = new MediaPlayerFactory();
-
-        // Get the meta data and dump it out
-        MediaMeta mediaMeta = factory.media().getMediaMeta(args[0], true);
-        logger.info("mediaMeta={}", mediaMeta);
-        logger.info("original description={}", mediaMeta.getDescription());
-
-        // Keep the original description to restore it later
-        String originalDescription = mediaMeta.getDescription();
-
-        // Write new meta data
-        mediaMeta.setDescription("Oh isn't this a lovely tune.");
-        mediaMeta.save();
-
-        mediaMeta.release();
-
-        // Re-read to confirm the updated value
-        mediaMeta = factory.media().getMediaMeta(args[0], true);
-        logger.info("mediaMeta={}", mediaMeta);
-        logger.info("updated description={}", mediaMeta.getDescription());
-
-        // Restore the original description
-        mediaMeta.setDescription(originalDescription);
-        mediaMeta.save();
-
-        mediaMeta.release();
-
-        // Re-read to confirm
-        mediaMeta = factory.media().getMediaMeta(args[0], true);
-        logger.info("mediaMeta={}", mediaMeta);
-        logger.info("restored description={}", mediaMeta.getDescription());
-
-        mediaMeta.release();
-
-        // Orderly clean-up
-        factory.release();
+//        if(args.length != 1) {
+//            System.out.println("Specify a single MRL");
+//            System.exit(1);
+//        }
+//
+//        // Create a media player
+//        MediaPlayerFactory factory = new MediaPlayerFactory();
+//
+//        // Get the meta data and dump it out
+//        MediaMeta mediaMeta = factory.media().getMediaMeta(args[0], true);
+//        logger.info("mediaMeta={}", mediaMeta);
+//        logger.info("original description={}", mediaMeta.getDescription());
+//
+//        // Keep the original description to restore it later
+//        String originalDescription = mediaMeta.getDescription();
+//
+//        // Write new meta data
+//        mediaMeta.setDescription("Oh isn't this a lovely tune.");
+//        mediaMeta.save();
+//
+//        mediaMeta.release();
+//
+//        // Re-read to confirm the updated value
+//        mediaMeta = factory.media().getMediaMeta(args[0], true);
+//        logger.info("mediaMeta={}", mediaMeta);
+//        logger.info("updated description={}", mediaMeta.getDescription());
+//
+//        // Restore the original description
+//        mediaMeta.setDescription(originalDescription);
+//        mediaMeta.save();
+//
+//        mediaMeta.release();
+//
+//        // Re-read to confirm
+//        mediaMeta = factory.media().getMediaMeta(args[0], true);
+//        logger.info("mediaMeta={}", mediaMeta);
+//        logger.info("restored description={}", mediaMeta.getDescription());
+//
+//        mediaMeta.release();
+//
+//        // Orderly clean-up
+//        factory.release(); FIXME
     }
 }

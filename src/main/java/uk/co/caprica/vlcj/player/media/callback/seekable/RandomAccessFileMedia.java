@@ -51,10 +51,9 @@ public class RandomAccessFileMedia extends SeekableCallbackMedia {
      * Create a media instance with a default IO buffer size.
      *
      * @param file file to read media data from
-     * @param mediaOptions zero or more media options.
      */
-    public RandomAccessFileMedia(File file, String... mediaOptions) {
-        super(mediaOptions);
+    public RandomAccessFileMedia(File file) {
+        super();
         this.file = file;
     }
 
@@ -63,10 +62,9 @@ public class RandomAccessFileMedia extends SeekableCallbackMedia {
      *
      * @param file file to read media data from
      * @param ioBufferSize IO buffer size
-     * @param mediaOptions zero or more media options.
      */
-    public RandomAccessFileMedia(File file, int ioBufferSize, String... mediaOptions) {
-        super(ioBufferSize, mediaOptions);
+    public RandomAccessFileMedia(File file, int ioBufferSize) {
+        super(ioBufferSize);
         this.file = file;
     }
 

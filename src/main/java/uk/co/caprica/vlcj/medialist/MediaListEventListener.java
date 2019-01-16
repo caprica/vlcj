@@ -65,6 +65,7 @@ public interface MediaListEventListener {
 
     /**
      * The end of the media list was reached.
+     * FIXME i don't think this actually fires
      *
      * @param mediaList list
      */

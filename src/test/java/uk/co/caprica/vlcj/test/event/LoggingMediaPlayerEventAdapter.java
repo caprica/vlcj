@@ -180,48 +180,6 @@ public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener 
         logger.debug("ready(mediaPlayer={})", mediaPlayer);
     }
 
-    // === Events relating to the current media =================================
-
-    @Override
-    public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-        logger.debug("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
-    }
-
-    @Override
-    public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-        logger.debug("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
-    }
-
-    @Override
-    public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-        logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
-    }
-
-    @Override
-    public void mediaParsedStatus(MediaPlayer mediaPlayer, int newStatus) {
-        logger.debug("mediaParsedStatus(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
-    }
-
-    @Override
-    public void mediaFreed(MediaPlayer mediaPlayer) {
-        logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
-    }
-
-    @Override
-    public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
-        logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
-    }
-
-    @Override
-    public void mediaSubItemTreeAdded(MediaPlayer mediaPlayer, libvlc_media_t item) {
-        logger.debug("mediaSubItemTreeAdded(mediaPlayer={},newState={})", mediaPlayer, item);
-    }
-
-    @Override
-    public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
-        logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
-    }
-
     // === Synthetic/semantic events ============================================
 
     @Override

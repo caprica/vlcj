@@ -155,7 +155,8 @@ public class AdaptiveLayoutTest extends VlcjTest {
         frame.setVisible(true);
 
         for(int i = 0; i < videoPanes.size() && i < mrls.length; i++) {
-            videoPanes.get(i).mediaPlayer().media().startMedia(mrls[i]);
+            videoPanes.get(i).mediaPlayer().media().set(mediaPlayerFactory.media().newMedia(mrls[i]));
+            videoPanes.get(i).mediaPlayer().controls().start();
         }
     }
 

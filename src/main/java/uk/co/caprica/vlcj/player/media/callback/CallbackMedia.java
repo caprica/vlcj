@@ -26,6 +26,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_seek_cb;
 
 import com.sun.jna.Pointer;
 
+// FIXME needs a rename i think MediaCallbacks maybe
+
 /**
  * Specification for media provided by native callbacks.
  * <p>

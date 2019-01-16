@@ -42,69 +42,70 @@ public class SearchMetaTest extends VlcjTest {
     /**
      * Log.
      */
-    private static final Logger logger = LoggerFactory.getLogger(SearchMetaTest.class);
-
-    private static final FileFilter AUDIO_FILE_FILTER = new FileFilter() {
-        @Override
-        public boolean accept(File pathname) {
-            return pathname.isFile() && pathname.getName().endsWith(".mp3");
-        }
-    };
-
-    private static final FileFilter DIR_FILTER = new FileFilter() {
-        @Override
-        public boolean accept(File pathname) {
-            return pathname.isDirectory();
-        }
-    };
-
-    public static void main(String[] args) {
-        if(args.length == 0) {
-            System.out.println("Specify at least one directory");
-            System.exit(1);
-        }
-
-        MediaPlayerFactory factory = new MediaPlayerFactory();
-
-        List<File> files = new ArrayList<File>(400);
-        for(String arg : args) {
-            files.addAll(scan(new File(arg)));
-        }
-
-        // Dump out the meta
-        for(File file : files) {
-            String mrl = file.getAbsolutePath();
-            MediaMeta meta = factory.media().getMediaMeta(mrl, true);
-            logger.info("{} -> {}", mrl, meta);
-            meta.release();
-        }
-
-        // Dump out only the title and the length
-        for(File file : files) {
-            String mrl = file.getAbsolutePath();
-            MediaMeta meta = factory.media().getMediaMeta(mrl, true);
-            logger.info("{} -> {}ms", meta.getTitle(), meta.getLength());
-            meta.release();
-        }
-
-        factory.release();
-    }
-
-    private static List<File> scan(File root) {
-        List<File> result = new ArrayList<File>(200);
-        scan(root, result);
-        return result;
-    }
-
-    private static void scan(File root, List<File> result) {
-        File[] files = root.listFiles(AUDIO_FILE_FILTER);
-        if(files != null) {
-            for(File file : files) {
-                result.add(file);
-            }
-            for(File dir : root.listFiles(DIR_FILTER)) {
-                scan(dir, result);
-            }
-        }
-    }
+//    private static final Logger logger = LoggerFactory.getLogger(SearchMetaTest.class);
+//
+//    private static final FileFilter AUDIO_FILE_FILTER = new FileFilter() {
+//        @Override
+//        public boolean accept(File pathname) {
+//            return pathname.isFile() && pathname.getName().endsWith(".mp3");
+//        }
+//    };
+//
+//    private static final FileFilter DIR_FILTER = new FileFilter() {
+//        @Override
+//        public boolean accept(File pathname) {
+//            return pathname.isDirectory();
+//        }
+//    };
+//
+//    public static void main(String[] args) {
+//        if(args.length == 0) {
+//            System.out.println("Specify at least one directory");
+//            System.exit(1);
+//        }
+//
+//        MediaPlayerFactory factory = new MediaPlayerFactory();
+//
+//        List<File> files = new ArrayList<File>(400);
+//        for(String arg : args) {
+//            files.addAll(scan(new File(arg)));
+//        }
+//
+//        // Dump out the meta
+//        for(File file : files) {
+//            String mrl = file.getAbsolutePath();
+//            MediaMeta meta = factory.media().getMediaMeta(mrl, true);
+//            logger.info("{} -> {}", mrl, meta);
+//            meta.release();
+//        }
+//
+//        // Dump out only the title and the length
+//        for(File file : files) {
+//            String mrl = file.getAbsolutePath();
+//            MediaMeta meta = factory.media().getMediaMeta(mrl, true);
+//            logger.info("{} -> {}ms", meta.getTitle(), meta.getLength());
+//            meta.release();
+//        }
+//
+//        factory.release();
+//    }
+//
+//    private static List<File> scan(File root) {
+//        List<File> result = new ArrayList<File>(200);
+//        scan(root, result);
+//        return result;
+//    }
+//
+//    private static void scan(File root, List<File> result) {
+//        File[] files = root.listFiles(AUDIO_FILE_FILTER);
+//        if(files != null) {
+//            for(File file : files) {
+//                result.add(file);
+//            }
+//            for(File dir : root.listFiles(DIR_FILTER)) {
+//                scan(dir, result);
+//            }
+//        }
+//    }
+    // FIXME
 }

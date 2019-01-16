@@ -27,7 +27,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.media.Media;
+import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.player.media.callback.CallbackMedia;
 import uk.co.caprica.vlcj.player.media.callback.seekable.RandomAccessFileMedia;
 import uk.co.caprica.vlcj.test.VlcjTest;
 import uk.co.caprica.vlcj.test.minimal.MinimalTestPlayer;
@@ -58,9 +59,10 @@ public class MinimalMediaCallbackTest extends VlcjTest {
         f.setContentPane(mediaPlayerComponent);
         f.setVisible(true);
 
-        Media media = new RandomAccessFileMedia(new File(args[0]));
+        Media media = mediaPlayerComponent.getMediaPlayerFactory().media().newMedia(new RandomAccessFileMedia(new File(args[0])));
 
-        mediaPlayerComponent.getMediaPlayer().media().playMedia(media);
+        mediaPlayerComponent.getMediaPlayer().media().set(media);
+        mediaPlayerComponent.getMediaPlayer().controls().play();
 
         Thread.currentThread().join();
     }

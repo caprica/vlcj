@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
+import uk.co.caprica.vlcj.player.events.media.*;
 
 /**
  * A factory that creates a media player event instance for a native media player event.
@@ -72,15 +73,6 @@ public final class StandardEventFactory {
             case libvlc_MediaPlayerAudioVolume     : return new MediaPlayerAudioVolumeEvent     (mediaPlayer, event);
             case libvlc_MediaPlayerAudioDevice     : return new MediaPlayerAudioDeviceEvent     (mediaPlayer, event);
             case libvlc_MediaPlayerChapterChanged  : return new MediaPlayerChapterChangedEvent  (mediaPlayer, event);
-
-            case libvlc_MediaMetaChanged           : return new MediaMetaChangedEvent           (mediaPlayer, event);
-            case libvlc_MediaSubItemAdded          : return new MediaSubItemAddedEvent          (mediaPlayer, event);
-            case libvlc_MediaDurationChanged       : return new MediaDurationChangedEvent       (mediaPlayer, event);
-            case libvlc_MediaParsedChanged         : return new MediaParsedChangedEvent         (mediaPlayer, event);
-            case libvlc_MediaParsedStatus          : return new MediaParsedStatusEvent          (mediaPlayer, event);
-            case libvlc_MediaFreed                 : return new MediaFreedEvent                 (mediaPlayer);
-            case libvlc_MediaStateChanged          : return new MediaStateChangedEvent          (mediaPlayer, event);
-            case libvlc_MediaSubItemTreeAdded      : return new MediaSubItemTreeAddedEvent      (mediaPlayer, event);
 
             default                                : return null;
         }

@@ -188,7 +188,9 @@ public class StatsTest extends VlcjTest {
             public void run() {
                 for(;;) {
                     if(mediaPlayerComponent.getMediaPlayer().status().isPlaying()) {
-                        updateStats(mediaPlayerComponent.getMediaPlayer().statistics().getMediaStatistics(mediaStatistics));
+                        if (mediaPlayerComponent.getMediaPlayer().media().get().info().statistics(mediaStatistics)) {
+                            updateStats(mediaStatistics);
+                        }
                     }
                     try {
                         // Update statistics every second, choose more/less if you want

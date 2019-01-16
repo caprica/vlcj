@@ -37,6 +37,8 @@ public final class NativeString {
     private NativeString() {
     }
 
+    // FIXME are these method names really the best? they're kinda confusing...
+
     /**
      * Get a String from a native string pointer, freeing the native string pointer when done.
      * <p>

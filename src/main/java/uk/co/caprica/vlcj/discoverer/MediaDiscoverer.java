@@ -4,9 +4,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.medialist.MediaList;
 
-// FIXME not too happy with having to pass LibVlc down through the listener
-//FIXME in this case it looks like events should be managed via the meidalist
-
+// FIXME clean up this comment, document it somewhere
 // The native API doc implies the event handler has to call HOLD if it wants to use the item, but the API doc also
 // says the item is valid until you get the same pointer in a deleted callback
 // so i think you can probably choose to hold at any time TBH
@@ -20,10 +18,10 @@ public class MediaDiscoverer {
 
     private final MediaList mediaList;
 
-    public MediaDiscoverer(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_discoverer_t discoverer) {
+    public MediaDiscoverer(LibVlc libvlc, libvlc_media_discoverer_t discoverer) {
         this.libvlc = libvlc;
         this.discoverer = discoverer;
-        this.mediaList = new MediaList(libvlc, libvlcInstance, libvlc.libvlc_media_discoverer_media_list(discoverer));
+        this.mediaList = new MediaList(libvlc, libvlc.libvlc_media_discoverer_media_list(discoverer));
     }
 
     public boolean start() {

@@ -41,7 +41,7 @@ public class libvlc_media_slave_t extends Structure {
         read();
     }
 
-    public String psz_uri;
+    public Pointer psz_uri;
     public int i_type;
     public int i_priority;
 

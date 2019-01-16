@@ -1,11 +1,14 @@
 package uk.co.caprica.vlcj.factory;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_type_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
+import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.player.DefaultMediaMeta;
-import uk.co.caprica.vlcj.player.MediaMeta;
+import uk.co.caprica.vlcj.player.MediaResourceLocator;
+import uk.co.caprica.vlcj.player.media.callback.CallbackMedia;
+
+// FIXME getcodecdescription has a weak argument for being in here
 
 public final class MediaService extends BaseService {
 
@@ -14,58 +17,57 @@ public final class MediaService extends BaseService {
     }
 
     /**
-     * Create a new media list for a play-list media player.
      *
-     * @return media list instance
-     */
-    public MediaList newMediaList() {
-        return new MediaList(libvlc, instance);
-    }
-
-    /**
-     * Get local media meta data.
-     * <p>
-     * Note that requesting meta data may cause one or more HTTP connections to
-     * be made to external web-sites to attempt download of album art.
-     * <p>
-     * This method should <strong>not</strong> be invoked for non-local MRL's
-     * like streaming network addresses.
      *
-     * @param mediaPath path to the local media
-     * @param parse <code>true</code> if the media should be parsed immediately; otherwise <code>false</code>
-     * @return media meta data, or <code>null</code> if the media could not be located
+     * @param mrl
+     * @return
      */
-    public MediaMeta getMediaMeta(String mediaPath, boolean parse) {
-        libvlc_media_t media = libvlc.libvlc_media_new_path(instance, mediaPath);
+    // FIXME rename fromMrl or forMrl? or just from(...)
+    public Media newMedia(String mrl) {
+        mrl = MediaResourceLocator.encodeMrl(mrl);
+        libvlc_media_t media = MediaResourceLocator.isLocation(mrl) ? libvlc.libvlc_media_new_location(instance, mrl) : libvlc.libvlc_media_new_path(instance, mrl);
         if (media != null) {
-            if(parse) {
-                // FIXME, options come from libvlc_parse_flag_t, timeout  0 means indefinite
-                libvlc.libvlc_media_parse_with_options(media, 0, 0);
-            }
-            MediaMeta mediaMeta = new DefaultMediaMeta(libvlc, media);
-            // Release this native reference, the media meta instance retains its own native reference
-            libvlc.libvlc_media_release(media);
-            return mediaMeta;
+            return new Media(libvlc, media);
         } else {
             return null;
         }
     }
 
     /**
-     * Get the media type for the media.
-     * <p>
-     * This is a medium type rather than e.g. a specific file type.
-     * <p>
-     * Requires LibVLC 3.0.0 or later.
      *
-     * @param media media
-     * @return media type, or <code>null</code> if <code>media</code> is <code>null</code>
+     *
+     * <em>The calling application must make sure to keep hard references to the callback implementation objects to
+     * prevent them from being garbage collected, otherwise a fatal JVM crash may occur.</em>
+     *
+     * @param callbackMedia
+     * @return
      */
-    public libvlc_media_type_e getMediaType(libvlc_media_t media) {
+    // FIXME rename forCallbacks? or just from(...)
+    public Media newMedia(CallbackMedia callbackMedia) {
+        libvlc_media_t media = libvlc.libvlc_media_new_callbacks(instance,
+            callbackMedia.getOpen(),
+            callbackMedia.getRead(),
+            callbackMedia.getSeek(),
+            callbackMedia.getClose(),
+            callbackMedia.getOpaque()
+        );
         if (media != null) {
-            return libvlc_media_type_e.mediaType(libvlc.libvlc_media_get_type(media));
+            return new Media(libvlc, media);
+        } else {
+            return null;
         }
-        else {
+    }
+
+    /**
+     * Create a new media list for a play-list media player.
+     *
+     * @return media list instance
+     */
+    public MediaList newMediaList() {
+        libvlc_media_list_t mediaList = libvlc.libvlc_media_list_new(instance);
+        if (mediaList != null) {
+            return new MediaList(libvlc, mediaList);
+        } else {
             return null;
         }
     }

@@ -168,7 +168,9 @@ public class TestPlayer extends VlcjTest {
         mediaPlayer.input().setEnableKeyInputHandling(false);
         mediaPlayer.input().setEnableMouseInputHandling(false);
 
-        controlsPanel = new PlayerControlsPanel(mediaPlayer);
+        mediaPlayer.media().setRepeat(true);
+
+        controlsPanel = new PlayerControlsPanel(mediaPlayerFactory, mediaPlayer);
         videoAdjustPanel = new PlayerVideoAdjustPanel(mediaPlayer);
 
         mainFrame.setLayout(new BorderLayout());
@@ -389,8 +391,8 @@ public class TestPlayer extends VlcjTest {
         @Override
         public void playing(MediaPlayer mediaPlayer) {
             logger.debug("playing(mediaPlayer={})", mediaPlayer);
-            MediaDetails mediaDetails = mediaPlayer.info().getMediaDetails();
-            logger.info("mediaDetails={}", mediaDetails);
+//            MediaDetails mediaDetails = mediaPlayer.info().getMediaDetails();
+//            logger.info("mediaDetails={}", mediaDetails);
         }
 
         @Override
@@ -405,8 +407,8 @@ public class TestPlayer extends VlcjTest {
                 return;
             }
 
-            MediaDetails mediaDetails = mediaPlayer.info().getMediaDetails();
-            logger.info("mediaDetails={}", mediaDetails);
+//            MediaDetails mediaDetails = mediaPlayer.info().getMediaDetails();
+//            logger.info("mediaDetails={}", mediaDetails);
 
 // FIXME            MediaMeta mediaMeta = mediaPlayer.getMediaMeta();
 //            logger.info("mediaMeta={}", mediaMeta);
@@ -470,35 +472,6 @@ public class TestPlayer extends VlcjTest {
             logger.debug("error(mediaPlayer={})", mediaPlayer);
         }
 
-        @Override
-        public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-            logger.debug("mediaSubItemAdded(mediaPlayer={},subItem={})", mediaPlayer, subItem);
-        }
-
-        @Override
-        public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-            logger.debug("mediaDurationChanged(mediaPlayer={},newDuration={})", mediaPlayer, newDuration);
-        }
-
-        @Override
-        public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-            logger.debug("mediaParsedChanged(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
-        }
-
-        @Override
-        public void mediaFreed(MediaPlayer mediaPlayer) {
-            logger.debug("mediaFreed(mediaPlayer={})", mediaPlayer);
-        }
-
-        @Override
-        public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
-            logger.debug("mediaStateChanged(mediaPlayer={},newState={})", mediaPlayer, newState);
-        }
-
-        @Override
-        public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
-            logger.debug("mediaMetaChanged(mediaPlayer={},metaType={})", mediaPlayer, metaType);
-        }
     }
 
     /**

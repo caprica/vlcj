@@ -17,25 +17,24 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.events.standard;
+package uk.co.caprica.vlcj.player.events.media;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.media_subitemtree_added;
+import uk.co.caprica.vlcj.media.Media;
 
-final class MediaDurationChangedEvent extends MediaPlayerEvent {
+final class MediaSubItemTreeAddedEvent extends MediaEvent {
 
-    private final long newDuration;
+    private final libvlc_media_t subItem;
 
-    MediaDurationChangedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
-        super(mediaPlayer);
-        this.newDuration = ((media_duration_changed) event.u.getTypedValue(media_duration_changed.class)).new_duration;
+    MediaSubItemTreeAddedEvent(Media media, libvlc_event_t event) {
+        super(media);
+        this.subItem = ((media_subitemtree_added) event.u.getTypedValue(media_subitemtree_added.class)).item;
     }
 
     @Override
-    public void notify(MediaPlayerEventListener listener) {
-        listener.mediaDurationChanged(mediaPlayer, newDuration);
+    public void notify(MediaEventListener listener) {
+        listener.mediaSubItemTreeAdded(media, subItem);
     }
 }

@@ -32,46 +32,6 @@ import uk.co.caprica.vlcj.player.events.*;
 public final class SemanticEventFactory {
 
     /**
-     * Create a new semantic event for new media.
-     *
-     * @param mediaPlayer@return media player event, or <code>null</code> if the event type is not enabled
-     */
-    public static MediaPlayerEvent createMediaNewEvent(MediaPlayer mediaPlayer) {
-        return new MediaNewEvent(mediaPlayer);
-    }
-
-    /**
-     * Create a new semantic event for a played sub-item.
-     *
-     * @param mediaPlayer
-     * @param subItemIndex index of the sub-item that was played
-     * @return media player event, or <code>null</code> if the event type is not enabled
-     */
-    public static MediaPlayerEvent createMediaSubItemPlayedEvent(MediaPlayer mediaPlayer, int subItemIndex) {
-        return new MediaSubItemPlayedEvent(mediaPlayer, subItemIndex);
-    }
-
-    /**
-     * Create a new semantic event for a finished sub-item.
-     *
-     * @param mediaPlayer
-     * @param subItemIndex index of the sub-item that finished playing
-     * @return media player event, or <code>null</code> if the event type is not enabled
-     */
-    public static MediaPlayerEvent createMediaSubItemFinishedEvent(MediaPlayer mediaPlayer, int subItemIndex) {
-        return new MediaSubItemFinishedEvent(mediaPlayer, subItemIndex);
-    }
-
-    /**
-     * Create a new semantic event for the end of the sub-items being reached.
-     *
-     * @param mediaPlayer@return media player event, or <code>null</code> if the event type is not enabled
-     */
-    public static MediaPlayerEvent createMediaEndOfSubItemsEvent(MediaPlayer mediaPlayer) {
-        return new MediaEndOfSubItemsEvent(mediaPlayer);
-    }
-
-    /**
      *
      * @return
      * @param mediaPlayer

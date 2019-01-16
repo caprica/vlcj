@@ -101,6 +101,7 @@ public class FullScreenTest extends VlcjTest {
         f.setVisible(true);
 
         mediaPlayer.fullScreen().setFullScreen(true);
-        mediaPlayer.media().startMedia(args[0]);
+        mediaPlayer.media().set(mediaPlayerFactory.media().newMedia(args[0]));
+        mediaPlayer.controls().start();
     }
 }

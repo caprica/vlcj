@@ -38,8 +38,6 @@ import java.util.concurrent.TimeUnit;
 
 // FIXME could almost be renamed BaseMediaPlayer instead of Default
 
-// FIXME rename instance to libvlcInstance ?
-
 /**
  * Base media player implementation.
  */
@@ -77,16 +75,13 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     private final ChapterService    chapterService;
     private final ControlsService   controlsService;
     private final EventService      eventService;
-    private final InfoService       infoService;
     private final LogoService       logoService;
     private final MarqueeService    marqueeService;
     private final MediaService      mediaService;
     private final MenuService       menuService;
-    private final ParseService      parseService;
     private final RoleService       roleService;
     private final SlaveService      slaveService;
     private final SnapshotService   snapshotService;
-    private final StatsService      statsService;
     private final StatusService     statusService;
     private final SubItemService    subItemService;
     private final SubpictureService subpictureService;
@@ -111,16 +106,13 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
         chapterService    = new ChapterService   (this);
         controlsService   = new ControlsService  (this);
         eventService      = new EventService     (this);
-        infoService       = new InfoService      (this);
         logoService       = new LogoService      (this);
         marqueeService    = new MarqueeService   (this);
         mediaService      = new MediaService     (this);
         menuService       = new MenuService      (this);
-        parseService      = new ParseService     (this);
         roleService       = new RoleService      (this);
         slaveService      = new SlaveService     (this);
         snapshotService   = new SnapshotService  (this);
-        statsService      = new StatsService     (this);
         statusService     = new StatusService    (this);
         subItemService    = new SubItemService   (this);
         subpictureService = new SubpictureService(this);
@@ -160,11 +152,6 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     }
 
     @Override
-    public InfoService info() {
-        return infoService;
-    }
-
-    @Override
     public LogoService logo() {
         return logoService;
     }
@@ -185,11 +172,6 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     }
 
     @Override
-    public ParseService parsing() {
-        return parseService;
-    }
-
-    @Override
     public RoleService role() {
         return roleService;
     }
@@ -202,11 +184,6 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
     @Override
     public SnapshotService snapshots() {
         return snapshotService;
-    }
-
-    @Override
-    public StatsService statistics() {
-        return statsService;
     }
 
     @Override
@@ -249,16 +226,13 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
         chapterService   .release();
         controlsService  .release();
         eventService     .release();
-        infoService      .release();
         logoService      .release();
         marqueeService   .release();
         mediaService     .release();
         menuService      .release();
-        parseService     .release();
         roleService      .release();
         slaveService     .release();
         snapshotService  .release();
-        statsService     .release();
         statusService    .release();
         subItemService   .release();
         subpictureService.release();

@@ -58,7 +58,8 @@ public class SnapshotTest extends VlcjTest {
             }
         });
 
-        mediaPlayer.media().startMedia(args[0]);
+        mediaPlayer.media().set(factory.media().newMedia(args[0]));
+        mediaPlayer.controls().start();
 
         mediaPlayer.controls().setPosition(0.25f);
         Thread.sleep(1000); // Don't do this, use events instead

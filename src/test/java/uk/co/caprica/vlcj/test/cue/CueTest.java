@@ -37,13 +37,19 @@ import java.util.List;
 public class CueTest extends VlcjTest {
 
     public static void main(String[] args) throws InterruptedException {
+        args = new String[] {"/home/mark/temp/cue-test/100_blank_and_jones-relax_edition_eight-cd1-2014.m3u"};
+
         if(args.length != 1) {
             System.err.println("Specify a single cue sheet");
             System.exit(1);
         }
 
         final AudioMediaPlayerComponent player = new AudioMediaPlayerComponent();
-        player.getMediaPlayer().media().prepareMedia(args[0]);
+//        player.getMediaPlayer().media().prepareMedia(args[0]);
+
+        player.getMediaPlayer().subItems().setPlaySubItems(true);
+
+        player.getMediaPlayer().media().set(player.getMediaPlayerFactory().media().newMedia(args[0]));
 
         player.getMediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 
@@ -55,13 +61,17 @@ public class CueTest extends VlcjTest {
                 // Play an arbitrary sub-item - note that in this basic test each
                 // time the media finishes it will be replayed - a more useful
                 // implementation would do something more sophisticated here
-                player.getMediaPlayer().subItems().playSubItem(5);
+//                player.getMediaPlayer().subItems().player().controls().playItem(5);
             }
         });
 
         // The sub-items will not be created until the cue sheet is "played" and the
         // media player receives a "finished" event
+        System.out.println("before play");
+
         player.getMediaPlayer().controls().play();
+
+        System.out.println("played");
 
         Thread.currentThread().join();
     }
@@ -73,10 +83,10 @@ public class CueTest extends VlcjTest {
 //            System.out.println("meta: " + meta);
 //        } FIXME
         // Dump the media list
-        MediaList mediaList = player.getMediaPlayer().subItems().subItemsMediaList();
-        List<String> items = mediaList.items();
-        for(String item : items) {
-            System.out.println(item);
-        }
+//        MediaList mediaList = player.getMediaPlayer().media().get().subitems().get();
+//        List<String> items = mediaList.items().mrls();
+//        for(String item : items) {
+//            System.out.println(item);
+//        }
     }
 }

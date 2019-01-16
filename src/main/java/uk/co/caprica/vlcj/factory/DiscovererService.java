@@ -41,7 +41,7 @@ public final class DiscovererService extends BaseService {
     public MediaDiscoverer discoverer(String name) {
         libvlc_media_discoverer_t discoverer = libvlc.libvlc_media_discoverer_new(instance, name);
         if (discoverer != null) {
-            return new MediaDiscoverer(libvlc, instance, discoverer);
+            return new MediaDiscoverer(libvlc, discoverer);
         } else {
             return null;
         }

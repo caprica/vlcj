@@ -162,8 +162,6 @@ public interface MediaPlayer {
 
     EventService events();
 
-    InfoService info();
-
     LogoService logo();
 
     MediaService media();
@@ -172,15 +170,11 @@ public interface MediaPlayer {
 
     MenuService menu();
 
-    ParseService parsing();
-
     RoleService role();
 
     SlaveService slave();
 
     SnapshotService snapshots();
-
-    StatsService statistics();
 
     StatusService status();
 

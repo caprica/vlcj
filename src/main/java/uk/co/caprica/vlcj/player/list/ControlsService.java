@@ -13,7 +13,7 @@ public final class ControlsService extends BaseService {
      * event will be raised.
      */
     public void play() {
-        mediaListPlayer.attachVideoSurface();
+        attachVideoSurface();
         libvlc.libvlc_media_list_player_play(mediaListPlayerInstance);
     }
 
@@ -50,7 +50,7 @@ public final class ControlsService extends BaseService {
      * @return <code>true</code> if the item could be played, otherwise <code>false</code>
      */
     public boolean playItem(int itemIndex) {
-        mediaListPlayer.attachVideoSurface();
+        attachVideoSurface();
         return libvlc.libvlc_media_list_player_play_item_at_index(mediaListPlayerInstance, itemIndex) == 0;
     }
 
@@ -60,7 +60,7 @@ public final class ControlsService extends BaseService {
      * When the mode is {@link MediaListPlayerMode#REPEAT} this method will replay the current media, not the next one.
      */
     public boolean playNext() {
-        mediaListPlayer.attachVideoSurface();
+        attachVideoSurface();
         return libvlc.libvlc_media_list_player_next(mediaListPlayerInstance) == 0;
     }
 
@@ -71,8 +71,12 @@ public final class ControlsService extends BaseService {
      * one.
      */
     public boolean playPrevious() {
-        mediaListPlayer.attachVideoSurface();
+        attachVideoSurface();
         return libvlc.libvlc_media_list_player_previous(mediaListPlayerInstance) == 0;
+    }
+
+    private void attachVideoSurface() {
+        mediaListPlayer.mediaPlayer().attachVideoSurface();
     }
 
 }

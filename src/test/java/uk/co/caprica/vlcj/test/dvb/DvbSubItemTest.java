@@ -20,7 +20,6 @@
 package uk.co.caprica.vlcj.test.dvb;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -46,12 +45,12 @@ public class DvbSubItemTest extends VlcjTest {
         mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void finished(MediaPlayer mediaPlayer) {
-                int subItemCount = mediaPlayer.subItems().subItemCount();
+                int subItemCount = mediaPlayer.media().get().subitems().get().items().count();
                 System.out.println("subItemCount=" + subItemCount);
 
                 System.out.println("Getting sub-items...");
 
-                List<String> subItems = mediaPlayer.subItems().subItems();
+                List<String> subItems = mediaPlayer.media().get().subitems().get().items().mrls();
                 for(String subItem : subItems) {
                     System.out.println(subItem);
                 }

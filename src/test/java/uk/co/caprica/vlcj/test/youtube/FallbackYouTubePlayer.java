@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.test.youtube;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -83,19 +82,13 @@ public class FallbackYouTubePlayer extends VlcjTest {
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
 
             @Override
-            public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-                // Show the sub-item being added for purposes of the test...
-//                System.out.println("mediaSubItemAdded: " + mediaPlayerComponent.getMediaPlayer().mrl(subItem));
-            }
-
-            @Override
             public void finished(MediaPlayer mediaPlayer) {
                 System.out.println("finished");
 
                 // This is key...
                 //
                 // On receipt of a "finished" event, check if sub-items have been created...
-                List<String> subItems = mediaPlayer.subItems().subItems();
+                List<String> subItems = mediaPlayer.media().get().subitems().get().items().mrls(); // FIXME yuck, consider naming etc to make this a bit nicer
                 System.out.println("subItems=" + subItems);
                 // If sub-items were created...
                 if(subItems != null && !subItems.isEmpty()) {

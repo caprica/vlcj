@@ -104,10 +104,8 @@ public abstract class AbstractCallbackMedia extends AbstractMedia implements Cal
      * Create a new media instance.
      *
      * @param seekable <code>true</code> if the media is seekable; <code>false</code> if it is not
-     * @param mediaOptions zero or media options
      */
-    public AbstractCallbackMedia(boolean seekable, String... mediaOptions) {
-        super(mediaOptions);
+    public AbstractCallbackMedia(boolean seekable) {
         this.seekable = seekable;
         this.open = new Open();
         this.read = new Read();

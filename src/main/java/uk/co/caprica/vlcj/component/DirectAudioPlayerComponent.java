@@ -325,38 +325,6 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
     }
 
     @Override
-    public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
-    }
-
-    @Override
-    public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-    }
-
-    @Override
-    public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-    }
-
-    @Override
-    public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-    }
-
-    @Override
-    public void mediaParsedStatus(MediaPlayer mediaPlayer, int newStatus) {
-    }
-
-    @Override
-    public void mediaFreed(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
-    }
-
-    @Override
-    public void mediaSubItemTreeAdded(MediaPlayer mediaPlayer, libvlc_media_t item) {
-    }
-
-    @Override
     public void newMedia(MediaPlayer mediaPlayer) {
     }
 

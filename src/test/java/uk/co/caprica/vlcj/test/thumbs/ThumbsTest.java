@@ -93,15 +93,15 @@ public class ThumbsTest extends VlcjTest {
             }
         });
 
-        if(mediaPlayer.media().startMedia(mrl)) {
-            mediaPlayer.controls().setPosition(VLC_THUMBNAIL_POSITION);
-            inPositionLatch.await(); // Might wait forever if error
-
-            mediaPlayer.snapshots().saveSnapshot(snapshotFile, imageWidth, 0);
-            snapshotTakenLatch.await(); // Might wait forever if error
-
-            mediaPlayer.controls().stop();
-        }
+//        if(mediaPlayer.media().startMedia(mrl)) {
+//            mediaPlayer.controls().setPosition(VLC_THUMBNAIL_POSITION);
+//            inPositionLatch.await(); // Might wait forever if error
+//
+//            mediaPlayer.snapshots().saveSnapshot(snapshotFile, imageWidth, 0);
+//            snapshotTakenLatch.await(); // Might wait forever if error
+//
+//            mediaPlayer.controls().stop();
+//FIXME        }
 
         mediaPlayer.release();
         factory.release();

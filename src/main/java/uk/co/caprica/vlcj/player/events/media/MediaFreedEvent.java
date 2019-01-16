@@ -17,28 +17,21 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.events.semantic;
+package uk.co.caprica.vlcj.player.events.media;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
+import uk.co.caprica.vlcj.media.Media;
 
 /**
  *
  */
-class MediaEndOfSubItemsEvent extends MediaPlayerEvent {
+final class MediaFreedEvent extends MediaEvent {
 
-    /**
-     * Create a media player event.
-     *
-     * @param mediaPlayer media player the event relates to
-     */
-    MediaEndOfSubItemsEvent(MediaPlayer mediaPlayer) {
-        super(mediaPlayer);
+    MediaFreedEvent(Media media) {
+        super(media);
     }
 
     @Override
-    public void notify(MediaPlayerEventListener listener) {
-        listener.endOfSubItems(mediaPlayer);
+    public void notify(MediaEventListener listener) {
+        listener.mediaFreed(media);
     }
 }

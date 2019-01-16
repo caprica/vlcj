@@ -22,24 +22,7 @@ package uk.co.caprica.vlcj.player.media;
 /**
  * Base implementation of Media to handle media options.
  */
-public abstract class AbstractMedia implements Media {
+@Deprecated
+public abstract class AbstractMedia {
 
-    /**
-     * Media options, may be <code>null</code>.
-     */
-    private final String[] mediaOptions;
-
-    /**
-     * Create a media instance.
-     *
-     * @param mediaOptions zero or more media options
-     */
-    public AbstractMedia(String... mediaOptions) {
-        this.mediaOptions = mediaOptions;
-    }
-
-    @Override
-    public final String[] mediaOptions() {
-        return mediaOptions;
-    }
 }

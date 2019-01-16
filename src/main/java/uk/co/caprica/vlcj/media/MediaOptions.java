@@ -1,9 +1,8 @@
-package uk.co.caprica.vlcj.medialist;
+package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 
-// FIXME dammit this is a copy of package private class in base
 final class MediaOptions {
 
     static boolean addMediaOptions(LibVlc libvlc, libvlc_media_t media, String... mediaOptions) {

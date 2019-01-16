@@ -19,10 +19,19 @@
 
 package uk.co.caprica.vlcj.test.basic;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import uk.co.caprica.vlcj.binding.LibVlcConst;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -31,25 +40,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.filechooser.FileFilter;
-
-import uk.co.caprica.vlcj.binding.LibVlcConst;
-import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-
 public class PlayerControlsPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -57,6 +47,8 @@ public class PlayerControlsPanel extends JPanel {
     private static final int SKIP_TIME_MS = 10 * 1000;
 
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
+    private final MediaPlayerFactory factory;
 
     private final EmbeddedMediaPlayer mediaPlayer;
 
@@ -89,7 +81,8 @@ public class PlayerControlsPanel extends JPanel {
 
     private boolean mousePressedPlaying = false;
 
-    public PlayerControlsPanel(EmbeddedMediaPlayer mediaPlayer) {
+    public PlayerControlsPanel(MediaPlayerFactory factory, EmbeddedMediaPlayer mediaPlayer) {
+        this.factory = factory;
         this.mediaPlayer = mediaPlayer;
 
         createUI();
@@ -388,7 +381,8 @@ public class PlayerControlsPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.overlay().enableOverlay(false);
                 if(JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(PlayerControlsPanel.this)) {
-                    mediaPlayer.media().playMedia(fileChooser.getSelectedFile().getAbsolutePath());
+                    mediaPlayer.media().set(factory.media().newMedia(fileChooser.getSelectedFile().getAbsolutePath()));
+                    mediaPlayer.controls().play();
                 }
                 mediaPlayer.overlay().enableOverlay(true);
             }

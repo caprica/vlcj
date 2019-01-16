@@ -32,9 +32,9 @@ public class MediaDiscovererTest {
             System.out.println("discoverer=" + discoverer);
 
             MediaList list = discoverer.mediaList();
-            System.out.println("read only = " + list.isReadOnly());
+            System.out.println("read only = " + list.items().isReadOnly());
 
-            list.addMediaListEventListener(new MediaListEventAdapter() {
+            list.events().addMediaListEventListener(new MediaListEventAdapter() {
                 @Override
                 public void mediaListWillAddItem(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
                     System.out.println("will add " + mediaInstance);

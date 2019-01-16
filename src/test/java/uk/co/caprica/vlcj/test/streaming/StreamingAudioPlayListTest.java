@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.List;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
@@ -107,7 +108,9 @@ public class StreamingAudioPlayListTest extends VlcjTest {
         for(File file : files) {
             // You could instead set standard options on the media list player rather
             // than setting options each time you add media
-            playList.addMedia(file.getAbsolutePath(), mediaOptions);
+            Media media = factory.media().newMedia(file.getAbsolutePath());
+            media.options().addOptions(mediaOptions); // FIXME consider factory method with mrl+options
+            playList.items().addMedia(media);
         }
         // Loop the play-list over and over
         mediaListPlayer.mode().setMode(MediaListPlayerMode.LOOP);

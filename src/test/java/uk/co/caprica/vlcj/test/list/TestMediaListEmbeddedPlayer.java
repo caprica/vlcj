@@ -76,9 +76,9 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
         f.setVisible(true);
 
         MediaList mediaList = mediaPlayerFactory.media().newMediaList();
-        mediaList.addMedia("/movies/1.mp4");
-        mediaList.addMedia("/movies/2.mp4");
-        mediaList.addMedia("/movies/3.mp4");
+        mediaList.items().addMedia(mediaPlayerFactory.media().newMedia("/movies/1.mp4"));
+        mediaList.items().addMedia(mediaPlayerFactory.media().newMedia("/movies/2.mp4"));
+        mediaList.items().addMedia(mediaPlayerFactory.media().newMedia("/movies/3.mp4"));
 
         mediaListPlayer.list().setMediaList(mediaList);
         mediaListPlayer.mode().setMode(MediaListPlayerMode.LOOP);

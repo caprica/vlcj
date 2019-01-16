@@ -17,28 +17,24 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.events.standard;
+package uk.co.caprica.vlcj.player.events.media;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
+import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_parsed_status_e;
+import uk.co.caprica.vlcj.binding.internal.media_parsed_changed;
+import uk.co.caprica.vlcj.media.Media;
 
-/**
- *
- */
-class MediaFreedEvent extends MediaPlayerEvent {
+final class MediaParsedChangedEvent extends MediaEvent {
 
-    /**
-     * Create a media player event.
-     *
-     * @param mediaPlayer media player the event relates to
-     */
-    MediaFreedEvent(MediaPlayer mediaPlayer) {
-        super(mediaPlayer);
+    private final int newStatus;
+
+    MediaParsedChangedEvent(Media media, libvlc_event_t event) {
+        super(media);
+        this.newStatus = ((media_parsed_changed) event.u.getTypedValue(media_parsed_changed.class)).new_status;
     }
 
     @Override
-    public void notify(MediaPlayerEventListener listener) {
-        listener.mediaFreed(mediaPlayer);
+    public void notify(MediaEventListener listener) {
+        listener.mediaParsedChanged(media, libvlc_media_parsed_status_e.mediaParsedStatus(newStatus));
     }
 }

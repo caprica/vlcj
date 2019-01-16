@@ -48,10 +48,9 @@ public abstract class DefaultCallbackMedia extends AbstractCallbackMedia {
      * Create a new media instance with a default IO buffer size.
      *
      * @param seekable <code>true</code> if the media is seekable; <code>false</code> if it is not
-     * @param mediaOptions zero or more media options
      */
-    public DefaultCallbackMedia(boolean seekable, String... mediaOptions) {
-        this(seekable, DEFAULT_BUFFER_SIZE, mediaOptions);
+    public DefaultCallbackMedia(boolean seekable) {
+        this(seekable, DEFAULT_BUFFER_SIZE);
     }
 
     /**
@@ -59,10 +58,9 @@ public abstract class DefaultCallbackMedia extends AbstractCallbackMedia {
      *
      * @param seekable <code>true</code> if the media is seekable; <code>false</code> if it is not
      * @param ioBufferSize IO buffer size
-     * @param mediaOptions zero or more media options
      */
-    public DefaultCallbackMedia(boolean seekable, int ioBufferSize, String... mediaOptions) {
-        super(seekable, mediaOptions);
+    public DefaultCallbackMedia(boolean seekable, int ioBufferSize) {
+        super(seekable);
         this.ioBuffer = new byte[ioBufferSize];
     }
 

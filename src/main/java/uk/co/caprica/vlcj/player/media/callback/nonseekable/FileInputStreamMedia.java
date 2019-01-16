@@ -38,10 +38,9 @@ public class FileInputStreamMedia extends NonSeekableInputStreamMedia {
      * Create a media instance with a default IO buffer size.
      *
      * @param file file to read media data from
-     * @param mediaOptions zero or more media options
      */
-    public FileInputStreamMedia(File file, String... mediaOptions) {
-        super(mediaOptions);
+    public FileInputStreamMedia(File file) {
+        super();
         this.file = file;
     }
 
@@ -50,10 +49,9 @@ public class FileInputStreamMedia extends NonSeekableInputStreamMedia {
      *
      * @param file file to read media data from
      * @param ioBufferSize IO buffer size
-     * @param mediaOptions zero or more media options
      */
-    public FileInputStreamMedia(File file, int ioBufferSize, String... mediaOptions) {
-        super(ioBufferSize, mediaOptions);
+    public FileInputStreamMedia(File file, int ioBufferSize) {
+        super(ioBufferSize);
         this.file = file;
     }
 

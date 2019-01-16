@@ -149,40 +149,6 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     public void mediaPlayerReady(MediaPlayer mediaPlayer) {
     }
 
-    // === Events relating to the current media =================================
-
-    @Override
-    public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-    }
-
-    @Override
-    public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
-    }
-
-    @Override
-    public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-    }
-
-    @Override
-    public void mediaParsedStatus(MediaPlayer mediaPlayer, int newStatus) {
-    }
-
-    @Override
-    public void mediaFreed(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void mediaStateChanged(MediaPlayer mediaPlayer, int newState) {
-    }
-
-    @Override
-    public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
-    }
-
-    @Override
-    public void mediaSubItemTreeAdded(MediaPlayer mediaPlayer, libvlc_media_t item) {
-    }
-
     // === Synthetic/semantic events ============================================
 
     @Override
