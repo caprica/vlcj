@@ -77,7 +77,12 @@ public enum DeinterlaceMode {
     /**
      *
      */
-    IVTC("ivtc");
+    IVTC("ivtc"),
+
+    /**
+     *
+     */
+    AUTO("auto");
 
     private static final Map<String, DeinterlaceMode> STRING_MAP = new HashMap<String, DeinterlaceMode>();
 
