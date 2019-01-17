@@ -203,6 +203,17 @@ public class MediaPlayerFactory {
      * The factory must not be used again after it has been released.
      */
     public final void release() {
+        applicationService .release();
+        audioService       .release();
+        dialogsService     .release();
+        discovererService  .release();
+        equalizerService   .release();
+        mediaPlayerService .release();
+        mediaService       .release();
+        moduleService      .release();
+        rendererService    .release();
+        videoSurfaceService.release();
+
         libvlc.libvlc_release(this.libvlcInstance);
     }
 
