@@ -16,11 +16,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public final class EventService extends BaseService {
 
     /**
-     * Native media player event manager.
-     */
-    private final libvlc_event_manager_t mediaListPlayerEventManager;
-
-    /**
      * Collection of media player event listeners.
      * <p>
      * A {@link CopyOnWriteArrayList} is used defensively so as not to interfere with the processing of any existing
@@ -37,18 +32,7 @@ public final class EventService extends BaseService {
     EventService(DefaultMediaListPlayer mediaListPlayer) {
         super(mediaListPlayer);
 
-        this.mediaListPlayerEventManager = getNativeMediaListPlayerEventManager();
-
         registerNativeEventListener();
-    }
-
-    private libvlc_event_manager_t getNativeMediaListPlayerEventManager() {
-        libvlc_event_manager_t result = libvlc.libvlc_media_list_player_event_manager(mediaListPlayerInstance);
-        if (result != null) {
-            return result;
-        } else {
-            throw new RuntimeException("Failed to get the native media player event manager instance");
-        }
     }
 
     /**
@@ -70,6 +54,7 @@ public final class EventService extends BaseService {
     }
 
     private void registerNativeEventListener() {
+        libvlc_event_manager_t mediaListPlayerEventManager = libvlc.libvlc_media_list_player_event_manager(mediaListPlayerInstance);
         for (libvlc_event_e event : libvlc_event_e.values()) {
             if (event.intValue() >= libvlc_event_e.libvlc_MediaListPlayerPlayed.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListPlayerStopped.intValue()) {
                 libvlc.libvlc_event_attach(mediaListPlayerEventManager, event.intValue(), callback, null);
@@ -78,6 +63,7 @@ public final class EventService extends BaseService {
     }
 
     private void deregisterNativeEventListener() {
+        libvlc_event_manager_t mediaListPlayerEventManager = libvlc.libvlc_media_list_player_event_manager(mediaListPlayerInstance);
         for (libvlc_event_e event : libvlc_event_e.values()) {
             if (event.intValue() >= libvlc_event_e.libvlc_MediaListPlayerPlayed.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaListPlayerStopped.intValue()) {
                 libvlc.libvlc_event_detach(mediaListPlayerEventManager, event.intValue(), callback, null);

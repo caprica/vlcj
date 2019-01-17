@@ -17,11 +17,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public final class EventService extends BaseService {
 
     /**
-     * Native media player event manager.
-     */
-    private final libvlc_event_manager_t mediaPlayerEventManager;
-
-    /**
      * Collection of media player event listeners.
      * <p>
      * A {@link CopyOnWriteArrayList} is used defensively so as not to interfere with the processing of any existing
@@ -38,22 +33,11 @@ public final class EventService extends BaseService {
     EventService(DefaultMediaPlayer mediaPlayer) {
         super(mediaPlayer);
 
-        this.mediaPlayerEventManager = getNativeMediaPlayerEventManager();
-
         // Add event handlers used for internal implementation
         addMediaPlayerEventListener(new RepeatPlayEventHandler      ());
         addMediaPlayerEventListener(new MediaPlayerReadyEventHandler());
 
         registerNativeEventListener();
-    }
-
-    private libvlc_event_manager_t getNativeMediaPlayerEventManager() {
-        libvlc_event_manager_t result = libvlc.libvlc_media_player_event_manager(mediaPlayerInstance);
-        if (result != null) {
-            return result;
-        } else {
-            throw new RuntimeException("Failed to get the native media player event manager instance");
-        }
     }
 
     /**
@@ -75,6 +59,7 @@ public final class EventService extends BaseService {
     }
 
     private void registerNativeEventListener() {
+        libvlc_event_manager_t mediaPlayerEventManager = libvlc.libvlc_media_player_event_manager(mediaPlayerInstance);
         for (libvlc_event_e event : libvlc_event_e.values()) {
             if (event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaPlayerChapterChanged.intValue()) {
                 libvlc.libvlc_event_attach(mediaPlayerEventManager, event.intValue(), callback, null);
@@ -83,6 +68,7 @@ public final class EventService extends BaseService {
     }
 
     private void deregisterNativeEventListener() {
+        libvlc_event_manager_t mediaPlayerEventManager = libvlc.libvlc_media_player_event_manager(mediaPlayerInstance);
         if (mediaPlayerEventManager != null) {
             for (libvlc_event_e event : libvlc_event_e.values()) {
                 if (event.intValue() >= libvlc_event_e.libvlc_MediaPlayerMediaChanged.intValue() && event.intValue() <= libvlc_event_e.libvlc_MediaPlayerChapterChanged.intValue()) {
