@@ -23,12 +23,14 @@ public final class MediaService extends BaseService {
      *
      * @param media
      */
-    public void set(Media media) {
+    public Media set(Media media) {
+        Media previousMedia = this.media;
         this.media = media;
         if (media != null) {
             libvlc.libvlc_media_player_set_media(mediaPlayerInstance, media.mediaInstance());
         }
         mediaPlayer.subItems().changeMedia(media);
+        return previousMedia;
     }
 
     /**
