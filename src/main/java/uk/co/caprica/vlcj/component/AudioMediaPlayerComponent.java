@@ -72,12 +72,7 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
  * It is always a better strategy to reuse media player components, rather than repeatedly creating
  * and destroying instances.
  */
-public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(AudioMediaPlayerComponent.class);
+public class AudioMediaPlayerComponent extends AudioMediaPlayerComponentBase implements MediaPlayerComponent {
 
     /**
      * Default factory initialisation arguments.
@@ -87,10 +82,12 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
      * A sub-class has access to these default arguments so new ones could be merged with these if
      * required.
      */
-    protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
+    static final String[] DEFAULT_FACTORY_ARGUMENTS = {
         "--quiet-synchro",
         "--intf=dummy"
     };
+
+    private final boolean ownFactory;
 
     /**
      * Media player factory.
@@ -105,21 +102,24 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
     /**
      * Construct a media player component.
      */
-    public AudioMediaPlayerComponent() {
-        mediaPlayerFactory = onGetMediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.mediaPlayers().newHeadlessMediaPlayer();
-        // Sub-class initialisation
+    public AudioMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory) {
+        this.ownFactory = mediaPlayerFactory == null;
+        this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
+
+        this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newHeadlessMediaPlayer();
+        this.mediaPlayer.events().addMediaPlayerEventListener(this);
+
         onAfterConstruct();
-        // Register listeners
-        mediaPlayer.events().addMediaPlayerEventListener(this);
     }
 
-    /**
-     * Get the media player factory reference.
-     *
-     * @return media player factory
-     */
-    public final MediaPlayerFactory getMediaPlayerFactory() {
+    public AudioMediaPlayerComponent() {
+        this(null);
+    }
+
+    private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {
+        if (mediaPlayerFactory == null) {
+            mediaPlayerFactory = new MediaPlayerFactory(DEFAULT_FACTORY_ARGUMENTS);
+        }
         return mediaPlayerFactory;
     }
 
@@ -142,69 +142,19 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
      */
     public final void release() {
         onBeforeRelease();
+
         mediaPlayer.release();
+
+        if (ownFactory) {
+            mediaPlayerFactory.release();
+        }
+
         onAfterRelease();
     }
 
-    /**
-     * Release the media player component and the associated media player factory.
-     * <p>
-     * Optionally release the media player factory.
-     * <p>
-     * This method invokes {@link #release()}, then depending on the value of the <code>releaseFactory</code>
-     * parameter the associated factory will also be released.
-     *
-     * @param releaseFactory <code>true</code> if the factory should also be released; <code>false</code> if it should not
-     */
-    public final void release(boolean releaseFactory) {
-        release();
-        if(releaseFactory) {
-            mediaPlayerFactory.release();
-        }
-    }
-
-    /**
-     * Template method to create a media player factory.
-     * <p>
-     * The default implementation will invoke the {@link #onGetMediaPlayerFactoryArgs()} template
-     * method.
-     *
-     * @return media player factory
-     */
-    protected MediaPlayerFactory onGetMediaPlayerFactory() {
-        String[] args = Arguments.mergeArguments(onGetMediaPlayerFactoryArgs(), onGetMediaPlayerFactoryExtraArgs());
-        logger.debug("args={}", Arrays.toString(args));
-        return new MediaPlayerFactory(args);
-    }
-
-    /**
-     * Template method to obtain the initialisation arguments used to create the media player
-     * factory instance.
-     * <p>
-     * This can be used to provide arguments to use <em>instead</em> of the defaults.
-     * <p>
-     * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
-     * guarantee that {@link #onGetMediaPlayerFactoryArgs()} will be called.
-     *
-     * @return media player factory initialisation arguments
-     */
-    protected String[] onGetMediaPlayerFactoryArgs() {
-        return DEFAULT_FACTORY_ARGUMENTS;
-    }
-
-    /**
-     * Template method to obtain the extra initialisation arguments used to create the media player
-     * factory instance.
-     * <p>
-     * This can be used to provide <em>additional</em> arguments to add to the hard-coded defaults.
-     * <p>
-     * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
-     * guarantee that {@link #onGetMediaPlayerFactoryExtraArgs()} will be called.
-     *
-     * @return media player factory initialisation arguments, or <code>null</code>
-     */
-    protected String[] onGetMediaPlayerFactoryExtraArgs() {
-        return null;
+    @Override
+    public final MediaPlayerFactory getMediaPlayerFactory() {
+        return mediaPlayerFactory;
     }
 
     /**
@@ -226,4 +176,5 @@ public class AudioMediaPlayerComponent extends MediaPlayerEventAdapter {
      */
     protected void onAfterRelease() {
     }
+
 }

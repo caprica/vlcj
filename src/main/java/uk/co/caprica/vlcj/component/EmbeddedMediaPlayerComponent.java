@@ -19,41 +19,15 @@
 
 package uk.co.caprica.vlcj.component;
 
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.Image;
-import java.awt.Panel;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.Window;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JWindow;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
-import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
-import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
@@ -138,36 +112,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * and destroying instances.
  */
 @SuppressWarnings("serial")
-public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEventListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
-
-    /**
-     * Enumeration of flags for controller input (mouse and keyboard) event handling for the video
-     * surface.
-     */
-    public enum InputEvents {
-
-        /**
-         * No input event handling, no mouse or keyboard listener events will fire.
-         */
-        NONE,
-
-        /**
-         * Default input event handling, mouse and keyboard listener events will fire.
-         */
-        DEFAULT,
-
-        /**
-         * Disable native input event handling, mouse and keyboard listener events will fire.
-         * <p>
-         * This is the mode that is usually required on Windows.
-         */
-        DISABLE_NATIVE
-    }
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(EmbeddedMediaPlayerComponent.class);
+public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBase implements MediaPlayerComponent {
 
     /**
      * Default factory initialisation arguments.
@@ -177,7 +122,7 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      * A sub-class has access to these default arguments so new ones could be merged with these if
      * required.
      */
-    protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
+    static final String[] DEFAULT_FACTORY_ARGUMENTS = {
         "--video-title=vlcj video output",
         "--no-snapshot-preview",
         "--quiet-synchro",
@@ -186,9 +131,19 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     };
 
     /**
+     *
+     */
+    private boolean ownFactory;
+
+    /**
      * Media player factory.
      */
-    private final MediaPlayerFactory mediaPlayerFactory;
+    protected final MediaPlayerFactory mediaPlayerFactory;
+
+    /**
+     *
+     */
+    private final Component videoSurfaceComponent;
 
     /**
      * Media player.
@@ -196,38 +151,66 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     private final EmbeddedMediaPlayer mediaPlayer;
 
     /**
-     * Video surface canvas.
-     */
-    private final Canvas canvas;
-
-    /**
-     * Video surface encapsulation.
-     */
-    private final VideoSurface videoSurface;
-
-    /**
      * Blank cursor to use when the cursor is disabled.
      */
     private Cursor blankCursor;
 
     /**
+     *
+     *
+     * @param mediaPlayerFactory
+     * @param videoSurfaceComponent
+     * @param fullScreenStrategy
+     * @param inputEvents
+     * @param overlay
+     */
+    public EmbeddedMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, Component videoSurfaceComponent, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, Window overlay) {
+        this.ownFactory = mediaPlayerFactory == null;
+        this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
+
+        this.videoSurfaceComponent = initVideoSurfaceComponent(videoSurfaceComponent);
+
+        this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
+
+        this.mediaPlayer.videoSurface().setVideoSurface(this.mediaPlayerFactory.videoSurfaces().newVideoSurface(videoSurfaceComponent));
+        this.mediaPlayer.fullScreen().setFullScreenStrategy(fullScreenStrategy);
+        this.mediaPlayer.overlay().setOverlay(overlay);
+
+        setLayout(new BorderLayout());
+        add(videoSurfaceComponent, BorderLayout.CENTER);
+
+        initInputEvents(inputEvents);
+
+        onAfterConstruct();
+    }
+
+    /**
      * Construct a media player component.
      */
     public EmbeddedMediaPlayerComponent() {
-        // Create the native resources
-        mediaPlayerFactory = onGetMediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.fullScreen().setFullScreenStrategy(onGetFullScreenStrategy());
-        canvas = onGetCanvas();
-        videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
-        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
-        // Prepare the user interface
-        setBackground(Color.black);
-        setLayout(new BorderLayout());
-        add(canvas, BorderLayout.CENTER);
-        // Register listeners
-        mediaPlayer.events().addMediaPlayerEventListener(this);
-        switch (onGetInputEvents()) {
+        this(null, null, null, null, null);
+    }
+
+    private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {
+        if (mediaPlayerFactory == null) {
+            mediaPlayerFactory = new MediaPlayerFactory(DEFAULT_FACTORY_ARGUMENTS);
+        }
+        return mediaPlayerFactory;
+    }
+
+    private Component initVideoSurfaceComponent(Component videoSurfaceComponent) {
+        if (videoSurfaceComponent == null) {
+            videoSurfaceComponent = new Canvas();
+            videoSurfaceComponent.setBackground(Color.black);
+        }
+        return videoSurfaceComponent;
+    }
+
+    private void initInputEvents(InputEvents inputEvents) {
+        if (inputEvents == null) {
+            inputEvents = RuntimeUtil.isNix() || RuntimeUtil.isMac() ? InputEvents.DEFAULT : InputEvents.DISABLE_NATIVE;
+        }
+        switch (inputEvents) {
             case NONE:
                 break;
             case DISABLE_NATIVE:
@@ -235,25 +218,12 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
                 mediaPlayer.input().setEnableMouseInputHandling(false);
                 // Case fall-through is by design
             case DEFAULT:
-                canvas.addMouseListener(this);
-                canvas.addMouseMotionListener(this);
-                canvas.addMouseWheelListener(this);
-                canvas.addKeyListener(this);
+                videoSurfaceComponent.addMouseListener(this);
+                videoSurfaceComponent.addMouseMotionListener(this);
+                videoSurfaceComponent.addMouseWheelListener(this);
+                videoSurfaceComponent.addKeyListener(this);
                 break;
         }
-        // Set the overlay
-        mediaPlayer.overlay().setOverlay(onGetOverlay());
-        // Sub-class initialisation
-        onAfterConstruct();
-    }
-
-    /**
-     * Get the media player factory reference.
-     *
-     * @return media player factory
-     */
-    public final MediaPlayerFactory getMediaPlayerFactory() {
-        return mediaPlayerFactory;
     }
 
     /**
@@ -274,8 +244,8 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      *
      * @return video surface component
      */
-    public final Canvas getVideoSurface() {
-        return canvas;
+    public final Component getVideoSurfaceComponent() {
+        return videoSurfaceComponent;
     }
 
     /**
@@ -301,27 +271,30 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
      */
     public final void release() {
         onBeforeRelease();
+
+        // It is safe to remove listeners like this even if none were added (depends on configured InputEvents in the
+        // constructor)
+        videoSurfaceComponent.removeMouseListener(this);
+        videoSurfaceComponent.removeMouseMotionListener(this);
+        videoSurfaceComponent.removeMouseWheelListener(this);
+        videoSurfaceComponent.removeKeyListener(this);
+
         mediaPlayer.release();
+
+        if (ownFactory) {
+            mediaPlayerFactory.release();
+        }
+
         onAfterRelease();
     }
 
     /**
-     * Release the media player component and the associated media player factory.
-     * <p>
-     * Optionally release the media player factory.
-     * <p>
-     * This method invokes {@link #release()}, then depending on the value of the <code>releaseFactory</code>
-     * parameter the associated factory will also be released.
+     * Get the media player factory reference.
      *
-     * @param releaseFactory <code>true</code> if the factory should also be released; <code>false</code> if it should not
+     * @return media player factory
      */
-    public final void release(boolean releaseFactory) {
-        logger.debug("release(releaseFactory={})", releaseFactory);
-        release();
-        if(releaseFactory) {
-            logger.debug("Releasing media player factory");
-            mediaPlayerFactory.release();
-        }
+    public final MediaPlayerFactory getMediaPlayerFactory() {
+        return mediaPlayerFactory;
     }
 
     /**
@@ -338,312 +311,21 @@ public class EmbeddedMediaPlayerComponent extends Panel implements MediaPlayerEv
     }
 
     /**
-     * Template method to create a media player factory.
-     * <p>
-     * The default implementation will invoke the {@link #onGetMediaPlayerFactoryArgs()} template
-     * method.
-     *
-     * @return media player factory
-     */
-    protected MediaPlayerFactory onGetMediaPlayerFactory() {
-        String[] args = Arguments.mergeArguments(onGetMediaPlayerFactoryArgs(), onGetMediaPlayerFactoryExtraArgs());
-        logger.debug("args={}", Arrays.toString(args));
-        return new MediaPlayerFactory(args);
-    }
-
-    /**
-     * Template method to obtain the initialisation arguments used to create the media player
-     * factory instance.
-     * <p>
-     * This can be used to provide arguments to use <em>instead</em> of the defaults.
-     * <p>
-     * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
-     * guarantee that {@link #onGetMediaPlayerFactoryArgs()} will be called.
-     *
-     * @return media player factory initialisation arguments
-     */
-    protected String[] onGetMediaPlayerFactoryArgs() {
-        return DEFAULT_FACTORY_ARGUMENTS;
-    }
-
-    /**
-     * Template method to obtain the extra initialisation arguments used to create the media player
-     * factory instance.
-     * <p>
-     * This can be used to provide <em>additional</em> arguments to add to the hard-coded defaults.
-     * <p>
-     * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
-     * guarantee that {@link #onGetMediaPlayerFactoryExtraArgs()} will be called.
-     *
-     * @return media player factory initialisation arguments, or <code>null</code>
-     */
-    protected String[] onGetMediaPlayerFactoryExtraArgs() {
-        return null;
-    }
-
-    /**
-     * Template method to obtain a full-screen strategy implementation.
-     * <p>
-     * The default implementation does not provide any full-screen strategy.
-     *
-     * @return full-screen strategy implementation
-     */
-    protected FullScreenStrategy onGetFullScreenStrategy() {
-        return null;
-    }
-
-    /**
-     * Template method to obtain a video surface {@link Canvas} component.
-     * <p>
-     * The default implementation simply returns an ordinary Canvas with a black background.
-     *
-     * @return video surface component
-     */
-    protected Canvas onGetCanvas() {
-        Canvas canvas = new Canvas();
-        canvas.setBackground(Color.black);
-        return canvas;
-    }
-
-    /**
-     * Template method to determine how input events should be processed by the component.
-     * <p>
-     * By default keyboard and mouse listener events from the video surface will be dispatched to
-     * the corresponding template methods in this component.
-     * <p>
-     * In addition, by Default on Windows the native input handling is disabled. This is usually
-     * what you always want if you want mouse and/or keyboard events from the video surface on
-     * Windows).
-     * <p>
-     * Override this method to change the default handling.
-     * <p>
-     * No matter what is chosen here, an application can still add its own listeners the usual way
-     * and can still choose to disable (or not) the native input handling.
-     *
-     * @return value describing how to handle input events, never <code>null</code>
-     */
-    protected InputEvents onGetInputEvents() {
-        if (RuntimeUtil.isNix() || RuntimeUtil.isMac()) {
-            return InputEvents.DEFAULT;
-        }
-        else {
-            return InputEvents.DISABLE_NATIVE;
-        }
-    }
-
-    /**
-     * Template method to obtain an overlay component.
-     * <p>
-     * The default implementation does not provide an overlay.
-     * <p>
-     * The overlay component may be a {@link Window} or a <code>Window</code> sub-class such as
-     * {@link JWindow}.
-     *
-     * @return overlay component
-     */
-    protected Window onGetOverlay() {
-        return null;
-    }
-
-    /**
      * Template method invoked at the end of the media player constructor.
      */
     protected void onAfterConstruct() {
     }
 
     /**
-     * Template method invoked immediately prior to releasing the media player and media player
-     * factory instances.
+     * Template method invoked immediately prior to releasing the media player and media player factory instances.
      */
     protected void onBeforeRelease() {
     }
 
     /**
-     * Template method invoked immediately after releasing the media player and media player factory
-     * instances.
+     * Template method invoked immediately after releasing the media player and media player factory instances.
      */
     protected void onAfterRelease() {
     }
 
-    // === MediaPlayerEventListener =============================================
-
-    @Override
-    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
-    }
-
-    @Override
-    public void opening(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void buffering(MediaPlayer mediaPlayer, float newCache) {
-    }
-
-    @Override
-    public void playing(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void paused(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void stopped(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void forward(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void backward(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void finished(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-    }
-
-    @Override
-    public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
-    }
-
-    @Override
-    public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-    }
-
-    @Override
-    public void pausableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-    }
-
-    @Override
-    public void titleChanged(MediaPlayer mediaPlayer, int newTitle) {
-    }
-
-    @Override
-    public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
-    }
-
-    @Override
-    public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
-    }
-
-    @Override
-    public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-    }
-
-    @Override
-    public void scrambledChanged(MediaPlayer mediaPlayer, int newScrambled) {
-    }
-
-    @Override
-    public void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id) {
-    }
-
-    @Override
-    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id) {
-    }
-
-    @Override
-    public void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id) {
-    }
-
-    @Override
-    public void corked(MediaPlayer mediaPlayer, boolean corked) {
-    }
-
-    @Override
-    public void muted(MediaPlayer mediaPlayer, boolean muted) {
-    }
-
-    @Override
-    public void volumeChanged(MediaPlayer mediaPlayer, float volume) {
-    }
-
-    @Override
-    public void audioDeviceChanged(MediaPlayer mediaPlayer, String audioDevice) {
-    }
-
-    @Override
-    public void chapterChanged(MediaPlayer mediaPlayer, int newChapter) {
-    }
-
-    @Override
-    public void error(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void mediaPlayerReady(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void newMedia(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void subItemPlayed(MediaPlayer mediaPlayer, int subItemIndex) {
-    }
-
-    @Override
-    public void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex) {
-    }
-
-    @Override
-    public void endOfSubItems(MediaPlayer mediaPlayer) {
-    }
-
-    // === MouseListener ========================================================
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    // === MouseMotionListener ==================================================
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-    }
-
-    // === MouseWheelListener ===================================================
-
-    @Override
-    public void mouseWheelMoved(MouseWheelEvent e) {
-    }
-
-    // === KeyListener ==========================================================
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
 }

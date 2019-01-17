@@ -141,12 +141,7 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
             }
         };
 
-        mediaPlayerComponent = new DirectMediaPlayerComponent(bufferFormatCallback) {
-            @Override
-            protected RenderCallback onGetRenderCallback() {
-                return new TestRenderCallbackAdapter();
-            }
-        };
+        mediaPlayerComponent = new DirectMediaPlayerComponent(bufferFormatCallback, new TestRenderCallbackAdapter());
 
         frame.setContentPane(panel);
 

@@ -29,6 +29,8 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
 
+import java.util.Collection;
+
 /**
  * Factory for creating media player instances and associated components.
  * <p>
@@ -120,6 +122,25 @@ public class MediaPlayerFactory {
      * @param libvlcArgs array of options/arguments to pass to LibVLC for initialisation of the native library
      */
     public MediaPlayerFactory(String... libvlcArgs) {
+        this(new NativeDiscovery(), libvlcArgs);
+    }
+
+    /**
+     *
+     *
+     * @param discovery
+     * @param libvlcArgs
+     */
+    public MediaPlayerFactory(NativeDiscovery discovery, Collection<String> libvlcArgs) {
+        this(discovery, libvlcArgs.toArray(new String[libvlcArgs.size()]));
+    }
+
+    /**
+     *
+     *
+     * @param libvlcArgs
+     */
+    public MediaPlayerFactory(Collection<String> libvlcArgs) {
         this(new NativeDiscovery(), libvlcArgs);
     }
 

@@ -19,30 +19,14 @@
 
 package uk.co.caprica.vlcj.component;
 
-import java.util.Arrays;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
-import uk.co.caprica.vlcj.player.directaudio.AudioCallbackAdapter;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
-
-import com.sun.jna.Pointer;
 
 /**
  * Encapsulation of a direct audio player.
  */
-public class DirectAudioPlayerComponent implements MediaPlayerEventListener, AudioCallback {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(DirectAudioPlayerComponent.class);
+public class DirectAudioPlayerComponent extends DirectAudioPlayerComponentBase implements MediaPlayerComponent {
 
     /**
      * Default factory initialisation arguments.
@@ -52,10 +36,12 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
      * A sub-class has access to these default arguments so new ones could be merged with these if
      * required.
      */
-    protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
+    static final String[] DEFAULT_FACTORY_ARGUMENTS = {
         "--quiet-synchro",
         "--intf=dummy"
     };
+
+    private final boolean ownFactory;
 
     /**
      * Media player factory.
@@ -67,6 +53,16 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
      */
     private final DirectAudioPlayer mediaPlayer;
 
+    public DirectAudioPlayerComponent(MediaPlayerFactory mediaPlayerFactory, String format, int rate, int channels, AudioCallback audioCallback) {
+        this.ownFactory = mediaPlayerFactory == null;
+        this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
+
+        this.mediaPlayer = mediaPlayerFactory.mediaPlayers().newDirectAudioPlayer(format, rate, channels, audioCallback != null ? audioCallback : this);
+        this.mediaPlayer.events().addMediaPlayerEventListener(this);
+
+        onAfterConstruct();
+    }
+
     /**
      * Create a direct audio player component.
      *
@@ -75,20 +71,17 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
      * @param channels decoded audio channels
      */
     public DirectAudioPlayerComponent(String format, int rate, int channels) {
-        mediaPlayerFactory = onGetMediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.mediaPlayers().newDirectAudioPlayer(format, rate, channels, onGetAudioCallback());
-        // Register listeners
-        mediaPlayer.events().addMediaPlayerEventListener(this);
-        // Sub-class initialisation
-        onAfterConstruct();
+        this(null, format, rate, channels, null);
     }
 
-    /**
-     * Get the media player factory reference.
-     *
-     * @return media player factory
-     */
-    public final MediaPlayerFactory getMediaPlayerFactory() {
+    public DirectAudioPlayerComponent(String format, int rate, int channels, AudioCallback audioCallback) {
+        this(null, format, rate, channels, audioCallback);
+    }
+
+    private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {
+        if (mediaPlayerFactory == null) {
+            mediaPlayerFactory = new MediaPlayerFactory(DEFAULT_FACTORY_ARGUMENTS);
+        }
         return mediaPlayerFactory;
     }
 
@@ -111,83 +104,19 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
      */
     public final void release() {
         onBeforeRelease();
+
         mediaPlayer.release();
+
+        if (ownFactory) {
+            mediaPlayerFactory.release();
+        }
+
         onAfterRelease();
     }
 
-    /**
-     * Release the media player component and the associated media player factory.
-     * <p>
-     * Optionally release the media player factory.
-     * <p>
-     * This method invokes {@link #release()}, then depending on the value of the <code>releaseFactory</code>
-     * parameter the associated factory will also be released.
-     *
-     * @param releaseFactory <code>true</code> if the factory should also be released; <code>false</code> if it should not
-     */
-    public final void release(boolean releaseFactory) {
-        release();
-        if(releaseFactory) {
-            mediaPlayerFactory.release();
-        }
-    }
-
-    /**
-     * Template method to create a media player factory.
-     * <p>
-     * The default implementation will invoke the {@link #onGetMediaPlayerFactoryArgs()} template
-     * method.
-     *
-     * @return media player factory
-     */
-    protected MediaPlayerFactory onGetMediaPlayerFactory() {
-        String[] args = Arguments.mergeArguments(onGetMediaPlayerFactoryArgs(), onGetMediaPlayerFactoryExtraArgs());
-        logger.debug("args={}", Arrays.toString(args));
-        return new MediaPlayerFactory(args);
-    }
-
-    /**
-     * Template method to obtain the initialisation arguments used to create the media player
-     * factory instance.
-     * <p>
-     * This can be used to provide arguments to use <em>instead</em> of the defaults.
-     * <p>
-     * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
-     * guarantee that {@link #onGetMediaPlayerFactoryArgs()} will be called.
-     *
-     * @return media player factory initialisation arguments
-     */
-    protected String[] onGetMediaPlayerFactoryArgs() {
-        return DEFAULT_FACTORY_ARGUMENTS;
-    }
-
-    /**
-     * Template method to obtain the extra initialisation arguments used to create the media player
-     * factory instance.
-     * <p>
-     * This can be used to provide <em>additional</em> arguments to add to the hard-coded defaults.
-     * <p>
-     * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
-     * guarantee that {@link #onGetMediaPlayerFactoryExtraArgs()} will be called.
-     *
-     * @return media player factory initialisation arguments, or <code>null</code>
-     */
-    protected String[] onGetMediaPlayerFactoryExtraArgs() {
-        return null;
-    }
-
-    /**
-     * Template method to obtain an audio callback implementation.
-     * <p>
-     * The default behaviour is simply to return this component instance itself.
-     * <p>
-     * A sub-class may provide any implementation of {@link AudioCallback} - including
-     * {@link AudioCallbackAdapter}.
-     *
-     * @return audio callback implementation
-     */
-    protected AudioCallback onGetAudioCallback() {
-        return this;
+    @Override
+    public final MediaPlayerFactory getMediaPlayerFactory() {
+        return mediaPlayerFactory;
     }
 
     /**
@@ -210,155 +139,4 @@ public class DirectAudioPlayerComponent implements MediaPlayerEventListener, Aud
     protected void onAfterRelease() {
     }
 
-    // === MediaPlayerEventListener =============================================
-
-    @Override
-    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
-    }
-
-    @Override
-    public void opening(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void buffering(MediaPlayer mediaPlayer, float newCache) {
-    }
-
-    @Override
-    public void playing(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void paused(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void stopped(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void forward(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void backward(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void finished(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-    }
-
-    @Override
-    public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
-    }
-
-    @Override
-    public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-    }
-
-    @Override
-    public void pausableChanged(MediaPlayer mediaPlayer, int newPausable) {
-    }
-
-    @Override
-    public void titleChanged(MediaPlayer mediaPlayer, int newTitle) {
-    }
-
-    @Override
-    public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
-    }
-
-    @Override
-    public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
-    }
-
-    @Override
-    public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-    }
-
-    @Override
-    public void scrambledChanged(MediaPlayer mediaPlayer, int newScrambled) {
-    }
-
-    @Override
-    public void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id) {
-    }
-
-    @Override
-    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id) {
-    }
-
-    @Override
-    public void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id) {
-    }
-
-    @Override
-    public void corked(MediaPlayer mediaPlayer, boolean corked) {
-    }
-
-    @Override
-    public void muted(MediaPlayer mediaPlayer, boolean muted) {
-    }
-
-    @Override
-    public void volumeChanged(MediaPlayer mediaPlayer, float volume) {
-    }
-
-    @Override
-    public void audioDeviceChanged(MediaPlayer mediaPlayer, String audioDevice) {
-    }
-
-    @Override
-    public void chapterChanged(MediaPlayer mediaPlayer, int newChapter) {
-    }
-
-    @Override
-    public void error(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void mediaPlayerReady(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void newMedia(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void subItemPlayed(MediaPlayer mediaPlayer, int subItemIndex) {
-    }
-
-    @Override
-    public void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex) {
-    }
-
-    @Override
-    public void endOfSubItems(MediaPlayer mediaPlayer) {
-    }
-
-    // === RenderCallback =======================================================
-
-    @Override
-    public void play(DirectAudioPlayer mediaPlayer, Pointer samples, int sampleCount, long pts) {
-    }
-
-    @Override
-    public void pause(DirectAudioPlayer mediaPlayer, long pts) {
-    }
-
-    @Override
-    public void resume(DirectAudioPlayer mediaPlayer, long pts) {
-    }
-
-    @Override
-    public void flush(DirectAudioPlayer mediaPlayer, long pts) {
-    }
-
-    @Override
-    public void drain(DirectAudioPlayer mediaPlayer) {
-    }
 }

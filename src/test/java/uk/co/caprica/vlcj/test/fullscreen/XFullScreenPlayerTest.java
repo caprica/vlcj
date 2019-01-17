@@ -62,12 +62,8 @@ public class XFullScreenPlayerTest extends VlcjTest {
         frame.setLocation(100, 100);
         frame.setSize(1200, 800);
 
-        mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
-            @Override
-            protected FullScreenStrategy onGetFullScreenStrategy() {
-                return new XFullScreenStrategy(frame);
-            }
-        };
+
+        // FIXME
 
         frame.setContentPane(mediaPlayerComponent);
 

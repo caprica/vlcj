@@ -257,6 +257,8 @@ public interface MediaPlayerEventListener {
      */
     void error(MediaPlayer mediaPlayer);
 
+    // === Synthetic/semantic events ============================================
+
     /**
      * Media player is ready (to enable features like logo and marquee) after
      * the media has started playing.
@@ -275,42 +277,4 @@ public interface MediaPlayerEventListener {
      */
     void mediaPlayerReady(MediaPlayer mediaPlayer);
 
-    // === Synthetic/semantic events ============================================
-
-    /**
-     * New media was opened.
-     * <p>
-     * This is raised only for the "main" media item and not for any sub-items.
-     *
-     * @param mediaPlayer media player that raised the event
-     */
-    void newMedia(MediaPlayer mediaPlayer);
-
-    /**
-     * A sub-item was played.
-     * <p>
-     * There is no guarantee the sub-item actually started, but it was at least attempted to be
-     * played.
-     *
-     * @param mediaPlayer media player that raised the event
-     * @param subItemIndex index of the sub-item that was played
-     */
-    void subItemPlayed(MediaPlayer mediaPlayer, int subItemIndex);
-
-    /**
-     * A sub-item finished playing.
-     *
-     * @param mediaPlayer media player that raised the event
-     * @param subItemIndex index of the sub-item that finished playing
-     */
-    void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex);
-
-    /**
-     * The end of the media sub-items was reached.
-     * <p>
-     * This event will not be raised if the sub-items are being repeated.
-     *
-     * @param mediaPlayer media player that raised the event
-     */
-    void endOfSubItems(MediaPlayer mediaPlayer);
 }

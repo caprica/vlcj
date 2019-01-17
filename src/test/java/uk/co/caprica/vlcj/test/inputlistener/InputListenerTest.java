@@ -98,11 +98,11 @@ public class InputListenerTest extends VlcjTest {
         MouseHandler mouseHandler = new MouseHandler();
         KeyHandler keyHandler = new KeyHandler();
 
-        mediaPlayerComponent.getVideoSurface().addMouseListener(mouseHandler);
-        mediaPlayerComponent.getVideoSurface().addMouseMotionListener(mouseHandler);
-        mediaPlayerComponent.getVideoSurface().addMouseWheelListener(mouseHandler);
+        mediaPlayerComponent.getVideoSurfaceComponent().addMouseListener(mouseHandler);
+        mediaPlayerComponent.getVideoSurfaceComponent().addMouseMotionListener(mouseHandler);
+        mediaPlayerComponent.getVideoSurfaceComponent().addMouseWheelListener(mouseHandler);
 
-        mediaPlayerComponent.getVideoSurface().addKeyListener(keyHandler);
+        mediaPlayerComponent.getVideoSurfaceComponent().addKeyListener(keyHandler);
 
         mainFrame = new JFrame("vlcj input listener test");
         mainFrame.setBounds(50, 50, 800, 500);
@@ -111,7 +111,7 @@ public class InputListenerTest extends VlcjTest {
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
-                mediaPlayerComponent.release(true);
+                mediaPlayerComponent.release();
             }
         });
         mainFrame.setVisible(true);
@@ -119,7 +119,7 @@ public class InputListenerTest extends VlcjTest {
         // You must explicitly request focus to the video surface, this is one way to do it...
         // Clicking in the Canvas will *not* by default set focus (you could request focus in
         // response to a mouse-clicked event)
-        mediaPlayerComponent.getVideoSurface().requestFocusInWindow();
+        mediaPlayerComponent.getVideoSurfaceComponent().requestFocusInWindow();
     }
 
     private void start(String mrl) {

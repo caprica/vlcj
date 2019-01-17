@@ -78,26 +78,6 @@ public class AdvancedEmbeddedMediaPlayerComponentTest extends VlcjTest {
         // different)...
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
             @Override
-            protected MediaPlayerFactory onGetMediaPlayerFactory() {
-                return super.onGetMediaPlayerFactory();
-            }
-
-            @Override
-            protected String[] onGetMediaPlayerFactoryArgs() {
-                return super.onGetMediaPlayerFactoryArgs();
-            }
-
-            @Override
-            protected FullScreenStrategy onGetFullScreenStrategy() {
-                return super.onGetFullScreenStrategy();
-            }
-
-            @Override
-            protected Canvas onGetCanvas() {
-                return super.onGetCanvas();
-            }
-
-            @Override
             protected void onBeforeRelease() {
                 super.onBeforeRelease();
             }

@@ -24,9 +24,6 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
@@ -70,12 +67,7 @@ import com.sun.jna.Memory;
  * It is always a better strategy to reuse media player components, rather than repeatedly creating
  * and destroying instances.
  */
-public class DirectMediaPlayerComponent implements MediaPlayerEventListener, RenderCallback {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(DirectMediaPlayerComponent.class);
+public class DirectMediaPlayerComponent extends DirectMediaPlayerComponentBase {
 
     /**
      * Default factory initialisation arguments.
@@ -85,12 +77,14 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      * A sub-class has access to these default arguments so new ones could be merged with these if
      * required.
      */
-    protected static final String[] DEFAULT_FACTORY_ARGUMENTS = {
+    static final String[] DEFAULT_FACTORY_ARGUMENTS = {
         "--no-snapshot-preview",
         "--quiet-synchro",
         "--sub-filter=logo:marq",
         "--intf=dummy"
     };
+
+    private final boolean ownFactory;
 
     /**
      * Media player factory.
@@ -102,19 +96,34 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      */
     private final DirectMediaPlayer mediaPlayer;
 
+    public DirectMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback) {
+        this.ownFactory = mediaPlayerFactory == null;
+        this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
+
+        this.mediaPlayer = mediaPlayerFactory.mediaPlayers().newDirectMediaPlayer(bufferFormatCallback, renderCallback != null ? renderCallback : this);
+        this.mediaPlayer.events().addMediaPlayerEventListener(this);
+
+        onAfterConstruct();
+    }
+
     /**
      * Construct a media player component.
      *
      * @param bufferFormatCallback callback used to set video buffer characteristics
      */
     public DirectMediaPlayerComponent(BufferFormatCallback bufferFormatCallback) {
-        // Create the native resources
-        mediaPlayerFactory = onGetMediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.mediaPlayers().newDirectMediaPlayer(bufferFormatCallback, onGetRenderCallback());
-        // Register listeners
-        mediaPlayer.events().addMediaPlayerEventListener(this);
-        // Sub-class initialisation
-        onAfterConstruct();
+        this(null, bufferFormatCallback, null);
+    }
+
+    public DirectMediaPlayerComponent(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback) {
+        this(null, bufferFormatCallback, renderCallback);
+    }
+
+    private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {
+        if (mediaPlayerFactory == null) {
+            mediaPlayerFactory = new MediaPlayerFactory(DEFAULT_FACTORY_ARGUMENTS);
+        }
+        return mediaPlayerFactory;
     }
 
     /**
@@ -145,84 +154,14 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
      */
     public final void release() {
         onBeforeRelease();
-        mediaPlayer.release();
-        onAfterRelease();
-    }
 
-    /**
-     * Release the media player component and the associated media player factory.
-     * <p>
-     * Optionally release the media player factory.
-     * <p>
-     * This method invokes {@link #release()}, then depending on the value of the <code>releaseFactory</code>
-     * parameter the associated factory will also be released.
-     *
-     * @param releaseFactory <code>true</code> if the factory should also be released; <code>false</code> if it should not
-     */
-    public final void release(boolean releaseFactory) {
-        release();
-        if(releaseFactory) {
+        mediaPlayer.release();
+
+        if (ownFactory) {
             mediaPlayerFactory.release();
         }
-    }
 
-    /**
-     * Template method to create a media player factory.
-     * <p>
-     * The default implementation will invoke the {@link #onGetMediaPlayerFactoryArgs()} template
-     * method.
-     *
-     * @return media player factory
-     */
-    protected MediaPlayerFactory onGetMediaPlayerFactory() {
-        String[] args = Arguments.mergeArguments(onGetMediaPlayerFactoryArgs(), onGetMediaPlayerFactoryExtraArgs());
-        logger.debug("args={}", Arrays.toString(args));
-        return new MediaPlayerFactory(args);
-    }
-
-    /**
-     * Template method to obtain the initialisation arguments used to create the media player
-     * factory instance.
-     * <p>
-     * This can be used to provide arguments to use <em>instead</em> of the defaults.
-     * <p>
-     * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
-     * guarantee that {@link #onGetMediaPlayerFactoryArgs()} will be called.
-     *
-     * @return media player factory initialisation arguments
-     */
-    protected String[] onGetMediaPlayerFactoryArgs() {
-        return DEFAULT_FACTORY_ARGUMENTS;
-    }
-
-    /**
-     * Template method to obtain the extra initialisation arguments used to create the media player
-     * factory instance.
-     * <p>
-     * This can be used to provide <em>additional</em> arguments to add to the hard-coded defaults.
-     * <p>
-     * If a sub-class overrides the {@link #onGetMediaPlayerFactory()} template method there is no
-     * guarantee that {@link #onGetMediaPlayerFactoryExtraArgs()} will be called.
-     *
-     * @return media player factory initialisation arguments, or <code>null</code>
-     */
-    protected String[] onGetMediaPlayerFactoryExtraArgs() {
-        return null;
-    }
-
-    /**
-     * Template method to obtain a render callback implementation.
-     * <p>
-     * The default behaviour is simply to return this component instance itself so that sub-classes
-     * may override {@link #display(Memory)}.
-     * <p>
-     * A sub-class may provide any implementation of {@link RenderCallback} - including
-     * {@link RenderCallbackAdapter}.
-     *
-     * @return render callback implementation
-     */
-    protected RenderCallback onGetRenderCallback() {
-        return this;
+        onAfterRelease();
     }
 
     /**
@@ -245,141 +184,4 @@ public class DirectMediaPlayerComponent implements MediaPlayerEventListener, Ren
     protected void onAfterRelease() {
     }
 
-    // === MediaPlayerEventListener =============================================
-
-    @Override
-    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
-    }
-
-    @Override
-    public void opening(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void buffering(MediaPlayer mediaPlayer, float newCache) {
-    }
-
-    @Override
-    public void playing(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void paused(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void stopped(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void forward(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void backward(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void finished(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-    }
-
-    @Override
-    public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
-    }
-
-    @Override
-    public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-    }
-
-    @Override
-    public void pausableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-    }
-
-    @Override
-    public void titleChanged(MediaPlayer mediaPlayer, int newTitle) {
-    }
-
-    @Override
-    public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
-    }
-
-    @Override
-    public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
-    }
-
-    @Override
-    public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-    }
-
-    @Override
-    public void scrambledChanged(MediaPlayer mediaPlayer, int newScrambled) {
-    }
-
-    @Override
-    public void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id) {
-    }
-
-    @Override
-    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id) {
-    }
-
-    @Override
-    public void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id) {
-    }
-
-    @Override
-    public void corked(MediaPlayer mediaPlayer, boolean corked) {
-    }
-
-    @Override
-    public void muted(MediaPlayer mediaPlayer, boolean muted) {
-    }
-
-    @Override
-    public void volumeChanged(MediaPlayer mediaPlayer, float volume) {
-    }
-
-    @Override
-    public void audioDeviceChanged(MediaPlayer mediaPlayer, String audioDevice) {
-    }
-
-    @Override
-    public void chapterChanged(MediaPlayer mediaPlayer, int newChapter) {
-    }
-
-    @Override
-    public void error(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void mediaPlayerReady(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void newMedia(MediaPlayer mediaPlayer) {
-    }
-
-    @Override
-    public void subItemPlayed(MediaPlayer mediaPlayer, int subItemIndex) {
-    }
-
-    @Override
-    public void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex) {
-    }
-
-    @Override
-    public void endOfSubItems(MediaPlayer mediaPlayer) {
-    }
-
-    // === RenderCallback =======================================================
-
-    @Override
-    public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
-        // Default implementation does nothing, sub-classes should override this or
-        // provide their own implementation of a RenderCallback
-    }
 }

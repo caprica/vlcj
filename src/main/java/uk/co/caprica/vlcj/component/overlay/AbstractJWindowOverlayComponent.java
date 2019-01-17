@@ -115,6 +115,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
     protected void onSetWindowTransparency() {
         String javaSpecificationVersion = System.getProperty("java.specification.version");
         // If Java7 or later...
+        // FIXME check this version check is still valid
         if("1.7".compareTo(javaSpecificationVersion) <= 0) {
             // ...simply set the background colour to a fully transparent colour
             setBackground(new Color(0, 0, 0, 0));

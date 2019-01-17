@@ -180,25 +180,4 @@ public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener 
         logger.debug("ready(mediaPlayer={})", mediaPlayer);
     }
 
-    // === Synthetic/semantic events ============================================
-
-    @Override
-    public void newMedia(MediaPlayer mediaPlayer) {
-        logger.debug("newMedia(mediaPlayer={})", mediaPlayer);
-    }
-
-    @Override
-    public void subItemPlayed(MediaPlayer mediaPlayer, int subItemIndex) {
-        logger.debug("subItemPlayed(mediaPlayer={},subItemIndex={})", mediaPlayer, subItemIndex);
-    }
-
-    @Override
-    public void subItemFinished(MediaPlayer mediaPlayer, int subItemIndex) {
-        logger.debug("subItemFinished(mediaPlayer={},subItemIndex={})", mediaPlayer, subItemIndex);
-    }
-
-    @Override
-    public void endOfSubItems(MediaPlayer mediaPlayer) {
-        logger.debug("endOfSubItems(mediaPlayer={})", mediaPlayer);
-    }
 }

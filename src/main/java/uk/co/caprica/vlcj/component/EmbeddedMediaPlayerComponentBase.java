@@ -1,41 +1,25 @@
-/*
- * This file is part of VLCJ.
- *
- * VLCJ is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * VLCJ is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Copyright 2009-2019 Caprica Software Limited.
- */
-
-package uk.co.caprica.vlcj.player;
-
-import javax.swing.SwingUtilities;
+package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
-/**
- * Default implementation of the media player event listener.
- * <p>
- * Simply override the methods you're interested in.
- * <p>
- * Events are <em>not</em> raised on the Swing Event Dispatch thread so if updating user
- * interface components in response to these events care must be taken to use
- * {@link SwingUtilities#invokeLater(Runnable)}.
- */
-public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
+import java.awt.*;
+import java.awt.event.*;
 
-    // === Events relating to the media player ==================================
+/**
+ *
+ *
+ * <p>
+ * Having this class saves cluttering the {@link EmbeddedMediaPlayerComponent} with all of these empty event listener
+ * methods.
+ */
+abstract class EmbeddedMediaPlayerComponentBase extends Panel implements MediaPlayerEventListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener  {
+
+    protected EmbeddedMediaPlayerComponentBase() {
+    }
+
+    // === MediaPlayerEventListener =============================================
 
     @Override
     public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
@@ -86,7 +70,7 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
-    public void pausableChanged(MediaPlayer mediaPlayer, int newPausable) {
+    public void pausableChanged(MediaPlayer mediaPlayer, int newSeekable) {
     }
 
     @Override
@@ -147,6 +131,58 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
 
     @Override
     public void mediaPlayerReady(MediaPlayer mediaPlayer) {
+    }
+
+    // === MouseListener ========================================================
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+
+    // === MouseMotionListener ==================================================
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+    }
+
+    // === MouseWheelListener ===================================================
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+    }
+
+    // === KeyListener ==========================================================
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 
 }

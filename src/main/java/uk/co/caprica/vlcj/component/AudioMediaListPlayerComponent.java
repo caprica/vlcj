@@ -19,11 +19,9 @@
 
 package uk.co.caprica.vlcj.component;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 /**
  * Encapsulation of an audio media list player.
@@ -31,7 +29,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
  * This component extends the {@link AudioMediaPlayerComponent} to incorporate a
  * {@link MediaListPlayer} and an associated {@link MediaList}.
  */
-public class AudioMediaListPlayerComponent extends AudioMediaPlayerComponent implements MediaListPlayerEventListener {
+public class AudioMediaListPlayerComponent extends AudioMediaListPlayerComponentBase {
 
     /**
      * Media list player.
@@ -47,15 +45,21 @@ public class AudioMediaListPlayerComponent extends AudioMediaPlayerComponent imp
      * Construct a media list player component.
      */
     public AudioMediaListPlayerComponent() {
-        // Create the native resources
-        MediaPlayerFactory mediaPlayerFactory = getMediaPlayerFactory();
-        mediaListPlayer = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
-        mediaList = mediaPlayerFactory.media().newMediaList();
-        mediaListPlayer.list().setMediaList(mediaList);
-        mediaListPlayer.mediaPlayer().setMediaPlayer(getMediaPlayer());
-        // Register listeners
-        mediaListPlayer.events().addMediaListPlayerEventListener(this);
-        // Sub-class initialisation
+        this(null);
+    }
+
+    public AudioMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory) {
+        super(mediaPlayerFactory);
+
+        this.mediaListPlayer = getMediaPlayerFactory().mediaPlayers().newMediaListPlayer();
+        this.mediaListPlayer.mediaPlayer().setMediaPlayer(getMediaPlayer());
+        this.mediaListPlayer.events().addMediaListPlayerEventListener(this);
+
+        this.mediaList = getMediaPlayerFactory().media().newMediaList();
+        this.mediaList.events().addMediaListEventListener(this);
+
+        this.mediaListPlayer.list().setMediaList(this.mediaList);
+
         onAfterConstruct();
     }
 
@@ -81,29 +85,8 @@ public class AudioMediaListPlayerComponent extends AudioMediaPlayerComponent imp
 
     @Override
     protected final void onBeforeRelease() {
-        onBeforeReleaseComponent();
         mediaListPlayer.release();
         mediaList.release();
-    }
-
-    /**
-     * Template method invoked before the media list player is released.
-     */
-    protected void onBeforeReleaseComponent() {
-    }
-
-    // === MediaListPlayerEventListener =========================================
-
-    @Override
-    public void mediaListPlayerFinished(MediaListPlayer mediaListPlayer) {
-    }
-
-    @Override
-    public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
-    }
-
-    @Override
-    public void stopped(MediaListPlayer mediaListPlayer) {
     }
 
 }

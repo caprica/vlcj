@@ -19,11 +19,19 @@
 
 package uk.co.caprica.vlcj.component;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_parsed_status_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
+import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.medialist.MediaListEventListener;
+import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.events.media.MediaEventListener;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
+
+import java.awt.*;
 
 /**
  * Encapsulation of an embedded media list player.
@@ -32,7 +40,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
  * {@link MediaListPlayer} and an associated {@link MediaList}.
  */
 @SuppressWarnings("serial")
-public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaPlayerComponent implements MediaListPlayerEventListener {
+public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerComponentBase {
 
     /**
      * Media list player.
@@ -44,20 +52,26 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaPlayerCompone
      */
     private final MediaList mediaList;
 
+    public EmbeddedMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, Component videoSurfaceComponent, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, Window overlay) {
+        super(mediaPlayerFactory, videoSurfaceComponent, fullScreenStrategy, inputEvents, overlay);
+
+        this.mediaListPlayer = getMediaPlayerFactory().mediaPlayers().newMediaListPlayer();
+        this.mediaListPlayer.mediaPlayer().setMediaPlayer(getMediaPlayer());
+        this.mediaListPlayer.events().addMediaListPlayerEventListener(this);
+
+        this.mediaList = getMediaPlayerFactory().media().newMediaList();
+        this.mediaList.events().addMediaListEventListener(this);
+
+        this.mediaListPlayer.list().setMediaList(this.mediaList);
+
+        onAfterConstruct();
+    }
+
     /**
      * Construct a media list player component.
      */
     public EmbeddedMediaListPlayerComponent() {
-        // Create the native resources
-        MediaPlayerFactory mediaPlayerFactory = getMediaPlayerFactory();
-        mediaListPlayer = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
-        mediaList = mediaPlayerFactory.media().newMediaList();
-        mediaListPlayer.list().setMediaList(mediaList);
-        mediaListPlayer.mediaPlayer().setMediaPlayer(getMediaPlayer());
-        // Register listeners
-        mediaListPlayer.events().addMediaListPlayerEventListener(this);
-        // Sub-class initialisation
-        onAfterConstruct();
+        this(null, null, null, null, null);
     }
 
     /**
@@ -82,29 +96,8 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaPlayerCompone
 
     @Override
     protected final void onBeforeRelease() {
-        onBeforeReleaseComponent();
         mediaListPlayer.release();
         mediaList.release();
-    }
-
-    /**
-     * Template method invoked before the media list player is released.
-     */
-    protected void onBeforeReleaseComponent() {
-    }
-
-    // === MediaListPlayerEventListener =========================================
-
-    @Override
-    public void mediaListPlayerFinished(MediaListPlayer mediaListPlayer) {
-    }
-
-    @Override
-    public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
-    }
-
-    @Override
-    public void stopped(MediaListPlayer mediaListPlayer) {
     }
 
 }

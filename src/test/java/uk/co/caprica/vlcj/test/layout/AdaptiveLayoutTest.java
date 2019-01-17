@@ -198,13 +198,13 @@ public class AdaptiveLayoutTest extends VlcjTest {
             });
 
             mediaPlayer = new EmbeddedMediaPlayerComponent() {
-                @Override
-                protected MediaPlayerFactory onGetMediaPlayerFactory() {
-                    return mediaPlayerFactory;
-                }
+//                @Override
+//                protected MediaPlayerFactory onGetMediaPlayerFactory() {
+//                    return mediaPlayerFactory;
+// FIXME               }
             };
 
-            mediaPlayer.getVideoSurface().addMouseListener(new MouseAdapter() {
+            mediaPlayer.getVideoSurfaceComponent().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if(e.getButton() == MouseEvent.BUTTON3) {
