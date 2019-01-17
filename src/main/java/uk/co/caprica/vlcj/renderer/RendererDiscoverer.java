@@ -23,9 +23,7 @@ public class RendererDiscoverer {
 
     private final LibVlc libvlc;
 
-    private final libvlc_renderer_discoverer_t discoverer;
-
-    private final libvlc_event_manager_t eventManager;
+    private final libvlc_renderer_discoverer_t discovererInstance;
 
     /**
      * Collection of media player event listeners.
@@ -42,9 +40,8 @@ public class RendererDiscoverer {
     private final DiscovererCallback callback = new DiscovererCallback();
 
     public RendererDiscoverer(LibVlc libvlc, libvlc_renderer_discoverer_t discoverer) {
-        this.libvlc = libvlc;
-        this.discoverer = discoverer;
-        this.eventManager = libvlc.libvlc_renderer_discoverer_event_manager(discoverer);
+        this.libvlc             = libvlc;
+        this.discovererInstance = discoverer;
 
         registerNativeEventListener();
     }
@@ -58,31 +55,33 @@ public class RendererDiscoverer {
     }
 
     public boolean start() {
-        return libvlc.libvlc_renderer_discoverer_start(discoverer) == 0;
+        return libvlc.libvlc_renderer_discoverer_start(discovererInstance) == 0;
     }
 
     public void stop() {
-        libvlc.libvlc_renderer_discoverer_stop(discoverer);
+        libvlc.libvlc_renderer_discoverer_stop(discovererInstance);
     }
 
     public void release() {
         eventListenerList.clear();
         deregisterNativeEventListener();
-        libvlc.libvlc_renderer_discoverer_release(discoverer);
+        libvlc.libvlc_renderer_discoverer_release(discovererInstance);
     }
 
     private void registerNativeEventListener() {
+        libvlc_event_manager_t rendererDiscovererEventManager = libvlc.libvlc_renderer_discoverer_event_manager(discovererInstance);
         for (libvlc_event_e event : libvlc_event_e.values()) {
             if (event.intValue() >= libvlc_event_e.libvlc_RendererDiscovererItemAdded.intValue() && event.intValue() <= libvlc_event_e.libvlc_RendererDiscovererItemDeleted.intValue()) {
-                libvlc.libvlc_event_attach(eventManager, event.intValue(), callback, null);
+                libvlc.libvlc_event_attach(rendererDiscovererEventManager, event.intValue(), callback, null);
             }
         }
     }
 
     private void deregisterNativeEventListener() {
+        libvlc_event_manager_t rendererDiscovererEventManager = libvlc.libvlc_renderer_discoverer_event_manager(discovererInstance);
         for (libvlc_event_e event : libvlc_event_e.values()) {
             if (event.intValue() >= libvlc_event_e.libvlc_RendererDiscovererItemAdded.intValue() && event.intValue() <= libvlc_event_e.libvlc_RendererDiscovererItemDeleted.intValue()) {
-                libvlc.libvlc_event_detach(eventManager, event.intValue(), callback, null);
+                libvlc.libvlc_event_detach(rendererDiscovererEventManager, event.intValue(), callback, null);
             }
         }
     }
@@ -98,7 +97,7 @@ public class RendererDiscoverer {
      * @param rendererDiscovererEvent event to raise, may be <code>null</code> and if so will be ignored
      */
     void raiseEvent(RendererDiscovererEvent rendererDiscovererEvent) {
-        if (rendererDiscovererEvent!= null) {
+        if (rendererDiscovererEvent != null) {
             for (RendererDiscovererEventListener listener : eventListenerList) {
                 rendererDiscovererEvent.notify(listener);
             }
@@ -108,7 +107,7 @@ public class RendererDiscoverer {
     private class DiscovererCallback implements libvlc_callback_t {
 
         private DiscovererCallback() {
-            Native.setCallbackThreadInitializer(this, new CallbackThreadInitializer(true, false, "renderer-discoverer"));
+            Native.setCallbackThreadInitializer(this, new CallbackThreadInitializer(true, false, "renderer-discoverer-events"));
         }
 
         @Override
