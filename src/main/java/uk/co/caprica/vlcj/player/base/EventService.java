@@ -88,7 +88,7 @@ public final class EventService extends BaseService {
      *
      * @param mediaPlayerEvent event to raise, may be <code>null</code> and if so will be ignored
      */
-    void raiseEvent(final MediaPlayerEvent mediaPlayerEvent) {
+    void raiseEvent(MediaPlayerEvent mediaPlayerEvent) {
         if (mediaPlayerEvent != null) {
             for (MediaPlayerEventListener listener : eventListenerList) {
                 mediaPlayerEvent.notify(listener);
