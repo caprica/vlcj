@@ -100,7 +100,7 @@ public class DirectMediaPlayerComponent extends DirectMediaPlayerComponentBase {
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
 
-        this.mediaPlayer = mediaPlayerFactory.mediaPlayers().newDirectMediaPlayer(bufferFormatCallback, renderCallback != null ? renderCallback : this);
+        this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newDirectMediaPlayer(bufferFormatCallback, renderCallback != null ? renderCallback : this);
         this.mediaPlayer.events().addMediaPlayerEventListener(this);
 
         onAfterConstruct();

@@ -57,7 +57,7 @@ public class DirectAudioPlayerComponent extends DirectAudioPlayerComponentBase i
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
 
-        this.mediaPlayer = mediaPlayerFactory.mediaPlayers().newDirectAudioPlayer(format, rate, channels, audioCallback != null ? audioCallback : this);
+        this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newDirectAudioPlayer(format, rate, channels, audioCallback != null ? audioCallback : this);
         this.mediaPlayer.events().addMediaPlayerEventListener(this);
 
         onAfterConstruct();
