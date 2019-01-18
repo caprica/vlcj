@@ -1,11 +1,7 @@
 package uk.co.caprica.vlcj.test.factory;
 
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.binding.internal.libvlc_log_level_e;
 import uk.co.caprica.vlcj.factory.*;
-import uk.co.caprica.vlcj.log.LogEventListener;
-import uk.co.caprica.vlcj.log.NativeLog;
-import uk.co.caprica.vlcj.mrl.RtspMrl;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -85,11 +81,11 @@ public class DialogsTest extends VlcjTest {
         });
 
 //        NativeLog log = factory.application().newLog();
-//        log.setLevel(libvlc_log_level_e.DEBUG);
+//        log.setLevel(LogLevel.DEBUG);
 //
 //        log.addLogListener(new LogEventListener() {
 //            @Override
-//            public void log(libvlc_log_level_e level, String module, String file, Integer line, String name, String header, Integer id, String message) {
+//            public void log(LogLevel level, String module, String file, Integer line, String name, String header, Integer id, String message) {
 //                System.out.printf("log: %s - %s - %s - %s%n", module, name, header, message);
 //            }
 //        });

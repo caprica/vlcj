@@ -17,38 +17,41 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * Enumeration of track types.
  */
-public enum libvlc_media_slave_type_t {
+public enum TrackType {
 
-    libvlc_media_slave_type_subtitle(0),
-    libvlc_media_slave_type_audio(1);
+    UNKNOWN(-1),
+    AUDIO  ( 0),
+    VIDEO  ( 1),
+    TEXT   ( 2);
 
-    private static final Map<Integer, libvlc_media_slave_type_t> INT_MAP = new HashMap<Integer, libvlc_media_slave_type_t>();
+    private static final Map<Integer, TrackType> INT_MAP = new HashMap<Integer, TrackType>();
 
     static {
-        for(libvlc_media_slave_type_t value : libvlc_media_slave_type_t.values()) {
+        for(TrackType value : TrackType.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static libvlc_media_slave_type_t mediaSlaveType(int intValue) {
+    public static TrackType trackType(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_media_slave_type_t(int intValue) {
+    TrackType(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

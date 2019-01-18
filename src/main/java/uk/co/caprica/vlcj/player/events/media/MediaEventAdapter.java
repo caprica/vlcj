@@ -1,8 +1,8 @@
 package uk.co.caprica.vlcj.player.events.media;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_parsed_status_e;
+import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
+import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.media.Media;
 
 public class MediaEventAdapter implements MediaEventListener {
@@ -20,7 +20,7 @@ public class MediaEventAdapter implements MediaEventListener {
     }
 
     @Override
-    public void mediaParsedChanged(Media media, libvlc_media_parsed_status_e newStatus) {
+    public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
     }
 
     @Override
@@ -28,7 +28,7 @@ public class MediaEventAdapter implements MediaEventListener {
     }
 
     @Override
-    public void mediaStateChanged(Media media, libvlc_state_t newState) {
+    public void mediaStateChanged(Media media, State newState) {
     }
 
     @Override

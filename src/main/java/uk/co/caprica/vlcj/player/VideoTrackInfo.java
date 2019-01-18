@@ -19,9 +19,9 @@
 
 package uk.co.caprica.vlcj.player;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_video_multiview_e;
-import uk.co.caprica.vlcj.binding.internal.libvlc_video_orient_e;
-import uk.co.caprica.vlcj.binding.internal.libvlc_video_projection_e;
+import uk.co.caprica.vlcj.enums.Multiview;
+import uk.co.caprica.vlcj.enums.VideoOrientation;
+import uk.co.caprica.vlcj.enums.VideoProjection;
 
 /**
  * Video track info.
@@ -66,12 +66,12 @@ public class VideoTrackInfo extends TrackInfo {
     /**
      * Video orientation.
      */
-    private final libvlc_video_orient_e orientation;
+    private final VideoOrientation orientation;
 
     /**
      * Video projection.
      */
-    private final libvlc_video_projection_e projection;
+    private final VideoProjection projection;
 
     /**
      * Yaw, degrees, for spherical video.
@@ -101,7 +101,7 @@ public class VideoTrackInfo extends TrackInfo {
     /**
      *
      */
-    private final libvlc_video_multiview_e multiview;
+    private final Multiview multiview;
 
     /**
      * Create a new video track info.
@@ -129,7 +129,7 @@ public class VideoTrackInfo extends TrackInfo {
      * @param multiview
      * @param codecDescription codec description
      */
-    public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, libvlc_video_orient_e orientation, libvlc_video_projection_e projection, float yaw, float pitch, float roll, float fov, float zoom, libvlc_video_multiview_e multiview, String codecDescription) {
+    public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, VideoOrientation orientation, VideoProjection projection, float yaw, float pitch, float roll, float fov, float zoom, Multiview multiview, String codecDescription) {
         super(codec, originalCodec, id, profile, level, bitRate, language, description, codecDescription);
         this.width = width;
         this.height = height;
@@ -207,7 +207,7 @@ public class VideoTrackInfo extends TrackInfo {
      * @return video orientation
      * @since LibVLC 3.0.0
      */
-    public final libvlc_video_orient_e orientation() {
+    public final VideoOrientation orientation() {
         return orientation;
     }
 
@@ -217,7 +217,7 @@ public class VideoTrackInfo extends TrackInfo {
      * @return video projection
      * @since LibVLC 3.0.0
      */
-    public final libvlc_video_projection_e projection() {
+    public final VideoProjection projection() {
         return projection;
     }
 
@@ -275,7 +275,7 @@ public class VideoTrackInfo extends TrackInfo {
      *
      * @return
      */
-    public final libvlc_video_multiview_e multiview() {
+    public final Multiview multiview() {
         return multiview;
     }
 

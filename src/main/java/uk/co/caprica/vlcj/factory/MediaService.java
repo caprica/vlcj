@@ -2,7 +2,7 @@ package uk.co.caprica.vlcj.factory;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_track_type_t;
+import uk.co.caprica.vlcj.enums.TrackType;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.MediaResourceLocator;
@@ -81,7 +81,7 @@ public final class MediaService extends BaseService {
      *
      * @since libvlc 3.0.0
      */
-    public String getCodecDescription(libvlc_track_type_t type, int codec) {
+    public String getCodecDescription(TrackType type, int codec) {
         return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
     }
 

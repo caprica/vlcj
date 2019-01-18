@@ -1,6 +1,6 @@
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_type_t;
+import uk.co.caprica.vlcj.enums.MediaSlaveType;
 
 // FIXME rename to simple add?
 
@@ -32,7 +32,7 @@ public final class SlaveService extends BaseService {
      * @param select <code>true</code> if this slave should be automatically selected when added
      * @return <code>true</code> on success; <code>false</code> otherwise
      */
-    public boolean addSlave(libvlc_media_slave_type_t type, String uri, boolean select) {
+    public boolean addSlave(MediaSlaveType type, String uri, boolean select) {
         return libvlc.libvlc_media_player_add_slave(mediaPlayerInstance, type.intValue(), uri, select ? 1 : 0) == 0;
     }
 

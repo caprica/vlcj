@@ -1,7 +1,7 @@
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_parsed_status_e;
+import uk.co.caprica.vlcj.enums.ParseFlag;
+import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 
 /**
  *
@@ -24,18 +24,18 @@ public class ParseService extends BaseService {
     }
 
     public boolean parse() {
-        return parse(-1, (libvlc_media_parse_flag_t[]) null);
+        return parse(-1, (ParseFlag[]) null);
     }
 
     public boolean parse(int timeout) {
-        return parse(timeout, (libvlc_media_parse_flag_t[]) null);
+        return parse(timeout, (ParseFlag[]) null);
     }
 
-    public boolean parse(libvlc_media_parse_flag_t... flags) {
+    public boolean parse(ParseFlag... flags) {
         return parse(-1, flags);
     }
 
-    public boolean parse(int timeout, libvlc_media_parse_flag_t... flags) {
+    public boolean parse(int timeout, ParseFlag... flags) {
         return libvlc.libvlc_media_parse_with_options(mediaInstance, flagsToInt(flags), timeout) == 0;
     }
 
@@ -43,14 +43,14 @@ public class ParseService extends BaseService {
         libvlc.libvlc_media_parse_stop(mediaInstance);
     }
 
-    public libvlc_media_parsed_status_e status() {
-        return libvlc_media_parsed_status_e.mediaParsedStatus(libvlc.libvlc_media_get_parsed_status(mediaInstance));
+    public MediaParsedStatus status() {
+        return MediaParsedStatus.mediaParsedStatus(libvlc.libvlc_media_get_parsed_status(mediaInstance));
     }
 
-    private int flagsToInt(libvlc_media_parse_flag_t... flags) {
+    private int flagsToInt(ParseFlag... flags) {
         int result = 0;
         if (flags != null) {
-            for (libvlc_media_parse_flag_t flag : flags) {
+            for (ParseFlag flag : flags) {
                 result |= flag.intValue();
             }
         }

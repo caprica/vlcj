@@ -6,7 +6,11 @@ import com.sun.jna.ptr.PointerByReference;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.*;
+import uk.co.caprica.vlcj.enums.Multiview;
+import uk.co.caprica.vlcj.enums.TrackType;
 import uk.co.caprica.vlcj.player.*;
+import uk.co.caprica.vlcj.enums.VideoOrientation;
+import uk.co.caprica.vlcj.enums.VideoProjection;
 
 import java.util.*;
 
@@ -51,26 +55,26 @@ final class TrackInformation {
         TrackInfo result = null;
         libvlc_media_track_t track = Structure.newInstance(libvlc_media_track_t.class, pointer);
         track.read();
-        switch (libvlc_track_type_t.valueOf(track.i_type)) {
-            case libvlc_track_unknown:
+        switch (TrackType.trackType(track.i_type)) {
+            case UNKNOWN:
                 if (types == null || types.contains(TrackType.UNKNOWN)) {
                     result = getUnknownTrackInfo(libvlc, track);
                 }
                 break;
 
-            case libvlc_track_video:
+            case VIDEO:
                 if (types == null || types.contains(TrackType.VIDEO)) {
                     result = getVideoTrackInfo(libvlc, track);
                 }
                 break;
 
-            case libvlc_track_audio:
+            case AUDIO:
                 if (types == null || types.contains(TrackType.AUDIO)) {
                     result = getAudioTrackInfo(libvlc, track);
                 }
                 break;
 
-            case libvlc_track_text:
+            case TEXT:
                 if (types == null || types.contains(TrackType.TEXT)) {
                     result = getTextTrackInfo(libvlc, track);
                 }
@@ -89,7 +93,7 @@ final class TrackInformation {
             track.i_bitrate,
             NativeString.copyNativeString(track.psz_language),
             NativeString.copyNativeString(track.psz_description),
-            codecDescription(libvlc, libvlc_track_type_t.libvlc_track_unknown, track.i_codec)
+            codecDescription(libvlc, TrackType.UNKNOWN, track.i_codec)
         );
     }
 
@@ -110,15 +114,15 @@ final class TrackInformation {
             track.u.video.i_sar_den,
             track.u.video.i_frame_rate_num,
             track.u.video.i_frame_rate_den,
-            libvlc_video_orient_e.orientation(track.u.video.i_orientation),
-            libvlc_video_projection_e.projection(track.u.video.i_projection),
+            VideoOrientation.videoOrientation(track.u.video.i_orientation),
+            VideoProjection.videoProjection(track.u.video.i_projection),
             track.u.video.pose.f_yaw,
             track.u.video.pose.f_pitch,
             track.u.video.pose.f_roll,
             track.u.video.pose.f_field_of_view,
             track.u.video.pose.f_zoom,
-            libvlc_video_multiview_e.multiview(track.u.video.i_multiview),
-            codecDescription(libvlc, libvlc_track_type_t.libvlc_track_video, track.i_codec)
+            Multiview.multiview(track.u.video.i_multiview),
+            codecDescription(libvlc, TrackType.VIDEO, track.i_codec)
         );
     }
 
@@ -135,7 +139,7 @@ final class TrackInformation {
             NativeString.copyNativeString(track.psz_description),
             track.u.audio.i_channels,
             track.u.audio.i_rate,
-            codecDescription(libvlc, libvlc_track_type_t.libvlc_track_audio, track.i_codec)
+            codecDescription(libvlc, TrackType.AUDIO, track.i_codec)
         );
     }
 
@@ -151,11 +155,11 @@ final class TrackInformation {
             NativeString.copyNativeString(track.psz_language),
             NativeString.copyNativeString(track.psz_description),
             NativeString.copyNativeString(track.u.subtitle.psz_encoding),
-            codecDescription(libvlc, libvlc_track_type_t.libvlc_track_text, track.i_codec)
+            codecDescription(libvlc, TrackType.TEXT, track.i_codec)
         );
     }
 
-    private static String codecDescription(LibVlc libvlc, libvlc_track_type_t type, int codec) {
+    private static String codecDescription(LibVlc libvlc, TrackType type, int codec) {
         return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
     }
 

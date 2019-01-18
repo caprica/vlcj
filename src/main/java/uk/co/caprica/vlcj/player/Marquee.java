@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.player;
 
 import java.awt.Color;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
+import uk.co.caprica.vlcj.enums.MarqueePosition;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
@@ -32,7 +32,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
  * <pre>
  *   marquee()
  *     .opacity(200)
- *     .position(libvlc_marquee_position_e.bottom)
+ *     .position(MarqueePosition.BOTTOM)
  *     .colour(Color.white)
  *     .timeout(5000)
  *     .text("vlcj is just great")
@@ -94,7 +94,7 @@ public final class Marquee {
     /**
      * Predefined text position.
      */
-    private libvlc_marquee_position_e position;
+    private MarqueePosition position;
 
     /**
      * Enabled/disabled state.
@@ -228,7 +228,7 @@ public final class Marquee {
      * @param position predefined text position
      * @return this
      */
-    public Marquee position(libvlc_marquee_position_e position) {
+    public Marquee position(MarqueePosition position) {
         this.position = position;
         return this;
     }
@@ -350,7 +350,7 @@ public final class Marquee {
      *
      * @return position
      */
-    public libvlc_marquee_position_e getPosition() {
+    public MarqueePosition getPosition() {
         return position;
     }
 

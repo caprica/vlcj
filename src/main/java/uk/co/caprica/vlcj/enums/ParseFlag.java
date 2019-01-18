@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,55 +25,55 @@ import java.util.Map;
 /**
  * Parse flags used by libvlc_media_parse_with_options().
  */
-public enum libvlc_media_parse_flag_t {
+public enum ParseFlag {
 
     /**
      * Parse media if it's a local file
      */
-    libvlc_media_parse_local  (0x00),
+    PARSE_LOCAL(0x00),
 
     /**
      * Parse media even if it's a network file
      */
-
-    libvlc_media_parse_network(0x01),
+    PARSE_NETWORK(0x01),
 
     /**
      * Fetch meta and covert art using local resources
      */
-    libvlc_media_fetch_local  (0x02),
+    FETCH_LOCAL(0x02),
 
     /**
      * Fetch meta and covert art using network resources
      */
-    libvlc_media_fetch_network(0x04),
+    FETCH_NETWORK(0x04),
 
     /**
      * Interact with the user (via libvlc_dialog_cbs) when preparsing this item
      * (and not its sub items). Set this flag in order to receive a callback
      * when the input is asking for credentials.
      */
-    libvlc_media_do_interact  (0x08);
+    DO_INTERACT(0x08);
 
-    private static final Map<Integer, libvlc_media_parse_flag_t> INT_MAP = new HashMap<Integer, libvlc_media_parse_flag_t>();
+    private static final Map<Integer, ParseFlag> INT_MAP = new HashMap<Integer, ParseFlag>();
 
     static {
-        for(libvlc_media_parse_flag_t value : libvlc_media_parse_flag_t.values()) {
+        for(ParseFlag value : ParseFlag.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static libvlc_media_parse_flag_t parseFlag(int intValue) {
+    public static ParseFlag parseFlag(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_media_parse_flag_t(int intValue) {
+    ParseFlag(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

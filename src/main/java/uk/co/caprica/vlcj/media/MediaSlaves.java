@@ -3,8 +3,8 @@ package uk.co.caprica.vlcj.media;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.enums.MediaSlaveType;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_type_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.NativeString;
 
@@ -21,7 +21,7 @@ final class MediaSlaves {
             Pointer[] pointers = slavesPointer.getValue().getPointerArray(0, numberOfSlaves);
             for (Pointer pointer : pointers) {
                 libvlc_media_slave_t slave = new libvlc_media_slave_t(pointer);
-                result.add(new MediaSlave(NativeString.copyNativeString(slave.psz_uri), libvlc_media_slave_type_t.mediaSlaveType(slave.i_type), slave.i_priority));
+                result.add(new MediaSlave(NativeString.copyNativeString(slave.psz_uri), MediaSlaveType.mediaSlaveType(slave.i_type), slave.i_priority));
             }
             libvlc.libvlc_media_slaves_release(slavesPointer.getValue(), numberOfSlaves);
         }

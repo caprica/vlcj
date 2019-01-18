@@ -48,11 +48,12 @@ public enum libvlc_navigate_mode_e {
 
     private final int intValue;
 
-    private libvlc_navigate_mode_e(int intValue) {
+    libvlc_navigate_mode_e(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

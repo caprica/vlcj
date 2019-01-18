@@ -19,17 +19,10 @@
 
 package uk.co.caprica.vlcj.component;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_parsed_status_e;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
-import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
-import uk.co.caprica.vlcj.player.events.media.MediaEventListener;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 import java.awt.*;
 

@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_meta_t;
+import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.version.Version;
 
 /**
@@ -103,262 +103,262 @@ public class DefaultMediaMeta implements MediaMeta {
 
     @Override
     public final String getTitle() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Title);
+        return getMeta(Meta.TITLE);
     }
 
     @Override
     public final void setTitle(String title) {
-        setMeta(libvlc_meta_t.libvlc_meta_Title, title);
+        setMeta(Meta.TITLE, title);
     }
 
     @Override
     public final String getArtist() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Artist);
+        return getMeta(Meta.ARTIST);
     }
 
     @Override
     public final void setArtist(String artist) {
-        setMeta(libvlc_meta_t.libvlc_meta_Artist, artist);
+        setMeta(Meta.ARTIST, artist);
     }
 
     @Override
     public final String getGenre() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Genre);
+        return getMeta(Meta.GENRE);
     }
 
     @Override
     public final void setGenre(String genre) {
-        setMeta(libvlc_meta_t.libvlc_meta_Genre, genre);
+        setMeta(Meta.GENRE, genre);
     }
 
     @Override
     public final String getCopyright() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Copyright);
+        return getMeta(Meta.COPYRIGHT);
     }
 
     @Override
     public final void setCopyright(String copyright) {
-        setMeta(libvlc_meta_t.libvlc_meta_Copyright, copyright);
+        setMeta(Meta.COPYRIGHT, copyright);
     }
 
     @Override
     public final String getAlbum() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Album);
+        return getMeta(Meta.ALBUM);
     }
 
     @Override
     public final void setAlbum(String album) {
-        setMeta(libvlc_meta_t.libvlc_meta_Album, album);
+        setMeta(Meta.ALBUM, album);
     }
 
     @Override
     public final String getTrackNumber() {
-        return getMeta(libvlc_meta_t.libvlc_meta_TrackNumber);
+        return getMeta(Meta.TRACK_NUMBER);
     }
 
     @Override
     public final void setTrackNumber(String trackNumber) {
-        setMeta(libvlc_meta_t.libvlc_meta_TrackNumber, trackNumber);
+        setMeta(Meta.TRACK_NUMBER, trackNumber);
     }
 
     @Override
     public final String getDescription() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Description);
+        return getMeta(Meta.DESCRIPTION);
     }
 
     @Override
     public final void setDescription(String description) {
-        setMeta(libvlc_meta_t.libvlc_meta_Description, description);
+        setMeta(Meta.DESCRIPTION, description);
     }
 
     @Override
     public final String getRating() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Rating);
+        return getMeta(Meta.RATING);
     }
 
     @Override
     public final void setRating(String rating) {
-        setMeta(libvlc_meta_t.libvlc_meta_Rating, rating);
+        setMeta(Meta.RATING, rating);
     }
 
     @Override
     public final String getDate() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Date);
+        return getMeta(Meta.DATE);
     }
 
     @Override
     public final void setDate(String date) {
-        setMeta(libvlc_meta_t.libvlc_meta_Date, date);
+        setMeta(Meta.DATE, date);
     }
 
     @Override
     public final String getSetting() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Setting);
+        return getMeta(Meta.SETTING);
     }
 
     @Override
     public final void setSetting(String setting) {
-        setMeta(libvlc_meta_t.libvlc_meta_Setting, setting);
+        setMeta(Meta.SETTING, setting);
     }
 
     @Override
     public final String getUrl() {
-        return getMeta(libvlc_meta_t.libvlc_meta_URL);
+        return getMeta(Meta.URL);
     }
 
     @Override
     public final void setUrl(String url) {
-        setMeta(libvlc_meta_t.libvlc_meta_URL, url);
+        setMeta(Meta.URL, url);
     }
 
     @Override
     public final String getLanguage() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Language);
+        return getMeta(Meta.LANGUAGE);
     }
 
     @Override
     public final void setLanguage(String language) {
-        setMeta(libvlc_meta_t.libvlc_meta_Language, language);
+        setMeta(Meta.LANGUAGE, language);
     }
 
     @Override
     public final String getNowPlaying() {
-        return getMeta(libvlc_meta_t.libvlc_meta_NowPlaying);
+        return getMeta(Meta.NOW_PLAYING);
     }
 
     @Override
     public final void setNowPlaying(String nowPlaying) {
-        setMeta(libvlc_meta_t.libvlc_meta_NowPlaying, nowPlaying);
+        setMeta(Meta.NOW_PLAYING, nowPlaying);
     }
 
     @Override
     public final String getPublisher() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Publisher);
+        return getMeta(Meta.PUBLISHER);
     }
 
     @Override
     public final void setPublisher(String publisher) {
-        setMeta(libvlc_meta_t.libvlc_meta_Publisher, publisher);
+        setMeta(Meta.PUBLISHER, publisher);
     }
 
     @Override
     public final String getEncodedBy() {
-        return getMeta(libvlc_meta_t.libvlc_meta_EncodedBy);
+        return getMeta(Meta.ENCODED_BY);
     }
 
     @Override
     public final void setEncodedBy(String encodedBy) {
-        setMeta(libvlc_meta_t.libvlc_meta_EncodedBy, encodedBy);
+        setMeta(Meta.ENCODED_BY, encodedBy);
     }
 
     @Override
     public final String getArtworkUrl() {
-        return getMeta(libvlc_meta_t.libvlc_meta_ArtworkURL);
+        return getMeta(Meta.ARTWORK_URL);
     }
 
     @Override
     public final void setArtworkUrl(String artworkUrl) {
-        setMeta(libvlc_meta_t.libvlc_meta_ArtworkURL, artworkUrl);
+        setMeta(Meta.ARTWORK_URL, artworkUrl);
     }
 
     @Override
     public final String getTrackId() {
-        return getMeta(libvlc_meta_t.libvlc_meta_TrackID);
+        return getMeta(Meta.TRACK_ID);
     }
 
     @Override
     public final void setTrackId(String trackId) {
-        setMeta(libvlc_meta_t.libvlc_meta_TrackID, trackId);
+        setMeta(Meta.TRACK_ID, trackId);
     }
 
     @Override
     public final String getTrackTotal() {
-        return getMeta(libvlc_meta_t.libvlc_meta_TrackTotal);
+        return getMeta(Meta.TRACK_TOTAL);
     }
 
     @Override
     public final void setTrackTotal(String trackTotal) {
-        setMeta(libvlc_meta_t.libvlc_meta_TrackTotal, trackTotal);
+        setMeta(Meta.TRACK_TOTAL, trackTotal);
     }
 
     @Override
     public final String getDirector() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Director);
+        return getMeta(Meta.DIRECTOR);
     }
 
     @Override
     public final void setDirector(String director) {
-        setMeta(libvlc_meta_t.libvlc_meta_Director, director);
+        setMeta(Meta.DIRECTOR, director);
     }
 
     @Override
     public final String getSeason() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Season);
+        return getMeta(Meta.SEASON);
     }
 
     @Override
     public final void setSeason(String season) {
-        setMeta(libvlc_meta_t.libvlc_meta_Season, season);
+        setMeta(Meta.SEASON, season);
     }
 
     @Override
     public final String getEpisode() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Episode);
+        return getMeta(Meta.EPISODE);
     }
 
     @Override
     public final void setEpisode(String episode) {
-        setMeta(libvlc_meta_t.libvlc_meta_Episode, episode);
+        setMeta(Meta.EPISODE, episode);
     }
 
     @Override
     public final String getShowName() {
-        return getMeta(libvlc_meta_t.libvlc_meta_ShowName);
+        return getMeta(Meta.SHOW_NAME);
     }
 
     @Override
     public final void setShowName(String showName) {
-        setMeta(libvlc_meta_t.libvlc_meta_ShowName, showName);
+        setMeta(Meta.SHOW_NAME, showName);
     }
 
     @Override
     public final String getActors() {
-        return getMeta(libvlc_meta_t.libvlc_meta_Actors);
+        return getMeta(Meta.ACTORS);
     }
 
     @Override
     public final void setActors(String actors) {
-        setMeta(libvlc_meta_t.libvlc_meta_Actors, actors);
+        setMeta(Meta.ACTORS, actors);
     }
 
     @Override
     public String getAlbumArtist() {
-        return getMeta(libvlc_meta_t.libvlc_meta_AlbumArtist);
+        return getMeta(Meta.ALBUM_ARTIST);
     }
 
     @Override
     public void setAlbumArtist(String albumArtist) {
-        setMeta(libvlc_meta_t.libvlc_meta_AlbumArtist, albumArtist);
+        setMeta(Meta.ALBUM_ARTIST, albumArtist);
     }
 
     @Override
     public String getDiscNumber() {
-        return getMeta(libvlc_meta_t.libvlc_meta_DiscNumber);
+        return getMeta(Meta.DISC_NUMBER);
     }
 
     @Override
     public void setDiscNumber(String discNumber) {
-        setMeta(libvlc_meta_t.libvlc_meta_DiscNumber, discNumber);
+        setMeta(Meta.DISC_NUMBER, discNumber);
     }
 
     @Override
     public String getDiscTotal() {
-        return getMeta(libvlc_meta_t.libvlc_meta_DiscTotal);
+        return getMeta(Meta.DISC_TOTAL);
     }
 
     @Override
     public void setDiscTotal(String discTotal) {
-        setMeta(libvlc_meta_t.libvlc_meta_DiscTotal, discTotal);
+        setMeta(Meta.DISC_TOTAL, discTotal);
     }
 
     @Override
@@ -438,7 +438,7 @@ public class DefaultMediaMeta implements MediaMeta {
      * @param metaType type of meta data
      * @return meta data value
      */
-    private String getMeta(libvlc_meta_t metaType) {
+    private String getMeta(Meta metaType) {
         logger.trace("getMeta(metaType={},media={})", metaType, media);
         return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_media_get_meta(media, metaType.intValue()));
     }
@@ -452,7 +452,7 @@ public class DefaultMediaMeta implements MediaMeta {
      * @param media media instance
      * @param value meta data value
      */
-    private void setMeta(libvlc_meta_t metaType, String value) {
+    private void setMeta(Meta metaType, String value) {
         logger.trace("setMeta(metaType={},media={},value={})", metaType, media, value);
         libvlc.libvlc_media_set_meta(media, metaType.intValue(), value);
     }

@@ -7,7 +7,7 @@
  * (at your option) any later version.
  *
  * VLCJ is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * but WITHOUT ANY WARRANTY, without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
@@ -17,27 +17,48 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 /**
  *
  */
-public enum libvlc_audio_output_channel_t {
+public enum Meta {
 
-    libvlc_AudioChannel_Error  (-1),
-    libvlc_AudioChannel_Stereo ( 1),
-    libvlc_AudioChannel_RStereo( 2),
-    libvlc_AudioChannel_Left   ( 3),
-    libvlc_AudioChannel_Right  ( 4),
-    libvlc_AudioChannel_Dolbys ( 5);
+    TITLE       ( 0),
+    ARTIST      ( 1),
+    GENRE       ( 2),
+    COPYRIGHT   ( 3),
+    ALBUM       ( 4),
+    TRACK_NUMBER( 5),
+    DESCRIPTION ( 6),
+    RATING      ( 7),
+    DATE        ( 8),
+    SETTING     ( 9),
+    URL         (10),
+    LANGUAGE    (11),
+    NOW_PLAYING (12),
+    PUBLISHER   (13),
+    ENCODED_BY  (14),
+    ARTWORK_URL (15),
+    TRACK_ID    (16),
+    TRACK_TOTAL (17),
+    DIRECTOR    (18),
+    SEASON      (19),
+    EPISODE     (20),
+    SHOW_NAME   (21),
+    ACTORS      (22),
+    ALBUM_ARTIST(23),
+    DISC_NUMBER (24),
+    DISC_TOTAL  (25);
 
     private final int intValue;
 
-    private libvlc_audio_output_channel_t(int intValue) {
+    Meta(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

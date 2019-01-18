@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,21 +25,21 @@ import java.util.Map;
 /**
  * Enumeration of native media/player states.
  */
-public enum libvlc_state_t {
+public enum State {
 
-    libvlc_NothingSpecial(0),
-    libvlc_Opening       (1),
-    libvlc_Buffering     (2), // Deprecated, use  libvlc_MediaPlayerBuffering events instead
-    libvlc_Playing       (3),
-    libvlc_Paused        (4),
-    libvlc_Stopped       (5),
-    libvlc_Ended         (6),
-    libvlc_Error         (7);
+    NOTHING_SPECIAL(0),
+    OPENING        (1),
+    BUFFERING      (2), // Deprecated, use  libvlc_MediaPlayerBuffering events instead
+    PLAYING        (3),
+    PAUSED         (4),
+    STOPPED        (5),
+    ENDED          (6),
+    ERROR          (7);
 
-    private static final Map<Integer, libvlc_state_t> INT_MAP = new HashMap<Integer, libvlc_state_t>();
+    private static final Map<Integer, State> INT_MAP = new HashMap<Integer, State>();
 
     static {
-        for(libvlc_state_t event : libvlc_state_t.values()) {
+        for(State event : State.values()) {
             INT_MAP.put(event.intValue, event);
         }
     }
@@ -50,7 +50,7 @@ public enum libvlc_state_t {
      * @param intValue native value
      * @return enumerated value
      */
-    public static libvlc_state_t state(int intValue) {
+    public static State state(int intValue) {
         return INT_MAP.get(intValue);
     }
 
@@ -64,7 +64,7 @@ public enum libvlc_state_t {
      *
      * @param intValue native value
      */
-    private libvlc_state_t(int intValue) {
+    State(int intValue) {
         this.intValue = intValue;
     }
 
@@ -76,4 +76,5 @@ public enum libvlc_state_t {
     public int intValue() {
         return intValue;
     }
+
 }

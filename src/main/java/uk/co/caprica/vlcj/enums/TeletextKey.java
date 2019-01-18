@@ -14,45 +14,45 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2019 Caprica Software Limited.
+ * Copyright 2009-2017 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of media types.
+ * Enumeration of teletext keys.
  */
-public enum libvlc_media_type_e {
+public enum TeletextKey {
 
-    libvlc_media_type_unknown  (0),
-    libvlc_media_type_file     (1),
-    libvlc_media_type_directory(2),
-    libvlc_media_type_disc     (3),
-    libvlc_media_type_stream   (4),
-    libvlc_media_type_playlist (5);
+    RED   ('r' << 16),
+    GREEN ('g' << 16),
+    YELLOW('y' << 16),
+    BLUE  ('b' << 16),
+    INDEX ('i' << 16);
 
-    private static final Map<Integer, libvlc_media_type_e> INT_MAP = new HashMap<Integer, libvlc_media_type_e>();
+    private static final Map<Integer, TeletextKey> INT_MAP = new HashMap<Integer, TeletextKey>();
 
     static {
-        for(libvlc_media_type_e value : libvlc_media_type_e.values()) {
-            INT_MAP.put(value.intValue, value);
+        for(TeletextKey key : TeletextKey.values()) {
+            INT_MAP.put(key.intValue, key);
         }
     }
 
-    public static libvlc_media_type_e mediaType(int intValue) {
+    public static TeletextKey key(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_media_type_e(int intValue) {
+    TeletextKey(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

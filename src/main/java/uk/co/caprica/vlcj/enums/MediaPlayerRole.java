@@ -17,7 +17,7 @@
  * Copyright 2009-2017 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,38 +25,39 @@ import java.util.Map;
 /**
  * Enumeration of media player roles.
  */
-public enum libvlc_media_player_role_e {
+public enum MediaPlayerRole {
 
-    libvlc_role_None         (0), /* Don't use a media player role */
-    libvlc_role_Music        (1), /* Music (or radio) playback */
-    libvlc_role_Video        (2), /* Video playback */
-    libvlc_role_Communication(3), /* Speech, real-time communication */
-    libvlc_role_Game         (4), /* Video game */
-    liblvc_role_Notification (5), /* User interaction feedback */
-    libvlc_role_Animation    (6), /* Embedded animation (e.g. in web page) */
-    libvlc_role_Production   (7), /* Audio editting/production */
-    libvlc_role_Accessibility(8), /* Accessibility */
-    libvlc_role_Test         (9); /* Testing */
+    NONE         (0), /* Don't use a media player role */
+    MUSIC        (1), /* Music (or radio) playback */
+    VIDEO        (2), /* Video playback */
+    COMMUNICATION(3), /* Speech, real-time communication */
+    GAME         (4), /* Video game */
+    NOTIFICATION (5), /* User interaction feedback */
+    ANIMATION    (6), /* Embedded animation (e.g. in web page) */
+    PRODUCTION   (7), /* Audio editting/production */
+    ACCESSIBILITY(8), /* Accessibility */
+    TEST         (9); /* Testing */
 
-    private static final Map<Integer, libvlc_media_player_role_e> INT_MAP = new HashMap<Integer, libvlc_media_player_role_e>();
+    private static final Map<Integer, MediaPlayerRole> INT_MAP = new HashMap<Integer, MediaPlayerRole>();
 
     static {
-        for(libvlc_media_player_role_e role : libvlc_media_player_role_e.values()) {
+        for(MediaPlayerRole role : MediaPlayerRole.values()) {
             INT_MAP.put(role.intValue, role);
         }
     }
 
-    public static libvlc_media_player_role_e role(int intValue) {
+    public static MediaPlayerRole role(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_media_player_role_e(int intValue) {
+    MediaPlayerRole(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

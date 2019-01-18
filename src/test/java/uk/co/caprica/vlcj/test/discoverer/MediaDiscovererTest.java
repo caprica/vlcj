@@ -1,6 +1,6 @@
 package uk.co.caprica.vlcj.test.discoverer;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_category_e;
+import uk.co.caprica.vlcj.enums.MediaDiscovererCategory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.discoverer.MediaDiscovererDescription;
@@ -18,7 +18,7 @@ public class MediaDiscovererTest {
     public static void main(String[] args) throws Exception {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
-        List<MediaDiscovererDescription> discoverers = factory.discoverers().discoverers(libvlc_media_discoverer_category_e.libvlc_media_discoverer_localdirs);
+        List<MediaDiscovererDescription> discoverers = factory.discoverers().discoverers(MediaDiscovererCategory.LOCAL_DIRS);
         System.out.println("discoverers=" + discoverers);
 
         if (discoverers.size() == 0) {

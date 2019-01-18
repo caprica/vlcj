@@ -17,40 +17,50 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of native log levels.
+ * Enumeration of positions, e.g. for the video title.
  */
-public enum libvlc_log_level_e {
+public enum Position {
 
-    DEBUG  (0), // Debug message
-    NOTICE (2), // Important informational message
-    WARNING(3), // Warning (potential error) message
-    ERROR  (4); // Error message
+    DISABLE     (-1),
 
-    private static final Map<Integer, libvlc_log_level_e> INT_MAP = new HashMap<Integer, libvlc_log_level_e>();
+    CENTER      ( 0),
+    LEFT        ( 1),
+    RIGHT       ( 2),
+
+    TOP         ( 3),
+    TOP_LEFT    ( 4),
+    TOP_RIGHT   ( 5),
+
+    BOTTOM      ( 6),
+    BOTTOM_LEFT ( 7),
+    BOTTOM_RIGHT( 8);
+
+    private static final Map<Integer, Position> INT_MAP = new HashMap<Integer, Position>();
 
     static {
-        for(libvlc_log_level_e event : libvlc_log_level_e.values()) {
-            INT_MAP.put(event.intValue, event);
+        for(Position value : Position.values()) {
+            INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static libvlc_log_level_e level(int intValue) {
+    public static Position position(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_log_level_e(int intValue) {
+    Position(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

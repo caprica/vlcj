@@ -1,8 +1,8 @@
 package uk.co.caprica.vlcj.player.events.media;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_parsed_status_e;
+import uk.co.caprica.vlcj.enums.MediaParsedStatus;
+import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.media.Media;
 
 public interface MediaEventListener {
@@ -37,7 +37,7 @@ public interface MediaEventListener {
      * @param media media that raised the event
      * @param newStatus new parsed status
      */
-    void mediaParsedChanged(Media media, libvlc_media_parsed_status_e newStatus);
+    void mediaParsedChanged(Media media, MediaParsedStatus newStatus);
 
     /**
      * The current media was freed.
@@ -52,7 +52,7 @@ public interface MediaEventListener {
      * @param media media that raised the event
      * @param newState new state
      */
-    void mediaStateChanged(Media media, libvlc_state_t newState);
+    void mediaStateChanged(Media media, State newState);
 
     /**
      * A sub-item tree was added to the media.

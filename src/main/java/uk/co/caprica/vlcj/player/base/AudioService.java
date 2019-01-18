@@ -143,8 +143,6 @@ public final class AudioService extends BaseService implements EqualizerListener
      *
      * For channel values see {@link libvlc_audio_output_channel_t}.
      *
-     * <strong>Warning this API is subject to change.</strong>
-     *
      * @return audio channel
      */
     public int getAudioChannel() {
@@ -155,8 +153,6 @@ public final class AudioService extends BaseService implements EqualizerListener
      * Set the audio channel.
      *
      * For channel values see {@link libvlc_audio_output_channel_t}.
-     *
-     * <strong>Warning this API is subject to change.</strong>
      *
      * @param channel channel
      */

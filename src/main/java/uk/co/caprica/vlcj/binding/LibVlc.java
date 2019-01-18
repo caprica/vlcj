@@ -46,22 +46,22 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_open_cb;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_read_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_seek_cb;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_type_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
+import uk.co.caprica.vlcj.enums.MediaSlaveType;
+import uk.co.caprica.vlcj.enums.ParseFlag;
+import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.binding.support.size_t;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
@@ -549,7 +549,7 @@ public interface LibVlc extends Library {
      * libvlc_structures.c (libvlc_NothingSpecial=0, libvlc_Opening, libvlc_Buffering,
      * libvlc_Playing, libvlc_Paused, libvlc_Stopped, libvlc_Ended, libvlc_Error).
      *
-     * @see libvlc_state_t
+     * @see State
      * @param p_meta_desc a media descriptor object
      * @return state of media descriptor object
      */
@@ -619,7 +619,7 @@ public interface LibVlc extends Library {
      * event. However if this functions returns an error, you will not receive any
      * events.
      *
-     * It uses a flag to specify parse options (see libvlc_media_parse_flag_t). All
+     * It uses a flag to specify parse options (see ParseFlag). All
      * these flags can be combined. By default, media is parsed if it's a local
      * file.
      *
@@ -628,7 +628,7 @@ public interface LibVlc extends Library {
      * @see libvlc_event_e#libvlc_MediaParsedChanged
      * @see #libvlc_media_get_meta(libvlc_media_t, int)
      * @see #libvlc_media_tracks_get(libvlc_media_t, PointerByReference)
-     * @see libvlc_media_parse_flag_t
+     * @see ParseFlag
      *
      * @param p_md media descriptor object
      * @param parse_flag parse options
@@ -1226,7 +1226,7 @@ public interface LibVlc extends Library {
      * Get current movie state
      *
      * @param p_mi the Media Player
-     * @return the current state of the media player (playing, paused, ...) @see libvlc_state_t
+     * @return the current state of the media player (playing, paused, ...) @see State
      */
     int libvlc_media_player_get_state(libvlc_media_player_t p_mi);
 
@@ -1295,7 +1295,7 @@ public interface LibVlc extends Library {
      * If the player is playing, the slave will be added directly. This call
      * will also update the slave list of the attached libvlc_media_t.
      *
-     * @see #libvlc_media_slaves_add(libvlc_media_t, libvlc_media_slave_type_t, int, String)
+     * @see #libvlc_media_slaves_add(libvlc_media_t, MediaSlaveType, int, String)
      *
      * @param p_mi the media player
      * @param i_type subtitle or audio
@@ -1608,7 +1608,7 @@ public interface LibVlc extends Library {
      * @param p_mi the media player
      * @param i_page teletex page number requested.
      *               This value can be 0 to disable teletext or a number in the range 0 to 1000 to show the requested
-     *               page or a libvlc_teletext_key_e. 100 is the default teletext page.
+     *               page or a TeletextKey. 100 is the default teletext page.
      */
     void libvlc_video_set_teletext(libvlc_media_player_t p_mi, int i_page);
 
@@ -1989,7 +1989,7 @@ public interface LibVlc extends Library {
      * Get current audio channel.
      *
      * @param p_mi media player
-     * @return the audio channel @see libvlc_audio_output_channel_t
+     * @return the audio channel @see AudioChannel
      */
     int libvlc_audio_get_channel(libvlc_media_player_t p_mi);
 
@@ -1997,7 +1997,7 @@ public interface LibVlc extends Library {
      * Set current audio channel.
      *
      * @param p_mi media player
-     * @param channel the audio channel, @see libvlc_audio_output_channel_t
+     * @param channel the audio channel, @see AudioChannel
      * @return 0 on success, -1 on error
      */
     int libvlc_audio_set_channel(libvlc_media_player_t p_mi, int channel);
@@ -2186,7 +2186,7 @@ public interface LibVlc extends Library {
      * Gets the media role.
      *
      * @param p_mi opaque media player handle
-     * @return the media player role (libvlc_media_player_role_e)
+     * @return the media player role (MediaPlayerRole)
      * @since LibVLC 3.0.0 or later
      */
     int libvlc_media_player_get_role(libvlc_media_player_t p_mi);
@@ -2195,7 +2195,7 @@ public interface LibVlc extends Library {
      * Sets the media role.
      *
      * @param p_mi opaque media player handle
-     * @param role the media player role (libvlc_media_player_role_e)
+     * @param role the media player role (MediaPlayerRole)
      * @return 0 on success, -1 on error
      * @since LibVLC 3.0.0 or later
      */
@@ -2445,7 +2445,7 @@ public interface LibVlc extends Library {
      * Get current libvlc_state of media list player
      *
      * @param p_mlp media list player instance
-     * @return libvlc_state_t for media list player
+     * @return State for media list player
      */
     int libvlc_media_list_player_get_state(libvlc_media_list_player_t p_mlp);
 

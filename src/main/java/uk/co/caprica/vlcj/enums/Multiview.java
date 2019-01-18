@@ -17,7 +17,7 @@
  * Copyright 2009-2017 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,35 +25,36 @@ import java.util.Map;
 /**
  * Enumeration of video multiview.
  */
-public enum libvlc_video_multiview_e {
+public enum Multiview {
 
-    libvlc_video_multiview_2d(0),                  /**< No stereoscopy: 2D picture. */
-    libvlc_video_multiview_stereo_sbs(1),          /**< Side-by-side */
-    libvlc_video_multiview_stereo_tb(2),           /**< Top-bottom */
-    libvlc_video_multiview_stereo_row(3),          /**< Row sequential */
-    libvlc_video_multiview_stereo_col(4),          /**< Column sequential */
-    libvlc_video_multiview_stereo_frame(5),        /**< Frame sequential */
-    libvlc_video_multiview_stereo_checkerboard(6); /**< Checkerboard pattern */
+    TWO_D       (0), /**< No stereoscopy: 2D picture. */
+    STEREO_SBS  (1), /**< Side-by-side */
+    STEREO_TB   (2), /**< Top-bottom */
+    STEREO_ROW  (3), /**< Row sequential */
+    STEREO_COL  (4), /**< Column sequential */
+    STEREO_FRAME(5), /**< Frame sequential */
+    CHECKERBOARD(6); /**< Checkerboard pattern */
 
-    private static final Map<Integer, libvlc_video_multiview_e> INT_MAP = new HashMap<Integer, libvlc_video_multiview_e>();
+    private static final Map<Integer, Multiview> INT_MAP = new HashMap<Integer, Multiview>();
 
     static {
-        for(libvlc_video_multiview_e multiview : libvlc_video_multiview_e.values()) {
+        for(Multiview multiview : Multiview.values()) {
             INT_MAP.put(multiview.intValue, multiview);
         }
     }
 
-    public static libvlc_video_multiview_e multiview(int intValue) {
+    public static Multiview multiview(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_video_multiview_e(int intValue) {
+    Multiview(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

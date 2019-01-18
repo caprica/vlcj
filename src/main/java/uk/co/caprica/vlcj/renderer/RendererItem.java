@@ -22,7 +22,7 @@ public final class RendererItem {
         this.libvlc = libvlc;
         this.item = item;
         this.name = libvlc.libvlc_renderer_item_name(item);
-        this.type = libvlc.libvlc_renderer_item_name(item);
+        this.type = libvlc.libvlc_renderer_item_type(item);
         this.iconUri = libvlc.libvlc_renderer_item_icon_uri(item);
         this.flags = libvlc.libvlc_renderer_item_flags(item);
     }

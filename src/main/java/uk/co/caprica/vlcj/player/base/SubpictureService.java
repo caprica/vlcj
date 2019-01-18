@@ -1,6 +1,6 @@
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_type_t;
+import uk.co.caprica.vlcj.enums.MediaSlaveType;
 import uk.co.caprica.vlcj.player.TrackDescription;
 
 import java.io.File;
@@ -82,7 +82,7 @@ public final class SubpictureService extends BaseService {
      * @param subTitleFileName name of the file containing the sub-titles
      */
     public void setSubTitleFile(String subTitleFileName) {
-        mediaPlayer.slave().addSlave(libvlc_media_slave_type_t.libvlc_media_slave_type_subtitle, subTitleFileName, true);
+        mediaPlayer.slave().addSlave(MediaSlaveType.SUBTITLE, subTitleFileName, true);
     }
 
     /**

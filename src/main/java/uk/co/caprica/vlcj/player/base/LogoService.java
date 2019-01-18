@@ -1,6 +1,6 @@
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
+import uk.co.caprica.vlcj.enums.LogoPosition;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
 import uk.co.caprica.vlcj.player.Logo;
 
@@ -61,7 +61,7 @@ public final class LogoService extends BaseService {
      *
      * @param position position
      */
-    public void setLogoPosition(libvlc_logo_position_e position) {
+    public void setLogoPosition(LogoPosition position) {
         libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_position.intValue(), position.intValue());
     }
 

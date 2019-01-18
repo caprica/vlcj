@@ -17,43 +17,43 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of marquee positions.
+ * Enumeration of logo positions.
  */
-public enum libvlc_marquee_position_e {
+public enum LogoPosition {
 
-    centre      ( 0),
-    left        ( 1),
-    right       ( 2),
+    CENTRE      ( 0),
+    LEFT        ( 1),
+    RIGHT       ( 2),
 
-    top         ( 4),
-    top_left    ( 5),
-    top_right   ( 6),
+    TOP         ( 4),
+    TOP_LEFT    ( 5),
+    TOP_RIGHT   ( 6),
 
-    bottom      ( 8),
-    bottom_left ( 9),
-    bottom_right(10);
+    BOTTOM      ( 8),
+    BOTTOM_LEFT ( 9),
+    BOTTOM_RIGHT(10);
 
-    private static final Map<Integer, libvlc_marquee_position_e> INT_MAP = new HashMap<Integer, libvlc_marquee_position_e>();
+    private static final Map<Integer, LogoPosition> INT_MAP = new HashMap<Integer, LogoPosition>();
 
     static {
-        for(libvlc_marquee_position_e value : libvlc_marquee_position_e.values()) {
+        for(LogoPosition value : LogoPosition.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static libvlc_marquee_position_e position(int intValue) {
+    public static LogoPosition position(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_marquee_position_e(int intValue) {
+    LogoPosition(int intValue) {
         this.intValue = intValue;
     }
 

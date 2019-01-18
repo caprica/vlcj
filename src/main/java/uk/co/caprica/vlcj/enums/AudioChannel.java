@@ -17,40 +17,28 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
-
-import java.util.HashMap;
-import java.util.Map;
+package uk.co.caprica.vlcj.enums;
 
 /**
- * Enumeration of media parsed statuses.
+ *
  */
-public enum libvlc_media_parsed_status_e {
+public enum AudioChannel {
 
-    libvlc_media_parsed_status_skipped(1),
-    libvlc_media_parsed_status_failed (2),
-    libvlc_media_parsed_status_timeout(3),
-    libvlc_media_parsed_status_done   (4);
-
-    private static final Map<Integer, libvlc_media_parsed_status_e> INT_MAP = new HashMap<Integer, libvlc_media_parsed_status_e>();
-
-    static {
-        for(libvlc_media_parsed_status_e value : libvlc_media_parsed_status_e.values()) {
-            INT_MAP.put(value.intValue, value);
-        }
-    }
-
-    public static libvlc_media_parsed_status_e mediaParsedStatus(int intValue) {
-        return INT_MAP.get(intValue);
-    }
+    ERROR  (-1),
+    STEREO ( 1),
+    RSTEREO( 2),
+    LEFT   ( 3),
+    RIGHT  ( 4),
+    DOLBYS ( 5);
 
     private final int intValue;
 
-    private libvlc_media_parsed_status_e(int intValue) {
+    AudioChannel(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

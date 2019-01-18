@@ -17,40 +17,41 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of media discover categories.
+ * Enumeration of media discoverer categories.
  */
-public enum libvlc_media_discoverer_category_e {
+public enum MediaDiscovererCategory {
 
-    libvlc_media_discoverer_devices  (0), // devices, like portable music player
-    libvlc_media_discoverer_lan      (1), // LAN/WAN services, like Upnp, SMB, or SAP
-    libvlc_media_discoverer_podcasts (2), // Podcasts
-    libvlc_media_discoverer_localdirs(3); // Local directories, like Video, Music or Pictures directories
+    DEVICES   (0), // devices, like portable music player
+    LAN       (1), // lan/wan services, like upnp, smb, or sap
+    PODCASTS  (2), // podcasts
+    LOCAL_DIRS(3); // local directories, like video, music or pictures directories
 
-    private static final Map<Integer, libvlc_media_discoverer_category_e> INT_MAP = new HashMap<Integer, libvlc_media_discoverer_category_e>();
+    private static final Map<Integer, MediaDiscovererCategory> INT_MAP = new HashMap<Integer, MediaDiscovererCategory>();
 
     static {
-        for(libvlc_media_discoverer_category_e value : libvlc_media_discoverer_category_e.values()) {
+        for(MediaDiscovererCategory value : MediaDiscovererCategory.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static libvlc_media_discoverer_category_e mediaDiscovererCategory(int intValue) {
+    public static MediaDiscovererCategory mediaDiscovererCategory(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_media_discoverer_category_e(int intValue) {
+    MediaDiscovererCategory(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

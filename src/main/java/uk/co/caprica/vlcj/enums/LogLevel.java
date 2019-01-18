@@ -14,42 +14,44 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2017 Caprica Software Limited.
+ * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of video projections.
+ * Enumeration of native log levels.
  */
-public enum libvlc_video_projection_e {
+public enum LogLevel {
 
-    libvlc_video_projection_rectangular            (0),
-    libvlc_video_projection_equirectangular        (1),     /* 360 spherical */
-    libvlc_video_projection_cubemap_layout_standard(0x100);
+    DEBUG  (0), // Debug message
+    NOTICE (2), // Important informational message
+    WARNING(3), // Warning (potential error) message
+    ERROR  (4); // Error message
 
-    private static final Map<Integer, libvlc_video_projection_e> INT_MAP = new HashMap<Integer, libvlc_video_projection_e>();
+    private static final Map<Integer, LogLevel> INT_MAP = new HashMap<Integer, LogLevel>();
 
     static {
-        for(libvlc_video_projection_e projection : libvlc_video_projection_e.values()) {
-            INT_MAP.put(projection.intValue, projection);
+        for(LogLevel event : LogLevel.values()) {
+            INT_MAP.put(event.intValue, event);
         }
     }
 
-    public static libvlc_video_projection_e projection(int intValue) {
+    public static LogLevel level(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_video_projection_e(int intValue) {
+    LogLevel(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

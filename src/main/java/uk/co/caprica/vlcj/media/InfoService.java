@@ -1,9 +1,10 @@
 package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.enums.State;
+import uk.co.caprica.vlcj.enums.TrackType;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_type_e;
-import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
+import uk.co.caprica.vlcj.enums.MediaType;
 import uk.co.caprica.vlcj.player.*;
 
 import java.util.List;
@@ -20,12 +21,12 @@ public class InfoService extends BaseService {
         return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_media_get_mrl(mediaInstance));
     }
 
-    public libvlc_media_type_e type() {
-        return libvlc_media_type_e.mediaType(libvlc.libvlc_media_get_type(mediaInstance));
+    public MediaType type() {
+        return MediaType.mediaType(libvlc.libvlc_media_get_type(mediaInstance));
     }
 
-    public libvlc_state_t state() {
-        return libvlc_state_t.state(libvlc.libvlc_media_get_state(mediaInstance));
+    public State state() {
+        return State.state(libvlc.libvlc_media_get_state(mediaInstance));
     }
 
     public long duration() {

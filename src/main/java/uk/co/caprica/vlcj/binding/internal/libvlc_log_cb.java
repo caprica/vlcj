@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.binding.internal;
 
 import com.sun.jna.Callback;
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.enums.LogLevel;
 
 /**
  * Specification for a callback that handles native log messages.
@@ -33,7 +34,7 @@ public interface libvlc_log_cb extends Callback {
      * <em>Log message handlers <b>must</b> be thread-safe.</em>
      *
      * @param data data pointer as given to libvlc_log_set()
-     * @param level message level {@link libvlc_log_level_e}
+     * @param level message level {@link LogLevel}
      * @param ctx message context (meta-informations about the message)
      * @param format printf() format string (as defined by ISO C11)
      * @param args variable argument list for the format

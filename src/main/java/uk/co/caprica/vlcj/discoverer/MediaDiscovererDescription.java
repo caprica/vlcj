@@ -1,6 +1,6 @@
 package uk.co.caprica.vlcj.discoverer;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_category_e;
+import uk.co.caprica.vlcj.enums.MediaDiscovererCategory;
 
 public final class MediaDiscovererDescription {
 
@@ -8,9 +8,9 @@ public final class MediaDiscovererDescription {
 
     private final String longName;
 
-    private final libvlc_media_discoverer_category_e category;
+    private final MediaDiscovererCategory category;
 
-    public MediaDiscovererDescription(String name, String longName, libvlc_media_discoverer_category_e category) {
+    public MediaDiscovererDescription(String name, String longName, MediaDiscovererCategory category) {
         this.name = name;
         this.longName = longName;
         this.category = category;
@@ -24,7 +24,7 @@ public final class MediaDiscovererDescription {
         return longName;
     }
 
-    public libvlc_media_discoverer_category_e category() {
+    public MediaDiscovererCategory category() {
         return category;
     }
 

@@ -19,11 +19,11 @@
 
 package uk.co.caprica.vlcj.test.list;
 
+import uk.co.caprica.vlcj.enums.PlaybackMode;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -57,7 +57,7 @@ public class StaticImageTest extends VlcjTest {
 //FIXME        playlist.addMedia("/home/mark/2.jpg", "image-duration=5");
         MediaListPlayer player = factory.mediaPlayers().newMediaListPlayer();
         player.list().setMediaList(playlist);
-        player.mode().setMode(MediaListPlayerMode.LOOP);
+        player.mode().setMode(PlaybackMode.LOOP);
         player.controls().play();
         Thread.currentThread().join();
     }

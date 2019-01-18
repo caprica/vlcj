@@ -19,8 +19,8 @@
 
 package uk.co.caprica.vlcj.player.events.media;
 
+import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.binding.internal.media_state_changed;
 import uk.co.caprica.vlcj.media.Media;
 
@@ -35,6 +35,6 @@ final class MediaStateChangedEvent extends MediaEvent {
 
     @Override
     public void notify(MediaEventListener listener) {
-        listener.mediaStateChanged(media, libvlc_state_t.state(newState));
+        listener.mediaStateChanged(media, State.state(newState));
     }
 }

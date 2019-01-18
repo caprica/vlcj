@@ -17,7 +17,7 @@
  * Copyright 2009-2017 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,36 +25,37 @@ import java.util.Map;
 /**
  * Enumeration of video orientations.
  */
-public enum libvlc_video_orient_e {
+public enum VideoOrientation {
 
-    libvlc_video_orient_top_left    (0),   /* Normal. Top line represents top, left column left. */
-    libvlc_video_orient_top_right   (1),   /* Flipped horizontally */
-    libvlc_video_orient_bottom_left (2),   /* Flipped vertically */
-    libvlc_video_orient_bottom_right(3),   /* Rotated 180 degrees */
-    libvlc_video_orient_left_top    (4),   /* Transposed */
-    libvlc_video_orient_left_bottom (5),   /* Rotated 90 degrees clockwise (or 270 anti-clockwise) */
-    libvlc_video_orient_right_top   (6),   /* Rotated 90 degrees anti-clockwise */
-    libvlc_video_orient_right_bottom(7);   /* Anti-transposed */
+    TOP_LEFT    (0),   /* Normal. Top line represents top, left column left. */
+    TOP_RIGHT   (1),   /* Flipped horizontally */
+    BOTTOM_LEFT (2),   /* Flipped vertically */
+    BOTTOM_RIGHT(3),   /* Rotated 180 degrees */
+    LEFT_TOP    (4),   /* Transposed */
+    LEFT_BOTTOM (5),   /* Rotated 90 degrees clockwise (or 270 anti-clockwise) */
+    RIGHT_TOP   (6),   /* Rotated 90 degrees anti-clockwise */
+    RIGHT_BOTTOM(7);   /* Anti-transposed */
 
-    private static final Map<Integer, libvlc_video_orient_e> INT_MAP = new HashMap<Integer, libvlc_video_orient_e>();
+    private static final Map<Integer, VideoOrientation> INT_MAP = new HashMap<Integer, VideoOrientation>();
 
     static {
-        for(libvlc_video_orient_e orientation : libvlc_video_orient_e.values()) {
+        for(VideoOrientation orientation : VideoOrientation.values()) {
             INT_MAP.put(orientation.intValue, orientation);
         }
     }
 
-    public static libvlc_video_orient_e orientation(int intValue) {
+    public static VideoOrientation videoOrientation(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_video_orient_e(int intValue) {
+    VideoOrientation(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

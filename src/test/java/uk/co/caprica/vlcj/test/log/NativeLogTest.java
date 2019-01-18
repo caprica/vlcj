@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.log;
 
 import java.util.concurrent.CountDownLatch;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_log_level_e;
+import uk.co.caprica.vlcj.enums.LogLevel;
 import uk.co.caprica.vlcj.component.AudioMediaPlayerComponent;
 import uk.co.caprica.vlcj.log.LogEventListener;
 import uk.co.caprica.vlcj.log.NativeLog;
@@ -58,10 +58,10 @@ public class NativeLogTest extends VlcjTest {
             System.exit(1);
         }
 
-        log.setLevel(libvlc_log_level_e.DEBUG);
+        log.setLevel(LogLevel.DEBUG);
         log.addLogListener(new LogEventListener() {
             @Override
-            public void log(libvlc_log_level_e level, String module, String file, Integer line, String name, String header, Integer id, String message) {
+            public void log(LogLevel level, String module, String file, Integer line, String name, String header, Integer id, String message) {
                 System.out.printf("[%-20s] (%-20s) %7s: %s\n", module, name, level, message);
             }
         });

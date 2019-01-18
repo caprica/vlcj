@@ -17,47 +17,39 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of logo positions.
+ *
  */
-public enum libvlc_logo_position_e {
+public enum MediaSlaveType {
 
-    centre      ( 0),
-    left        ( 1),
-    right       ( 2),
+    SUBTITLE(0),
+    AUDIO   (1);
 
-    top         ( 4),
-    top_left    ( 5),
-    top_right   ( 6),
-
-    bottom      ( 8),
-    bottom_left ( 9),
-    bottom_right(10);
-
-    private static final Map<Integer, libvlc_logo_position_e> INT_MAP = new HashMap<Integer, libvlc_logo_position_e>();
+    private static final Map<Integer, MediaSlaveType> INT_MAP = new HashMap<Integer, MediaSlaveType>();
 
     static {
-        for(libvlc_logo_position_e value : libvlc_logo_position_e.values()) {
+        for(MediaSlaveType value : MediaSlaveType.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static libvlc_logo_position_e position(int intValue) {
+    public static MediaSlaveType mediaSlaveType(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_logo_position_e(int intValue) {
+    MediaSlaveType(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.binding.internal;
 /**
  *
  */
+// FIXME is this actually used anywhere in the native API?
 public enum libvlc_audio_output_device_types_t {
 
     libvlc_AudioOutputDevice_Error (-1),
@@ -36,11 +37,12 @@ public enum libvlc_audio_output_device_types_t {
 
     private final int intValue;
 
-    private libvlc_audio_output_device_types_t(int intValue) {
+    libvlc_audio_output_device_types_t(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

@@ -1,6 +1,6 @@
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
+import uk.co.caprica.vlcj.enums.State;
 
 public final class StatusService extends BaseService {
 
@@ -103,8 +103,8 @@ public final class StatusService extends BaseService {
      *
      * @return state current media player state
      */
-    public libvlc_state_t getMediaPlayerState() {
-        return libvlc_state_t.state(libvlc.libvlc_media_player_get_state(mediaPlayerInstance));
+    public State getMediaPlayerState() {
+        return State.state(libvlc.libvlc_media_player_get_state(mediaPlayerInstance));
     }
 
 }

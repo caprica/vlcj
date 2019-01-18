@@ -14,44 +14,44 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2017 Caprica Software Limited.
+ * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of teletext keys.
+ * Enumeration of media parsed statuses.
  */
-public enum libvlc_teletext_key_e {
+public enum MediaParsedStatus {
 
-    libvlc_teletext_key_red   ('r' << 16),
-    libvlc_teletext_key_green ('g' << 16),
-    libvlc_teletext_key_yellow('y' << 16),
-    libvlc_teletext_key_blue  ('b' << 16),
-    libvlc_teletext_key_index ('i' << 16);
+    SKIPPED(1),
+    FAILED (2),
+    TIMEOUT(3),
+    DONE   (4);
 
-    private static final Map<Integer, libvlc_teletext_key_e> INT_MAP = new HashMap<Integer, libvlc_teletext_key_e>();
+    private static final Map<Integer, MediaParsedStatus> INT_MAP = new HashMap<Integer, MediaParsedStatus>();
 
     static {
-        for(libvlc_teletext_key_e key : libvlc_teletext_key_e.values()) {
-            INT_MAP.put(key.intValue, key);
+        for(MediaParsedStatus value : MediaParsedStatus.values()) {
+            INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static libvlc_teletext_key_e key(int intValue) {
+    public static MediaParsedStatus mediaParsedStatus(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_teletext_key_e(int intValue) {
+    MediaParsedStatus(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

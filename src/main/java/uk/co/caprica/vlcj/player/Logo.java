@@ -22,8 +22,8 @@ package uk.co.caprica.vlcj.player;
 import java.awt.image.RenderedImage;
 import java.io.File;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
+import uk.co.caprica.vlcj.enums.LogoPosition;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
@@ -66,7 +66,7 @@ public final class Logo {
     /**
      * Predefined logo position.
      */
-    private libvlc_logo_position_e position;
+    private LogoPosition position;
 
     /**
      * File name.
@@ -141,7 +141,7 @@ public final class Logo {
      * @param position position enumeration value
      * @return this
      */
-    public Logo position(libvlc_logo_position_e position) {
+    public Logo position(LogoPosition position) {
         this.position = position;
         return this;
     }
@@ -151,7 +151,7 @@ public final class Logo {
      * <p>
      * It is possible to simply specify the name of the file, or the extended syntax supported by
      * libvlc - e.g. "file,d,t;file,d,t;...", see
-     * {@link libvlc_video_logo_option_t#libvlc_logo_file}.
+     * {@link libvlc_video_logo_option_t#FILE}.
      *
      * @param file name of the file
      * @return this
@@ -257,7 +257,7 @@ public final class Logo {
      *
      * @return position
      */
-    public libvlc_logo_position_e getPosition() {
+    public LogoPosition getPosition() {
         return position;
     }
 

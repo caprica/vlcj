@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.log;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_log_level_e;
+import uk.co.caprica.vlcj.enums.LogLevel;
 
 /**
  * Specification for a component that will receive native log messages.
@@ -38,5 +38,5 @@ public interface LogEventListener {
      * @param id object identifier
      * @param message log message
      */
-    void log(libvlc_log_level_e level, String module, String file, Integer line, String name, String header, Integer id, String message);
+    void log(LogLevel level, String module, String file, Integer line, String name, String header, Integer id, String message);
 }

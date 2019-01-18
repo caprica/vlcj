@@ -1,6 +1,6 @@
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
+import uk.co.caprica.vlcj.enums.MarqueePosition;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
 import uk.co.caprica.vlcj.player.Marquee;
 
@@ -117,7 +117,7 @@ public final class MarqueeService extends BaseService {
      *
      * @param position position
      */
-    public void setMarqueePosition(libvlc_marquee_position_e position) {
+    public void setMarqueePosition(MarqueePosition position) {
         libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Position.intValue(), position.intValue());
     }
 

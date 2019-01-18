@@ -43,7 +43,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
+import uk.co.caprica.vlcj.enums.LogoPosition;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -175,7 +175,7 @@ public class LogoTest extends VlcjTest {
                     catch(NumberFormatException e) {
                     }
 
-                    logo().file(fileTextField.getText()).location(x, y).position((libvlc_logo_position_e)positionCombo.getSelectedItem()).opacity(opacitySlider.getValue()).enable(enableCheckBox.isSelected()).apply(mediaPlayerComponent.getMediaPlayer());
+                    logo().file(fileTextField.getText()).location(x, y).position((LogoPosition)positionCombo.getSelectedItem()).opacity(opacitySlider.getValue()).enable(enableCheckBox.isSelected()).apply(mediaPlayerComponent.getMediaPlayer());
                 }
             });
 
@@ -201,7 +201,7 @@ public class LogoTest extends VlcjTest {
     private class PositionComboModel extends DefaultComboBoxModel {
 
         private PositionComboModel() {
-            super(libvlc_logo_position_e.values());
+            super(LogoPosition.values());
             insertElementAt(null, 0);
             setSelectedItem(null);
         }

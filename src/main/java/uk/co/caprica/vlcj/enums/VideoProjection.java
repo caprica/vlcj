@@ -14,52 +14,43 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2019 Caprica Software Limited.
+ * Copyright 2009-2017 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of positions, e.g. for the video title.
+ * Enumeration of video projections.
  */
-public enum libvlc_position_e {
+public enum VideoProjection {
 
-    disable     (-1),
+    RECTANGULAR            (0),
+    EQUIRECTANGULAR        (1),     /* 360 spherical */
+    CUBEMAP_LAYOUT_STANDARD(0x100);
 
-    center      ( 0),
-    left        ( 1),
-    right       ( 2),
-
-    top         ( 3),
-    top_left    ( 4),
-    top_right   ( 5),
-
-    bottom      ( 6),
-    bottom_left ( 7),
-    bottom_right( 8);
-
-    private static final Map<Integer, libvlc_position_e> INT_MAP = new HashMap<Integer, libvlc_position_e>();
+    private static final Map<Integer, VideoProjection> INT_MAP = new HashMap<Integer, VideoProjection>();
 
     static {
-        for(libvlc_position_e value : libvlc_position_e.values()) {
-            INT_MAP.put(value.intValue, value);
+        for(VideoProjection projection : VideoProjection.values()) {
+            INT_MAP.put(projection.intValue, projection);
         }
     }
 
-    public static libvlc_position_e position(int intValue) {
+    public static VideoProjection videoProjection(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_position_e(int intValue) {
+    VideoProjection(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

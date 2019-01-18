@@ -27,6 +27,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import uk.co.caprica.vlcj.enums.PlaybackMode;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
@@ -34,7 +35,6 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -81,7 +81,7 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
         mediaList.items().addMedia(mediaPlayerFactory.media().newMedia("/movies/3.mp4"));
 
         mediaListPlayer.list().setMediaList(mediaList);
-        mediaListPlayer.mode().setMode(MediaListPlayerMode.LOOP);
+        mediaListPlayer.mode().setMode(PlaybackMode.LOOP);
 
         mediaListPlayer.controls().play();
 

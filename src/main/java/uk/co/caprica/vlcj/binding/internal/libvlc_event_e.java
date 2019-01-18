@@ -99,11 +99,12 @@ public enum libvlc_event_e {
 
     private final int intValue;
 
-    private libvlc_event_e(int intValue) {
+    libvlc_event_e(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

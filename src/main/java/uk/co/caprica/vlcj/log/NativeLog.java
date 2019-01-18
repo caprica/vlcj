@@ -31,11 +31,10 @@ import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.enums.LogLevel;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_cb;
-import uk.co.caprica.vlcj.binding.internal.libvlc_log_level_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
-import uk.co.caprica.vlcj.version.LibVlcVersion;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
@@ -47,8 +46,8 @@ import com.sun.jna.ptr.PointerByReference;
  * The native library specifies that implementations of native log handlers (like
  * that encapsulated within this class) must be thread-safe.
  * <p>
- * The default log level is {@link libvlc_log_level_e#NOTICE}, this can be changed
- * by invoking {@link #setLevel(libvlc_log_level_e)}.
+ * The default log level is {@link LogLevel#NOTICE}, this can be changed
+ * by invoking {@link #setLevel(LogLevel)}.
  * <p>
  * <strong>The native log requires vlc 2.1.0 or later.</strong>
  */
@@ -104,7 +103,7 @@ public class NativeLog {
      * <p>
      * Set to <code>null</code> to suppress all log messages.
      */
-    private libvlc_log_level_e logLevel = libvlc_log_level_e.NOTICE;
+    private LogLevel logLevel = LogLevel.NOTICE;
 
     /**
      * Create a new native log component.
@@ -146,7 +145,7 @@ public class NativeLog {
      *
      * @param logLevel log threshold level
      */
-    public final void setLevel(libvlc_log_level_e logLevel) {
+    public final void setLevel(LogLevel logLevel) {
         this.logLevel = logLevel;
     }
 
@@ -155,7 +154,7 @@ public class NativeLog {
      *
      * @return level
      */
-    public final libvlc_log_level_e getLevel() {
+    public final LogLevel getLevel() {
         return logLevel;
     }
 
@@ -236,7 +235,7 @@ public class NativeLog {
                         String header = getString(headerPointer);
                         Integer id = idPointer.getValue();
                         // ...send the event
-                        raiseLogEvent(libvlc_log_level_e.level(level), module, file, line, name, header, id, message);
+                        raiseLogEvent(LogLevel.level(level), module, file, line, name, header, id, message);
                     }
                 }
                 else {
@@ -269,7 +268,7 @@ public class NativeLog {
      * @param id object identifier
      * @param message log message
      */
-    private void raiseLogEvent(libvlc_log_level_e level, String module, String file, Integer line, String name, String header, Integer id, String message) {
+    private void raiseLogEvent(LogLevel level, String module, String file, Integer line, String name, String header, Integer id, String message) {
         logger.trace("raiseLogEvent(level={},module={},line={},name={},header={},id={},message={}", level, module, file, line, name, header, id, message);
         // Submit a new log event so message are sent serially and asynchronously
         listenersService.submit(new NotifyEventListenersRunnable(level, module, file, line, name, header, id, message));
@@ -289,7 +288,7 @@ public class NativeLog {
         /**
          * Log level.
          */
-        private final libvlc_log_level_e level;
+        private final LogLevel level;
 
         /**
          * Module.
@@ -340,7 +339,7 @@ public class NativeLog {
          *
          * @param mediaPlayerEvent event to notify
          */
-        private NotifyEventListenersRunnable(libvlc_log_level_e level, String module, String file, Integer line, String name, String header, Integer id, String message) {
+        private NotifyEventListenersRunnable(LogLevel level, String module, String file, Integer line, String name, String header, Integer id, String message) {
             this.level = level;
             this.module = module;
             this.file = file;

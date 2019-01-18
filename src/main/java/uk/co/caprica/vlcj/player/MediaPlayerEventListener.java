@@ -21,7 +21,6 @@ package uk.co.caprica.vlcj.player;
 
 import javax.swing.SwingUtilities;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_parse_flag_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 

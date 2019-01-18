@@ -17,70 +17,48 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of track types.
+ * Enumeration of marquee positions.
  */
-public enum TrackType {
+public enum MarqueePosition {
 
-    /**
-     * Unknown.
-     */
-    UNKNOWN (-1),
+    CENTRE      ( 0),
+    LEFT        ( 1),
+    RIGHT       ( 2),
 
-    /**
-     * Audio track.
-     */
-    AUDIO   ( 0),
+    TOP         ( 4),
+    TOP_LEFT    ( 5),
+    TOP_RIGHT   ( 6),
 
-    /**
-     * Video track.
-     */
-    VIDEO   ( 1),
+    BOTTOM      ( 8),
+    BOTTOM_LEFT ( 9),
+    BOTTOM_RIGHT(10);
 
-    /**
-     * Text track.
-     * <p>
-     * Also known as "subtitle" or "sub-picture".
-     */
-    TEXT    ( 2);
-
-    private static final Map<Integer, TrackType> INT_MAP = new HashMap<Integer, TrackType>();
+    private static final Map<Integer, MarqueePosition> INT_MAP = new HashMap<Integer, MarqueePosition>();
 
     static {
-        for(TrackType value : TrackType.values()) {
+        for(MarqueePosition value : MarqueePosition.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static TrackType trackType(int intValue) {
+    public static MarqueePosition position(int intValue) {
         return INT_MAP.get(intValue);
     }
 
-    /**
-     * Raw value.
-     */
     private final int intValue;
 
-    /**
-     * Raw value.
-     *
-     * @param value raw value
-     */
-    private TrackType(int value) {
-        this.intValue = value;
+    MarqueePosition(int intValue) {
+        this.intValue = intValue;
     }
 
-    /**
-     * Get the raw value.
-     *
-     * @return raw value
-     */
-    public int value() {
+    public int intValue() {
         return intValue;
     }
+
 }

@@ -1,6 +1,6 @@
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_teletext_key_e;
+import uk.co.caprica.vlcj.enums.TeletextKey;
 
 public final class TeletextService extends BaseService {
 
@@ -31,7 +31,7 @@ public final class TeletextService extends BaseService {
      *
      * @param key teletext key
      */
-    public void setTeletextKey(libvlc_teletext_key_e key) {
+    public void setTeletextKey(TeletextKey key) {
         libvlc.libvlc_video_set_teletext(mediaPlayerInstance, key.intValue());
     }
 

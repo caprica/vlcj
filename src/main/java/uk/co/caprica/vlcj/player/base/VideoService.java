@@ -1,7 +1,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import com.sun.jna.ptr.IntByReference;
-import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
+import uk.co.caprica.vlcj.enums.Position;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 import uk.co.caprica.vlcj.player.DeinterlaceMode;
@@ -155,10 +155,10 @@ public final class VideoService extends BaseService {
     /**
      * Set if, and how, the video title will be shown when playing media.
      *
-     * @param position position, {@link libvlc_position_e#disable} to prevent the title from appearing
+     * @param position position, {@link Position#DISABLE} to prevent the title from appearing
      * @param timeout time to display the title in milliseconds (ignored when the title is disabled)
      */
-    public void setVideoTitleDisplay(libvlc_position_e position, int timeout) {
+    public void setVideoTitleDisplay(Position position, int timeout) {
         libvlc.libvlc_media_player_set_video_title_display(mediaPlayerInstance, position.intValue(), timeout);
     }
 

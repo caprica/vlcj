@@ -6,6 +6,10 @@ import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaSlave;
 import uk.co.caprica.vlcj.player.TrackInfo;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.enums.MediaParsedStatus;
+import uk.co.caprica.vlcj.enums.MediaSlaveType;
+import uk.co.caprica.vlcj.enums.Meta;
+import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.player.events.media.MediaEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -29,11 +33,11 @@ public class MediaTest extends VlcjTest {
 
         boolean addedSlave;
 
-        addedSlave = media.slaves().add(libvlc_media_slave_type_t.libvlc_media_slave_type_subtitle, 4, "file:///home/mark/test.srt");
+        addedSlave = media.slaves().add(MediaSlaveType.SUBTITLE, 4, "file:///home/mark/test.srt");
         System.out.println("Added slave " + addedSlave);
 
         // I don't really know how audio slaves work, nor what can really be done with them...
-//        addedSlave = media.slaves().add(libvlc_media_slave_type_t.libvlc_media_slave_type_audio, 4, "file:///home/mark/test.mp3");
+//        addedSlave = media.slaves().add(MediaSlaveType.libvlc_media_slave_type_audio, 4, "file:///home/mark/test.mp3");
 //        System.out.println("Added slave " + addedSlave);
 
         List<MediaSlave> slaves = media.slaves().get();
@@ -58,11 +62,11 @@ public class MediaTest extends VlcjTest {
             }
 
             @Override
-            public void mediaParsedChanged(Media media, libvlc_media_parsed_status_e newStatus) {
+            public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
                 System.out.printf("parsed changed: %s%n", newStatus);
 
-                if (newStatus == libvlc_media_parsed_status_e.libvlc_media_parsed_status_done) {
-                    for (libvlc_meta_t t : libvlc_meta_t.values()) {
+                if (newStatus == MediaParsedStatus.DONE) {
+                    for (Meta t : Meta.values()) {
                         String meta = media.meta().get(t);
                         if (meta != null) {
                             System.out.printf("%-26s - %s%n", t, meta);
@@ -82,7 +86,7 @@ public class MediaTest extends VlcjTest {
             }
 
             @Override
-            public void mediaStateChanged(Media media, libvlc_state_t newState) {
+            public void mediaStateChanged(Media media, State newState) {
                 System.out.printf("state changed: %s%n", newState);
             }
 

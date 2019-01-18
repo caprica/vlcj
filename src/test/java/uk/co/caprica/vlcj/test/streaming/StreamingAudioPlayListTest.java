@@ -26,13 +26,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import uk.co.caprica.vlcj.enums.PlaybackMode;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -113,7 +113,7 @@ public class StreamingAudioPlayListTest extends VlcjTest {
             playList.items().addMedia(media);
         }
         // Loop the play-list over and over
-        mediaListPlayer.mode().setMode(MediaListPlayerMode.LOOP);
+        mediaListPlayer.mode().setMode(PlaybackMode.LOOP);
         // Attach the play-list to the media list player
         mediaListPlayer.list().setMediaList(playList);
         // Finally, start the media player

@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,31 +25,32 @@ import java.util.Map;
 /**
  * Enumeration of media list player playback modes.
  */
-public enum libvlc_playback_mode_e {
+public enum PlaybackMode {
 
-    libvlc_playback_mode_default (0),
-    libvlc_playback_mode_loop    (1),
-    libvlc_playback_mode_repeat  (2);
+    DEFAULT(0),
+    LOOP   (1),
+    REPEAT (2);
 
-    private static final Map<Integer, libvlc_playback_mode_e> INT_MAP = new HashMap<Integer, libvlc_playback_mode_e>();
+    private static final Map<Integer, PlaybackMode> INT_MAP = new HashMap<Integer, PlaybackMode>();
 
     static {
-        for(libvlc_playback_mode_e event : libvlc_playback_mode_e.values()) {
+        for(PlaybackMode event : PlaybackMode.values()) {
             INT_MAP.put(event.intValue, event);
         }
     }
 
-    public static libvlc_playback_mode_e event(int intValue) {
+    public static PlaybackMode event(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    private libvlc_playback_mode_e(int intValue) {
+    PlaybackMode(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

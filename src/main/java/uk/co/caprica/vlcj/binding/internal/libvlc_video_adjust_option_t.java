@@ -33,11 +33,12 @@ public enum libvlc_video_adjust_option_t {
 
     private final int intValue;
 
-    private libvlc_video_adjust_option_t(int intValue) {
+    libvlc_video_adjust_option_t(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }
