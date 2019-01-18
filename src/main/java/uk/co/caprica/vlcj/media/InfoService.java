@@ -37,14 +37,17 @@ public class InfoService extends BaseService {
         return TrackInformation.getTrackInfo(libvlc, mediaInstance, types);
     }
 
+    @SuppressWarnings("unchecked")
     public List<AudioTrackInfo> audioTracks() {
         return (List<AudioTrackInfo>) tracks(TrackType.AUDIO);
     }
 
+    @SuppressWarnings("unchecked")
     public List<VideoTrackInfo> videoTracks() {
         return (List<VideoTrackInfo>) tracks(TrackType.VIDEO);
     }
 
+    @SuppressWarnings("unchecked")
     public List<TextTrackInfo> textTracks() {
         return (List<TextTrackInfo>) tracks(TrackType.TEXT);
     }
