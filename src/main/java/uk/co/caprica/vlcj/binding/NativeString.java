@@ -17,13 +17,10 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player;
-
-import uk.co.caprica.vlcj.binding.LibVlc;
+package uk.co.caprica.vlcj.binding;
 
 import com.sun.jna.Pointer;
 
-// FIXME move package, it's probably a binding/internal class? not sure...
 /**
  * Encapsulation of access to native strings.
  * <p>

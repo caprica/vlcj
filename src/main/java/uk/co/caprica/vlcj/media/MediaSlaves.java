@@ -6,7 +6,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_type_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.player.NativeString;
+import uk.co.caprica.vlcj.binding.NativeString;
 
 import java.util.ArrayList;
 import java.util.List;

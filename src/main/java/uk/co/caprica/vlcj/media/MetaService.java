@@ -2,7 +2,7 @@ package uk.co.caprica.vlcj.media;
 
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.binding.internal.libvlc_meta_t;
-import uk.co.caprica.vlcj.player.NativeString;
+import uk.co.caprica.vlcj.binding.NativeString;
 
 // FIXME replace libvlc_meta_t with a Java enum
 // FIXME need to add some comments regarding fetching remote artwork url (it might happen during parse)

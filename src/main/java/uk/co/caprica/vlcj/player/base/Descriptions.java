@@ -9,7 +9,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_title_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.player.ChapterDescription;
-import uk.co.caprica.vlcj.player.NativeString;
+import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.player.TitleDescription;
 import uk.co.caprica.vlcj.player.TrackDescription;
 

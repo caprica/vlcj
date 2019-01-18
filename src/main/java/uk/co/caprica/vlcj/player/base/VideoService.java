@@ -5,7 +5,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 import uk.co.caprica.vlcj.player.DeinterlaceMode;
-import uk.co.caprica.vlcj.player.NativeString;
+import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.player.TrackDescription;
 import uk.co.caprica.vlcj.player.Viewpoint;
 

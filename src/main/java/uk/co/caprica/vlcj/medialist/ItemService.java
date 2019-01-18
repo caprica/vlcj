@@ -2,7 +2,7 @@ package uk.co.caprica.vlcj.medialist;
 
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.player.NativeString;
+import uk.co.caprica.vlcj.binding.NativeString;
 
 import java.util.ArrayList;
 import java.util.List;
