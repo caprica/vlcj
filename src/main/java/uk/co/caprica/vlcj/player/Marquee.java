@@ -97,6 +97,11 @@ public final class Marquee {
     private MarqueePosition position;
 
     /**
+     *
+     */
+    private Integer refresh;
+
+    /**
      * Enabled/disabled state.
      */
     private boolean enable;
@@ -230,6 +235,17 @@ public final class Marquee {
      */
     public Marquee position(MarqueePosition position) {
         this.position = position;
+        return this;
+    }
+
+    /**
+     *
+     *
+     * @param refresh
+     * @return
+     */
+    public Marquee refresh(int refresh) {
+        this.refresh = refresh;
         return this;
     }
 
@@ -369,34 +385,37 @@ public final class Marquee {
      * @param mediaPlayer media player
      */
     public void apply(MediaPlayer mediaPlayer) {
-        if(text != null) {
+        if (text != null) {
             mediaPlayer.marquee().setMarqueeText(text);
         }
-        if(colour != null) {
+        if (colour != null) {
             mediaPlayer.marquee().setMarqueeColour(colour);
         }
-        if(rgb != null) {
+        if (rgb != null) {
             mediaPlayer.marquee().setMarqueeColour(rgb);
         }
-        if(intOpacity != null) {
+        if (intOpacity != null) {
             mediaPlayer.marquee().setMarqueeOpacity(intOpacity);
         }
-        if(floatOpacity != null) {
+        if (floatOpacity != null) {
             mediaPlayer.marquee().setMarqueeOpacity(floatOpacity);
         }
-        if(size != null) {
+        if (size != null) {
             mediaPlayer.marquee().setMarqueeSize(size);
         }
-        if(timeout != null) {
+        if (timeout != null) {
             mediaPlayer.marquee().setMarqueeTimeout(timeout);
         }
-        if(x != null && y != null && x >= 0 && y >= 0) {
+        if (x != null && y != null && x >= 0 && y >= 0) {
             mediaPlayer.marquee().setMarqueeLocation(x, y);
         }
-        if(position != null) {
+        if (position != null) {
             mediaPlayer.marquee().setMarqueePosition(position);
         }
-        if(enable) {
+        if (refresh != null) {
+            mediaPlayer.marquee().setMarqueeRefresh(refresh);
+        }
+        if (enable) {
             mediaPlayer.marquee().enableMarquee(true);
         }
     }
@@ -415,6 +434,7 @@ public final class Marquee {
             .append("x=").append(x).append(',')
             .append("y=").append(y).append(',')
             .append("position=").append(position).append(',')
+            .append("refresh=").append(refresh).append(',')
             .append("enable=").append(enable).append(']')
             .toString();
     }

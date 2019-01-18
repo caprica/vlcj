@@ -26,7 +26,7 @@ public final class MarqueeService extends BaseService {
     /**
      * Set the marquee text.
      * <p>
-     * Format variables are available:
+     * Format variables are available, some examples:
      * <pre>
      * Time related:
      *  %Y = year
@@ -36,6 +36,8 @@ public final class MarqueeService extends BaseService {
      *  %S = second
      * </pre>
      * See <code>http://wiki.videolan.org/index.php?title=Documentation:Modules/marq</code>.
+     * <p>
+     * You can use any format specifiers used by the strftime C function ("man strftime" for more information).
      * <p>
      * If you want to use new-lines in the marquee text make sure you use the "\r\n" escape sequence - "\n" on its own
      * will not work.
@@ -119,6 +121,15 @@ public final class MarqueeService extends BaseService {
      */
     public void setMarqueePosition(MarqueePosition position) {
         libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Position.intValue(), position.intValue());
+    }
+
+    /**
+     *
+     *
+     * @param refresh
+     */
+    public void setMarqueeRefresh(int refresh) {
+        libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Refresh.intValue(), refresh);
     }
 
     /**
