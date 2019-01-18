@@ -172,12 +172,12 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
         this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
 
-        this.mediaPlayer.videoSurface().setVideoSurface(this.mediaPlayerFactory.videoSurfaces().newVideoSurface(videoSurfaceComponent));
+        this.mediaPlayer.videoSurface().setVideoSurface(this.mediaPlayerFactory.videoSurfaces().newVideoSurface(this.videoSurfaceComponent));
         this.mediaPlayer.fullScreen().setFullScreenStrategy(fullScreenStrategy);
         this.mediaPlayer.overlay().setOverlay(overlay);
 
         setLayout(new BorderLayout());
-        add(videoSurfaceComponent, BorderLayout.CENTER);
+        add(this.videoSurfaceComponent, BorderLayout.CENTER);
 
         initInputEvents(inputEvents);
 
