@@ -439,7 +439,7 @@ public class DefaultMediaMeta implements MediaMeta {
      */
     private String getMeta(libvlc_meta_t metaType) {
         logger.trace("getMeta(metaType={},media={})", metaType, media);
-        return NativeString.getNativeString(libvlc, libvlc.libvlc_media_get_meta(media, metaType.intValue()));
+        return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_media_get_meta(media, metaType.intValue()));
     }
 
     /**

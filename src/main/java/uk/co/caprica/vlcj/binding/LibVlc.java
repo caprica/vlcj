@@ -353,7 +353,7 @@ public interface LibVlc extends Library {
      *
      * @since LibVLC 2.1.0 or later
      */
-    void libvlc_log_set(libvlc_instance_t p_instance, libvlc_log_cb cb, Pointer data );
+    void libvlc_log_set(libvlc_instance_t p_instance, libvlc_log_cb cb, Pointer data);
 
     /**
      * Release a list of module descriptions.
@@ -738,7 +738,7 @@ public interface LibVlc extends Library {
      *
      * @since LibVLC 3.0.0 and later.
      */
-     String libvlc_media_get_codec_description(int i_type, int i_codec);
+    String libvlc_media_get_codec_description(int i_type, int i_codec);
 
     /**
      * Add a slave to the current media.
@@ -1682,7 +1682,7 @@ public interface LibVlc extends Library {
      * @param option marq option to get @see libvlc_video_marquee_string_option_t
      * @return marquee option value
      */
-    String libvlc_video_get_marquee_string(libvlc_media_player_t p_mi, int option);
+    Pointer libvlc_video_get_marquee_string(libvlc_media_player_t p_mi, int option);
 
     /**
      * Enable, disable or set an integer marquee option Setting libvlc_marquee_Enable has the side
@@ -1910,7 +1910,7 @@ public interface LibVlc extends Library {
      *         (the result must be released with free() or libvlc_free()).
      * @since LibVLC 3.0.0 or later.
      */
-    Pointer libvlc_audio_output_device_get( libvlc_media_player_t mp );
+    Pointer libvlc_audio_output_device_get(libvlc_media_player_t mp);
 
     /**
      * Toggle mute status.

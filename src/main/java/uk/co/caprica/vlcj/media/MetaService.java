@@ -27,7 +27,7 @@ public class MetaService extends BaseService {
     }
 
     private String getMetaValue(Pointer pointer) {
-        return NativeString.copyNativeString(pointer);
+        return NativeString.copyAndFreeNativeString(libvlc, pointer);
     }
 
 }

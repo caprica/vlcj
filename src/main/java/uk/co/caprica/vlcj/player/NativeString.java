@@ -27,7 +27,18 @@ import com.sun.jna.Pointer;
 /**
  * Encapsulation of access to native strings.
  * <p>
- * This class takes care of freeing the memory that was natively allocated for the string.
+ * This class takes care of freeing the memory that was natively allocated for the string, if needed.
+ * <p>
+ * Generally, any native API that returns "const char*" must <em>not</em> be freed, so in such cases the native return
+ * type mapping can actually be String rather than {@link Pointer}. Alternatively, {@link #copyNativeString(Pointer)}
+ * can be used.
+ * <p>
+ * Generally, Any native API that returns "char*" <em>must</em> be freed, so in such cases the native return type
+ * mapping must be {@link Pointer} and {@link #copyAndFreeNativeString(LibVlc, Pointer)} must be used.
+ * <p>
+ * Where a native string is contained in a {@link com.sun.jna.Structure} those strings should <em>not</em> be freed if
+ * the structure itself is subsequently freed (usually by a companion release native method), so in these cases
+ * {@link #copyNativeString(Pointer)} must be used.
  */
 public final class NativeString {
 
@@ -37,19 +48,20 @@ public final class NativeString {
     private NativeString() {
     }
 
-    // FIXME are these method names really the best? they're kinda confusing...
-
     /**
      * Get a String from a native string pointer, freeing the native string pointer when done.
      * <p>
      * If the native string pointer is not freed then a native memory leak will occur.
+     * <p>
+     * Use this method if the native string type is "char*", i.e. lacking the "const" modifier.
      *
      * @param libvlc native library instance
      * @param pointer pointer to native string, may be <code>null</code>
      * @return string, or <code>null</code> if the pointer was <code>null</code>
      */
-    public static final String getNativeString(LibVlc libvlc, Pointer pointer) {
+    public static final String copyAndFreeNativeString(LibVlc libvlc, Pointer pointer) {
         if(pointer != null) {
+            // Pointer.getString copies native memory to a Java String
             String result = pointer.getString(0);
             libvlc.libvlc_free(pointer);
             return result;
@@ -61,12 +73,15 @@ public final class NativeString {
 
     /**
      * Copy a String from a native string pointer, without freeing the native pointer.
+     * <p>
+     * Use this method if the native string type is "const char*".
      *
      * @param pointer pointer to native string, may be <code>null</code>
      * @return string, or <code>null</code> if the pointer was <code>null</code>
      */
     public static final String copyNativeString(Pointer pointer) {
         if(pointer != null) {
+            // Pointer.getString copies native memory to a Java String
             return pointer.getString(0);
         }
         else {

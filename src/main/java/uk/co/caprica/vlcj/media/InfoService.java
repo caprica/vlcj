@@ -16,8 +16,7 @@ public class InfoService extends BaseService {
     }
 
     public String mrl() {
-        // The returned string must be freed // this has been checked for this method against VLC source, but i think i'd like to annotate the native method in LibVlc.java ? FIXME
-        return NativeString.getNativeString(libvlc, libvlc.libvlc_media_get_mrl(mediaInstance));
+        return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_media_get_mrl(mediaInstance));
     }
 
     public libvlc_media_type_e type() {

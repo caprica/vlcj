@@ -47,7 +47,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      * @return identifier of the current audio output device, or <code>null</code> if not available
      */
     public String getAudioOutputDevice() {
-        return NativeString.getNativeString(libvlc, libvlc.libvlc_audio_output_device_get(mediaPlayerInstance));
+        return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_audio_output_device_get(mediaPlayerInstance));
     }
 
     /**

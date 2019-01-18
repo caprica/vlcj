@@ -1,7 +1,6 @@
 package uk.co.caprica.vlcj.player.base;
 
 import com.sun.jna.ptr.IntByReference;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
@@ -169,7 +168,7 @@ public final class VideoService extends BaseService {
      * @return aspect ratio
      */
     public String getAspectRatio() {
-        return NativeString.getNativeString(libvlc, libvlc.libvlc_video_get_aspect_ratio(mediaPlayerInstance));
+        return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_video_get_aspect_ratio(mediaPlayerInstance));
     }
 
     /**
@@ -205,7 +204,7 @@ public final class VideoService extends BaseService {
      * @return crop geometry
      */
     public String getCropGeometry() {
-        return NativeString.getNativeString(libvlc, libvlc.libvlc_video_get_crop_geometry(mediaPlayerInstance));
+        return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_video_get_crop_geometry(mediaPlayerInstance));
     }
 
     /**
