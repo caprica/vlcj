@@ -126,7 +126,6 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         "--video-title=vlcj video output",
         "--no-snapshot-preview",
         "--quiet-synchro",
-        "--sub-filter=logo:marq",
         "--intf=dummy"
     };
 

@@ -80,7 +80,6 @@ public class DirectMediaPlayerComponent extends DirectMediaPlayerComponentBase {
     static final String[] DEFAULT_FACTORY_ARGUMENTS = {
         "--no-snapshot-preview",
         "--quiet-synchro",
-        "--sub-filter=logo:marq",
         "--intf=dummy"
     };
 
