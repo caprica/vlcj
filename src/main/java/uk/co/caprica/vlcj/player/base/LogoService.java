@@ -27,6 +27,15 @@ public final class LogoService extends BaseService {
     }
 
     /**
+     *
+     *
+     * @param duration
+     */
+    public void setLogoDuration(int duration) {
+        libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_delay.intValue(), duration);
+    }
+
+    /**
      * Set the logo opacity.
      *
      * @param opacity opacity in the range 0 to 255 where 255 is fully opaque
@@ -66,7 +75,34 @@ public final class LogoService extends BaseService {
     }
 
     /**
+     *
+     *
+     * <p>
+     * Note that with current versions of VLC you may need to set a repeat count one more than you might expect - this
+     * is because on the last loop iteration it appears to stop after only the first logo has been displayed.
+     *
+     * @param repeat number of times to repeat the logos, or -1 for indefinite, or 0 to disable looping
+     */
+    public void setLogoRepeat(int repeat) {
+        libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_repeat.intValue(), repeat);
+    }
+
+    /**
      * Set the logo file.
+     * <p>
+     * It is possible to set multiple logo files here, each with their own optional delay and opacity.
+     * <p>
+     * The format of the string is:
+     * <pre>
+     *     filename1[,delay1[,opacity1];filename2[,delay2[,opacity2];filename3[,delay3[,opacity3];
+     * </pre>
+     * Since the delay and opacity values are optional, simply leave them out but make sure to include the expected
+     * number of commas.
+     * <p>
+     * When an optional value is not present, a default will be used as per {@link #setLogoOpacity(int)} amd
+     * {@link #setLogoDuration(int)}.
+     * <p>
+     * In addition, {@link #setLogoRepeat(int)} can be used to loop the sequence of logos.
      *
      * @param logoFile logo file name
      */

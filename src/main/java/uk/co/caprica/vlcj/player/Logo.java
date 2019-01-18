@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.player;
 
 import java.awt.image.RenderedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
 import uk.co.caprica.vlcj.enums.LogoPosition;
@@ -54,6 +56,11 @@ public final class Logo {
     private Float floatOpacity;
 
     /**
+     * Duration for the logo, milliseconds.
+     */
+    private Integer duration;
+
+    /**
      * X position, in video co-ordinates.
      */
     private Integer x;
@@ -69,11 +76,16 @@ public final class Logo {
     private LogoPosition position;
 
     /**
+     * Number of times to repeat the sequence of logos, or -1 for indefinite, or 0 for no looping.
+     */
+    private Integer repeat;
+
+    /**
      * File name.
      * <p>
      * May include extended syntax, see {@link #file(String)}.
      */
-    private String file;
+    private List<String> files = new ArrayList<String>();
 
     /**
      * Logo image.
@@ -98,6 +110,11 @@ public final class Logo {
      * Private constructor prevents direct instantiation by others.
      */
     private Logo() {
+    }
+
+    public Logo duration(int duration) {
+        this.duration = duration;
+        return this;
     }
 
     /**
@@ -147,6 +164,20 @@ public final class Logo {
     }
 
     /**
+     *
+     * <p>
+     * Note that with current versions of VLC you may need to set a repeat count one more than you might expect - this
+     * is because on the last loop iteration it appears to stop after only the first logo has been displayed.
+     *
+     * @param repeat number of times to repeat the sequence of logos, or -1 for indefinite, or 0 for no looping.
+     * @return this
+     */
+    public Logo repeat(int repeat) {
+        this.repeat = repeat;
+        return this;
+    }
+
+    /**
      * Apply the logo file.
      * <p>
      * It is possible to simply specify the name of the file, or the extended syntax supported by
@@ -157,8 +188,11 @@ public final class Logo {
      * @return this
      */
     public Logo file(String file) {
-        this.file = file;
-        return this;
+        return addFileSpec(file);
+    }
+
+    public Logo file(String file, Integer duration, Integer opacity) {
+        return addFileSpec(String.format("%s,%s,%s", file, duration == null ? "" : duration, opacity == null ? "" : opacity));
     }
 
     /**
@@ -168,8 +202,11 @@ public final class Logo {
      * @return this
      */
     public Logo file(File file) {
-        this.file = file.getAbsolutePath();
-        return this;
+        return file(file.getAbsolutePath());
+    }
+
+    public Logo file(File file, Integer duration, Integer opacity) {
+        return file(file.getAbsolutePath(), duration, opacity);
     }
 
     /**
@@ -214,6 +251,10 @@ public final class Logo {
     public Logo disable() {
         this.enable = false;
         return this;
+    }
+
+    public Integer getDuration() {
+        return duration;
     }
 
     /**
@@ -267,7 +308,7 @@ public final class Logo {
      * @return file name
      */
     public String getFile() {
-        return file;
+        return convertFileSpecs();
     }
 
     /**
@@ -296,27 +337,49 @@ public final class Logo {
      * @param mediaPlayer media player
      */
     public void apply(MediaPlayer mediaPlayer) {
-        if(intOpacity != null) {
+        if (duration != null) {
+            mediaPlayer.logo().setLogoDuration(duration);
+        }
+        if (intOpacity != null) {
             mediaPlayer.logo().setLogoOpacity(intOpacity);
         }
-        if(floatOpacity != null) {
+        if (floatOpacity != null) {
             mediaPlayer.logo().setLogoOpacity(floatOpacity);
         }
-        if(x != null && y != null && x >= 0 && y >= 0) {
+        if (x != null && y != null && x >= 0 && y >= 0) {
             mediaPlayer.logo().setLogoLocation(x, y);
         }
-        if(position != null) {
+        if (position != null) {
             mediaPlayer.logo().setLogoPosition(position);
         }
-        if(file != null) {
-            mediaPlayer.logo().setLogoFile(file);
+        if (repeat != null) {
+            mediaPlayer.logo().setLogoRepeat(repeat);
         }
-        if(image != null) {
+        if (!files.isEmpty()) {
+            mediaPlayer.logo().setLogoFile(convertFileSpecs());
+        }
+        if (image != null) {
             mediaPlayer.logo().setLogoImage(image);
         }
-        if(enable) {
+        if (enable) {
             mediaPlayer.logo().enableLogo(true);
         }
+    }
+
+    private Logo addFileSpec(String fileSpec) {
+        this.files.add(fileSpec);
+        return this;
+    }
+
+    private String convertFileSpecs() {
+        StringBuilder sb = new StringBuilder(files.size() * 40);
+        for (String fileSpec : files) {
+            sb.append(fileSpec).append(";");
+        }
+        if (sb.charAt(sb.length() - 1) == ';') {
+            sb.setLength(sb.length() - 1);
+        }
+        return sb.toString();
     }
 
     @Override
@@ -328,7 +391,7 @@ public final class Logo {
             .append("x=").append(x).append(',')
             .append("y=").append(y).append(',')
             .append("position=").append(position).append(',')
-            .append("file=").append(file).append(',')
+            .append("files=").append(files).append(',')
             .append("image=").append(image).append(',')
             .append("enable=").append(enable).append(']')
             .toString();
