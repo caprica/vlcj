@@ -115,12 +115,15 @@ public class WindowSurfaceTest {
     }
 
     private void syncVideoSurface() {
-        // We re-size and re-position to the reference panel contained within the frame rather than the frame itself,
-        // this makes it easy to add other UI elements without worrying about calculating the correct size and position
-        // for the video surface ourselves - the referencePanel is in effect a "proxy" for the video surface
-        referencePanel.getBounds(bounds);
-        bounds.setLocation(referencePanel.getLocationOnScreen());
-        window.setBounds(bounds);
+        if (frame.isVisible()) {
+            // We re-size and re-position to the reference panel contained within the frame rather than the frame
+            // itself, this makes it easy to add other UI elements without worrying about calculating the correct size
+            // and position for the video surface ourselves - the referencePanel is in effect a "proxy" for the video
+            // surface
+            referencePanel.getBounds(bounds);
+            bounds.setLocation(referencePanel.getLocationOnScreen());
+            window.setBounds(bounds);
+        }
     }
 
     private void release() {
