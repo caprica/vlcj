@@ -1072,7 +1072,7 @@ public interface LibVlc extends Library {
      * and is mutually exclusive with libvlc_audio_set_format_callbacks().
      *
      * @param mp the media player
-     * @param format a four-characters string identifying the sample format (e.g. "S16N" or "FL32")
+     * @param format a four-characters string identifying the sample format (e.g. "S16N" or "f32l")
      * @param rate sample rate (expressed in Hz)
      * @param channels channels count
      * @since LibVLC 2.0.0 or later
