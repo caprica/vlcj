@@ -8,10 +8,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 /**
  * This test uses a Window for the video surface.
@@ -67,9 +64,35 @@ public class WindowSurfaceTest {
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout());
-        buttonsPanel.add(new JButton("Play"));
-        buttonsPanel.add(new JButton("Pause"));
-        buttonsPanel.add(new JButton("Stop"));
+
+        JButton playButton = new JButton("Play");
+        JButton pauseButton = new JButton("Pause");
+        JButton stopButton = new JButton("Stop");
+
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mediaPlayer.controls().play();
+            }
+        });
+
+        pauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mediaPlayer.controls().pause();
+            }
+        });
+
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mediaPlayer.controls().stop();
+            }
+        });
+
+        buttonsPanel.add(playButton);
+        buttonsPanel.add(pauseButton);
+        buttonsPanel.add(stopButton);
 
         frame.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
 
@@ -111,7 +134,6 @@ public class WindowSurfaceTest {
 
         media = factory.media().newMedia(args[0]);
         mediaPlayer.media().set(media);
-        mediaPlayer.controls().play();
     }
 
     private void syncVideoSurface() {
@@ -127,6 +149,7 @@ public class WindowSurfaceTest {
     }
 
     private void release() {
+        mediaPlayer.controls().stop();
         mediaPlayer.release();
         media.release();
         factory.release();
