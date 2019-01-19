@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.runtime.osx.OsxComponentId;
 
 import java.awt.*;
 
@@ -60,11 +62,19 @@ public class ComponentVideoSurface extends VideoSurface {
     @Override
     public void attach(LibVlc libvlc, MediaPlayer mediaPlayer) {
         if(component.isDisplayable()) {
-            long componentId = Native.getComponentID(component);
+            long componentId = getComponentId(component);
             videoSurfaceAdapter.attach(libvlc, mediaPlayer, componentId);
         }
         else {
             throw new IllegalStateException("The video surface component must be displayable");
+        }
+    }
+
+    private long getComponentId(Component component) {
+        if (!RuntimeUtil.isMac()) {
+            return Native.getComponentID(component);
+        } else {
+            return OsxComponentId.getOsxComponentId(component);
         }
     }
 
