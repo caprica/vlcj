@@ -117,12 +117,14 @@ public final class ControlsService extends BaseService {
      * Set the video play rate.
      * <p>
      * Some media protocols are not able to change the rate.
+     * <p>
+     * Note that a successful return does not guarantee the rate was changed (depending on media protocol).
      *
      * @param rate rate, where 1.0 is normal speed, 0.5 is half speed, 2.0 is double speed and so on
-     * @return -1 on error, 0 on success
+     * @return <code>true</code> if successful; <code>false</code> otherwise
      */
-    public int setRate(float rate) {
-        return libvlc.libvlc_media_player_set_rate(mediaPlayerInstance, rate);
+    public boolean setRate(float rate) {
+        return libvlc.libvlc_media_player_set_rate(mediaPlayerInstance, rate) != -1;
     }
 
 }
