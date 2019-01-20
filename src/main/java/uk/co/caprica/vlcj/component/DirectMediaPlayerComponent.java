@@ -19,17 +19,11 @@
 
 package uk.co.caprica.vlcj.component;
 
-import java.util.Arrays;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
-import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
 
 import com.sun.jna.Memory;
 
@@ -77,11 +71,7 @@ public class DirectMediaPlayerComponent extends DirectMediaPlayerComponentBase {
      * A sub-class has access to these default arguments so new ones could be merged with these if
      * required.
      */
-    static final String[] DEFAULT_FACTORY_ARGUMENTS = {
-        "--no-snapshot-preview",
-        "--quiet-synchro",
-        "--intf=dummy"
-    };
+    static final String[] DEFAULT_FACTORY_ARGUMENTS = MediaPlayerComponentDefaults.DIRECT_MEDIA_PLAYER_ARGS;
 
     private final boolean ownFactory;
 

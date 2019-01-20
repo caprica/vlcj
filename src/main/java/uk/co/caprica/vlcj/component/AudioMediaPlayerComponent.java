@@ -19,13 +19,7 @@
 
 package uk.co.caprica.vlcj.component;
 
-import java.util.Arrays;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 
 /**
@@ -82,10 +76,7 @@ public class AudioMediaPlayerComponent extends AudioMediaPlayerComponentBase imp
      * A sub-class has access to these default arguments so new ones could be merged with these if
      * required.
      */
-    static final String[] DEFAULT_FACTORY_ARGUMENTS = {
-        "--quiet-synchro",
-        "--intf=dummy"
-    };
+    static final String[] DEFAULT_FACTORY_ARGUMENTS = MediaPlayerComponentDefaults.AUDIO_MEDIA_PLAYER_ARGS;
 
     private final boolean ownFactory;
 

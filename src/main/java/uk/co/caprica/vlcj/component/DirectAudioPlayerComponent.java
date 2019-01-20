@@ -36,10 +36,7 @@ public class DirectAudioPlayerComponent extends DirectAudioPlayerComponentBase i
      * A sub-class has access to these default arguments so new ones could be merged with these if
      * required.
      */
-    static final String[] DEFAULT_FACTORY_ARGUMENTS = {
-        "--quiet-synchro",
-        "--intf=dummy"
-    };
+    static final String[] DEFAULT_FACTORY_ARGUMENTS = MediaPlayerComponentDefaults.DIRECT_AUDIO_PLAYER_ARGS;
 
     private final boolean ownFactory;
 

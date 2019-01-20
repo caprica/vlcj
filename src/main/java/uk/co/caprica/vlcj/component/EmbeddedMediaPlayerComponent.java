@@ -122,12 +122,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * A sub-class has access to these default arguments so new ones could be merged with these if
      * required.
      */
-    static final String[] DEFAULT_FACTORY_ARGUMENTS = {
-        "--video-title=vlcj video output",
-        "--no-snapshot-preview",
-        "--quiet-synchro",
-        "--intf=dummy"
-    };
+    static final String[] DEFAULT_FACTORY_ARGUMENTS = MediaPlayerComponentDefaults.EMBEDDED_MEDIA_PLAYER_ARGS;
 
     /**
      *
