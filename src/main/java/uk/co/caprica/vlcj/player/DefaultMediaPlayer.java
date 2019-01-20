@@ -1778,7 +1778,8 @@ public abstract class DefaultMediaPlayer extends AbstractMediaPlayer implements 
     @Override
     public void setHue(int hue) {
         logger.debug("setHue(hue={})", hue);
-        libvlc.libvlc_video_set_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue(), hue);
+        // The native implementation changed for hue, it is now a float type with a range of -180 to 180
+        libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue(), hue - 180);
     }
 
     @Override
