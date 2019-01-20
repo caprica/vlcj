@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.events.media;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.media_subitemtree_added;
@@ -28,8 +29,8 @@ final class MediaSubItemTreeAddedEvent extends MediaEvent {
 
     private final libvlc_media_t subItem;
 
-    MediaSubItemTreeAddedEvent(Media media, libvlc_event_t event) {
-        super(media);
+    MediaSubItemTreeAddedEvent(LibVlc libvlc, Media media, libvlc_event_t event) {
+        super(libvlc, media);
         this.subItem = ((media_subitemtree_added) event.u.getTypedValue(media_subitemtree_added.class)).item;
     }
 

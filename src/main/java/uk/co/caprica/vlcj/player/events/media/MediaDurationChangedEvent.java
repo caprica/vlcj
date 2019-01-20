@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.events.media;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
 import uk.co.caprica.vlcj.media.Media;
@@ -27,8 +28,8 @@ final class MediaDurationChangedEvent extends MediaEvent {
 
     private final long newDuration;
 
-    MediaDurationChangedEvent(Media media, libvlc_event_t event) {
-        super(media);
+    MediaDurationChangedEvent(LibVlc libvlc, Media media, libvlc_event_t event) {
+        super(libvlc, media);
         this.newDuration = ((media_duration_changed) event.u.getTypedValue(media_duration_changed.class)).new_duration;
     }
 

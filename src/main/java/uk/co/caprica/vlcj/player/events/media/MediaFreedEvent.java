@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.events.media;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.media.Media;
 
 /**
@@ -26,8 +27,8 @@ import uk.co.caprica.vlcj.media.Media;
  */
 final class MediaFreedEvent extends MediaEvent {
 
-    MediaFreedEvent(Media media) {
-        super(media);
+    MediaFreedEvent(LibVlc libvlc, Media media) {
+        super(libvlc, media);
     }
 
     @Override

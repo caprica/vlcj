@@ -101,7 +101,7 @@ public class EventService extends BaseService {
 
         @Override
         public void callback(libvlc_event_t event, Pointer userData) {
-            raiseEvent(MediaEventFactory.createEvent(media, event));
+            raiseEvent(MediaEventFactory.createEvent(libvlc, media, event));
         }
     }
 

@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.events.media;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.media_meta_changed;
 import uk.co.caprica.vlcj.media.Media;
@@ -27,8 +28,8 @@ final class MediaMetaChangedEvent extends MediaEvent {
 
     private final int metaType;
 
-    MediaMetaChangedEvent(Media media, libvlc_event_t event) {
-        super(media);
+    MediaMetaChangedEvent(LibVlc libvlc, Media media, libvlc_event_t event) {
+        super(libvlc, media);
         this.metaType = ((media_meta_changed) event.u.getTypedValue(media_meta_changed.class)).meta_type;
     }
 
