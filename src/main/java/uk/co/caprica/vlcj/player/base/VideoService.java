@@ -91,10 +91,10 @@ public final class VideoService extends BaseService {
     /**
      * Get the current video hue.
      *
-     * @return hue, in the range from 0 to 360
+     * @return hue, in the range from -180.0 to 180.0
      */
-    public int getHue() {
-        return libvlc.libvlc_video_get_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue());
+    public float getHue() {
+        return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue());
     }
 
     /**
@@ -102,10 +102,10 @@ public final class VideoService extends BaseService {
      * <p>
      * Video adjustments must be enabled for this to have any effect.
      *
-     * @param hue hue value, in the range from 0 to 360
+     * @param hue hue value, in the range from -180.0 to 180.0
      */
-    public void setHue(int hue) {
-        libvlc.libvlc_video_set_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue(), hue);
+    public void setHue(float hue) {
+        libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue(), hue);
     }
 
     /**

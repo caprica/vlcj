@@ -33,8 +33,8 @@ public interface LibVlcConst {
     float MIN_BRIGHTNESS = 0.0f;
     float MAX_BRIGHTNESS = 2.0f;
 
-    int MIN_HUE = 0;
-    int MAX_HUE = 360;
+    float MIN_HUE = -180;
+    float MAX_HUE = 180;
 
     float MIN_SATURATION = 0.0f;
     float MAX_SATURATION = 3.0f;

@@ -97,8 +97,8 @@ public class PlayerVideoAdjustPanel extends JPanel {
         hueLabel = new JLabel("Hue");
         hueSlider = new JSlider();
         hueSlider.setOrientation(JSlider.HORIZONTAL);
-        hueSlider.setMinimum(LibVlcConst.MIN_HUE);
-        hueSlider.setMaximum(LibVlcConst.MAX_HUE);
+        hueSlider.setMinimum(Math.round(LibVlcConst.MIN_HUE * 100.0f));
+        hueSlider.setMaximum(Math.round(LibVlcConst.MAX_HUE * 100.0f));
         hueSlider.setPreferredSize(new Dimension(100, 40));
         hueSlider.setToolTipText("Change ");
         hueSlider.setEnabled(false);
@@ -123,7 +123,7 @@ public class PlayerVideoAdjustPanel extends JPanel {
 
         contrastSlider.setValue(Math.round(mediaPlayer.video().getBrightness() * 100.0f));
         brightnessSlider.setValue(Math.round(mediaPlayer.video().getContrast() * 100.0f));
-        hueSlider.setValue(mediaPlayer.video().getHue());
+        hueSlider.setValue(Math.round(mediaPlayer.video().getHue() * 100.0f));
         saturationSlider.setValue(Math.round(mediaPlayer.video().getSaturation() * 100.0f));
         gammaSlider.setValue(Math.round(mediaPlayer.video().getGamma() * 100.0f));
     }
@@ -189,7 +189,7 @@ public class PlayerVideoAdjustPanel extends JPanel {
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider)e.getSource();
                 // if(!source.getValueIsAdjusting()) {
-                mediaPlayer.video().setHue(source.getValue());
+                mediaPlayer.video().setHue(source.getValue() / 100.0f);
                 // }
             }
         });
