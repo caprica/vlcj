@@ -145,6 +145,8 @@ public final class VideoService extends BaseService {
      * Video adjustments must be enabled for this to have any effect.
      * <p>
      * <strong>Requires vlc 1.1.1 or later.</strong>
+     * <p>
+     * Changing gamma may not be supported by all video outputs, e.g. vdpau
      *
      * @param gamma gamma, in the range from 0.01 to 10.0
      */
