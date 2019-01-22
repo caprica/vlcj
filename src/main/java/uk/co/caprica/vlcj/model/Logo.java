@@ -17,16 +17,15 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player;
+package uk.co.caprica.vlcj.model;
+
+import uk.co.caprica.vlcj.enums.LogoPosition;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
-import uk.co.caprica.vlcj.enums.LogoPosition;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Builder for a Logo.
@@ -181,8 +180,7 @@ public final class Logo {
      * Apply the logo file.
      * <p>
      * It is possible to simply specify the name of the file, or the extended syntax supported by
-     * libvlc - e.g. "file,d,t;file,d,t;...", see
-     * {@link libvlc_video_logo_option_t#FILE}.
+     * libvlc - e.g. "file,d,t;file,d,t;...", see {@link #file(String, Integer, Integer)}.
      *
      * @param file name of the file
      * @return this

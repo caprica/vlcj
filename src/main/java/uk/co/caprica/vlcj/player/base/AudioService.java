@@ -4,8 +4,9 @@ import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.model.AudioDevice;
+import uk.co.caprica.vlcj.model.Equalizer;
+import uk.co.caprica.vlcj.model.EqualizerListener;
 import uk.co.caprica.vlcj.model.TrackDescription;
-import uk.co.caprica.vlcj.player.*;
 
 import java.util.ArrayList;
 import java.util.List;

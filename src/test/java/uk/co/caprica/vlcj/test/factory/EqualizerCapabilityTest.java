@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.test.factory;
 import java.util.List;
 import java.util.Map;
 
-import uk.co.caprica.vlcj.player.Equalizer;
+import uk.co.caprica.vlcj.model.Equalizer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 

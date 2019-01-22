@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.logo;
 
-import static uk.co.caprica.vlcj.player.Logo.logo;
+import static uk.co.caprica.vlcj.model.Logo.logo;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

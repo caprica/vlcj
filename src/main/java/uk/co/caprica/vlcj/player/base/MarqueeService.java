@@ -2,7 +2,7 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.enums.MarqueePosition;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
-import uk.co.caprica.vlcj.player.Marquee;
+import uk.co.caprica.vlcj.model.Marquee;
 
 import java.awt.*;
 
