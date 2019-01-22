@@ -148,7 +148,7 @@ public class TestMultiPlayer extends VlcjTest {
             public void run() {
                 for(int i = 0; i < medias.length; i ++ ) {
                     players.get(i).mediaPlayer().videoSurface().setVideoSurface(factory.videoSurfaces().newVideoSurface(players.get(i).videoSurface()));
-                    players.get(i).mediaPlayer().media().set(factory.media().newMedia((medias[i])));
+                    players.get(i).mediaPlayer().media().startMedia(medias[i]);
                 }
 
                 // There is a race condition somewhere when invoking libvlc_media_player_play()

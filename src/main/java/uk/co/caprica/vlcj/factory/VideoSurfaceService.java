@@ -46,6 +46,7 @@ public final class VideoSurfaceService extends BaseService {
      * @return video surface
      */
     public ComponentVideoSurface newVideoSurface(Component component) {
+        // FIXME common adapter code
         VideoSurfaceAdapter videoSurfaceAdapter;
         if (RuntimeUtil.isNix()) {
             videoSurfaceAdapter = new LinuxVideoSurfaceAdapter();
@@ -66,6 +67,7 @@ public final class VideoSurfaceService extends BaseService {
      * @return video surface
      */
     public ComponentIdVideoSurface newVideoSurface(long componentId) {
+        // FIXME common adapter code
         VideoSurfaceAdapter videoSurfaceAdapter;
         if(RuntimeUtil.isNix()) {
             videoSurfaceAdapter = new LinuxVideoSurfaceAdapter();

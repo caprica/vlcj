@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.enums.TrackType;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.MediaResourceLocator;
 import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
@@ -42,14 +43,8 @@ public final class MediaService extends BaseService {
      * @return
      */
     // FIXME rename fromMrl or forMrl? or just from(...)
-    public Media newMedia(String mrl) {
-        mrl = MediaResourceLocator.encodeMrl(mrl);
-        libvlc_media_t media = MediaResourceLocator.isLocation(mrl) ? libvlc.libvlc_media_new_location(instance, mrl) : libvlc.libvlc_media_new_path(instance, mrl);
-        if (media != null) {
-            return new Media(libvlc, media);
-        } else {
-            return null;
-        }
+    public Media newMedia(String mrl, String... options) {
+        return MediaFactory.newMedia(libvlc, instance, mrl, options);
     }
 
     /**
@@ -63,18 +58,7 @@ public final class MediaService extends BaseService {
      */
     // FIXME rename forCallbacks? or just from(...)
     public Media newMedia(CallbackMedia callbackMedia) {
-        libvlc_media_t media = libvlc.libvlc_media_new_callbacks(instance,
-            callbackMedia.getOpen(),
-            callbackMedia.getRead(),
-            callbackMedia.getSeek(),
-            callbackMedia.getClose(),
-            callbackMedia.getOpaque()
-        );
-        if (media != null) {
-            return new Media(libvlc, media);
-        } else {
-            return null;
-        }
+        return MediaFactory.newMedia(libvlc, instance, callbackMedia);
     }
 
     /**

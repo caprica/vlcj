@@ -19,9 +19,12 @@
 
 package uk.co.caprica.vlcj.test.info;
 
+import uk.co.caprica.vlcj.enums.MediaParsedStatus;
+import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.player.*;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.events.media.MediaEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -40,31 +43,28 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class MediaInfoTest extends VlcjTest {
 
     public static void main(String[] args) {
-        args = new String[] {"/disks/big/video/dvd-iso/Inception.iso"};
-
         if(args.length != 1) {
             System.out.println("Specify an MRL");
             System.exit(1);
         }
 
         MediaPlayerFactory factory = new MediaPlayerFactory();
-        MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
+        final MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
 
         mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void mediaPlayerReady(MediaPlayer mediaPlayer) {
-//                System.out.println("     Track Information: " + mediaPlayer.getTrackInfo());
+                System.out.println("MEDIA PLAYER READY...");
+                System.out.println("     Track Information: " + mediaPlayer.media().get().info().tracks());
                 System.out.println("    Title Descriptions: " + mediaPlayer.titles().getTitleDescriptions());
-//                System.out.println("    Video Descriptions: " + mediaPlayer.video().getVideoDescriptions());
-//                System.out.println("    Audio Descriptions: " + mediaPlayer.audio().getAudioDescriptions());
+                System.out.println("    Video Descriptions: " + mediaPlayer.video().getVideoDescriptions());
+                System.out.println("    Audio Descriptions: " + mediaPlayer.audio().getAudioDescriptions());
                 System.out.println("Chapter Descriptions: " + mediaPlayer.chapters().getAllChapterDescriptions());
+                System.out.println();
             }
         });
 
-        mediaPlayer.media().set(factory.media().newMedia(args[0]));
-
-        mediaPlayer.media().get().parsing().parse();
-
+        mediaPlayer.media().prepareMedia(args[0]);
         mediaPlayer.controls().start();
 
         try {

@@ -43,8 +43,6 @@ public class Win32FullScreenPlayerTest extends VlcjTest {
 
     private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 
-    private final Media media;
-
     public static void main(String[] args) {
         if(args.length != 1) {
             System.err.println("Specify an MRL to play");
@@ -68,7 +66,6 @@ public class Win32FullScreenPlayerTest extends VlcjTest {
             public void windowClosing(WindowEvent e) {
                 mediaPlayerComponent.getMediaPlayer().controls().stop();
                 mediaPlayerComponent.release();
-                media.release();
             }
         });
 
@@ -77,14 +74,11 @@ public class Win32FullScreenPlayerTest extends VlcjTest {
                 .withFullScreenStrategy(new Win32FullScreenStrategy(frame))
                 .embeddedMediaPlayerComponent();
 
-        media = mediaPlayerComponent.getMediaPlayerFactory().media().newMedia(mrl);
-
         frame.setContentPane(mediaPlayerComponent);
 
         frame.setVisible(true);
 
-        mediaPlayerComponent.getMediaPlayer().media().set(media);
-        mediaPlayerComponent.getMediaPlayer().controls().play();
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
         mediaPlayerComponent.getMediaPlayer().fullScreen().setFullScreen(true);
     }
 

@@ -44,8 +44,6 @@ public class XFullScreenPlayerTest extends VlcjTest {
 
     private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 
-    private final Media media;
-
     public static void main(String[] args) {
         if(args.length != 1) {
             System.err.println("Specify an MRL to play");
@@ -69,7 +67,6 @@ public class XFullScreenPlayerTest extends VlcjTest {
             public void windowClosing(WindowEvent e) {
                 mediaPlayerComponent.getMediaPlayer().controls().stop();
                 mediaPlayerComponent.release();
-                media.release();
             }
         });
 
@@ -78,14 +75,11 @@ public class XFullScreenPlayerTest extends VlcjTest {
                 .withFullScreenStrategy(new XFullScreenStrategy(frame))
                 .embeddedMediaPlayerComponent();
 
-        media = mediaPlayerComponent.getMediaPlayerFactory().media().newMedia(mrl);
-
         frame.setContentPane(mediaPlayerComponent);
 
         frame.setVisible(true);
 
-        mediaPlayerComponent.getMediaPlayer().media().set(media);
-        mediaPlayerComponent.getMediaPlayer().controls().play();
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
         mediaPlayerComponent.getMediaPlayer().fullScreen().setFullScreen(true);
     }
 

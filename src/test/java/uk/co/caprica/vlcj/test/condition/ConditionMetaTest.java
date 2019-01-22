@@ -79,8 +79,7 @@ public class ConditionMetaTest extends VlcjTest {
             @Override
             protected boolean onBefore() {
                 // Some media, such as mpg, must be played before all meta data (e.g. duration) is available
-                mediaPlayer.media().set(factory.media().newMedia(mrl)); // "start" waits until the media is playing before returning
-                mediaPlayer.controls().start();
+                mediaPlayer.media().startMedia(mrl); // "start" waits until the media is playing before returning
                 mediaPlayer.media().get().parsing().parse(); // asynchronous invocation
                 return true;
             }

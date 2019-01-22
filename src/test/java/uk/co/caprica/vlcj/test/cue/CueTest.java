@@ -49,8 +49,6 @@ public class CueTest extends VlcjTest {
 
         player.getMediaPlayer().subItems().setPlaySubItems(true);
 
-        player.getMediaPlayer().media().set(player.getMediaPlayerFactory().media().newMedia(args[0]));
-
         player.getMediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 
             @Override
@@ -69,7 +67,7 @@ public class CueTest extends VlcjTest {
         // media player receives a "finished" event
         System.out.println("before play");
 
-        player.getMediaPlayer().controls().play();
+        player.getMediaPlayer().media().playMedia(args[0]);
 
         System.out.println("played");
 

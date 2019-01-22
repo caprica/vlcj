@@ -47,8 +47,6 @@ public class WindowSurfaceTest {
 
     private VideoSurface videoSurface;
 
-    private Media media;
-
     private final Rectangle bounds = new Rectangle();
 
     private JFrame frame;
@@ -151,8 +149,7 @@ public class WindowSurfaceTest {
         mediaPlayer.marquee().setMarqueeLocation(10, 10);
         mediaPlayer.marquee().enableMarquee(true);
 
-        media = factory.media().newMedia(args[0]);
-        mediaPlayer.media().set(media);
+        mediaPlayer.media().prepareMedia(args[0]);
     }
 
     private void syncVideoSurface() {
@@ -170,7 +167,6 @@ public class WindowSurfaceTest {
     private void release() {
         mediaPlayer.controls().stop();
         mediaPlayer.release();
-        media.release();
         factory.release();
     }
 

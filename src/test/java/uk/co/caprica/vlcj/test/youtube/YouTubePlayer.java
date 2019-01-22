@@ -180,11 +180,9 @@ public class YouTubePlayer extends VlcjTest {
     }
 
     private void play() {
-        final Media media = factory.media().newMedia(urlTextField.getText());
-        mediaPlayer.media().set(media);
+        mediaPlayer.media().playMedia(urlTextField.getText());
         System.out.println(mediaPlayer.media().get().info().mrl());
         System.out.println(mediaPlayer.media().get().info().type());
-        mediaPlayer.controls().play();
     }
 
     private void exit(int value) {

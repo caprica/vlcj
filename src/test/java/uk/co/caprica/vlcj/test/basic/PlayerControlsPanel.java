@@ -381,8 +381,7 @@ public class PlayerControlsPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.overlay().enableOverlay(false);
                 if(JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(PlayerControlsPanel.this)) {
-                    mediaPlayer.media().set(factory.media().newMedia(fileChooser.getSelectedFile().getAbsolutePath()));
-                    mediaPlayer.controls().play();
+                    mediaPlayer.media().playMedia(fileChooser.getSelectedFile().getAbsolutePath());
                 }
                 mediaPlayer.overlay().enableOverlay(true);
             }
