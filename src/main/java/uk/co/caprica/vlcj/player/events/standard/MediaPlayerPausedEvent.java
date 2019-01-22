@@ -21,12 +21,11 @@ package uk.co.caprica.vlcj.player.events.standard;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
 
 /**
  *
  */
-class MediaPlayerPausedEvent extends MediaPlayerEvent {
+final class MediaPlayerPausedEvent extends MediaPlayerEvent {
 
     /**
      * Create a media player event.

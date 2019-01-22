@@ -17,30 +17,27 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.events.semantic;
+package uk.co.caprica.vlcj.player.events.standard;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.events.*;
+import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
 /**
- * A factory that creates a media player event instance for a semantic event.
- * <p>
- * A "semantic" event is one that has no directly associated native event, but is instead a higher level event (like
- * "media player ready" or "sub-item finished", there is no such native event but it can be inferred and is a useful
- * event).
+ * This is a synthetic event, it is not directly raised by LibVLC.
  */
-public final class SemanticEventFactory {
+final class MediaPlayerReadyEvent extends MediaPlayerEvent {
 
     /**
+     * Create a media player event.
      *
-     * @return
-     * @param mediaPlayer
+     * @param mediaPlayer media player the event relates to
      */
-    public static MediaPlayerEvent createMediaPlayerReadyEvent(MediaPlayer mediaPlayer) {
-        return new MediaPlayerReadyEvent(mediaPlayer);
+    MediaPlayerReadyEvent(MediaPlayer mediaPlayer) {
+        super(mediaPlayer);
     }
 
-    private SemanticEventFactory() {
+    @Override
+    public void notify(MediaPlayerEventListener listener) {
+        listener.mediaPlayerReady(mediaPlayer);
     }
-
 }

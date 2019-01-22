@@ -22,8 +22,6 @@ package uk.co.caprica.vlcj.player.events.standard;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
-import uk.co.caprica.vlcj.player.events.media.*;
 
 /**
  * A factory that creates a media player event instance for a native media player event.
@@ -76,6 +74,10 @@ public final class StandardEventFactory {
 
             default                                : return null;
         }
+    }
+
+    public static MediaPlayerEvent createMediaPlayerReadyEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerReadyEvent(mediaPlayer);
     }
 
     private StandardEventFactory() {

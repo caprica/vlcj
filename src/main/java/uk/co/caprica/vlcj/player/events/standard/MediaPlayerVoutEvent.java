@@ -23,9 +23,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.media_player_vout;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
 
-class MediaPlayerVoutEvent extends MediaPlayerEvent {
+final class MediaPlayerVoutEvent extends MediaPlayerEvent {
 
     private final int newCount;
 

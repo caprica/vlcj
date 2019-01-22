@@ -22,9 +22,6 @@ package uk.co.caprica.vlcj.player.events.renderer;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.events.MediaPlayerEvent;
-import uk.co.caprica.vlcj.player.events.standard.*;
 import uk.co.caprica.vlcj.renderer.RendererDiscoverer;
 
 /**
