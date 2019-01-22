@@ -4,7 +4,7 @@ import com.sun.jna.ptr.IntByReference;
 import uk.co.caprica.vlcj.enums.Position;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
-import uk.co.caprica.vlcj.player.DeinterlaceMode;
+import uk.co.caprica.vlcj.enums.DeinterlaceMode;
 import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.player.TrackDescription;
 import uk.co.caprica.vlcj.player.Viewpoint;
@@ -23,7 +23,7 @@ public final class VideoService extends BaseService {
      * @param deinterlaceMode mode, or null to disable the de-interlace filter
      */
     public void setDeinterlace(DeinterlaceMode deinterlaceMode) {
-        libvlc.libvlc_video_set_deinterlace(mediaPlayerInstance, deinterlaceMode != null ? deinterlaceMode.mode() : null);
+        libvlc.libvlc_video_set_deinterlace(mediaPlayerInstance, deinterlaceMode != null ? deinterlaceMode.stringValue() : null);
     }
 
     /**

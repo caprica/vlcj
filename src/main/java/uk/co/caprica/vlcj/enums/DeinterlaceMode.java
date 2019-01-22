@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,7 +106,7 @@ public enum DeinterlaceMode {
      *
      * @param mode native mode value
      */
-    private DeinterlaceMode(String mode) {
+    DeinterlaceMode(String mode) {
         this.mode = mode;
     }
 
@@ -115,8 +115,8 @@ public enum DeinterlaceMode {
      *
      * @return mode value
      */
-    // FIXME ideally this would  have been value(), not mode()
-    public final String mode() {
+    public final String stringValue() {
         return mode;
     }
+
 }
