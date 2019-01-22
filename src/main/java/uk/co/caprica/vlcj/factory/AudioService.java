@@ -2,8 +2,8 @@ package uk.co.caprica.vlcj.factory;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
-import uk.co.caprica.vlcj.player.AudioDevice;
-import uk.co.caprica.vlcj.player.AudioOutput;
+import uk.co.caprica.vlcj.model.AudioDevice;
+import uk.co.caprica.vlcj.model.AudioOutput;
 import uk.co.caprica.vlcj.binding.NativeString;
 
 import java.util.ArrayList;

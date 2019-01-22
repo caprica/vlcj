@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player;
+package uk.co.caprica.vlcj.model;
 
 import java.util.Iterator;
 import java.util.List;

@@ -42,11 +42,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-import uk.co.caprica.vlcj.player.AudioDevice;
-import uk.co.caprica.vlcj.player.AudioOutput;
+import uk.co.caprica.vlcj.model.AudioDevice;
+import uk.co.caprica.vlcj.model.AudioOutput;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
 

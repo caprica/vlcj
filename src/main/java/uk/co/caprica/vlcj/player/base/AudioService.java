@@ -3,6 +3,8 @@ package uk.co.caprica.vlcj.player.base;
 import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
+import uk.co.caprica.vlcj.model.AudioDevice;
+import uk.co.caprica.vlcj.model.TrackDescription;
 import uk.co.caprica.vlcj.player.*;
 
 import java.util.ArrayList;

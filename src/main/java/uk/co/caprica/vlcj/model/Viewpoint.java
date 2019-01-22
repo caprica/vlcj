@@ -1,4 +1,4 @@
-package uk.co.caprica.vlcj.player;
+package uk.co.caprica.vlcj.model;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;

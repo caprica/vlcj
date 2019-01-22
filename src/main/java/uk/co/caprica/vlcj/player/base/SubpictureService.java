@@ -1,7 +1,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.enums.MediaSlaveType;
-import uk.co.caprica.vlcj.player.TrackDescription;
+import uk.co.caprica.vlcj.model.TrackDescription;
 
 import java.io.File;
 import java.util.List;

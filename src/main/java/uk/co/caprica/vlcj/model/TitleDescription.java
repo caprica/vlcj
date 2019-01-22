@@ -17,24 +17,19 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player;
+package uk.co.caprica.vlcj.model;
 
 import java.io.Serializable;
 
 /**
- * Chapter description.
+ * Title description.
  */
-public class ChapterDescription implements Serializable {
+public class TitleDescription implements Serializable {
 
     /**
      * Serial version.
      */
     private static final long serialVersionUID = 1L;
-
-    /**
-     * Chapter offset (milliseconds).
-     */
-    private final long offset;
 
     /**
      * Chapter duration (milliseconds).
@@ -47,25 +42,21 @@ public class ChapterDescription implements Serializable {
     private final String name;
 
     /**
-     * Create a new chapter description.
-     *
-     * @param offset chapter offset (milliseconds)
-     * @param duration chapter duration (milliseconds)
-     * @param name chapter name
+     * Does the title represent a menu.
      */
-    public ChapterDescription(long offset, long duration, String name) {
-        this.offset = offset;
-        this.duration = duration;
-        this.name = name;
-    }
+    private final boolean menu;
 
     /**
-     * Get the chapter offset.
+     * Create a new title description.
      *
-     * @return offset (milliseconds)
+     * @param duration chapter duration (milliseconds)
+     * @param name chapter name
+     * @param menu <code>true</code> if the title represents a menu; <code>false</code> otherwise
      */
-    public long getOffset() {
-        return offset;
+    public TitleDescription(long duration, String name, boolean menu) {
+        this.duration = duration;
+        this.name = name;
+        this.menu = menu;
     }
 
     /**
@@ -86,13 +77,22 @@ public class ChapterDescription implements Serializable {
         return name;
     }
 
+    /**
+     * Does the title represent a menu.
+     *
+     * @return <code>true</code> if the title represents a menu; <code>false</code> otherwise
+     */
+    public boolean isMenu() {
+        return menu;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(60);
         sb.append(getClass().getSimpleName()).append('[');
-        sb.append("offset=").append(offset).append(',');
         sb.append("duration=").append(duration).append(',');
-        sb.append("name=").append(name).append(']');
+        sb.append("name=").append(name).append(',');
+        sb.append("menu=").append(menu).append(']');
         return sb.toString();
     }
 }

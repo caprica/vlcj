@@ -8,7 +8,7 @@ import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.enums.Multiview;
 import uk.co.caprica.vlcj.enums.TrackType;
-import uk.co.caprica.vlcj.player.*;
+import uk.co.caprica.vlcj.model.*;
 import uk.co.caprica.vlcj.enums.VideoOrientation;
 import uk.co.caprica.vlcj.enums.VideoProjection;
 

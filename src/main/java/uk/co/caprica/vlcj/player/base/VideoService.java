@@ -6,8 +6,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 import uk.co.caprica.vlcj.enums.DeinterlaceMode;
 import uk.co.caprica.vlcj.binding.NativeString;
-import uk.co.caprica.vlcj.player.TrackDescription;
-import uk.co.caprica.vlcj.player.Viewpoint;
+import uk.co.caprica.vlcj.model.TrackDescription;
+import uk.co.caprica.vlcj.model.Viewpoint;
 
 import java.awt.*;
 

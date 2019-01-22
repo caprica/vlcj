@@ -1,7 +1,7 @@
 package uk.co.caprica.vlcj.factory;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
-import uk.co.caprica.vlcj.player.ModuleDescription;
+import uk.co.caprica.vlcj.model.ModuleDescription;
 
 import java.util.ArrayList;
 import java.util.List;

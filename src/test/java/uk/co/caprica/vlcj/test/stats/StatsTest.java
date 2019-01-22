@@ -31,7 +31,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.MediaStatistics;
+import uk.co.caprica.vlcj.model.MediaStatistics;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**

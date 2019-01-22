@@ -1,4 +1,4 @@
-package uk.co.caprica.vlcj.player;
+package uk.co.caprica.vlcj.model;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 

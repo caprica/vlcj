@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
 
 //import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.player.AudioOutput;
+import uk.co.caprica.vlcj.model.AudioOutput;
 import uk.co.caprica.vlcj.player.Equalizer;
 //import uk.co.caprica.vlcj.player.MediaDetails;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;

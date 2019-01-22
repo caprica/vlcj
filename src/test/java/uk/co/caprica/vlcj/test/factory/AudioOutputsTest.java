@@ -21,8 +21,8 @@ package uk.co.caprica.vlcj.test.factory;
 
 import java.util.List;
 
-import uk.co.caprica.vlcj.player.AudioDevice;
-import uk.co.caprica.vlcj.player.AudioOutput;
+import uk.co.caprica.vlcj.model.AudioDevice;
+import uk.co.caprica.vlcj.model.AudioOutput;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 

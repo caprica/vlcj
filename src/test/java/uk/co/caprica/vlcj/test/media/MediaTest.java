@@ -4,7 +4,7 @@ import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaSlave;
-import uk.co.caprica.vlcj.player.TrackInfo;
+import uk.co.caprica.vlcj.model.TrackInfo;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.enums.MediaSlaveType;
