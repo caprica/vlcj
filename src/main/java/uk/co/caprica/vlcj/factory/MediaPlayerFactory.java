@@ -224,6 +224,8 @@ public class MediaPlayerFactory {
      * The factory must not be used again after it has been released.
      */
     public final void release() {
+        onBeforeRelease();
+
         applicationService .release();
         audioService       .release();
         dialogsService     .release();
@@ -236,6 +238,14 @@ public class MediaPlayerFactory {
         videoSurfaceService.release();
 
         libvlc.libvlc_release(this.libvlcInstance);
+
+        onAfterRelease();
+    }
+
+    protected void onBeforeRelease() {
+    }
+
+    protected void onAfterRelease() {
     }
 
     protected final LibVlc libvlc() {
