@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.basic;
 
 import uk.co.caprica.vlcj.binding.LibVlcConst;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
+import uk.co.caprica.vlcj.filefilters.swing.SwingFileFilterFactory;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;

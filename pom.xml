@@ -77,6 +77,7 @@
     <properties>
         <jna.version>5.2.0</jna.version>
         <slf4j.version>1.7.25</slf4j.version>
+        <vlcjFileFilters.version>1.0.0-SNAPSHOT</vlcjFileFilters.version>
         <sonar.exclusions>**/package-info.java,uk/co/caprica/vlcj/binding/**</sonar.exclusions>
         <sonar.language>java</sonar.language>
     </properties>
@@ -101,6 +102,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>uk.co.caprica</groupId>
+            <artifactId>vlcj-file-filters</artifactId>
+            <version>${vlcjFileFilters.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
