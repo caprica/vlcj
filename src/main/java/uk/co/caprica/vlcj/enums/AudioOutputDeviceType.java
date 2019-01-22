@@ -17,26 +17,26 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player;
+package uk.co.caprica.vlcj.enums;
 
 /**
  * Enumeration of audio output device types.
  */
 public enum AudioOutputDeviceType {
 
-    AUDIO_ERROR(-1),
-    AUDIO_MONO(1),
-    AUDIO_STEREO(2),
-    AUDIO_2F2R(4),
-    AUDIO_3F2R(5),
-    AUDIO_5_1(6),
-    AUDIO_6_1(7),
-    AUDIO_7_1(8),
-    AUDIO_SPDIF(10);
+    AUDIO_ERROR (-1),
+    AUDIO_MONO  ( 1),
+    AUDIO_STEREO( 2),
+    AUDIO_2F2R  ( 4),
+    AUDIO_3F2R  ( 5),
+    AUDIO_5_1   ( 6),
+    AUDIO_6_1   ( 7),
+    AUDIO_7_1   ( 8),
+    AUDIO_SPDIF (10);
 
     private final int intValue;
 
-    private AudioOutputDeviceType(int intValue) {
+    AudioOutputDeviceType(int intValue) {
         this.intValue = intValue;
     }
 
@@ -58,4 +58,5 @@ public enum AudioOutputDeviceType {
         }
         return null;
     }
+
 }
