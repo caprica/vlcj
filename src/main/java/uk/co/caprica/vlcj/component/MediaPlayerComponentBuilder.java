@@ -52,8 +52,6 @@ public final class MediaPlayerComponentBuilder implements
     private String[] factoryArgs;
     private String[] extraFactoryArgs;
 
-    private Class<?> type;
-
     private MediaPlayerFactory mediaPlayerFactory;
     private FullScreenStrategy fullScreenStrategy;
     private Component videoSurfaceComponent;
