@@ -19,11 +19,7 @@
 
 package uk.co.caprica.vlcj.player.embedded;
 
-import java.awt.Window;
-import java.awt.image.BufferedImage;
-
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 
 /**
  * Specification for a media player component that is intended to be embedded in a user-interface
