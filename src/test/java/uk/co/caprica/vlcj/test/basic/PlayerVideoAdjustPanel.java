@@ -33,7 +33,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import uk.co.caprica.vlcj.binding.LibVlcConst;
+import uk.co.caprica.vlcj.model.LibVlcConst;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 public class PlayerVideoAdjustPanel extends JPanel {
