@@ -19,13 +19,16 @@
 
 package uk.co.caprica.vlcj.test.fullscreen;
 
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
+import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.player.embedded.x.XFullScreenStrategy;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import static uk.co.caprica.vlcj.component.MediaPlayerComponentBuilder.mediaPlayerComponentBuilder;
 
 /**
  * An example of using the "X" full-screen strategy.
@@ -35,9 +38,13 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class XFullScreenPlayerTest extends VlcjTest {
 
-    private JFrame frame;
+    private static XFullScreenPlayerTest app;
 
-    private EmbeddedMediaPlayerComponent mediaPlayerComponent;
+    private final JFrame frame;
+
+    private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
+
+    private final Media media;
 
     public static void main(String[] args) {
         if(args.length != 1) {
@@ -47,31 +54,39 @@ public class XFullScreenPlayerTest extends VlcjTest {
 
         final String mrl = args[0];
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new XFullScreenPlayerTest().start(mrl);
-            }
-        });
+        app = new XFullScreenPlayerTest(mrl);
     }
 
     @SuppressWarnings("serial")
-    public XFullScreenPlayerTest() {
+    public XFullScreenPlayerTest(String mrl) {
         frame = new JFrame("LibX11 Full Screen Strategy");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocation(100, 100);
         frame.setSize(1200, 800);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mediaPlayerComponent.getMediaPlayer().controls().stop();
+                mediaPlayerComponent.release();
+                media.release();
+            }
+        });
 
+        mediaPlayerComponent = mediaPlayerComponentBuilder()
+                .embedded()
+                .withFullScreenStrategy(new XFullScreenStrategy(frame))
+                .embeddedMediaPlayerComponent();
 
-        // FIXME
+        media = mediaPlayerComponent.getMediaPlayerFactory().media().newMedia(mrl);
 
         frame.setContentPane(mediaPlayerComponent);
 
         frame.setVisible(true);
-    }
 
-    protected void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().set(media);
+        mediaPlayerComponent.getMediaPlayer().controls().play();
         mediaPlayerComponent.getMediaPlayer().fullScreen().setFullScreen(true);
     }
+
 }
