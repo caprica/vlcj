@@ -22,6 +22,10 @@ package uk.co.caprica.vlcj.media;
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.model.MediaMetaData;
+
+import java.util.HashMap;
+import java.util.Map;
 
 // FIXME need to add some comments regarding fetching remote artwork url (it might happen during parse)
 // FIXME need to add about maybe only parsing local files, see parseflags
@@ -42,6 +46,14 @@ public class MetaService extends BaseService {
 
     public boolean save() {
         return libvlc.libvlc_media_save_meta(mediaInstance) != 0;
+    }
+
+    public MediaMetaData asMetaData() {
+        Map<Meta,String> values = new HashMap<Meta,String>(26);
+        for (Meta meta : Meta.values()) {
+            values.put(meta, get(meta));
+        }
+        return new MediaMetaData(values);
     }
 
     private String getMetaValue(Pointer pointer) {

@@ -19,17 +19,28 @@
 
 package uk.co.caprica.vlcj.test.meta;
 
+import uk.co.caprica.vlcj.binding.LibC;
+import uk.co.caprica.vlcj.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.discovery.linux.DefaultLinuxNativeDiscoveryStrategy;
+import uk.co.caprica.vlcj.enums.MediaParsedStatus;
+import uk.co.caprica.vlcj.enums.ParseFlag;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.model.MediaMetaData;
+import uk.co.caprica.vlcj.player.events.media.MediaEventAdapter;
+import uk.co.caprica.vlcj.player.events.media.MediaEventListener;
+import uk.co.caprica.vlcj.test.VlcjTest;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import uk.co.caprica.vlcj.player.MediaMeta;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.test.VlcjTest;
+// FIXME need some documentation on album art
+//  it seems you can specify "--no-metadata-network-access" on the factory but likely don't need to if parse flags work
+//  album art may still appear in ~/.cache/vlc/art even if you disable art fetching, this is because the art is embedded in the mp3
+//  otherwise beware that parsing may make network requests for meta data/art (privacy issue)
 
 /**
  * Search one or more directories for audio files to extract mp3 tags (exposed as meta data).
@@ -39,73 +50,92 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class SearchMetaTest extends VlcjTest {
 
-    /**
-     * Log.
-     */
-//    private static final Logger logger = LoggerFactory.getLogger(SearchMetaTest.class);
-//
-//    private static final FileFilter AUDIO_FILE_FILTER = new FileFilter() {
-//        @Override
-//        public boolean accept(File pathname) {
-//            return pathname.isFile() && pathname.getName().endsWith(".mp3");
-//        }
-//    };
-//
-//    private static final FileFilter DIR_FILTER = new FileFilter() {
-//        @Override
-//        public boolean accept(File pathname) {
-//            return pathname.isDirectory();
-//        }
-//    };
-//
-//    public static void main(String[] args) {
-//        if(args.length == 0) {
-//            System.out.println("Specify at least one directory");
-//            System.exit(1);
-//        }
-//
-//        MediaPlayerFactory factory = new MediaPlayerFactory();
-//
-//        List<File> files = new ArrayList<File>(400);
-//        for(String arg : args) {
-//            files.addAll(scan(new File(arg)));
-//        }
-//
-//        // Dump out the meta
-//        for(File file : files) {
-//            String mrl = file.getAbsolutePath();
-//            MediaMeta meta = factory.media().getMediaMeta(mrl, true);
-//            logger.info("{} -> {}", mrl, meta);
-//            meta.release();
-//        }
-//
-//        // Dump out only the title and the length
-//        for(File file : files) {
-//            String mrl = file.getAbsolutePath();
-//            MediaMeta meta = factory.media().getMediaMeta(mrl, true);
-//            logger.info("{} -> {}ms", meta.getTitle(), meta.getLength());
-//            meta.release();
-//        }
-//
-//        factory.release();
-//    }
-//
-//    private static List<File> scan(File root) {
-//        List<File> result = new ArrayList<File>(200);
-//        scan(root, result);
-//        return result;
-//    }
-//
-//    private static void scan(File root, List<File> result) {
-//        File[] files = root.listFiles(AUDIO_FILE_FILTER);
-//        if(files != null) {
-//            for(File file : files) {
-//                result.add(file);
-//            }
-//            for(File dir : root.listFiles(DIR_FILTER)) {
-//                scan(dir, result);
-//            }
-//        }
-//    }
-    // FIXME
+    private static CountDownLatch sync;
+
+    private static List<MediaMetaData> result;
+
+    private static final FileFilter AUDIO_FILE_FILTER = new FileFilter() {
+        @Override
+        public boolean accept(File pathname) {
+            return pathname.isFile() && pathname.getName().endsWith(".mp3");
+        }
+    };
+
+    private static final FileFilter DIR_FILTER = new FileFilter() {
+        @Override
+        public boolean accept(File pathname) {
+            return pathname.isDirectory();
+        }
+    };
+
+    public static void main(String[] args) throws Exception {
+        if(args.length == 0) {
+            System.out.println("Specify at least one directory");
+            System.exit(1);
+        }
+
+        MediaPlayerFactory factory = new MediaPlayerFactory();
+
+        List<File> files = new ArrayList<File>(400);
+        for(String arg : args) {
+            files.addAll(scan(new File(arg)));
+        }
+
+        result = new ArrayList<MediaMetaData>(files.size());
+
+        sync = new CountDownLatch(files.size());
+
+        MediaEventListener listener = new ParseListener();
+
+        final List<Media> mediaList = new ArrayList<Media>(files.size());
+        for (File file : files) {
+            Media media = factory.media().newMedia(file.getAbsolutePath());
+            mediaList.add(media);
+            media.events().addMediaEventListener(listener);
+            media.parsing().parse(ParseFlag.FETCH_LOCAL);
+        }
+
+        System.out.println("Waiting...");
+
+        sync.await();
+
+        System.out.println("Finished!");
+
+        // Dump out the meta
+        for(MediaMetaData meta : result) {
+            System.out.println(meta);
+        }
+
+        factory.release();
+    }
+
+    private static List<File> scan(File root) {
+        List<File> result = new ArrayList<File>(200);
+        scan(root, result);
+        return result;
+    }
+
+    private static void scan(File root, List<File> result) {
+        File[] files = root.listFiles(AUDIO_FILE_FILTER);
+        if(files != null) {
+            for(File file : files) {
+                result.add(file);
+            }
+            for(File dir : root.listFiles(DIR_FILTER)) {
+                scan(dir, result);
+            }
+        }
+    }
+
+    private static class ParseListener extends MediaEventAdapter {
+
+        @Override
+        public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
+            MediaMetaData metaData = media.meta().asMetaData();
+            result.add(metaData);
+            sync.countDown();
+            media.events().removeMediaEventListener(this);
+        }
+    }
+
 }
