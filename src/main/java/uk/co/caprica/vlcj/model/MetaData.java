@@ -27,11 +27,11 @@ import java.util.Map;
 /**
  * Immutable meta data value object.
  */
-public final class MediaMetaData {
+public final class MetaData {
 
     private final Map<Meta,String> values;
 
-    public MediaMetaData(Map<Meta,String> values) {
+    public MetaData(Map<Meta,String> values) {
         this.values = Collections.unmodifiableMap(values);
     }
 

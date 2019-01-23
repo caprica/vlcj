@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.media;
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.binding.NativeString;
-import uk.co.caprica.vlcj.model.MediaMetaData;
+import uk.co.caprica.vlcj.model.MetaData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,12 +48,12 @@ public class MetaService extends BaseService {
         return libvlc.libvlc_media_save_meta(mediaInstance) != 0;
     }
 
-    public MediaMetaData asMetaData() {
+    public MetaData asMetaData() {
         Map<Meta,String> values = new HashMap<Meta,String>(26);
         for (Meta meta : Meta.values()) {
             values.put(meta, get(meta));
         }
-        return new MediaMetaData(values);
+        return new MetaData(values);
     }
 
     private String getMetaValue(Pointer pointer) {

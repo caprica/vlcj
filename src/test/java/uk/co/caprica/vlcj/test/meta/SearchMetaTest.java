@@ -19,14 +19,11 @@
 
 package uk.co.caprica.vlcj.test.meta;
 
-import uk.co.caprica.vlcj.binding.LibC;
-import uk.co.caprica.vlcj.discovery.NativeDiscovery;
-import uk.co.caprica.vlcj.discovery.linux.DefaultLinuxNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.enums.ParseFlag;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.model.MediaMetaData;
+import uk.co.caprica.vlcj.model.MetaData;
 import uk.co.caprica.vlcj.player.events.media.MediaEventAdapter;
 import uk.co.caprica.vlcj.player.events.media.MediaEventListener;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -52,7 +49,7 @@ public class SearchMetaTest extends VlcjTest {
 
     private static CountDownLatch sync;
 
-    private static List<MediaMetaData> result;
+    private static List<MetaData> result;
 
     private static final FileFilter AUDIO_FILE_FILTER = new FileFilter() {
         @Override
@@ -81,7 +78,7 @@ public class SearchMetaTest extends VlcjTest {
             files.addAll(scan(new File(arg)));
         }
 
-        result = new ArrayList<MediaMetaData>(files.size());
+        result = new ArrayList<MetaData>(files.size());
 
         sync = new CountDownLatch(files.size());
 
@@ -102,7 +99,7 @@ public class SearchMetaTest extends VlcjTest {
         System.out.println("Finished!");
 
         // Dump out the meta
-        for(MediaMetaData meta : result) {
+        for(MetaData meta : result) {
             System.out.println(meta);
         }
 
@@ -131,7 +128,7 @@ public class SearchMetaTest extends VlcjTest {
 
         @Override
         public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
-            MediaMetaData metaData = media.meta().asMetaData();
+            MetaData metaData = media.meta().asMetaData();
             result.add(metaData);
             sync.countDown();
             media.events().removeMediaEventListener(this);
