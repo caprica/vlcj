@@ -360,7 +360,7 @@ public interface LibVlc extends Library {
      *
      * @param p_list the list to be released
      */
-    void libvlc_module_description_list_release(libvlc_module_description_t p_list);
+    void libvlc_module_description_list_release(Pointer p_list);
 
     /**
      * Returns a list of audio filters that are available.
@@ -1789,7 +1789,7 @@ public interface LibVlc extends Library {
      *
      * @param p_list list with audio outputs for release
      */
-    void libvlc_audio_output_list_release(libvlc_audio_output_t p_list);
+    void libvlc_audio_output_list_release(Pointer p_list);
 
     /**
      * Sets the audio output.
@@ -1850,7 +1850,7 @@ public interface LibVlc extends Library {
      * @param p_list list with audio outputs for release
      * @since LibVLC 2.1.0 or later.
      */
-    void libvlc_audio_output_device_list_release(libvlc_audio_output_device_t p_list );
+    void libvlc_audio_output_device_list_release(Pointer p_list);
 
     /**
      * Configures an explicit audio output device.

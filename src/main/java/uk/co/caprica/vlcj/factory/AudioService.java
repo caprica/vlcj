@@ -34,7 +34,7 @@ public final class AudioService extends BaseService {
                 result.add(new AudioOutput(name, description, getAudioOutputDevices(name)));
                 audioOutput = audioOutput.p_next;
             }
-            libvlc.libvlc_audio_output_list_release(audioOutputs);
+            libvlc.libvlc_audio_output_list_release(audioOutputs.getPointer());
         }
         return result;
     }
@@ -56,7 +56,7 @@ public final class AudioService extends BaseService {
                 result.add(new AudioDevice(device, description));
                 audioDevice = audioDevice.p_next;
             }
-            libvlc.libvlc_audio_output_device_list_release(audioDevices);
+            libvlc.libvlc_audio_output_device_list_release(audioDevices.getPointer());
         }
         return result;
     }

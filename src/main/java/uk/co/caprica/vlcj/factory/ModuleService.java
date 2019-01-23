@@ -20,7 +20,7 @@ public final class ModuleService extends BaseService {
     public List<ModuleDescription> audioFilters() {
         libvlc_module_description_t moduleDescriptions = libvlc.libvlc_audio_filter_list_get(instance);
         List<ModuleDescription> result = getModuleDescriptions(moduleDescriptions);
-        libvlc.libvlc_module_description_list_release(moduleDescriptions);
+        libvlc.libvlc_module_description_list_release(moduleDescriptions.getPointer());
         return result;
     }
 
@@ -32,7 +32,7 @@ public final class ModuleService extends BaseService {
     public List<ModuleDescription> videoFilters() {
         libvlc_module_description_t moduleDescriptions = libvlc.libvlc_video_filter_list_get(instance);
         List<ModuleDescription> result = getModuleDescriptions(moduleDescriptions);
-        libvlc.libvlc_module_description_list_release(moduleDescriptions);
+        libvlc.libvlc_module_description_list_release(moduleDescriptions.getPointer());
         return result;
     }
 

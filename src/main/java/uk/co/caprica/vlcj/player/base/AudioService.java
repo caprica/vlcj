@@ -87,7 +87,7 @@ public final class AudioService extends BaseService implements EqualizerListener
                 result.add(new AudioDevice(device, description));
                 audioDevice = audioDevice.p_next;
             }
-            libvlc.libvlc_audio_output_device_list_release(audioDevices);
+            libvlc.libvlc_audio_output_device_list_release(audioDevices.getPointer());
         }
         return result;
     }
