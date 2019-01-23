@@ -58,7 +58,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  * registered with the media player before the condition implementation is executed.
  * <p>
  * Note that as with other {@link MediaPlayerEventListener} implementations the
- * event callbacks are running in a background thread.
+ * event callbacks are running in a native thread.
  * <p>
  * Example:
  * <pre>
