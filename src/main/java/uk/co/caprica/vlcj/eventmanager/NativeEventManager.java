@@ -69,7 +69,7 @@ abstract public class NativeEventManager<E,L> {
      * @param lastEvent last event in the range of events to register
      * @param callbackName name to use for the callback thread initialiser
      */
-    NativeEventManager(LibVlc libvlc, E eventObject, libvlc_event_e firstEvent, libvlc_event_e lastEvent, String callbackName) {
+    protected NativeEventManager(LibVlc libvlc, E eventObject, libvlc_event_e firstEvent, libvlc_event_e lastEvent, String callbackName) {
         this.libvlc = libvlc;
         this.eventObject = eventObject;
         this.firstEvent = firstEvent;
