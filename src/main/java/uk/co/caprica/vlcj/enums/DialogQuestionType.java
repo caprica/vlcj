@@ -17,7 +17,7 @@
  * Copyright 2009-2017 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.factory;
+package uk.co.caprica.vlcj.enums;
 
 import java.util.HashMap;
 import java.util.Map;

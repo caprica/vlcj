@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.factory;
 
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.enums.DialogQuestionType;
 
 public interface DialogHandler {
 

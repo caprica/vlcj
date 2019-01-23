@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.factory;
 
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.binding.internal.*;
+import uk.co.caprica.vlcj.enums.DialogQuestionType;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
