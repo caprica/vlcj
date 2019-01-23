@@ -28,7 +28,7 @@ import uk.co.caprica.vlcj.medialist.MediaListEventListener;
  * <p>
  * Every instance of an event refers to an associated media list.
  */
-abstract public class MediaListEvent implements EventNotification<MediaListEventListener> {
+abstract class MediaListEvent implements EventNotification<MediaListEventListener> {
 
     /**
      * The media list the event relates to.

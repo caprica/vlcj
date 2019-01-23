@@ -52,6 +52,3 @@ public final class RendererDiscovererEventFactory {
     }
 
 }
-
-// FIXME renderer_item_t name type icon flags, also hold release
-//  gonna need a class to encap it all

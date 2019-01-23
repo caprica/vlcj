@@ -4,7 +4,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.media.Media;
 
-abstract public class MediaEvent implements EventNotification<MediaEventListener> {
+abstract class MediaEvent implements EventNotification<MediaEventListener> {
 
     protected final LibVlc libvlc;
 

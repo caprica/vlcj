@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.renderer.RendererDiscoverer;
 /**
  * Specification for a renderer discoverer event.
  */
-public abstract class RendererDiscovererEvent implements EventNotification<RendererDiscovererEventListener> {
+abstract class RendererDiscovererEvent implements EventNotification<RendererDiscovererEventListener> {
 
     protected final LibVlc libvlc;
 
