@@ -30,4 +30,9 @@ public class EventService extends BaseService {
         eventManager.removeEventListener(listener);
     }
 
+    @Override
+    protected void release() {
+        eventManager.release();
+    }
+
 }
