@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.events.medialist;
 
+import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 
@@ -27,7 +28,7 @@ import uk.co.caprica.vlcj.medialist.MediaListEventListener;
  * <p>
  * Every instance of an event refers to an associated media list.
  */
-abstract public class MediaListEvent {
+abstract public class MediaListEvent implements EventNotification<MediaListEventListener> {
 
     /**
      * The media list the event relates to.
@@ -42,12 +43,5 @@ abstract public class MediaListEvent {
     protected MediaListEvent(MediaList mediaList) {
         this.mediaList = mediaList;
     }
-
-    /**
-     * Notify a listener of the event.
-     *
-     * @param listener event listener to notify
-     */
-    abstract public void notify(MediaListEventListener listener);
 
 }

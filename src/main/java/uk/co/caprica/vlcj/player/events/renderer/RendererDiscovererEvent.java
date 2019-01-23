@@ -20,12 +20,13 @@
 package uk.co.caprica.vlcj.player.events.renderer;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.renderer.RendererDiscoverer;
 
 /**
  * Specification for a renderer discoverer event.
  */
-public abstract class RendererDiscovererEvent {
+public abstract class RendererDiscovererEvent implements EventNotification<RendererDiscovererEventListener> {
 
     protected final LibVlc libvlc;
 
@@ -45,15 +46,4 @@ public abstract class RendererDiscovererEvent {
         this.rendererDiscoverer = rendererDiscoverer;
     }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName();
-    }
-
-    /**
-     * Notify a listener of the event.
-     *
-     * @param listener event listener to notify
-     */
-    abstract public void notify(RendererDiscovererEventListener listener);
 }

@@ -19,17 +19,27 @@
 
 package uk.co.caprica.vlcj.player.list.events;
 
+import uk.co.caprica.vlcj.eventmanager.EventNotification;
+import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 /**
  * Specification for a media list player event.
  */
-public interface MediaListPlayerEvent {
+abstract class MediaListPlayerEvent implements EventNotification<MediaListPlayerEventListener> {
 
     /**
-     * Notify a listener of the event.
-     *
-     * @param listener event listener to notify
+     * The media list player the event relates to.
      */
-    void notify(MediaListPlayerEventListener listener);
+    protected final MediaListPlayer mediaListPlayer;
+
+    /**
+     * Create a media player event.
+     *
+     * @param mediaListPlayer media player that the event relates to
+     */
+    protected MediaListPlayerEvent(MediaListPlayer mediaListPlayer) {
+        this.mediaListPlayer = mediaListPlayer;
+    }
+
 }

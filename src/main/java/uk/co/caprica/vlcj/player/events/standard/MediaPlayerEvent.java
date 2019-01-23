@@ -19,13 +19,14 @@
 
 package uk.co.caprica.vlcj.player.events.standard;
 
+import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
 /**
  * Specification for a media player event.
  */
-public abstract class MediaPlayerEvent {
+public abstract class MediaPlayerEvent implements EventNotification<MediaPlayerEventListener> {
 
     /**
      * The media player the event relates to.
@@ -41,15 +42,4 @@ public abstract class MediaPlayerEvent {
         this.mediaPlayer = mediaPlayer;
     }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName();
-    }
-
-    /**
-     * Notify a listener of the event.
-     *
-     * @param listener event listener to notify
-     */
-    abstract public void notify(MediaPlayerEventListener listener);
 }

@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 /**
  *
  */
-final class MediaListPlayerStoppedEvent extends AbstractMediaListPlayerEvent {
+final class MediaListPlayerStoppedEvent extends MediaListPlayerEvent {
 
     /**
      * Create a media player event.

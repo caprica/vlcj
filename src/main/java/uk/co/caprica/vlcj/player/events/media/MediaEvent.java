@@ -1,9 +1,10 @@
 package uk.co.caprica.vlcj.player.events.media;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.media.Media;
 
-abstract public class MediaEvent {
+abstract public class MediaEvent implements EventNotification<MediaEventListener> {
 
     protected final LibVlc libvlc;
 
@@ -21,12 +22,5 @@ abstract public class MediaEvent {
         this.libvlc = libvlc;
         this.media = media;
     }
-
-    /**
-     * Notify a listener of the event.
-     *
-     * @param listener event listener to notify
-     */
-    abstract public void notify(MediaEventListener listener);
 
 }
