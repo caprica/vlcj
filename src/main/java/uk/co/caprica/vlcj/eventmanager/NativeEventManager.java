@@ -80,6 +80,14 @@ abstract public class NativeEventManager<E,L> {
     private final List<L> eventListenerList = new CopyOnWriteArrayList<L>();
 
     /**
+     * Flag tracking if the native event manager callback is active or not.
+     * <p>
+     * It is only registered if there is at least one active event listener, and care must be taken not to de-register
+     * more than once.
+     */
+    private boolean callbackRegistered;
+
+    /**
      * Create a new component to manage native events.
      *
      * @param libvlc native library
@@ -120,9 +128,8 @@ abstract public class NativeEventManager<E,L> {
      * Register a call-back to receive media native events.
      */
     private void addNativeEventListener() {
-        // If the new listener list size is exactly one, register for native callbacks (we only want to register once
-        // even if more listeners are subsequently added)
-        if (eventListenerList.size() == 1) {
+        if (!callbackRegistered && !eventListenerList.isEmpty()) {
+            callbackRegistered = true;
             libvlc_event_manager_t mediaEventManager = onGetEventManager(libvlc, eventObject);
             for (libvlc_event_e event : libvlc_event_e.values()) {
                 if (event.intValue() >= firstEvent.intValue() && event.intValue() <= lastEvent.intValue()) {
@@ -136,8 +143,8 @@ abstract public class NativeEventManager<E,L> {
      * De-register the call-back used to receive native media events.
      */
     private void removeNativeEventListener() {
-        // Stop delivering native events if there are no listeners
-        if (eventListenerList.isEmpty()) {
+        if (callbackRegistered && eventListenerList.isEmpty()) {
+            callbackRegistered = false;
             libvlc_event_manager_t mediaEventManager = onGetEventManager(libvlc, eventObject);
             for (libvlc_event_e event : libvlc_event_e.values()) {
                 if (event.intValue() >= firstEvent.intValue() && event.intValue() <= lastEvent.intValue()) {
