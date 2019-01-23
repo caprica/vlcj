@@ -205,6 +205,6 @@ abstract public class NativeEventManager<E,L> {
      * @param eventObject component that generated the event
      * @return
      */
-    protected abstract EventNotification onCreateEvent(LibVlc libvlc, libvlc_event_t event, E eventObject);
+    protected abstract EventNotification<L> onCreateEvent(LibVlc libvlc, libvlc_event_t event, E eventObject);
 
 }

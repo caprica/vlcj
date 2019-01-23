@@ -40,7 +40,7 @@ final class MediaPlayerNativeEventManager extends NativeEventManager<MediaPlayer
     }
 
     @Override
-    protected EventNotification onCreateEvent(LibVlc libvlc, libvlc_event_t event, MediaPlayer eventObject) {
+    protected EventNotification<MediaPlayerEventListener> onCreateEvent(LibVlc libvlc, libvlc_event_t event, MediaPlayer eventObject) {
         return StandardEventFactory.createEvent(eventObject, event);
     }
 

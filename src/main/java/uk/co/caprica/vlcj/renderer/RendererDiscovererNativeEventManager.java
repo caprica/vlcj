@@ -40,7 +40,7 @@ final class RendererDiscovererNativeEventManager extends NativeEventManager<Rend
     }
 
     @Override
-    protected EventNotification onCreateEvent(LibVlc libvlc, libvlc_event_t event, RendererDiscoverer eventObject) {
+    protected EventNotification<RendererDiscovererEventListener> onCreateEvent(LibVlc libvlc, libvlc_event_t event, RendererDiscoverer eventObject) {
         return RendererDiscovererEventFactory.createEvent(libvlc, eventObject, event);
     }
 
