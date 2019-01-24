@@ -17,22 +17,18 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.media.callback;
+package uk.co.caprica.vlcj.callbackmedia;
 
-import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.sun.jna.Pointer;
+import com.sun.jna.ptr.LongByReference;
+import com.sun.jna.ptr.PointerByReference;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_close_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_open_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_read_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_seek_cb;
 import uk.co.caprica.vlcj.binding.support.size_t;
 
-import com.sun.jna.Pointer;
-import com.sun.jna.ptr.LongByReference;
-import com.sun.jna.ptr.PointerByReference;
+import java.io.IOException;
 
 /**
  * Base implementation of media that uses the native media callbacks.
@@ -61,11 +57,6 @@ public abstract class AbstractCallbackMedia implements CallbackMedia {
      * Native API end-of-stream indicator.
      */
     private static final int END_OF_STREAM = 0;
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(AbstractCallbackMedia.class);
 
     /**
      * Is the media seekable?
@@ -170,7 +161,6 @@ public abstract class AbstractCallbackMedia implements CallbackMedia {
 
         @Override
         public int open(Pointer opaque, PointerByReference datap, LongByReference sizep) {
-            logger.debug("open()");
             sizep.setValue(onGetSize());
             return onOpen() ? SUCCESS : ERROR;
         }
@@ -189,7 +179,6 @@ public abstract class AbstractCallbackMedia implements CallbackMedia {
                 result = bytesRead >= 0 ? bytesRead : END_OF_STREAM;
             }
             catch (IOException e) {
-                logger.error("Exception reading data", e);
                 result = ERROR;
             }
             return new size_t(result);
@@ -203,7 +192,6 @@ public abstract class AbstractCallbackMedia implements CallbackMedia {
 
         @Override
         public int seek(Pointer opaque, long offset) {
-            logger.trace("seek(offset={})", offset);
             return onSeek(offset) ? SUCCESS : ERROR;
         }
     }
@@ -215,7 +203,6 @@ public abstract class AbstractCallbackMedia implements CallbackMedia {
 
         @Override
         public void close(Pointer opaque) {
-            logger.debug("close()");
             onClose();
         }
     }
@@ -244,4 +231,5 @@ public abstract class AbstractCallbackMedia implements CallbackMedia {
     public final Pointer getOpaque() {
         return opaque;
     }
+
 }

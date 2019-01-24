@@ -4,4 +4,4 @@
  * <p>
  * <em>Callback media requires LibVLC 3.0.0 or later.</em>
  */
-package uk.co.caprica.vlcj.player.media.callback;
+package uk.co.caprica.vlcj.callbackmedia;

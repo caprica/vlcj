@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.media.callback.nonseekable;
+package uk.co.caprica.vlcj.callbackmedia.nonseekable;
 
 import java.io.File;
 import java.io.FileInputStream;

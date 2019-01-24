@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.enums.TrackType;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.MediaResourceLocator;
-import uk.co.caprica.vlcj.player.media.callback.CallbackMedia;
+import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
 
 // FIXME getcodecdescription has a weak argument for being in here
 

@@ -28,8 +28,7 @@ import javax.swing.JFrame;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.player.media.callback.CallbackMedia;
-import uk.co.caprica.vlcj.player.media.callback.seekable.RandomAccessFileMedia;
+import uk.co.caprica.vlcj.callbackmedia.seekable.RandomAccessFileMedia;
 import uk.co.caprica.vlcj.test.VlcjTest;
 import uk.co.caprica.vlcj.test.minimal.MinimalTestPlayer;
 

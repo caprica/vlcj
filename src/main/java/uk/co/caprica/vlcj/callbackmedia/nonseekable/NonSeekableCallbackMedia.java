@@ -17,29 +17,33 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.media.callback.seekable;
+package uk.co.caprica.vlcj.callbackmedia.nonseekable;
 
-import uk.co.caprica.vlcj.player.media.callback.DefaultCallbackMedia;
+import uk.co.caprica.vlcj.callbackmedia.DefaultCallbackMedia;
 
 /**
- * Base implementation for seekable media.
+ * Base implementation for non-seekable media.
  */
-public abstract class SeekableCallbackMedia extends DefaultCallbackMedia  {
+public abstract class NonSeekableCallbackMedia extends DefaultCallbackMedia  {
 
     /**
      * Create a media instance with a default IO buffer size.
      */
-    public SeekableCallbackMedia() {
-        super(true);
+    public NonSeekableCallbackMedia() {
+        super(false);
     }
 
     /**
      * Create a media instance.
      *
      * @param ioBufferSize IO buffer size
-     * @param mediaOptions zero or more media options
      */
-    public SeekableCallbackMedia(int ioBufferSize, String... mediaOptions) {
-        super(true, ioBufferSize);
+    public NonSeekableCallbackMedia(int ioBufferSize) {
+        super(false, ioBufferSize);
+    }
+
+    @Override
+    protected final boolean onSeek(long offset) {
+        return false;
     }
 }
