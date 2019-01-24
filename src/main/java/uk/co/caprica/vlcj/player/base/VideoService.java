@@ -28,7 +28,8 @@ import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.model.TrackDescription;
 import uk.co.caprica.vlcj.model.Viewpoint;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.util.List;
 
 public final class VideoService extends BaseService {
 
@@ -341,7 +342,7 @@ public final class VideoService extends BaseService {
      * @return list of descriptions, may be empty but will never be <code>null</code>
      */
     // FIXME rename trackDescrptions()? or videoTrackDescriptions()?
-    public java.util.List<TrackDescription> getVideoDescriptions() {
+    public List<TrackDescription> getVideoDescriptions() {
         return Descriptions.videoTrackDescriptions(libvlc, mediaPlayerInstance);
     }
 
