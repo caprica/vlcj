@@ -30,7 +30,7 @@ final class MediaPlayerAudioDeviceEvent extends MediaPlayerEvent {
 
     MediaPlayerAudioDeviceEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
         super(mediaPlayer);
-        this.device = ((media_player_audio_device)event.u.getTypedValue(media_player_audio_device.class)).device; // FIXME copy the string?!
+        this.device = ((media_player_audio_device)event.u.getTypedValue(media_player_audio_device.class)).device;
     }
 
     @Override

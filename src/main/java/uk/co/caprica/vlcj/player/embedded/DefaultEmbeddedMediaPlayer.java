@@ -23,9 +23,6 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
 
-// FIXME remember we need to abstract out Canvas i think
-//  in the attach method it checks isVisible, that should probably go in the CanvasVideoSurface implementation, not in this class
-
 /**
  * Implementation of a media player that renders video to an embedded Canvas component.
  * <p>
