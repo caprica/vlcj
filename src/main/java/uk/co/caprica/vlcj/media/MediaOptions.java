@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.enums.OptionFlag;
+import uk.co.caprica.vlcj.enums.ParseFlag;
 
 final class MediaOptions {
 
@@ -35,6 +37,37 @@ final class MediaOptions {
         } else {
             return false;
         }
+    }
+
+    public static boolean addMediaOptions(LibVlc libvlc, libvlc_media_t media, String[] mediaOptions, OptionFlag... flags) {
+        if (media != null) {
+            int flagsValue = flagsToInt(flags);
+            for (String mediaOption : mediaOptions) {
+                libvlc.libvlc_media_add_option_flag(media, mediaOption, flagsValue);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean addMediaOption(LibVlc libvlc, libvlc_media_t media, String mediaOption, OptionFlag... flags) {
+        if (media != null) {
+            libvlc.libvlc_media_add_option_flag(media, mediaOption, flagsToInt(flags));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static int flagsToInt(OptionFlag... flags) {
+        int result = 0;
+        if (flags != null) {
+            for (OptionFlag flag : flags) {
+                result |= flag.intValue();
+            }
+        }
+        return result;
     }
 
     private MediaOptions() {

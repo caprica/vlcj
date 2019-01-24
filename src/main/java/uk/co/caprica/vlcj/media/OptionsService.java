@@ -19,21 +19,15 @@
 
 package uk.co.caprica.vlcj.media;
 
-// FIXME
-// adding an option with no flags grants it TRUSTED and UNIQUE
-//  (There are no other flags)
-//
-// if you do unique, it will REPLACE an existing option
-// if you do not do unqiue, it ADDs to the existing option
-//
-// what that means in practical terms i don't know.
-//
-// generally we have not bothered with flags
-//  so i think we just won't implement it
+import uk.co.caprica.vlcj.enums.OptionFlag;
 
+/**
+ *
+ *
+ * Generally there is no need to specify option flags, by default the option will be {@link OptionFlag#TRUSTED} and
+ * {@link OptionFlag#UNIQUE} although it is possible to use different flag values if required.
+ */
 public class OptionsService extends BaseService {
-
-    private Object userData;
 
     OptionsService(Media media) {
         super(media);
@@ -41,6 +35,14 @@ public class OptionsService extends BaseService {
 
     public boolean addOptions(String... options) {
         return MediaOptions.addMediaOptions(libvlc, mediaInstance, options);
+    }
+
+    public boolean addOptions(String[] options, OptionFlag... flags) {
+        return MediaOptions.addMediaOptions(libvlc, mediaInstance, options, flags);
+    }
+
+    public boolean addOption(String option, OptionFlag... flags) {
+        return MediaOptions.addMediaOption(libvlc, mediaInstance, option, flags);
     }
 
 }
