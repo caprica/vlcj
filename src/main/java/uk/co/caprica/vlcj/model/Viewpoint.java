@@ -68,14 +68,6 @@ public final class Viewpoint {
         viewpoint.f_field_of_view = fov;
     }
 
-    public float getZoom() {
-        return viewpoint.f_zoom;
-    }
-
-    public void setZoom(float zoom) {
-        viewpoint.f_zoom = zoom;
-    }
-
     public libvlc_video_viewpoint_t viewpoint() {
         return viewpoint;
     }
