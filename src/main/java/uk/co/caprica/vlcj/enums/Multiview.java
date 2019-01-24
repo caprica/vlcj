@@ -27,13 +27,13 @@ import java.util.Map;
  */
 public enum Multiview {
 
-    TWO_D       (0), /**< No stereoscopy: 2D picture. */
-    STEREO_SBS  (1), /**< Side-by-side */
-    STEREO_TB   (2), /**< Top-bottom */
-    STEREO_ROW  (3), /**< Row sequential */
-    STEREO_COL  (4), /**< Column sequential */
-    STEREO_FRAME(5), /**< Frame sequential */
-    CHECKERBOARD(6); /**< Checkerboard pattern */
+    TWO_D       (0), /** No stereoscopy: 2D picture. */
+    STEREO_SBS  (1), /** Side-by-side */
+    STEREO_TB   (2), /** Top-bottom */
+    STEREO_ROW  (3), /** Row sequential */
+    STEREO_COL  (4), /** Column sequential */
+    STEREO_FRAME(5), /** Frame sequential */
+    CHECKERBOARD(6); /** Checkerboard pattern */
 
     private static final Map<Integer, Multiview> INT_MAP = new HashMap<Integer, Multiview>();
 
