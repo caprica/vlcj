@@ -27,9 +27,6 @@ import uk.co.caprica.vlcj.model.MetaData;
 import java.util.HashMap;
 import java.util.Map;
 
-// FIXME need to add some comments regarding fetching remote artwork url (it might happen during parse)
-// FIXME need to add about maybe only parsing local files, see parseflags
-
 public class MetaService extends BaseService {
 
     MetaService(Media media) {

@@ -23,7 +23,7 @@ import uk.co.caprica.vlcj.enums.ParseFlag;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 
 /**
- *
+ * Media parsing functionality.
  * <p>
  * Parsing is always asynchronous - you must wait for a parsed changed event before you can read meta data.
  * <p>
@@ -35,6 +35,18 @@ import uk.co.caprica.vlcj.enums.MediaParsedStatus;
  *     <li>0 means that the call will wait indefinitely;</li>
  *     <li>-1 means that the default value set by the "preparse-timeout" native option/argument will be used</li>
  * </ul>
+ * Parsing may trigger the remote downloading of data, including for example performing a search for cover art for the
+ * media. This has clear privacy implications.
+ * <p>
+ * To affirmatively prevent all network access for meta data, consider trying the "--no-metadata-network-access"
+ * argument when creating a {@link uk.co.caprica.vlcj.factory.MediaPlayerFactory}.
+ * <p>
+ * It should also be possible to prevent such network accesses by using appropriate {@link ParseFlag} values, see
+ * {@link ParseFlag#FETCH_LOCAL} vs {@link ParseFlag#FETCH_NETWORK}.
+ * <p>
+ * Even with network access disabled, some media covert art may still appear locally (e.g. ~/.cache/vlc) - this does not
+ * necessarily mean that a remote network request was made for the cover art, rather the art was embedded in the media
+ * file and extracted to this temporary cache directory.
  */
 public class ParseService extends BaseService {
 
