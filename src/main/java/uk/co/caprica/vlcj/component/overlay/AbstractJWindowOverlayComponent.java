@@ -31,6 +31,7 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Method;
+import java.util.Properties;
 
 import javax.swing.JWindow;
 
@@ -115,7 +116,6 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
     protected void onSetWindowTransparency() {
         String javaSpecificationVersion = System.getProperty("java.specification.version");
         // If Java7 or later...
-        // FIXME check this version check is still valid
         if("1.7".compareTo(javaSpecificationVersion) <= 0) {
             // ...simply set the background colour to a fully transparent colour
             setBackground(new Color(0, 0, 0, 0));
@@ -212,4 +212,5 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
         Image blankImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         return Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(0, 0), "");
     }
+
 }
