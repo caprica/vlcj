@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.discovery;
+package uk.co.caprica.vlcj.discovery.strategy;
 
 /**
  * Specification for a component that can locate the libvlc native libraries at
@@ -43,9 +43,25 @@ public interface NativeDiscoveryStrategy {
     String discover();
 
     /**
-     * Invoked when native shared libraries find.
+     * Invoked when native shared libraries found.
+     * <p>
+     * This serves two purposes: the first is to enable the strategy implementation to carry out bespoke work if needed;
+     * te second is to indicate whether or not the discovered path should be added to the JNA native library search
+     * path.
      *
      * @param path directory containing the shared libraries
+     * @return <code>true</code> if the path should be added to the JNA native library search path; <code>false</code> if not
      */
-    void onFound(String path);
+    boolean onFound(String path);
+
+    /**
+     * Invoked after discovery has completed and found the native shared libraries.
+     * <p>
+     * This method will <em>not</em> be invoked only if there is already a VLC_PLUGIN_PATH environment variable set.
+     *
+     * @param path directory containing the shared libraries
+     * @return
+     */
+    boolean onSetPluginPath(String path);
+
 }

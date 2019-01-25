@@ -19,31 +19,30 @@
 
 package uk.co.caprica.vlcj.test.discovery;
 
-import org.apache.log4j.BasicConfigurator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-//import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.discovery.strategy.NativeDiscoveryStrategy;
 
 /**
- * A trivial test to demonstrate automatic discovery of the libvlc native shared
- * libraries.
+ * A trivial test to demonstrate automatic discovery of the libvlc native shared libraries.
  */
 public class NativeDiscoveryTest {
 
-    /**
-     * Log.
-     */
-    private static final Logger logger = LoggerFactory.getLogger(NativeDiscoveryTest.class);
-
     public static void main(String[] args) {
-        BasicConfigurator.configure();
-        // Create a discovery component that uses the default provided discovery strategies
-        boolean found = new NativeDiscovery().discover();
-        logger.debug("found={}", found);
-        if(found) {
-//            logger.debug("Version: {}", LibVlcFactory.factory().create().libvlc_get_version());
-        }
+        NativeDiscovery discovery = new NativeDiscovery() {
+            @Override
+            protected void onFound(String path, NativeDiscoveryStrategy strategy) {
+                System.out.println("Found");
+                System.out.println(path);
+                System.out.println(strategy);
+            }
+
+            @Override
+            protected void onNotFound() {
+                System.out.println("Not found");
+            }
+        };
+        boolean found = discovery.discover();
+        System.out.println(found);
     }
+
 }

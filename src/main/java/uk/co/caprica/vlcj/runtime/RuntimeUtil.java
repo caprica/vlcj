@@ -129,6 +129,15 @@ public final class RuntimeUtil {
     }
 
     /**
+     *
+     *
+     * @return
+     */
+    public static String getLibVlcCoreLibraryName() {
+        return isWindows() ? "libvlccore" : "vlccore";
+    }
+
+    /**
      * Get the operating system file name for the libvlc shared object.
      * <p>
      * This is only used to generate help/error messages.

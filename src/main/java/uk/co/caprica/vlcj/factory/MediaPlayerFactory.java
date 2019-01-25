@@ -219,6 +219,14 @@ public class MediaPlayerFactory {
     }
 
     /**
+     *
+     * @return
+     */
+    public final String nativeLibraryPath() {
+        return NativeLibraryPath.getNativeLibraryPath(libvlc);
+    }
+
+    /**
      * Release all native resources associated with this factory.
      * <p>
      * The factory must not be used again after it has been released.

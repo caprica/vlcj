@@ -19,14 +19,7 @@
 
 package uk.co.caprica.vlcj.test.discovery;
 
-import uk.co.caprica.vlcj.discovery.NativeDiscovery;
-import uk.co.caprica.vlcj.discovery.linux.DefaultLinuxNativeDiscoveryStrategy;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class NativeDiscoveryPatternMatchingTest {
 
@@ -52,10 +45,12 @@ public class NativeDiscoveryPatternMatchingTest {
             }
         }
     }
-
-    private static class TestStrategy extends DefaultLinuxNativeDiscoveryStrategy {
+/*
+    private static class TestStrategy extends LinuxNativeDiscoveryStrategy {
 
         private final List<File> files = new ArrayList<File>();
+
+
 
         private TestStrategy(String... fileNames) throws IOException {
             for (String fileName : fileNames) {
@@ -106,5 +101,5 @@ public class NativeDiscoveryPatternMatchingTest {
         finally {
             tearDown();
         }
-    }
+    }*/
 }
