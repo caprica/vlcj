@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.basic;
 
 import uk.co.caprica.vlcj.model.LibVlcConst;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.filefilters.swing.SwingFileFilterFactory;
+//import uk.co.caprica.vlcj.filefilters.swing.SwingFileFilterFactory;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -166,12 +166,12 @@ public class PlayerControlsPanel extends JPanel {
 
         fileChooser = new JFileChooser();
         fileChooser.setApproveButtonText("Play");
-        fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newVideoFileFilter());
-        fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newAudioFileFilter());
-        fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newPlayListFileFilter());
-        FileFilter defaultFilter = SwingFileFilterFactory.newMediaFileFilter();
-        fileChooser.addChoosableFileFilter(defaultFilter);
-        fileChooser.setFileFilter(defaultFilter);
+//        fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newVideoFileFilter());
+//        fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newAudioFileFilter());
+//        fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newPlayListFileFilter());
+//        FileFilter defaultFilter = SwingFileFilterFactory.newMediaFileFilter();
+//        fileChooser.addChoosableFileFilter(defaultFilter);
+//        fileChooser.setFileFilter(defaultFilter);
 
         fullScreenButton = new JButton();
         fullScreenButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/image.png")));
