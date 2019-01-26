@@ -46,18 +46,7 @@ public final class VideoSurfaceService extends BaseService {
      * @return video surface
      */
     public ComponentVideoSurface newVideoSurface(Component component) {
-        // FIXME common adapter code
-        VideoSurfaceAdapter videoSurfaceAdapter;
-        if (RuntimeUtil.isNix()) {
-            videoSurfaceAdapter = new LinuxVideoSurfaceAdapter();
-        } else if(RuntimeUtil.isWindows()) {
-            videoSurfaceAdapter = new WindowsVideoSurfaceAdapter();
-        } else if(RuntimeUtil.isMac()) {
-            videoSurfaceAdapter = new MacVideoSurfaceAdapter();
-        } else {
-            throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
-        }
-        return new ComponentVideoSurface(component, videoSurfaceAdapter);
+        return new ComponentVideoSurface(component, getVideoSurfaceAdapter());
     }
 
     /**
@@ -67,22 +56,19 @@ public final class VideoSurfaceService extends BaseService {
      * @return video surface
      */
     public ComponentIdVideoSurface newVideoSurface(long componentId) {
-        // FIXME common adapter code
-        VideoSurfaceAdapter videoSurfaceAdapter;
-        if(RuntimeUtil.isNix()) {
-            videoSurfaceAdapter = new LinuxVideoSurfaceAdapter();
-        }
-        else if(RuntimeUtil.isWindows()) {
-            videoSurfaceAdapter = new WindowsVideoSurfaceAdapter();
-        }
-        else if(RuntimeUtil.isMac()) {
-            videoSurfaceAdapter = new MacVideoSurfaceAdapter();
-        }
-        else {
+        return new ComponentIdVideoSurface(componentId, getVideoSurfaceAdapter());
+    }
+
+    private VideoSurfaceAdapter getVideoSurfaceAdapter() {
+        if (RuntimeUtil.isNix()) {
+            return new LinuxVideoSurfaceAdapter();
+        } else if(RuntimeUtil.isWindows()) {
+            return new WindowsVideoSurfaceAdapter();
+        } else if(RuntimeUtil.isMac()) {
+            return new MacVideoSurfaceAdapter();
+        } else {
             throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
         }
-        ComponentIdVideoSurface videoSurface = new ComponentIdVideoSurface(componentId, videoSurfaceAdapter);
-        return videoSurface;
     }
 
 }
