@@ -180,13 +180,9 @@
                             <useDefaultManifestFile>false</useDefaultManifestFile>
                             <archive>
                                 <addMavenDescriptor>false</addMavenDescriptor>
-                                <manifest>
-                                    <mainClass>uk.co.caprica.vlcj.test.basic.TestPlayer</mainClass>
-                                    <addClasspath>true</addClasspath>
-                                </manifest>
                                 <manifestEntries>
                                     <Class-Path>${project.artifactId}-${project.version}.jar</Class-Path>
-                                </manifestEntries>                                    
+                                </manifestEntries>
                             </archive>
                         </configuration>
                     </execution>
