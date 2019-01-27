@@ -123,7 +123,7 @@ public class AudioMediaPlayerComponent extends AudioMediaPlayerComponentBase imp
     }
 
     /**
-     * Get the embedded media player reference.
+     * Get the media player reference.
      * <p>
      * An application uses this handle to control the media player, add listeners and so on.
      *
