@@ -19,20 +19,12 @@
 
 package uk.co.caprica.vlcj.runtime;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Crude heuristics to determine the current Operating System.
  * <p>
  * The com.sun.jna.Platform class provides similar functionality.
  */
 public final class RuntimeUtil {
-
-    /**
-     * Log.
-     */
-    private static final Logger logger = LoggerFactory.getLogger(RuntimeUtil.class);
 
     /**
      * Operating System Name system property.
@@ -108,50 +100,6 @@ public final class RuntimeUtil {
      */
     public static String getLibVlcCoreLibraryName() {
         return isWindows() ? "libvlccore" : "vlccore";
-    }
-
-    /**
-     * Get the operating system file name for the libvlc shared object.
-     * <p>
-     * This is only used to generate help/error messages.
-     *
-     * @return shared object file name
-     */
-    public static String getLibVlcName() {
-        if (RuntimeUtil.isNix()) {
-            return "libvlc.so";
-        }
-        else if (RuntimeUtil.isWindows()) {
-            return "libvlc.dll";
-        }
-        else if (RuntimeUtil.isMac()) {
-            return "libvlc.dylib";
-        }
-        else {
-            throw new RuntimeException("Unknown operating system");
-        }
-    }
-
-    /**
-     * Get the operating system file name for the libvlc core shared object.
-     * <p>
-     * This is only used to generate help/error messages.
-     *
-     * @return shared object file name
-     */
-    public static String getLibVlcCoreName() {
-        if (RuntimeUtil.isNix()) {
-            return "libvlccore.so";
-        }
-        else if (RuntimeUtil.isWindows()) {
-            return "libvlccore.dll";
-        }
-        else if (RuntimeUtil.isMac()) {
-            return "libvlccore.dylib";
-        }
-        else {
-            throw new RuntimeException("Unknown operating system");
-        }
     }
 
 }
