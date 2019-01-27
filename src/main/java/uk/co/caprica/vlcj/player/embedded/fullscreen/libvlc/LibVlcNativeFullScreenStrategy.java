@@ -17,23 +17,24 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded;
+package uk.co.caprica.vlcj.player.embedded.fullscreen.libvlc;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
 /**
  * Implementation of a {@link FullScreenStrategy} that uses the native LibVLC fullscreen API.
  * <p>
  * <em>This can only be used if you are not embedding the media player video surface in your application.</em>
  */
-public class VlcNativeFullScreenStrategy implements FullScreenStrategy {
+public class LibVlcNativeFullScreenStrategy implements FullScreenStrategy {
 
     private final LibVlc libvlc;
 
     private final libvlc_media_player_t mediaPlayerInstance;
 
-    public VlcNativeFullScreenStrategy(LibVlc libvlc, libvlc_media_player_t mediaPlayerInstance) {
+    public LibVlcNativeFullScreenStrategy(LibVlc libvlc, libvlc_media_player_t mediaPlayerInstance) {
         this.libvlc              = libvlc;
         this.mediaPlayerInstance = mediaPlayerInstance;
     }

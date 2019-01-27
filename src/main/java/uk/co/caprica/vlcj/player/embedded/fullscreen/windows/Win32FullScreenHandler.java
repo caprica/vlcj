@@ -17,19 +17,19 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded.windows;
+package uk.co.caprica.vlcj.player.embedded.fullscreen.windows;
 
 import static com.sun.jna.platform.win32.WinUser.GWL_EXSTYLE;
 import static com.sun.jna.platform.win32.WinUser.GWL_STYLE;
-import static uk.co.caprica.vlcj.player.embedded.windows.ExtendedUser32.SWP_FRAMECHANGED;
-import static uk.co.caprica.vlcj.player.embedded.windows.ExtendedUser32.SWP_NOACTIVATE;
-import static uk.co.caprica.vlcj.player.embedded.windows.ExtendedUser32.SWP_NOZORDER;
-import static uk.co.caprica.vlcj.player.embedded.windows.ExtendedUser32.WS_CAPTION;
-import static uk.co.caprica.vlcj.player.embedded.windows.ExtendedUser32.WS_EX_CLIENTEDGE;
-import static uk.co.caprica.vlcj.player.embedded.windows.ExtendedUser32.WS_EX_DLGMODALFRAME;
-import static uk.co.caprica.vlcj.player.embedded.windows.ExtendedUser32.WS_EX_STATICEDGE;
-import static uk.co.caprica.vlcj.player.embedded.windows.ExtendedUser32.WS_EX_WINDOWEDGE;
-import static uk.co.caprica.vlcj.player.embedded.windows.ExtendedUser32.WS_THICKFRAME;
+import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.SWP_FRAMECHANGED;
+import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.SWP_NOACTIVATE;
+import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.SWP_NOZORDER;
+import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.WS_CAPTION;
+import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.WS_EX_CLIENTEDGE;
+import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.WS_EX_DLGMODALFRAME;
+import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.WS_EX_STATICEDGE;
+import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.WS_EX_WINDOWEDGE;
+import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.WS_THICKFRAME;
 
 import java.awt.Window;
 
@@ -76,7 +76,7 @@ final class Win32FullScreenHandler {
      */
     void setFullScreen(boolean fullScreen) {
         HWND hWnd = getHWND(Native.getComponentID(window));
-        if(fullScreen) {
+        if (fullScreen) {
             windowState = getWindowState(hWnd);
             ExtendedUser32.INSTANCE.SetWindowLong(hWnd, GWL_STYLE, windowState.getStyle() & ~(WS_CAPTION | WS_THICKFRAME));
             ExtendedUser32.INSTANCE.SetWindowLong(hWnd, GWL_EXSTYLE, windowState.getExStyle() & ~(WS_EX_DLGMODALFRAME | WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE));
@@ -88,7 +88,7 @@ final class Win32FullScreenHandler {
             ExtendedUser32.INSTANCE.SetWindowLong(hWnd, GWL_STYLE, windowState.getStyle());
             ExtendedUser32.INSTANCE.SetWindowLong(hWnd, GWL_EXSTYLE, windowState.getExStyle());
             ExtendedUser32.INSTANCE.SetWindowPos(hWnd, null, windowState.getLeft(), windowState.getTop(), windowState.getRight() - windowState.getLeft(), windowState.getBottom() - windowState.getTop(), SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
-            if(windowState.getMaximized()) {
+            if (windowState.getMaximized()) {
                 ExtendedUser32.INSTANCE.SendMessage(hWnd, User32.WM_SYSCOMMAND, new WPARAM(WinUser.SC_MAXIMIZE), new LPARAM(0));
             }
         }
@@ -113,14 +113,14 @@ final class Win32FullScreenHandler {
     private WindowState getWindowState(HWND hWnd) {
         WindowState windowState = new WindowState();
         windowState.setMaximized(ExtendedUser32.INSTANCE.IsZoomed(hWnd));
-        if(windowState.getMaximized()) {
+        if (windowState.getMaximized()) {
             ExtendedUser32.INSTANCE.SendMessage(hWnd, User32.WM_SYSCOMMAND, new WPARAM(ExtendedUser32.SC_RESTORE), new LPARAM(0));
         }
         windowState.setStyle(ExtendedUser32.INSTANCE.GetWindowLong(hWnd, ExtendedUser32.GWL_STYLE));
         windowState.setExStyle(ExtendedUser32.INSTANCE.GetWindowLong(hWnd, ExtendedUser32.GWL_EXSTYLE));
         RECT rect = new RECT();
         boolean gotWindowRect = ExtendedUser32.INSTANCE.GetWindowRect(hWnd, rect);
-        if(gotWindowRect) {
+        if (gotWindowRect) {
             windowState.setLeft(rect.left);
             windowState.setTop(rect.top);
             windowState.setRight(rect.right);
@@ -141,4 +141,5 @@ final class Win32FullScreenHandler {
         ExtendedUser32.INSTANCE.GetMonitorInfoA(hMonitor, monitorInfo);
         return monitorInfo;
     }
+
 }

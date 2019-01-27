@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded;
+package uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode;
 
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
@@ -27,6 +27,7 @@ import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
 /**
  * Default implementation of a full-screen strategy that attempts to use the JDK full-screen
@@ -45,12 +46,12 @@ import org.slf4j.LoggerFactory;
  * It may be useful to specify "-Dsun.java2d.d3d=false" on the Windows platform for performance
  * reasons.
  */
-public class DefaultFullScreenStrategy implements FullScreenStrategy {
+public class ExclusiveModeFullScreenStrategy implements FullScreenStrategy {
 
     /**
      * Log.
      */
-    private final Logger logger = LoggerFactory.getLogger(DefaultFullScreenStrategy.class);
+    private final Logger logger = LoggerFactory.getLogger(ExclusiveModeFullScreenStrategy.class);
 
     /**
      * The component that will be made full-screen.
@@ -62,9 +63,9 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
      *
      * @param window component that will be made full-screen
      */
-    public DefaultFullScreenStrategy(Window window) {
-        logger.debug("DefaultFullScreenStrategy(window={})", window);
-        if(window != null) {
+    public ExclusiveModeFullScreenStrategy(Window window) {
+        logger.debug("ExclusiveModeFullScreenStrategy(window={})", window);
+        if (window != null) {
             this.window = window;
         }
         else {
@@ -83,7 +84,7 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
         graphicsDevice.setFullScreenWindow(window);
         DisplayMode displayMode = getDisplayMode(graphicsDevice.getDisplayModes());
         logger.debug("displayMode={}", displayMode);
-        if(displayMode != null) {
+        if (displayMode != null) {
             logger.debug("Setting new display mode");
             graphicsDevice.setDisplayMode(displayMode);
         }
@@ -147,4 +148,5 @@ public class DefaultFullScreenStrategy implements FullScreenStrategy {
      */
     protected void onAfterExitFullScreenMode() {
     }
+
 }

@@ -50,7 +50,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  *   MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(libvlcArgs);
  *
  *   // Create a full-screen strategy
- *   FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
+ *   FullScreenStrategy fullScreenStrategy = new ExclusiveModeFullScreenStrategy(mainFrame);
  *
  *   // Create a media player instance (in this example an embedded media player)
  *   EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(fullScreenStrategy);

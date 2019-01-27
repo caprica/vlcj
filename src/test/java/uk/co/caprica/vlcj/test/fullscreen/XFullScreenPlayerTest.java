@@ -20,8 +20,7 @@
 package uk.co.caprica.vlcj.test.fullscreen;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.player.embedded.x.XFullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.x.XFullScreenStrategy;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import javax.swing.*;

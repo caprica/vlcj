@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded.windows;
+package uk.co.caprica.vlcj.player.embedded.fullscreen.windows;
 
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
@@ -86,4 +86,5 @@ public interface ExtendedUser32 extends User32 {
      * @return result
      */
     LRESULT SendMessage(HWND hWnd, int Msg, WPARAM wParam, LPARAM lParam);
+
 }

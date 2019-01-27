@@ -17,12 +17,12 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded;
+package uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive;
 
 import java.awt.Window;
 
-import uk.co.caprica.vlcj.player.embedded.windows.Win32FullScreenStrategy;
-import uk.co.caprica.vlcj.player.embedded.x.XFullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.windows.Win32FullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.x.XFullScreenStrategy;
 import uk.co.caprica.vlcj.runtime.RuntimeType;
 
 /**

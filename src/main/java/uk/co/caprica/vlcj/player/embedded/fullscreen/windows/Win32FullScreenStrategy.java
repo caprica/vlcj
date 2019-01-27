@@ -17,34 +17,29 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded.x;
+package uk.co.caprica.vlcj.player.embedded.fullscreen.windows;
 
 import java.awt.Window;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
-import uk.co.caprica.vlcj.runtime.x.LibXUtil;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
 /**
- * Implementation of a full-screen strategy that attempts to use the native X11 window manager.
- * <p>
- * With this full-screen strategy, a full-screen transparent overlay <em>will</em> work correctly,
- * see {@link EmbeddedMediaPlayer#setOverlay(Window)}.
+ * Implementation of a full screen strategy that uses the native Win32 API.
  */
-public class XFullScreenStrategy implements FullScreenStrategy {
+public class Win32FullScreenStrategy implements FullScreenStrategy {
 
     /**
      * Log.
      */
-    private final Logger logger = LoggerFactory.getLogger(XFullScreenStrategy.class);
+    private final Logger logger = LoggerFactory.getLogger(Win32FullScreenStrategy.class);
 
     /**
-     * The component that will be made full-screen.
+     * Native full-screen implementation.
      */
-    private final Window window;
+    private final Win32FullScreenHandler handler;
 
     /**
      * Is the window currently in full-screen mode?
@@ -56,10 +51,9 @@ public class XFullScreenStrategy implements FullScreenStrategy {
      *
      * @param window component that will be made full-screen
      */
-    public XFullScreenStrategy(Window window) {
-        logger.debug("DefaultFullScreenStrategy(window={})", window);
+    public Win32FullScreenStrategy(Window window) {
         if(window != null) {
-            this.window = window;
+            this.handler = new Win32FullScreenHandler(window);
         }
         else {
             throw new IllegalArgumentException("Window must not be null");
@@ -69,17 +63,21 @@ public class XFullScreenStrategy implements FullScreenStrategy {
     @Override
     public final void enterFullScreenMode() {
         logger.debug("enterFullScreenMode()");
-        onBeforeEnterFullScreenMode();
-        LibXUtil.setFullScreenWindow(window, true);
-        isFullScreenMode = true;
+        if(!isFullScreenMode) {
+            onBeforeEnterFullScreenMode();
+            handler.setFullScreen(true);
+            isFullScreenMode = true;
+        }
     }
 
     @Override
     public final void exitFullScreenMode() {
         logger.debug("exitFullScreenMode()");
-        LibXUtil.setFullScreenWindow(window, false);
-        isFullScreenMode = false;
-        onAfterExitFullScreenMode();
+        if(isFullScreenMode) {
+            handler.setFullScreen(false);
+            isFullScreenMode = false;
+            onAfterExitFullScreenMode();
+        }
     }
 
     @Override
@@ -105,4 +103,5 @@ public class XFullScreenStrategy implements FullScreenStrategy {
      */
     protected void onAfterExitFullScreenMode() {
     }
+
 }

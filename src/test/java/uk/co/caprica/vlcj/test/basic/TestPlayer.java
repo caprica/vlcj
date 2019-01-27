@@ -61,9 +61,9 @@ import uk.co.caprica.vlcj.model.Equalizer;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveModeFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -152,7 +152,7 @@ public class TestPlayer extends VlcjTest {
         mainFrame = new JFrame("VLCJ Test Player");
         mainFrame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
 
-        FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
+        FullScreenStrategy fullScreenStrategy = new ExclusiveModeFullScreenStrategy(mainFrame);
 
         mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));
         mediaPlayerFactory.application().setUserAgent("vlcj test player");

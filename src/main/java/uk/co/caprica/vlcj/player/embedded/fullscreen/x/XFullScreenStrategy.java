@@ -17,29 +17,34 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded.windows;
+package uk.co.caprica.vlcj.player.embedded.fullscreen.x;
 
 import java.awt.Window;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
+import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 
 /**
- * Implementation of a full screen strategy that uses the native Win32 API.
+ * Implementation of a full-screen strategy that attempts to use the native X11 window manager.
+ * <p>
+ * With this full-screen strategy, a full-screen transparent overlay <em>will</em> work correctly,
+ * see {@link EmbeddedMediaPlayer#setOverlay(Window)}.
  */
-public class Win32FullScreenStrategy implements FullScreenStrategy {
+public class XFullScreenStrategy implements FullScreenStrategy {
 
     /**
      * Log.
      */
-    private final Logger logger = LoggerFactory.getLogger(Win32FullScreenStrategy.class);
+    private final Logger logger = LoggerFactory.getLogger(XFullScreenStrategy.class);
 
     /**
-     * Native full-screen implementation.
+     * The component that will be made full-screen.
      */
-    private final Win32FullScreenHandler handler;
+    private final Window window;
 
     /**
      * Is the window currently in full-screen mode?
@@ -51,9 +56,10 @@ public class Win32FullScreenStrategy implements FullScreenStrategy {
      *
      * @param window component that will be made full-screen
      */
-    public Win32FullScreenStrategy(Window window) {
-        if(window != null) {
-            this.handler = new Win32FullScreenHandler(window);
+    public XFullScreenStrategy(Window window) {
+        logger.debug("ExclusiveModeFullScreenStrategy(window={})", window);
+        if (window != null) {
+            this.window = window;
         }
         else {
             throw new IllegalArgumentException("Window must not be null");
@@ -63,21 +69,17 @@ public class Win32FullScreenStrategy implements FullScreenStrategy {
     @Override
     public final void enterFullScreenMode() {
         logger.debug("enterFullScreenMode()");
-        if(!isFullScreenMode) {
-            onBeforeEnterFullScreenMode();
-            handler.setFullScreen(true);
-            isFullScreenMode = true;
-        }
+        onBeforeEnterFullScreenMode();
+        LibXUtil.setFullScreenWindow(window, true);
+        isFullScreenMode = true;
     }
 
     @Override
     public final void exitFullScreenMode() {
         logger.debug("exitFullScreenMode()");
-        if(isFullScreenMode) {
-            handler.setFullScreen(false);
-            isFullScreenMode = false;
-            onAfterExitFullScreenMode();
-        }
+        LibXUtil.setFullScreenWindow(window, false);
+        isFullScreenMode = false;
+        onAfterExitFullScreenMode();
     }
 
     @Override
@@ -103,4 +105,5 @@ public class Win32FullScreenStrategy implements FullScreenStrategy {
      */
     protected void onAfterExitFullScreenMode() {
     }
+
 }

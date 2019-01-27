@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded.windows;
+package uk.co.caprica.vlcj.player.embedded.fullscreen.windows;
 
 /**
  * Encapsulation of window state.

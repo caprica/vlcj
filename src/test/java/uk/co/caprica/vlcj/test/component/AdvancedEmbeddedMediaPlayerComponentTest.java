@@ -19,15 +19,11 @@
 
 package uk.co.caprica.vlcj.test.component;
 
-import java.awt.Canvas;
-
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**

@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded;
+package uk.co.caprica.vlcj.player.embedded.fullscreen;
 
 /**
  * Specification for a full-screen strategy implementation.

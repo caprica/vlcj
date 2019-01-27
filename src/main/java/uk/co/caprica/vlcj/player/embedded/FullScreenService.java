@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.embedded;
 
+import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
+
 public final class FullScreenService extends BaseService {
 
     /**

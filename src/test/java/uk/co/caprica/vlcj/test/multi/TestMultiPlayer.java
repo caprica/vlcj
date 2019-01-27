@@ -38,9 +38,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveModeFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -123,7 +123,7 @@ public class TestMultiPlayer extends VlcjTest {
 
         factory = new MediaPlayerFactory();
 
-        FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
+        FullScreenStrategy fullScreenStrategy = new ExclusiveModeFullScreenStrategy(mainFrame);
 
         for(int i = 0; i < medias.length; i ++ ) {
             EmbeddedMediaPlayer player = factory.mediaPlayers().newEmbeddedMediaPlayer();
