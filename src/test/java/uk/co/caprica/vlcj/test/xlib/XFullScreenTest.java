@@ -19,9 +19,10 @@
 
 package uk.co.caprica.vlcj.test.xlib;
 
-import javax.swing.JFrame;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.x.XFullScreenStrategy;
 
-import uk.co.caprica.vlcj.runtime.x.LibXUtil;
+import javax.swing.*;
 
 /**
  * Basic test to use the native X-Windows API to set a full-screen window.
@@ -29,6 +30,9 @@ import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 public class XFullScreenTest {
 
     public static void main(String[] args) throws Exception {
+        // Creating a factory ensures LibVlc is property initialised, and that LibX is properly initialised on Linux
+        MediaPlayerFactory factory = new MediaPlayerFactory();
+
         JFrame f = new JFrame("LibX Display Test");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLocation(100, 100);
@@ -36,9 +40,13 @@ public class XFullScreenTest {
         f.setVisible(true);
 
         Thread.sleep(3000);
-        LibXUtil.setFullScreenWindow(f, true);
+
+        XFullScreenStrategy strategy = new XFullScreenStrategy(f);
+        strategy.enterFullScreenMode();
 
         Thread.sleep(3000);
-        LibXUtil.setFullScreenWindow(f, false);
+
+        strategy.exitFullScreenMode();
     }
+
 }

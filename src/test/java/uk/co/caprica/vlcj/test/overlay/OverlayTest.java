@@ -41,7 +41,7 @@ import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.runtime.x.LibXUtil;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.x.XFullScreenStrategy;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import com.sun.jna.platform.WindowUtils;
@@ -132,7 +132,8 @@ public class OverlayTest extends VlcjTest {
 
         mediaPlayer.media().playMedia(mrl);
 
-        LibXUtil.setFullScreenWindow(f, true);
+        XFullScreenStrategy strategy = new XFullScreenStrategy(f);
+        strategy.enterFullScreenMode();
     }
 
     private class Overlay extends Window {

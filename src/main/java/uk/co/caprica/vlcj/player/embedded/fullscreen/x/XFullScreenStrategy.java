@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
-import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 
 /**
  * Implementation of a full-screen strategy that attempts to use the native X11 window manager.
@@ -70,14 +69,14 @@ public class XFullScreenStrategy implements FullScreenStrategy {
     public final void enterFullScreenMode() {
         logger.debug("enterFullScreenMode()");
         onBeforeEnterFullScreenMode();
-        LibXUtil.setFullScreenWindow(window, true);
+        XFullScreenHandler.setFullScreenWindow(window, true);
         isFullScreenMode = true;
     }
 
     @Override
     public final void exitFullScreenMode() {
         logger.debug("exitFullScreenMode()");
-        LibXUtil.setFullScreenWindow(window, false);
+        XFullScreenHandler.setFullScreenWindow(window, false);
         isFullScreenMode = false;
         onAfterExitFullScreenMode();
     }

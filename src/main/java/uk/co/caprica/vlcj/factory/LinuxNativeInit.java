@@ -21,13 +21,11 @@ package uk.co.caprica.vlcj.factory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.co.caprica.vlcj.binding.LibX11;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 
 /**
  * Private helper class to ensure the native libraries are properly initialised on Linux.
@@ -54,17 +52,18 @@ final class LinuxNativeInit {
             }
             logger.debug("Java7 on Linux workaround complete.");
         }
-        // With recent VLC/JDK it seems necessary to do this (it will be silently ignored on non-
-        // X platforms) - it can however cause problems if using the JVM splash-screen options
-        // Ultimately this needs more investigation, it may no longer be necessary to do this with
-        // VLC 3.0.0+
-        //
-        // Without this, it is also possible that opening a JavaFX FileChooser will cause a fatal
-        // JVM crash
-        String initX = System.getProperty("VLCJ_INITX"); // FIXME is this still needed?
+        // With recent VLC/JDK it seems necessary to do this - it can however cause problems if using the JVM
+        // splash-screen options. Without this, VLC may complain to the console output and it is also possible that
+        // opening a JavaFX FileChooser will cause a fatal JVM crash
+        String initX = System.getProperty("VLCJ_INITX");
         logger.debug("initX={}", initX);
         if (!"no".equalsIgnoreCase(initX)) {
-            LibXUtil.initialise();
+            try {
+                LibX11.INSTANCE.XInitThreads();
+            }
+            catch (Exception e) {
+                logger.warn("XInitThreads failed", e);
+            }
         }
 
     }

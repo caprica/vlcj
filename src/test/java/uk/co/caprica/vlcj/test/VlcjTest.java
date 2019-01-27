@@ -19,18 +19,14 @@
 
 package uk.co.caprica.vlcj.test;
 
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-
+import com.sun.jna.NativeLibrary;
 import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 
-import com.sun.jna.NativeLibrary;
+import javax.swing.*;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 /**
  * Base class for tests.
@@ -72,11 +68,6 @@ public abstract class VlcjTest {
     static {
         // Initialise Log4J (this is good enough for testing, vlcj depends on log4j only for testing here)
         BasicConfigurator.configure();
-
-        // Safely try to initialise LibX11 to reduce the opportunity for native
-        // crashes - this will silently throw an Error on Windows (and maybe MacOS)
-        // that can safely be ignored
-        LibXUtil.initialise();
 
         if(null != NATIVE_LIBRARY_SEARCH_PATH) {
             logger.info("Explicitly adding JNA native library search path: '{}'", NATIVE_LIBRARY_SEARCH_PATH);

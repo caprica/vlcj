@@ -17,83 +17,21 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.runtime.x;
-
-import java.awt.Window;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import uk.co.caprica.vlcj.binding.LibX11;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+package uk.co.caprica.vlcj.player.embedded.fullscreen.x;
 
 import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
 import com.sun.jna.platform.unix.X11;
-import com.sun.jna.platform.unix.X11.Display;
-import com.sun.jna.platform.unix.X11.XClientMessageEvent;
-import com.sun.jna.platform.unix.X11.XEvent;
 
-/**
- * A helper class that provides various methods that may be useful when running on an X-Windows
- * platform.
- * <p>
- * There are two types of method provided by this class:
- * <ul>
- * <li>Explicitly initialise the X-Windows system threads;</li>
- * <li>Interaction with the Window Manager itself.</li>
- * </ul>
- */
-public final class LibXUtil {
+import java.awt.*;
 
-    /**
-     * Log.
-     */
-    private static final Logger logger = LoggerFactory.getLogger(LibXUtil.class);
+final class XFullScreenHandler {
 
-    // X window message definitions
     private static final int _NET_WM_STATE_REMOVE = 0;
 
     private static final int _NET_WM_STATE_ADD = 1;
 
-    // private static final int _NET_WM_STATE_TOGGLE = 2;
-
-    // X boolean definitions
     private static final int TRUE = 1;
-
-    // private static final int FALSE = 0;
-
-    /**
-     * Prevent direct instantiation by others.
-     */
-    private LibXUtil() {
-    }
-
-    /**
-     * Attempt to initialise LibX threads.
-     * <p>
-     * It is safe to invoke this on any operating system and it will silently fail if X is not
-     * supported.
-     * <p>
-     * This can prevent some fatal native crashes on Linux and related operating systems.
-     * <p>
-     * This <strong>should not</strong> be required, but in practice it may be useful.
-     */
-    public static void initialise() {
-        try {
-            LibX11.INSTANCE.XInitThreads();
-        }
-        catch(Exception e) {
-            if(!RuntimeUtil.isWindows()) {
-                logger.debug("Did not initialise LibX11: {}", e.getMessage());
-            }
-        }
-        catch(Error e) {
-            if(!RuntimeUtil.isWindows()) {
-                logger.debug("Did not initialise LibX11: {}", e.getMessage());
-            }
-        }
-    }
 
     /**
      * Ask the window manager to make a window full-screen.
@@ -110,10 +48,10 @@ public final class LibXUtil {
      * @param fullScreen <code>true</code> to make the window full-screen; <code>false</code> to restore the window to it's original size and position
      * @return <code>true</code> if the message was successfully sent to the window; <code>false</code> otherwise
      */
-    public static boolean setFullScreenWindow(Window w, boolean fullScreen) {
+    static boolean setFullScreenWindow(Window w, boolean fullScreen) {
         // Use the JNA platform X11 binding
         X11 x = X11.INSTANCE;
-        Display display = null;
+        X11.Display display = null;
         try {
             // Open the display
             display = x.XOpenDisplay(null);
@@ -139,14 +77,14 @@ public final class LibXUtil {
      * @param data1 message data
      * @return <code>1</code> if the message was successfully sent to the window; <code>0</code> otherwise
      */
-    private static int sendClientMessage(Display display, long wid, String msg, NativeLong data0, NativeLong data1) {
+    private static int sendClientMessage(X11.Display display, long wid, String msg, NativeLong data0, NativeLong data1) {
         // Use the JNA platform X11 binding
         X11 x = X11.INSTANCE;
         // Create and populate a client-event structure
-        XEvent event = new XEvent();
+        X11.XEvent event = new X11.XEvent();
         event.type = X11.ClientMessage;
         // Select the proper union structure for the event type and populate it
-        event.setType(XClientMessageEvent.class);
+        event.setType(X11.XClientMessageEvent.class);
         event.xclient.type = X11.ClientMessage;
         event.xclient.serial = new NativeLong(0L);
         event.xclient.send_event = TRUE;
@@ -168,4 +106,8 @@ public final class LibXUtil {
         // Finally, return the result of sending the event
         return result;
     }
+
+    private XFullScreenHandler() {
+    }
+
 }
