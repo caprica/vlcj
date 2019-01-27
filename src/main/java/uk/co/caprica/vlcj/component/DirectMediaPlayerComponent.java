@@ -19,6 +19,11 @@
 
 package uk.co.caprica.vlcj.component;
 
+import java.util.Arrays;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
@@ -85,6 +90,10 @@ public class DirectMediaPlayerComponent extends DirectMediaPlayerComponentBase {
      */
     private final DirectMediaPlayer mediaPlayer;
 
+    public static Spec directMediaPlayerSpec() {
+        return DirectMediaPlayerComponentBase.spec();
+    }
+
     public DirectMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback) {
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
@@ -106,6 +115,10 @@ public class DirectMediaPlayerComponent extends DirectMediaPlayerComponentBase {
 
     public DirectMediaPlayerComponent(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback) {
         this(null, bufferFormatCallback, renderCallback);
+    }
+
+    public DirectMediaPlayerComponent(Spec spec) {
+        this(spec.factory, spec.formatCallback, spec.renderCallback);
     }
 
     private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {

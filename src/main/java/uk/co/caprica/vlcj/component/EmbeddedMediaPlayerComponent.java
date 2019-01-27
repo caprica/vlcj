@@ -149,6 +149,10 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      */
     private Cursor blankCursor;
 
+    public static Spec embeddedMediaPlayerSpec() {
+        return EmbeddedMediaPlayerComponentBase.spec();
+    }
+
     /**
      *
      *
@@ -176,6 +180,10 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         initInputEvents(inputEvents);
 
         onAfterConstruct();
+    }
+
+    public EmbeddedMediaPlayerComponent(Spec spec) {
+        this(spec.factory, spec.videoSurfaceComponent, spec.fullScreenStrategy, spec.inputEvents, spec.overlay);
     }
 
     /**

@@ -20,16 +20,14 @@
 package uk.co.caprica.vlcj.component;
 
 import com.sun.jna.Memory;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
+import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.nio.ByteBuffer;
 
 /**
  *
@@ -39,6 +37,36 @@ import java.awt.event.*;
  * methods.
  */
 abstract class DirectMediaPlayerComponentBase extends MediaPlayerEventAdapter implements RenderCallback {
+
+    protected static final Spec spec() {
+        return new Spec();
+    }
+
+    public static final class Spec {
+
+        protected MediaPlayerFactory factory;
+        protected BufferFormatCallback formatCallback;
+        protected RenderCallback renderCallback;
+
+        public Spec withFactory(MediaPlayerFactory factory) {
+            this.factory = factory;
+            return this;
+        }
+
+        public Spec withFormatCallback(BufferFormatCallback formatCallback) {
+            this.formatCallback = formatCallback;
+            return this;
+        }
+
+        public Spec withRenderCallback(RenderCallback renderCallback) {
+            this.renderCallback = renderCallback;
+            return this;
+        }
+
+        private Spec() {
+        }
+
+    }
 
     protected DirectMediaPlayerComponentBase() {
     }

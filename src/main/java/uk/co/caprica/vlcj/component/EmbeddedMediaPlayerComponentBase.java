@@ -20,8 +20,10 @@
 package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -34,6 +36,48 @@ import java.awt.event.*;
  * methods.
  */
 abstract class EmbeddedMediaPlayerComponentBase extends Panel implements MediaPlayerEventListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener  {
+
+    protected static final Spec spec() {
+        return new Spec();
+    }
+
+    public static final class Spec {
+
+        protected MediaPlayerFactory factory;
+        protected Component videoSurfaceComponent;
+        protected FullScreenStrategy fullScreenStrategy;
+        protected InputEvents inputEvents;
+        protected Window overlay;
+
+        public Spec withFactory(MediaPlayerFactory factory) {
+            this.factory = factory;
+            return this;
+        }
+
+        public Spec withVideoSurfaceComponent(Component videoSurfaceComponent) {
+            this.videoSurfaceComponent = videoSurfaceComponent;
+            return this;
+        }
+
+        public Spec withFullScreenStrategy(FullScreenStrategy fullScreenStrategy) {
+            this.fullScreenStrategy = fullScreenStrategy;
+            return this;
+        }
+
+        public Spec withInputEvents(InputEvents inputEvents) {
+            this.inputEvents = inputEvents;
+            return this;
+        }
+
+        public Spec withOverlay(Window overlay) {
+            this.overlay = overlay;
+            return this;
+        }
+
+        private Spec() {
+        }
+
+    }
 
     protected EmbeddedMediaPlayerComponentBase() {
     }

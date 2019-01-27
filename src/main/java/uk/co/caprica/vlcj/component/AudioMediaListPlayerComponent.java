@@ -44,10 +44,6 @@ public class AudioMediaListPlayerComponent extends AudioMediaListPlayerComponent
     /**
      * Construct a media list player component.
      */
-    public AudioMediaListPlayerComponent() {
-        this(null);
-    }
-
     public AudioMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory) {
         super(mediaPlayerFactory);
 
@@ -61,6 +57,14 @@ public class AudioMediaListPlayerComponent extends AudioMediaListPlayerComponent
         this.mediaListPlayer.list().setMediaList(this.mediaList);
 
         onAfterConstruct();
+    }
+
+    public AudioMediaListPlayerComponent(Spec spec) {
+        this(spec.factory);
+    }
+
+    public AudioMediaListPlayerComponent() {
+        this((MediaPlayerFactory) null);
     }
 
     /**

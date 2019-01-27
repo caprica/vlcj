@@ -50,6 +50,10 @@ public class DirectAudioPlayerComponent extends DirectAudioPlayerComponentBase i
      */
     private final DirectAudioPlayer mediaPlayer;
 
+    public static Spec directAudioPlayerSpec() {
+        return DirectAudioPlayerComponentBase.spec();
+    }
+
     public DirectAudioPlayerComponent(MediaPlayerFactory mediaPlayerFactory, String format, int rate, int channels, AudioCallback audioCallback) {
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
@@ -58,6 +62,10 @@ public class DirectAudioPlayerComponent extends DirectAudioPlayerComponentBase i
         this.mediaPlayer.events().addMediaPlayerEventListener(this);
 
         onAfterConstruct();
+    }
+
+    public DirectAudioPlayerComponent(String format, int rate, int channels, AudioCallback audioCallback) {
+        this(null, format, rate, channels, audioCallback);
     }
 
     /**
@@ -71,8 +79,8 @@ public class DirectAudioPlayerComponent extends DirectAudioPlayerComponentBase i
         this(null, format, rate, channels, null);
     }
 
-    public DirectAudioPlayerComponent(String format, int rate, int channels, AudioCallback audioCallback) {
-        this(null, format, rate, channels, audioCallback);
+    public DirectAudioPlayerComponent(Spec spec) {
+        this(spec.factory, spec.format, spec.rate, spec.channels, spec.audioCallback);
     }
 
     private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {

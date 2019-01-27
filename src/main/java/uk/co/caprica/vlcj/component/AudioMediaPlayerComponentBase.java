@@ -19,9 +19,28 @@
 
 package uk.co.caprica.vlcj.component;
 
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 
 abstract class AudioMediaPlayerComponentBase extends MediaPlayerEventAdapter {
+
+    protected static final Spec spec() {
+        return new Spec();
+    }
+
+    public static final class Spec {
+
+        protected MediaPlayerFactory factory;
+
+        public Spec withFactory(MediaPlayerFactory factory) {
+            this.factory = factory;
+            return this;
+        }
+
+        private Spec() {
+        }
+
+    }
 
     protected AudioMediaPlayerComponentBase() {
     }
