@@ -176,8 +176,8 @@ abstract public class NativeEventManager<E,L> {
      * Release this component.
      */
     public final void release() {
-        removeNativeEventListener();
         eventListenerList.clear();
+        removeNativeEventListener();
     }
 
     /**
