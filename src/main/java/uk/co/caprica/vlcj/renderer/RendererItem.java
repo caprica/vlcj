@@ -53,7 +53,7 @@ public final class RendererItem {
 
         int flags = libvlc.libvlc_renderer_item_flags(item);
         this.canAudio = (flags & CAN_AUDIO) != 0;
-        this.canVideo = (flags * CAN_VIDEO) != 0;
+        this.canVideo = (flags & CAN_VIDEO) != 0;
     }
 
     public String name() {
