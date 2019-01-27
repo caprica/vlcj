@@ -61,7 +61,9 @@ import java.util.Collection;
 public class MediaPlayerFactory {
 
     static {
-        LinuxNativeInit.init();
+        if (RuntimeUtil.isNix()) {
+            LinuxNativeInit.init();
+        }
     }
 
     private final Logger logger = LoggerFactory.getLogger(MediaPlayerFactory.class);

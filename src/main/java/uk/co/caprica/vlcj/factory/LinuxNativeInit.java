@@ -35,8 +35,7 @@ final class LinuxNativeInit {
     private static final Logger logger = LoggerFactory.getLogger(LinuxNativeInit.class);
 
     static void init() {
-        // Only apply for Linux, not for a headless environment...
-        if (RuntimeUtil.isNix() && !GraphicsEnvironment.isHeadless()) {
+        if (!GraphicsEnvironment.isHeadless()) {
             // Only apply if the run-time version is Java 1.7.0 or later...
             logger.debug("Trying workaround for Java7+ on Linux");
             try {
@@ -65,7 +64,6 @@ final class LinuxNativeInit {
                 logger.warn("XInitThreads failed", e);
             }
         }
-
     }
 
     private LinuxNativeInit() {
