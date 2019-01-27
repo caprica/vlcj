@@ -93,33 +93,6 @@ public final class RuntimeUtil {
     }
 
     /**
-     * Try to safely convert a long value to an int.
-     *
-     * The current libvlc API requires a 32-bit integer value for the drawable window handle -
-     * however, according to the JNA API it is possible that 64-bit integer values are used (since
-     * Native.getComponentId returns a long value).
-     * <p>
-     * Therefore there is a chance that we are given a native window handle that we can not use with
-     * libvlc.
-     * <p>
-     * In practice, I have never seen this happen on Linux or Windows.
-     *
-     * @param value long value
-     * @return int value
-     * @throws IllegalArgumentException if the long value can not be safely converted to an int
-     */
-    public static int safeLongToInt(long value) {
-        logger.debug("nativeComponentId={}", value);
-        if(value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
-            logger.warn("Native component id is too big for int");
-            throw new IllegalArgumentException("long value " + value + " cannot be safely converted to an int.");
-        }
-        else {
-            return (int)value;
-        }
-    }
-
-    /**
      * Get the native library name.
      *
      * @return library name
@@ -145,13 +118,13 @@ public final class RuntimeUtil {
      * @return shared object file name
      */
     public static String getLibVlcName() {
-        if(RuntimeUtil.isNix()) {
+        if (RuntimeUtil.isNix()) {
             return "libvlc.so";
         }
-        else if(RuntimeUtil.isWindows()) {
+        else if (RuntimeUtil.isWindows()) {
             return "libvlc.dll";
         }
-        else if(RuntimeUtil.isMac()) {
+        else if (RuntimeUtil.isMac()) {
             return "libvlc.dylib";
         }
         else {
@@ -167,13 +140,13 @@ public final class RuntimeUtil {
      * @return shared object file name
      */
     public static String getLibVlcCoreName() {
-        if(RuntimeUtil.isNix()) {
+        if (RuntimeUtil.isNix()) {
             return "libvlccore.so";
         }
-        else if(RuntimeUtil.isWindows()) {
+        else if (RuntimeUtil.isWindows()) {
             return "libvlccore.dll";
         }
-        else if(RuntimeUtil.isMac()) {
+        else if (RuntimeUtil.isMac()) {
             return "libvlccore.dylib";
         }
         else {
@@ -181,19 +154,4 @@ public final class RuntimeUtil {
         }
     }
 
-    /**
-     * Get the default directory name for the vlc plugins directory.
-     * <p>
-     * This is only used to generate help/error messages.
-     *
-     * @return plugin directory name
-     */
-    public static String getPluginsDirectoryName() {
-        if(!RuntimeUtil.isWindows()) {
-            return "vlc/plugins";
-        }
-        else {
-            return "plugins";
-        }
-    }
 }
