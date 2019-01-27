@@ -60,7 +60,7 @@ public class NativeDiscovery {
 
     private void tryPluginPath(String path, NativeDiscoveryStrategy discoveryStrategy) {
         String env = System.getenv(PLUGIN_ENV_NAME);
-        if (env == null || env.length() > 0) {
+        if (env == null || env.length() == 0) {
             discoveryStrategy.onSetPluginPath(path);
         }
     }
