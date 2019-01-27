@@ -22,9 +22,9 @@ package uk.co.caprica.vlcj.factory;
 import uk.co.caprica.vlcj.player.embedded.videosurface.ComponentIdVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.ComponentVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
-import uk.co.caprica.vlcj.player.embedded.videosurface.linux.LinuxVideoSurfaceAdapter;
-import uk.co.caprica.vlcj.player.embedded.videosurface.mac.MacVideoSurfaceAdapter;
-import uk.co.caprica.vlcj.player.embedded.videosurface.windows.WindowsVideoSurfaceAdapter;
+import uk.co.caprica.vlcj.player.embedded.videosurface.LinuxVideoSurfaceAdapter;
+import uk.co.caprica.vlcj.player.embedded.videosurface.OsxVideoSurfaceAdapter;
+import uk.co.caprica.vlcj.player.embedded.videosurface.WindowsVideoSurfaceAdapter;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import java.awt.*;
@@ -65,7 +65,7 @@ public final class VideoSurfaceService extends BaseService {
         } else if(RuntimeUtil.isWindows()) {
             return new WindowsVideoSurfaceAdapter();
         } else if(RuntimeUtil.isMac()) {
-            return new MacVideoSurfaceAdapter();
+            return new OsxVideoSurfaceAdapter();
         } else {
             throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
         }

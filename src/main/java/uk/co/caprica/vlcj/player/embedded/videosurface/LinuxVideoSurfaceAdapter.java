@@ -17,33 +17,19 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded.videosurface.mac;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
 
 /**
- * Implementation of a video surface adapter for Mac.
+ * Implementation of a video surface adapter for Linux.
  */
-public class MacVideoSurfaceAdapter implements VideoSurfaceAdapter {
-
-    /**
-     * Serial version.
-     */
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(MacVideoSurfaceAdapter.class);
+final public class LinuxVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
     @Override
     public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-        logger.debug("attach(componentId={})", componentId);
-        libvlc.libvlc_media_player_set_nsobject(mediaPlayer.mediaPlayerInstance(), componentId);
+        libvlc.libvlc_media_player_set_xwindow(mediaPlayer.mediaPlayerInstance(), (int)componentId);
     }
+
 }

@@ -17,35 +17,20 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded.videosurface.windows;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
+package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Implementation of a video surface adapter for Windows.
  */
-public class WindowsVideoSurfaceAdapter implements VideoSurfaceAdapter {
-
-    /**
-     * Serial version.
-     */
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(WindowsVideoSurfaceAdapter.class);
+final public class WindowsVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
     @Override
     public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-        logger.debug("attach(componentId={})", componentId);
         libvlc.libvlc_media_player_set_hwnd(mediaPlayer.mediaPlayerInstance(), Pointer.createConstant(componentId));
     }
+
 }

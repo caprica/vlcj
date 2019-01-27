@@ -17,16 +17,16 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.runtime.osx;
+package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Native;
 
 import java.awt.*;
 import java.lang.reflect.Method;
 
-public final class OsxComponentId {
+final class OsxComponentId {
 
-    public static long getOsxComponentId(Component component) {
+    static long getOsxComponentId(Component component) {
         long componentId;
         // Try the usual method first, this should still work on JDK 1.6
         try {
@@ -56,6 +56,9 @@ public final class OsxComponentId {
             componentId = 0;
         }
         return componentId;
+    }
+
+    private OsxComponentId() {
     }
 
 }

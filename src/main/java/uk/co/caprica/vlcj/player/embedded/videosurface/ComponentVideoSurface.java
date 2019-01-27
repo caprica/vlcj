@@ -20,12 +20,9 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Native;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-import uk.co.caprica.vlcj.runtime.osx.OsxComponentId;
 
 import java.awt.*;
 
