@@ -33,6 +33,8 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 import java.util.Arrays;
 
 import javax.swing.ImageIcon;
@@ -41,10 +43,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.direct.BufferFormat;
-import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
-import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
+import uk.co.caprica.vlcj.player.direct.*;
 import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -60,15 +59,12 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class DirectTestPlayer extends VlcjTest {
 
-    // The size does NOT need to match the mediaPlayer size - it's the size that
-    // the media will be scaled to
-    // Matching the native size will be faster of course
+    private static DirectTestPlayer app;
+
+    // The size does NOT need to match the mediaPlayer size - it's the size that the media will be scaled
+    // to - matching the native size will be faster of course
     private final int width = 720;
-
     private final int height = 480;
-
-    // private final int width = 1280;
-    // private final int height = 720;
 
     /**
      * Image to render the video frame data.
@@ -81,7 +77,7 @@ public class DirectTestPlayer extends VlcjTest {
 
     private ImagePane imagePane;
 
-    public DirectTestPlayer(String media, String[] args) throws InterruptedException, InvocationTargetException {
+    public DirectTestPlayer(String media) throws InterruptedException, InvocationTargetException {
         image = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(width, height);
         image.setAccelerationPriority(1.0f);
 
@@ -113,26 +109,23 @@ public class DirectTestPlayer extends VlcjTest {
 
         });
 
-        factory = new MediaPlayerFactory(args);
-        mediaPlayer = factory.mediaPlayers().newDirectMediaPlayer(new TestBufferFormatCallback(), new TestRenderCallback());
+        factory = new MediaPlayerFactory();
+        mediaPlayer = factory.mediaPlayers().newDirectMediaPlayer(new TestBufferFormatCallback(), new TestRenderCallback(), true);
+
         mediaPlayer.media().playMedia(media);
 
-        // Just to show regular media player functions still work...
-        Thread.sleep(5000);
-        mediaPlayer.chapters().nextChapter();
+        // In a real application we must take care to release all of these objects (factory, mediaPlayer, media)
     }
 
-    public static void main(String[] args) throws InterruptedException, InvocationTargetException {
-        if(args.length < 1) {
+    public static void main(String[] args) throws Exception {
+        if (args.length < 1) {
             System.out.println("Specify a single media URL");
             System.exit(1);
         }
 
-        String[] vlcArgs = (args.length == 1) ? new String[] {} : Arrays.copyOfRange(args, 1, args.length);
+        app = new DirectTestPlayer(args[0]);
 
-        new DirectTestPlayer(args[0], vlcArgs);
-
-        // Application will not exit since the UI thread is running
+        Thread.currentThread().join();
     }
 
     @SuppressWarnings("serial")
@@ -163,25 +156,29 @@ public class DirectTestPlayer extends VlcjTest {
         }
     }
 
-    private final class TestRenderCallback extends RenderCallbackAdapter {
+    private final int[] rgbBuffer = new int[width * height];
 
-        public TestRenderCallback() {
-            super(((DataBufferInt) image.getRaster().getDataBuffer()).getData());
-        }
+    private final class TestRenderCallback implements RenderCallback {
 
         @Override
-        public void onDisplay(DirectMediaPlayer mediaPlayer, int[] data) {
+        public void display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
+            ByteBuffer bb = nativeBuffers[0];
+            IntBuffer ib = bb.asIntBuffer();
+            ib.get(rgbBuffer);
+
             // The image data could be manipulated here...
 
             /* RGB to GRAYScale conversion example */
-//            for(int i=0; i < data.length; i++){
-//                int argb = data[i];
-//                int b = (argb & 0xFF);
-//                int g = ((argb >> 8 ) & 0xFF);
-//                int r = ((argb >> 16 ) & 0xFF);
-//                int grey = (r + g + b + g) >> 2 ; //performance optimized - not real grey!
-//                data[i] = (grey << 16) + (grey << 8) + grey;
-//            }
+            for (int i=0; i < rgbBuffer.length; i++){
+                int argb = rgbBuffer[i];
+                int b = (argb & 0xFF);
+                int g = ((argb >> 8 ) & 0xFF);
+                int r = ((argb >> 16 ) & 0xFF);
+                int grey = (r + g + b + g) >> 2 ; // performance optimized - not real grey!
+                rgbBuffer[i] = (grey << 16) + (grey << 8) + grey;
+            }
+
+            image.setRGB(0, 0, width, height, rgbBuffer, 0, width);
             imagePane.repaint();
         }
     }

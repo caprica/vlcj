@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.direct;
 
-import com.sun.jna.Memory;
+import java.nio.ByteBuffer;
 
 /**
  * A render call-back adapter implementation that fills an array of RGB integer data for an entire
@@ -27,11 +27,14 @@ import com.sun.jna.Memory;
  * <p>
  * The media player must be sending pixels in the RV32 format.
  * <p>
- * If you simply want access to the native memory buffer you should consider sub-classing
+ * If you simply want access to the native memory buffer you should consider implementing
  * {@link RenderCallback} directly rather than using this class.
  * <p>
  * This is probably the most <em>inefficient</em> implementation possible of a render callback,
  * ordinarily the video data should be written directly to some other construct (like a texture).
+ * <p>
+ * Having said that, the supplied rgbBuffer could be a buffer direct from an image raster, in which case it should be
+ * quite quick.
  */
 public abstract class RenderCallbackAdapter implements RenderCallback {
 
@@ -42,6 +45,8 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
 
     /**
      * Create a new render call-back.
+     * <p>
+     * The caller must ensure the supplied data buffer is large enough to hold the video frame data.
      *
      * @param rgbBuffer video data buffer
      */
@@ -50,18 +55,9 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     }
 
     @Override
-    public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffer, BufferFormat bufferFormat) {
-        nativeBuffer[0].getByteBuffer(0L, nativeBuffer[0].size()).asIntBuffer().get(rgbBuffer(), 0, bufferFormat.getHeight() * bufferFormat.getWidth());
-        onDisplay(mediaPlayer, rgbBuffer());
-    }
-
-    /**
-     * Get the video data buffer.
-     *
-     * @return video buffer
-     */
-    public int[] rgbBuffer() {
-        return rgbBuffer;
+    public final void display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
+        nativeBuffers[0].asIntBuffer().get(rgbBuffer, 0, bufferFormat.getHeight() * bufferFormat.getWidth());
+        onDisplay(mediaPlayer, rgbBuffer);
     }
 
     /**
@@ -71,4 +67,5 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
      * @param rgbBuffer video data buffer
      */
     protected abstract void onDisplay(DirectMediaPlayer mediaPlayer, int[] rgbBuffer);
+
 }

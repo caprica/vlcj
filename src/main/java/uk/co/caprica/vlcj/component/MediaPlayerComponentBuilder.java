@@ -60,6 +60,7 @@ public final class MediaPlayerComponentBuilder implements
 
     private BufferFormatCallback bufferFormatCallback;
     private RenderCallback renderCallback;
+    private boolean lockBuffers;
 
     private String audioFormat;
     private int audioRate;
@@ -181,11 +182,18 @@ public final class MediaPlayerComponentBuilder implements
     }
 
     @Override
+    public MediaPlayerComponentBuilders.DirectVideo lockBuffers(boolean lockBuffers) {
+        this.lockBuffers = lockBuffers;
+        return this;
+    }
+
+    @Override
     public DirectMediaPlayerComponent directMediaPlayerComponent() {
         return new DirectMediaPlayerComponent(
             getMediaPlayerFactory(DirectMediaPlayerComponent.class),
             this.bufferFormatCallback,
-            this.renderCallback
+            this.renderCallback,
+            this.lockBuffers
         );
     }
 

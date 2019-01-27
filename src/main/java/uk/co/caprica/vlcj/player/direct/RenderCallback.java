@@ -20,6 +20,9 @@
 package uk.co.caprica.vlcj.player.direct;
 
 import com.sun.jna.Memory;
+import com.sun.jna.Pointer;
+
+import java.nio.ByteBuffer;
 
 /**
  * Specification for a component that wishes to be called back to process video frames.
@@ -40,5 +43,5 @@ public interface RenderCallback {
      * @param nativeBuffers video data for one frame
      * @param bufferFormat information about the format of the buffer used
      */
-    void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat);
+    void display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat);
 }

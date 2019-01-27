@@ -81,6 +81,7 @@ public interface MediaPlayerComponentBuilders {
 
     interface DirectVideo {
         DirectVideo withCallback(RenderCallback renderCallback);
+        DirectVideo lockBuffers(boolean lockBuffers);
         DirectMediaPlayerComponent directMediaPlayerComponent();
     }
 

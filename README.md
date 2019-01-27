@@ -50,6 +50,29 @@ This branch will also introduce significant new features with new API, some head
 
 For a full list of changes in this release, check the [release milestone](https://github.com/caprica/vlcj/milestone/14).
 
+Building vlcj - sun.misc.Unsafe
+-------------------------------
+
+Currently the target supported JDK is still 1.6, since there are no new language or platform features used in vlcj
+that need anything past 1.6. There is particularly strong reason to keep supporting 1.6, but there is no particular
+reason to abandon it either.
+
+On the other hand, the project is at the moment built with OpenJDK 11 on Linux and cross-compiled to 1.6. This will
+work just fine when using Maven to build the project from the command-line, or when working with Eclipse.
+
+However, if you use IntelliJ IDEA you may encounter some compilation problems...
+
+When compiling, IDEA will complain that package sun.misc does not exist - the Unsafe class from this package is
+required for the "direct" media players.
+
+This can be worked around in a number of ways:
+
+ - use source and target JDK 1.10 in the pom.xml, which IDEA will then incorporate into the project
+ - use JDK 1.9 and convert the project to use the Java Module System and add jdk.unsupported as a required module
+ - change the IDEA compiler settings to *uncheck* the "Use '--release' option for cross-compilation (Java 9 and later)"
+
+The latter option is probably the simplest to deal with.
+
 Maven Dependency
 ----------------
 

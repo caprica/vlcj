@@ -94,11 +94,11 @@ public class DirectMediaPlayerComponent extends DirectMediaPlayerComponentBase {
         return DirectMediaPlayerComponentBase.spec();
     }
 
-    public DirectMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback) {
+    public DirectMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers) {
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
 
-        this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newDirectMediaPlayer(bufferFormatCallback, renderCallback != null ? renderCallback : this);
+        this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newDirectMediaPlayer(bufferFormatCallback, renderCallback != null ? renderCallback : this, lockBuffers);
         this.mediaPlayer.events().addMediaPlayerEventListener(this);
 
         onAfterConstruct();
@@ -109,16 +109,16 @@ public class DirectMediaPlayerComponent extends DirectMediaPlayerComponentBase {
      *
      * @param bufferFormatCallback callback used to set video buffer characteristics
      */
-    public DirectMediaPlayerComponent(BufferFormatCallback bufferFormatCallback) {
-        this(null, bufferFormatCallback, null);
+    public DirectMediaPlayerComponent(BufferFormatCallback bufferFormatCallback, boolean lockBuffers) {
+        this(null, bufferFormatCallback, null, lockBuffers);
     }
 
-    public DirectMediaPlayerComponent(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback) {
-        this(null, bufferFormatCallback, renderCallback);
+    public DirectMediaPlayerComponent(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers) {
+        this(null, bufferFormatCallback, renderCallback, lockBuffers);
     }
 
     public DirectMediaPlayerComponent(Spec spec) {
-        this(spec.factory, spec.formatCallback, spec.renderCallback);
+        this(spec.factory, spec.formatCallback, spec.renderCallback, spec.lockedBuffers);
     }
 
     private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {

@@ -26,7 +26,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -34,11 +39,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.direct.BufferFormat;
-import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
-import uk.co.caprica.vlcj.player.direct.RenderCallback;
-import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
+import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.player.direct.*;
 import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -141,13 +143,20 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
             }
         };
 
-        mediaPlayerComponent = new DirectMediaPlayerComponent(bufferFormatCallback, new TestRenderCallbackAdapter());
+        mediaPlayerComponent = new DirectMediaPlayerComponent(bufferFormatCallback, new TestRenderCallbackAdapter(), true);
 
         frame.setContentPane(panel);
 
         frame.setLocation(100, 100);
         frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mediaPlayerComponent.release();
+                System.exit(0);
+            }
+        });
         frame.setVisible(true);
     }
 
@@ -157,21 +166,20 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
      * @param mrl mrl
      */
     private void start(String mrl) {
-        // One line of vlcj code to play the media...
         mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
     }
 
     private class TestRenderCallbackAdapter extends RenderCallbackAdapter {
 
         private TestRenderCallbackAdapter() {
-            super(new int[width * height]);
+            super (((DataBufferInt) image.getRaster().getDataBuffer()).getData());
         }
 
         @Override
         protected void onDisplay(DirectMediaPlayer mediaPlayer, int[] rgbBuffer) {
-            // Simply copy buffer to the image and repaint
-            image.setRGB(0, 0, width, height, rgbBuffer, 0, width);
             panel.repaint();
         }
-    }
+
+    };
+
 }

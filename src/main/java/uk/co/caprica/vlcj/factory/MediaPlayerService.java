@@ -58,10 +58,11 @@ public final class MediaPlayerService extends BaseService {
      *
      * @param bufferFormatCallback callback to set the desired buffer format
      * @param renderCallback callback to receive the video frame data
+     * @param lockBuffers
      * @return media player instance
      */
-    public DirectMediaPlayer newDirectMediaPlayer(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback) {
-        return new DefaultDirectMediaPlayer(libvlc, instance, bufferFormatCallback, renderCallback);
+    public DirectMediaPlayer newDirectMediaPlayer(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers) {
+        return new DefaultDirectMediaPlayer(libvlc, instance, bufferFormatCallback, renderCallback, lockBuffers);
     }
 
     /**

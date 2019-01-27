@@ -47,6 +47,7 @@ abstract class DirectMediaPlayerComponentBase extends MediaPlayerEventAdapter im
         protected MediaPlayerFactory factory;
         protected BufferFormatCallback formatCallback;
         protected RenderCallback renderCallback;
+	protected boolean lockedBuffers;
 
         public Spec withFactory(MediaPlayerFactory factory) {
             this.factory = factory;
@@ -63,6 +64,16 @@ abstract class DirectMediaPlayerComponentBase extends MediaPlayerEventAdapter im
             return this;
         }
 
+        public Spec withLockedBuffers() {
+            this.lockedBuffers = true;
+            return this;
+        }
+
+        public Spec withLockedBuffers(boolean lockedBuffers) {
+            this.lockedBuffers = lockedBuffers;
+            return this;
+        }
+
         private Spec() {
         }
 
@@ -74,7 +85,7 @@ abstract class DirectMediaPlayerComponentBase extends MediaPlayerEventAdapter im
     // === RenderCallback =======================================================
 
     @Override
-    public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
+    public void display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
         // Default implementation does nothing, sub-classes should override this or provide their own implementation of
         // a RenderCallback
     }

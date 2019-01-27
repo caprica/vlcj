@@ -66,7 +66,7 @@ public class ComponentSpecTest extends VlcjTest {
             .withFormatCallback(null))
         {
             @Override
-            public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
+            public void display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
                 super.display(mediaPlayer, nativeBuffers, bufferFormat);
             }
 
