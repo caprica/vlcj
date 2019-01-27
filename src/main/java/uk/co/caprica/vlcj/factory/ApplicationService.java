@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.factory;
 
+import uk.co.caprica.vlcj.enums.TrackType;
 import uk.co.caprica.vlcj.log.NativeLog;
 
 public final class ApplicationService extends BaseService {
@@ -103,6 +104,18 @@ public final class ApplicationService extends BaseService {
      */
     public long clock() {
         return libvlc.libvlc_clock();
+    }
+
+
+    /**
+     * Get a description for a particular codec value.
+     *
+     * @param type type of track
+     * @param codec codec value (or codec FourCC)
+     * @return codec description
+     */
+    public String codecDescription(TrackType type, int codec) {
+        return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
     }
 
 }

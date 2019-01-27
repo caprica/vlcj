@@ -20,15 +20,10 @@
 package uk.co.caprica.vlcj.factory;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.enums.TrackType;
+import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.player.MediaResourceLocator;
-import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
-
-// FIXME getcodecdescription has a weak argument for being in here
 
 public final class MediaService extends BaseService {
 
@@ -73,19 +68,6 @@ public final class MediaService extends BaseService {
         } else {
             return null;
         }
-    }
-
-    /**
-     * Get a description for a particular codec value.
-     *
-     * @param type type of track
-     * @param codec codec value (or codec FourCC)
-     * @return codec description
-     *
-     * @since libvlc 3.0.0
-     */
-    public String getCodecDescription(TrackType type, int codec) {
-        return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
     }
 
 }
