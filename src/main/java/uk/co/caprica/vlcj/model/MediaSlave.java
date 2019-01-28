@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.media;
+package uk.co.caprica.vlcj.model;
 
 import uk.co.caprica.vlcj.enums.MediaSlaveType;
 

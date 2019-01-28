@@ -26,6 +26,7 @@ import uk.co.caprica.vlcj.enums.MediaSlaveType;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.model.MediaSlave;
 
 import java.util.ArrayList;
 import java.util.List;

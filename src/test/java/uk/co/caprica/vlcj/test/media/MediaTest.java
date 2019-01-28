@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.test.media;
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.MediaSlave;
+import uk.co.caprica.vlcj.model.MediaSlave;
 import uk.co.caprica.vlcj.model.TrackInfo;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
