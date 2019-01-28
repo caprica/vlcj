@@ -23,12 +23,6 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.medialist.MediaList;
 
-// FIXME clean up this comment, document it somewhere
-// The native API doc implies the event handler has to call HOLD if it wants to use the item, but the API doc also
-// says the item is valid until you get the same pointer in a deleted callback
-// so i think you can probably choose to hold at any time TBH
-// we will need to expose the item so it can be set on a mediaplayer
-
 public class MediaDiscoverer {
 
     private final LibVlc libvlc;
