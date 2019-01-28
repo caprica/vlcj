@@ -54,7 +54,7 @@ Building vlcj - sun.misc.Unsafe
 -------------------------------
 
 Currently the target supported JDK is still 1.6, since there are no new language or platform features used in vlcj
-that need anything past 1.6. There is particularly strong reason to keep supporting 1.6, but there is no particular
+that need anything past 1.6. There is no particularly strong reason to keep supporting 1.6, but there is no particular
 reason to abandon it either.
 
 On the other hand, the project is at the moment built with OpenJDK 11 on Linux and cross-compiled to 1.6. This will
