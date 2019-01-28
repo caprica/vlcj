@@ -25,8 +25,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.eventmanager.NativeEventManager;
-import uk.co.caprica.vlcj.player.events.media.MediaEventFactory;
-import uk.co.caprica.vlcj.player.events.media.MediaEventListener;
+import uk.co.caprica.vlcj.media.events.MediaEventFactory;
+import uk.co.caprica.vlcj.media.events.MediaEventListener;
 
 final class MediaNativeEventManager extends NativeEventManager<Media, MediaEventListener> {
 

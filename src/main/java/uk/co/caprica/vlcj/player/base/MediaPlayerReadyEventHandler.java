@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.events.standard.StandardEventFactory;
+import uk.co.caprica.vlcj.player.base.events.MediaPlayerEventFactory;
 
 /**
  * Event listener implementation that waits for the first position changed event and raises a synthetic media player
@@ -40,7 +40,7 @@ final class MediaPlayerReadyEventHandler extends MediaPlayerEventAdapter {
     public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
         if (!fired && newPosition > 0) {
             fired = true;
-            mediaPlayer.events().raiseEvent(StandardEventFactory.createMediaPlayerReadyEvent(mediaPlayer));
+            mediaPlayer.events().raiseEvent(MediaPlayerEventFactory.createMediaPlayerReadyEvent(mediaPlayer));
         }
     }
 

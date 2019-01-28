@@ -29,7 +29,7 @@ import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.enums.MediaSlaveType;
 import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.enums.State;
-import uk.co.caprica.vlcj.player.events.media.MediaEventAdapter;
+import uk.co.caprica.vlcj.media.events.MediaEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import java.util.List;

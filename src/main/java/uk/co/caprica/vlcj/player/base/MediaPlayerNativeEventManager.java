@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.eventmanager.NativeEventManager;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.events.standard.StandardEventFactory;
+import uk.co.caprica.vlcj.player.base.events.MediaPlayerEventFactory;
 
 final class MediaPlayerNativeEventManager extends NativeEventManager<MediaPlayer, MediaPlayerEventListener> {
 
@@ -41,7 +41,7 @@ final class MediaPlayerNativeEventManager extends NativeEventManager<MediaPlayer
 
     @Override
     protected EventNotification<MediaPlayerEventListener> onCreateEvent(LibVlc libvlc, libvlc_event_t event, MediaPlayer eventObject) {
-        return StandardEventFactory.createEvent(eventObject, event);
+        return MediaPlayerEventFactory.createEvent(eventObject, event);
     }
 
 }

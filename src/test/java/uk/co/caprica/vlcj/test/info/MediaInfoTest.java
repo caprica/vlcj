@@ -19,12 +19,9 @@
 
 package uk.co.caprica.vlcj.test.info;
 
-import uk.co.caprica.vlcj.enums.MediaParsedStatus;
-import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.player.*;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.events.media.MediaEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**

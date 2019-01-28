@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.events.standard.MediaPlayerEvent;
+import uk.co.caprica.vlcj.player.base.events.MediaPlayerEvent;
 
 public final class EventService extends BaseService {
 
