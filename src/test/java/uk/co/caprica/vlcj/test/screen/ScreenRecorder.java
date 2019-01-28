@@ -78,7 +78,7 @@ public class ScreenRecorder extends VlcjTest {
 
     public ScreenRecorder(final String destination) {
         mediaPlayerFactory = new MediaPlayerFactory(OPTIONS);
-        mediaPlayer = mediaPlayerFactory.mediaPlayers().newHeadlessMediaPlayer();
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newMediaPlayer();
         JPanel cp = new JPanel();
         JButton recordButton = new JButton("Record");
         cp.add(recordButton);

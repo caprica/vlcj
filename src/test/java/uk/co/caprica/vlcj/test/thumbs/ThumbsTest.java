@@ -72,7 +72,7 @@ public class ThumbsTest extends VlcjTest {
         File snapshotFile = new File(args[2]);
 
         MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
-        MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
+        MediaPlayer mediaPlayer = factory.mediaPlayers().newMediaPlayer();
 
         final CountDownLatch inPositionLatch = new CountDownLatch(1);
         final CountDownLatch snapshotTakenLatch = new CountDownLatch(1);

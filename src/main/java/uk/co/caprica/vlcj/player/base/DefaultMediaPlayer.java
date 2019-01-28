@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Base media player implementation.
  */
-public abstract class DefaultMediaPlayer implements MediaPlayer {
+public class DefaultMediaPlayer implements MediaPlayer {
 
     /**
      * Native library interface.
@@ -96,7 +96,7 @@ public abstract class DefaultMediaPlayer implements MediaPlayer {
      * @param libvlc native library interface
      * @param instance libvlc instance
      */
-    protected DefaultMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
+    public DefaultMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
         this.libvlc         = libvlc;
         this.libvlcInstance = instance;
 

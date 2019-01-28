@@ -111,7 +111,7 @@ public class ScriptTest extends VlcjTest {
         scriptEngine = scriptEngineManager.getEngineByMimeType("application/javascript");
 
         mediaPlayerFactory = new MediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
+        mediaPlayer = mediaPlayerFactory.newMediaPlayer();
 
         mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventHandler());
 

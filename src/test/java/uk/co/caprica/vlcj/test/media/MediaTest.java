@@ -41,7 +41,7 @@ public class MediaTest extends VlcjTest {
     public static void main(String[] args) throws Exception {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
-        MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
+        MediaPlayer mediaPlayer = factory.mediaPlayers().newMediaPlayer();
 
         Media media = factory.media().newMedia("/home/mark/1.mp4");
 //        Media media = factory.media().newMedia("/home/mark/1.mp3");

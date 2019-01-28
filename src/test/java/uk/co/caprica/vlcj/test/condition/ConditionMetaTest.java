@@ -61,7 +61,7 @@ public class ConditionMetaTest extends VlcjTest {
         final String mrl = args[0];
 
         final MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
-        MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
+        MediaPlayer mediaPlayer = factory.mediaPlayers().newMediaPlayer();
 
         mediaPlayer.snapshots().setSnapshotDirectory(new File(".").getAbsolutePath());
 

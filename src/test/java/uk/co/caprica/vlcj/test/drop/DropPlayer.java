@@ -90,7 +90,7 @@ public class DropPlayer extends VlcjTest {
         javaFileListFlavor = DataFlavor.javaFileListFlavor;
 
         mediaPlayerFactory = new MediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.mediaPlayers().newHeadlessMediaPlayer();
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newMediaPlayer();
 // FIXME       mediaPlayer.subitems().setPlaySubItems(true); // <--- very important!
 
         contentPane = new JPanel();

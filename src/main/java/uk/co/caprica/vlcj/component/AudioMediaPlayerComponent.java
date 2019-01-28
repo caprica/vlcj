@@ -101,7 +101,7 @@ public class AudioMediaPlayerComponent extends AudioMediaPlayerComponentBase imp
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
 
-        this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newHeadlessMediaPlayer();
+        this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newMediaPlayer();
         this.mediaPlayer.events().addMediaPlayerEventListener(this);
 
         onAfterConstruct();

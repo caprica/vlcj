@@ -69,7 +69,7 @@ public class ConditionTest extends VlcjTest {
 //        final int period = Integer.parseInt(args[1]) * 1000;
 //
 //        MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
-//        MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
+//        MediaPlayer mediaPlayer = factory.mediaPlayers().newMediaPlayer();
 //
 //        mediaPlayer.snapshots().setSnapshotDirectory(new File(".").getAbsolutePath());
 //

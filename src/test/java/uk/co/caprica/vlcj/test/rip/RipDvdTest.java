@@ -19,16 +19,14 @@
 
 package uk.co.caprica.vlcj.test.rip;
 
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.test.VlcjTest;
+
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
-
-import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
-import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * The basics of DVD encoding.
@@ -108,7 +106,7 @@ public class RipDvdTest extends VlcjTest {
         String mediaOptions = sb.toString();
 
         final MediaPlayerFactory factory = new MediaPlayerFactory();
-        final HeadlessMediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
+        final MediaPlayer mediaPlayer = factory.mediaPlayers().newMediaPlayer();
 
         mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             DecimalFormat df = new DecimalFormat("0.00");

@@ -46,7 +46,7 @@ public class MediaInfoTest extends VlcjTest {
         }
 
         MediaPlayerFactory factory = new MediaPlayerFactory();
-        final MediaPlayer mediaPlayer = factory.mediaPlayers().newHeadlessMediaPlayer();
+        final MediaPlayer mediaPlayer = factory.mediaPlayers().newMediaPlayer();
 
         mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override

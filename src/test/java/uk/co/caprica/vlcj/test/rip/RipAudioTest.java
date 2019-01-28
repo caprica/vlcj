@@ -59,7 +59,7 @@ public class RipAudioTest extends VlcjTest {
 
         // Create the media player
         mediaPlayerFactory = new MediaPlayerFactory();
-        mediaPlayer = mediaPlayerFactory.mediaPlayers().newHeadlessMediaPlayer();
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newMediaPlayer();
         mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void finished(MediaPlayer mediaPlayer) {

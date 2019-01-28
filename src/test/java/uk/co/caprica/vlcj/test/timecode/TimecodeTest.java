@@ -80,7 +80,7 @@ public class TimecodeTest extends VlcjTest {
             "--timecode-fps", "25/1"            // <--- Tweak this to suit
         );
 
-        player = factory.mediaPlayers().newHeadlessMediaPlayer();
+        player = factory.mediaPlayers().newMediaPlayer();
     }
 
     /**
