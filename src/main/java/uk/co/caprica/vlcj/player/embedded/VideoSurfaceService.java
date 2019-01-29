@@ -74,7 +74,7 @@ public final class VideoSurfaceService extends BaseService {
      */
     public void attachVideoSurface() {
         if (videoSurface != null) {
-                videoSurface.attach(libvlc, mediaPlayer);
+            videoSurface.attach(libvlc, mediaPlayer);
         }
         else {
             // This is not necessarily an error
