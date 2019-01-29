@@ -19,9 +19,6 @@
 
 package uk.co.caprica.vlcj.discovery.strategy;
 
-import com.sun.jna.NativeLibrary;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-
 import java.io.File;
 import java.util.HashSet;
 import java.util.List;
@@ -120,12 +117,12 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
         return false;
     }
 
+    /**
+     *
+     *
+     * @param pluginPath
+     * @return
+     */
     protected abstract boolean setPluginPath(String pluginPath);
-
-// FIXME don't like these methods
-
-    protected final void addLibVlcCoreSearchPath(String path) {
-        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcCoreLibraryName(), path);
-    }
 
 }
