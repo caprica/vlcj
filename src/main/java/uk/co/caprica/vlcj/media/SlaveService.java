@@ -21,7 +21,6 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.enums.MediaSlaveType;
 import uk.co.caprica.vlcj.model.MediaSlave;
-import uk.co.caprica.vlcj.player.MediaResourceLocator;
 
 import java.io.File;
 import java.util.List;

@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player;
+package uk.co.caprica.vlcj.media;
 
 import java.io.File;
 import java.net.URI;
@@ -37,7 +37,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * <p>
  * This is essentially an internal class.
  */
-public final class MediaResourceLocator {
+final class MediaResourceLocator {
 
     /**
      * Log.
@@ -61,7 +61,7 @@ public final class MediaResourceLocator {
      * @param mrl media resource locator
      * @return <code>true</code> if the supplied MRL should be treated as a "location"; <code>false</code> for a file
      */
-    public static boolean isLocation(String mrl) {
+    static boolean isLocation(String mrl) {
         return MRL_LOCATION_PATTERN.matcher(mrl).matches();
     }
 
@@ -87,7 +87,7 @@ public final class MediaResourceLocator {
      * @param mrl MRL
      * @return the original MRL if no encoding is required, or a percent-encoded file URL
      */
-    public static String encodeMrl(String mrl) {
+    static String encodeMrl(String mrl) {
         // FIXME it may be possible that this can be simplified greatly, in particular it may not be necessary to use
         //       the URI workaround for absolute paths on the inferior OS
         logger.debug("encodeMrl(mrl={})", mrl);

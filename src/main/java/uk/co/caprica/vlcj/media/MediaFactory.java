@@ -23,7 +23,6 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
-import uk.co.caprica.vlcj.player.MediaResourceLocator;
 
 public final class MediaFactory {
 
