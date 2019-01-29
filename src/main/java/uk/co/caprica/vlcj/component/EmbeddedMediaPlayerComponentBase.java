@@ -24,6 +24,7 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive.AdaptiveFullScreenStrategy;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -61,6 +62,11 @@ abstract class EmbeddedMediaPlayerComponentBase extends Panel implements MediaPl
 
         public Spec withFullScreenStrategy(FullScreenStrategy fullScreenStrategy) {
             this.fullScreenStrategy = fullScreenStrategy;
+            return this;
+        }
+
+        public Spec withDefaultFullScreenStrategy(Window fullScreenWindow) {
+            this.fullScreenStrategy = new AdaptiveFullScreenStrategy(fullScreenWindow);
             return this;
         }
 

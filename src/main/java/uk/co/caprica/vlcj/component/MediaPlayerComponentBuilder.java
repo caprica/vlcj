@@ -24,6 +24,7 @@ import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
 import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive.AdaptiveFullScreenStrategy;
 
 import java.awt.*;
 import java.lang.reflect.Field;
@@ -102,6 +103,12 @@ public final class MediaPlayerComponentBuilder implements
     @Override
     public MediaPlayerComponentBuilders.Embedded withFullScreenStrategy(FullScreenStrategy fullScreenStrategy) {
         this.fullScreenStrategy = fullScreenStrategy;
+        return this;
+    }
+
+    @Override
+    public MediaPlayerComponentBuilders.Embedded withDefaultFullScreenStrategy(Window fullScreenWindow) {
+        this.fullScreenStrategy = new AdaptiveFullScreenStrategy(fullScreenWindow);
         return this;
     }
 

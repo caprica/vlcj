@@ -56,6 +56,7 @@ public interface MediaPlayerComponentBuilders {
 
     interface Embedded {
         Embedded withFullScreenStrategy(FullScreenStrategy fullScreenStrategy);
+        Embedded withDefaultFullScreenStrategy(Window fullScreenWindow);
         Embedded withVideoSurfaceComponent(Component videoSurfaceComponent);
         Embedded withOverlay(Window overlay);
         Embedded withInputEvents(InputEvents inputEvents);
