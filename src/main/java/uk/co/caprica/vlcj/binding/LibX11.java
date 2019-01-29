@@ -42,7 +42,7 @@ public interface LibX11 extends Library {
      * <p>
      * Conceivably Xlib could be present on Windows.
      */
-    LibX11 INSTANCE = Native.load(Platform.isWindows() ? "libX11" : "X11", LibX11.class);
+    LibX11 INSTANCE = Native.load("X11", LibX11.class);
 
     /**
      * Initialise Xlib support for concurrent threads.
@@ -53,4 +53,5 @@ public interface LibX11 extends Library {
      * @return non-zero on success, zero on failure (or if threading is not supported)
      */
     int XInitThreads();
+
 }
