@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.test.version;
 
+import com.sun.jna.Native;
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 import uk.co.caprica.vlcj.version.Version;
 
@@ -36,7 +38,8 @@ public class LibVlcVersionTest extends VlcjTest {
      * @param args command-line arguments
      */
     public static void main(String[] args) {
-        String version = LibVlc.INSTANCE.libvlc_get_version();
+        LibVlc libvlc = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+        String version = libvlc.libvlc_get_version();
         test("2.1.0", version);
     }
 

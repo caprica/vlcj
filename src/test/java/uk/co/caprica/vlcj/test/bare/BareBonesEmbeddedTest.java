@@ -65,7 +65,7 @@ public class BareBonesEmbeddedTest extends VlcjTest {
     }
 
     public BareBonesEmbeddedTest() {
-        libvlc = LibVlc.INSTANCE;
+        libvlc = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
 
         if(!RuntimeUtil.isMac()) {
             instance = libvlc.libvlc_new(0, new String[] {});

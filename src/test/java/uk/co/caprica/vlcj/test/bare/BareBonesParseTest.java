@@ -19,9 +19,11 @@
 
 package uk.co.caprica.vlcj.test.bare;
 
+import com.sun.jna.Native;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -39,7 +41,7 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class BareBonesParseTest extends VlcjTest {
 
     public static void main(String[] args) throws Exception {
-        LibVlc libvlc = LibVlc.INSTANCE;
+        LibVlc libvlc = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
 
         libvlc_instance_t instance = libvlc.libvlc_new(0, new String[] {});
 
