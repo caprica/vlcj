@@ -73,6 +73,8 @@ This can be worked around in a number of ways:
 
 The latter option is probably the simplest to deal with.
 
+When compiling with Maven it is simply not possible to suppress the warnings about using sun.misc.Unsafe.
+
 Maven Dependency
 ----------------
 
