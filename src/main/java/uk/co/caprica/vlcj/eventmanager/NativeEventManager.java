@@ -67,17 +67,17 @@ abstract public class NativeEventManager<E,L> {
     private final String callbackName;
 
     /**
-     * Native event callback.
-     */
-    private final EventCallback callback = new EventCallback();
-
-    /**
      * Collection of registered event listeners.
      * <p>
      * A copy-on-write collection is used to defend against listeners being added/removed whilst the native thread is
      * dispatching an event to already registered listeners.
      */
     private final List<L> eventListenerList = new CopyOnWriteArrayList<L>();
+
+    /**
+     * Native event callback.
+     */
+    private EventCallback callback;
 
     /**
      * Flag tracking if the native event manager callback is active or not.
@@ -130,6 +130,7 @@ abstract public class NativeEventManager<E,L> {
     private void addNativeEventListener() {
         if (!callbackRegistered && !eventListenerList.isEmpty()) {
             callbackRegistered = true;
+            callback = new EventCallback();
             libvlc_event_manager_t mediaEventManager = onGetEventManager(libvlc, eventObject);
             for (libvlc_event_e event : libvlc_event_e.values()) {
                 if (event.intValue() >= firstEvent.intValue() && event.intValue() <= lastEvent.intValue()) {
@@ -151,6 +152,8 @@ abstract public class NativeEventManager<E,L> {
                     libvlc.libvlc_event_detach(mediaEventManager, event.intValue(), callback, null);
                 }
             }
+            callback.release();
+            callback = null;
         }
     }
 
@@ -185,13 +188,20 @@ abstract public class NativeEventManager<E,L> {
      */
     private class EventCallback implements libvlc_callback_t {
 
+        private final CallbackThreadInitializer cti;
+
         private EventCallback() {
-            Native.setCallbackThreadInitializer(this, new CallbackThreadInitializer(true, false, callbackName));
+            this.cti = new CallbackThreadInitializer(true, false, callbackName);
+            Native.setCallbackThreadInitializer(this, cti);
         }
 
         @Override
         public void callback(libvlc_event_t event, Pointer userData) {
             raiseEvent(onCreateEvent(libvlc, event, eventObject));
+        }
+
+        private void release() {
+            cti.detach(this);
         }
     }
 
