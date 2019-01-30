@@ -19,11 +19,11 @@
 
 package uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive;
 
-import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveModeFullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.osx.OsxFullScreenStrategy;
 
 import java.awt.*;
 
-public final class DefaultOsxFullScreenStrategy extends ExclusiveModeFullScreenStrategy {
+public final class DefaultOsxFullScreenStrategy extends OsxFullScreenStrategy {
 
     DefaultOsxFullScreenStrategy(Window window) {
         super(window);
