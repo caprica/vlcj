@@ -150,8 +150,7 @@ public final class SnapshotService extends BaseService {
             snapshotDirectory.mkdirs();
         }
         if (snapshotDirectory.exists()) {
-            boolean snapshotTaken = libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), width, height) == 0;
-            return snapshotTaken;
+            return libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), width, height) == 0;
         } else {
             throw new RuntimeException("Directory does not exist and could not be created for '" + file.getAbsolutePath() + "'");
         }
