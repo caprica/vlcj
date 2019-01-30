@@ -68,7 +68,7 @@ public class DialogsTest extends VlcjTest {
         dialogs.addDialogHandler(new DialogHandler() {
             @Override
             public void displayError(Pointer userData, String title, String text) {
-                System.out.printf("display error: %d - %s - %s%n", userData, title, text);
+                System.out.printf("display error: %s - %s - %s%n", userData, title, text);
             }
 
             @Override
@@ -110,8 +110,8 @@ public class DialogsTest extends VlcjTest {
 //            }
 //        });
 
-        MediaPlayer mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
-        ((EmbeddedMediaPlayer) mediaPlayer).videoSurface().setVideoSurface(videoSurface);
+        EmbeddedMediaPlayer mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
+        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
 
         mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
