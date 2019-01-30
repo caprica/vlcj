@@ -48,7 +48,7 @@ public class MediaPlayerComponentBuilderTest {
         DirectMediaPlayerComponent directMediaPlayerComponent = mediaPlayerComponentBuilder()
                 .withFactory(new MediaPlayerFactory())
                 .direct()
-                .withFormat((BufferFormatCallback) null)
+                .withFormat(null)
                 .directMediaPlayerComponent();
 
         DirectAudioPlayerComponent directAudioPlayerComponent = mediaPlayerComponentBuilder()
