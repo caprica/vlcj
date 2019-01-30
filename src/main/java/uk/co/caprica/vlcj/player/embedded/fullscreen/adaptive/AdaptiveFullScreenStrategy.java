@@ -20,6 +20,10 @@
 package uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive;
 
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveModeFullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.osx.OsxFullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.windows.Win32FullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.x.XFullScreenStrategy;
 
 import java.awt.*;
 
@@ -38,10 +42,10 @@ public class AdaptiveFullScreenStrategy extends BaseAdaptiveFullScreenStrategy {
      */
     public AdaptiveFullScreenStrategy(Window window) {
         super(
-            new DefaultLinuxFullScreenStrategy(window),
-            new DefaultWindowsFullScreenStrategy(window),
-            new DefaultOsxFullScreenStrategy(window),
-            new DefaultOtherFullScreenStrategy(window)
+            new XFullScreenStrategy(window),
+            new Win32FullScreenStrategy(window),
+            new OsxFullScreenStrategy(window),
+            new ExclusiveModeFullScreenStrategy(window)
         );
     }
 
