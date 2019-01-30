@@ -112,6 +112,18 @@ There are many examples in the vlcj test sources showing how to use vlcj.
 For a more complete example of a feature-rich media player built with vlcj,
 see [vlcj-player](https://github.com/caprica/vlcj-player).
 
+Related Projects
+----------------
+
+ * [vlcj-player](https://github.com/caprica/vlcj-player)
+ * [vlcj-javafx](https://github.com/caprica/vlcj-javafx)
+ * [vlcj-mrls](https://github.com/caprica/vlcj-mrls)
+ * [vlcj-file-filters](https://github.com/caprica/vlcj-file-filters)
+ * [vlcj-swt](https://github.com/caprica/vlcj-swt)
+ * [vlcj-swt-demo](https://github.com/caprica/vlcj-swt-demo)
+ * [vlcj-swt-swing](https://github.com/caprica/vlcj-swt-swing)
+ * [vlcj-info](https://github.com/caprica/vlcj-info)
+
 Support
 -------
 
