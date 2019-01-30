@@ -25,11 +25,6 @@ package uk.co.caprica.vlcj.model;
 public class UnknownTrackInfo extends TrackInfo {
 
     /**
-     * Serial version.
-     */
-    private static final long serialVersionUID = 1L;
-
-    /**
      * Create an unknown track info.
      *
      * @param codec codec

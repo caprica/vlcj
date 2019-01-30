@@ -19,17 +19,10 @@
 
 package uk.co.caprica.vlcj.model;
 
-import java.io.Serializable;
-
 /**
  * Base track info.
  */
-public abstract class TrackInfo implements Serializable {
-
-    /**
-     * Serial version.
-     */
-    private static final long serialVersionUID = 1L;
+public abstract class TrackInfo {
 
     /**
      * Codec (fourcc).
@@ -237,7 +230,8 @@ public abstract class TrackInfo implements Serializable {
      * @param codec codec identifier
      * @return string representation of the codec identifier
      */
-    private final String codecName(int codec) {
+    private String codecName(int codec) {
         return codec != 0 ? new String(new byte[] {(byte)codec, (byte)(codec >>> 8), (byte)(codec >>> 16), (byte)(codec >>> 24)}).trim() : null;
     }
+
 }

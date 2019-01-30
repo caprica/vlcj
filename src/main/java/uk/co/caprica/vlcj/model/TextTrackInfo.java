@@ -27,11 +27,6 @@ package uk.co.caprica.vlcj.model;
 public class TextTrackInfo extends TrackInfo {
 
     /**
-     * Serial version.
-     */
-    private static final long serialVersionUID = 1L;
-
-    /**
      * Encoding.
      */
     private final String encoding;

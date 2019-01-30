@@ -19,17 +19,10 @@
 
 package uk.co.caprica.vlcj.model;
 
-import java.io.Serializable;
-
 /**
  * Chapter description.
  */
-public class ChapterDescription implements Serializable {
-
-    /**
-     * Serial version.
-     */
-    private static final long serialVersionUID = 1L;
+public class ChapterDescription {
 
     /**
      * Chapter offset (milliseconds).

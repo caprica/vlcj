@@ -29,11 +29,6 @@ import uk.co.caprica.vlcj.enums.VideoProjection;
 public class VideoTrackInfo extends TrackInfo {
 
     /**
-     * Serial version.
-     */
-    private static final long serialVersionUID = 1L;
-
-    /**
      * Video width.
      */
     private final int width;
