@@ -86,7 +86,7 @@ public class LuaUbuntuJava7Test {
 
         LibLua INSTANCE = Native.load("lua5.1", LibLua.class);
 
-        static int LUA_MULTRET = -1;
+        int LUA_MULTRET = -1;
 
         Pointer luaL_newstate();
 
@@ -97,7 +97,7 @@ public class LuaUbuntuJava7Test {
         int lua_pcall(Pointer pointer, int nargs, int nresults, int errfunc);
 
         void lua_close(Pointer instance);
-    };
+    }
 
     public static void main(String[] args) throws Exception {
         System.out.println("java.version=" + System.getProperty("java.version"));
