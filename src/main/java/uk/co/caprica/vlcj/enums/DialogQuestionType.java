@@ -45,7 +45,7 @@ public enum DialogQuestionType {
 
     private final int intValue;
 
-    private DialogQuestionType(int intValue) {
+    DialogQuestionType(int intValue) {
         this.intValue = intValue;
     }
 
