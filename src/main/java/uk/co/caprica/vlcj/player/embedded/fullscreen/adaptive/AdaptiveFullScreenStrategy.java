@@ -24,6 +24,7 @@ import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveMode
 import uk.co.caprica.vlcj.player.embedded.fullscreen.osx.OsxFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.windows.Win32FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.x.XFullScreenStrategy;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import java.awt.*;
 
@@ -33,7 +34,12 @@ import java.awt.*;
  * This implementation uses the "best" available of the provided full-screen strategy implementations, which may be a
  * native solution, for each supported operating system.
  */
-public class AdaptiveFullScreenStrategy extends BaseAdaptiveFullScreenStrategy {
+public class AdaptiveFullScreenStrategy implements FullScreenStrategy {
+
+    /**
+     * Strategy chosen depending on runtime operating system.
+     */
+    private final FullScreenStrategy strategy;
 
     /**
      * Create a full-screen strategy.
@@ -41,24 +47,48 @@ public class AdaptiveFullScreenStrategy extends BaseAdaptiveFullScreenStrategy {
      * @param window window to manage as full-screen or not
      */
     public AdaptiveFullScreenStrategy(Window window) {
-        super(
-            new XFullScreenStrategy(window),
-            new Win32FullScreenStrategy(window),
-            new OsxFullScreenStrategy(window),
-            new ExclusiveModeFullScreenStrategy(window)
-        );
+        this.strategy = getStrategy(window);
+    }
+
+    @Override
+    public final void enterFullScreenMode() {
+        onBeforeEnterFullScreen();
+        strategy.enterFullScreenMode();
+    }
+
+    @Override
+    public final void exitFullScreenMode() {
+        strategy.exitFullScreenMode();
+        onAfterExitFullScreen();
+    }
+
+    @Override
+    public final boolean isFullScreenMode() {
+        return strategy.isFullScreenMode();
     }
 
     /**
      *
-     *
-     * @param linuxStrategy
-     * @param windowsScreenStrategy
-     * @param osxStrategy
-     * @param otherStrategy
      */
-    public AdaptiveFullScreenStrategy(FullScreenStrategy linuxStrategy, FullScreenStrategy windowsScreenStrategy, FullScreenStrategy osxStrategy, FullScreenStrategy otherStrategy) {
-        super(linuxStrategy, windowsScreenStrategy, osxStrategy, otherStrategy);
+    protected void onBeforeEnterFullScreen() {
+    }
+
+    /**
+     *
+     */
+    protected void onAfterExitFullScreen() {
+    }
+
+    private FullScreenStrategy getStrategy(Window window) {
+        if (RuntimeUtil.isNix()) {
+            return new XFullScreenStrategy(window);
+        } else if (RuntimeUtil.isWindows()) {
+            return new Win32FullScreenStrategy(window);
+        } else if (RuntimeUtil.isMac()) {
+            return new OsxFullScreenStrategy(window);
+        } else {
+            return new ExclusiveModeFullScreenStrategy(window);
+        }
     }
 
 }
