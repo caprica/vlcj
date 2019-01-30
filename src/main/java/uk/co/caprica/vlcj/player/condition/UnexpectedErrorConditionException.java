@@ -23,11 +23,5 @@ package uk.co.caprica.vlcj.player.condition;
  * Exception thrown when a media player condition instance triggers in response
  * to an error.
  */
-public class UnexpectedErrorConditionException extends RuntimeException {
-
-    /**
-     * Default serial version identifier.
-     */
-    private static final long serialVersionUID = 1L;
-
+public final class UnexpectedErrorConditionException extends RuntimeException {
 }
