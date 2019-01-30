@@ -111,7 +111,7 @@ final class MediaResourceLocator {
                     logger.debug("Ignoring MRL with scheme '{}'", scheme);
                 }
             }
-            catch(URISyntaxException e) {
+            catch (URISyntaxException e) {
                 // Can't do anything, return the original string
                 logger.debug("Can not obtain a valid URI from the MRL");
                 // On the inferior OS, sometimes an absolute local path with unicode characters must be encoded,
@@ -171,6 +171,6 @@ final class MediaResourceLocator {
         String result = new File(value).toURI().toASCIIString().replaceFirst("file:/", "file:///");
         logger.debug("result={}", result);
         return result;
-
     }
+
 }
