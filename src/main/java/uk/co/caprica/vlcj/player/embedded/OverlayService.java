@@ -109,7 +109,7 @@ public final class OverlayService extends BaseService {
             addOverlay(overlay);
         }
         else {
-            throw new IllegalStateException("Can't set an overlay when there's no video surface");
+            throw new IllegalStateException("Overlay requires a ComponentVideoSurface");
         }
     }
 
