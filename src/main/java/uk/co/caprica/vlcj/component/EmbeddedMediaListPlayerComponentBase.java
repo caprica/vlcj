@@ -29,6 +29,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 import java.awt.*;
 
+@SuppressWarnings("serial")
 abstract class EmbeddedMediaListPlayerComponentBase extends EmbeddedMediaPlayerComponent implements MediaListPlayerEventListener, MediaListEventListener {
 
     protected EmbeddedMediaListPlayerComponentBase(MediaPlayerFactory mediaPlayerFactory, Component videoSurfaceComponent, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, Window overlay) {

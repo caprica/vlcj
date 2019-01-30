@@ -53,7 +53,6 @@ public class Win32FullScreenPlayerTest extends VlcjTest {
         app = new Win32FullScreenPlayerTest(mrl);
     }
 
-    @SuppressWarnings("serial")
     public Win32FullScreenPlayerTest(String mrl) {
         frame = new JFrame("Win32 Full Screen Strategy");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -56,17 +56,13 @@ import com.sun.jna.platform.WindowUtils;
  * <p>
  * Best results will be obtained by <em>disabling</em> any compositing desktop window manager.
  */
+@SuppressWarnings("serial")
 public abstract class AbstractJWindowOverlayComponent extends JWindow {
 
     /**
      * Log.
      */
     private final Logger logger = LoggerFactory.getLogger(AbstractJWindowOverlayComponent.class);
-
-    /**
-     * Serial version.
-     */
-    private static final long serialVersionUID = 1L;
 
     /**
      * Current layout width.

@@ -26,6 +26,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 /**
  * Implementation of a video surface adapter for Windows.
  */
+@SuppressWarnings("serial")
 final public class WindowsVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
     @Override

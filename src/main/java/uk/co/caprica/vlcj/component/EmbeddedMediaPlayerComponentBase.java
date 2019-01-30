@@ -36,6 +36,7 @@ import java.awt.event.*;
  * Having this class saves cluttering the {@link EmbeddedMediaPlayerComponent} with all of these empty event listener
  * methods.
  */
+@SuppressWarnings("serial")
 abstract class EmbeddedMediaPlayerComponentBase extends Panel implements MediaPlayerEventListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener  {
 
     protected static final Spec spec() {

@@ -25,6 +25,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 /**
  * Implementation of a video surface adapter for Linux.
  */
+@SuppressWarnings("serial")
 final public class LinuxVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
     @Override

@@ -25,6 +25,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 /**
  * Implementation of a video surface adapter for Mac.
  */
+@SuppressWarnings("serial")
 final public class OsxVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
     @Override

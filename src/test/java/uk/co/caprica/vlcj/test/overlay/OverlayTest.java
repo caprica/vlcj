@@ -138,8 +138,6 @@ public class OverlayTest extends VlcjTest {
 
     private class Overlay extends Window {
 
-        private static final long serialVersionUID = 1L;
-
         public Overlay(Window owner) {
             super(owner, WindowUtils.getAlphaCompatibleGraphicsConfiguration());
 
@@ -174,8 +172,6 @@ public class OverlayTest extends VlcjTest {
     }
 
     private class TranslucentComponent extends JComponent {
-
-        private static final long serialVersionUID = 1L;
 
         public TranslucentComponent() {
             setOpaque(false);

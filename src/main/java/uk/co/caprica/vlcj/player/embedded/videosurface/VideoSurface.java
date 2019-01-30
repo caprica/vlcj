@@ -22,17 +22,10 @@ package uk.co.caprica.vlcj.player.embedded.videosurface;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
-import java.io.Serializable;
-
 /**
  * Encapsulation of a video surface.
  */
-public abstract class VideoSurface implements Serializable {
-
-    /**
-     * Serial version.
-     */
-    private static final long serialVersionUID = 1L;
+public abstract class VideoSurface {
 
     /**
      * Operating System specific video surface adapter implementation.

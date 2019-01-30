@@ -109,8 +109,6 @@ public class FullScreenMultiMediaTest extends VlcjTest {
         final List<File> files = scan(new File(args[0]));
 
         p.getActionMap().put("next", new AbstractAction() {
-            private static final long serialVersionUID = 1L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentIndex ++ ;

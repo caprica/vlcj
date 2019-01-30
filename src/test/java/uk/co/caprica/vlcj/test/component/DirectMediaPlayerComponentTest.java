@@ -180,6 +180,6 @@ public class DirectMediaPlayerComponentTest extends VlcjTest {
             panel.repaint();
         }
 
-    };
+    }
 
 }

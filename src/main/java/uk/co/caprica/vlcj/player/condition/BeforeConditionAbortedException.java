@@ -23,5 +23,6 @@ package uk.co.caprica.vlcj.player.condition;
  * Exception thrown when a media player condition instance triggers aborts by
  * returning <code>false</code> in an {@link Condition#onBefore()} implementation.
  */
+@SuppressWarnings("serial")
 public final class BeforeConditionAbortedException extends RuntimeException {
 }
