@@ -28,6 +28,7 @@ import java.util.List;
 
 // FIXME consider rename
 // FIXME really need to understand what's ref-counted when here... when adding / removing items
+// FIXME is this really MediaService?
 
 public class ItemService extends BaseService {
 
@@ -137,6 +138,7 @@ public class ItemService extends BaseService {
         }
     }
 
+    // FIXME....... it should return the same Media instance each time i think... that implies some sort of mirror'd list
     public Media getMedia(int index) {
         lock();
         try {
