@@ -238,7 +238,7 @@ public class AdaptiveLayoutTest extends VlcjTest {
         private final int rows;
         private final int cols;
 
-        private final List<Component> components;;
+        private final List<Component> components;
 
         private int focusIndex = -1;
 
