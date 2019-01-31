@@ -32,19 +32,8 @@ public final class SlaveService extends BaseService {
     /**
      * Add an input slave to the current media.
      * <p>
-     * The success of this call does not indicate that the slave being added is actually valid or not, it simply
-     * associates a slave URI with the current media player (for example, a sub-title file will not be parsed and
-     * checked for validity during this call).
-     * <p>
-     * If the URI represents a local file, it <em>must</em> be of the form "file://" otherwise it will not work, so this
-     * will work:
-     * <pre>
-     *     file:///home/movies/movie.srt
-     * </pre>
-     * This will not work:
-     * <pre>
-     *     file:/home/movies/movie.srt
-     * </pre>
+     * See {@link uk.co.caprica.vlcj.media.SlaveService#add(MediaSlaveType, int, String)} for further important
+     * information regarding this method.
      *
      * @param type type of slave to add
      * @param uri URI of the slave to add

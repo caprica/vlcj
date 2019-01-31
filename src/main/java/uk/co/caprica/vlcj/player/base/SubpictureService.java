@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import uk.co.caprica.vlcj.binding.NativeUri;
 import uk.co.caprica.vlcj.enums.MediaSlaveType;
 import uk.co.caprica.vlcj.model.TrackDescription;
 
@@ -94,23 +95,49 @@ public final class SubpictureService extends BaseService {
         libvlc.libvlc_video_set_spu_delay(mediaPlayerInstance, delay);
     }
 
-    // FIXME for now we will leave this as-is, but either we change this to support addSlave (like http: etc) or we keep it just for local files and always prepend "file:///" with Java7 we could use String uri = File.toPath().toUri().toString();
     /**
      * Set the sub-title file to use.
+     * <p>
+     * These sub-titles will be automatically selected.
+     * <p>
+     * This method is a convenience for {@link SlaveService#addSlave(MediaSlaveType, String, boolean)}.
      *
-     * @param subTitleFileName name of the file containing the sub-titles
+     * @param subTitleFileName name of the local file containing the sub-titles
+     * @return
      */
-    public void setSubTitleFile(String subTitleFileName) {
-        mediaPlayer.slave().addSlave(MediaSlaveType.SUBTITLE, subTitleFileName, true);
+    public boolean setSubTitleFile(String subTitleFileName) {
+        return setSubTitleUri(NativeUri.encodeUri(subTitleFileName));
     }
 
     /**
      * Set the sub-title file to use.
+     * <p>
+     * These sub-titles will be automatically selected.
+     * <p>
+     * This method is a convenience for {@link SlaveService#addSlave(MediaSlaveType, String, boolean)}.
      *
      * @param subTitleFile file containing the sub-titles
+     * @return
      */
-    public void setSubTitleFile(File subTitleFile) {
-        setSubTitleFile(String.format("file://%s", subTitleFile.getAbsolutePath()));
+    public boolean setSubTitleFile(File subTitleFile) {
+        return setSubTitleUri(NativeUri.encodeUri(subTitleFile.getAbsolutePath()));
+    }
+
+    /**
+     * Set sub-titles from a URI.
+     * <p>
+     * These sub-titles will be automatically selected.
+     * <p>
+     * This method is a convenience for {@link SlaveService#addSlave(MediaSlaveType, String, boolean)}.
+     * <p>
+     * See {@link uk.co.caprica.vlcj.media.SlaveService#add(MediaSlaveType, int, String)} for further important
+     * information regarding this method.
+     *
+     * @param uri
+     * @return
+     */
+    public boolean setSubTitleUri(String uri) {
+        return mediaPlayer.slave().addSlave(MediaSlaveType.SUBTITLE, uri, true);
     }
 
     /**

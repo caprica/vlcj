@@ -31,13 +31,31 @@ public class SlaveService extends BaseService {
         super(media);
     }
 
+    /**
+     * Add an input slave to the current media.
+     * <p>
+     * The success of this call does not indicate that the slave being added is actually valid or not, it simply
+     * associates a slave URI with the current media player (for example, a sub-title file will not be parsed and
+     * checked for validity during this call).
+     * <p>
+     * If the URI represents a local file, it <em>must</em> be of the form "file://" otherwise it will not work, so this
+     * will work:
+     * <pre>
+     *     file:///home/movies/movie.srt
+     * </pre>
+     * This will not work:
+     * <pre>
+     *     file:/home/movies/movie.srt
+     * </pre>
+     * <p>
+     * If you are using {@link File#toURI()} to generate your URI, this will not work as that method will most likely
+     * return the latter from the two above.
+     *
+     * @param type type of slave to add
+     * @param uri URI of the slave to add
+     * @return <code>true</code> on success; <code>false</code> otherwise
+     */
     public boolean add(MediaSlaveType type, int priority, String uri) {
-        uri = MediaResourceLocator.encodeMrl(uri); // FIXME check if needed, maybe factor out it its own thing, since this usage is not specifically an MRL
-        return libvlc.libvlc_media_slaves_add(mediaInstance, type.intValue(), priority, uri) == 0;
-    }
-
-    public boolean add(MediaSlaveType type, int priority, File file) {
-        String uri = String.format("file://%s", file.getAbsolutePath());
         return libvlc.libvlc_media_slaves_add(mediaInstance, type.intValue(), priority, uri) == 0;
     }
 
