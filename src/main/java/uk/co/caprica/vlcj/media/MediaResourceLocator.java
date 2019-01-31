@@ -85,14 +85,12 @@ final class MediaResourceLocator {
             try {
                 URI uri = new URI(mrl);
                 if (uri.getScheme() == null) {
-                    result = encode(mrl);
+                    result = toLocalFileUri(mrl);
                 }
             }
             catch (URISyntaxException e) {
                 if (RuntimeUtil.isWindows()) {
-                    if (isAbsolutePath(mrl)) {
-                        result = encode(mrl);
-                    }
+                    result = toLocalFileUri(mrl);
                 }
             }
         }
@@ -117,23 +115,37 @@ final class MediaResourceLocator {
     }
 
     /**
-     * Tests if the supplied value represents an absolute filesystem path.
-     *
-     * @param value value to test
-     * @return <code>true</code> if the supplied String represents an absolute filesystem path; <code>false</code> for a local path
-     */
-    private static boolean isAbsolutePath(String value) {
-        return new File(value).isAbsolute();
-    }
-
-    /**
      * Encode a string using ASCII escape sequences as necessary.
+     * <p>
+     * According to {@link File#toURI()} Javadoc, the format of the URI is system-dependent - this means that we can not
+     * rely on the file URI starting "file:/" (bad) or "file://" good, so we must account for either case.
+     * <p>
+     * With JDK 1.7+ we could have used the Path class to get a URI in the proper format.
+     * <p>
+     * Implementation notes:
+     * <p>
+     * The main concern is to check if the URI starts "file:/", or "file://", clearly care must be taken with this test,
+     * since the leading characters match, so we must base our condition on the longer string.
+     * <p>
+     * If the URI starts with "file://", we are done at this point and return.
+     * <p>
+     * If the URI starts with "file:/", as is almost certainly the case when using {@link File#toURI()}, then we apply a
+     * replacement by dropping "file:/" and adding "file:///" in its place. When replacing in this manner, a third slash
+     * is added to separate the unused "authority" part of the URI (this could in theory have been something like
+     * "file://localhost/path/file.ext", so we return it as "file:///path/file.ext" instead).
      *
      * @param value value to encode
      * @return encoded value
      */
-    private static String encode(String value) {
-        return new File(value).toURI().toASCIIString().replaceFirst("file:/", "file:///");
+    private static String toLocalFileUri(String value) {
+        String asciiString = new File(value).toURI().toASCIIString();
+        if (asciiString.startsWith("file://")) {
+            // URI already starts with "file://", so simply return the ASCII string
+            return asciiString;
+        } else {
+            // URI therefore starts by so replace the bad prefix with a proper one
+            return asciiString.replaceFirst("file:/", "file:///");
+        }
     }
 
 }
