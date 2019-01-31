@@ -24,9 +24,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
@@ -38,11 +35,6 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * This is essentially an internal class.
  */
 final class MediaResourceLocator {
-
-    /**
-     * Log.
-     */
-    private static final Logger logger = LoggerFactory.getLogger(MediaResourceLocator.class);
 
     /**
      * Simple pattern to detect locations.
@@ -88,34 +80,15 @@ final class MediaResourceLocator {
      * @return the original MRL if no encoding is required, or a percent-encoded file URL
      */
     static String encodeMrl(String mrl) {
-        // FIXME it may be possible that this can be simplified greatly, in particular it may not be necessary to use
-        //       the URI workaround for absolute paths on the inferior OS
-        logger.debug("encodeMrl(mrl={})", mrl);
-        // Assume no change needed
         String result = mrl;
-        // If the supplied MRL contains any Unicode characters...
         if (containsUnicode(mrl)) {
-            logger.debug("MRL contains Unicode characters");
             try {
                 URI uri = new URI(mrl);
-                logger.debug("uri={}", uri);
-                String scheme = uri.getScheme();
-                logger.debug("scheme={}", uri.getScheme());
-                // If there is no URI scheme, then this is a local file...
-                if (scheme == null) {
-                    logger.debug("MRL has no scheme, assuming a local file name that should be encoded");
-                    // Encode the local file as ASCII, and fix the scheme prefix
+                if (uri.getScheme() == null) {
                     result = encode(mrl);
-                }
-                else {
-                    logger.debug("Ignoring MRL with scheme '{}'", scheme);
                 }
             }
             catch (URISyntaxException e) {
-                // Can't do anything, return the original string
-                logger.debug("Can not obtain a valid URI from the MRL");
-                // On the inferior OS, sometimes an absolute local path with unicode characters must be encoded,
-                // relative paths do in fact work...
                 if (RuntimeUtil.isWindows()) {
                     if (isAbsolutePath(mrl)) {
                         result = encode(mrl);
@@ -123,10 +96,6 @@ final class MediaResourceLocator {
                 }
             }
         }
-        else {
-            logger.debug("MRL does not contain any Unicode characters");
-        }
-        logger.debug("result={}", result);
         return result;
     }
 
@@ -154,10 +123,7 @@ final class MediaResourceLocator {
      * @return <code>true</code> if the supplied String represents an absolute filesystem path; <code>false</code> for a local path
      */
     private static boolean isAbsolutePath(String value) {
-        logger.debug("isAbsolutePath(value={})", value);
-        boolean result = new File(value).isAbsolute();
-        logger.debug("result={}", result);
-        return result;
+        return new File(value).isAbsolute();
     }
 
     /**
@@ -167,10 +133,7 @@ final class MediaResourceLocator {
      * @return encoded value
      */
     private static String encode(String value) {
-        logger.debug("encode(value={})", value);
-        String result = new File(value).toURI().toASCIIString().replaceFirst("file:/", "file:///");
-        logger.debug("result={}", result);
-        return result;
+        return new File(value).toURI().toASCIIString().replaceFirst("file:/", "file:///");
     }
 
 }
