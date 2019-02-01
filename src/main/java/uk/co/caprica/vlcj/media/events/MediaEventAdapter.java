@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.model.Picture;
 
 public class MediaEventAdapter implements MediaEventListener {
 
@@ -52,6 +53,10 @@ public class MediaEventAdapter implements MediaEventListener {
 
     @Override
     public void mediaSubItemTreeAdded(Media media, libvlc_media_t item) {
+    }
+
+    @Override
+    public void mediaThumbnailGenerated(Media media, Picture picture) {
     }
 
 }

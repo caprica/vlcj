@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.model.Picture;
 
 public interface MediaEventListener {
 
@@ -80,5 +81,12 @@ public interface MediaEventListener {
      * @param item media item
      */
     void mediaSubItemTreeAdded(Media media, libvlc_media_t item);
+
+    /**
+     *
+     *  @param media
+     * @param picture
+     */
+    void mediaThumbnailGenerated(Media media, Picture picture);
 
 }
