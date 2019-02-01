@@ -32,7 +32,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import com.sun.jna.Native;

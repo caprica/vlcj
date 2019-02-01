@@ -63,10 +63,8 @@ import uk.co.caprica.vlcj.enums.MediaSlaveType;
 import uk.co.caprica.vlcj.enums.ParseFlag;
 import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.binding.support.size_t;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import com.sun.jna.Library;
-import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;

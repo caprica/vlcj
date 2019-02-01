@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.discovery.provider;
 
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 public class OsxWellKnownDirectoryProvider extends WellKnownDirectoryProvider {
 

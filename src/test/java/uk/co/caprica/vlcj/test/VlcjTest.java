@@ -23,7 +23,7 @@ import com.sun.jna.NativeLibrary;
 import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;

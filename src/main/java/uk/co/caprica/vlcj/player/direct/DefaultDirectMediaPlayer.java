@@ -31,7 +31,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.binding.support.size_t;
 import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.Semaphore;

@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.binding;
 
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;

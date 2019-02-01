@@ -24,7 +24,7 @@ import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveMode
 import uk.co.caprica.vlcj.player.embedded.fullscreen.osx.OsxFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.windows.Win32FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.x.XFullScreenStrategy;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 import java.awt.*;
 

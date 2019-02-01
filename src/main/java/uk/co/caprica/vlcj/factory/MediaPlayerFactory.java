@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
 
 import java.util.Collection;

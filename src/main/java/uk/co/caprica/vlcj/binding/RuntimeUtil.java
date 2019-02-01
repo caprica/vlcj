@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.runtime;
+package uk.co.caprica.vlcj.binding;
 
 /**
  * Crude heuristics to determine the current Operating System.

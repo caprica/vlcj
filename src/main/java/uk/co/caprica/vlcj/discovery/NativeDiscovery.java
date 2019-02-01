@@ -2,7 +2,7 @@ package uk.co.caprica.vlcj.discovery;
 
 import com.sun.jna.NativeLibrary;
 import uk.co.caprica.vlcj.discovery.strategy.*;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 /**
  * Native library discovery component.

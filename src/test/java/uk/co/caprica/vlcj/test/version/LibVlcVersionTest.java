@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.version;
 
 import com.sun.jna.Native;
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 import uk.co.caprica.vlcj.version.Version;
 

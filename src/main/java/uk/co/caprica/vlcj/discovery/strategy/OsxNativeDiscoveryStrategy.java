@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.discovery.strategy;
 import com.sun.jna.NativeLibrary;
 import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.discovery.provider.DirectoryProviderDiscoveryStrategy;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 public class OsxNativeDiscoveryStrategy extends DirectoryProviderDiscoveryStrategy {
 

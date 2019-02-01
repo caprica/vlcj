@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.discovery.strategy;
 
 import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.discovery.provider.DirectoryProviderDiscoveryStrategy;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 public class LinuxNativeDiscoveryStrategy extends DirectoryProviderDiscoveryStrategy {
 

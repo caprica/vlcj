@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.LinuxVideoSurfaceAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.OsxVideoSurfaceAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.WindowsVideoSurfaceAdapter;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 import java.awt.*;
 

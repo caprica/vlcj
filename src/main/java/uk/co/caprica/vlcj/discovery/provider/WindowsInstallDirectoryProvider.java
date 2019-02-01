@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.discovery.provider;
 
 import com.sun.jna.platform.win32.Advapi32Util;
 import com.sun.jna.platform.win32.WinReg;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 public class WindowsInstallDirectoryProvider implements DiscoveryDirectoryProvider {
 

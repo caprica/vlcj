@@ -22,7 +22,6 @@ package uk.co.caprica.vlcj.factory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.binding.LibX11;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import javax.swing.*;
 import java.awt.*;
