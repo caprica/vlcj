@@ -17,31 +17,21 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.binding.internal;
+package uk.co.caprica.vlcj.binding.support;
 
-import com.sun.jna.Structure;
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
+import com.sun.jna.ptr.ByReference;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+public class size_tByReference extends ByReference {
 
-/**
- *
- */
-public class media_thumbnail_generated extends Structure {
-
-    /**
-     *
-     */
-    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("p_thumbnail"));
-
-    /**
-     *
-     */
-    public libvlc_picture_t p_thumbnail;
-
-    @Override
-    protected List<String> getFieldOrder() {
-        return FIELD_ORDER;
+    public size_tByReference() {
+        super(Native.SIZE_T_SIZE);
     }
+
+    public size_t getValue() {
+        Pointer pointer = getPointer();
+        return new size_t(Native.SIZE_T_SIZE == 8 ? pointer.getLong(0) : pointer.getInt(0));
+    }
+
 }

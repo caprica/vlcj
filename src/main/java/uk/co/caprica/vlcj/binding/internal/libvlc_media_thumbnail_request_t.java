@@ -19,29 +19,11 @@
 
 package uk.co.caprica.vlcj.binding.internal;
 
-import com.sun.jna.Structure;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import com.sun.jna.PointerType;
 
 /**
  *
  */
-public class media_thumbnail_generated extends Structure {
+public class libvlc_media_thumbnail_request_t extends PointerType {
 
-    /**
-     *
-     */
-    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("p_thumbnail"));
-
-    /**
-     *
-     */
-    public libvlc_picture_t p_thumbnail;
-
-    @Override
-    protected List<String> getFieldOrder() {
-        return FIELD_ORDER;
-    }
 }
