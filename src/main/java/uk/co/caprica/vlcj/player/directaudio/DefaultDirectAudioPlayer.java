@@ -19,19 +19,10 @@
 
 package uk.co.caprica.vlcj.player.directaudio;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.internal.libvlc_audio_drain_cb;
-import uk.co.caprica.vlcj.binding.internal.libvlc_audio_flush_cb;
-import uk.co.caprica.vlcj.binding.internal.libvlc_audio_pause_cb;
-import uk.co.caprica.vlcj.binding.internal.libvlc_audio_play_cb;
-import uk.co.caprica.vlcj.binding.internal.libvlc_audio_resume_cb;
-import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
-
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.*;
+import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
 
 /**
  * Media player implementation that provides direct access to the audio buffer data.
@@ -53,11 +44,6 @@ import com.sun.jna.Pointer;
  * size" for a sample must also be considered.
  */
 public class DefaultDirectAudioPlayer extends DefaultEmbeddedMediaPlayer implements DirectAudioPlayer {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(DefaultDirectAudioPlayer.class);
 
     /**
      * Play callback.
@@ -133,7 +119,6 @@ public class DefaultDirectAudioPlayer extends DefaultEmbeddedMediaPlayer impleme
 
         @Override
         public void play(Pointer data, Pointer samples, int count, long pts) {
-            logger.trace("play(count={},pts={})", count, pts);
             audioCallback.play(DefaultDirectAudioPlayer.this, samples, count, pts);
         }
     }
@@ -145,7 +130,6 @@ public class DefaultDirectAudioPlayer extends DefaultEmbeddedMediaPlayer impleme
 
         @Override
         public void pause(Pointer data, long pts) {
-            logger.debug("pause(pts={})", pts);
             audioCallback.pause(DefaultDirectAudioPlayer.this, pts);
         }
     }
@@ -157,7 +141,6 @@ public class DefaultDirectAudioPlayer extends DefaultEmbeddedMediaPlayer impleme
 
         @Override
         public void resume(Pointer data, long pts) {
-            logger.debug("resume(pts={})", pts);
             audioCallback.resume(DefaultDirectAudioPlayer.this, pts);
         }
     }
@@ -169,7 +152,6 @@ public class DefaultDirectAudioPlayer extends DefaultEmbeddedMediaPlayer impleme
 
         @Override
         public void flush(Pointer data, long pts) {
-            logger.debug("flush(pts={})", pts);
             audioCallback.flush(DefaultDirectAudioPlayer.this, pts);
         }
     }
@@ -181,8 +163,8 @@ public class DefaultDirectAudioPlayer extends DefaultEmbeddedMediaPlayer impleme
 
         @Override
         public void drain(Pointer data) {
-            logger.debug("drain()");
             audioCallback.drain(DefaultDirectAudioPlayer.this);
         }
     }
+
 }
