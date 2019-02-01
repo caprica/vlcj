@@ -72,7 +72,7 @@ public class WindowSurfaceTest {
 
         factory = new MediaPlayerFactory();
         mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
-        window = new Window(frame); // What if JFrame was owner?
+        window = new Window(frame);
         window.setBackground(Color.black);
         videoSurface = factory.videoSurfaces().newVideoSurface(window);
         mediaPlayer.videoSurface().setVideoSurface(videoSurface);
