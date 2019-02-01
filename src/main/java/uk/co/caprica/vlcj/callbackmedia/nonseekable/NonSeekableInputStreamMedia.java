@@ -22,18 +22,10 @@ package uk.co.caprica.vlcj.callbackmedia.nonseekable;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Base implementation for non-seekable media using an {@link InputStream}.
  */
 public abstract class NonSeekableInputStreamMedia extends NonSeekableCallbackMedia {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(NonSeekableInputStreamMedia.class);
 
     /**
      * Input stream.
@@ -63,7 +55,6 @@ public abstract class NonSeekableInputStreamMedia extends NonSeekableCallbackMed
             return true;
         }
         catch (IOException e) {
-            logger.error("Failed to open stream", e);
             return false;
         }
     }

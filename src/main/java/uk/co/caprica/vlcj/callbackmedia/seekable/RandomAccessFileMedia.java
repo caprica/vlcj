@@ -24,18 +24,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Implementation of seekable media that uses a {@link RandomAccessFile}.
  */
 public class RandomAccessFileMedia extends SeekableCallbackMedia {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(RandomAccessFileMedia.class);
 
     /**
      * File to read media data from.
@@ -80,7 +72,6 @@ public class RandomAccessFileMedia extends SeekableCallbackMedia {
             return true;
         }
         catch (FileNotFoundException e) {
-            logger.error("File not found");
             return false;
         }
     }
