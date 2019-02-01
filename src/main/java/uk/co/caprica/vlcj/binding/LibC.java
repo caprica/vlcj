@@ -75,33 +75,6 @@ public interface LibC extends Library {
     int munlock(Pointer addr, NativeLong length);
 
     /**
-     * Open a stream for a file descriptor.
-     *
-     * @param filedes file descriptor
-     * @param mode open mode
-     * @return file descriptor; or <code>NULL</code>, setting <code>errno</code> to an error code
-     */
-    Pointer fdopen(int filedes, String mode);
-
-    /**
-     * Associate an existing stream to a new file.
-     *
-     * @param path new file path
-     * @param mode open mode
-     * @param stream file stream
-     * @return file descriptor; or <code>NULL</code>, setting <code>errno</code> to an error code
-     */
-    Pointer freopen(String path, String mode, Pointer stream);
-
-    /**
-     * Close a file stream.
-     *
-     * @param stream stream
-     * @return 0 if successful; -1 if not, setting <code>errno</code> to an error code
-     */
-    int fclose(Pointer stream);
-
-    /**
      * Change or add an evironment variable.
      * <p>
      * The value strings are copied (natively).
