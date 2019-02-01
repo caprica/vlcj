@@ -52,13 +52,16 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_seek_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_picture_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_thumbnail_request_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
+import uk.co.caprica.vlcj.binding.support.size_tByReference;
 import uk.co.caprica.vlcj.enums.MediaSlaveType;
 import uk.co.caprica.vlcj.enums.ParseFlag;
 import uk.co.caprica.vlcj.enums.State;
@@ -722,6 +725,62 @@ public interface LibVlc extends Library {
     int libvlc_media_get_type(libvlc_media_t p_md);
 
     /**
+     * Start an asynchronous thumbnail generation
+     *
+     * If the request is successfuly queued, the libvlc_MediaThumbnailGenerated
+     * is guaranteed to be emited.
+     *
+     * @param md media descriptor object
+     * @param time The time at which the thumbnail should be generated
+     * @param speed The seeking speed \sa{libvlc_thumbnailer_seek_speed_t}
+     * @param width The thumbnail width
+     * @param height the thumbnail height
+     * @param picture_type The thumbnail picture type \sa{libvlc_picture_type_t}
+     * @param timeout A timeout value in ms, or 0 to disable timeout
+     *
+     * @return A valid opaque request object, or NULL in case of failure.
+     *
+     * @since libvlc 4.0 or later
+     *
+     * @see libvlc_picture_t
+     * @see libvlc_picture_type_t
+     */
+    libvlc_media_thumbnail_request_t libvlc_media_thumbnail_request_by_time(libvlc_media_t md, long time, int speed, int width, int height, int picture_type, long timeout);
+
+    /**
+     * Start an asynchronous thumbnail generation
+     *
+     * If the request is successfuly queued, the libvlc_MediaThumbnailGenerated
+     * is guaranteed to be emited.
+     *
+     * @param md media descriptor object
+     * @param pos The position at which the thumbnail should be generated
+     * @param speed The seeking speed \sa{libvlc_thumbnailer_seek_speed_t}
+     * @param width The thumbnail width
+     * @param height the thumbnail height
+     * @param picture_type The thumbnail picture type \sa{libvlc_picture_type_t}
+     * @param timeout A timeout value in ms, or 0 to disable timeout
+     *
+     * @return A valid opaque request object, or NULL in case of failure.
+     *
+     * @since libvlc 4.0 or later
+     *
+     * @see libvlc_picture_t
+     * @see libvlc_picture_type_t
+     */
+    libvlc_media_thumbnail_request_t libvlc_media_thumbnail_request_by_pos(libvlc_media_t md, float pos, int speed, int width, int height, int picture_type, long timeout);
+
+    /**
+     * @brief libvlc_media_thumbnail_cancel cancels a thumbnailing request
+     * @param p_req An opaque thumbnail request object.
+     *
+     * Cancelling the request will still cause libvlc_MediaThumbnailGenerated event
+     * to be emited, with a NULL libvlc_picture_t
+     * If the request is cancelled after its completion, the behavior is undefined.
+     */
+    void libvlc_media_thumbnail_cancel(libvlc_media_thumbnail_request_t p_req);
+
+    /**
      * Get codec description from media elementary stream.
      *
      * @param i_type i_type from libvlc_media_track_t
@@ -1091,8 +1150,11 @@ public interface LibVlc extends Library {
     long libvlc_media_player_get_time(libvlc_media_player_t p_mi);
 
     /**
-     * Set the movie time (in ms). This has no effect if no media is being played. Not all formats
-     * and protocols support this.
+     * Set the movie time (in ms).
+     * <p>
+     * This has no effect if no media is being played.
+     * <p>
+     * Not all formats and protocols support this.
      *
      * @param p_mi the Media Player
      * @param i_time the movie time (in ms).
@@ -1108,8 +1170,11 @@ public interface LibVlc extends Library {
     float libvlc_media_player_get_position(libvlc_media_player_t p_mi);
 
     /**
-     * Set movie position. This has no effect if playback is not enabled. This might not work
-     * depending on the underlying input format and protocol.
+     * Set movie position as percentage between 0.0 and 1.0.
+     * <p>
+     * This has no effect if playback is not enabled.
+     * <p>
+     * This might not work depending on the underlying input format and protocol.
      *
      * @param p_mi the Media Player
      * @param f_pos the position
@@ -2841,5 +2906,84 @@ public interface LibVlc extends Library {
     void libvlc_renderer_discoverer_list_release(Pointer pp_services, size_t i_count);
 
     // === libvlc_renderer_discoverer.h =========================================
+
+    // === libvlc_picture.h =====================================================
+
+    /**
+     * Increment the reference count of this picture.
+     *
+     * @see libvlc_picture_release()
+     * @param pic A picture object
+     */
+    void libvlc_picture_retain(libvlc_picture_t pic);
+
+    /**
+     * Decrement the reference count of this picture.
+     * When the reference count reaches 0, the picture will be released.
+     * The picture must not be accessed after calling this function.
+     *
+     * @see libvlc_picture_retain
+     * @param pic A picture object
+     */
+    void libvlc_picture_release(libvlc_picture_t pic);
+
+    /**
+     * Saves this picture to a file. The image format is the same as the one
+     * returned by \link libvlc_picture_type \endlink
+     *
+     * @param pic A picture object
+     * @param path The path to the generated file
+     * @return 0 in case of success, -1 otherwise
+     */
+    int libvlc_picture_save(libvlc_picture_t pic, String path);
+
+    /**
+     * Returns the image internal buffer, including potential padding.
+     * The libvlc_picture_t owns the returned buffer, which must not be modified nor
+     * freed.
+     *
+     * @param pic A picture object
+     * @param size A pointer to a size_t that will hold the size of the buffer [required]
+     * @return A pointer to the internal buffer.
+     */
+    Pointer libvlc_picture_get_buffer(libvlc_picture_t pic, size_tByReference size);
+
+    /**
+     * Returns the picture type
+     *
+     * @param pic A picture object
+     * @see libvlc_picture_type_t
+     */
+    int libvlc_picture_type(libvlc_picture_t pic);
+
+    /**
+     * Returns the image stride, ie. the number of bytes per line.
+     * This can only be called on images of type libvlc_picture_Argb
+     *
+     * @param pic A picture object
+     */
+    int libvlc_picture_get_stride(libvlc_picture_t pic);
+
+    /**
+     * Returns the width of the image in pixels
+     *
+     * @param pic A picture object
+     */
+    int libvlc_picture_get_width(libvlc_picture_t pic);
+
+    /**
+     * Returns the height of the image in pixels
+     *
+     * @param pic A picture object
+     */
+    int libvlc_picture_get_height(libvlc_picture_t pic);
+
+    /**
+     * Returns the time at which this picture was generated, in milliseconds
+     * @param pic A picture object
+     */
+    long libvlc_picture_get_time(libvlc_picture_t pic);
+
+    // === libvlc_picture.h =====================================================
 
 }
