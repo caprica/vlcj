@@ -19,13 +19,10 @@
 
 package uk.co.caprica.vlcj.player.embedded.fullscreen.x;
 
-import java.awt.Window;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
+
+import java.awt.*;
 
 /**
  * Implementation of a full-screen strategy that attempts to use the native X11 window manager.
@@ -34,11 +31,6 @@ import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
  * see {@link EmbeddedMediaPlayer#setOverlay(Window)}.
  */
 public class XFullScreenStrategy implements FullScreenStrategy {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(XFullScreenStrategy.class);
 
     /**
      * The component that will be made full-screen.
@@ -56,7 +48,6 @@ public class XFullScreenStrategy implements FullScreenStrategy {
      * @param window component that will be made full-screen
      */
     public XFullScreenStrategy(Window window) {
-        logger.debug("ExclusiveModeFullScreenStrategy(window={})", window);
         if (window != null) {
             this.window = window;
         }
@@ -67,7 +58,6 @@ public class XFullScreenStrategy implements FullScreenStrategy {
 
     @Override
     public final void enterFullScreenMode() {
-        logger.debug("enterFullScreenMode()");
         onBeforeEnterFullScreenMode();
         XFullScreenHandler.setFullScreenWindow(window, true);
         isFullScreenMode = true;
@@ -75,7 +65,6 @@ public class XFullScreenStrategy implements FullScreenStrategy {
 
     @Override
     public final void exitFullScreenMode() {
-        logger.debug("exitFullScreenMode()");
         XFullScreenHandler.setFullScreenWindow(window, false);
         isFullScreenMode = false;
         onAfterExitFullScreenMode();
@@ -83,7 +72,6 @@ public class XFullScreenStrategy implements FullScreenStrategy {
 
     @Override
     public final boolean isFullScreenMode() {
-        logger.debug("isFullScreenMode()");
         return isFullScreenMode;
     }
 

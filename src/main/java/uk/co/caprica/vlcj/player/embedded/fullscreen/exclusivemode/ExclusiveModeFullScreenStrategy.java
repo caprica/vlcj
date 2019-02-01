@@ -19,15 +19,9 @@
 
 package uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode;
 
-import java.awt.DisplayMode;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Window;
-import java.util.Arrays;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
+
+import java.awt.*;
 
 /**
  * Default implementation of a full-screen strategy that attempts to use the JDK full-screen
@@ -49,11 +43,6 @@ import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 public class ExclusiveModeFullScreenStrategy implements FullScreenStrategy {
 
     /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(ExclusiveModeFullScreenStrategy.class);
-
-    /**
      * The component that will be made full-screen.
      */
     private final Window window;
@@ -64,7 +53,6 @@ public class ExclusiveModeFullScreenStrategy implements FullScreenStrategy {
      * @param window component that will be made full-screen
      */
     public ExclusiveModeFullScreenStrategy(Window window) {
-        logger.debug("ExclusiveModeFullScreenStrategy(window={})", window);
         if (window != null) {
             this.window = window;
         }
@@ -75,34 +63,25 @@ public class ExclusiveModeFullScreenStrategy implements FullScreenStrategy {
 
     @Override
     public void enterFullScreenMode() {
-        logger.debug("enterFullScreenMode()");
         GraphicsDevice graphicsDevice = getScreenDevice();
-        logger.debug("graphicsDevice={}", graphicsDevice);
-        boolean fullScreenSupported = graphicsDevice.isFullScreenSupported();
-        logger.debug("fullScreenSupported={}", fullScreenSupported);
-        onBeforeEnterFullScreenMode();
-        graphicsDevice.setFullScreenWindow(window);
-        DisplayMode displayMode = getDisplayMode(graphicsDevice.getDisplayModes());
-        logger.debug("displayMode={}", displayMode);
-        if (displayMode != null) {
-            logger.debug("Setting new display mode");
-            graphicsDevice.setDisplayMode(displayMode);
-        }
-        else {
-            logger.debug("Using default display mode");
+        if (graphicsDevice.isFullScreenSupported()) {
+            onBeforeEnterFullScreenMode();
+            graphicsDevice.setFullScreenWindow(window);
+            DisplayMode displayMode = getDisplayMode(graphicsDevice.getDisplayModes());
+            if (displayMode != null) {
+                graphicsDevice.setDisplayMode(displayMode);
+            }
         }
     }
 
     @Override
     public void exitFullScreenMode() {
-        logger.debug("exitFullScreenMode()");
         getScreenDevice().setFullScreenWindow(null);
         onAfterExitFullScreenMode();
     }
 
     @Override
     public boolean isFullScreenMode() {
-        logger.debug("isFullScreenMode()");
         return getScreenDevice().getFullScreenWindow() != null;
     }
 
@@ -114,7 +93,6 @@ public class ExclusiveModeFullScreenStrategy implements FullScreenStrategy {
      * @return screen device, must not be <code>null</code>
      */
     protected GraphicsDevice getScreenDevice() {
-        logger.debug("getScreenDevice()");
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     }
 
@@ -127,7 +105,6 @@ public class ExclusiveModeFullScreenStrategy implements FullScreenStrategy {
      * @return display mode, may be <code>null</code>
      */
     protected DisplayMode getDisplayMode(DisplayMode[] displayModes) {
-        logger.debug("getDisplayMode()", Arrays.toString(displayModes));
         return null;
     }
 
