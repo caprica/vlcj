@@ -19,18 +19,12 @@
 
 package uk.co.caprica.vlcj.component;
 
-import java.util.Arrays;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.sun.jna.Memory;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
-
-import com.sun.jna.Memory;
 
 /**
  * Encapsulation of a direct-rendering media player.

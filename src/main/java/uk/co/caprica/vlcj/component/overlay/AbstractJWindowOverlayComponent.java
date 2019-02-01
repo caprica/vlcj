@@ -19,26 +19,12 @@
 
 package uk.co.caprica.vlcj.component.overlay;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.Toolkit;
-import java.awt.Window;
+import com.sun.jna.platform.WindowUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Method;
-import java.util.Properties;
-
-import javax.swing.JWindow;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.sun.jna.platform.WindowUtils;
 
 /**
  * Base implementation for a video overlay component.
@@ -58,11 +44,6 @@ import com.sun.jna.platform.WindowUtils;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractJWindowOverlayComponent extends JWindow {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(AbstractJWindowOverlayComponent.class);
 
     /**
      * Current layout width.
@@ -125,7 +106,6 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
                 setWindowOpaqueMethod.invoke(null, this, false);
             }
             catch(Exception e) {
-                logger.debug("No apparent support for transparent windows", e.getMessage());
                 // Fall-back, this is the best that can be done
                 setBackground(new Color(0, 0, 0, 0));
             }
