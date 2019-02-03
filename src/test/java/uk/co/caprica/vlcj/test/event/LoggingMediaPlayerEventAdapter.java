@@ -19,12 +19,9 @@
 
 package uk.co.caprica.vlcj.test.event;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Implementation of a {@link MediaPlayerEventListener} that logs all invocations.
@@ -33,151 +30,144 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  */
 public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener {
 
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(LoggingMediaPlayerEventAdapter.class);
-
-    // === Events relating to the media player ==================================
-
     @Override
     public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
-        logger.debug("mediaChanged(mediaPlayer={},media={})", mediaPlayer, media);
+        System.out.printf("mediaChanged(mediaPlayer=%s,media=%s)%n", mediaPlayer, media);
     }
 
     @Override
     public void opening(MediaPlayer mediaPlayer) {
-        logger.debug("opening(mediaPlayer={})", mediaPlayer);
+        System.out.printf("opening(mediaPlayer=%s)%n", mediaPlayer);
     }
 
     @Override
     public void buffering(MediaPlayer mediaPlayer, float newCache) {
-        logger.debug("buffering(mediaPlayer={},newCache={})", mediaPlayer, newCache);
+        System.out.printf("buffering(mediaPlayer=%s,newCache=%f)%n", mediaPlayer, newCache);
     }
 
     @Override
     public void playing(MediaPlayer mediaPlayer) {
-        logger.debug("playing(mediaPlayer={})", mediaPlayer);
+        System.out.printf("playing(mediaPlayer=%s)%n", mediaPlayer);
     }
 
     @Override
     public void paused(MediaPlayer mediaPlayer) {
-        logger.debug("paused(mediaPlayer={})", mediaPlayer);
+        System.out.printf("paused(mediaPlayer=%s)%n", mediaPlayer);
     }
 
     @Override
     public void stopped(MediaPlayer mediaPlayer) {
-        logger.debug("stopped(mediaPlayer={})", mediaPlayer);
+        System.out.printf("stopped(mediaPlayer=%s)%n", mediaPlayer);
     }
 
     @Override
     public void forward(MediaPlayer mediaPlayer) {
-        logger.debug("forward(mediaPlayer={}", mediaPlayer);
+        System.out.printf("forward(mediaPlayer=%s%n", mediaPlayer);
     }
 
     @Override
     public void backward(MediaPlayer mediaPlayer) {
-        logger.debug("backward(mediaPlayer={}", mediaPlayer);
+        System.out.printf("backward(mediaPlayer=%s%n", mediaPlayer);
     }
 
     @Override
     public void finished(MediaPlayer mediaPlayer) {
-        logger.debug("finished(mediaPlayer={}", mediaPlayer);
+        System.out.printf("finished(mediaPlayer=%s%n", mediaPlayer);
     }
 
     @Override
     public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-        logger.debug("timeChanged(mediaPlayer={},newTime={})", mediaPlayer, newTime);
+        System.out.printf("timeChanged(mediaPlayer=%s,newTime=%d)%n", mediaPlayer, newTime);
     }
 
     @Override
     public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
-        logger.debug("positionChanged(mediaPlayer={},newPosition={})", mediaPlayer, newPosition);
+        System.out.printf("positionChanged(mediaPlayer=%s,newPosition=%f)%n", mediaPlayer, newPosition);
     }
 
     @Override
     public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-        logger.debug("seekableChanged(mediaPlayer={},newSeekable={})", mediaPlayer, newSeekable);
+        System.out.printf("seekableChanged(mediaPlayer=%s,newSeekable=%d)%n", mediaPlayer, newSeekable);
     }
 
     @Override
     public void pausableChanged(MediaPlayer mediaPlayer, int newPausable) {
-        logger.debug("pausableChanged(mediaPlayer={},newPausable={})", mediaPlayer, newPausable);
+        System.out.printf("pausableChanged(mediaPlayer=%s,newPausable=%d)%n", mediaPlayer, newPausable);
     }
 
     @Override
     public void titleChanged(MediaPlayer mediaPlayer, int newTitle) {
-        logger.debug("titleChanged(mediaPlayer={},newTitle={})", mediaPlayer, newTitle);
+        System.out.printf("titleChanged(mediaPlayer=%s,newTitle=%d)%n", mediaPlayer, newTitle);
     }
 
     @Override
     public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
-        logger.debug("snapshotTaken(mediaPlayer={},filename={})", mediaPlayer, filename);
+        System.out.printf("snapshotTaken(mediaPlayer=%s,filename=%s)%n", mediaPlayer, filename);
     }
 
     @Override
     public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
-        logger.debug("timeChanged(mediaPlayer={},newLength={})", mediaPlayer, newLength);
+        System.out.printf("timeChanged(mediaPlayer=%s,newLength=%d)%n", mediaPlayer, newLength);
     }
 
     @Override
     public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-        logger.debug("videoOutput(mediaPlayer={},newCount={})", mediaPlayer, newCount);
+        System.out.printf("videoOutput(mediaPlayer=%s,newCount=%d)%n", mediaPlayer, newCount);
     }
 
     @Override
     public void scrambledChanged(MediaPlayer mediaPlayer, int newScrambled) {
-        logger.debug("scrambledChanged(mediaPlayer={},newScrambled={})", mediaPlayer, newScrambled);
+        System.out.printf("scrambledChanged(mediaPlayer=%s,newScrambled=%d)%n", mediaPlayer, newScrambled);
     }
 
     @Override
     public void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id) {
-        logger.debug("elementaryStreamAdded(mediaPlayer={},type={},id={})", mediaPlayer, type, id);
+        System.out.printf("elementaryStreamAdded(mediaPlayer=%s,type=%d,id=%d)%n", mediaPlayer, type, id);
     }
 
     @Override
     public void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id) {
-        logger.debug("elementaryStreamDeleted(mediaPlayer={},type={},id={})", mediaPlayer, type, id);
+        System.out.printf("elementaryStreamDeleted(mediaPlayer=%s,type=%d,id=%d)%n", mediaPlayer, type, id);
     }
 
     @Override
     public void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id) {
-        logger.debug("elementaryStreamSelected(mediaPlayer={},type={},id={})", mediaPlayer, type, id);
+        System.out.printf("elementaryStreamSelected(mediaPlayer=%s,type=%d,id=%d)%n", mediaPlayer, type, id);
     }
 
     @Override
     public void corked(MediaPlayer mediaPlayer, boolean corked) {
-        logger.debug("corked(mediaPlayer={},corked={})", mediaPlayer, corked);
+        System.out.printf("corked(mediaPlayer=%s,corked=%s)%n", mediaPlayer, corked);
     }
 
     @Override
     public void muted(MediaPlayer mediaPlayer, boolean muted) {
-        logger.debug("muted(mediaPlayer={},muted={})", mediaPlayer, muted);
+        System.out.printf("muted(mediaPlayer=%s,muted=%s)%n", mediaPlayer, muted);
     }
 
     @Override
     public void volumeChanged(MediaPlayer mediaPlayer, float volume) {
-        logger.debug("volumeChanged(mediaPlayer={},volume={})", mediaPlayer, volume);
+        System.out.printf("volumeChanged(mediaPlayer=%s,volume=%f)%n", mediaPlayer, volume);
     }
 
     @Override
     public void audioDeviceChanged(MediaPlayer mediaPlayer, String audioDevice) {
-        logger.debug("audioDeviceChanged(mediaPlayer={},audioDevice={})", mediaPlayer, audioDevice);
+        System.out.printf("audioDeviceChanged(mediaPlayer=%s,audioDevice=%s)%n", mediaPlayer, audioDevice);
     }
 
     @Override
     public void chapterChanged(MediaPlayer mediaPlayer, int newChapter) {
-        logger.debug("chapterChanged(mediaPlayer={},newChapter={})", mediaPlayer, newChapter);
+        System.out.printf("chapterChanged(mediaPlayer=%s,newChapter=%d)%n", mediaPlayer, newChapter);
     }
 
     @Override
     public void error(MediaPlayer mediaPlayer) {
-        logger.debug("error(mediaPlayer={})", mediaPlayer);
+        System.out.printf("error(mediaPlayer=%s)%n", mediaPlayer);
     }
 
     @Override
     public void mediaPlayerReady(MediaPlayer mediaPlayer) {
-        logger.debug("ready(mediaPlayer={})", mediaPlayer);
+        System.out.printf("ready(mediaPlayer=%s)%n", mediaPlayer);
     }
 
 }
