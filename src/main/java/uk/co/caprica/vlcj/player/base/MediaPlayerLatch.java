@@ -22,8 +22,6 @@ package uk.co.caprica.vlcj.player.base;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 
 /**
@@ -58,11 +56,6 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 final class MediaPlayerLatch {
 
     /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(MediaPlayerLatch.class);
-
-    /**
      * Media player instance.
      */
     private final MediaPlayer mediaPlayer;
@@ -84,31 +77,24 @@ final class MediaPlayerLatch {
      *          <em>might</em> still start)
      */
     boolean play() {
-        logger.debug("play()");
         // If the media player is already playing, then the latch will wait for an event that
         // will never arrive and so will block incorrectly
-        if(!mediaPlayer.status().isPlaying()) {
+        if (!mediaPlayer.status().isPlaying()) {
             CountDownLatch latch = new CountDownLatch(1);
             LatchListener listener = new LatchListener(latch);
             mediaPlayer.events().addMediaPlayerEventListener(listener);
             mediaPlayer.controls().play();
             try {
-                logger.debug("Waiting for media playing or error...");
                 latch.await();
-                logger.debug("Finished waiting.");
-                boolean started = listener.playing.get();
-                logger.debug("started={}", started);
-                return started;
+                return listener.playing.get();
             }
             catch(InterruptedException e) {
-                logger.debug("Interrupted while waiting for media player", e);
                 return false;
             }
             finally {
                 mediaPlayer.events().removeMediaPlayerEventListener(listener);
             }
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -149,4 +135,5 @@ final class MediaPlayerLatch {
             latch.countDown();
         }
     }
+
 }
