@@ -50,12 +50,6 @@ public class ThumbsTest extends VlcjTest {
         "--intf", "dummy",          /* no interface */
         "--vout", "dummy",          /* we don't want video (output) */
         "--no-audio",               /* we don't want audio (decoding) */
-        "--no-osd",
-        "--no-spu",
-        "--no-statistics",               /* no statistics */
-        "--no-sub-autodetect-file", /* we don't want subtitles */
-        "--no-inhibit",             /* we don't want interfaces */
-        "--no-disable-screensaver", /* we don't want interfaces */
         "--no-snapshot-preview",    /* no blending in dummy vout */
     };
 
@@ -93,15 +87,15 @@ public class ThumbsTest extends VlcjTest {
             }
         });
 
-//        if(mediaPlayer.media().startMedia(mrl)) {
-//            mediaPlayer.controls().setPosition(VLC_THUMBNAIL_POSITION);
-//            inPositionLatch.await(); // Might wait forever if error
-//
-//            mediaPlayer.snapshots().saveSnapshot(snapshotFile, imageWidth, 0);
-//            snapshotTakenLatch.await(); // Might wait forever if error
-//
-//            mediaPlayer.controls().stop();
-//FIXME        }
+        if (mediaPlayer.media().startMedia(mrl)) {
+            mediaPlayer.controls().setPosition(VLC_THUMBNAIL_POSITION);
+            inPositionLatch.await(); // Might wait forever if error
+
+            mediaPlayer.snapshots().saveSnapshot(snapshotFile, imageWidth, 0);
+            snapshotTakenLatch.await(); // Might wait forever if error
+
+            mediaPlayer.controls().stop();
+        }
 
         mediaPlayer.release();
         factory.release();

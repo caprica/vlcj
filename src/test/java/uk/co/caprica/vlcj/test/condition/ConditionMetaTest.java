@@ -21,20 +21,18 @@ package uk.co.caprica.vlcj.test.condition;
 
 import java.io.File;
 
+import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.model.MetaData;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.condition.Condition;
-import uk.co.caprica.vlcj.player.condition.conditions.ParsedCondition;
+import uk.co.caprica.vlcj.player.condition.media.ParsedCondition;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
- * Demonstration of the synchronous approach to media player programming when
- * using media player condition objects.
+ * Demonstration of the synchronous approach to media player programming when using media player conditional waiter
+ * objects.
  * <p>
  * This example asynchronously parses the media to get available meta data.
- * <p>
- * This is only useful as an example - in practical terms it is much simpler to
- * use the synchronous {@link MediaPlayer#parseMedia()} method.
  * <p>
  * Specify the MRL for the media on the command line.
  */
@@ -45,15 +43,11 @@ public class ConditionMetaTest extends VlcjTest {
         "--intf", "dummy",          /* no interface */
         "--vout", "dummy",          /* we don't want video (output) */
         "--no-audio",               /* we don't want audio (decoding) */
-        "--no-statistics",               /* no statistics */
-        "--no-sub-autodetect-file", /* we don't want subtitles */
-        "--no-inhibit",             /* we don't want interfaces */
-        "--no-disable-screensaver", /* we don't want interfaces */
         "--no-snapshot-preview",    /* no blending in dummy vout */
     };
 
     public static void main(String[] args) throws Exception {
-        if(args.length != 1) {
+        if (args.length != 1) {
             System.err.println("Usage: <mrl>");
             System.exit(1);
         }
@@ -61,13 +55,13 @@ public class ConditionMetaTest extends VlcjTest {
         final String mrl = args[0];
 
         final MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
-        MediaPlayer mediaPlayer = factory.mediaPlayers().newMediaPlayer();
+        final MediaPlayer mediaPlayer = factory.mediaPlayers().newMediaPlayer();
 
         mediaPlayer.snapshots().setSnapshotDirectory(new File(".").getAbsolutePath());
 
         // The sequence for getting the meta is...
         //
-        // Start the media and wait for it to play
+        // Play the media
         // Wait for parsed condition
         //
         // There is a small overhead of actually having to start the media - but
@@ -75,32 +69,31 @@ public class ConditionMetaTest extends VlcjTest {
         // audio and video outputs so there will be no visible/audible sign of
         // the media playing
 
-        Condition<Integer> parsedCondition = new ParsedCondition(mediaPlayer) {
+        mediaPlayer.media().prepareMedia(mrl);
+
+        Media media = mediaPlayer.media().get();
+
+        ParsedCondition parsedCondition = new ParsedCondition(media) {
             @Override
-            protected boolean onBefore() {
+            protected boolean onBefore(Media media) {
                 // Some media, such as mpg, must be played before all meta data (e.g. duration) is available
-                mediaPlayer.media().startMedia(mrl); // "start" waits until the media is playing before returning
+                mediaPlayer.controls().play();
                 mediaPlayer.media().get().parsing().parse(); // asynchronous invocation
                 return true;
             }
 
             @Override
-            protected void onAfter(Integer result) {
+            protected void onAfter(Media media, Object result) {
                 mediaPlayer.controls().stop();
             }
         };
         parsedCondition.await();
 
-        // This is functionally equivalent to the simpler synchronous version:
-        /*
-        mediaPlayer.startMedia(mrl);  // "start" waits until the media is playing before returning
-        mediaPlayer.parseMedia(); // synchronous invocation
-        mediaPlayer.stop();
-        */
-
-//FIXME        System.out.println(mediaPlayer.meta().getMediaMeta());
+        MetaData metaData = mediaPlayer.media().get().meta().asMetaData();
+        System.out.println(metaData);
 
         mediaPlayer.release();
         factory.release();
     }
+
 }

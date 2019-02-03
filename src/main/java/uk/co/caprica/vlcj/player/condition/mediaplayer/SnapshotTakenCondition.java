@@ -17,37 +17,28 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.conditions;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package uk.co.caprica.vlcj.player.condition.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.condition.DefaultCondition;
 
 /**
  * Implementation of a condition that waits for the media player to report that
- * media has been parsed.
+ * it has finished taking a snapshot.
  */
-public class ParsedCondition extends DefaultCondition<Integer> {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(ParsedCondition.class);
+public class SnapshotTakenCondition extends MediaPlayerCondition<String> {
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
      */
-    public ParsedCondition(MediaPlayer mediaPlayer) {
+    public SnapshotTakenCondition(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 
-//    @Override
-//    public final void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-//        logger.debug("mediaParsedChange(mediaPlayer={},newStatus={})", mediaPlayer, newStatus);
-//        ready(newStatus);
-//    } // FIXME
+    @Override
+    public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
+        ready(filename);
+    }
+
 }

@@ -17,37 +17,37 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.conditions;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package uk.co.caprica.vlcj.player.condition.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.condition.Condition;
 
 /**
  * Implementation of a condition that waits for the media player to report that
- * it has finished taking a snapshot.
+ * it has reached/passed a particular position.
  */
-public class SnapshotTakenCondition extends Condition<String> {
+public class PositionReachedCondition extends MediaPlayerCondition<Float> {
 
     /**
-     * Log.
+     * Target position (percentage, 0.0 to 1.0).
      */
-    private final Logger logger = LoggerFactory.getLogger(SnapshotTakenCondition.class);
+    protected final float targetPosition;
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
+     * @param targetPosition target position (percentage, 0.0 to 1.0)
      */
-    public SnapshotTakenCondition(MediaPlayer mediaPlayer) {
+    public PositionReachedCondition(MediaPlayer mediaPlayer, float targetPosition) {
         super(mediaPlayer);
+        this.targetPosition = targetPosition;
     }
 
     @Override
-    public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
-        logger.debug("snapshotTaken(mediaPlayer={},filename={})", mediaPlayer, filename);
-        ready(filename);
+    public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
+        if (newPosition >= targetPosition) {
+            ready(targetPosition);
+        }
     }
+
 }

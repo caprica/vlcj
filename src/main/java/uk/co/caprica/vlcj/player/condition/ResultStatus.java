@@ -20,13 +20,23 @@
 package uk.co.caprica.vlcj.player.condition;
 
 /**
- * Exception thrown when a media player condition instance triggers in response to the media finishing (reaching the
- * end) unexpectedly before the conditional wait is satisfied.
+ * Enumeration of result status.
  */
-@SuppressWarnings("serial")
-public final class UnexpectedFinishedConditionException extends RuntimeException {
+enum ResultStatus {
 
-    UnexpectedFinishedConditionException() {
-    }
+    /**
+     * Processing completed normally.
+     */
+    NORMAL,
+
+    /**
+     * An error occurred.
+     */
+    ERROR,
+
+    /**
+     * The media finished unexpectedly.
+     */
+    FINISHED
 
 }

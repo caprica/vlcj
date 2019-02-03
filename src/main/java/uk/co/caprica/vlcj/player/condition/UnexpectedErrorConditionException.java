@@ -20,9 +20,12 @@
 package uk.co.caprica.vlcj.player.condition;
 
 /**
- * Exception thrown when a media player condition instance triggers in response
- * to an error.
+ * Exception thrown when a media player condition instance triggers in response to an error.
  */
 @SuppressWarnings("serial")
 public final class UnexpectedErrorConditionException extends RuntimeException {
+
+    UnexpectedErrorConditionException() {
+    }
+
 }

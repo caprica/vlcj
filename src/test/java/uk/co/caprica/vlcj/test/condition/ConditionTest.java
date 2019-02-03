@@ -23,149 +23,119 @@ import java.io.File;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.condition.Condition;
 import uk.co.caprica.vlcj.player.condition.UnexpectedErrorConditionException;
 import uk.co.caprica.vlcj.player.condition.UnexpectedFinishedConditionException;
-import uk.co.caprica.vlcj.player.condition.conditions.PausedCondition;
-import uk.co.caprica.vlcj.player.condition.conditions.PlayingCondition;
-import uk.co.caprica.vlcj.player.condition.conditions.SnapshotTakenCondition;
-import uk.co.caprica.vlcj.player.condition.conditions.TimeReachedCondition;
+import uk.co.caprica.vlcj.player.condition.mediaplayer.*;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
- * Demonstration of the synchronous approach to media player programming when
- * using media player condition objects.
+ * Demonstration of the synchronous approach to media player programming when using media player conditional waiter
+ * objects.
  * <p>
  * This example generates a series of snapshots for a video file.
  * <p>
  * The snapshots will be saved in the current directory.
  * <p>
- * Specify two options on the command-line: first the MRL to play, second the
- * period at which to take snapshots (e.g. "20" for every 20 seconds).
+ * Specify two options on the command-line: first the MRL to play, second the period at which to take snapshots (e.g.
+ * "20" for every 20 seconds).
+ * <p>
+ * Note that with contemporary versions of VLC grabbing a snapshot while paused is not going to work, at least not
+ * reliably.
  */
 public class ConditionTest extends VlcjTest {
 
-//    // Some standard options for headless operation
-//    private static final String[] VLC_ARGS = {
-//        "--intf", "dummy",          /* no interface */
-//        "--vout", "dummy",          /* we don't want video (output) */
-//        "--no-audio",               /* we don't want audio (decoding) */
-//        "--no-osd",
-//        "--no-spu",
-//        "--no-statistics",               /* no statistics */
-//        "--no-sub-autodetect-file", /* we don't want subtitles */
-//        "--no-inhibit",             /* we don't want interfaces */
-//        "--no-disable-screensaver", /* we don't want interfaces */
-//        "--no-snapshot-preview",    /* no blending in dummy vout */
-//    };
-//
-//    public static void main(String[] args) throws Exception {
-//        if(args.length != 2) {
-//            System.err.println("Usage: <mrl> <seconds>");
-//            System.exit(1);
-//        }
-//
-//        final String mrl = args[0];
-//        final int period = Integer.parseInt(args[1]) * 1000;
-//
-//        MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
-//        MediaPlayer mediaPlayer = factory.mediaPlayers().newMediaPlayer();
-//
-//        mediaPlayer.snapshots().setSnapshotDirectory(new File(".").getAbsolutePath());
-//
-//        // The sequence for creating the snapshots is...
-//        //
-//        // Start the media
-//        // Wait until playing
-//        // Loop...
-//        //  Set the target time
-//        //  Wait until the target time is reached
-//        //  Pause the media player
-//        //  Wait until paused
-//        //  Save the snapshot
-//        //  Wait until snapshot taken
-//        //  Play the media player
-//        //
-//        // The media player must be playing or else the required time changed events
-//        // will not be fired.
-//
-//        try {
-//            Condition<?> playingCondition = new PlayingCondition(mediaPlayer) {
-//                @Override
-//                protected boolean onBefore() {
-//                    // You do not have to use onBefore(), but sometimes it is very convenient, and guarantees
-//                    // that the required media player event listener is added before your condition is tested
-//                    mediaPlayer.media().startMedia(mrl);
-//                    return true;
-//                }
-//            };
-//            playingCondition.await();
-//
-//            long time = period;
-//
-//            for(int i = 0; ; i++) {
-//
-//                // Some special cases here...
-//                //
-//                // 1. The duration may not be available yet, even if the media player is playing
-//                // 2. For some media types it is not possible to set the position past the end - this
-//                //    means that you would have to wait for playback to reach the end normally
-//                long duration = mediaPlayer.status().getLength();
-//                if(duration > 0 && time >= duration) {
-//                    break;
-//                }
-//
-//                System.out.println("Snapshot " + i);
-//
-//                Condition<?> timeReachedCondition = new TimeReachedCondition(mediaPlayer, time) {
-//                    @Override
-//                    protected boolean onBefore() {
-//                        mediaPlayer.controls().setTime(targetTime);
-//                        return true;
-//                    }
-//                };
-//                timeReachedCondition.await();
-//
-//                Condition<?> pausedCondition = new PausedCondition(mediaPlayer) {
-//                    @Override
-//                    protected boolean onBefore() {
-//                        mediaPlayer.controls().pause();
-//                        return true;
-//                    }
-//                };
-//                pausedCondition.await();
-//
-//                Condition<?> snapshotTakenCondition = new SnapshotTakenCondition(mediaPlayer) {
-//                    @Override
-//                    protected boolean onBefore() {
-//                        mediaPlayer.snapshots().saveSnapshot();
-//                        return true;
-//                    }
-//                };
-//                snapshotTakenCondition.await();
-//
-//                playingCondition = new PlayingCondition(mediaPlayer) {
-//                    @Override
-//                    protected boolean onBefore() {
-//                        mediaPlayer.controls().play();
-//                        return true;
-//                    }
-//                };
-//                playingCondition.await();
-//
-//                time += period;
-//            }
-//        }
-//        catch(UnexpectedErrorConditionException e) {
-//            System.out.println("ERROR!");
-//        }
-//        catch(UnexpectedFinishedConditionException e) {
-//            System.out.println("FINISHED!");
-//        }
-//
-//        System.out.println("All done");
-//
-//        mediaPlayer.release();
-//        factory.release();
-//    }
+    // Some standard options for headless operation
+    private static final String[] VLC_ARGS = {
+        "--intf", "dummy",          /* no interface */
+        "--vout", "dummy",          /* we don't want video (output) */
+        "--no-audio",               /* we don't want audio (decoding) */
+        "--no-snapshot-preview",    /* no blending in dummy vout */
+    };
+
+    public static void main(String[] args) throws Exception {
+        if(args.length != 2) {
+            System.err.println("Usage: <mrl> <seconds>");
+            System.exit(1);
+        }
+
+        final String mrl = args[0];
+        final int period = Integer.parseInt(args[1]) * 1000;
+
+        MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
+        MediaPlayer mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
+
+        mediaPlayer.snapshots().setSnapshotDirectory(new File(".").getAbsolutePath());
+
+        // The sequence for creating the snapshots is...
+        //
+        // Start the media
+        // Wait until ready (it must be "ready", not "playing")
+        // Loop...
+        //  Set the target time
+        //  Wait until the target time is reached
+        //  Save the snapshot
+        //  Wait until snapshot taken
+        //
+        // The media player must be playing or else the required time changed events will not be fired.
+
+        try {
+            ReadyCondition readyCondition = new ReadyCondition(mediaPlayer) {
+                @Override
+                protected boolean onBefore(MediaPlayer mediaPlayer) {
+                    // You do not have to use onBefore(), but sometimes it is very convenient, and guarantees
+                    // that the required media player event listener is added before your condition is tested
+                    mediaPlayer.media().playMedia(mrl);
+                    return true;
+                }
+            };
+            readyCondition.await();
+
+            long time = period;
+
+            for (int i = 0; ; i++) {
+                // Some special cases here...
+                //
+                // 1. The duration may not be available yet, even if the media player is playing
+                // 2. For some media types it is not possible to set the position past the end - this means that you
+                //    would have to wait for playback to reach the end normally
+                long duration = mediaPlayer.status().getLength();
+                if (duration > 0 && time >= duration) {
+                    break;
+                }
+
+                System.out.println("Snapshot " + i);
+
+                TimeReachedCondition timeReachedCondition = new TimeReachedCondition(mediaPlayer, time) {
+                    @Override
+                    protected boolean onBefore(MediaPlayer mediaPlayer) {
+                        mediaPlayer.controls().setTime(targetTime);
+                        return true;
+                    }
+                };
+                timeReachedCondition.await();
+
+                // This step may not be necessary, but the purpose of this test is to demo these conditional waiters
+                SnapshotTakenCondition snapshotTakenCondition = new SnapshotTakenCondition(mediaPlayer) {
+                    @Override
+                    protected boolean onBefore(MediaPlayer mediaPlayer) {
+                        return mediaPlayer.snapshots().saveSnapshot(640, 480);
+                    }
+                };
+                snapshotTakenCondition.await();
+
+                time += period;
+            }
+        }
+        catch(UnexpectedErrorConditionException e) {
+            System.out.println("ERROR!");
+        }
+        catch(UnexpectedFinishedConditionException e) {
+            System.out.println("FINISHED!");
+        }
+
+        System.out.println("All done");
+
+        mediaPlayer.release();
+        factory.release();
+    }
 }

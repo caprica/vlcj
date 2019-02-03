@@ -17,24 +17,15 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.conditions;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package uk.co.caprica.vlcj.player.condition.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.condition.DefaultCondition;
 
 /**
  * Implementation of a condition that waits for the media player to report that
  * it has reached/passed a particular point in time.
  */
-public class TimeReachedCondition extends DefaultCondition<Long> {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(TimeReachedCondition.class);
+public class TimeReachedCondition extends MediaPlayerCondition<Long> {
 
     /**
      * Target time (number of milliseconds since start of media).
@@ -54,9 +45,9 @@ public class TimeReachedCondition extends DefaultCondition<Long> {
 
     @Override
     public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-        if(newTime >= targetTime) {
-            logger.debug("Target time {} reached", targetTime);
+        if (newTime >= targetTime) {
             ready(targetTime);
         }
     }
+
 }

@@ -17,46 +17,28 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.conditions;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package uk.co.caprica.vlcj.player.condition.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.condition.DefaultCondition;
 
 /**
  * Implementation of a condition that waits for the media player to report that
- * it has reached/passed a particular position.
+ * it is paused.
  */
-public class PositionReachedCondition extends DefaultCondition<Float> {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(PositionReachedCondition.class);
-
-    /**
-     * Target position (percentage, 0.0 to 1.0).
-     */
-    protected final float targetPosition;
+public class PausedCondition extends MediaPlayerCondition<Object> {
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
-     * @param targetPosition target position (percentage, 0.0 to 1.0)
      */
-    public PositionReachedCondition(MediaPlayer mediaPlayer, float targetPosition) {
+    public PausedCondition(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
-        this.targetPosition = targetPosition;
     }
 
     @Override
-    public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
-        if(newPosition >= targetPosition) {
-            logger.debug("Target position {} reached", targetPosition);
-            ready(targetPosition);
-        }
+    public void paused(MediaPlayer mediaPlayer) {
+        ready();
     }
+
 }

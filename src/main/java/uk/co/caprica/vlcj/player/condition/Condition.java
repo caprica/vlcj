@@ -19,19 +19,15 @@
 
 package uk.co.caprica.vlcj.player.condition;
 
+import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.player.condition.mediaplayer.MediaPlayerCondition;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-
 /**
- * Base implementation for a component that waits for specific media player state
+ * Base implementation for a component that waits for specific component state
  * to occur.
  * <p>
  * Instances of this class, or its sub-classes, are <em>not</em> reusable.
@@ -81,20 +77,14 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  *    }
  * </pre>
  *
- * @param <T> type of result that may be returned when the desired condition arises
+ * @param <R> type of result that may be returned when the desired condition arises
  *
- * @see DefaultCondition
+ * @see MediaPlayerCondition
  */
-public abstract class Condition<T> extends MediaPlayerEventAdapter {
+public abstract class Condition<C, R> {
 
     /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(Condition.class);
-
-    /**
-     * Synchronisation object used to wait until the media player state reaches
-     * the desired condition.
+     * Synchronisation object used to wait until the component state reaches the desired condition.
      */
     private final CountDownLatch completionLatch = new CountDownLatch(1);
 
@@ -106,7 +96,7 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
     /**
      * Optional result.
      */
-    private final AtomicReference<T> result = new AtomicReference<T>();
+    private final AtomicReference<R> result = new AtomicReference<R>();
 
     /**
      * Flag indicating if this condition is already finished.
@@ -114,25 +104,17 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
     private final AtomicBoolean finished = new AtomicBoolean();
 
     /**
-     * Associated media player.
+     * Associated component.
      */
-    protected final MediaPlayer mediaPlayer;
-
-    /**
-     * Simple flag to track whether or not this instance has been used before -
-     * instances are <em>not</em> reusable.
-     */
-    private boolean used;
+    protected final C component;
 
     /**
      * Create a new waiter.
      *
-     * @param mediaPlayer media player
+     * @param component component to wait for
      */
-    public Condition(MediaPlayer mediaPlayer) {
-        this.mediaPlayer = mediaPlayer;
-        // Listen for media player events
-        mediaPlayer.events().addMediaPlayerEventListener(this);
+    public Condition(C component) {
+        this.component = component;
     }
 
     /**
@@ -143,112 +125,92 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
      * @throws UnexpectedErrorConditionException if an unexpected error occurred
      * @throws UnexpectedFinishedConditionException if the condition finished unexpectedly
      */
-    public final T await() throws InterruptedException, UnexpectedErrorConditionException, UnexpectedFinishedConditionException {
-        logger.debug("await()");
-        if(!used) {
-            used = true;
-            // Invoke the template method before waiting
-            if(onBefore()) {
-                // Wait for the completion latch to be triggered...
-                completionLatch.await();
-                // Depending on the result status...
-                switch(resultStatus.get()) {
-                    case NORMAL:
-                        // ...normal processing, first invoke the template method after finished
-                        onAfter(this.result.get());
-                        // ...then return the result
-                        return result.get();
-                    case ERROR:
-                        // ...an error occurred
-                        throw new UnexpectedErrorConditionException();
-                    case FINISHED:
-                        // ...the media finished unexpectedly
-                        throw new UnexpectedFinishedConditionException();
-                    default:
-                        // Can not happen
-                        throw new IllegalStateException("Unexpected result status: " + resultStatus.get());
-                }
+    public final R await() throws InterruptedException, UnexpectedErrorConditionException, UnexpectedFinishedConditionException {
+        startListening(component);
+        if (onBefore(component)) {
+            completionLatch.await();
+            switch (resultStatus.get()) {
+                case NORMAL:
+                    onAfter(component, this.result.get());
+                    return result.get();
+                case ERROR:
+                    throw new UnexpectedErrorConditionException();
+                case FINISHED:
+                    throw new UnexpectedFinishedConditionException();
+                default:
+                    throw new IllegalStateException("Unexpected result status: " + resultStatus.get());
             }
-            else {
-                throw new BeforeConditionAbortedException();
-            }
-        }
-        else {
-            throw new IllegalStateException("Can not re-use Condition instances, create a new instance instead");
+        } else {
+            throw new BeforeConditionAbortedException();
         }
     }
 
     /**
-     * Trigger method invoked by a sub-class event handler when the desired media
-     * player state is detected.
+     * Trigger method invoked by a sub-class event handler when the desired component state is detected.
      * <p>
      * This is a convenience for {@link #ready(Object)} when no result is needed.
      */
     protected final void ready() {
-        logger.debug("ready()");
         ready(null);
     }
 
     /**
-     * Trigger method invoked by a sub-class event handler when the desired media
-     * player state is detected.
+     * Trigger method invoked by a sub-class event handler when the desired component state is detected.
      *
      * @param result optional result, may be <code>null</code>
      */
-    protected final void ready(T result) {
-        logger.debug("ready(result={})", result);
-        if(!finished.getAndSet(true)) {
-            logger.debug("Finished");
-            // Store the result
+    protected final void ready(R result) {
+        if (!finished.getAndSet(true)) {
             this.result.set(result);
-            // Finish waiting and release the waiter
             release(ResultStatus.NORMAL);
-        }
-        else {
-            logger.debug("Already finished");
         }
     }
 
     /**
-     * Trigger method invoked by a sub-class event handler when the media player
-     * reports an error has occurred.
+     * Trigger method invoked by a sub-class event handler when the media player reports an error has occurred.
      */
     protected final void error() {
-        logger.debug("error()");
-        // Finish waiting...
         release(ResultStatus.ERROR);
     }
 
     /**
-     * Trigger method invoked by a sub-class event handler when the media player
-     * reports the end of the media has been reached.
+     * Trigger method invoked by a sub-class event handler when the media player reports the end of the media has been
+     * reached.
      */
     protected final void finished() {
-        logger.debug("finished()");
-        // Finish waiting...
         release(ResultStatus.FINISHED);
     }
 
     /**
-     * Template method invoked after the listener has been added but before the
-     * {@link #await()} is invoked.
+     * Template method invoked after the listener has been added but before the {@link #await()} is invoked.
      *
      * @return <code>true</code> to continue; <code>false</code> to abort
      */
-    protected boolean onBefore() {
-        // Default implementation does nothing
+    protected boolean onBefore(C component) {
         return true;
     }
 
     /**
-     * Template method invoked after the media player state has reached the desired
-     * condition.
+     * Template method invoked after the component state has reached the desired condition.
      *
      * @param result optional result
      */
-    protected void onAfter(T result) {
-        // Default implementation does nothing
+    protected void onAfter(C component, R result) {
     }
+
+    /**
+     *
+     *
+     * @param component
+     */
+    protected abstract void startListening(C component);
+
+    /**
+     *
+     *
+     * @param component
+     */
+    protected abstract void stopListening(C component);
 
     /**
      * Release the waiter.
@@ -256,32 +218,9 @@ public abstract class Condition<T> extends MediaPlayerEventAdapter {
      * @param resultStatus result status indicator
      */
     private void release(ResultStatus resultStatus) {
-        // Stop listening for media player events
-        mediaPlayer.events().removeMediaPlayerEventListener(this);
-        // Store the result status
+        stopListening(component);
         this.resultStatus.set(resultStatus);
-        // Trigger the completion latch to release the waiter
         completionLatch.countDown();
     }
 
-    /**
-     * Enumeration of result status.
-     */
-    private enum ResultStatus {
-
-        /**
-         * Processing completed normally.
-         */
-        NORMAL,
-
-        /**
-         * An error occurred.
-         */
-        ERROR,
-
-        /**
-         * The media finished unexpectedly.
-         */
-        FINISHED
-    }
 }

@@ -17,37 +17,28 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.conditions;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package uk.co.caprica.vlcj.player.condition.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.condition.DefaultCondition;
 
 /**
  * Implementation of a condition that waits for the media player to report that
- * a video output has been created.
+ * the media length has changed.
  */
-public class VideoOutputCreatedCondition extends DefaultCondition<Integer> {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(VideoOutputCreatedCondition.class);
+public class LengthChangedCondition extends MediaPlayerCondition<Long> {
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
      */
-    public VideoOutputCreatedCondition(MediaPlayer mediaPlayer) {
+    public LengthChangedCondition(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 
     @Override
-    public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-        logger.debug("videoOutput(mediaPlayer={},newCount={})", mediaPlayer, newCount);
-        ready(newCount);
+    public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
+        ready(newLength);
     }
+
 }

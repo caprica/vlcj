@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.player.base;
 
 import java.io.File;
 
-import uk.co.caprica.vlcj.player.condition.conditions.SnapshotTakenCondition;
+import uk.co.caprica.vlcj.player.condition.mediaplayer.SnapshotTakenCondition;
 
 /**
  * Private helper to take a snapshot and wait until the corresponding snapshot
@@ -60,7 +60,8 @@ final class WaitForSnapshot extends SnapshotTakenCondition {
     }
 
     @Override
-    protected boolean onBefore() {
+    protected boolean onBefore(MediaPlayer mediaPlayer) {
         return mediaPlayer.snapshots().saveSnapshot(file, width, height);
     }
+
 }

@@ -44,6 +44,8 @@ import uk.co.caprica.vlcj.test.thumbs.ThumbsTest;
 public class SnapshotTest extends VlcjTest {
 
     public static void main(String[] args) throws Exception {
+        args = new String[] {"/home/mark/1.mp4"};
+
         if(args.length != 1) {
             System.err.println("Specify an MRL");
             System.exit(1);

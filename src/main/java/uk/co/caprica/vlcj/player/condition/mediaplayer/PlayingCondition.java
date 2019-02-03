@@ -17,24 +17,15 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.conditions;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package uk.co.caprica.vlcj.player.condition.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.condition.DefaultCondition;
 
 /**
  * Implementation of a condition that waits for the media player to report that
  * it is playing.
  */
-public class PlayingCondition extends DefaultCondition<Object> {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(PlayingCondition.class);
+public class PlayingCondition extends MediaPlayerCondition<Object> {
 
     /**
      * Create a condition.
@@ -47,7 +38,7 @@ public class PlayingCondition extends DefaultCondition<Object> {
 
     @Override
     public void playing(MediaPlayer mediaPlayer) {
-        logger.debug("playing(mediaPlayer={})", mediaPlayer);
         ready();
     }
+
 }

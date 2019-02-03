@@ -17,37 +17,28 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.conditions;
+package uk.co.caprica.vlcj.player.condition.media;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.condition.DefaultCondition;
+import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.model.Picture;
 
 /**
- * Implementation of a condition that waits for the media player to report that
- * it is paused.
+ * Implementation of a condition that waits for the media player to report that media has been parsed successfully.
  */
-public class PausedCondition extends DefaultCondition<Object> {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(PausedCondition.class);
+public class ThumbnailGeneratedCondition extends MediaCondition<Picture> {
 
     /**
      * Create a condition.
      *
-     * @param mediaPlayer media player
+     * @param media media
      */
-    public PausedCondition(MediaPlayer mediaPlayer) {
-        super(mediaPlayer);
+    public ThumbnailGeneratedCondition(Media media) {
+        super(media);
     }
 
     @Override
-    public void paused(MediaPlayer mediaPlayer) {
-        logger.debug("paused(mediaPlayer={})", mediaPlayer);
-        ready();
+    public void mediaThumbnailGenerated(Media media, Picture picture) {
+        ready(picture);
     }
+
 }

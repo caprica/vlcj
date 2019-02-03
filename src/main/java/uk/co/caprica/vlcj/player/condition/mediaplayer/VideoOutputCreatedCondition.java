@@ -17,16 +17,28 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition;
+package uk.co.caprica.vlcj.player.condition.mediaplayer;
+
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
- * Exception thrown when a media player condition instance triggers in response to the media finishing (reaching the
- * end) unexpectedly before the conditional wait is satisfied.
+ * Implementation of a condition that waits for the media player to report that
+ * a video output has been created.
  */
-@SuppressWarnings("serial")
-public final class UnexpectedFinishedConditionException extends RuntimeException {
+public class VideoOutputCreatedCondition extends MediaPlayerCondition<Integer> {
 
-    UnexpectedFinishedConditionException() {
+    /**
+     * Create a condition.
+     *
+     * @param mediaPlayer media player
+     */
+    public VideoOutputCreatedCondition(MediaPlayer mediaPlayer) {
+        super(mediaPlayer);
+    }
+
+    @Override
+    public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
+        ready(newCount);
     }
 
 }
