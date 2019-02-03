@@ -110,8 +110,12 @@ abstract public class NativeEventManager<E,L> {
      * @param listener component to notify
      */
     public final void addEventListener(L listener) {
-        eventListenerList.add(listener);
-        addNativeEventListener();
+        if (listener != null) {
+            eventListenerList.add(listener);
+            addNativeEventListener();
+        } else {
+            throw new IllegalArgumentException("Listener must not be null");
+        }
     }
 
     /**
