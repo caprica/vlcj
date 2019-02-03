@@ -78,7 +78,7 @@
         <jna.version>5.2.0</jna.version>
         <slf4j.version>1.7.25</slf4j.version>
         <vlcjFileFilters.version>1.0.0-SNAPSHOT</vlcjFileFilters.version>
-        <vlcjOsxStubs.version>1.0.0-SNAPSHOT</vlcjOsxStubs.version>
+        <vlcjOsxStubs.version>1.0.0</vlcjOsxStubs.version>
         <sonar.exclusions>**/package-info.java,uk/co/caprica/vlcj/binding/**</sonar.exclusions>
         <sonar.language>java</sonar.language>
     </properties>
