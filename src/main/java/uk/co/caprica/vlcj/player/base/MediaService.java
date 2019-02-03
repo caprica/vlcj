@@ -148,7 +148,7 @@ public final class MediaService extends BaseService {
      */
     public void reset() {
         if (this.media != null) {
-            changeMedia(this.media, true);
+            applyMedia();
         }
     }
 
@@ -190,14 +190,18 @@ public final class MediaService extends BaseService {
         if (newMedia != null) {
             this.media = newMedia;
             this.ownMedia = ownMedia;
-            libvlc.libvlc_media_player_set_media(mediaPlayerInstance, media.mediaInstance());
-            mediaPlayer.subItems().changeMedia(media);
+            applyMedia();
             return true;
         } else {
             this.media = null;
             this.ownMedia = false;
             return false;
         }
+    }
+
+    private void applyMedia() {
+        libvlc.libvlc_media_player_set_media(mediaPlayerInstance, media.mediaInstance());
+        mediaPlayer.subItems().changeMedia(media);
     }
 
     @Override
