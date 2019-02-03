@@ -17,10 +17,10 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition;
+package uk.co.caprica.vlcj.condition;
 
+import uk.co.caprica.vlcj.condition.mediaplayer.MediaPlayerCondition;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.condition.mediaplayer.MediaPlayerCondition;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;

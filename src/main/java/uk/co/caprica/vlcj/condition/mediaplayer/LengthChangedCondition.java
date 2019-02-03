@@ -17,28 +17,28 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.mediaplayer;
+package uk.co.caprica.vlcj.condition.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Implementation of a condition that waits for the media player to report that
- * a video output has been created.
+ * the media length has changed.
  */
-public class VideoOutputCreatedCondition extends MediaPlayerCondition<Integer> {
+public class LengthChangedCondition extends MediaPlayerCondition<Long> {
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
      */
-    public VideoOutputCreatedCondition(MediaPlayer mediaPlayer) {
+    public LengthChangedCondition(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 
     @Override
-    public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-        ready(newCount);
+    public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
+        ready(newLength);
     }
 
 }

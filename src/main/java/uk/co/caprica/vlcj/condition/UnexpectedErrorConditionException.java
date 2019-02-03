@@ -17,26 +17,15 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition;
+package uk.co.caprica.vlcj.condition;
 
 /**
- * Enumeration of result status.
+ * Exception thrown when a media player condition instance triggers in response to an error.
  */
-enum ResultStatus {
+@SuppressWarnings("serial")
+public final class UnexpectedErrorConditionException extends RuntimeException {
 
-    /**
-     * Processing completed normally.
-     */
-    NORMAL,
-
-    /**
-     * An error occurred.
-     */
-    ERROR,
-
-    /**
-     * The media finished unexpectedly.
-     */
-    FINISHED
+    UnexpectedErrorConditionException() {
+    }
 
 }

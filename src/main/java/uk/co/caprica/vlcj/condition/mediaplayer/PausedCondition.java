@@ -17,16 +17,28 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition;
+package uk.co.caprica.vlcj.condition.mediaplayer;
+
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
- * Exception thrown when a media player condition instance triggers in response to the media finishing (reaching the
- * end) unexpectedly before the conditional wait is satisfied.
+ * Implementation of a condition that waits for the media player to report that
+ * it is paused.
  */
-@SuppressWarnings("serial")
-public final class UnexpectedFinishedConditionException extends RuntimeException {
+public class PausedCondition extends MediaPlayerCondition<Object> {
 
-    UnexpectedFinishedConditionException() {
+    /**
+     * Create a condition.
+     *
+     * @param mediaPlayer media player
+     */
+    public PausedCondition(MediaPlayer mediaPlayer) {
+        super(mediaPlayer);
+    }
+
+    @Override
+    public void paused(MediaPlayer mediaPlayer) {
+        ready();
     }
 
 }

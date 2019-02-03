@@ -17,27 +17,27 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.mediaplayer;
+package uk.co.caprica.vlcj.condition.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Implementation of a condition that waits for the media player to report that
- * it is paused.
+ * it is playing.
  */
-public class PausedCondition extends MediaPlayerCondition<Object> {
+public class PlayingCondition extends MediaPlayerCondition<Object> {
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
      */
-    public PausedCondition(MediaPlayer mediaPlayer) {
+    public PlayingCondition(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 
     @Override
-    public void paused(MediaPlayer mediaPlayer) {
+    public void playing(MediaPlayer mediaPlayer) {
         ready();
     }
 

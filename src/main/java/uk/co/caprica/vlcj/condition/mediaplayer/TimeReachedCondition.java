@@ -17,28 +17,37 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.mediaplayer;
+package uk.co.caprica.vlcj.condition.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Implementation of a condition that waits for the media player to report that
- * the media length has changed.
+ * it has reached/passed a particular point in time.
  */
-public class LengthChangedCondition extends MediaPlayerCondition<Long> {
+public class TimeReachedCondition extends MediaPlayerCondition<Long> {
+
+    /**
+     * Target time (number of milliseconds since start of media).
+     */
+    protected final long targetTime;
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
+     * @param targetTime target time (milliseconds since start)
      */
-    public LengthChangedCondition(MediaPlayer mediaPlayer) {
+    public TimeReachedCondition(MediaPlayer mediaPlayer, long targetTime) {
         super(mediaPlayer);
+        this.targetTime = targetTime;
     }
 
     @Override
-    public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
-        ready(newLength);
+    public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
+        if (newTime >= targetTime) {
+            ready(targetTime);
+        }
     }
 
 }

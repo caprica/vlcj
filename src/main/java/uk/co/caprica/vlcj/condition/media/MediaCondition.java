@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.media;
+package uk.co.caprica.vlcj.condition.media;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.events.MediaEventAdapter;
 import uk.co.caprica.vlcj.media.events.MediaEventListener;
 import uk.co.caprica.vlcj.model.Picture;
-import uk.co.caprica.vlcj.player.condition.Condition;
+import uk.co.caprica.vlcj.condition.Condition;
 
 abstract public class MediaCondition<R> extends Condition<Media, R> implements MediaEventListener {
 

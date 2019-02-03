@@ -17,32 +17,16 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.media;
-
-import uk.co.caprica.vlcj.enums.MediaParsedStatus;
-import uk.co.caprica.vlcj.media.Media;
+package uk.co.caprica.vlcj.condition;
 
 /**
- * Implementation of a condition that waits for the media player to report that media has been parsed successfully.
+ * Exception thrown when a media player condition instance triggers in response to the media finishing (reaching the
+ * end) unexpectedly before the conditional wait is satisfied.
  */
-public class ParsedCondition extends MediaCondition<Object> {
+@SuppressWarnings("serial")
+public final class UnexpectedFinishedConditionException extends RuntimeException {
 
-    /**
-     * Create a condition.
-     *
-     * @param media media
-     */
-    public ParsedCondition(Media media) {
-        super(media);
-    }
-
-    @Override
-    public final void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
-        if (newStatus == MediaParsedStatus.DONE) {
-            ready();
-        } else {
-            error();
-        }
+    UnexpectedFinishedConditionException() {
     }
 
 }

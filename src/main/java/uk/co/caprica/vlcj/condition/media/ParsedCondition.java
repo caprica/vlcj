@@ -17,36 +17,31 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.mediaplayer;
+package uk.co.caprica.vlcj.condition.media;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.enums.MediaParsedStatus;
+import uk.co.caprica.vlcj.media.Media;
 
 /**
- * Implementation of a condition that waits for the media player to report that
- * it has reached/passed a particular point in time.
+ * Implementation of a condition that waits for the media player to report that media has been parsed successfully.
  */
-public class TimeReachedCondition extends MediaPlayerCondition<Long> {
-
-    /**
-     * Target time (number of milliseconds since start of media).
-     */
-    protected final long targetTime;
+public class ParsedCondition extends MediaCondition<Object> {
 
     /**
      * Create a condition.
      *
-     * @param mediaPlayer media player
-     * @param targetTime target time (milliseconds since start)
+     * @param media media
      */
-    public TimeReachedCondition(MediaPlayer mediaPlayer, long targetTime) {
-        super(mediaPlayer);
-        this.targetTime = targetTime;
+    public ParsedCondition(Media media) {
+        super(media);
     }
 
     @Override
-    public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-        if (newTime >= targetTime) {
-            ready(targetTime);
+    public final void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
+        if (newStatus == MediaParsedStatus.DONE) {
+            ready();
+        } else {
+            error();
         }
     }
 

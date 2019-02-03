@@ -17,28 +17,28 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.mediaplayer;
+package uk.co.caprica.vlcj.condition.media;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.model.Picture;
 
 /**
- * Implementation of a condition that waits for the media player to report that
- * it is playing.
+ * Implementation of a condition that waits for the media player to report that media has been parsed successfully.
  */
-public class PlayingCondition extends MediaPlayerCondition<Object> {
+public class ThumbnailGeneratedCondition extends MediaCondition<Picture> {
 
     /**
      * Create a condition.
      *
-     * @param mediaPlayer media player
+     * @param media media
      */
-    public PlayingCondition(MediaPlayer mediaPlayer) {
-        super(mediaPlayer);
+    public ThumbnailGeneratedCondition(Media media) {
+        super(media);
     }
 
     @Override
-    public void playing(MediaPlayer mediaPlayer) {
-        ready();
+    public void mediaThumbnailGenerated(Media media, Picture picture) {
+        ready(picture);
     }
 
 }

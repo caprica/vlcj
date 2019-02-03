@@ -17,16 +17,26 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition;
+package uk.co.caprica.vlcj.condition;
 
 /**
- * Exception thrown when a media player condition instance triggers aborts by returning <code>false</code> in an
- * {@link Condition#onBefore()} implementation.
+ * Enumeration of result status.
  */
-@SuppressWarnings("serial")
-public final class BeforeConditionAbortedException extends RuntimeException {
+enum ResultStatus {
 
-    BeforeConditionAbortedException() {
-    }
+    /**
+     * Processing completed normally.
+     */
+    NORMAL,
+
+    /**
+     * An error occurred.
+     */
+    ERROR,
+
+    /**
+     * The media finished unexpectedly.
+     */
+    FINISHED
 
 }

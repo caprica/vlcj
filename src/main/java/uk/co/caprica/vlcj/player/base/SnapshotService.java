@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.condition.BeforeConditionAbortedException;
+import uk.co.caprica.vlcj.condition.BeforeConditionAbortedException;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

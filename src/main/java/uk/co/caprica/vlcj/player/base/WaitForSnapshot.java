@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.player.base;
 
 import java.io.File;
 
-import uk.co.caprica.vlcj.player.condition.mediaplayer.SnapshotTakenCondition;
+import uk.co.caprica.vlcj.condition.mediaplayer.SnapshotTakenCondition;
 
 /**
  * Private helper to take a snapshot and wait until the corresponding snapshot

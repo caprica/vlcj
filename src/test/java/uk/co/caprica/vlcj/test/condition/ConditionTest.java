@@ -21,11 +21,13 @@ package uk.co.caprica.vlcj.test.condition;
 
 import java.io.File;
 
+import uk.co.caprica.vlcj.condition.mediaplayer.ReadyCondition;
+import uk.co.caprica.vlcj.condition.mediaplayer.SnapshotTakenCondition;
+import uk.co.caprica.vlcj.condition.mediaplayer.TimeReachedCondition;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.condition.UnexpectedErrorConditionException;
-import uk.co.caprica.vlcj.player.condition.UnexpectedFinishedConditionException;
-import uk.co.caprica.vlcj.player.condition.mediaplayer.*;
+import uk.co.caprica.vlcj.condition.UnexpectedErrorConditionException;
+import uk.co.caprica.vlcj.condition.UnexpectedFinishedConditionException;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**

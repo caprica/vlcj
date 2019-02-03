@@ -17,13 +17,13 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.condition.mediaplayer;
+package uk.co.caprica.vlcj.condition.mediaplayer;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.condition.Condition;
+import uk.co.caprica.vlcj.condition.Condition;
 
 abstract public class MediaPlayerCondition<R> extends Condition<MediaPlayer, R> implements MediaPlayerEventListener {
 
