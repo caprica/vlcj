@@ -19,52 +19,24 @@
 
 package uk.co.caprica.vlcj.test.basic;
 
-import java.awt.AWTEvent;
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.model.Equalizer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveModeFullScreenStrategy;
+import uk.co.caprica.vlcj.test.VlcjTest;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.AWTEventListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import javax.swing.SwingUtilities;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-//import uk.co.caprica.vlcj.binding.LibVlcFactory;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.model.AudioOutput;
-import uk.co.caprica.vlcj.model.Equalizer;
-//import uk.co.caprica.vlcj.player.MediaDetails;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveModeFullScreenStrategy;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
-import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * Simple test harness creates an AWT Window and plays a video.
@@ -72,16 +44,10 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  * This is <strong>very</strong> basic but should give you an idea of how to build a media player.
  * <p>
  * In case you didn't realise, you can press F12 to toggle the visibility of the player controls.
- * <p>
- * Java7 provides -Dsun.java2d.xrender=True or -Dsun.java2d.xrender=true, might give some general
- * performance improvements in graphics rendering.
  */
 public class TestPlayer extends VlcjTest {
 
-    /**
-     * Log.
-     */
-    private static final Logger logger = LoggerFactory.getLogger(TestPlayer.class);
+    private static TestPlayer app;
 
     private final JFrame mainFrame;
     private final Canvas videoSurface;
@@ -97,57 +63,23 @@ public class TestPlayer extends VlcjTest {
     private Equalizer equalizer;
 
     public static void main(final String[] args) throws Exception {
-//        LibVlc libVlc = LibVlcFactory.factory().create();
-
-//        logger.info("  version: {}", libVlc.libvlc_get_version());
-//        logger.info(" compiler: {}", libVlc.libvlc_get_compiler());
-//        logger.info("changeset: {}", libVlc.libvlc_get_changeset());
-
         setLookAndFeel();
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new TestPlayer(args);
-            }
-        });
+        app = new TestPlayer();
     }
 
-    public TestPlayer(String[] args) {
+    public TestPlayer() {
         videoSurface = new Canvas();
 
         videoSurface.setBackground(Color.black);
         videoSurface.setSize(800, 600); // Only for initial layout
 
-        // Since we're mixing lightweight Swing components and heavyweight AWT
-        // components this is probably a good idea
+        // Since we're mixing lightweight Swing components and heavyweight AWT components this is probably a good idea
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
-
-        TestPlayerMouseListener mouseListener = new TestPlayerMouseListener();
-        videoSurface.addMouseListener(mouseListener);
-        videoSurface.addMouseMotionListener(mouseListener);
-        videoSurface.addMouseWheelListener(mouseListener);
-        videoSurface.addKeyListener(new TestPlayerKeyListener());
 
         List<String> vlcArgs = new ArrayList<String>();
 
         vlcArgs.add("--no-snapshot-preview");
         vlcArgs.add("--quiet");
-        vlcArgs.add("--quiet-synchro");
-        vlcArgs.add("--intf");
-        vlcArgs.add("dummy");
-
-        // Special case to help out users on Windows (supposedly this is not actually needed)...
-        // if(RuntimeUtil.isWindows()) {
-        // vlcArgs.add("--plugin-path=" + WindowsRuntimeUtil.getVlcInstallDir() + "\\plugins");
-        // }
-        // else {
-        // vlcArgs.add("--plugin-path=/home/linux/vlc/lib");
-        // }
-
-        // vlcArgs.add("--plugin-path=" + System.getProperty("user.home") + "/.vlcj");
-
-        logger.debug("vlcArgs={}", vlcArgs);
 
         mainFrame = new JFrame("VLCJ Test Player");
         mainFrame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
@@ -157,13 +89,10 @@ public class TestPlayer extends VlcjTest {
         mediaPlayerFactory = new MediaPlayerFactory(vlcArgs.toArray(new String[vlcArgs.size()]));
         mediaPlayerFactory.application().setUserAgent("vlcj test player");
 
-        List<AudioOutput> audioOutputs = mediaPlayerFactory.audio().audioOutputs();
-        logger.debug("audioOutputs={}", audioOutputs);
-
         mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
         mediaPlayer.fullScreen().setFullScreenStrategy(fullScreenStrategy);
         mediaPlayer.videoSurface().setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(videoSurface));
-// FIXME        mediaPlayer.setPlaySubItems(true);
+        mediaPlayer.subItems().setPlaySubItems(true);
 
         mediaPlayer.input().setEnableKeyInputHandling(false);
         mediaPlayer.input().setEnableMouseInputHandling(false);
@@ -184,14 +113,11 @@ public class TestPlayer extends VlcjTest {
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent evt) {
-                logger.debug("windowClosing(evt={})", evt);
-
-                if(mediaPlayer != null) {
+                if (mediaPlayer != null) {
                     mediaPlayer.release();
                     mediaPlayer = null;
                 }
-
-                if(mediaPlayerFactory != null) {
+                if (mediaPlayerFactory != null) {
                     mediaPlayerFactory.release();
                     mediaPlayerFactory = null;
                 }
@@ -201,56 +127,30 @@ public class TestPlayer extends VlcjTest {
         equalizer = mediaPlayerFactory.equalizers().newEqualizer();
         equalizerFrame = new EqualizerFrame(mediaPlayerFactory.equalizers().bands(), mediaPlayerFactory.equalizers().presets(), mediaPlayerFactory, mediaPlayer, equalizer);
 
-        // Global AWT key handler, you're better off using Swing's InputMap and
-        // ActionMap with a JFrame - that would solve all sorts of focus issues too
+        // Global AWT key handler, you're better off using Swing's InputMap and ActionMap with a JFrame - that would
+        // solve all sorts of focus issues too
         Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
             @Override
             public void eventDispatched(AWTEvent event) {
-                if(event instanceof KeyEvent) {
+                if (event instanceof KeyEvent) {
                     KeyEvent keyEvent = (KeyEvent)event;
-                    if(keyEvent.getID() == KeyEvent.KEY_PRESSED) {
-                        if(keyEvent.getKeyCode() == KeyEvent.VK_F12) {
+                    if (keyEvent.getID() == KeyEvent.KEY_PRESSED) {
+                        if (keyEvent.getKeyCode() == KeyEvent.VK_F12) {
                             controlsPanel.setVisible(!controlsPanel.isVisible());
                             videoAdjustPanel.setVisible(!videoAdjustPanel.isVisible());
                             mainFrame.getJMenuBar().setVisible(!mainFrame.getJMenuBar().isVisible());
                             mainFrame.invalidate();
                             mainFrame.validate();
-                        }
-                        else if(keyEvent.getKeyCode() == KeyEvent.VK_A) {
+                        } else if (keyEvent.getKeyCode() == KeyEvent.VK_A) {
                             mediaPlayer.audio().setAudioDelay(mediaPlayer.audio().getAudioDelay() - 50000);
-                        }
-                        else if(keyEvent.getKeyCode() == KeyEvent.VK_S) {
+                        } else if (keyEvent.getKeyCode() == KeyEvent.VK_S) {
                             mediaPlayer.audio().setAudioDelay(mediaPlayer.audio().getAudioDelay() + 50000);
-                        }
-                        // else if(keyEvent.getKeyCode() == KeyEvent.VK_N) {
-                        // mediaPlayer.nextFrame();
-                        // }
-                        else if(keyEvent.getKeyCode() == KeyEvent.VK_1) {
+                        } else if (keyEvent.getKeyCode() == KeyEvent.VK_1) {
                             mediaPlayer.controls().setTime(60000 * 1);
-                        }
-                        else if(keyEvent.getKeyCode() == KeyEvent.VK_2) {
+                        } else if (keyEvent.getKeyCode() == KeyEvent.VK_2) {
                             mediaPlayer.controls().setTime(60000 * 2);
-                        }
-                        else if(keyEvent.getKeyCode() == KeyEvent.VK_3) {
+                        } else if (keyEvent.getKeyCode() == KeyEvent.VK_3) {
                             mediaPlayer.controls().setTime(60000 * 3);
-                        }
-                        else if(keyEvent.getKeyCode() == KeyEvent.VK_4) {
-                            mediaPlayer.controls().setTime(60000 * 4);
-                        }
-                        else if(keyEvent.getKeyCode() == KeyEvent.VK_5) {
-                            mediaPlayer.controls().setTime(60000 * 5);
-                        }
-                        else if(keyEvent.getKeyCode() == KeyEvent.VK_6) {
-                            mediaPlayer.controls().setTime(60000 * 6);
-                        }
-                        else if(keyEvent.getKeyCode() == KeyEvent.VK_7) {
-                            mediaPlayer.controls().setTime(60000 * 7);
-                        }
-                        else if(keyEvent.getKeyCode() == KeyEvent.VK_8) {
-                            mediaPlayer.controls().setTime(60000 * 8);
-                        }
-                        else if(keyEvent.getKeyCode() == KeyEvent.VK_9) {
-                            mediaPlayer.controls().setTime(60000 * 9);
                         }
                     }
                 }
@@ -264,50 +164,27 @@ public class TestPlayer extends VlcjTest {
 
         mediaPlayer.events().addMediaPlayerEventListener(new TestPlayerMediaPlayerEventListener());
 
-        // Won't work with OpenJDK or JDK1.7, requires a Sun/Oracle JVM (currently)
-//        boolean transparentWindowsSupport = true;
-//        try {
-//            Class.forName("com.sun.awt.AWTUtilities");
-//        }
-//        catch(Exception e) {
-//            transparentWindowsSupport = false;
-//        }
-//
-//        logger.debug("transparentWindowsSupport={}", transparentWindowsSupport);
-//
-//        if(transparentWindowsSupport) {
-//            final Window test = new Window(null, WindowUtils.getAlphaCompatibleGraphicsConfiguration()) {
-//                private static final long serialVersionUID = 1L;
-//
-//                @Override
-//                public void paint(Graphics g) {
-//                    Graphics2D g2 = (Graphics2D)g;
-//
-//                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//                    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-//
-//                    g.setColor(Color.white);
-//                    g.fillRoundRect(100, 150, 100, 100, 32, 32);
-//
-//                    g.setFont(new Font("Sans", Font.BOLD, 32));
-//                    g.drawString("Heavyweight overlay test", 100, 300);
-//                }
-//            };
-//
-//            test.setBackground(new Color(0, 0, 0, 0)); // This is what you do in JDK7
-//
-//            // mediaPlayer.setOverlay(test);
-//            // mediaPlayer.enableOverlay(true);
-//        }
+        // You can set a logo like this if you like...
+        File logoFile = new File("./etc/vlcj-logo.png");
+        if (logoFile.exists()) {
+            mediaPlayer.logo().setLogoFile(logoFile.getAbsolutePath());
+            mediaPlayer.logo().setLogoOpacity(0.5f);
+            mediaPlayer.logo().setLogoLocation(10, 10);
+            mediaPlayer.logo().enableLogo(true);
+        }
 
-        // This might be useful
-        // enableMousePointer(false);
+        // Demo the marquee
+        mediaPlayer.marquee().setMarqueeText("vlcj java bindings for vlc");
+        mediaPlayer.marquee().setMarqueeSize(40);
+        mediaPlayer.marquee().setMarqueeOpacity(95);
+        mediaPlayer.marquee().setMarqueeColour(Color.white);
+        mediaPlayer.marquee().setMarqueeTimeout(5000);
+        mediaPlayer.marquee().setMarqueeLocation(50, 120);
+        mediaPlayer.marquee().enableMarquee(true);
     }
 
     private JMenuBar buildMenuBar() {
-        // Menus are just added as an example of overlapping the video - they are
-        // non-functional in this demo player
-
+        // Menus are just added as an example of overlapping the video - they are non-functional in this demo player
         JMenuBar menuBar = new JMenuBar();
 
         JMenu mediaMenu = new JMenu("Media");
@@ -334,7 +211,7 @@ public class TestPlayer extends VlcjTest {
 
         JMenu playbackChapterMenu = new JMenu("Chapter");
         playbackChapterMenu.setMnemonic('c');
-        for(int i = 1; i <= 25; i ++ ) {
+        for (int i = 1; i <= 25; i ++ ) {
             JMenuItem chapterMenuItem = new JMenuItem("Chapter " + i);
             playbackChapterMenu.add(chapterMenuItem);
         }
@@ -343,7 +220,7 @@ public class TestPlayer extends VlcjTest {
         JMenu subtitlesMenu = new JMenu("Subtitles");
         playbackChapterMenu.setMnemonic('s');
         String[] subs = {"01 English (en)", "02 English Commentary (en)", "03 French (fr)", "04 Spanish (es)", "05 German (de)", "06 Italian (it)"};
-        for(int i = 0; i < subs.length; i ++ ) {
+        for (int i = 0; i < subs.length; i ++ ) {
             JMenuItem subtitlesMenuItem = new JMenuItem(subs[i]);
             subtitlesMenu.add(subtitlesMenuItem);
         }
@@ -374,48 +251,12 @@ public class TestPlayer extends VlcjTest {
 
     private final class TestPlayerMediaPlayerEventListener extends MediaPlayerEventAdapter {
         @Override
-        public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
-            logger.debug("mediaChanged(mediaPlayer={},media={})", mediaPlayer, media);
-        }
-
-        @Override
-        public void finished(MediaPlayer mediaPlayer) {
-            logger.debug("finished(mediaPlayer={})", mediaPlayer);
-        }
-
-        @Override
-        public void paused(MediaPlayer mediaPlayer) {
-            logger.debug("paused(mediaPlayer={})", mediaPlayer);
-        }
-
-        @Override
-        public void playing(MediaPlayer mediaPlayer) {
-            logger.debug("playing(mediaPlayer={})", mediaPlayer);
-//            MediaDetails mediaDetails = mediaPlayer.info().getMediaDetails();
-//            logger.info("mediaDetails={}", mediaDetails);
-        }
-
-        @Override
-        public void stopped(MediaPlayer mediaPlayer) {
-            logger.debug("stopped(mediaPlayer={})", mediaPlayer);
-        }
-
-        @Override
         public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-            logger.debug("videoOutput(mediaPlayer={},newCount={})", mediaPlayer, newCount);
-            if(newCount == 0) {
+            if (newCount == 0) {
                 return;
             }
-
-//            MediaDetails mediaDetails = mediaPlayer.info().getMediaDetails();
-//            logger.info("mediaDetails={}", mediaDetails);
-
-// FIXME            MediaMeta mediaMeta = mediaPlayer.getMediaMeta();
-//            logger.info("mediaMeta={}", mediaMeta);
-
             final Dimension dimension = mediaPlayer.video().getVideoDimension();
-            logger.debug("dimension={}", dimension);
-            if(dimension != null) {
+            if (dimension != null) {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
@@ -424,131 +265,7 @@ public class TestPlayer extends VlcjTest {
                     }
                 });
             }
-
-            // You can set a logo like this if you like...
-            File logoFile = new File("./etc/vlcj-logo.png");
-            if(logoFile.exists()) {
-                mediaPlayer.logo().setLogoFile(logoFile.getAbsolutePath());
-                mediaPlayer.logo().setLogoOpacity(0.5f);
-                mediaPlayer.logo().setLogoLocation(10, 10);
-                mediaPlayer.logo().enableLogo(true);
-            }
-
-            // Demo the marquee
-            mediaPlayer.marquee().setMarqueeText("vlcj java bindings for vlc");
-            mediaPlayer.marquee().setMarqueeSize(40);
-            mediaPlayer.marquee().setMarqueeOpacity(95);
-            mediaPlayer.marquee().setMarqueeColour(Color.white);
-            mediaPlayer.marquee().setMarqueeTimeout(5000);
-            mediaPlayer.marquee().setMarqueeLocation(50, 120);
-            mediaPlayer.marquee().enableMarquee(true);
-
-            // Not quite sure how crop geometry is supposed to work...
-            //
-            // Assertions in libvlc code:
-            //
-            // top + height must be less than visible height
-            // left + width must be less than visible width
-            //
-            // With DVD source material:
-            //
-            // Reported size is 1024x576 - this is what libvlc reports when you call
-            // get video size
-            //
-            // mpeg size is 720x576 - this is what is reported in the native log
-            //
-            // The crop geometry relates to the mpeg size, not the size reported
-            // through the API
-            //
-            // For 720x576, attempting to set geometry to anything bigger than
-            // 719x575 results in the assertion failures above (seems like it should
-            // allow 720x576) to me
-
-            // mediaPlayer.setCropGeometry("4:3");
-        }
-
-        @Override
-        public void error(MediaPlayer mediaPlayer) {
-            logger.debug("error(mediaPlayer={})", mediaPlayer);
-        }
-
-    }
-
-    /**
-     *
-     *
-     * @param enable
-     */
-    @SuppressWarnings("unused")
-    private void enableMousePointer(boolean enable) {
-        logger.debug("enableMousePointer(enable={})", enable);
-        if(enable) {
-            videoSurface.setCursor(null);
-        }
-        else {
-            Image blankImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-            videoSurface.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(0, 0), ""));
         }
     }
 
-    /**
-     *
-     */
-    private final class TestPlayerMouseListener extends MouseAdapter {
-        @Override
-        public void mouseMoved(MouseEvent e) {
-            logger.trace("mouseMoved(e={})", e);
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            logger.debug("mousePressed(e={})", e);
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            logger.debug("mouseReleased(e={})", e);
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            logger.debug("mouseClicked(e={})", e);
-        }
-
-        @Override
-        public void mouseWheelMoved(MouseWheelEvent e) {
-            logger.debug("mouseWheelMoved(e={})", e);
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            logger.debug("mouseEntered(e={})", e);
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            logger.debug("mouseExited(e={})", e);
-        }
-    }
-
-    /**
-     *
-     */
-    private final class TestPlayerKeyListener extends KeyAdapter {
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            logger.debug("keyPressed(e={})", e);
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            logger.debug("keyReleased(e={})", e);
-        }
-
-        @Override
-        public void keyTyped(KeyEvent e) {
-            logger.debug("keyTyped(e={})", e);
-        }
-    }
 }
