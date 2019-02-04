@@ -71,6 +71,7 @@ import com.sun.jna.platform.WindowUtils;
  * <p>
  * Specify a single MRL to play on the command-line.
  */
+@SuppressWarnings("serial")
 public class OverlayTest extends VlcjTest {
 
     public static void main(final String[] args) throws Exception {

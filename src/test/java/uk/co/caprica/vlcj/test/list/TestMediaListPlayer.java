@@ -41,6 +41,7 @@ import java.awt.event.*;
  * This test does not embed a video window so a new native video window will be created for each
  * movie in the play-list.
  */
+@SuppressWarnings("serial")
 public class TestMediaListPlayer extends VlcjTest {
 
     private final MediaPlayerFactory mediaPlayerFactory;

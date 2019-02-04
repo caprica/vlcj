@@ -36,6 +36,7 @@ import javax.swing.event.ChangeListener;
 import uk.co.caprica.vlcj.model.LibVlcConst;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
+@SuppressWarnings("serial")
 public class PlayerVideoAdjustPanel extends JPanel {
 
     private final MediaPlayer mediaPlayer;

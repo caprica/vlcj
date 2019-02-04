@@ -40,6 +40,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@SuppressWarnings("serial")
 public class PlayerControlsPanel extends JPanel {
 
     private static final int SKIP_TIME_MS = 10 * 1000;

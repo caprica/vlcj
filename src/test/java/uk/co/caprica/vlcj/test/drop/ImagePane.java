@@ -37,6 +37,7 @@ import javax.swing.JComponent;
 /**
  * A panel that paints a background image.
  */
+@SuppressWarnings("serial")
 public class ImagePane extends JComponent {
 
     public enum Mode {
