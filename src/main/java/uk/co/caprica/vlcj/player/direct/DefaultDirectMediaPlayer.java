@@ -23,15 +23,13 @@ import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.binding.Kernel32;
 import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.binding.support.size_t;
 import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.Semaphore;
@@ -54,11 +52,6 @@ import java.util.concurrent.Semaphore;
  * This list is not exhaustive.
  */
 public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements DirectMediaPlayer {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(DefaultDirectMediaPlayer.class);
 
     /**
      * Use a semaphore with a single permit to ensure that the lock, display, unlock cycle goes in a
@@ -208,9 +201,7 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
     private final class SetupCallback implements libvlc_video_format_cb {
         @Override
         public int format(PointerByReference opaque, PointerByReference chroma, IntByReference width, IntByReference height, PointerByReference pitches, PointerByReference lines) {
-            logger.debug("format(chroma={},width={},height={})", chroma.getPointer().getString(0), width.getValue(), height.getValue());
             bufferFormat = bufferFormatCallback.getBufferFormat(width.getValue(), height.getValue());
-            logger.debug("bufferFormat={}", bufferFormat);
             // Set the desired video format properties - space for these structures is already allocated by LibVlc, we
             // simply fill the existing memory
             byte[] chromaBytes = bufferFormat.getChroma().getBytes();
