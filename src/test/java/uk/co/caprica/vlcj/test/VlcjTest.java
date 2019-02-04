@@ -20,9 +20,6 @@
 package uk.co.caprica.vlcj.test;
 
 import com.sun.jna.NativeLibrary;
-import org.apache.log4j.BasicConfigurator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 import javax.swing.*;
@@ -45,11 +42,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 public abstract class VlcjTest {
 
     /**
-     * Log.
-     */
-    private static final Logger logger = LoggerFactory.getLogger(VlcjTest.class);
-
-    /**
      * Change this to point to your own vlc installation, or comment out the code if you want to use
      * your system default installation.
      * <p>
@@ -66,11 +58,7 @@ public abstract class VlcjTest {
      * Static initialisation.
      */
     static {
-        // Initialise Log4J (this is good enough for testing, vlcj depends on log4j only for testing here)
-        BasicConfigurator.configure();
-
-        if(null != NATIVE_LIBRARY_SEARCH_PATH) {
-            logger.info("Explicitly adding JNA native library search path: '{}'", NATIVE_LIBRARY_SEARCH_PATH);
+        if (null != NATIVE_LIBRARY_SEARCH_PATH) {
             NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
         }
 
@@ -84,11 +72,11 @@ public abstract class VlcjTest {
         String lookAndFeelClassName = null;
         LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
         for(LookAndFeelInfo lookAndFeel : lookAndFeelInfos) {
-            if("Nimbus".equals(lookAndFeel.getName())) {
+            if ("Nimbus".equals(lookAndFeel.getName())) {
                 lookAndFeelClassName = lookAndFeel.getClassName();
             }
         }
-        if(lookAndFeelClassName == null) {
+        if (lookAndFeelClassName == null) {
             lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
         }
         try {
