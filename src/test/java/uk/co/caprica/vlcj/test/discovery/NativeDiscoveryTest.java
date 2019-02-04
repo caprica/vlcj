@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.test.discovery;
 
+import com.sun.jna.Native;
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.discovery.strategy.NativeDiscoveryStrategy;
 
@@ -43,6 +46,8 @@ public class NativeDiscoveryTest {
         };
         boolean found = discovery.discover();
         System.out.println(found);
+        LibVlc nativeLibrary = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+        System.out.println("Loaded library " + nativeLibrary);
     }
 
 }
