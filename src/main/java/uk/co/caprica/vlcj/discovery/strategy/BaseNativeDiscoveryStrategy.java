@@ -109,9 +109,7 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
         for (String pathFormat : pluginPathFormats) {
             String pluginPath = String.format(pathFormat, path);
             if (new File(pluginPath).exists()) {
-                if (setPluginPath(pluginPath)) {
-                    return true;
-                }
+                return setPluginPath(pluginPath);
             }
         }
         return false;
