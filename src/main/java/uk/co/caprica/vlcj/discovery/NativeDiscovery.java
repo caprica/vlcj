@@ -19,6 +19,17 @@ public class NativeDiscovery {
      */
     protected static final String PLUGIN_ENV_NAME = "VLC_PLUGIN_PATH";
 
+    /**
+     * Flag if the discovery already completed and found the native libraries.
+     * <p>
+     * There is no point running the discovery again if the libraries were already found, since the native library
+     * search path will already have been set and a successful discovery would do no more than set it again.
+     * <p>
+     * If the discovery failed before, then running it again may work e.g. if the client application took some remedial
+     * steps to make the native libraries available.
+     */
+    private boolean alreadyFound;
+
     private static final NativeDiscoveryStrategy[] DEFAULT_STRATEGIES = new NativeDiscoveryStrategy[] {
         new JnaLibraryPathNativeDiscoveryStrategy(),
         new LinuxNativeDiscoveryStrategy(),
@@ -41,21 +52,26 @@ public class NativeDiscovery {
     }
 
     public final boolean discover() {
-        for (NativeDiscoveryStrategy discoveryStrategy : discoveryStrategies) {
-            if (discoveryStrategy.supported()) {
-                String path = discoveryStrategy.discover();
-                if (path != null) {
-                    if (discoveryStrategy.onFound(path)) {
-                        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), path);
+        if (alreadyFound) {
+            return true;
+        } else {
+            for (NativeDiscoveryStrategy discoveryStrategy : discoveryStrategies) {
+                if (discoveryStrategy.supported()) {
+                    String path = discoveryStrategy.discover();
+                    if (path != null) {
+                        if (discoveryStrategy.onFound(path)) {
+                            NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), path);
+                        }
+                        tryPluginPath(path, discoveryStrategy);
+                        onFound(path, discoveryStrategy);
+                        alreadyFound = true;
+                        return true;
                     }
-                    tryPluginPath(path, discoveryStrategy);
-                    onFound(path, discoveryStrategy);
-                    return true;
                 }
             }
+            onNotFound();
+            return false;
         }
-        onNotFound();
-        return false;
     }
 
     /**
