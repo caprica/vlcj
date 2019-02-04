@@ -58,6 +58,15 @@ public class NativeDiscovery {
         return false;
     }
 
+    /**
+     *
+     *
+     * Rather than setting the plugin path here, we must ask the strategy to set the path. This is because there are
+     * different ways (different native API) to set process environment variables on e.g. Linux vs Windows.
+     *
+     * @param path
+     * @param discoveryStrategy
+     */
     private void tryPluginPath(String path, NativeDiscoveryStrategy discoveryStrategy) {
         String env = System.getenv(PLUGIN_ENV_NAME);
         if (env == null || env.length() == 0) {
