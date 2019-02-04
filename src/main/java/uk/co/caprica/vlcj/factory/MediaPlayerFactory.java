@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.factory;
 import com.sun.jna.Native;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.co.caprica.vlcj.Info;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
@@ -61,6 +62,7 @@ import java.util.Collection;
 public class MediaPlayerFactory {
 
     static {
+        Info.getInstance();
         if (RuntimeUtil.isNix()) {
             LinuxNativeInit.init();
         }

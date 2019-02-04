@@ -112,11 +112,6 @@ import com.sun.jna.ptr.PointerByReference;
  */
 public interface LibVlc extends Library {
 
-    /**
-     * Application information.
-     */
-    Info INFO = Info.getInstance();
-
     // === libvlc.h =============================================================
 
     /**
