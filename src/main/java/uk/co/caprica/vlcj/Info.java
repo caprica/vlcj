@@ -19,23 +19,14 @@
 
 package uk.co.caprica.vlcj;
 
-import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.version.Version;
 
+import java.util.Properties;
+
 /**
- * Application information banner.
+ * Application version/environment information.
  */
 public final class Info {
-
-    /**
-     * Log.
-     */
-    private final Logger logger = LoggerFactory.getLogger(Info.class);
 
     /**
      * Singleton holder.
@@ -60,30 +51,46 @@ public final class Info {
     /**
      * vlcj version.
      */
-    private Version version;
+    private Version vlcjVersion;
 
-    /**
-     * Private constructor.
-     */
+    private final String os;
+
+    private final String javaVersion;
+
+    private final String javaHome;
+
+    private final String jnaLibraryPath;
+
+    private final String javaLibraryPath;
+
+    private final String path;
+
+    private final String pluginPath;
+
+    private final String ldLibraryPath;
+
+    private final String dyldLibraryPath;
+
+    private final String dyldFallbackLibraryPath;
+
     private Info() {
-        try {
-            Properties properties = new Properties();
-            properties.load(getClass().getResourceAsStream("/uk/co/caprica/vlcj/build.properties"));
-            version = new Version(properties.getProperty("build.version"));
-        }
-        catch(Exception e) {
-            // This can only happen if something went wrong with the build
-            version = null;
-        }
-        logger.info("vlcj             : {}", version != null ? version : "<version not available>");
-        logger.info("os               : {} {} {}", System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"));
-        logger.info("java             : {} {}", System.getProperty("java.version"), System.getProperty("java.vendor"));
-        logger.info("java.home        : {}", property("java.home"));
-        logger.info("jna.library.path : {}", property("jna.library.path"));
-        logger.info("java.library.path: {}", property("java.library.path"));
-        if (RuntimeUtil.isNix()) {
-            logger.info("LD_LIBRARY_PATH  : {}", env("LD_LIBRARY_PATH"));
-        }
+        vlcjVersion = getVlcjVersion();
+
+        os = String.format("%s %s %s", System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"));
+        javaVersion = String.format("%s %s", System.getProperty("java.version"), System.getProperty("java.vendor"));
+
+        javaHome = System.getProperty("java.home");
+        jnaLibraryPath = System.getProperty("jna.library.path");
+        javaLibraryPath = System.getProperty("java.library.path");
+
+        path = System.getenv("PATH");
+
+        pluginPath = System.getenv("VLC_PLUGIN_PATH");
+
+        ldLibraryPath = System.getenv("LD_LIBRARY_PATH");
+
+        dyldLibraryPath = System.getenv("DYLD_LIBRARY_PATH");
+        dyldFallbackLibraryPath = System.getenv("DYLD_FALLBACK_LIBRARY_PATH");
     }
 
     /**
@@ -91,17 +98,78 @@ public final class Info {
      *
      * @return version
      */
-    public final Version version() {
-        return version;
+    public Version vlcjVersion() {
+        return vlcjVersion;
     }
 
-    private String property(String name) {
-        String result = System.getProperty(name);
-        return result != null ? result : "<not set>";
+    public String os() {
+        return os;
+    };
+
+    public String javaVersion() {
+        return javaVersion;
     }
 
-    private String env(String name) {
-        String result = System.getenv(name);
-        return result != null ? result : "<not set>";
+    public String javaHome() {
+        return javaHome;
     }
+
+    public String jnaLibraryPath() {
+        return jnaLibraryPath;
+    }
+
+    public String javaLibraryPath() {
+        return javaLibraryPath;
+    }
+
+    public String path() {
+        return path;
+    }
+
+    public String pluginPath() {
+        return pluginPath;
+    }
+
+    public String ldLibraryPath() {
+        return ldLibraryPath;
+    }
+
+    public String dyldLibraryPath() {
+        return dyldLibraryPath;
+    }
+
+    public String dyldFallbackLibraryPath() {
+        return dyldFallbackLibraryPath;
+    }
+
+    private Version getVlcjVersion() {
+        try {
+            Properties properties = new Properties();
+            properties.load(getClass().getResourceAsStream("/uk/co/caprica/vlcj/build.properties"));
+            return new Version(properties.getProperty("build.version"));
+        }
+        catch(Exception e) {
+            // This can only happen if something went wrong with the build
+            return null;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder(200)
+            .append(getClass().getSimpleName()).append('[')
+            .append("vlcjVersion=").append(vlcjVersion).append(',')
+            .append("os=").append(os).append(',')
+            .append("javaVersion=").append(javaVersion).append(',')
+            .append("javaHome=").append(javaHome).append(',')
+            .append("jnaLibraryPath=").append(jnaLibraryPath).append(',')
+            .append("javaLibraryPath=").append(javaLibraryPath).append(',')
+            .append("path=").append(path).append(',')
+            .append("pluginPath=").append(pluginPath).append(',')
+            .append("ldLibraryPath=").append(ldLibraryPath).append(',')
+            .append("dyldLibraryPath=").append(dyldLibraryPath).append(',')
+            .append("dyldFallbackLibraryPath=").append(dyldFallbackLibraryPath).append(']')
+            .toString();
+    }
+
 }

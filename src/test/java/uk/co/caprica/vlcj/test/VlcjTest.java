@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.test;
 
 import com.sun.jna.NativeLibrary;
+import uk.co.caprica.vlcj.Info;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 import javax.swing.*;
@@ -58,11 +59,33 @@ public abstract class VlcjTest {
      * Static initialisation.
      */
     static {
+        Info info = Info.getInstance();
+
+        System.out.printf("vlcj             : %s%n", info.vlcjVersion() != null ? info.vlcjVersion() : "<version not available>");
+        System.out.printf("os               : %s%n", val(info.os()));
+        System.out.printf("java             : %s%n", val(info.javaVersion()));
+        System.out.printf("java.home        : %s%n", val(info.javaHome()));
+        System.out.printf("jna.library.path : %s%n", val(info.jnaLibraryPath()));
+        System.out.printf("java.library.path: %s%n", val(info.javaLibraryPath()));
+        System.out.printf("PATH             : %s%n", val(info.path()));
+        System.out.printf("VLC_PLUGIN_PATH  : %s%n", val(info.pluginPath()));
+
+        if (RuntimeUtil.isNix()) {
+            System.out.printf("LD_LIBRARY_PATH  : %s%n", val(info.ldLibraryPath()));
+        } else if (RuntimeUtil.isMac()) {
+            System.out.printf("DYLD_LIBRARY_PATH          : %s%n", val(info.dyldLibraryPath()));
+            System.out.printf("DYLD_FALLBACK_LIBRARY_PATH : %s%n", val(info.dyldFallbackLibraryPath()));
+        }
+
         if (null != NATIVE_LIBRARY_SEARCH_PATH) {
             NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
         }
 
         System.setProperty("jna.dump_memory", DUMP_NATIVE_MEMORY);
+    }
+
+    private static String val(String val) {
+        return val != null ? val : "<not set>";
     }
 
     /**
