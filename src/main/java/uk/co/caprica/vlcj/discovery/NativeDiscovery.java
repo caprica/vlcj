@@ -1,8 +1,12 @@
 package uk.co.caprica.vlcj.discovery;
 
+import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.discovery.strategy.*;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.version.LibVlcVersion;
 
 /**
  * Native library discovery component.
@@ -61,6 +65,15 @@ public class NativeDiscovery {
         this.discoveryStrategies = discoveryStrategies.length > 0 ? discoveryStrategies : DEFAULT_STRATEGIES;
     }
 
+    /**
+     *
+     * <p>
+     * Discovery will stop when a strategy returns a discovered location - it is still possible that the native library
+     * will fail to load, but even if does not load there is no chance to resume discovery with that strategy or any of
+     * the subsequent ones (due to how {@link NativeLibrary#addSearchPath(String, String)} works).
+     *
+     * @return
+     */
     public final boolean discover() {
         if (alreadyFound) {
             return true;
@@ -73,9 +86,16 @@ public class NativeDiscovery {
                             NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), path);
                         }
                         tryPluginPath(path, discoveryStrategy);
-                        onFound(path, discoveryStrategy);
-                        alreadyFound = true;
-                        return true;
+                        if (tryLoadingLibrary()) {
+                            onFound(path, discoveryStrategy);
+                            alreadyFound = true;
+                            return true;
+                        } else {
+                            // We have to stop here, because we already added a search path for the native library and
+                            // any further search paths we add will be tried AFTER the one that already failed - the
+                            // subsequent directories we may like to try will never actually be tried
+                            return false;
+                        }
                     }
                 }
             }
@@ -96,8 +116,30 @@ public class NativeDiscovery {
     private void tryPluginPath(String path, NativeDiscoveryStrategy discoveryStrategy) {
         String env = System.getenv(PLUGIN_ENV_NAME);
         if (env == null || env.length() == 0) {
+            // The return value from onSetPluginPath is currently not used (it would imply that the API call to set the
+            // process environment variable failed, which is somewhat of a stretch that it would ever occur)
             discoveryStrategy.onSetPluginPath(path);
         }
+    }
+
+    /**
+     *
+     */
+    private boolean tryLoadingLibrary() {
+        try {
+            LibVlc libvlc = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+            libvlc_instance_t instance = libvlc.libvlc_new(0, new String[0]);
+            if (instance != null) {
+                libvlc.libvlc_release(instance);
+                LibVlcVersion version = new LibVlcVersion(libvlc);
+                if (version.isSupported()) {
+                    return true;
+                }
+            }
+        }
+        catch (UnsatisfiedLinkError e) {
+        }
+        return false;
     }
 
     protected void onFound(String path, NativeDiscoveryStrategy strategy) {

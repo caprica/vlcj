@@ -163,6 +163,15 @@ public class MediaPlayerFactory {
         return nativeLibrary;
     }
 
+    /**
+     *
+     *
+     * <p>
+     * This check must be done here even though the default {@link NativeDiscovery} implementation already does it,
+     * simply because using the default {@link NativeDiscovery} is optional.
+     *
+     * @param nativeLibrary
+     */
     private void checkVersion(LibVlc nativeLibrary) {
         LibVlcVersion version = new LibVlcVersion(nativeLibrary);
         if (!version.isSupported()) {
