@@ -15,6 +15,9 @@ working with LibVLC.
 vlcj is primarily developed and therefore extensively tested on Linux - it does also work just fine on Windows and
 OSX, although there may be some limitations on OSX.
 
+Additionally, whilst not supported as one of the main platforms, this version of vlcj has been tested and shown to be
+working on contemporary Raspberry Pi builds.
+
 At least JDK 1.6 is required.
 
 *This version of vlcj requires VLC 3.0.0 as a minimum, no earlier version is supported.*
