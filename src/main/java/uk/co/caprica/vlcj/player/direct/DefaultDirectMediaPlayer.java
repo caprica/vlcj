@@ -214,10 +214,12 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
             if (bufferFormat == null) {
                 throw new IllegalStateException("buffer format can not be null");
             }
-            // Set the desired video format properties
+            // Set the desired video format properties - space for these structures is already allocated by LibVlc, we
+            // simply fill the existing memory
             byte[] chromaBytes = bufferFormat.getChroma().getBytes();
-            // Space for these structures is already allocated by libvlc, we simply fill the existing memory
-            chroma.getPointer().write(0, chromaBytes, 0, chromaBytes.length > 4 ? 4 : chromaBytes.length);
+            // The buffer format class restricts the chroma to maximum four bytes, so we don't need check it here - we
+            // do however need to check if it is less than four
+            chroma.getPointer().write(0, chromaBytes, 0, chromaBytes.length < 4 ? chromaBytes.length : 4);
             width.setValue(bufferFormat.getWidth());
             height.setValue(bufferFormat.getHeight());
             int[] pitchValues = bufferFormat.getPitches();
