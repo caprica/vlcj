@@ -9,6 +9,16 @@ import uk.co.caprica.vlcj.binding.RuntimeUtil;
  * <p>
  *     ...
  * <p>
+ * It is possible that even if native discovery fails, i.e. {@link #discover()} returns <code>false</code>, that the
+ * native library can be loaded successfully. This could happen in an environment that is already well-configured, with
+ * libraries installed in places that the Operating System and JVM already know about.
+ * <p>
+ * In {@link uk.co.caprica.vlcj.factory.MediaPlayerFactory}, where this native discovery component is primarily used, an
+ * attempt to load the native library will <em>always</em> be made, whether explicit discovery works or not.
+ * <p>
+ * This behaviour is by design, as is always trying the discovery first whether or not this "default" library loading
+ * would work - since it is possible that a client application does not actually want to prioritise the default library
+ * load (e.g. different version of VLC if multiple are installed).
  */
 public class NativeDiscovery {
 
