@@ -44,7 +44,7 @@ public final class JnaLibraryPathNativeDiscoveryStrategy implements NativeDiscov
     @Override
     public boolean onSetPluginPath(String path) {
         // When using jna.library.path, we don't set VLC_PLUGIN_PATH, we assume the client application does it
-        return false;
+        return true;
     }
 
 }
