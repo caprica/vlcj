@@ -20,8 +20,6 @@
 package uk.co.caprica.vlcj.factory;
 
 import com.sun.jna.Native;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.Info;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
@@ -68,8 +66,6 @@ public class MediaPlayerFactory {
         }
     }
 
-    private final Logger logger = LoggerFactory.getLogger(MediaPlayerFactory.class);
-
     private final LibVlc libvlc; // FIXME maybe just protected and get rid of the getter?
 
     private final libvlc_instance_t libvlcInstance; // FIXME maybe just protected and get rid of the getter?
@@ -101,8 +97,6 @@ public class MediaPlayerFactory {
      * @param libvlcArgs array of options/arguments to pass to LibVLC for initialisation of the native library
      */
     public MediaPlayerFactory(NativeDiscovery discovery, String... libvlcArgs) {
-        logger.debug("MediaPlayerFactory(discovery={},libvlcArgs={})", discovery, libvlcArgs);
-
         this.libvlc         = discoverNativeLibrary(discovery);
         this.libvlcInstance = newLibVlcInstance(libvlcArgs != null ? libvlcArgs : new String[0]);
 
@@ -149,15 +143,12 @@ public class MediaPlayerFactory {
     }
 
     private LibVlc discoverNativeLibrary(NativeDiscovery discovery) {
-        logger.debug("discoverNativeLibrary()");
         if (discovery != null) {
-            boolean found = discovery.discover();
-            logger.debug("found={}", found);
-        } else {
-            logger.debug("skipping native discovery");
+            // The discover method return value is not currently used, since we try and load the native library whether
+            // discovery worked or not
+            discovery.discover();
         }
         LibVlc nativeLibrary = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-        logger.info("nativeLibrary={}", NativeLibraryPath.getNativeLibraryPath(nativeLibrary));
         checkVersion(nativeLibrary);
         // FIXME likely we must use a synchronized instance
         return nativeLibrary;
