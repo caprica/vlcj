@@ -19,23 +19,21 @@
 
 package uk.co.caprica.vlcj.test.meta;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import uk.co.caprica.vlcj.condition.media.ParsedCondition;
+import uk.co.caprica.vlcj.enums.MediaParsedStatus;
+import uk.co.caprica.vlcj.enums.Meta;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.model.MetaData;
+import uk.co.caprica.vlcj.test.VlcjTest;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.test.VlcjTest;
+import java.net.URL;
 
 /**
  * Simple test to show local file meta data.
@@ -50,60 +48,68 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class MetaTest extends VlcjTest {
 
-    /**
-     * Log.
-     */
-    private static final Logger logger = LoggerFactory.getLogger(MetaTest.class);
+    public static void main(String[] args) throws Exception {
+        if (args.length != 1) {
+            System.out.println("Specify a single MRL");
+            System.exit(1);
+        }
 
-    public static void main(String[] args) {
-//        if(args.length != 1) {
-//            System.out.println("Specify a single MRL");
-//            System.exit(1);
-//        }
-//
-//        // Create a media player
-//        MediaPlayerFactory factory = new MediaPlayerFactory();
-//
-//        // Get the meta data and dump it out
-//        MediaMeta mediaMeta = factory.media().getMediaMeta(args[0], true);
-//        logger.debug("mediaMeta={}", mediaMeta);
-//
-//        // Load the artwork into a buffered image (if available)
-//        final BufferedImage artwork = mediaMeta.getArtwork();
-//        System.out.println(artwork);
-//
-//        // Orderly clean-up
-//        mediaMeta.release();
-//        factory.release();
-//
-//        if(artwork != null) {
-//            JPanel cp = new JPanel() {
-//                private static final long serialVersionUID = 1L;
-//
-//                @Override
-//                protected void paintComponent(Graphics g) {
-//                    Graphics2D g2 = (Graphics2D)g;
-//                    g2.setPaint(Color.black);
-//                    g2.fillRect(0, 0, getWidth(), getHeight());
-//                    double sx = (double)getWidth() / (double)artwork.getWidth();
-//                    double sy = (double)getHeight() / (double)artwork.getHeight();
-//                    sx = Math.min(sx, sy);
-//                    sy = Math.min(sx, sy);
-//                    AffineTransform tx = AffineTransform.getScaleInstance(sx, sy);
-//                    g2.drawImage(artwork, new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR), 0, 0);
-//                }
-//
-//                @Override
-//                public Dimension getPreferredSize() {
-//                    return new Dimension(artwork.getWidth(), artwork.getHeight());
-//                }
-//            };
-//            JFrame f = new JFrame("vlcj meta artwork");
-//            f.setIconImage(new ImageIcon(MetaTest.class.getResource("/icons/vlcj-logo.png")).getImage());
-//            f.setContentPane(cp);
-//            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            f.pack();
-//            f.setVisible(true);
-//        } FIXME
+        // Create a media player
+        MediaPlayerFactory factory = new MediaPlayerFactory();
+
+        // Create media
+        final Media media = factory.media().newMedia(args[0]);
+
+        // Parsing is asynchronous, we use a conditional waiter to parse the media and wait for it to finish parsing
+        ParsedCondition parsed = new ParsedCondition(media) {
+            @Override
+            protected boolean onBefore(Media component) {
+                return media.parsing().parse();
+            }
+        };
+        parsed.await();
+
+        // Get the meta data and dump it out
+        MetaData metaData = media.meta().asMetaData();
+        System.out.println(metaData);
+
+        // Load the artwork into a buffered image (if available)
+        String artworkUrl = metaData.get(Meta.ARTWORK_URL);
+        System.out.println(artworkUrl);
+
+        // Orderly clean-up
+        media.release();
+        factory.release();
+
+        if (artworkUrl != null) {
+            final BufferedImage artwork = ImageIO.read(new URL(artworkUrl));
+
+            JPanel cp = new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    Graphics2D g2 = (Graphics2D)g;
+                    g2.setPaint(Color.black);
+                    g2.fillRect(0, 0, getWidth(), getHeight());
+                    double sx = (double)getWidth() / (double)artwork.getWidth();
+                    double sy = (double)getHeight() / (double)artwork.getHeight();
+                    sx = Math.min(sx, sy);
+                    sy = Math.min(sx, sy);
+                    AffineTransform tx = AffineTransform.getScaleInstance(sx, sy);
+                    g2.drawImage(artwork, new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR), 0, 0);
+                }
+
+                @Override
+                public Dimension getPreferredSize() {
+                    return new Dimension(artwork.getWidth(), artwork.getHeight());
+                }
+            };
+            JFrame f = new JFrame("vlcj meta artwork");
+            f.setIconImage(new ImageIcon(MetaTest.class.getResource("/icons/vlcj-logo.png")).getImage());
+            f.setContentPane(cp);
+            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            f.pack();
+            f.setVisible(true);
+        }
     }
+
 }

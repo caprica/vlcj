@@ -19,10 +19,10 @@
 
 package uk.co.caprica.vlcj.test.meta;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import uk.co.caprica.vlcj.condition.media.ParsedCondition;
+import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -32,53 +32,52 @@ import uk.co.caprica.vlcj.test.VlcjTest;
  */
 public class UpdateMetaTest extends VlcjTest {
 
-    /**
-     * Log.
-     */
-    private static final Logger logger = LoggerFactory.getLogger(UpdateMetaTest.class);
+    public static void main(String[] args) throws Exception {
+        if (args.length != 1) {
+            System.out.println("Specify a single MRL");
+            System.exit(1);
+        }
 
-    public static void main(String[] args) {
-//        if(args.length != 1) {
-//            System.out.println("Specify a single MRL");
-//            System.exit(1);
-//        }
-//
-//        // Create a media player
-//        MediaPlayerFactory factory = new MediaPlayerFactory();
-//
-//        // Get the meta data and dump it out
-//        MediaMeta mediaMeta = factory.media().getMediaMeta(args[0], true);
-//        logger.info("mediaMeta={}", mediaMeta);
-//        logger.info("original description={}", mediaMeta.getDescription());
-//
-//        // Keep the original description to restore it later
-//        String originalDescription = mediaMeta.getDescription();
-//
-//        // Write new meta data
-//        mediaMeta.setDescription("Oh isn't this a lovely tune.");
-//        mediaMeta.save();
-//
-//        mediaMeta.release();
-//
-//        // Re-read to confirm the updated value
-//        mediaMeta = factory.media().getMediaMeta(args[0], true);
-//        logger.info("mediaMeta={}", mediaMeta);
-//        logger.info("updated description={}", mediaMeta.getDescription());
-//
-//        // Restore the original description
-//        mediaMeta.setDescription(originalDescription);
-//        mediaMeta.save();
-//
-//        mediaMeta.release();
-//
-//        // Re-read to confirm
-//        mediaMeta = factory.media().getMediaMeta(args[0], true);
-//        logger.info("mediaMeta={}", mediaMeta);
-//        logger.info("restored description={}", mediaMeta.getDescription());
-//
-//        mediaMeta.release();
-//
-//        // Orderly clean-up
-//        factory.release(); FIXME
+        // Create a media player
+        MediaPlayerFactory factory = new MediaPlayerFactory();
+
+        Media media = getParsedMedia(factory, args[0]);
+        String originalDescription = media.meta().get(Meta.DESCRIPTION);
+        System.out.println("originalDescription=" + originalDescription);
+
+        media.meta().set(Meta.DESCRIPTION, "A bangin' choon.");
+        media.meta().save();
+        media.release();
+
+        Media checkMedia = getParsedMedia(factory, args[0]);
+        String checkDescription = checkMedia.meta().get(Meta.DESCRIPTION);
+        System.out.println("checkDescription=" + checkDescription);
+
+        checkMedia.meta().set(Meta.DESCRIPTION, originalDescription);
+        checkMedia.meta().save();
+        checkMedia.release();
+
+        Media restoreMedia = getParsedMedia(factory, args[0]);
+        String restoreDescription = restoreMedia.meta().get(Meta.DESCRIPTION);
+        System.out.println("restoreDescription=" + restoreDescription);
+        restoreMedia.release();
+
+        factory.release();
     }
+
+    private static Media getParsedMedia(MediaPlayerFactory factory, String mrl) throws Exception {
+        final Media media = factory.media().newMedia(mrl);
+
+        // Parsing is asynchronous, we use a conditional waiter to parse the media and wait for it to finish parsing
+        ParsedCondition parsed = new ParsedCondition(media) {
+            @Override
+            protected boolean onBefore(Media component) {
+                return media.parsing().parse();
+            }
+        };
+        parsed.await();
+
+        return media;
+    }
+
 }
