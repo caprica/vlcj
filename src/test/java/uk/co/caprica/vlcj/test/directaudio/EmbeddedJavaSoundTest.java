@@ -12,9 +12,6 @@ import javax.sound.sampled.SourceDataLine;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import uk.co.caprica.vlcj.component.DirectAudioPlayerComponent;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
@@ -29,8 +26,6 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
     private static final int RATE = 44100;
 
     private static final int CHANNELS = 2;
-
-    private final Logger logger = LoggerFactory.getLogger(JavaSoundTest.class);
 
     private final Semaphore sync = new Semaphore(0);
 
@@ -102,13 +97,13 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
         }
 
         private void start() throws Exception {
-            logger.info("start()");
+            System.out.println("start()");
             dataLine.open(audioFormat);
             dataLine.start();
         }
 
         private void stop() {
-            logger.info("stop()");
+            System.out.println("stop()");
             dataLine.close();
         }
 
@@ -123,13 +118,13 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
 
         @Override
         public void drain(DirectAudioPlayer mediaPlayer) {
-            logger.info("drain()");
+            System.out.println("drain()");
             dataLine.drain();
         }
 
         @Override
         public void finished(MediaPlayer mediaPlayer) {
-            logger.info("finished()");
+            System.out.println("finished()");
             sync.release();
         }
     }
