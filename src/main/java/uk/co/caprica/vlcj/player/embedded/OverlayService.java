@@ -165,7 +165,6 @@ public final class OverlayService extends BaseService {
             }
             else {
                 // This should not be possible
-//                logger.warn("Failed to find a Window ancestor for the video surface Canvas");
             }
         }
     }
