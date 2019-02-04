@@ -211,9 +211,6 @@ public class DefaultDirectMediaPlayer extends DefaultMediaPlayer implements Dire
             logger.debug("format(chroma={},width={},height={})", chroma.getPointer().getString(0), width.getValue(), height.getValue());
             bufferFormat = bufferFormatCallback.getBufferFormat(width.getValue(), height.getValue());
             logger.debug("bufferFormat={}", bufferFormat);
-            if (bufferFormat == null) {
-                throw new IllegalStateException("buffer format can not be null");
-            }
             // Set the desired video format properties - space for these structures is already allocated by LibVlc, we
             // simply fill the existing memory
             byte[] chromaBytes = bufferFormat.getChroma().getBytes();
