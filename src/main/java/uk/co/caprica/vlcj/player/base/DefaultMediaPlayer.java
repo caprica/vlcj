@@ -31,11 +31,6 @@ import java.util.concurrent.TimeUnit;
 // FIXME
 //  still need to think about what Interfaces i actually need (e.g. vlcj-pro impact is currently unknown)
 
-// FIXME
-//  would be nice to totally ditch the loggers from everywhere
-
-// FIXME don't forget, we should do something similar with EmbeddedMediaPlayer and so on
-
 // FIXME could almost be renamed BaseMediaPlayer instead of Default
 
 /**
