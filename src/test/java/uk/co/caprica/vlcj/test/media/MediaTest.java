@@ -34,8 +34,6 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 
 import java.util.List;
 
-// FIXME would be very nice to be able to wait for parsing to complete (synchronous) so we could Conditional-like wait for a parsedChanged
-
 public class MediaTest extends VlcjTest {
 
     public static void main(String[] args) throws Exception {

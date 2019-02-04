@@ -108,8 +108,7 @@ public class StreamingAudioPlayListTest extends VlcjTest {
         for(File file : files) {
             // You could instead set standard options on the media list player rather
             // than setting options each time you add media
-            Media media = factory.media().newMedia(file.getAbsolutePath());
-            media.options().addOptions(mediaOptions); // FIXME consider factory method with mrl+options
+            Media media = factory.media().newMedia(file.getAbsolutePath(), mediaOptions);
             playList.items().addMedia(media);
         }
         // Loop the play-list over and over

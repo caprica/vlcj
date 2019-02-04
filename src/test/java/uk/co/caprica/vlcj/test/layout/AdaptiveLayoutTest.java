@@ -53,6 +53,8 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
+import static uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent.embeddedMediaPlayerSpec;
+
 /**
  * An example showing one way to solve the problem of needing to "move" a media player video
  * surface.
@@ -196,12 +198,7 @@ public class AdaptiveLayoutTest extends VlcjTest {
                 }
             });
 
-            mediaPlayer = new EmbeddedMediaPlayerComponent() {
-//                @Override
-//                protected MediaPlayerFactory onGetMediaPlayerFactory() {
-//                    return mediaPlayerFactory;
-// FIXME               }
-            };
+            mediaPlayer = new EmbeddedMediaPlayerComponent(embeddedMediaPlayerSpec().withFactory(mediaPlayerFactory));
 
             mediaPlayer.getVideoSurfaceComponent().addMouseListener(new MouseAdapter() {
                 @Override
