@@ -93,6 +93,24 @@ Add the following Maven dependency to your own project pom.xml:
 
 *This artefact may not be available for quite some time, we do not push snapshot releases to Maven Central.*
 
+Privacy Considerations
+----------------------
+
+When parsing media, depending on configuration, it may be possible that a remote network access is made for meta data
+and album/cover art. This may unintentionally expose sensitive data regarding the media being parsed.
+
+To affirmatively prevent all network access for meta data, consider using the `--no-metadata-network-access` argument
+when creating a `MediaPlayerFactory`.
+
+It should also be possible to prevent such network accesses by using appropriate `ParseFlag` values when requesting to
+parse media.
+
+Even with network access disabled, some media covert art may still appear locally (e.g. ~/.cache/vlc) - this does not
+necessarily mean that a remote network request was made for the cover art, rather the art was embedded in the media
+file and extracted to this temporary cache directory.
+
+In any case, you need to be aware of this issue and inform users of your application about it.
+
 News
 ----
 
