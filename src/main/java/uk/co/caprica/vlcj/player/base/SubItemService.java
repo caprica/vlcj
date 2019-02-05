@@ -30,6 +30,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 // FIXME in light of the new insight gained into playing sub-items and media lists, we should get rid of this service
 //       since it does hardly anything, and merge its functionality into a more appropriate place
+//       problem is where the player() API should go...
 
 public final class SubItemService extends BaseService {
 
