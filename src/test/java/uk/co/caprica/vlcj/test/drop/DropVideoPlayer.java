@@ -87,7 +87,6 @@ public class DropVideoPlayer extends VlcjTest {
 
         mediaPlayerFactory = new MediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.subItems().setPlaySubItems(true);
 
         canvas = new Canvas();
         canvas.setBackground(Color.black);

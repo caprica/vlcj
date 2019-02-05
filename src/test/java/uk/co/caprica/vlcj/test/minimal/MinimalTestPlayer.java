@@ -56,7 +56,6 @@ public class MinimalTestPlayer extends VlcjTest {
         f.setContentPane(mediaPlayerComponent);
         f.setVisible(true);
 
-        mediaPlayerComponent.getMediaPlayer().subItems().setPlaySubItems(true);
         mediaPlayerComponent.getMediaPlayer().media().playMedia(args[0]);
 
         Thread.currentThread().join();

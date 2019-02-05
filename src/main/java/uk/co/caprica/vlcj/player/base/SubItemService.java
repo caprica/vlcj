@@ -28,6 +28,9 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 // FIXME do i need to expose the medialistplayer somehow? i shouldn't really have a getter but i could set loop mode and the controls and so on?
 //          controls() in here could return subitem controls used to access the media list player?
 
+// FIXME in light of the new insight gained into playing sub-items and media lists, we should get rid of this service
+//       since it does hardly anything, and merge its functionality into a more appropriate place
+
 public final class SubItemService extends BaseService {
 
     /**
@@ -35,30 +38,12 @@ public final class SubItemService extends BaseService {
      */
     private final MediaListPlayer mediaListPlayer;
 
-    /**
-     * Flag whether or not to automatically play media sub-items if there are any.
-     */
-    private boolean playSubItems;
-
     SubItemService(DefaultMediaPlayer mediaPlayer) {
         super(mediaPlayer);
 
         this.mediaListPlayer = new DefaultMediaListPlayer(libvlc, libvlcInstance);
 
         mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer);
-    }
-
-    /**
-     * Set whether or not the media player should automatically play media sub-items.
-     *
-     * @param playSubItems <code>true</code> to automatically play sub-items, otherwise <code>false</code>
-     */
-    public void setPlaySubItems(boolean playSubItems) {
-        this.playSubItems = playSubItems;
-    }
-
-    public boolean getPlaySubItems() {
-        return this.playSubItems;
     }
 
     public MediaListPlayer player() {
@@ -70,16 +55,16 @@ public final class SubItemService extends BaseService {
      *
      * Set a new list for this media's sub-items - this component owns the list so must release it at the appropriate
      * time.
+     * <p>
+     * If media was played, the sub-item list will start playing automatically. If you do <em>not</em> want this, then
+     * instead of playing the media you should prepare it, then parse it, and wait for the parsed status changed media
+     * event.
      *
      * @param media
      */
     void changeMedia(Media media) {
         releaseMediaList();
-
-        if (playSubItems) {
-            // Simply setting the media list on a media list player with attached media player will play the list
-            mediaListPlayer.list().setMediaList(media.subitems().get());
-        }
+        mediaListPlayer.list().setMediaList(media.subitems().get());
     }
 
     private void releaseMediaList() {

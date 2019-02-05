@@ -74,8 +74,6 @@ public class TestMediaListPlayer extends VlcjTest {
         this.mediaList          = mediaPlayerFactory.media().newMediaList();
         this.mediaListPlayer    = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
 
-        mediaPlayer.subItems().setPlaySubItems(false);
-
         mediaList.items().addMedia(mediaPlayerFactory.media().newMedia("https://www.youtube.com/watch?v=zGt444zwSAM"));
 
         mediaListPlayer.list().setMediaList(mediaList);

@@ -91,7 +91,6 @@ public class DropPlayer extends VlcjTest {
 
         mediaPlayerFactory = new MediaPlayerFactory();
         mediaPlayer = mediaPlayerFactory.mediaPlayers().newMediaPlayer();
-        mediaPlayer.subItems().setPlaySubItems(true); // <--- very important!
 
         contentPane = new JPanel();
         contentPane.setBackground(Color.black);

@@ -19,8 +19,11 @@
 
 package uk.co.caprica.vlcj.test.cue;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.component.AudioMediaPlayerComponent;
+import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.events.MediaEventAdapter;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
@@ -43,7 +46,7 @@ public class CueTest extends VlcjTest {
 
         final AudioMediaPlayerComponent player = new AudioMediaPlayerComponent();
 
-        player.getMediaPlayer().subItems().setPlaySubItems(false);
+        System.out.println(player.getMediaPlayerFactory().nativeLibraryPath());
 
         player.getMediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 
@@ -51,24 +54,36 @@ public class CueTest extends VlcjTest {
             public void finished(final MediaPlayer mediaPlayer) {
                 System.out.println("finished");
                 dump(mediaPlayer);
-
-                // Play an arbitrary sub-item - note that in this basic test each
-                // time the media finishes it will be replayed - a more useful
-                // implementation would do something more sophisticated here
-                mediaPlayer.submit(new Runnable() {
-                    @Override
-                    public void run() {
-                        mediaPlayer.subItems().player().controls().playItem(5);
-                    }
-                });
             }
         });
 
-        // The sub-items will not be created until the cue sheet is "played" and the
-        // media player receives a "finished" event
+        // The sub-items will not be created until the cue sheet is parsed and the parsed status event is raised
         System.out.println("before play");
 
-        player.getMediaPlayer().media().playMedia(args[0]);
+        player.getMediaPlayer().media().prepareMedia(args[0]);
+        Media media = player.getMediaPlayer().media().get();
+        media.events().addMediaEventListener(new MediaEventAdapter() {
+            @Override
+            public void mediaSubItemAdded(Media media, libvlc_media_t subItem) {
+                System.out.println("ITEM ADDED");
+            }
+
+            @Override
+            public void mediaSubItemTreeAdded(Media media, libvlc_media_t item) {
+                System.out.println("TREE ADDED");
+            }
+
+            @Override
+            public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
+                System.out.println("PARSED " + newStatus);
+                dump(player.getMediaPlayer());
+                // Play an arbitrary sub-item to prove it works for the sake of example, this will fail of course if the
+                // index is out of range for your playlist
+                player.getMediaPlayer().subItems().player().controls().playItem(2);
+            }
+        });
+
+        player.getMediaPlayer().media().get().parsing().parse();
 
         System.out.println("played");
 

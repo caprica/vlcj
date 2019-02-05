@@ -147,8 +147,6 @@ public class YouTubePlayer extends VlcjTest {
 
         mediaPlayer.media().setRepeat(false);
 
-        mediaPlayer.subItems().setPlaySubItems(true); // <--- This is very important for YouTube media
-
         mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void buffering(MediaPlayer mediaPlayer, float newCache) {
