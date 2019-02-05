@@ -3,6 +3,7 @@ package uk.co.caprica.vlcj.test.directaudio;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
 
 import javax.sound.sampled.AudioFormat;
@@ -27,12 +28,12 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
 
     private static final int CHANNELS = 2;
 
-    private final Semaphore sync = new Semaphore(0);
+    private final CountDownLatch sync = new CountDownLatch(1);
 
     private final JavaSoundDirectAudioPlayerComponent audioPlayerComponent;
 
     public static void main(String[] args) throws Exception {
-        if(args.length != 1) {
+        if (args.length != 1) {
             System.out.println("Specify an MRL");
             System.exit(1);
         }
@@ -40,6 +41,9 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
         new EmbeddedJavaSoundTest().play(args[0]);
 
         System.out.println("Exit normally");
+
+        // Force exit since the JFrame keeps us running
+        System.exit(0);
     }
 
     public EmbeddedJavaSoundTest() throws Exception {
@@ -62,16 +66,15 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
     private void play(String mrl) throws Exception {
         audioPlayerComponent.start();
         audioPlayerComponent.getMediaPlayer().media().playMedia(mrl);
+        audioPlayerComponent.getMediaPlayer().controls().setPosition(0.98f);
         try {
-            sync.acquire(); // Potential race if the media has already finished, but very unlikely, and good enough for a test
+            sync.await();
         }
         catch(InterruptedException e) {
             e.printStackTrace();
         }
         audioPlayerComponent.stop();
-
-        // audioPlayerComponent.release(true); // FIXME right now this causes a fatal JVM crash just before the JVM terminates, I am not sure why (the other direct audio player example does NOT crash)
-        System.exit(0); // so instead do this...
+        audioPlayerComponent.release();
     }
 
     /**
@@ -125,7 +128,7 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
         @Override
         public void finished(MediaPlayer mediaPlayer) {
             System.out.println("finished()");
-            sync.release();
+            sync.countDown();
         }
     }
 }

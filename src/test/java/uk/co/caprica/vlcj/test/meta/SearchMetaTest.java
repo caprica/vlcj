@@ -34,11 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-// FIXME need some documentation on album art
-//  it seems you can specify "--no-metadata-network-access" on the factory but likely don't need to if parse flags work
-//  album art may still appear in ~/.cache/vlc/art even if you disable art fetching, this is because the art is embedded in the mp3
-//  otherwise beware that parsing may make network requests for meta data/art (privacy issue)
-
 /**
  * Search one or more directories for audio files to extract mp3 tags (exposed as meta data).
  * <p>

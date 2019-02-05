@@ -53,8 +53,8 @@ public class StaticImageTest extends VlcjTest {
     public static void main(String[] args) throws Exception {
         MediaPlayerFactory factory = new MediaPlayerFactory();
         MediaList playlist = factory.media().newMediaList();
-//        playlist.addMedia("/home/mark/1.jpg", "image-duration=5"); // Play picture for 5 seconds
-//FIXME        playlist.addMedia("/home/mark/2.jpg", "image-duration=5");
+        playlist.items().addMedia(factory.media().newMedia("/home/mark/p1.jpg", "image-duration=5")); // Play picture for 5 seconds
+        playlist.items().addMedia(factory.media().newMedia("/home/mark/p2.jpg", "image-duration=3"));
         MediaListPlayer player = factory.mediaPlayers().newMediaListPlayer();
         player.list().setMediaList(playlist);
         player.mode().setMode(PlaybackMode.LOOP);

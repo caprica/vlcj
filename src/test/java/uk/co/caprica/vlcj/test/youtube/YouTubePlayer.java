@@ -19,8 +19,10 @@
 
 package uk.co.caprica.vlcj.test.youtube;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.events.MediaEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -138,20 +140,6 @@ public class YouTubePlayer extends VlcjTest {
             }
         });
 
-//        factory = new MediaPlayerFactory("-vv");
-//        factory = new MediaPlayerFactory(new NativeDiscovery(new DefaultLinuxNativeDiscoveryStrategy() {
-//            @Override
-//            protected void onGetDirectoryNames(List<String> directoryNames) {
-//                directoryNames.add("/disks/data/build/install/test");
-//            }
-//
-//            @Override
-//            public void onFound(String path) {
-//                String plugins = String.format("%s/plugins", path);
-//                LibC.INSTANCE.setenv("VLC_PLUGIN_PATH", plugins, 1);
-//            }
-//        }), "-vv");
-
         factory = new MediaPlayerFactory();
 
         mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
@@ -166,12 +154,6 @@ public class YouTubePlayer extends VlcjTest {
             public void buffering(MediaPlayer mediaPlayer, float newCache) {
                 System.out.println("Buffering " + newCache);
             }
-
-//            @Override
-//            public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t subItem) {
-//                 List<String> items = mediaPlayer.subItems().subItems();
-//                 System.out.println(items);
-//            } FIXME
         });
     }
 
@@ -180,9 +162,25 @@ public class YouTubePlayer extends VlcjTest {
     }
 
     private void play() {
-        mediaPlayer.media().playMedia(urlTextField.getText());
-        System.out.println(mediaPlayer.media().get().info().mrl());
-        System.out.println(mediaPlayer.media().get().info().type());
+        mediaPlayer.media().prepareMedia(urlTextField.getText());
+        mediaPlayer.media().get().events().addMediaEventListener(new MediaEventAdapter() {
+            @Override
+            public void mediaSubItemAdded(Media media, libvlc_media_t subItem) {
+                System.out.println("item added");
+                for (String mrl : media.subitems().get().items().mrls()) {
+                    System.out.println("mrl=" + mrl);
+                }
+            }
+
+            @Override
+            public void mediaSubItemTreeAdded(Media media, libvlc_media_t item) {
+                System.out.println("item tree added");
+                for (String mrl : media.subitems().get().items().mrls()) {
+                    System.out.println("mrl=" + mrl);
+                }
+            }
+        });
+        mediaPlayer.controls().play();
     }
 
     private void exit(int value) {

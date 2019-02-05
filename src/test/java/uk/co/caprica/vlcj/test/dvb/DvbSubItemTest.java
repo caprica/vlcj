@@ -19,7 +19,10 @@
 
 package uk.co.caprica.vlcj.test.dvb;
 
+import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -57,10 +60,12 @@ public class DvbSubItemTest extends VlcjTest {
 
                 System.out.println("Getting sub-item meta data...");
 
-//                List<MediaMeta> metas = mediaPlayer.getSubItemMediaMeta();
-//                for(MediaMeta meta : metas) {
-//                    System.out.println("title -> " + meta.getTitle());
-//                } FIXME
+                MediaList subitems = mediaPlayer.media().get().subitems().get();
+                for (int i = 0; i < subitems.items().count(); i++) {
+                    Media media = subitems.items().getMedia(i);
+                    System.out.println("title -> " + media.meta().get(Meta.TITLE));
+                }
+                subitems.release();
 
                 System.out.println("Done.");
 

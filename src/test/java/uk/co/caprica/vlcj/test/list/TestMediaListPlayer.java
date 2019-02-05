@@ -248,16 +248,12 @@ public class TestMediaListPlayer extends VlcjTest {
                 }
             });
 
-            // FIXME this is hanging... sometimes
             clearButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     mediaList.items().clear();
                 }
             });
-
-//            mediaPlayer.events().addMediaPlayerEventListener(new LoggingMediaPlayerEventAdapter());
-            mediaListPlayer.events().addMediaListPlayerEventListener(new LoggingMediaListPlayerEventAdapter());
         }
     }
 

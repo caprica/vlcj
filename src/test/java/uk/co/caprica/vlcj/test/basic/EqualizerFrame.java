@@ -171,7 +171,8 @@ public class EqualizerFrame extends JFrame implements ChangeListener, ActionList
             int value = slider.getValue();
             // Band...
             if(index != null) {
-                equalizer.setAmp(index, value / 100f); // FIXME
+                System.out.println(value);
+                equalizer.setAmp(index, value / 100f);
             }
             // Preamp...
             else {
@@ -194,7 +195,7 @@ public class EqualizerFrame extends JFrame implements ChangeListener, ActionList
                 Equalizer presetEqualizer = mediaPlayerFactory.equalizers().newEqualizer(presetName);
                 if(presetEqualizer != null) {
                     applyingPreset = true;
-                    preampControl.getSlider().setValue((int)(presetEqualizer.getPreamp() * 100f)); // FIXME
+                    preampControl.getSlider().setValue((int)(presetEqualizer.getPreamp() * 100f));
                     float[] amps = presetEqualizer.getAmps();
                     for(int i = 0; i < amps.length; i++) {
                         bandControls[i].getSlider().setValue((int)(amps[i] * 100f));

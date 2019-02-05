@@ -20,12 +20,11 @@
 package uk.co.caprica.vlcj.test.cue;
 
 import uk.co.caprica.vlcj.component.AudioMediaPlayerComponent;
+import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
-
-import java.util.List;
 
 /**
  * Very basic test showing using a cue sheet paired with a single mp3 file
@@ -37,29 +36,31 @@ import java.util.List;
 public class CueTest extends VlcjTest {
 
     public static void main(String[] args) throws InterruptedException {
-        args = new String[] {"/home/mark/temp/cue-test/100_blank_and_jones-relax_edition_eight-cd1-2014.m3u"};
-
-        if(args.length != 1) {
+        if (args.length != 1) {
             System.err.println("Specify a single cue sheet");
             System.exit(1);
         }
 
         final AudioMediaPlayerComponent player = new AudioMediaPlayerComponent();
-//        player.getMediaPlayer().media().prepareMedia(args[0]);
 
-        player.getMediaPlayer().subItems().setPlaySubItems(true);
+        player.getMediaPlayer().subItems().setPlaySubItems(false);
 
         player.getMediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 
             @Override
-            public void finished(MediaPlayer mediaPlayer) {
+            public void finished(final MediaPlayer mediaPlayer) {
                 System.out.println("finished");
-                dump(player);
+                dump(mediaPlayer);
 
                 // Play an arbitrary sub-item - note that in this basic test each
                 // time the media finishes it will be replayed - a more useful
                 // implementation would do something more sophisticated here
-//                player.getMediaPlayer().subItems().player().controls().playItem(5);
+                mediaPlayer.submit(new Runnable() {
+                    @Override
+                    public void run() {
+                        mediaPlayer.subItems().player().controls().playItem(5);
+                    }
+                });
             }
         });
 
@@ -74,17 +75,14 @@ public class CueTest extends VlcjTest {
         Thread.currentThread().join();
     }
 
-    private static void dump(AudioMediaPlayerComponent player) {
-        // Dump meta
-//        List<MediaMeta> metas = player.getMediaPlayer().getSubItemMediaMeta();
-//        for(MediaMeta meta : metas) {
-//            System.out.println("meta: " + meta);
-//        } FIXME
-        // Dump the media list
-//        MediaList mediaList = player.getMediaPlayer().media().get().subitems().get();
-//        List<String> items = mediaList.items().mrls();
-//        for(String item : items) {
-//            System.out.println(item);
-//        }
+    private static void dump(MediaPlayer player) {
+        // Dump meta (this is just a demo, we would actually have to parse the media to get the meta)
+        MediaList subitems = player.media().get().subitems().get();
+        for (int i = 0; i < subitems.items().count(); i++) {
+            Media media = subitems.items().getMedia(i);
+            System.out.println("title -> " + media.meta().asMetaData());
+        }
+        subitems.release();
     }
+
 }

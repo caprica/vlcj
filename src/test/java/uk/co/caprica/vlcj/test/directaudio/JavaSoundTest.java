@@ -19,19 +19,17 @@
 
 package uk.co.caprica.vlcj.test.directaudio;
 
-import java.util.concurrent.Semaphore;
-
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine.Info;
-import javax.sound.sampled.SourceDataLine;
-
+import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.component.DirectAudioPlayerComponent;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
-import com.sun.jna.Pointer;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine.Info;
+import javax.sound.sampled.SourceDataLine;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Test showing how to use the direct audio player to play through the JavaSound API.
@@ -46,12 +44,12 @@ public class JavaSoundTest extends VlcjTest {
 
     private static final int CHANNELS = 2;
 
-    private final Semaphore sync = new Semaphore(0);
+    private final CountDownLatch sync = new CountDownLatch(1);
 
     private final JavaSoundDirectAudioPlayerComponent audioPlayerComponent;
 
     public static void main(String[] args) throws Exception {
-        if(args.length != 1) {
+        if (args.length != 1) {
             System.out.println("Specify an MRL");
             System.exit(1);
         }
@@ -69,15 +67,13 @@ public class JavaSoundTest extends VlcjTest {
         audioPlayerComponent.start();
         audioPlayerComponent.getMediaPlayer().media().playMedia(mrl);
         try {
-            sync.acquire(); // Potential race if the media has already finished, but very unlikely, and good enough for a test
+            sync.await();
         }
-        catch(InterruptedException e) {
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
         audioPlayerComponent.stop();
-
-        // audioPlayerComponent.release(true); // FIXME right now this causes a fatal JVM crash just before the JVM terminates, I am not sure why (the other direct audio player example does NOT crash)
-        System.exit(0); // so instead do this...
+        audioPlayerComponent.release();
     }
 
     /**
@@ -131,7 +127,7 @@ public class JavaSoundTest extends VlcjTest {
         @Override
         public void finished(MediaPlayer mediaPlayer) {
             System.out.println("finished()");
-            sync.release();
+            sync.countDown();
         }
     }
 }
