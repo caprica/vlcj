@@ -90,10 +90,10 @@ public class ItemService extends BaseService {
     }
 
     /**
-     * Add a media item, with options, to the play-list.
+     * Add a media item to the play-list.
      *
-     * @param mrl media resource locator
-     * @param mediaOptions zero or more media item options
+     * @param media media to add
+     * @return <code>true</code> if the item was added; <code>false</code> if an error occurred
      */
     public boolean addMedia(Media media) {
         lock();
@@ -109,8 +109,8 @@ public class ItemService extends BaseService {
      * Insert a media item, with options, to the play-list.
      *
      * @param index position at which to insert the media item (counting from zero)
-     * @param mrl media resource locator
-     * @param mediaOptions zero or more media item options
+     * @param media media to insert
+     * @return <code>true</code> if the item was added; <code>false</code> if an error occurred
      */
     public boolean insertMedia(int index, Media media) {
         lock();

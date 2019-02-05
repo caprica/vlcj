@@ -28,7 +28,7 @@ import java.awt.*;
  * Implementation of a full-screen strategy that attempts to use the native X11 window manager.
  * <p>
  * With this full-screen strategy, a full-screen transparent overlay <em>will</em> work correctly,
- * see {@link EmbeddedMediaPlayer#setOverlay(Window)}.
+ * see {@link EmbeddedMediaPlayer#overlay()}.
  */
 public class XFullScreenStrategy implements FullScreenStrategy {
 

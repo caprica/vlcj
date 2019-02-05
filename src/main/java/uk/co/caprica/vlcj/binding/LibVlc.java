@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.binding;
 
-import uk.co.caprica.vlcj.Info;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_drain_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_flush_cb;
@@ -36,6 +35,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_id;
 import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_event_u;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
@@ -62,7 +62,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 import uk.co.caprica.vlcj.binding.support.size_tByReference;
-import uk.co.caprica.vlcj.enums.MediaSlaveType;
 import uk.co.caprica.vlcj.enums.ParseFlag;
 import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.binding.support.size_t;
@@ -71,6 +70,7 @@ import com.sun.jna.Library;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
+import uk.co.caprica.vlcj.renderer.RendererItem;
 
 /**
  * JNA interface to the libvlc native library.
@@ -360,7 +360,7 @@ public interface LibVlc extends Library {
      * @return a list of module descriptions. It should be freed with
      *         libvlc_module_description_list_release(). In case of an error, NULL is returned.
      * @see libvlc_module_description_t
-     * @see #libvlc_module_description_list_release(libvlc_module_description_t)
+     * @see #libvlc_module_description_list_release(Pointer)
      */
     libvlc_module_description_t libvlc_audio_filter_list_get(libvlc_instance_t p_instance);
 
@@ -371,7 +371,7 @@ public interface LibVlc extends Library {
      * @return a list of module descriptions. It should be freed with
      *         libvlc_module_description_list_release(). In case of an error, NULL is returned.
      * @see libvlc_module_description_t
-     * @see #libvlc_module_description_list_release(libvlc_module_description_t)
+     * @see #libvlc_module_description_list_release(Pointer)
      */
     libvlc_module_description_t libvlc_video_filter_list_get(libvlc_instance_t p_instance);
 
@@ -508,7 +508,7 @@ public interface LibVlc extends Library {
      * libvlc_MediaMetaChanged event. If you prefer a synchronous version ensure that you call
      * libvlc_media_parse() before get_meta().
      *
-     * @see #libvlc_media_parse(libvlc_media_t)
+     * @see #libvlc_media_parse_with_options(libvlc_media_t, int, int)
      * @see #libvlc_media_parse_async(libvlc_media_t)
      * @see libvlc_event_e#libvlc_MediaMetaChanged
      * @param p_md the media descriptor
@@ -592,7 +592,7 @@ public interface LibVlc extends Library {
      * can listen to libvlc_MediaParsedChanged event. However if the media was already parsed
      * you will not receive this event.
      *
-     * @see #libvlc_media_parse(libvlc_media_t)
+     * @see #libvlc_media_parse_with_options(libvlc_media_t, int, int)
      * @see libvlc_event_e#libvlc_MediaParsedChanged
      * @see #libvlc_media_get_meta(libvlc_media_t, int)
      * @param media media descriptor object
@@ -639,7 +639,7 @@ public interface LibVlc extends Library {
      * When the media parsing is stopped, the libvlc_MediaParsedChanged event will
      * be sent with the libvlc_media_parsed_status_timeout status.
      *
-     * @see libvlc_media_parse_with_options
+     * @see #libvlc_media_parse_with_options(libvlc_media_t, int, int)
      *
      * @param p_md media descriptor object
      *
@@ -650,8 +650,7 @@ public interface LibVlc extends Library {
     /**
      * Get Parsed status for media descriptor object.
      *
-     * @see libvlc_MediaParsedChanged
-     * @see libvlc_media_parsed_status_t
+     * @see uk.co.caprica.vlcj.enums.MediaParsedStatus
      *
      * @param p_md media descriptor object
      * @return a value of the libvlc_media_parsed_status_t enum
@@ -683,8 +682,7 @@ public interface LibVlc extends Library {
     /**
      * Get media descriptor's elementary streams description
      * <p>
-     * Note, you need to call {@link #libvlc_media_parse(libvlc_media_t)} or play the media at least once
-     * before calling this function.
+     * Note, you need to parse or play the media at least once before calling this function.
      * <p>
      * Not doing this will result in an empty array.
      *
@@ -738,7 +736,7 @@ public interface LibVlc extends Library {
      * @since libvlc 4.0 or later
      *
      * @see libvlc_picture_t
-     * @see libvlc_picture_type_t
+     * @see uk.co.caprica.vlcj.enums.PictureType
      */
     libvlc_media_thumbnail_request_t libvlc_media_thumbnail_request_by_time(libvlc_media_t md, long time, int speed, int width, int height, int picture_type, long timeout);
 
@@ -761,7 +759,7 @@ public interface LibVlc extends Library {
      * @since libvlc 4.0 or later
      *
      * @see libvlc_picture_t
-     * @see libvlc_picture_type_t
+     * @see uk.co.caprica.vlcj.enums.PictureType
      */
     libvlc_media_thumbnail_request_t libvlc_media_thumbnail_request_by_pos(libvlc_media_t md, float pos, int speed, int width, int height, int picture_type, long timeout);
 
@@ -950,7 +948,7 @@ public interface LibVlc extends Library {
      * Must be called before the first call of libvlc_media_player_play() to
      * take effect.
      *
-     * @see libvlc_renderer_discoverer_new
+     * @see #libvlc_renderer_discoverer_new(libvlc_instance_t, String)
      *
      * @param p_mi the Media Player
      * @param p_item an item discovered by libvlc_renderer_discoverer_start()
@@ -1348,7 +1346,7 @@ public interface LibVlc extends Library {
      * If the player is playing, the slave will be added directly. This call
      * will also update the slave list of the attached libvlc_media_t.
      *
-     * @see #libvlc_media_slaves_add(libvlc_media_t, MediaSlaveType, int, String)
+     * @see #libvlc_media_slaves_add(libvlc_media_t, int, int, String)
      *
      * @param p_mi the media player
      * @param i_type subtitle or audio
@@ -1832,7 +1830,7 @@ public interface LibVlc extends Library {
      *
      * @param p_instance libvlc instance
      * @return list of available audio outputs. It must be freed it with
-     *         {@link #libvlc_audio_output_list_release(libvlc_audio_output_t)}. In case of error,
+     *         {@link #libvlc_audio_output_list_release(Pointer)}. In case of error,
      *         NULL is returned.
      */
     libvlc_audio_output_t libvlc_audio_output_list_get(libvlc_instance_t p_instance);
@@ -1870,7 +1868,7 @@ public interface LibVlc extends Library {
      *
      * @param mp media player
      * @return NULL-terminated linked list of potential audio output devices. It must be freed
-     *         with {@link #libvlc_audio_output_device_list_release(libvlc_audio_output_device_t)}.
+     *         with {@link #libvlc_audio_output_device_list_release(Pointer)}.
      * @since LibVLC 2.2.0 or later.
      */
     libvlc_audio_output_device_t libvlc_audio_output_device_enum(libvlc_media_player_t mp);
@@ -2724,7 +2722,7 @@ public interface LibVlc extends Library {
     /**
      * Release an array of media discoverer services
      *
-     * @see libvlc_media_discoverer_list_get()
+     * @see #libvlc_media_discoverer_list_get(libvlc_instance_t, int, PointerByReference)
      *
      * @param pp_services array to release
      * @param i_count number of elements in the array
@@ -2788,8 +2786,8 @@ public interface LibVlc extends Library {
     /**
      * Get the flags of a renderer item
      *
-     * @see LIBVLC_RENDERER_CAN_AUDIO
-     * @see LIBVLC_RENDERER_CAN_VIDEO
+     * @see RendererItem#canAudio()
+     * @see RendererItem#canVideo()
      *
      * @return bitwise flag: capabilities of the renderer, see
      *
@@ -2806,8 +2804,8 @@ public interface LibVlc extends Library {
      * You need to call libvlc_renderer_discoverer_start() in order to start the
      * discovery.
      *
-     * @see libvlc_renderer_discoverer_event_manager()
-     * @see libvlc_renderer_discoverer_start()
+     * @see #libvlc_renderer_discoverer_event_manager(libvlc_renderer_discoverer_t)
+     * @see #libvlc_renderer_discoverer_start(libvlc_renderer_discoverer_t)
      *
      * @param p_inst libvlc instance
      * @param psz_name service name; use libvlc_renderer_discoverer_list_get() to
@@ -2833,7 +2831,7 @@ public interface LibVlc extends Library {
      * To stop it, call libvlc_renderer_discoverer_stop() or
      * libvlc_renderer_discoverer_release() directly.
      *
-     * @see libvlc_renderer_discoverer_stop()
+     * @see #libvlc_renderer_discoverer_stop(libvlc_renderer_discoverer_t)
      *
      * @param p_rd renderer discoverer object
      * @return -1 in case of error, 0 otherwise
@@ -2845,7 +2843,7 @@ public interface LibVlc extends Library {
     /**
      * Stop renderer discovery.
      *
-     * @see libvlc_renderer_discoverer_start()
+     * @see #libvlc_renderer_discoverer_start(libvlc_renderer_discoverer_t)
      *
      * @param p_rd renderer discoverer object
      *
@@ -2863,8 +2861,8 @@ public interface LibVlc extends Library {
      * VLC, users should take care of holding/releasing this struct for their
      * internal usage.
      *
-     * @see libvlc_event_t.u.renderer_discoverer_item_added.item
-     * @see libvlc_event_t.u.renderer_discoverer_item_removed.item
+     * @see libvlc_event_u#renderer_discoverer_item_added
+     * @see libvlc_event_u#renderer_discoverer_item_deleted
      *
      * @return a valid event manager (can't fail)
      *
@@ -2875,7 +2873,7 @@ public interface LibVlc extends Library {
     /**
      * Get media discoverer services
      *
-     * @see libvlc_renderer_list_release()
+     * @see #libvlc_renderer_discoverer_list_release(Pointer, size_t)
      *
      * @param p_inst libvlc instance
      * @param ppp_services address to store an allocated array of renderer
@@ -2891,7 +2889,7 @@ public interface LibVlc extends Library {
     /**
      * Release an array of media discoverer services
      *
-     * @see libvlc_renderer_discoverer_list_get()
+     * @see #libvlc_renderer_discoverer_list_get(libvlc_instance_t, PointerByReference)
      *
      * @param pp_services array to release
      * @param i_count number of elements in the array
@@ -2907,7 +2905,7 @@ public interface LibVlc extends Library {
     /**
      * Increment the reference count of this picture.
      *
-     * @see libvlc_picture_release()
+     * @see #libvlc_picture_release(libvlc_picture_t)
      * @param pic A picture object
      */
     void libvlc_picture_retain(libvlc_picture_t pic);
@@ -2917,7 +2915,7 @@ public interface LibVlc extends Library {
      * When the reference count reaches 0, the picture will be released.
      * The picture must not be accessed after calling this function.
      *
-     * @see libvlc_picture_retain
+     * @see #libvlc_picture_retain(libvlc_picture_t)
      * @param pic A picture object
      */
     void libvlc_picture_release(libvlc_picture_t pic);
@@ -2947,7 +2945,7 @@ public interface LibVlc extends Library {
      * Returns the picture type
      *
      * @param pic A picture object
-     * @see libvlc_picture_type_t
+     * @see uk.co.caprica.vlcj.enums.PictureType
      */
     int libvlc_picture_type(libvlc_picture_t pic);
 

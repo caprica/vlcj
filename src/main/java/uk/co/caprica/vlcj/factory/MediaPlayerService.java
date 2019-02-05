@@ -56,10 +56,6 @@ public final class MediaPlayerService extends BaseService {
 
     /**
      * Create a new embedded media player.
-     * <p>
-     * Full-screen will not be available, to enable full-screen support see
-     * {@link #newEmbeddedMediaPlayer(FullScreenStrategy)}, or use an alternate mechanism to
-     * manually set full-screen if needed.
      *
      * @return media player instance
      */

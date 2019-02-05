@@ -19,46 +19,28 @@
 
 package uk.co.caprica.vlcj.component;
 
-import com.sun.jna.Memory;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
 
+import java.nio.ByteBuffer;
+
 /**
  * Encapsulation of a direct-rendering media player.
  * <p>
- * The default behaviour is to provide the video data via the {@link #display(DirectMediaPlayer, Memory[], BufferFormat)} method.
+ * The default behaviour is to provide the video data via the
+ * {@link #display(DirectMediaPlayer, ByteBuffer[], BufferFormat)} method.
  * <p>
- * Sub-classes may override this method to implement their own processing, or alternately return an
- * implementation of a {@link RenderCallback} by overriding the {@link #onGetRenderCallback()}
+ * Sub-classes may override this method to implement their own processing, or alternately provide their own
+ * implementation of a {@link RenderCallback} during object creation.
  * template method.
  * <p>
- * An example:
- * <pre>
- * mediaPlayerComponent = new DirectMediaPlayerComponent() {
- *
- *     protected String[] onGetMediaPlayerFactoryArgs() { return new String[] {&quot;--no-video-title-show&quot;}; }
- *
- *     public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) { }
- *
- *     public void error(MediaPlayer mediaPlayer) { }
- *
- *     public void finished(MediaPlayer mediaPlayer) { }
- *
- *     public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) { // Do something with the native video memory... }
- * };
- * </pre>
- * When the media player component is no longer needed, it should be released by invoking the
- * {@link #release()} method.
+ * When the media player component is no longer needed, it should be released by invoking the {@link #release()} method.
  * <p>
- * Since the media player factory associated by this component may be created by this component
- * itself or may be shared with some other media player resources it is the responsibility of
- * the application to also release the media player factory at the appropriate time.
- * <p>
- * It is always a better strategy to reuse media player components, rather than repeatedly creating
- * and destroying instances.
+ * It is always a better strategy to reuse media player components, rather than repeatedly creating and destroying
+ * instances.
  */
 public class DirectMediaPlayerComponent extends DirectMediaPlayerComponentBase {
 

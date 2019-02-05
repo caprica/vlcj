@@ -28,7 +28,7 @@ public final class ControlsService extends BaseService {
     /**
      * Play the media list.
      * <p>
-     * If the play mode is {@link MediaListPlayerMode#REPEAT} no item will be played and a "media list end reached"
+     * If the play mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#REPEAT} no item will be played and a "media list end reached"
      * event will be raised.
      */
     public void play() {
@@ -62,8 +62,8 @@ public final class ControlsService extends BaseService {
     /**
      * Play a particular item on the media list.
      * <p>
-     * When the mode is {@link MediaListPlayerMode#REPEAT} this method is the only way to successfully play media in the
-     * list.
+     * When the mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#REPEAT} this method is the only way to successfully
+     * play media in the list.
      *
      * @param itemIndex index of the item to play
      * @return <code>true</code> if the item could be played, otherwise <code>false</code>
@@ -76,7 +76,8 @@ public final class ControlsService extends BaseService {
     /**
      * Play the next item in the media list.
      * <p>
-     * When the mode is {@link MediaListPlayerMode#REPEAT} this method will replay the current media, not the next one.
+     * When the mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#REPEAT} this method will replay the current media,
+     * not the next one.
      */
     public boolean playNext() {
         attachVideoSurface();
@@ -86,8 +87,8 @@ public final class ControlsService extends BaseService {
     /**
      * Play the previous item in the media list.
      * <p>
-     * When the mode is {@link MediaListPlayerMode#REPEAT} this method will replay the current media, not the previous
-     * one.
+     * When the mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#REPEAT} this method will replay the current media,
+     * not the previous one.
      */
     public boolean playPrevious() {
         attachVideoSurface();

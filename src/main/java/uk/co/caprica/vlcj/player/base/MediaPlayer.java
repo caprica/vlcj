@@ -21,7 +21,6 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
 /**
  * Specification for a media player component.
@@ -137,11 +136,10 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  *
  * Some media when played may cause one or more media sub-items to created. These sub-items
  * subsequently need to be played. The media player can be set to automatically play these sub-items
- * via {@link #setPlaySubItems(boolean)}, otherwise {@link #playNextSubItem(String...)} can be
- * invoked in response to a {@link MediaPlayerEventListener#finished(MediaPlayer)} event.
+ * via {@link SubItemService#setPlaySubItems(boolean)}.
  * <p>
  * When using options, generally any options that enable/disable modules (e.g. video/audio filters) must be set via the
- * factory instance and not when invoking {@link MediaPlayer#playMedia(String, String...)}. However, the filter-specific
+ * factory instance and not when invoking {@link MediaService#playMedia(String, String...)}. However, the filter-specific
  * options <em>may</em> be able to be passed and be effective via a playMedia call.
  * <p>
  * It is always a better strategy to reuse media player instances, rather than repeatedly creating

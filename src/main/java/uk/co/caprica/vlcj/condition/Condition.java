@@ -20,41 +20,35 @@
 package uk.co.caprica.vlcj.condition;
 
 import uk.co.caprica.vlcj.condition.mediaplayer.MediaPlayerCondition;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Base implementation for a component that waits for specific component state
- * to occur.
+ * Base implementation for a component that waits for specific component state to occur.
  * <p>
- * Instances of this class, or its sub-classes, are <em>not</em> reusable.
+ * Instances of this class, or its sub-classes, are <em>not</em> reusable. FIXME this statement may no longer be true
  * <p>
- * This implementation works by adding a temporary event listener to an associated
- * media player then waiting, via {@link #await()}, for an internal synchronisation
- * object to trigger, via {@link #ready()} or {@link #ready(Object)}  when one or
- * other of the event listener's implementation methods detects the desired media
- * player state. The temporary event listener is then removed and the {@link #await()}
- * method is unblocked and returns.
+ * This implementation works by adding a temporary event listener to an associated component then waiting, via
+ * {@link #await()}, for an internal synchronisation object to trigger, via {@link #ready()} or {@link #ready(Object)}
+ * when one or other of the event listener's implementation methods detects the desired media component. The temporary
+ * event listener is then removed and the {@link #await()} method is unblocked and returns.
  * <p>
  * Commonly needed triggers are implemented for {@link #error()} and {@link #finished()}.
  * <p>
- * This facilitates a semblance of <em>synchronous</em> or sequential media player
- * programming.
+ * This facilitates a semblance of <em>synchronous</em> or sequential programming.
  * <p>
- * Sub-classes have access to the associated {@link #mediaPlayer} if needed.
+ * Sub-classes have access to the associated {@link #component} if needed.
  * <p>
- * Sub-classes may also override {@link #onBefore()} and {@link #onAfter(Object)} to
- * implement behaviour that executes respectively before awaiting the condition and
- * after the condition state is reached.
+ * Sub-classes may also override {@link #onBefore(Object)} and {@link #onAfter(Object, Object)} to implement behaviour
+ * that executes respectively before awaiting the condition and after the condition state is reached.
  * <p>
- * Using {@link #onBefore()} guarantees that the media player event listener has been
- * registered with the media player before the condition implementation is executed.
+ * Using {@link #onBefore(Object)} guarantees that the component event listener has been registered with the media
+ * player before the condition implementation is executed.
  * <p>
- * Note that as with other {@link MediaPlayerEventListener} implementations the
- * event callbacks are running in a native thread.
+ * Note that as with other media player and related component implementations the event callbacks are running in a
+ * native thread.
  * <p>
  * Example:
  * <pre>
@@ -69,10 +63,10 @@ import java.util.concurrent.atomic.AtomicReference;
  *
  *        // Do some interesting things, wait for some other conditions...
  *    }
- *    catch(UnexpectedErrorConditionException e) {
+ *    catch (UnexpectedErrorConditionException e) {
  *        // Whatever...
  *    }
- *    catch(UnexpectedFinishedConditionException e) {
+ *    catch (UnexpectedFinishedConditionException e) {
  *        // Whatever...
  *    }
  * </pre>
@@ -199,16 +193,16 @@ public abstract class Condition<C, R> {
     }
 
     /**
+     * Template method invoked to hook up the per-component event listener.
      *
-     *
-     * @param component
+     * @param component component to start listening to
      */
     protected abstract void startListening(C component);
 
     /**
+     * Template method to remove the per-component event listener.
      *
-     *
-     * @param component
+     * @param component  component to stop listening to
      */
     protected abstract void stopListening(C component);
 

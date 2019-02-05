@@ -29,13 +29,14 @@ public interface MediaListPlayerEventListener {
     /**
      * The media list player finished playing the last item in the list.
      * <p>
-     * When the media list player mode is {@link MediaListPlayerMode#DEFAULT}, this event will fire after the last item
-     * has been played.
+     * When the media list player mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#DEFAULT}, this event will fire
+     * after the last item has been played.
      * <p>
-     * When the mode is {@link MediaListPlayerMode#LOOP}, the event will not fire at all.
+     * When the mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#LOOP}, the event will not fire at all.
      * <p>
-     * When the mode is {@link MediaListPlayerMode#REPEAT}, the event will fire immediately if the media list player is
-     * played (nothing plays in this case); the event will not fire at all if a particular item is played (by index).
+     * When the mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#REPEAT}, the event will fire immediately if the
+     * media list player is played (nothing plays in this case); the event will not fire at all if a particular item is
+     * played (by index).
      *
      * @param mediaListPlayer media list player that raised the event
      */

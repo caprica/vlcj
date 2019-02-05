@@ -26,8 +26,8 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
  * component.
  *  <p>
  * Note that to get mouse and keyboard events delivered via listeners on some platforms (i.e. Windows)
- * you will likely need to invoke {@link #setEnableMouseInputHandling(boolean)} <em>and</em>
- * {@link #setEnableKeyInputHandling(boolean)}.
+ * you will likely need to invoke {@link InputService#setEnableMouseInputHandling(boolean)} <em>and</em>
+ * {@link InputService#setEnableKeyInputHandling(boolean)}.
  */
 public interface EmbeddedMediaPlayer extends MediaPlayer {
 

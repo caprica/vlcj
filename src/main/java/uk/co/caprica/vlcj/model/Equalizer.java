@@ -34,8 +34,6 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
  * to be thrown.
  * <p>
  * After creating an equalizer, it may be associated with a media player.
- *
- * @see MediaPlayer#setEqualizer(Equalizer)
  */
 public final class Equalizer {
 
@@ -232,9 +230,7 @@ public final class Equalizer {
     }
 
     /**
-     * Fire an event notification signifying that the pre-amplification value changed.
-     *
-     * @param preamp new pre-amplification value
+     * Fire an event notification signifying that the equalizer changed.
      */
     private void fireEqualizerChanged() {
         for(EqualizerListener listener : listeners) {

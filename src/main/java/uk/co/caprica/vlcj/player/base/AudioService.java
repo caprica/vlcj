@@ -53,7 +53,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      * <p>
      * The change will not be applied until the media player has been stopped and then played again.
      * <p>
-     * The output name comes from {@link MediaPlayerFactory#getAudioOutputs()}.
+     * The output name comes from {@link uk.co.caprica.vlcj.factory.AudioService#audioOutputs()}.
      *
      * @param output name of the desired audio output
      * @return <code>true</code> if the output was successfully set, otherwise <code>false</code>
@@ -78,10 +78,10 @@ public final class AudioService extends BaseService implements EqualizerListener
      * <p>
      * The change will not be applied until the media player has been stopped and then played again.
      * <p>
-     * The output name comes from {@link MediaPlayerFactory#getAudioOutputs()}.
+     * The output name comes from {@link uk.co.caprica.vlcj.factory.AudioService#audioOutputs()}.
      * <p>
      * The device id comes from the {@link AudioDevice#getDeviceId()} returned by
-     * {@link MediaPlayerFactory#getAudioOutputs()}.
+     * {@link uk.co.caprica.vlcj.factory.AudioService#audioOutputs()}.
      *
      * @param output name of the desired audio output
      * @param outputDeviceId id of the desired audio output device
@@ -163,7 +163,7 @@ public final class AudioService extends BaseService implements EqualizerListener
     /**
      * Get the current audio channel.
      *
-     * For channel values see {@link libvlc_audio_output_channel_t}.
+     * For channel values see {@link uk.co.caprica.vlcj.enums.AudioChannel}.
      *
      * @return audio channel
      */
@@ -174,7 +174,7 @@ public final class AudioService extends BaseService implements EqualizerListener
     /**
      * Set the audio channel.
      *
-     * For channel values see {@link libvlc_audio_output_channel_t}.
+     * For channel values see {@link uk.co.caprica.vlcj.enums.AudioChannel}.
      *
      * @param channel channel
      */
