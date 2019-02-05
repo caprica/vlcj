@@ -77,8 +77,6 @@
     <properties>
         <jna.version>5.2.0</jna.version>
         <vlcjOsxStubs.version>1.0.0</vlcjOsxStubs.version>
-        <sonar.exclusions>**/package-info.java,uk/co/caprica/vlcj/binding/**</sonar.exclusions>
-        <sonar.language>java</sonar.language>
     </properties>
 
     <dependencies>
