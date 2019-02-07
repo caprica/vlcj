@@ -127,87 +127,87 @@ public class DefaultMediaPlayer implements MediaPlayer {
     }
 
     @Override
-    public AudioService audio() {
+    public final AudioService audio() {
         return audioService;
     }
 
     @Override
-    public ChapterService chapters() {
+    public final ChapterService chapters() {
         return chapterService;
     }
 
     @Override
-    public ControlsService controls() {
+    public final ControlsService controls() {
         return controlsService;
     }
 
     @Override
-    public EventService events() {
+    public final EventService events() {
         return eventService;
     }
 
     @Override
-    public LogoService logo() {
+    public final LogoService logo() {
         return logoService;
     }
 
     @Override
-    public MediaService media() {
+    public final MediaService media() {
         return mediaService;
     }
 
     @Override
-    public MarqueeService marquee() {
+    public final MarqueeService marquee() {
         return marqueeService;
     }
 
     @Override
-    public MenuService menu() {
+    public final MenuService menu() {
         return menuService;
     }
 
     @Override
-    public RoleService role() {
+    public final RoleService role() {
         return roleService;
     }
 
     @Override
-    public SlaveService slave() {
+    public final SlaveService slave() {
         return slaveService;
     }
 
     @Override
-    public SnapshotService snapshots() {
+    public final SnapshotService snapshots() {
         return snapshotService;
     }
 
     @Override
-    public StatusService status() {
+    public final StatusService status() {
         return statusService;
     }
 
     @Override
-    public SubItemService subItems() {
+    public final SubItemService subItems() {
         return subItemService;
     }
 
     @Override
-    public SubpictureService subpictures() {
+    public final SubpictureService subpictures() {
         return subpictureService;
     }
 
     @Override
-    public TeletextService teletext() {
+    public final TeletextService teletext() {
         return teletextService;
     }
 
     @Override
-    public TitleService titles() {
+    public final TitleService titles() {
         return titleService;
     }
 
     @Override
-    public VideoService video() {
+    public final VideoService video() {
         return videoService;
     }
 
