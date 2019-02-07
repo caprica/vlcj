@@ -55,7 +55,6 @@ final class CallbackVideoSurfaceLayoutManager implements LayoutManager {
     public void layoutContainer(Container container) {
         if (component != null) {
             Dimension size = component.getPreferredSize();
-
             int x = (container.getWidth() - size.width) / 2;
             int y = (container.getHeight() - size.height) / 2;
             component.setBounds(x, y, size.width, size.height);
