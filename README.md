@@ -145,6 +145,9 @@ player.
 An added caveat for vlcj-4 is that when you implement event handling you must be sure to execute quickly, and to not
 block the native thread with any long-running operation.
 
+Your event handler implementations must *not* throw an `Exception`, failure of your event handlers to catch and handle
+any thrown exception may prevent other listeners from being notified of the event.
+
 If you are attempting to use multiple media players in your application, or using media players from multiple threads,
 you may need to take some extra care so that you do not have multiple threads calling into LibVlc concurrently. You may
 encounter subtle bugs and races that are very difficult to diagnose.
