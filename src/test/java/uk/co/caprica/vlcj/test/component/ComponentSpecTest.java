@@ -68,7 +68,7 @@ public class ComponentSpecTest extends VlcjTest {
             }
         };
 
-        AudioMediaPlayerComponent component4 = new AudioMediaPlayerComponent(audioPlayerSpec()
+        AudioPlayerComponent component4 = new AudioPlayerComponent(audioPlayerSpec()
             .withFactory(null))
         {
             @Override
@@ -77,7 +77,7 @@ public class ComponentSpecTest extends VlcjTest {
             }
         };
 
-        AudioMediaListPlayerComponent component5 = new AudioMediaListPlayerComponent(audioPlayerSpec()
+        AudioListPlayerComponent component5 = new AudioListPlayerComponent(audioPlayerSpec()
             .withFactory(null))
         {
             @Override

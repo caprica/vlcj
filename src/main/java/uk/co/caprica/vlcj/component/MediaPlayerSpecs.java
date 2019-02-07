@@ -176,12 +176,12 @@ public final class MediaPlayerSpecs {
             return this;
         }
 
-        public AudioMediaPlayerComponent audioPlayer() {
-            return new AudioMediaPlayerComponent(this);
+        public AudioPlayerComponent audioPlayer() {
+            return new AudioPlayerComponent(this);
         }
 
-        public AudioMediaListPlayerComponent audioListPlayer() {
-            return new AudioMediaListPlayerComponent(this);
+        public AudioListPlayerComponent audioListPlayer() {
+            return new AudioListPlayerComponent(this);
         }
 
         private AudioPlayerSpec() {

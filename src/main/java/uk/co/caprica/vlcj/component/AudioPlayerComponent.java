@@ -46,7 +46,7 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
  * media:
  *
  * <pre>
- * mediaPlayerComponent = new AudioMediaPlayerComponent(); // &lt;--- 1
+ * mediaPlayerComponent = new AudioPlayerComponent(); // &lt;--- 1
  * mediaPlayerComponent.getMediaPlayer().playMedia(mrl); // &lt;--- 2
  * </pre>
  *
@@ -66,7 +66,7 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
  * It is always a better strategy to reuse media player components, rather than repeatedly creating
  * and destroying instances.
  */
-public class AudioMediaPlayerComponent extends AudioMediaPlayerComponentBase implements MediaPlayerComponent {
+public class AudioPlayerComponent extends AudioPlayerComponentBase implements MediaPlayerComponent {
 
     /**
      * Default factory initialisation arguments.
@@ -93,7 +93,7 @@ public class AudioMediaPlayerComponent extends AudioMediaPlayerComponentBase imp
     /**
      * Construct a media player component.
      */
-    public AudioMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory) {
+    public AudioPlayerComponent(MediaPlayerFactory mediaPlayerFactory) {
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
 
@@ -103,11 +103,11 @@ public class AudioMediaPlayerComponent extends AudioMediaPlayerComponentBase imp
         onAfterConstruct();
     }
 
-    public AudioMediaPlayerComponent(MediaPlayerSpecs.AudioPlayerSpec spec) {
+    public AudioPlayerComponent(MediaPlayerSpecs.AudioPlayerSpec spec) {
         this(spec.factory);
     }
 
-    public AudioMediaPlayerComponent() {
+    public AudioPlayerComponent() {
         this((MediaPlayerFactory) null);
     }
 

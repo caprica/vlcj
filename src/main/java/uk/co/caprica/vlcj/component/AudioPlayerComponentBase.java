@@ -21,9 +21,9 @@ package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 
-abstract class AudioMediaPlayerComponentBase extends MediaPlayerEventAdapter {
+abstract class AudioPlayerComponentBase extends MediaPlayerEventAdapter {
 
-    protected AudioMediaPlayerComponentBase() {
+    protected AudioPlayerComponentBase() {
     }
 
 }

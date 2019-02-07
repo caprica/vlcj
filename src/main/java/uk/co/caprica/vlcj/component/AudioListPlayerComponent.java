@@ -26,10 +26,10 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 /**
  * Encapsulation of an audio media list player.
  * <p>
- * This component extends the {@link AudioMediaPlayerComponent} to incorporate a
+ * This component extends the {@link AudioPlayerComponent} to incorporate a
  * {@link MediaListPlayer} and an associated {@link MediaList}.
  */
-public class AudioMediaListPlayerComponent extends AudioMediaListPlayerComponentBase {
+public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
 
     /**
      * Media list player.
@@ -44,7 +44,7 @@ public class AudioMediaListPlayerComponent extends AudioMediaListPlayerComponent
     /**
      * Construct a media list player component.
      */
-    public AudioMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory) {
+    public AudioListPlayerComponent(MediaPlayerFactory mediaPlayerFactory) {
         super(mediaPlayerFactory);
 
         this.mediaListPlayer = getMediaPlayerFactory().mediaPlayers().newMediaListPlayer();
@@ -59,11 +59,11 @@ public class AudioMediaListPlayerComponent extends AudioMediaListPlayerComponent
         onAfterConstruct();
     }
 
-    public AudioMediaListPlayerComponent(MediaPlayerSpecs.AudioPlayerSpec spec) {
+    public AudioListPlayerComponent(MediaPlayerSpecs.AudioPlayerSpec spec) {
         this(spec.factory);
     }
 
-    public AudioMediaListPlayerComponent() {
+    public AudioListPlayerComponent() {
         this((MediaPlayerFactory) null);
     }
 

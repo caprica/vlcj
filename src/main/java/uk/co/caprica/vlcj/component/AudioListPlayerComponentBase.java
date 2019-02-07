@@ -26,9 +26,9 @@ import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
-abstract class AudioMediaListPlayerComponentBase extends AudioMediaPlayerComponent implements MediaListPlayerEventListener, MediaListEventListener {
+abstract class AudioListPlayerComponentBase extends AudioPlayerComponent implements MediaListPlayerEventListener, MediaListEventListener {
 
-    protected AudioMediaListPlayerComponentBase(MediaPlayerFactory mediaPlayerFactory) {
+    protected AudioListPlayerComponentBase(MediaPlayerFactory mediaPlayerFactory) {
         super(mediaPlayerFactory);
     }
 

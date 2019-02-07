@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.test.log;
 import java.util.concurrent.CountDownLatch;
 
 import uk.co.caprica.vlcj.enums.LogLevel;
-import uk.co.caprica.vlcj.component.AudioMediaPlayerComponent;
+import uk.co.caprica.vlcj.component.AudioPlayerComponent;
 import uk.co.caprica.vlcj.log.LogEventListener;
 import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
@@ -46,7 +46,7 @@ public class NativeLogTest extends VlcjTest {
             System.exit(1);
         }
 
-        AudioMediaPlayerComponent mediaPlayerComponent = new AudioMediaPlayerComponent();
+        AudioPlayerComponent mediaPlayerComponent = new AudioPlayerComponent();
 
         // This latch is used simply to cleanly exit the application when the
         // "finished" event is raised

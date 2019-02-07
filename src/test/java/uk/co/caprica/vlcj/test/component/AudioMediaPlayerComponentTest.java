@@ -19,20 +19,20 @@
 
 package uk.co.caprica.vlcj.test.component;
 
-import uk.co.caprica.vlcj.component.AudioMediaPlayerComponent;
+import uk.co.caprica.vlcj.component.AudioPlayerComponent;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
- * Test demonstrating the {@link AudioMediaPlayerComponent}.
+ * Test demonstrating the {@link AudioPlayerComponent}.
  */
 public class AudioMediaPlayerComponentTest extends VlcjTest {
 
     /**
      * Media player component.
      */
-    private final AudioMediaPlayerComponent audioMediaPlayerComponent;
+    private final AudioPlayerComponent audioMediaPlayerComponent;
 
     /**
      * Application entry point.
@@ -68,7 +68,7 @@ public class AudioMediaPlayerComponentTest extends VlcjTest {
      * Create a new test.
      */
     private AudioMediaPlayerComponentTest() {
-        audioMediaPlayerComponent = new AudioMediaPlayerComponent();
+        audioMediaPlayerComponent = new AudioPlayerComponent();
         audioMediaPlayerComponent.getMediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void stopped(MediaPlayer mediaPlayer) {

@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.minimalmp3;
 
-import uk.co.caprica.vlcj.component.AudioMediaPlayerComponent;
+import uk.co.caprica.vlcj.component.AudioPlayerComponent;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -37,7 +37,7 @@ public class Mp3Test extends VlcjTest {
             System.exit(1);
         }
 
-        AudioMediaPlayerComponent audioPlayer = new AudioMediaPlayerComponent() {
+        AudioPlayerComponent audioPlayer = new AudioPlayerComponent() {
             @Override
             public void finished(MediaPlayer mediaPlayer) {
                 System.exit(0);
