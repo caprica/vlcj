@@ -43,9 +43,10 @@ final class MediaSlaves {
                 libvlc_media_slave_t slave = new libvlc_media_slave_t(pointer);
                 result.add(new MediaSlave(NativeString.copyNativeString(slave.psz_uri), MediaSlaveType.mediaSlaveType(slave.i_type), slave.i_priority));
             }
-            libvlc.libvlc_media_slaves_release(slavesPointer.getValue(), numberOfSlaves);
         }
+        // In this case the native structure must be freed even if the count is zero
+        libvlc.libvlc_media_slaves_release(slavesPointer.getValue(), numberOfSlaves);
         return result;
-
     }
+
 }
