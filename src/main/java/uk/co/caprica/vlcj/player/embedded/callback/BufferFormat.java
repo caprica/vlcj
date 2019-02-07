@@ -22,14 +22,14 @@ package uk.co.caprica.vlcj.player.embedded.callback;
 import java.util.Arrays;
 
 /**
- * Specifies the formats used by the {@link DirectMediaPlayer}.
+ * Specifies the formats used by the {@link uk.co.caprica.vlcj.player.embedded.videosurface.CallbackVideoSurface}.
  * <p>
- * The buffer will contain data of the given width and height in the format specified by the chroma
- * parameter. A buffer can consist of multiple planes depending on the format of the data. For each
- * plane the pitch and height in lines must be supplied.
+ * The buffer will contain data of the given width and height in the format specified by the chroma parameter. A buffer
+ * can consist of multiple planes depending on the format of the data. For each plane the pitch and height in lines must
+ * be supplied.
  * <p>
- * For example, RV32 format has only one plane. Its pitch is width * 4, and its number of lines is
- * the same as the height.
+ * For example, RV32 format has only one plane. Its pitch is width * 4, and its number of lines is the same as the
+ * height.
  */
 public class BufferFormat {
 
@@ -184,4 +184,5 @@ public class BufferFormat {
             }
         }
     }
+
 }

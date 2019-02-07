@@ -134,9 +134,6 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
  * mediaPlayer.setHue(10);
  * </pre>
  *
- * Some media when played may cause one or more media sub-items to created. These sub-items
- * subsequently need to be played. The media player can be set to automatically play these sub-items
- * via {@link SubItemService#setPlaySubItems(boolean)}.
  * <p>
  * When using options, generally any options that enable/disable modules (e.g. video/audio filters) must be set via the
  * factory instance and not when invoking {@link MediaService#playMedia(String, String...)}. However, the filter-specific
