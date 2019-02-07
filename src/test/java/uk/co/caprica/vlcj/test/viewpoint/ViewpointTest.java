@@ -23,8 +23,6 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.model.Viewpoint;
 
-import static uk.co.caprica.vlcj.component.MediaPlayerComponentBuilder.mediaPlayerComponentBuilder;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -83,9 +81,7 @@ public class ViewpointTest {
     }
 
     private ViewpointTest() {
-        mediaPlayer = mediaPlayerComponentBuilder()
-            .embedded()
-            .embeddedMediaPlayerComponent();
+        mediaPlayer = new EmbeddedMediaPlayerComponent();
 
         MouseHandler mouseHandler = new MouseHandler();
         

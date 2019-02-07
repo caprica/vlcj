@@ -27,7 +27,7 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import static uk.co.caprica.vlcj.component.MediaPlayerComponentBuilder.mediaPlayerComponentBuilder;
+import static uk.co.caprica.vlcj.component.MediaPlayerSpecs.embeddedMediaPlayerSpec;
 
 /**
  * An example of using the native "Win32" full-screen strategy.
@@ -67,10 +67,9 @@ public class Win32FullScreenPlayerTest extends VlcjTest {
             }
         });
 
-        mediaPlayerComponent = mediaPlayerComponentBuilder()
-                .embedded()
-                .withFullScreenStrategy(new Win32FullScreenStrategy(frame))
-                .embeddedMediaPlayerComponent();
+        mediaPlayerComponent = embeddedMediaPlayerSpec()
+            .withFullScreenStrategy(new Win32FullScreenStrategy(frame))
+            .embeddedMediaPlayer();
 
         frame.setContentPane(mediaPlayerComponent);
 

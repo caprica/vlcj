@@ -28,8 +28,6 @@ import uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive.AdaptiveFullScreen
 
 import java.awt.*;
 
-// FIXME protected vs package?
-
 public final class MediaPlayerSpecs {
 
     public static EmbeddedMediaPlayerSpec embeddedMediaPlayerSpec() {
@@ -50,11 +48,11 @@ public final class MediaPlayerSpecs {
 
     public static final class EmbeddedMediaPlayerSpec {
 
-        protected MediaPlayerFactory factory;
-        protected Component videoSurfaceComponent;
-        protected FullScreenStrategy fullScreenStrategy;
-        protected InputEvents inputEvents;
-        protected Window overlay;
+        MediaPlayerFactory factory;
+        Component videoSurfaceComponent;
+        FullScreenStrategy fullScreenStrategy;
+        InputEvents inputEvents;
+        Window overlay;
 
         public EmbeddedMediaPlayerSpec withFactory(MediaPlayerFactory factory) {
             this.factory = factory;
@@ -86,6 +84,14 @@ public final class MediaPlayerSpecs {
             return this;
         }
 
+        public EmbeddedMediaPlayerComponent embeddedMediaPlayer() {
+            return new EmbeddedMediaPlayerComponent(this);
+        }
+
+        public EmbeddedMediaListPlayerComponent embeddedMediaListPlayer() {
+            return new EmbeddedMediaListPlayerComponent(this);
+        }
+
         private EmbeddedMediaPlayerSpec() {
         }
 
@@ -93,14 +99,14 @@ public final class MediaPlayerSpecs {
 
     public static final class CallbackMediaPlayerSpec {
 
-        protected MediaPlayerFactory factory;
-        protected Component videoSurfaceComponent;
-        protected Dimension size;
-        protected BufferFormatCallback bufferFormatCallback;
-        protected RenderCallback renderCallback;
-        protected Boolean lockedBuffers;
-        protected FullScreenStrategy fullScreenStrategy;
-        protected InputEvents inputEvents;
+        MediaPlayerFactory factory;
+        Component videoSurfaceComponent;
+        Dimension size;
+        BufferFormatCallback bufferFormatCallback;
+        RenderCallback renderCallback;
+        Boolean lockedBuffers;
+        FullScreenStrategy fullScreenStrategy;
+        InputEvents inputEvents;
 
         public CallbackMediaPlayerSpec withFactory(MediaPlayerFactory factory) {
             this.factory = factory;
@@ -152,6 +158,10 @@ public final class MediaPlayerSpecs {
             return this;
         }
 
+        public CallbackMediaPlayerComponent callbackMediaPlayer() {
+            return new CallbackMediaPlayerComponent(this);
+        }
+
         private CallbackMediaPlayerSpec() {
         }
         
@@ -159,11 +169,19 @@ public final class MediaPlayerSpecs {
 
     public static final class AudioPlayerSpec {
 
-        protected MediaPlayerFactory factory;
+        MediaPlayerFactory factory;
 
         public AudioPlayerSpec withFactory(MediaPlayerFactory factory) {
             this.factory = factory;
             return this;
+        }
+
+        public AudioMediaPlayerComponent audioPlayer() {
+            return new AudioMediaPlayerComponent(this);
+        }
+
+        public AudioMediaListPlayerComponent audioListPlayer() {
+            return new AudioMediaListPlayerComponent(this);
         }
 
         private AudioPlayerSpec() {
@@ -173,11 +191,11 @@ public final class MediaPlayerSpecs {
 
     public static final class CallbackAudioPlayerSpec {
 
-        protected MediaPlayerFactory factory;
-        protected String format;
-        protected int rate;
-        protected int channels;
-        protected AudioCallback audioCallback;
+        MediaPlayerFactory factory;
+        String format;
+        int rate;
+        int channels;
+        AudioCallback audioCallback;
 
         public CallbackAudioPlayerSpec withFactory(MediaPlayerFactory factory) {
             this.factory = factory;
@@ -194,6 +212,10 @@ public final class MediaPlayerSpecs {
         public CallbackAudioPlayerSpec withAudioCallback(AudioCallback audioCallback) {
             this.audioCallback = audioCallback;
             return this;
+        }
+
+        public DirectAudioPlayerComponent callbackAudioPlayer() {
+            return new DirectAudioPlayerComponent(this);
         }
 
         private CallbackAudioPlayerSpec(){

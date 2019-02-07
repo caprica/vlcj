@@ -27,7 +27,7 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import static uk.co.caprica.vlcj.component.MediaPlayerComponentBuilder.mediaPlayerComponentBuilder;
+import static uk.co.caprica.vlcj.component.MediaPlayerSpecs.embeddedMediaPlayerSpec;
 
 /**
  * An example of using the "X" full-screen strategy.
@@ -68,10 +68,9 @@ public class XFullScreenPlayerTest extends VlcjTest {
             }
         });
 
-        mediaPlayerComponent = mediaPlayerComponentBuilder()
-                .embedded()
-                .withFullScreenStrategy(new XFullScreenStrategy(frame))
-                .embeddedMediaPlayerComponent();
+        mediaPlayerComponent = embeddedMediaPlayerSpec()
+            .withFullScreenStrategy(new XFullScreenStrategy(frame))
+            .embeddedMediaPlayer();
 
         frame.setContentPane(mediaPlayerComponent);
 
