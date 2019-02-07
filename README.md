@@ -93,6 +93,62 @@ Add the following Maven dependency to your own project pom.xml:
 
 *This artefact may not be available for quite some time, we do not push snapshot releases to Maven Central.*
 
+Threading Model
+---------------
+
+This section is very important.
+
+With vlcj-4, every native event coming from LibVlc is processed on the native callback thread. This should give some
+small performance gains when compared with vlcj-3.
+
+The critical issue is that it is generally not permitted to call back into LibVlc from the event callback thread. Doing
+so may cause subtle failures or outright hard JVM crashes.
+
+A prime example of the sort of trap waiting for you is the very common case of handling a media player "finished" event
+so that you can then play the next item in a play-list:
+
+```
+mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+    @Override
+    public void finished(MediaPlayer mediaPlayer) {
+        mediaPlayer.media().playMedia(nextMrl); // <-- This is VERY BAD INDEED
+    }
+});
+```
+
+In this example, the `finished` method is being invoked on a native callback thread owned by LibVlc. The implementation
+of this method is calling back into LibVlc when it invokes `playMedia`. This is very likely to cause a terminal JVM
+crash and kill your application.
+
+In cases such as this, you should make use of an asynchronous task-executor queue conveniently provided by the 
+`MediaPlayer` object passed to the listener method:
+
+```
+mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+    @Override
+    public void finished(final MediaPlayer mediaPlayer) {
+        mediaPlayer.submit(new Runnable() {
+            @Override
+            public void run() {
+                mediaPlayer.media().playMedia(nextMrl);
+            }
+        });
+    }
+});
+```
+
+You should *not* use this mechanism for *all* of your event handlers, *only those that will call back into LibVlc*.
+
+Other high-level vlcj components may also provide their own asynchronous task executor, it is not limited to the media
+player.
+
+An added caveat for vlcj-4 is that when you implement event handling you must be sure to execute quickly, and to not
+block the native thread with any long-running operation.
+
+If you are attempting to use multiple media players in your application, or using media players from multiple threads,
+you may need to take some extra care so that you do not have multiple threads calling into LibVlc concurrently. You may
+encounter subtle bugs and races that are very difficult to diagnose.
+
 Privacy Considerations
 ----------------------
 
