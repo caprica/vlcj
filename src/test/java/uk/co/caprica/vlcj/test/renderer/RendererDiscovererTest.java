@@ -29,7 +29,7 @@ import uk.co.caprica.vlcj.renderer.RendererItem;
 import java.util.List;
 
 /**
- * A simple test of the renderer discover, which can be used e.g. send media to a Chromecast or some other device.
+ * A simple test of the renderer discover, which can be used e.g. to send media to a Chromecast or some other device.
  * <p>
  * In this test, pass your renderer name and the MRL you want to play as command-line arguments.
  */
