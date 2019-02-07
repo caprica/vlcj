@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.directaudio;
 
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Specification for an audio callback.
@@ -34,7 +35,7 @@ public interface AudioCallback {
      * @param sampleCount number of samples
      * @param pts presentation time stamp
      */
-    void play(DirectAudioPlayer mediaPlayer, Pointer samples, int sampleCount, long pts);
+    void play(MediaPlayer mediaPlayer, Pointer samples, int sampleCount, long pts);
 
     /**
      * Audio was paused.
@@ -42,7 +43,7 @@ public interface AudioCallback {
      * @param mediaPlayer media player
      * @param pts presentation time stamp
      */
-    void pause(DirectAudioPlayer mediaPlayer, long pts);
+    void pause(MediaPlayer mediaPlayer, long pts);
 
     /**
      * Audio was resumed.
@@ -50,7 +51,7 @@ public interface AudioCallback {
      * @param mediaPlayer media player
      * @param pts presentation time stamp
      */
-    void resume(DirectAudioPlayer mediaPlayer, long pts);
+    void resume(MediaPlayer mediaPlayer, long pts);
 
     /**
      * Audio buffer was flushed.
@@ -58,12 +59,12 @@ public interface AudioCallback {
      * @param mediaPlayer media player
      * @param pts presentation time stamp
      */
-    void flush(DirectAudioPlayer mediaPlayer, long pts);
+    void flush(MediaPlayer mediaPlayer, long pts);
 
     /**
      * Audio buffer was drained.
      *
      * @param mediaPlayer media player
      */
-    void drain(DirectAudioPlayer mediaPlayer);
+    void drain(MediaPlayer mediaPlayer);
 }

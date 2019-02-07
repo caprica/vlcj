@@ -26,11 +26,17 @@ import uk.co.caprica.vlcj.model.AudioDevice;
 import uk.co.caprica.vlcj.model.Equalizer;
 import uk.co.caprica.vlcj.model.EqualizerListener;
 import uk.co.caprica.vlcj.model.TrackDescription;
+import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class AudioService extends BaseService implements EqualizerListener {
+
+    /**
+     *
+     */
+    private final AudioCallbacks audioCallbacks;
 
     /**
      * Audio equalizer.
@@ -46,6 +52,7 @@ public final class AudioService extends BaseService implements EqualizerListener
 
     AudioService(DefaultMediaPlayer mediaPlayer) {
         super(mediaPlayer);
+        audioCallbacks = new AudioCallbacks(libvlc, mediaPlayer);
     }
 
     /**
@@ -299,6 +306,10 @@ public final class AudioService extends BaseService implements EqualizerListener
      */
     public java.util.List<TrackDescription> getAudioDescriptions() {
         return Descriptions.audioTrackDescriptions(libvlc, mediaPlayerInstance);
+    }
+
+    public void callback(String format, int rate, int channels, AudioCallback audioCallback) {
+        audioCallbacks.callback(format, rate, channels, audioCallback);
     }
 
     @Override

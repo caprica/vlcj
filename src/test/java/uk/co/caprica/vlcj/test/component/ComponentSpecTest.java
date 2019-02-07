@@ -54,21 +54,7 @@ public class ComponentSpecTest extends VlcjTest {
             }
         };
 
-        DirectAudioPlayerComponent component3 = new DirectAudioPlayerComponent(callbackAudioPlayerSpec().
-            withFactory(null))
-        {
-            @Override
-            public void play(DirectAudioPlayer mediaPlayer, Pointer samples, int sampleCount, long pts) {
-                super.play(mediaPlayer, samples, sampleCount, pts);
-            }
-
-            @Override
-            public void finished(MediaPlayer mediaPlayer) {
-                super.finished(mediaPlayer);
-            }
-        };
-
-        AudioPlayerComponent component4 = new AudioPlayerComponent(audioPlayerSpec()
+        AudioPlayerComponent component3 = new AudioPlayerComponent(audioPlayerSpec()
             .withFactory(null))
         {
             @Override
@@ -77,7 +63,7 @@ public class ComponentSpecTest extends VlcjTest {
             }
         };
 
-        AudioListPlayerComponent component5 = new AudioListPlayerComponent(audioPlayerSpec()
+        AudioListPlayerComponent component4 = new AudioListPlayerComponent(audioPlayerSpec()
             .withFactory(null))
         {
             @Override

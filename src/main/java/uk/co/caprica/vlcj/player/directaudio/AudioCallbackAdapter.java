@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.directaudio;
 
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Implementation of an {@link AudioCallback}.
@@ -31,22 +32,22 @@ import com.sun.jna.Pointer;
 public class AudioCallbackAdapter implements AudioCallback {
 
     @Override
-    public void play(DirectAudioPlayer mediaPlayer, Pointer samples, int sampleCount, long pts) {
+    public void play(MediaPlayer mediaPlayer, Pointer samples, int sampleCount, long pts) {
     }
 
     @Override
-    public void pause(DirectAudioPlayer mediaPlayer, long pts) {
+    public void pause(MediaPlayer mediaPlayer, long pts) {
     }
 
     @Override
-    public void resume(DirectAudioPlayer mediaPlayer, long pts) {
+    public void resume(MediaPlayer mediaPlayer, long pts) {
     }
 
     @Override
-    public void flush(DirectAudioPlayer mediaPlayer, long pts) {
+    public void flush(MediaPlayer mediaPlayer, long pts) {
     }
 
     @Override
-    public void drain(DirectAudioPlayer mediaPlayer) {
+    public void drain(MediaPlayer mediaPlayer) {
     }
 }

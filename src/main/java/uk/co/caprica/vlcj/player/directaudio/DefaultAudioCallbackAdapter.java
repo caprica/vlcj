@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.directaudio;
 
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Default implementation of an {@link AudioCallbackAdapter}.
@@ -44,7 +45,7 @@ public abstract class DefaultAudioCallbackAdapter extends AudioCallbackAdapter {
     }
 
     @Override
-    public final void play(DirectAudioPlayer mediaPlayer, Pointer samples, int sampleCount, long pts) {
+    public final void play(MediaPlayer mediaPlayer, Pointer samples, int sampleCount, long pts) {
         onPlay(mediaPlayer, samples.getByteArray(0, sampleCount * blockSize), sampleCount, pts);
     }
 
@@ -56,5 +57,6 @@ public abstract class DefaultAudioCallbackAdapter extends AudioCallbackAdapter {
      * @param sampleCount number of samples
      * @param pts presentation time stamp
      */
-    protected abstract void onPlay(DirectAudioPlayer mediaPlayer, byte[] data, int sampleCount, long pts);
+    protected abstract void onPlay(MediaPlayer mediaPlayer, byte[] data, int sampleCount, long pts);
+
 }

@@ -3,8 +3,9 @@ package uk.co.caprica.vlcj.test.directaudio;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Semaphore;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -13,9 +14,9 @@ import javax.sound.sampled.SourceDataLine;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import uk.co.caprica.vlcj.component.DirectAudioPlayerComponent;
+import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
+import uk.co.caprica.vlcj.player.directaudio.AudioCallbackAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import com.sun.jna.Pointer;
@@ -30,9 +31,11 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
 
     private final CountDownLatch sync = new CountDownLatch(1);
 
-    private final JavaSoundDirectAudioPlayerComponent audioPlayerComponent;
+    private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 
     public static void main(String[] args) throws Exception {
+        args = new String[] {"/home/mark/1.mp4"};
+
         if (args.length != 1) {
             System.out.println("Specify an MRL");
             System.exit(1);
@@ -47,40 +50,44 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
     }
 
     public EmbeddedJavaSoundTest() throws Exception {
+        mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
+        mediaPlayerComponent.getMediaPlayer().audio().callback(FORMAT, RATE, CHANNELS, new JavaSoundCallback(FORMAT, RATE, CHANNELS));
+
         JPanel cp = new JPanel();
         cp.setLayout(new BorderLayout());
-        Canvas canvas = new Canvas();
-        canvas.setBackground(Color.BLACK);
-        cp.add(canvas, BorderLayout.CENTER);
+        cp.add(mediaPlayerComponent, BorderLayout.CENTER);
 
         JFrame f = new JFrame();
         f.setContentPane(cp);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         f.setBounds(100, 100, 1000, 800);
         f.setVisible(true);
 
-        audioPlayerComponent = new JavaSoundDirectAudioPlayerComponent(FORMAT, RATE, CHANNELS);
-        audioPlayerComponent.getMediaPlayer().videoSurface().setVideoSurface(audioPlayerComponent.getMediaPlayerFactory().videoSurfaces().newVideoSurface(canvas));
+        f.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mediaPlayerComponent.release();
+                System.exit(0);
+            }
+        });
     }
 
     private void play(String mrl) throws Exception {
-        audioPlayerComponent.start();
-        audioPlayerComponent.getMediaPlayer().media().playMedia(mrl);
-        audioPlayerComponent.getMediaPlayer().controls().setPosition(0.98f);
+        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().controls().setPosition(0.98f);
         try {
             sync.await();
         }
         catch(InterruptedException e) {
             e.printStackTrace();
         }
-        audioPlayerComponent.stop();
-        audioPlayerComponent.release();
+        mediaPlayerComponent.release();
     }
 
     /**
      *
      */
-    private class JavaSoundDirectAudioPlayerComponent extends DirectAudioPlayerComponent {
+    private class JavaSoundCallback extends AudioCallbackAdapter {
 
         private static final int BLOCK_SIZE = 4;
 
@@ -92,11 +99,11 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
 
         private final SourceDataLine dataLine;
 
-        public JavaSoundDirectAudioPlayerComponent(String format, int rate, int channels) throws Exception {
-            super(format, rate, channels);
+        public JavaSoundCallback(String format, int rate, int channels) throws Exception {
             this.audioFormat = new AudioFormat(rate, SAMPLE_BITS, channels, true, false);
             this.info = new Info(SourceDataLine.class, audioFormat);
             this.dataLine = (SourceDataLine)AudioSystem.getLine(info);
+            start();
         }
 
         private void start() throws Exception {
@@ -111,7 +118,7 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
         }
 
         @Override
-        public void play(DirectAudioPlayer mediaPlayer, Pointer samples, int sampleCount, long pts) {
+        public void play(MediaPlayer mediaPlayer, Pointer samples, int sampleCount, long pts) {
             // There may be more efficient ways to do this...
             int bufferSize = sampleCount * BLOCK_SIZE;
             // You could process these samples in some way before playing them...
@@ -120,15 +127,10 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
         }
 
         @Override
-        public void drain(DirectAudioPlayer mediaPlayer) {
+        public void drain(MediaPlayer mediaPlayer) {
             System.out.println("drain()");
             dataLine.drain();
         }
-
-        @Override
-        public void finished(MediaPlayer mediaPlayer) {
-            System.out.println("finished()");
-            sync.countDown();
-        }
     }
+
 }

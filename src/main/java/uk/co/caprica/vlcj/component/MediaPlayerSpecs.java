@@ -42,10 +42,6 @@ public final class MediaPlayerSpecs {
         return new AudioPlayerSpec();
     }
 
-    public static CallbackAudioPlayerSpec callbackAudioPlayerSpec() {
-        return new CallbackAudioPlayerSpec();
-    }
-
     public static final class EmbeddedMediaPlayerSpec {
 
         MediaPlayerFactory factory;
@@ -185,40 +181,6 @@ public final class MediaPlayerSpecs {
         }
 
         private AudioPlayerSpec() {
-        }
-
-    }
-
-    public static final class CallbackAudioPlayerSpec {
-
-        MediaPlayerFactory factory;
-        String format;
-        int rate;
-        int channels;
-        AudioCallback audioCallback;
-
-        public CallbackAudioPlayerSpec withFactory(MediaPlayerFactory factory) {
-            this.factory = factory;
-            return this;
-        }
-
-        public CallbackAudioPlayerSpec withFormat(String format, int rate, int channels) {
-            this.format = format;
-            this.rate = rate;
-            this.channels = channels;
-            return this;
-        }
-
-        public CallbackAudioPlayerSpec withAudioCallback(AudioCallback audioCallback) {
-            this.audioCallback = audioCallback;
-            return this;
-        }
-
-        public DirectAudioPlayerComponent callbackAudioPlayer() {
-            return new DirectAudioPlayerComponent(this);
-        }
-
-        private CallbackAudioPlayerSpec(){
         }
 
     }

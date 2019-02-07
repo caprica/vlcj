@@ -20,9 +20,10 @@
 package uk.co.caprica.vlcj.test.directaudio;
 
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.component.DirectAudioPlayerComponent;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
+import uk.co.caprica.vlcj.player.directaudio.AudioCallbackAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import javax.sound.sampled.AudioFormat;
@@ -46,7 +47,8 @@ public class JavaSoundTest extends VlcjTest {
 
     private final CountDownLatch sync = new CountDownLatch(1);
 
-    private final JavaSoundDirectAudioPlayerComponent audioPlayerComponent;
+    private final MediaPlayerFactory mediaPlayerFactory;
+    private final MediaPlayer mediaPlayer;
 
     public static void main(String[] args) throws Exception {
         if (args.length != 1) {
@@ -59,27 +61,45 @@ public class JavaSoundTest extends VlcjTest {
         System.out.println("Exit normally");
     }
 
-    public JavaSoundTest() throws Exception {
-        audioPlayerComponent = new JavaSoundDirectAudioPlayerComponent(FORMAT, RATE, CHANNELS);
+    public JavaSoundTest() {
+        mediaPlayerFactory = new MediaPlayerFactory();
+        mediaPlayer = mediaPlayerFactory.mediaPlayers().newMediaPlayer();
     }
 
     private void play(String mrl) throws Exception {
-        audioPlayerComponent.start();
-        audioPlayerComponent.getMediaPlayer().media().playMedia(mrl);
+        mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+            @Override
+            public void error(MediaPlayer mediaPlayer) {
+                sync.countDown();
+            }
+
+            @Override
+            public void finished(MediaPlayer mediaPlayer) {
+                sync.countDown();
+            }
+
+        });
+
+        mediaPlayer.audio().callback(FORMAT, RATE, CHANNELS, new JavaSoundCallback(FORMAT, RATE, CHANNELS));
+
+        mediaPlayer.media().playMedia(mrl);
+
         try {
             sync.await();
         }
         catch (InterruptedException e) {
             e.printStackTrace();
         }
-        audioPlayerComponent.stop();
-        audioPlayerComponent.release();
+
+        mediaPlayer.controls().stop();
+        mediaPlayer.release();
+        mediaPlayerFactory.release();
     }
 
     /**
      *
      */
-    private class JavaSoundDirectAudioPlayerComponent extends DirectAudioPlayerComponent {
+    private class JavaSoundCallback extends AudioCallbackAdapter {
 
         private static final int BLOCK_SIZE = 4;
 
@@ -91,11 +111,11 @@ public class JavaSoundTest extends VlcjTest {
 
         private final SourceDataLine dataLine;
 
-        public JavaSoundDirectAudioPlayerComponent(String format, int rate, int channels) throws Exception {
-            super(format, rate, channels);
+        public JavaSoundCallback(String format, int rate, int channels) throws Exception {
             this.audioFormat = new AudioFormat(rate, SAMPLE_BITS, channels, true, false);
             this.info = new Info(SourceDataLine.class, audioFormat);
             this.dataLine = (SourceDataLine)AudioSystem.getLine(info);
+            start();
         }
 
         private void start() throws Exception {
@@ -110,7 +130,7 @@ public class JavaSoundTest extends VlcjTest {
         }
 
         @Override
-        public void play(DirectAudioPlayer mediaPlayer, Pointer samples, int sampleCount, long pts) {
+        public void play(MediaPlayer mediaPlayer, Pointer samples, int sampleCount, long pts) {
             // There may be more efficient ways to do this...
             int bufferSize = sampleCount * BLOCK_SIZE;
             // You could process these samples in some way before playing them...
@@ -119,15 +139,10 @@ public class JavaSoundTest extends VlcjTest {
         }
 
         @Override
-        public void drain(DirectAudioPlayer mediaPlayer) {
+        public void drain(MediaPlayer mediaPlayer) {
             System.out.println("drain()");
             dataLine.drain();
         }
-
-        @Override
-        public void finished(MediaPlayer mediaPlayer) {
-            System.out.println("finished()");
-            sync.countDown();
-        }
     }
+
 }

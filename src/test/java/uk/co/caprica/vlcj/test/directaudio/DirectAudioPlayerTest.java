@@ -82,7 +82,10 @@ public class DirectAudioPlayerTest extends VlcjTest {
      */
     public DirectAudioPlayerTest() throws IOException {
         factory = new MediaPlayerFactory();
-        audioPlayer = factory.mediaPlayers().newDirectAudioPlayer("S16N", 44100, 2, new TestAudioCallbackAdapter(new File("test.raw")));
+        audioPlayer = factory.mediaPlayers().newMediaPlayer();
+
+        audioPlayer.audio().callback("S16N", 44100, 2, new TestAudioCallbackAdapter(new File("test.raw")));
+
         audioPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 
             @Override
@@ -147,7 +150,7 @@ public class DirectAudioPlayerTest extends VlcjTest {
         }
 
         @Override
-        protected void onPlay(DirectAudioPlayer mediaPlayer, byte[] data, int sampleCount, long pts) {
+        protected void onPlay(MediaPlayer mediaPlayer, byte[] data, int sampleCount, long pts) {
             try {
                 out.write(data);
             }
@@ -158,12 +161,12 @@ public class DirectAudioPlayerTest extends VlcjTest {
         }
 
         @Override
-        public void flush(DirectAudioPlayer mediaPlayer, long pts) {
+        public void flush(MediaPlayer mediaPlayer, long pts) {
             System.out.println("flush()");
         }
 
         @Override
-        public void drain(DirectAudioPlayer mediaPlayer) {
+        public void drain(MediaPlayer mediaPlayer) {
             System.out.println("drain()");
             try {
                 out.flush();
