@@ -24,6 +24,7 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.model.MediaSlave;
 import uk.co.caprica.vlcj.model.TrackInfo;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.enums.MediaSlaveType;
@@ -53,9 +54,8 @@ public class MediaTest extends VlcjTest {
         addedSlave = media.slaves().add(MediaSlaveType.SUBTITLE, 4, "file:///home/mark/test.srt");
         System.out.println("Added slave " + addedSlave);
 
-        // I don't really know how audio slaves work, nor what can really be done with them...
-//        addedSlave = media.slaves().add(MediaSlaveType.libvlc_media_slave_type_audio, 4, "file:///home/mark/test.mp3");
-//        System.out.println("Added slave " + addedSlave);
+        addedSlave = media.slaves().add(MediaSlaveType.AUDIO, 4, "file:///home/mark/test.mp3");
+        System.out.println("Added slave " + addedSlave);
 
         List<MediaSlave> slaves = media.slaves().get();
         for (MediaSlave slave : slaves) {
@@ -118,13 +118,23 @@ public class MediaTest extends VlcjTest {
         result = media.parsing().parse();
         System.out.println("parse result is " + result);
 
-        // Just to let the initial parsing finish, it's not necessary for normal use
-        // play will kick off a parse if the media is not yet parsed
+        // Just to let the initial parsing finish, it's not necessary for normal use play will kick off a parse if the
+        // media is not yet parsed (this test is being a bit lazy, we really should use events and synchronise when
+        // parse completes
         Thread.sleep(3000);
 
         mediaPlayer.media().set(media);
 
         System.out.println("AFTER SET...");
+
+        mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+            @Override
+            public void mediaPlayerReady(MediaPlayer mediaPlayer) {
+                System.out.println(mediaPlayer.audio().getAudioDescriptions());
+                // This is a track ID, it is not an index or number, the ID comes from the return audio descriptions
+                mediaPlayer.audio().setAudioTrack(3);
+            }
+        });
 
         mediaPlayer.controls().play();
 
