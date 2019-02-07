@@ -64,8 +64,8 @@ public class MediaTest extends VlcjTest {
 
         media.events().addMediaEventListener(new MediaEventAdapter() {
             @Override
-            public void mediaMetaChanged(Media media, int metaType) {
-                System.out.printf("meta changed: %d%n", metaType);
+            public void mediaMetaChanged(Media media, Meta metaType) {
+                System.out.printf("meta changed: %s%n", metaType);
             }
 
             @Override

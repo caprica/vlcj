@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.media.events;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.media_meta_changed;
+import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.media.Media;
 
 final class MediaMetaChangedEvent extends MediaEvent {
@@ -35,6 +36,7 @@ final class MediaMetaChangedEvent extends MediaEvent {
 
     @Override
     public void notify(MediaEventListener listener) {
-        listener.mediaMetaChanged(media, metaType);
+        listener.mediaMetaChanged(media, Meta.meta(metaType));
     }
+
 }

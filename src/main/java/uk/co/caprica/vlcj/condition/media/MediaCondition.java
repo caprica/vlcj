@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.condition.media;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
+import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.events.MediaEventAdapter;
@@ -65,7 +66,7 @@ abstract public class MediaCondition<R> extends Condition<Media, R> implements M
     // === MediaEventListener ==================================================
 
     @Override
-    public void mediaMetaChanged(Media media, int metaType) {
+    public void mediaMetaChanged(Media media, Meta metaType) {
     }
 
     @Override

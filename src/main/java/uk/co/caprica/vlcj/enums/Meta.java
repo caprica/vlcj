@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  */
@@ -50,6 +53,18 @@ public enum Meta {
     ALBUM_ARTIST(23),
     DISC_NUMBER (24),
     DISC_TOTAL  (25);
+
+    private static final Map<Integer, Meta> INT_MAP = new HashMap<Integer, Meta>();
+
+    static {
+        for (Meta value : Meta.values()) {
+            INT_MAP.put(value.intValue, value);
+        }
+    }
+
+    public static Meta meta(int intValue) {
+        return INT_MAP.get(intValue);
+    }
 
     private final int intValue;
 

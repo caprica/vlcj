@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.media.events;
 
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
+import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.media.Media;
@@ -33,7 +34,7 @@ public interface MediaEventListener {
      * @param media media that raised the event
      * @param metaType type of meta data that changed
      */
-    void mediaMetaChanged(Media media, int metaType);
+    void mediaMetaChanged(Media media, Meta metaType);
 
     /**
      * A new sub-item was added to the current media.

@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.media.events;
 
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.model.Picture;
@@ -28,7 +29,7 @@ import uk.co.caprica.vlcj.model.Picture;
 public class MediaEventAdapter implements MediaEventListener {
 
     @Override
-    public void mediaMetaChanged(Media media, int metaType) {
+    public void mediaMetaChanged(Media media, Meta metaType) {
     }
 
     @Override
