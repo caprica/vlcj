@@ -21,95 +21,23 @@ package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
+import uk.co.caprica.vlcj.player.embedded.callback.RenderCallbackAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 /**
- * Encapsulation of an embedded media player.
- * <p>
- * This component encapsulates a media player and an associated video surface suitable for embedding
- * inside a graphical user interface.
- * <p>
- * Most implementation details, like creating a factory and connecting the various objects together,
- * are encapsulated.
- * <p>
- * The default implementation will work out-of-the-box, but there are various template methods
- * available to sub-classes to tailor the behaviour of the component.
- * <p>
- * This class implements the most the most common use-case for an embedded media player and is
- * intended to enable a developer to get quickly started with the vlcj framework. More advanced
- * applications are free to directly use the {@link MediaPlayerFactory}, if required, as has always
- * been the case.
- * <p>
- * This component also implements the various media player listener interfaces, consequently an
- * implementation sub-class can simply override those listener methods to handle events.
- * <p>
- * Applications can get a handle to the underlying media player object by invoking
- * {@link #getMediaPlayer()}.
- * <p>
- * To use, simply create an instance of this class and add it to a visual container component like a
- * {@link JPanel} (or any other {@link Container}).
- * <p>
- * For example, here a media player component is used directly as the content pane of a
- * {@link JFrame}, and only two lines of code that use vlcj are required:
  *
- * <pre>
- * frame = new JFrame();
- * mediaPlayerComponent = new EmbeddedMediaPlayerComponent(); // &lt;--- 1
- * frame.setContentPane(mediaPlayerComponent);
- * frame.setSize(1050, 600);
- * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- * frame.setVisible(true);
- * mediaPlayerComponent.getMediaPlayer().playMedia(mrl); // &lt;--- 2
- * </pre>
- *
- * An example of a sub-class to tailor behaviours and override event handlers:
- *
- * <pre>
- * mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
- *     protected String[] onGetMediaPlayerFactoryArgs() {
- *         return new String[] {&quot;--no-video-title-show&quot;};
- *     }
- *
- *     protected FullScreenStrategy onGetFullScreenStrategy() {
- *         return new XFullScreenStrategy(frame);
- *     }
- *
- *     public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
- *     }
- *
- *     public void error(MediaPlayer mediaPlayer) {
- *     }
- *
- *     public void finished(MediaPlayer mediaPlayer) {
- *     }
- * };
- * </pre>
- * This component also provides template methods for mouse and keyboard events - these are events
- * for the <em>video surface</em> and not for the <code>Panel</code> that this component is itself
- * contained in. If for some reason you need events for the <code>Panel</code> you can just add
- * them by calling the usual add listener methods.
- * <p>
- * You can use template methods and/or add your own listeners depending on your needs.
- * <p>
- * Key events will only be delivered if the video surface has the focus. It is up to you to manage
- * that.
- * <p>
- * When the media player component is no longer needed, it should be released by invoking the
- * {@link #release()} method.
- * <p>
- * Since the media player factory associated by this component may be created by this component
- * itself or may be shared with some other media player resources it is the responsibility of
- * the application to also release the media player factory at the appropriate time.
- * <p>
- * It is always a better strategy to reuse media player components, rather than repeatedly creating
- * and destroying instances.
  */
 @SuppressWarnings("serial")
-public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBase implements MediaPlayerComponent {
+public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBase implements MediaPlayerComponent {
 
     /**
      * Default factory initialisation arguments.
@@ -129,56 +57,57 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     /**
      *
      */
-    private final Component videoSurfaceComponent;
+    private final JComponent videoSurfaceComponent;
 
     /**
      * Media player.
      */
     private final EmbeddedMediaPlayer mediaPlayer;
 
+    private BufferedImage image;
+
     public static Spec embeddedMediaPlayerSpec() {
-        return EmbeddedMediaPlayerComponentBase.spec();
+        return EmbeddedMediaPlayerComponentBase.spec(); // FIXME
     }
 
     /**
      *
-     *
-     * @param mediaPlayerFactory
+     *  @param mediaPlayerFactory
      * @param videoSurfaceComponent
      * @param fullScreenStrategy
      * @param inputEvents
-     * @param overlay
      */
-    public EmbeddedMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, Component videoSurfaceComponent, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, Window overlay) {
+    public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, JComponent videoSurfaceComponent, Dimension size, BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents) {
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
 
-        this.videoSurfaceComponent = initVideoSurfaceComponent(videoSurfaceComponent);
+        this.videoSurfaceComponent = initVideoSurfaceComponent(videoSurfaceComponent, size);
 
         this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
 
-        this.mediaPlayer.videoSurface().setVideoSurface(this.mediaPlayerFactory.videoSurfaces().newVideoSurface(this.videoSurfaceComponent));
+        this.mediaPlayer.videoSurface().setVideoSurface(this.mediaPlayerFactory.videoSurfaces().newVideoSurface(bufferFormatCallback, initRenderCallback(renderCallback, size), lockBuffers));
         this.mediaPlayer.fullScreen().setFullScreenStrategy(fullScreenStrategy);
-        this.mediaPlayer.overlay().setOverlay(overlay);
 
         setBackground(Color.black);
-        setLayout(new BorderLayout());
-        add(this.videoSurfaceComponent, BorderLayout.CENTER);
+        setLayout(new CallbackVideoSurfaceLayoutManager());
+        add(this.videoSurfaceComponent, "");
 
         initInputEvents(inputEvents);
 
         onAfterConstruct();
     }
 
-    public EmbeddedMediaPlayerComponent(Spec spec) {
-        this(spec.factory, spec.videoSurfaceComponent, spec.fullScreenStrategy, spec.inputEvents, spec.overlay);
+    public CallbackMediaPlayerComponent(Spec spec) {
+        // FIXME
+        this(null, null, null, null, null, true, null, null);
     }
 
     /**
      * Construct a media player component.
      */
-    public EmbeddedMediaPlayerComponent() {
-        this(null, null, null, null, null);
+    public CallbackMediaPlayerComponent() {
+        // FIXME this set of null's wont work since with no rendercallback there must be a size
+        this(null, null, null, null, null, true, null, null);
     }
 
     private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {
@@ -188,12 +117,20 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         return mediaPlayerFactory;
     }
 
-    private Component initVideoSurfaceComponent(Component videoSurfaceComponent) {
+    private JComponent initVideoSurfaceComponent(JComponent videoSurfaceComponent, Dimension size) {
         if (videoSurfaceComponent == null) {
-            videoSurfaceComponent = new Canvas();
-            videoSurfaceComponent.setBackground(Color.black);
+            videoSurfaceComponent = new DefaultVideoSurfaceComponent();
+            videoSurfaceComponent.setPreferredSize(new Dimension(size));
         }
         return videoSurfaceComponent;
+    }
+
+    private RenderCallback initRenderCallback(RenderCallback renderCallback, Dimension size) {
+        if (renderCallback == null) {
+            image = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(size.width, size.height);
+            renderCallback = new DefaultRenderCallbackAdapter();
+        }
+        return renderCallback;
     }
 
     private void initInputEvents(InputEvents inputEvents) {
@@ -234,7 +171,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      *
      * @return video surface component
      */
-    public final Component getVideoSurfaceComponent() {
+    public final JComponent getVideoSurfaceComponent() {
         return videoSurfaceComponent;
     }
 
@@ -270,6 +207,42 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      */
     public final MediaPlayerFactory getMediaPlayerFactory() {
         return mediaPlayerFactory;
+    }
+
+    private class DefaultVideoSurfaceComponent extends JPanel {
+
+        private DefaultVideoSurfaceComponent() {
+            setBackground(Color.black);
+            setIgnoreRepaint(true); // FIXME dunno?
+        }
+
+        @Override
+        public void paint(Graphics g) {
+            Graphics2D g2 = (Graphics2D)g;
+            if (image != null) {
+                g2.drawImage(image, null, 0, 0);
+            } else {
+                g2.setColor(getBackground());
+                g2.fillRect(0, 0, getWidth(), getHeight());
+            }
+            onDrawOverlay(g2);
+        }
+    }
+
+    private class DefaultRenderCallbackAdapter extends RenderCallbackAdapter {
+
+        private DefaultRenderCallbackAdapter() {
+            super (((DataBufferInt) image.getRaster().getDataBuffer()).getData());
+        }
+
+        @Override
+        protected void onDisplay(MediaPlayer mediaPlayer, int[] rgbBuffer) {
+            videoSurfaceComponent.repaint();
+        }
+
+    }
+
+    protected void onDrawOverlay(Graphics2D g2) {
     }
 
 }

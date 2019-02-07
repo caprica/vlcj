@@ -19,33 +19,23 @@
 
 package uk.co.caprica.vlcj.test.direct;
 
-import java.awt.AlphaComposite;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
-import java.awt.RenderingHints;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.callback.BufferFormat;
+import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
+import uk.co.caprica.vlcj.player.embedded.callback.format.RV32BufferFormat;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.test.VlcjTest;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.util.Arrays;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.direct.*;
-import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
-import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * This simple test player shows how to get direct access to the video frame data.
@@ -73,7 +63,7 @@ public class DirectTestPlayer extends VlcjTest {
 
     private final MediaPlayerFactory factory;
 
-    private final DirectMediaPlayer mediaPlayer;
+    private final EmbeddedMediaPlayer mediaPlayer;
 
     private ImagePane imagePane;
 
@@ -110,11 +100,10 @@ public class DirectTestPlayer extends VlcjTest {
         });
 
         factory = new MediaPlayerFactory();
-        mediaPlayer = factory.mediaPlayers().newDirectMediaPlayer(new TestBufferFormatCallback(), new TestRenderCallback(), true);
+        mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
+        mediaPlayer.videoSurface().setVideoSurface(factory.videoSurfaces().newVideoSurface(new TestBufferFormatCallback(), new TestRenderCallback(), true));
 
         mediaPlayer.media().playMedia(media);
-
-        // In a real application we must take care to release all of these objects (factory, mediaPlayer, media)
     }
 
     public static void main(String[] args) throws Exception {
@@ -160,8 +149,11 @@ public class DirectTestPlayer extends VlcjTest {
 
     private final class TestRenderCallback implements RenderCallback {
 
+        // This is not optimal, see the CallbackMediaPlayerComponent for a way to render directly into the raster of a
+        // Buffered image
+
         @Override
-        public void display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
+        public void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
             ByteBuffer bb = nativeBuffers[0];
             IntBuffer ib = bb.asIntBuffer();
             ib.get(rgbBuffer);

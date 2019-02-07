@@ -17,9 +17,9 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.direct.format;
+package uk.co.caprica.vlcj.player.embedded.callback.format;
 
-import uk.co.caprica.vlcj.player.direct.BufferFormat;
+import uk.co.caprica.vlcj.player.embedded.callback.BufferFormat;
 
 /**
  * Implementation of a buffer format for RV32.

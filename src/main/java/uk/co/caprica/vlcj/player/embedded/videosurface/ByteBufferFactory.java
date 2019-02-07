@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.direct;
+package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import java.lang.reflect.Field;
 import java.nio.Buffer;
@@ -26,6 +26,7 @@ import java.nio.ByteOrder;
 
 import sun.misc.Unsafe;
 
+// FIXME move package, not public - might still keep some things in their own package, like Rendercallback, BufferFormatCallback etc? maybe not... maybe they all belong in embedded, actually, i could have embedded.callback package for it
 /**
  * Factory for creating property aligned native byte buffers.
  * <p>
@@ -33,7 +34,7 @@ import sun.misc.Unsafe;
  * <p>
  * Original credit: http://psy-lob-saw.blogspot.co.uk/2013/01/direct-memory-alignment-in-java.html
  */
-final class ByteBufferFactory {
+public final class ByteBufferFactory {
 
     private static final long addressOffset = getAddressOffset();
 
@@ -48,7 +49,7 @@ final class ByteBufferFactory {
      * @param capacity required size for the buffer
      * @return aligned byte buffer
      */
-    static ByteBuffer allocateAlignedBuffer(int capacity) {
+    public static ByteBuffer allocateAlignedBuffer(int capacity) {
         return allocateAlignedBuffer(capacity, LIBVLC_ALIGNMENT);
     }
 
@@ -58,7 +59,7 @@ final class ByteBufferFactory {
      * @param buffer buffer
      * @return native address pointer
      */
-    static long getAddress(ByteBuffer buffer) {
+    public static long getAddress(ByteBuffer buffer) {
         return UnsafeAccess.UNSAFE.getLong(buffer, addressOffset);
     }
 

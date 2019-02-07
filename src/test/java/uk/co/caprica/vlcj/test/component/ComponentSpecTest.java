@@ -19,20 +19,14 @@
 
 package uk.co.caprica.vlcj.test.component;
 
-import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.component.*;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.direct.BufferFormat;
-import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
-import java.nio.ByteBuffer;
-
 import static uk.co.caprica.vlcj.component.AudioMediaPlayerComponent.audioMediaPlayerSpec;
 import static uk.co.caprica.vlcj.component.DirectAudioPlayerComponent.directAudioPlayerSpec;
-import static uk.co.caprica.vlcj.component.DirectMediaPlayerComponent.directMediaPlayerSpec;
 import static uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent.embeddedMediaPlayerSpec;
 
 /**
@@ -41,6 +35,7 @@ import static uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent.embedded
 public class ComponentSpecTest extends VlcjTest {
 
     public static void main(String[] args) {
+
         EmbeddedMediaPlayerComponent component1 = new EmbeddedMediaPlayerComponent(embeddedMediaPlayerSpec()
             .withFactory(null)
             .withFullScreenStrategy(null))
@@ -61,22 +56,7 @@ public class ComponentSpecTest extends VlcjTest {
             }
         };
 
-        DirectMediaPlayerComponent component3 = new DirectMediaPlayerComponent(directMediaPlayerSpec()
-            .withFactory(null)
-            .withFormatCallback(null))
-        {
-            @Override
-            public void display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
-                super.display(mediaPlayer, nativeBuffers, bufferFormat);
-            }
-
-            @Override
-            public void finished(MediaPlayer mediaPlayer) {
-                super.finished(mediaPlayer);
-            }
-        };
-
-        DirectAudioPlayerComponent component4 = new DirectAudioPlayerComponent(directAudioPlayerSpec().
+        DirectAudioPlayerComponent component3 = new DirectAudioPlayerComponent(directAudioPlayerSpec().
             withFactory(null))
         {
             @Override
@@ -90,8 +70,8 @@ public class ComponentSpecTest extends VlcjTest {
             }
         };
 
-        AudioMediaPlayerComponent component5 = new AudioMediaPlayerComponent(audioMediaPlayerSpec()
-        .withFactory(null))
+        AudioMediaPlayerComponent component4 = new AudioMediaPlayerComponent(audioMediaPlayerSpec()
+            .withFactory(null))
         {
             @Override
             public void finished(MediaPlayer mediaPlayer) {
@@ -99,8 +79,8 @@ public class ComponentSpecTest extends VlcjTest {
             }
         };
 
-        AudioMediaListPlayerComponent component6 = new AudioMediaListPlayerComponent(audioMediaPlayerSpec()
-                .withFactory(null))
+        AudioMediaListPlayerComponent component5 = new AudioMediaListPlayerComponent(audioMediaPlayerSpec()
+            .withFactory(null))
         {
             @Override
             public void finished(MediaPlayer mediaPlayer) {

@@ -17,7 +17,9 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.direct;
+package uk.co.caprica.vlcj.player.embedded.callback;
+
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import java.nio.ByteBuffer;
 
@@ -55,7 +57,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     }
 
     @Override
-    public final void display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
+    public final void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
         nativeBuffers[0].asIntBuffer().get(rgbBuffer, 0, bufferFormat.getHeight() * bufferFormat.getWidth());
         onDisplay(mediaPlayer, rgbBuffer);
     }
@@ -66,6 +68,6 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
      * @param mediaPlayer media player
      * @param rgbBuffer video data buffer
      */
-    protected abstract void onDisplay(DirectMediaPlayer mediaPlayer, int[] rgbBuffer);
+    protected abstract void onDisplay(MediaPlayer mediaPlayer, int[] rgbBuffer);
 
 }

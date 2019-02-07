@@ -19,12 +19,9 @@
 
 package uk.co.caprica.vlcj.factory;
 
-import uk.co.caprica.vlcj.player.embedded.videosurface.ComponentIdVideoSurface;
-import uk.co.caprica.vlcj.player.embedded.videosurface.ComponentVideoSurface;
-import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
-import uk.co.caprica.vlcj.player.embedded.videosurface.LinuxVideoSurfaceAdapter;
-import uk.co.caprica.vlcj.player.embedded.videosurface.OsxVideoSurfaceAdapter;
-import uk.co.caprica.vlcj.player.embedded.videosurface.WindowsVideoSurfaceAdapter;
+import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.*;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 import java.awt.*;
@@ -57,6 +54,18 @@ public final class VideoSurfaceService extends BaseService {
      */
     public ComponentIdVideoSurface newVideoSurface(long componentId) {
         return new ComponentIdVideoSurface(componentId, getVideoSurfaceAdapter());
+    }
+
+    /**
+     *
+     *
+     * @param bufferFormatCallback
+     * @param renderCallback
+     * @param lockBuffers
+     * @return
+     */
+    public CallbackVideoSurface newVideoSurface(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers) {
+        return new CallbackVideoSurface(bufferFormatCallback, renderCallback, lockBuffers, getVideoSurfaceAdapter());
     }
 
     private VideoSurfaceAdapter getVideoSurfaceAdapter() {

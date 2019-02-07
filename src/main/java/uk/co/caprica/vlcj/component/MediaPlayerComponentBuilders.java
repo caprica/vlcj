@@ -20,8 +20,8 @@
 package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.direct.RenderCallback;
+import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
@@ -69,21 +69,11 @@ public interface MediaPlayerComponentBuilders {
         AudioMediaListPlayerComponent audioMediaListPlayerComponent();
     }
 
-    interface Direct extends VideoFormat, AudioFormat {
-    }
-
-    interface VideoFormat {
-        DirectVideo withFormat(BufferFormatCallback bufferFormatCallback);
+    interface Direct extends AudioFormat {
     }
 
     interface AudioFormat {
         DirectAudio withFormat(String format, int rate, int channels);
-    }
-
-    interface DirectVideo {
-        DirectVideo withCallback(RenderCallback renderCallback);
-        DirectVideo lockBuffers(boolean lockBuffers);
-        DirectMediaPlayerComponent directMediaPlayerComponent();
     }
 
     interface DirectAudio {

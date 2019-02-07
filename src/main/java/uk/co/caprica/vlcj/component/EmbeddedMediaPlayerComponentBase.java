@@ -26,8 +26,10 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive.AdaptiveFullScreenStrategy;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -37,7 +39,7 @@ import java.awt.event.*;
  * methods.
  */
 @SuppressWarnings("serial")
-abstract class EmbeddedMediaPlayerComponentBase extends Panel implements MediaPlayerEventListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener  {
+abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaPlayerEventListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener  {
 
     protected static final Spec spec() {
         return new Spec();
@@ -86,7 +88,61 @@ abstract class EmbeddedMediaPlayerComponentBase extends Panel implements MediaPl
 
     }
 
+    /**
+     * Blank cursor to use when the cursor is disabled.
+     */
+    private Cursor blankCursor;
+
+    /**
+     *
+     */
     protected EmbeddedMediaPlayerComponentBase() {
+    }
+
+    /**
+     * Enable or disable the mouse cursor when it is over the component.
+     * <p>
+     * Note that you may see glitchy behaviour if you try and disable the cursor <em>after</em> you
+     * show the window/frame that contains your video surface.
+     * <p>
+     * If you want to disable the cursor for this component you should do so before you show the
+     * window.
+     *
+     * @param enabled <code>true</code> to enable (show) the cursor; <code>false</code> to disable (hide) it
+     */
+    public final void setCursorEnabled(boolean enabled) {
+        setCursor(enabled ? null : getBlankCursor());
+    }
+
+    /**
+     * Create a blank 1x1 image to use when the cursor is disabled.
+     *
+     * @return cursor
+     */
+    private Cursor getBlankCursor() {
+        if(blankCursor == null) {
+            Image blankImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+            blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(0, 0), "");
+        }
+        return blankCursor;
+    }
+
+    /**
+     * Template method invoked at the end of the media player constructor.
+     */
+    protected void onAfterConstruct() {
+    }
+
+    /**
+     * Template method invoked immediately prior to releasing the media player and media player factory instances.
+     */
+    protected void onBeforeRelease() {
+    }
+
+    /**
+     * Template method invoked immediately after releasing the media player and media player factory instances.
+     */
+    protected void onAfterRelease() {
     }
 
     // === MediaPlayerEventListener =============================================

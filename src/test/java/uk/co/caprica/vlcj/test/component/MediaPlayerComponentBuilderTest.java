@@ -2,7 +2,6 @@ package uk.co.caprica.vlcj.test.component;
 
 import uk.co.caprica.vlcj.component.*;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 
 import java.awt.*;
 
@@ -44,12 +43,6 @@ public class MediaPlayerComponentBuilderTest {
         AudioMediaListPlayerComponent audioMediaListPlayerComponent = mediaPlayerComponentBuilder()
                 .audio()
                 .audioMediaListPlayerComponent();
-
-        DirectMediaPlayerComponent directMediaPlayerComponent = mediaPlayerComponentBuilder()
-                .withFactory(new MediaPlayerFactory())
-                .direct()
-                .withFormat(null)
-                .directMediaPlayerComponent();
 
         DirectAudioPlayerComponent directAudioPlayerComponent = mediaPlayerComponentBuilder()
                 .withFactory(new MediaPlayerFactory())

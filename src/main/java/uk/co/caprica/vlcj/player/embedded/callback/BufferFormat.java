@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.direct;
+package uk.co.caprica.vlcj.player.embedded.callback;
 
 import java.util.Arrays;
 

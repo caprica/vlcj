@@ -17,10 +17,9 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.direct;
+package uk.co.caprica.vlcj.player.embedded.callback;
 
-import com.sun.jna.Memory;
-import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import java.nio.ByteBuffer;
 
@@ -43,5 +42,6 @@ public interface RenderCallback {
      * @param nativeBuffers video data for one frame
      * @param bufferFormat information about the format of the buffer used
      */
-    void display(DirectMediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat);
+    void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat);
+
 }

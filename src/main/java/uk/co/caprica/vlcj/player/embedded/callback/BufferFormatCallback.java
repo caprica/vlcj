@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.direct;
+package uk.co.caprica.vlcj.player.embedded.callback;
 
 /**
  * Callback invoked by the {@link DirectMediaPlayer} when the format of the video changes.
@@ -38,4 +38,5 @@ public interface BufferFormatCallback {
      * @return buffer format, must never be <code>null</code>
      */
     BufferFormat getBufferFormat(int sourceWidth, int sourceHeight);
+
 }

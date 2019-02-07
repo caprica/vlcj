@@ -20,8 +20,8 @@
 package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.direct.RenderCallback;
+import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive.AdaptiveFullScreenStrategy;
@@ -40,9 +40,7 @@ public final class MediaPlayerComponentBuilder implements
     MediaPlayerComponentBuilders.Embedded,
     MediaPlayerComponentBuilders.Audio,
     MediaPlayerComponentBuilders.Direct,
-    MediaPlayerComponentBuilders.VideoFormat,
     MediaPlayerComponentBuilders.AudioFormat,
-    MediaPlayerComponentBuilders.DirectVideo,
     MediaPlayerComponentBuilders.DirectAudio {
 
     /**
@@ -174,34 +172,6 @@ public final class MediaPlayerComponentBuilder implements
     @Override
     public MediaPlayerComponentBuilders.Direct direct() {
         return this;
-    }
-
-    @Override
-    public MediaPlayerComponentBuilders.DirectVideo withFormat(BufferFormatCallback bufferFormatCallback) {
-        this.bufferFormatCallback = bufferFormatCallback;
-        return this;
-    }
-
-    @Override
-    public MediaPlayerComponentBuilders.DirectVideo withCallback(RenderCallback renderCallback) {
-        this.renderCallback = renderCallback;
-        return this;
-    }
-
-    @Override
-    public MediaPlayerComponentBuilders.DirectVideo lockBuffers(boolean lockBuffers) {
-        this.lockBuffers = lockBuffers;
-        return this;
-    }
-
-    @Override
-    public DirectMediaPlayerComponent directMediaPlayerComponent() {
-        return new DirectMediaPlayerComponent(
-            getMediaPlayerFactory(DirectMediaPlayerComponent.class),
-            this.bufferFormatCallback,
-            this.renderCallback,
-            this.lockBuffers
-        );
     }
 
     @Override

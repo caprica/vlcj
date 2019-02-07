@@ -20,16 +20,13 @@
 package uk.co.caprica.vlcj.factory;
 
 import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
-import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
-import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
-import uk.co.caprica.vlcj.player.direct.RenderCallback;
+import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
 import uk.co.caprica.vlcj.player.directaudio.DefaultDirectAudioPlayer;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.list.DefaultMediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
@@ -61,18 +58,6 @@ public final class MediaPlayerService extends BaseService {
      */
     public EmbeddedMediaPlayer newEmbeddedMediaPlayer() {
         return new DefaultEmbeddedMediaPlayer(libvlc, instance);
-    }
-
-    /**
-     * Create a new direct video rendering media player.
-     *
-     * @param bufferFormatCallback callback to set the desired buffer format
-     * @param renderCallback callback to receive the video frame data
-     * @param lockBuffers
-     * @return media player instance
-     */
-    public DirectMediaPlayer newDirectMediaPlayer(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers) {
-        return new DefaultDirectMediaPlayer(libvlc, instance, bufferFormatCallback, renderCallback, lockBuffers);
     }
 
     /**
