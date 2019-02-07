@@ -136,10 +136,6 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      */
     private final EmbeddedMediaPlayer mediaPlayer;
 
-    public static Spec embeddedMediaPlayerSpec() {
-        return EmbeddedMediaPlayerComponentBase.spec();
-    }
-
     /**
      *
      *
@@ -170,7 +166,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         onAfterConstruct();
     }
 
-    public EmbeddedMediaPlayerComponent(Spec spec) {
+    public EmbeddedMediaPlayerComponent(MediaPlayerSpecs.EmbeddedMediaPlayerSpec spec) {
         this(spec.factory, spec.videoSurfaceComponent, spec.fullScreenStrategy, spec.inputEvents, spec.overlay);
     }
 

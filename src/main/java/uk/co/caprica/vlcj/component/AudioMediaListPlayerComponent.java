@@ -59,7 +59,7 @@ public class AudioMediaListPlayerComponent extends AudioMediaListPlayerComponent
         onAfterConstruct();
     }
 
-    public AudioMediaListPlayerComponent(Spec spec) {
+    public AudioMediaListPlayerComponent(MediaPlayerSpecs.AudioPlayerSpec spec) {
         this(spec.factory);
     }
 

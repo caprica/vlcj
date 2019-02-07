@@ -90,10 +90,6 @@ public class AudioMediaPlayerComponent extends AudioMediaPlayerComponentBase imp
      */
     private final MediaPlayer mediaPlayer;
 
-    public static Spec audioMediaPlayerSpec() {
-        return AudioMediaPlayerComponentBase.spec();
-    }
-
     /**
      * Construct a media player component.
      */
@@ -107,7 +103,7 @@ public class AudioMediaPlayerComponent extends AudioMediaPlayerComponentBase imp
         onAfterConstruct();
     }
 
-    public AudioMediaPlayerComponent(Spec spec) {
+    public AudioMediaPlayerComponent(MediaPlayerSpecs.AudioPlayerSpec spec) {
         this(spec.factory);
     }
 

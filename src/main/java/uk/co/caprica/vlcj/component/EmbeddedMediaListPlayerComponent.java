@@ -60,7 +60,7 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerCom
         onAfterConstruct();
     }
 
-    public EmbeddedMediaListPlayerComponent(Spec spec) {
+    public EmbeddedMediaListPlayerComponent(MediaPlayerSpecs.EmbeddedMediaPlayerSpec spec) {
         this(spec.factory, spec.videoSurfaceComponent, spec.fullScreenStrategy, spec.inputEvents, spec.overlay);
     }
 

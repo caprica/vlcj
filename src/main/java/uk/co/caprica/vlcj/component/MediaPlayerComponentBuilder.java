@@ -26,6 +26,7 @@ import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive.AdaptiveFullScreenStrategy;
 
+import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.*;
@@ -38,6 +39,7 @@ public final class MediaPlayerComponentBuilder implements
     MediaPlayerComponentBuilders.Factory,
     MediaPlayerComponentBuilders.MediaPlayers,
     MediaPlayerComponentBuilders.Embedded,
+    MediaPlayerComponentBuilders.Callback,
     MediaPlayerComponentBuilders.Audio,
     MediaPlayerComponentBuilders.Direct,
     MediaPlayerComponentBuilders.AudioFormat,
@@ -57,6 +59,8 @@ public final class MediaPlayerComponentBuilder implements
     private Window overlay;
     private InputEvents inputEvents;
 
+    private JComponent callbackVideoSurfaceComponent;
+    private Dimension size;
     private BufferFormatCallback bufferFormatCallback;
     private RenderCallback renderCallback;
     private boolean lockBuffers;
@@ -111,6 +115,12 @@ public final class MediaPlayerComponentBuilder implements
     }
 
     @Override
+    public MediaPlayerComponentBuilders.Embedded withInputEvents(InputEvents inputEvents) {
+        this.inputEvents = inputEvents;
+        return this;
+    }
+
+    @Override
     public MediaPlayerComponentBuilders.Embedded withVideoSurfaceComponent(Component videoSurfaceComponent) {
         this.videoSurfaceComponent = videoSurfaceComponent;
         return this;
@@ -119,12 +129,6 @@ public final class MediaPlayerComponentBuilder implements
     @Override
     public MediaPlayerComponentBuilders.Embedded withOverlay(Window overlay) {
         this.overlay = overlay;
-        return this;
-    }
-
-    @Override
-    public MediaPlayerComponentBuilders.Embedded withInputEvents(InputEvents inputEvents) {
-        this.inputEvents = inputEvents;
         return this;
     }
 
@@ -147,6 +151,61 @@ public final class MediaPlayerComponentBuilder implements
             this.fullScreenStrategy,
             this.inputEvents,
             this.overlay
+        );
+    }
+
+    @Override
+    public MediaPlayerComponentBuilders.Callback callback() {
+        return this;
+    }
+
+    @Override
+    public MediaPlayerComponentBuilders.Callback withVideoSurfaceComponent(JComponent videoSurfaceComponent) {
+        this.callbackVideoSurfaceComponent = videoSurfaceComponent;
+        return this;
+    }
+
+    @Override
+    public MediaPlayerComponentBuilders.Callback withSize(int width, int height) {
+        this.size = new Dimension(width, height);
+        return this;
+    }
+
+    @Override
+    public MediaPlayerComponentBuilders.Callback withBufferFormatCallback(BufferFormatCallback bufferFormatCallback) {
+        this.bufferFormatCallback = bufferFormatCallback;
+        return this;
+    }
+
+    @Override
+    public MediaPlayerComponentBuilders.Callback withRenderCallback(RenderCallback renderCallback) {
+        this.renderCallback = renderCallback;
+        return this;
+    }
+
+    @Override
+    public MediaPlayerComponentBuilders.Callback withLockedBuffers(boolean lockBuffers) {
+        this.lockBuffers = lockBuffers;
+        return this;
+    }
+
+    @Override
+    public MediaPlayerComponentBuilders.Callback withLockedBuffers() {
+        this.lockBuffers = true;
+        return this;
+    }
+
+    @Override
+    public CallbackMediaPlayerComponent callbackMediaPlayerComponent() {
+        return new CallbackMediaPlayerComponent(
+            getMediaPlayerFactory(EmbeddedMediaPlayerComponent.class),
+            callbackVideoSurfaceComponent,
+            size,
+            bufferFormatCallback,
+            renderCallback,
+            lockBuffers,
+            fullScreenStrategy,
+            inputEvents
         );
     }
 

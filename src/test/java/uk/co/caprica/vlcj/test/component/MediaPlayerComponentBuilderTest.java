@@ -36,6 +36,16 @@ public class MediaPlayerComponentBuilderTest {
                 .withVideoSurfaceComponent(new Canvas())
                 .embeddedMediaListPlayerComponent();
 
+        CallbackMediaPlayerComponent callbackMediaPlayerComponent = mediaPlayerComponentBuilder()
+                .withFactory(new MediaPlayerFactory())
+                .embedded()
+                .withInputEvents(InputEvents.NONE)
+                .callback()
+                .withBufferFormatCallback(null)
+                .withRenderCallback(null)
+                .withLockedBuffers()
+                .callbackMediaPlayerComponent();
+
         AudioMediaPlayerComponent audioMediaPlayerComponent = mediaPlayerComponentBuilder()
                 .audio()
                 .audioMediaPlayerComponent();

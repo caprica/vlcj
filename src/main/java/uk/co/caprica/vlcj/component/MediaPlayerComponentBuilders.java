@@ -25,9 +25,13 @@ import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
+import javax.swing.*;
 import java.awt.*;
 
-// FIXME some of the interface names are a bit awkward, maybe some better names can be found
+// FIXME where are some problems that ideally we would stop with the type-safe builder
+//        if setting a videosurfacecomponent or an overlay, Callback should not be available
+//        if setting size, rendercallback and videosurfacecomponent should not be available
+//        bufferformat and rendercallback must go together
 
 /**
  * Specification for a type-safe builder for creating media player components.
@@ -57,11 +61,22 @@ public interface MediaPlayerComponentBuilders {
     interface Embedded {
         Embedded withFullScreenStrategy(FullScreenStrategy fullScreenStrategy);
         Embedded withDefaultFullScreenStrategy(Window fullScreenWindow);
+        Embedded withInputEvents(InputEvents inputEvents);
         Embedded withVideoSurfaceComponent(Component videoSurfaceComponent);
         Embedded withOverlay(Window overlay);
-        Embedded withInputEvents(InputEvents inputEvents);
+        Callback callback();
         EmbeddedMediaPlayerComponent embeddedMediaPlayerComponent();
         EmbeddedMediaListPlayerComponent embeddedMediaListPlayerComponent();
+    }
+
+    interface Callback {
+        Callback withVideoSurfaceComponent(JComponent videoSurfaceComponent);
+        Callback withSize(int width, int height);
+        Callback withBufferFormatCallback(BufferFormatCallback bufferFormatCallback);
+        Callback withRenderCallback(RenderCallback renderCallback);
+        Callback withLockedBuffers(boolean lockBuffers);
+        Callback withLockedBuffers();
+        CallbackMediaPlayerComponent callbackMediaPlayerComponent();
     }
 
     interface Audio {

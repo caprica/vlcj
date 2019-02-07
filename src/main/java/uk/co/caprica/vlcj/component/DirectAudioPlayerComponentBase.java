@@ -27,40 +27,6 @@ import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 
 abstract class DirectAudioPlayerComponentBase extends MediaPlayerEventAdapter implements AudioCallback {
 
-    protected static final Spec spec() {
-        return new Spec();
-    }
-
-    public static final class Spec {
-
-        protected MediaPlayerFactory factory;
-        protected String format;
-        protected int rate;
-        protected int channels;
-        protected AudioCallback audioCallback;
-
-        public Spec withFactory(MediaPlayerFactory factory) {
-            this.factory = factory;
-            return this;
-        }
-
-        public Spec withFormat(String format, int rate, int channels) {
-            this.format = format;
-            this.rate = rate;
-            this.channels = channels;
-            return this;
-        }
-
-        public Spec withAudioCallback(AudioCallback audioCallback) {
-            this.audioCallback = audioCallback;
-            return this;
-        }
-
-        private Spec(){
-        }
-
-    }
-
     protected DirectAudioPlayerComponentBase() {
     }
 

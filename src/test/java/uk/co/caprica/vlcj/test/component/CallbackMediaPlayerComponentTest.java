@@ -57,6 +57,8 @@ public class CallbackMediaPlayerComponentTest extends VlcjTest {
      * @param args
      */
     public static void main(String[] args) {
+        args = new String[] {"/home/mark/1.mp4"};
+
         if (args.length != 1) {
             System.out.println("Specify an mrl");
             System.exit(1);

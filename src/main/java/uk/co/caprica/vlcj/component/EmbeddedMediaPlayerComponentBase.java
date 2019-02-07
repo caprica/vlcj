@@ -41,53 +41,6 @@ import java.awt.image.BufferedImage;
 @SuppressWarnings("serial")
 abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaPlayerEventListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener  {
 
-    protected static final Spec spec() {
-        return new Spec();
-    }
-
-    public static final class Spec {
-
-        protected MediaPlayerFactory factory;
-        protected Component videoSurfaceComponent;
-        protected FullScreenStrategy fullScreenStrategy;
-        protected InputEvents inputEvents;
-        protected Window overlay;
-
-        public Spec withFactory(MediaPlayerFactory factory) {
-            this.factory = factory;
-            return this;
-        }
-
-        public Spec withVideoSurfaceComponent(Component videoSurfaceComponent) {
-            this.videoSurfaceComponent = videoSurfaceComponent;
-            return this;
-        }
-
-        public Spec withFullScreenStrategy(FullScreenStrategy fullScreenStrategy) {
-            this.fullScreenStrategy = fullScreenStrategy;
-            return this;
-        }
-
-        public Spec withDefaultFullScreenStrategy(Window fullScreenWindow) {
-            this.fullScreenStrategy = new AdaptiveFullScreenStrategy(fullScreenWindow);
-            return this;
-        }
-
-        public Spec withInputEvents(InputEvents inputEvents) {
-            this.inputEvents = inputEvents;
-            return this;
-        }
-
-        public Spec withOverlay(Window overlay) {
-            this.overlay = overlay;
-            return this;
-        }
-
-        private Spec() {
-        }
-
-    }
-
     /**
      * Blank cursor to use when the cursor is disabled.
      */

@@ -66,10 +66,6 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
     private BufferedImage image;
 
-    public static Spec embeddedMediaPlayerSpec() {
-        return EmbeddedMediaPlayerComponentBase.spec(); // FIXME
-    }
-
     /**
      *
      *  @param mediaPlayerFactory
@@ -97,7 +93,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         onAfterConstruct();
     }
 
-    public CallbackMediaPlayerComponent(Spec spec) {
+    public CallbackMediaPlayerComponent(MediaPlayerSpecs.CallbackMediaPlayerSpec spec) {
         // FIXME
         this(null, null, null, null, null, true, null, null);
     }

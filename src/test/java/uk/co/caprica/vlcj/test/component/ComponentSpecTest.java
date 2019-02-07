@@ -25,9 +25,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
-import static uk.co.caprica.vlcj.component.AudioMediaPlayerComponent.audioMediaPlayerSpec;
-import static uk.co.caprica.vlcj.component.DirectAudioPlayerComponent.directAudioPlayerSpec;
-import static uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent.embeddedMediaPlayerSpec;
+import static uk.co.caprica.vlcj.component.MediaPlayerSpecs.*;
 
 /**
  * This is a simple test of the spec builder syntax and dynamic sub-classing.
@@ -56,7 +54,7 @@ public class ComponentSpecTest extends VlcjTest {
             }
         };
 
-        DirectAudioPlayerComponent component3 = new DirectAudioPlayerComponent(directAudioPlayerSpec().
+        DirectAudioPlayerComponent component3 = new DirectAudioPlayerComponent(callbackAudioPlayerSpec().
             withFactory(null))
         {
             @Override
@@ -70,7 +68,7 @@ public class ComponentSpecTest extends VlcjTest {
             }
         };
 
-        AudioMediaPlayerComponent component4 = new AudioMediaPlayerComponent(audioMediaPlayerSpec()
+        AudioMediaPlayerComponent component4 = new AudioMediaPlayerComponent(audioPlayerSpec()
             .withFactory(null))
         {
             @Override
@@ -79,7 +77,7 @@ public class ComponentSpecTest extends VlcjTest {
             }
         };
 
-        AudioMediaListPlayerComponent component5 = new AudioMediaListPlayerComponent(audioMediaPlayerSpec()
+        AudioMediaListPlayerComponent component5 = new AudioMediaListPlayerComponent(audioPlayerSpec()
             .withFactory(null))
         {
             @Override

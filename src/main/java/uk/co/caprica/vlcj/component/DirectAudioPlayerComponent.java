@@ -50,10 +50,6 @@ public class DirectAudioPlayerComponent extends DirectAudioPlayerComponentBase i
      */
     private final DirectAudioPlayer mediaPlayer;
 
-    public static Spec directAudioPlayerSpec() {
-        return DirectAudioPlayerComponentBase.spec();
-    }
-
     public DirectAudioPlayerComponent(MediaPlayerFactory mediaPlayerFactory, String format, int rate, int channels, AudioCallback audioCallback) {
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
@@ -79,7 +75,7 @@ public class DirectAudioPlayerComponent extends DirectAudioPlayerComponentBase i
         this(null, format, rate, channels, null);
     }
 
-    public DirectAudioPlayerComponent(Spec spec) {
+    public DirectAudioPlayerComponent(MediaPlayerSpecs.CallbackAudioPlayerSpec spec) {
         this(spec.factory, spec.format, spec.rate, spec.channels, spec.audioCallback);
     }
 
