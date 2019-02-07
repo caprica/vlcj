@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.media;
 
+import uk.co.caprica.vlcj.enums.MediaSlavePriority;
 import uk.co.caprica.vlcj.enums.MediaSlaveType;
 import uk.co.caprica.vlcj.model.MediaSlave;
 
@@ -55,8 +56,8 @@ public class SlaveService extends BaseService {
      * @param uri URI of the slave to add
      * @return <code>true</code> on success; <code>false</code> otherwise
      */
-    public boolean add(MediaSlaveType type, int priority, String uri) {
-        return libvlc.libvlc_media_slaves_add(mediaInstance, type.intValue(), priority, uri) == 0;
+    public boolean add(MediaSlaveType type, MediaSlavePriority priority, String uri) {
+        return libvlc.libvlc_media_slaves_add(mediaInstance, type.intValue(), priority.intValue(), uri) == 0;
     }
 
     public void clear() {

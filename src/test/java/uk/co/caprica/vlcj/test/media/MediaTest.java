@@ -20,16 +20,13 @@
 package uk.co.caprica.vlcj.test.media;
 
 import uk.co.caprica.vlcj.binding.internal.*;
+import uk.co.caprica.vlcj.enums.*;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.model.MediaSlave;
 import uk.co.caprica.vlcj.model.TrackInfo;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.enums.MediaParsedStatus;
-import uk.co.caprica.vlcj.enums.MediaSlaveType;
-import uk.co.caprica.vlcj.enums.Meta;
-import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.media.events.MediaEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -51,10 +48,10 @@ public class MediaTest extends VlcjTest {
 
         boolean addedSlave;
 
-        addedSlave = media.slaves().add(MediaSlaveType.SUBTITLE, 4, "file:///home/mark/test.srt");
+        addedSlave = media.slaves().add(MediaSlaveType.SUBTITLE, MediaSlavePriority.HIGHEST, "file:///home/mark/test.srt");
         System.out.println("Added slave " + addedSlave);
 
-        addedSlave = media.slaves().add(MediaSlaveType.AUDIO, 4, "file:///home/mark/test.mp3");
+        addedSlave = media.slaves().add(MediaSlaveType.AUDIO, MediaSlavePriority.HIGHEST, "file:///home/mark/test.mp3");
         System.out.println("Added slave " + addedSlave);
 
         List<MediaSlave> slaves = media.slaves().get();
