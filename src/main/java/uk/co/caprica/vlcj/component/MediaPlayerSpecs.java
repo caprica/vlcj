@@ -26,6 +26,7 @@ import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive.AdaptiveFullScreenStrategy;
 
+import javax.swing.*;
 import java.awt.*;
 
 public final class MediaPlayerSpecs {
@@ -96,7 +97,7 @@ public final class MediaPlayerSpecs {
     public static final class CallbackMediaPlayerSpec {
 
         MediaPlayerFactory factory;
-        Component videoSurfaceComponent;
+        JComponent videoSurfaceComponent;
         Dimension size;
         BufferFormatCallback bufferFormatCallback;
         RenderCallback renderCallback;
@@ -109,7 +110,7 @@ public final class MediaPlayerSpecs {
             return this;
         }
 
-        public CallbackMediaPlayerSpec withVideoSurfaceComponent(Component videoSurfaceComponent) {
+        public CallbackMediaPlayerSpec withVideoSurfaceComponent(JComponent videoSurfaceComponent) {
             this.videoSurfaceComponent = videoSurfaceComponent;
             return this;
         }
@@ -156,6 +157,10 @@ public final class MediaPlayerSpecs {
 
         public CallbackMediaPlayerComponent callbackMediaPlayer() {
             return new CallbackMediaPlayerComponent(this);
+        }
+
+        public CallbackMediaListPlayerComponent callbackMediaListPlayer() {
+            return new CallbackMediaListPlayerComponent(this);
         }
 
         private CallbackMediaPlayerSpec() {
