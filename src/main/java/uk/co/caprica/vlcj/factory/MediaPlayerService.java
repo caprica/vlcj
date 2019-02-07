@@ -20,7 +20,6 @@
 package uk.co.caprica.vlcj.factory;
 
 import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
-import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
 import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.DefaultMediaListPlayer;
