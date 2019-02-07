@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.directaudio;
+package uk.co.caprica.vlcj.player.base.callback;
 
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
@@ -50,4 +50,5 @@ public class AudioCallbackAdapter implements AudioCallback {
     @Override
     public void drain(MediaPlayer mediaPlayer) {
     }
+
 }

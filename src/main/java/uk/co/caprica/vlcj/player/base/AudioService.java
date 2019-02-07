@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.model.AudioDevice;
 import uk.co.caprica.vlcj.model.Equalizer;
 import uk.co.caprica.vlcj.model.EqualizerListener;
 import uk.co.caprica.vlcj.model.TrackDescription;
-import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
+import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
 
 import java.util.ArrayList;
 import java.util.List;

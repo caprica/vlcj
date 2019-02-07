@@ -19,13 +19,15 @@
 
 package uk.co.caprica.vlcj.test.component;
 
-import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.component.*;
+import uk.co.caprica.vlcj.component.AudioListPlayerComponent;
+import uk.co.caprica.vlcj.component.AudioPlayerComponent;
+import uk.co.caprica.vlcj.component.EmbeddedMediaListPlayerComponent;
+import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
-import static uk.co.caprica.vlcj.component.MediaPlayerSpecs.*;
+import static uk.co.caprica.vlcj.component.MediaPlayerSpecs.audioPlayerSpec;
+import static uk.co.caprica.vlcj.component.MediaPlayerSpecs.embeddedMediaPlayerSpec;
 
 /**
  * This is a simple test of the spec builder syntax and dynamic sub-classing.

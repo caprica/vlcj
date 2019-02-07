@@ -20,7 +20,6 @@
 package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
 import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;

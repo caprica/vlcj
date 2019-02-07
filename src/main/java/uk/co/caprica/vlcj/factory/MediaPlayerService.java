@@ -20,11 +20,7 @@
 package uk.co.caprica.vlcj.factory;
 
 import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
-import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
-import uk.co.caprica.vlcj.player.directaudio.DefaultDirectAudioPlayer;
-import uk.co.caprica.vlcj.player.directaudio.DirectAudioPlayer;
+import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
 import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.DefaultMediaListPlayer;
@@ -58,19 +54,6 @@ public final class MediaPlayerService extends BaseService {
      */
     public EmbeddedMediaPlayer newEmbeddedMediaPlayer() {
         return new DefaultEmbeddedMediaPlayer(libvlc, instance);
-    }
-
-    /**
-     * Create a new direct audio media player.
-     *
-     * @param format decoded audio format
-     * @param rate decoded audio sample rate
-     * @param channels decoded audio channels
-     * @param audioCallback callback
-     * @return media player instance
-     */
-    public DirectAudioPlayer newDirectAudioPlayer(String format, int rate, int channels, AudioCallback audioCallback) {
-        return new DefaultDirectAudioPlayer(libvlc, instance, format, rate, channels, audioCallback);
     }
 
     /**

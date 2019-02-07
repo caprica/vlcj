@@ -1,8 +1,6 @@
 package uk.co.caprica.vlcj.test.directaudio;
 
 import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.concurrent.CountDownLatch;
@@ -16,7 +14,7 @@ import javax.swing.JPanel;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.directaudio.AudioCallbackAdapter;
+import uk.co.caprica.vlcj.player.base.callback.AudioCallbackAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import com.sun.jna.Pointer;

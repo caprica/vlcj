@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.directaudio;
+package uk.co.caprica.vlcj.player.base.callback;
 
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
@@ -25,8 +25,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 /**
  * Default implementation of an {@link AudioCallbackAdapter}.
  * <p>
- * This implementation gets the native sample data as a <code>byte[]</code> assuming a known fixed
- * block size.
+ * This implementation gets the native sample data as a <code>byte[]</code> assuming a known fixed block size.
  */
 public abstract class DefaultAudioCallbackAdapter extends AudioCallbackAdapter {
 

@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player.base;
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.*;
-import uk.co.caprica.vlcj.player.directaudio.AudioCallback;
+import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
 
 /**
  *
