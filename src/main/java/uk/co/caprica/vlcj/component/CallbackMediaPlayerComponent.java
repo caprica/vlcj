@@ -68,7 +68,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
     /**
      *
-     *  @param mediaPlayerFactory
+     * @param mediaPlayerFactory
      * @param videoSurfaceComponent
      * @param fullScreenStrategy
      * @param inputEvents
@@ -94,16 +94,14 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     }
 
     public CallbackMediaPlayerComponent(MediaPlayerSpecs.CallbackMediaPlayerSpec spec) {
-        // FIXME
-        this(null, null, null, null, null, true, null, null);
+        this(spec.factory, spec.videoSurfaceComponent, spec.size, spec.bufferFormatCallback, spec.renderCallback, spec.lockedBuffers, spec.fullScreenStrategy, spec.inputEvents);
     }
 
     /**
      * Construct a media player component.
      */
-    public CallbackMediaPlayerComponent() {
-        // FIXME this set of null's wont work since with no rendercallback there must be a size
-        this(null, null, null, null, null, true, null, null);
+    public CallbackMediaPlayerComponent(Dimension size) {
+        this(null, null, size, null, null, true, null, null);
     }
 
     private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {
