@@ -101,7 +101,7 @@ public final class MediaPlayerSpecs {
         Dimension size;
         BufferFormatCallback bufferFormatCallback;
         RenderCallback renderCallback;
-        Boolean lockedBuffers;
+        boolean lockedBuffers = true;
         FullScreenStrategy fullScreenStrategy;
         InputEvents inputEvents;
 
