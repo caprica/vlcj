@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.component;
 
+import uk.co.caprica.vlcj.component.callback.CallbackImagePainter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
@@ -42,8 +43,8 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
      */
     private final MediaList mediaList;
 
-    public CallbackMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, JComponent videoSurfaceComponent, Dimension size, BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents) {
-        super(mediaPlayerFactory, videoSurfaceComponent, size, bufferFormatCallback, renderCallback, lockBuffers, fullScreenStrategy, inputEvents);
+    public CallbackMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, BufferFormatCallback bufferFormatCallback, boolean lockBuffers, Dimension size, CallbackImagePainter imagePainter, JComponent videoSurfaceComponent, RenderCallback renderCallback) {
+        super(mediaPlayerFactory, fullScreenStrategy, inputEvents, bufferFormatCallback, lockBuffers, size, imagePainter, videoSurfaceComponent, renderCallback);
 
         this.mediaListPlayer = getMediaPlayerFactory().mediaPlayers().newMediaListPlayer();
         this.mediaListPlayer.mediaPlayer().setMediaPlayer(getMediaPlayer());
@@ -57,15 +58,23 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
         onAfterConstruct();
     }
 
+    public CallbackMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, BufferFormatCallback bufferFormatCallback, boolean lockBuffers, Dimension size, CallbackImagePainter imagePainter) {
+        this(mediaPlayerFactory, fullScreenStrategy, inputEvents, bufferFormatCallback, lockBuffers, size, imagePainter, null, null);
+    }
+
+    public CallbackMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, BufferFormatCallback bufferFormatCallback, boolean lockBuffers, JComponent videoSurfaceComponent, RenderCallback renderCallback) {
+        this(mediaPlayerFactory, fullScreenStrategy, inputEvents, bufferFormatCallback, lockBuffers, null, null, videoSurfaceComponent, renderCallback);
+    }
+
     public CallbackMediaListPlayerComponent(MediaPlayerSpecs.CallbackMediaPlayerSpec spec) {
-        this(spec.factory, spec.videoSurfaceComponent, spec.size, spec.bufferFormatCallback, spec.renderCallback, spec.lockedBuffers, spec.fullScreenStrategy, spec.inputEvents);
+        this(spec.factory, spec.fullScreenStrategy, spec.inputEvents, spec.bufferFormatCallback, spec.lockedBuffers, spec.size, spec.imagePainter, spec.videoSurfaceComponent, spec.renderCallback);
     }
 
     /**
      * Construct a media list player component.
      */
     public CallbackMediaListPlayerComponent(Dimension size) {
-        this(null, null, size, null, null, true, null, null);
+        this(null, null, null, null, true, size, null, null, null);
     }
 
     /**

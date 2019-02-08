@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.component.callback.CallbackImagePainter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventListener;
@@ -35,8 +36,8 @@ import java.awt.*;
 @SuppressWarnings("serial")
 public class CallbackMediaListPlayerComponentBase extends CallbackMediaPlayerComponent implements MediaListPlayerEventListener, MediaListEventListener {
 
-    public CallbackMediaListPlayerComponentBase(MediaPlayerFactory mediaPlayerFactory, JComponent videoSurfaceComponent, Dimension size, BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents) {
-        super(mediaPlayerFactory, videoSurfaceComponent, size, bufferFormatCallback, renderCallback, lockBuffers, fullScreenStrategy, inputEvents);
+    public CallbackMediaListPlayerComponentBase(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, BufferFormatCallback bufferFormatCallback, boolean lockBuffers, Dimension size, CallbackImagePainter imagePainter, JComponent videoSurfaceComponent, RenderCallback renderCallback) {
+        super(mediaPlayerFactory, fullScreenStrategy, inputEvents, bufferFormatCallback, lockBuffers, size, imagePainter, videoSurfaceComponent, renderCallback);
     }
 
     // === MediaListPlayerEventListener =========================================

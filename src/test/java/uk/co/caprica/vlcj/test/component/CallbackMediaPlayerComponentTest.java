@@ -20,6 +20,8 @@
 package uk.co.caprica.vlcj.test.component;
 
 import uk.co.caprica.vlcj.component.CallbackMediaPlayerComponent;
+import uk.co.caprica.vlcj.component.callback.ScaledCallbackImagePainter;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.callback.BufferFormat;
 import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.callback.format.RV32BufferFormat;
@@ -44,12 +46,12 @@ public class CallbackMediaPlayerComponentTest extends VlcjTest {
     /**
      *
      */
-    private final int width = 800;
+    private final int width = 1280;
 
     /**
      *
      */
-    private final int height = 450;
+    private final int height = 720;
 
     /**
      * Application entry point.
@@ -91,15 +93,13 @@ public class CallbackMediaPlayerComponentTest extends VlcjTest {
             }
         };
 
-        mediaPlayerComponent = new CallbackMediaPlayerComponent(null, null, new Dimension(width, height), bufferFormatCallback, null, true, null, null) {
+        mediaPlayerComponent = new CallbackMediaPlayerComponent(null, null, null, bufferFormatCallback, true, new Dimension(width, height), null, null, null) {
             @Override
             protected void onDrawOverlay(Graphics2D g2) {
-                g2 = (Graphics2D) g2.create();
                 g2.setColor(Color.white);
                 g2.setFont(font);
                 g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
                 g2.drawString("lightweight overlay", 100, 200);
-                g2.dispose();
             }
         };
 

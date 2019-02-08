@@ -20,12 +20,14 @@
 package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.component.callback.CallbackImagePainter;
+import uk.co.caprica.vlcj.component.callback.ScaledCallbackImagePainter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.callback.RenderCallbackAdapter;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
 import javax.swing.*;
@@ -59,6 +61,8 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      */
     private final JComponent videoSurfaceComponent;
 
+    private final CallbackImagePainter imagePainter;
+
     /**
      * Media player.
      */
@@ -68,40 +72,62 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
     /**
      *
+     * <p>
+     * This component will provide a reasonable default implementation, but a client application is free to override
+     * these defaults with their own implementation.
+     * <p>
+     * To rely on the defaults and have this component render the video, the <code>size</code> parameter <em>must</em>
+     * be provided. This size governs the size of the video buffer that will be used.
+     * <p>
+     * If a client application wishes to perform its own rendering, then it may omit the size parameter and instead
+     * provide a <code>renderCallback</code>. In this case, the <code>videoSurfaceComponent</code> parameter should also
+     * be provided if the client application wants the video surface they are rendering in to be incorporated into this
+     * component's layout.
+     *
      * @param mediaPlayerFactory
-     * @param videoSurfaceComponent
      * @param fullScreenStrategy
      * @param inputEvents
+     * @param bufferFormatCallback
+     * @param lockBuffers
+     * @param size
+     * @param videoSurfaceComponent
+     * @param renderCallback
      */
-    public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, JComponent videoSurfaceComponent, Dimension size, BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents) {
+    public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, BufferFormatCallback bufferFormatCallback, boolean lockBuffers, Dimension size, CallbackImagePainter imagePainter, JComponent videoSurfaceComponent, RenderCallback renderCallback) {
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
 
         this.videoSurfaceComponent = initVideoSurfaceComponent(videoSurfaceComponent, size);
+        this.imagePainter = renderCallback == null ? initImagePainter(imagePainter) : null;
 
         this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
-
         this.mediaPlayer.videoSurface().setVideoSurface(this.mediaPlayerFactory.videoSurfaces().newVideoSurface(bufferFormatCallback, initRenderCallback(renderCallback, size), lockBuffers));
         this.mediaPlayer.fullScreen().setFullScreenStrategy(fullScreenStrategy);
+        this.mediaPlayer.events().addMediaPlayerEventListener(this);
 
         setBackground(Color.black);
-        setLayout(new CallbackVideoSurfaceLayoutManager());
-        add(this.videoSurfaceComponent, "");
+        setLayout(new BorderLayout());
+        add(this.videoSurfaceComponent, BorderLayout.CENTER);
 
         initInputEvents(inputEvents);
 
         onAfterConstruct();
     }
 
-    public CallbackMediaPlayerComponent(MediaPlayerSpecs.CallbackMediaPlayerSpec spec) {
-        this(spec.factory, spec.videoSurfaceComponent, spec.size, spec.bufferFormatCallback, spec.renderCallback, spec.lockedBuffers, spec.fullScreenStrategy, spec.inputEvents);
+    public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, BufferFormatCallback bufferFormatCallback, boolean lockBuffers, Dimension size, CallbackImagePainter imagePainter) {
+        this(mediaPlayerFactory, fullScreenStrategy, inputEvents, bufferFormatCallback, lockBuffers, size, null, null, null);
     }
 
-    /**
-     * Construct a media player component.
-     */
+    public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, BufferFormatCallback bufferFormatCallback, boolean lockBuffers, JComponent videoSurfaceComponent, RenderCallback renderCallback) {
+        this(mediaPlayerFactory, fullScreenStrategy, inputEvents, bufferFormatCallback, lockBuffers, null, null, videoSurfaceComponent, renderCallback);
+    }
+
+    public CallbackMediaPlayerComponent(MediaPlayerSpecs.CallbackMediaPlayerSpec spec) {
+        this(spec.factory, spec.fullScreenStrategy, spec.inputEvents, spec.bufferFormatCallback, spec.lockedBuffers, spec.size, spec.imagePainter, spec.videoSurfaceComponent, spec.renderCallback);
+    }
+
     public CallbackMediaPlayerComponent(Dimension size) {
-        this(null, null, size, null, null, true, null, null);
+        this(null, null, null, null, true, size, null, null, null);
     }
 
     private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {
@@ -114,9 +140,18 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     private JComponent initVideoSurfaceComponent(JComponent videoSurfaceComponent, Dimension size) {
         if (videoSurfaceComponent == null) {
             videoSurfaceComponent = new DefaultVideoSurfaceComponent();
-            videoSurfaceComponent.setPreferredSize(new Dimension(size));
+            if (size != null) {
+                videoSurfaceComponent.setPreferredSize(new Dimension(size));
+            }
         }
         return videoSurfaceComponent;
+    }
+
+    private CallbackImagePainter initImagePainter(CallbackImagePainter imagePainter) {
+        if (imagePainter == null) {
+            imagePainter = new ScaledCallbackImagePainter();
+        }
+        return imagePainter;
     }
 
     private RenderCallback initRenderCallback(RenderCallback renderCallback, Dimension size) {
@@ -203,6 +238,9 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         return mediaPlayerFactory;
     }
 
+    /**
+     *
+     */
     private class DefaultVideoSurfaceComponent extends JPanel {
 
         private DefaultVideoSurfaceComponent() {
@@ -213,16 +251,23 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         @Override
         public void paint(Graphics g) {
             Graphics2D g2 = (Graphics2D)g;
-            if (image != null) {
-                g2.drawImage(image, null, 0, 0);
-            } else {
-                g2.setColor(getBackground());
-                g2.fillRect(0, 0, getWidth(), getHeight());
-            }
+
+            int width = getWidth();
+            int height = getHeight();
+
+            g2.setColor(getBackground());
+            g2.fillRect(0, 0,width, height);
+
+            imagePainter.prepare(g2);
+            imagePainter.paint(g2, width, height, image);
+
             onDrawOverlay(g2);
         }
     }
 
+    /**
+     *
+     */
     private class DefaultRenderCallbackAdapter extends RenderCallbackAdapter {
 
         private DefaultRenderCallbackAdapter() {

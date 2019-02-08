@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.component;
 
+import uk.co.caprica.vlcj.component.callback.CallbackImagePainter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
@@ -98,6 +99,7 @@ public final class MediaPlayerSpecs {
         MediaPlayerFactory factory;
         JComponent videoSurfaceComponent;
         Dimension size;
+        CallbackImagePainter imagePainter;
         BufferFormatCallback bufferFormatCallback;
         RenderCallback renderCallback;
         boolean lockedBuffers = true;
@@ -116,6 +118,11 @@ public final class MediaPlayerSpecs {
 
         public CallbackMediaPlayerSpec withSize(Dimension size) {
             this.size = new Dimension(size);
+            return this;
+        }
+
+        public CallbackMediaPlayerSpec withImagePainter(CallbackImagePainter imagePainter) {
+            this.imagePainter = imagePainter;
             return this;
         }
 
