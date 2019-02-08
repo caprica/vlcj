@@ -19,23 +19,39 @@
 
 package uk.co.caprica.vlcj.test.discoverer;
 
-import uk.co.caprica.vlcj.enums.MediaDiscovererCategory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.discoverer.MediaDiscovererDescription;
-import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.enums.MediaDiscovererCategory;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A simple test of the media discoverer.
+ *
+ * Is 3.0.4 bugged and return duplicate services?
+ *
+ * It does not seem to reflect any updates to the list, unfortunately, so adding/removing local files won't be
+ * reflected.
  */
 public class MediaDiscovererTest {
 
+    private static List<MediaDiscoverer> allDiscoverers = new ArrayList<MediaDiscoverer>();
+
+    private static List<MediaList> allLists = new ArrayList<MediaList>();
+
     public static void main(String[] args) throws Exception {
         MediaPlayerFactory factory = new MediaPlayerFactory();
+        System.out.println(factory.application().version());
+
+        dump(factory, MediaDiscovererCategory.DEVICES);
+        dump(factory, MediaDiscovererCategory.LAN);
+        dump(factory, MediaDiscovererCategory.PODCASTS);
+        dump(factory, MediaDiscovererCategory.LOCAL_DIRS);
 
         List<MediaDiscovererDescription> discoverers = factory.discoverers().discoverers(MediaDiscovererCategory.LOCAL_DIRS);
         System.out.println("discoverers=" + discoverers);
@@ -45,41 +61,46 @@ public class MediaDiscovererTest {
         }
 
         for (MediaDiscovererDescription description : discoverers) {
-            String name = description.name();
+            final String name = description.name();
             System.out.println("name=" + name);
             MediaDiscoverer discoverer = factory.discoverers().discoverer(name);
+            allDiscoverers.add(discoverer);
             System.out.println("discoverer=" + discoverer);
 
             MediaList list = discoverer.mediaList();
+            allLists.add(list);
             System.out.println("read only = " + list.items().isReadOnly());
 
             list.events().addMediaListEventListener(new MediaListEventAdapter() {
                 @Override
-                public void mediaListWillAddItem(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
-                    System.out.println("will add " + mediaInstance);
-                }
-
-                @Override
                 public void mediaListItemAdded(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
-                    System.out.println("added " + mediaInstance);
-                }
-
-                @Override
-                public void mediaListWillDeleteItem(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
-                    System.out.println("will delete " + mediaInstance);
+                    System.out.println(name + ": added " + mediaInstance);
                 }
 
                 @Override
                 public void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
-                    System.out.println("deleted " + mediaInstance);
+                    System.out.println(name + ": deleted " + mediaInstance);
                 }
             });
 
-            boolean started = discoverer.start();
-            System.out.println("started=" + started);
+            discoverer.start();
         }
 
         Thread.currentThread().join();
+    }
+
+    private static void dump(MediaPlayerFactory factory, MediaDiscovererCategory category) {
+        List<MediaDiscovererDescription> discoverers = factory.discoverers().discoverers(category);
+        System.out.println("discoverers=" + discoverers);
+
+        for (MediaDiscovererDescription description : discoverers) {
+            String name = description.name();
+            String longName = description.longName();
+            MediaDiscovererCategory cat = description.category();
+            System.out.printf("[%-12s] %-20s \"%s\"%n", cat, name, longName);
+        }
+
+        System.out.println();
     }
 
 }
