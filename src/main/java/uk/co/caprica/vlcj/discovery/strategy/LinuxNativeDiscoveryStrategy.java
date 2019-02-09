@@ -23,6 +23,9 @@ import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.discovery.provider.DirectoryProviderDiscoveryStrategy;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
+/**
+ * Default implementation of a native discovery strategy that searches directories on the Linux operating system.
+ */
 public class LinuxNativeDiscoveryStrategy extends DirectoryProviderDiscoveryStrategy {
 
     private static final String[] FILENAME_PATTERNS = new String[] {

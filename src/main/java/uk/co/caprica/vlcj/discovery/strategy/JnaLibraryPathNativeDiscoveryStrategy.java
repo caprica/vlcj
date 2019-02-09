@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.discovery.strategy;
 
+/**
+ * A native discovery strategy that
+ */
 public final class JnaLibraryPathNativeDiscoveryStrategy implements NativeDiscoveryStrategy {
 
     /**

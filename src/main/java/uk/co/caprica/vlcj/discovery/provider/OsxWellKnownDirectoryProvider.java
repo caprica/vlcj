@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.discovery.provider;
 
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
+/**
+ * Implementation of a directory provider that returns a list of well-known directory locations to search on OSX.
+ */
 public class OsxWellKnownDirectoryProvider extends WellKnownDirectoryProvider {
 
     private static final String[] DIRECTORIES = {

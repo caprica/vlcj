@@ -27,6 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Base implementation of a native discovery strategy that searches a list of directories for a list of files.
  */
 public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStrategy {
 
@@ -37,10 +38,23 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
      */
     protected static final String PLUGIN_ENV_NAME = "VLC_PLUGIN_PATH";
 
+    /**
+     * Filename patterns that must all be matched successfully.
+     */
     private final Pattern[] patternsToMatch;
 
+    /**
+     * Directory name templates that will be tried to locate the VLC plugin directory, relative to the successfully
+     * discovered native library directory.
+     */
     private final String[] pluginPathFormats;
 
+    /**
+     * Create a new native discovery strategy.
+     *
+     * @param filenamePatterns filename patterns to search for, as regular expressions
+     * @param pluginPathFormats directory name templates used to find the VLC plugin directory, printf style.
+     */
     public BaseNativeDiscoveryStrategy(String[] filenamePatterns, String[] pluginPathFormats) {
         this.patternsToMatch = new Pattern[filenamePatterns.length];
         for (int i = 0; i < filenamePatterns.length; i++) {
@@ -60,9 +74,9 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
     }
 
     /**
+     * Provide the list of directories to search.
      *
-     *
-     * @return
+     * @return list of directories to search
      */
     protected abstract List<String> discoveryDirectories();
 
@@ -116,10 +130,10 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
     }
 
     /**
+     * Set the VLC_PLUGIN_PATH environment variable.
      *
-     *
-     * @param pluginPath
-     * @return
+     * @param pluginPath value to set
+     * @return <code>true</code> if the environment variable was successfully set; <code>false</code> on error
      */
     protected abstract boolean setPluginPath(String pluginPath);
 

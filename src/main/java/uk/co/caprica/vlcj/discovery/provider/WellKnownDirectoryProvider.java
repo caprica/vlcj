@@ -19,6 +19,11 @@
 
 package uk.co.caprica.vlcj.discovery.provider;
 
+/**
+ * Base implementation for directory provider that searches well-known directories.
+ * <p>
+ * This base class is used simply to set the appropriate priority value.
+ */
 abstract public class WellKnownDirectoryProvider implements DiscoveryDirectoryProvider {
 
     @Override

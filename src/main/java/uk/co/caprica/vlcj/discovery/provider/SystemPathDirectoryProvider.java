@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.discovery.provider;
 
 import java.io.File;
 
+/**
+ * Implementation of a directory provider that searches the operating system native search path.
+ */
 public class SystemPathDirectoryProvider implements DiscoveryDirectoryProvider {
 
     @Override

@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.discovery.provider;
 
 /**
- *
+ * Priority values used by the standard {@link DiscoveryDirectoryProvider} implementations.
  */
 public interface DiscoveryProviderPriority {
 

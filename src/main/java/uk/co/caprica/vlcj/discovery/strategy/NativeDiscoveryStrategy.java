@@ -20,16 +20,14 @@
 package uk.co.caprica.vlcj.discovery.strategy;
 
 /**
- * Specification for a component that can locate the libvlc native libraries at
- * run-time.
+ * Specification for a component that can locate the LibVLC native libraries at run-time.
  */
 public interface NativeDiscoveryStrategy {
 
     /**
      * Is this strategy supported?
      * <p>
-     * Some strategies may, for example, only be applicable to one particular
-     * operating system or another.
+     * Some strategies may, for example, only be applicable to one particular operating system or another.
      *
      * @return <code>true</code> if this strategy is supported; <code>false</code> otherwise
      */
@@ -50,17 +48,17 @@ public interface NativeDiscoveryStrategy {
      * path.
      *
      * @param path directory containing the shared libraries
-     * @return <code>true</code> if the path should be added to the JNA native library search path; <code>false</code> if not
+     * @return <code>true</code> if the path should be added to the JNA native search path; <code>false</code> if not
      */
     boolean onFound(String path);
 
     /**
      * Invoked after discovery has completed and found the native shared libraries.
      * <p>
-     * This method will <em>not</em> be invoked only if there is already a VLC_PLUGIN_PATH environment variable set.
+     * This method will <em>not</em> be invoked if there is already a VLC_PLUGIN_PATH environment variable set.
      *
      * @param path directory containing the shared libraries
-     * @return
+     * @return <code>true</code> if the plugin path was set successfully; <code>false</code> on error
      */
     boolean onSetPluginPath(String path);
 

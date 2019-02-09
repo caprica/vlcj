@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.discovery.provider;
 
+/**
+ * Implementation of a directory provider that returns the current user home directory.
+ */
 public class UserDirDirectoryProvider implements DiscoveryDirectoryProvider {
 
     @Override

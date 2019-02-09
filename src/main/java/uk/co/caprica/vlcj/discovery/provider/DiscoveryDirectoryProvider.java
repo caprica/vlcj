@@ -19,12 +19,31 @@
 
 package uk.co.caprica.vlcj.discovery.provider;
 
+/**
+ * Specification for a component that provides a list of directories for the {@link DirectoryProviderDiscoveryStrategy}
+ * to use when searching for native libraries.
+ */
 public interface DiscoveryDirectoryProvider {
 
+    /**
+     * Priority of this provider.
+     *
+     * @return priority
+     */
     int priority();
 
+    /**
+     * Return the directories to search.
+     *
+     * @return directories
+     */
     String[] directories();
 
+    /**
+     * Check if this provider implementation is supported (e.g. it may be for a particular operating system only).
+     *
+     * @return <code>true</code> if supported; <code>false</code> if not
+     */
     boolean supported();
 
 }

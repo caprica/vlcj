@@ -19,14 +19,39 @@
 
 package uk.co.caprica.vlcj.discovery.provider;
 
+import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.discovery.strategy.BaseNativeDiscoveryStrategy;
 
 import java.util.*;
 
+/**
+ * Implementation of a native discovery strategy that searches a list of well-known directories.
+ * <p>
+ * The standard {@link ServiceLoader} mechanism is used to load {@link DiscoveryDirectoryProvider} instances that will
+ * provide the lists of directories to search.
+ * <p>
+ * By using service loader, a client application can easily add their own search directories simply by adding their own
+ * implementation of a discovery directory provider to the run-time classpath, and adding registering their provider
+ * class in <code>META-INF/services/uk.co.caprica.vlcj.discovery.provider.DiscoveryDirectoryProvider</code> - the client
+ * application need not concern itself directly with the default {@link NativeDiscovery} component.
+ * <p>
+ * Provider implementations have a priority. All of the standard provider implementations have a priority &lt; 0, see
+ * {@link DiscoveryProviderPriority}. A client application with its own provider implementations can return a priority
+ * value as appropriate to ensure their own provider is used before or after the other implementations.
+ */
 abstract public class DirectoryProviderDiscoveryStrategy extends BaseNativeDiscoveryStrategy {
 
+    /**
+     * Service loader for the directory provider implementations.
+     */
     private final ServiceLoader<DiscoveryDirectoryProvider> directoryProviders = ServiceLoader.load(DiscoveryDirectoryProvider.class);
 
+    /**
+     * Create a new native discovery strategy.
+     *
+     * @param filenamePatterns filename patterns to search for, as regular expressions
+     * @param pluginPathFormats directory name templates used to find the VLC plugin directory, printf style.
+     */
     public DirectoryProviderDiscoveryStrategy(String[] filenamePatterns, String[] pluginPathFormats) {
         super(filenamePatterns, pluginPathFormats);
     }
