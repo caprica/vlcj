@@ -323,6 +323,14 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
     }
 
+    /**
+     *
+     *
+     * When this method is invoked, the graphics context will already have a proper scaling applied according to the
+     * video size.
+     *
+     * @param g2
+     */
     protected void onDrawOverlay(Graphics2D g2) {
     }
 
