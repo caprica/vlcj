@@ -25,6 +25,8 @@ import java.util.Properties;
 
 /**
  * Application version/environment information.
+ * <p>
+ * May be useful for diagnostics.
  */
 public final class Info {
 
@@ -102,42 +104,92 @@ public final class Info {
         return vlcjVersion;
     }
 
+    /**
+     * Get the runtime operating system.
+     *
+     * @return operating system
+     */
     public String os() {
         return os;
     };
 
+    /**
+     * Get the Java version.
+     *
+     * @return version
+     */
     public String javaVersion() {
         return javaVersion;
     }
 
+    /**
+     * Get the Java home directory.
+     *
+     * @return home directory
+     */
     public String javaHome() {
         return javaHome;
     }
 
+    /**
+     * Get the JNA library path system property.
+     *
+     * @return JNA library path
+     */
     public String jnaLibraryPath() {
         return jnaLibraryPath;
     }
 
+    /**
+     * Get the Java library path system property.
+     *
+     * @return Java library path
+     */
     public String javaLibraryPath() {
         return javaLibraryPath;
     }
 
+    /**
+     * Get the runtime operating system search path.
+     *
+     * @return operating system path
+     */
     public String path() {
         return path;
     }
 
+    /**
+     * Get the VLC plugin path directory environment variable.
+     *
+     * @return plugin path directory
+     */
     public String pluginPath() {
         return pluginPath;
     }
 
+    /**
+     * Get the native load-library path (Linux).
+     *
+     * @return library path
+     */
     public String ldLibraryPath() {
         return ldLibraryPath;
     }
 
+    /**
+     * Get the native dynamic-load-library path (OSX).
+     *
+     * @return library path
+     */
     public String dyldLibraryPath() {
         return dyldLibraryPath;
     }
 
+    /**
+     * Get the native fallback dynamic-load-library path (OSX).
+     *
+     * @return library path
+     */
     public String dyldFallbackLibraryPath() {
         return dyldFallbackLibraryPath;
     }
