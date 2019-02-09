@@ -37,7 +37,7 @@ import java.awt.*;
 public class CallbackMediaListPlayerComponentBase extends CallbackMediaPlayerComponent implements MediaListPlayerEventListener, MediaListEventListener {
 
     public CallbackMediaListPlayerComponentBase(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, BufferFormatCallback bufferFormatCallback, boolean lockBuffers, Dimension size, CallbackImagePainter imagePainter, JComponent videoSurfaceComponent, RenderCallback renderCallback) {
-        super(mediaPlayerFactory, fullScreenStrategy, inputEvents, bufferFormatCallback, lockBuffers, size, imagePainter, videoSurfaceComponent, renderCallback);
+        super(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, size, imagePainter, renderCallback, bufferFormatCallback, videoSurfaceComponent);
     }
 
     // === MediaListPlayerEventListener =========================================

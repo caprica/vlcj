@@ -89,10 +89,10 @@ public class CallbackVideoSurface extends VideoSurface {
 
         /**
          *
-         * Set the desired video format properties - space for these structures is already allocated by LibVlc, we simply
-         * fill the existing memory.
+         * Set the desired video format properties - space for these structures is already allocated by LibVlc, we
+         * simply fill the existing memory.
          * <p>
-         * The {@link BufferFormat} class restricts the chroma to maximum four bytes, so we don't need check it here - we
+         * The {@link BufferFormat} class restricts the chroma to maximum four bytes, so we don't need check it here, we
          * do however need to check if it is less than four.
          *
          * @param chroma

@@ -20,8 +20,6 @@
 package uk.co.caprica.vlcj.test.component;
 
 import uk.co.caprica.vlcj.component.CallbackMediaPlayerComponent;
-import uk.co.caprica.vlcj.component.callback.ScaledCallbackImagePainter;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.callback.BufferFormat;
 import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.callback.format.RV32BufferFormat;
@@ -47,11 +45,13 @@ public class CallbackMediaPlayerComponentTest extends VlcjTest {
      *
      */
     private final int width = 1280;
+//    private final int width = 1920;
 
     /**
      *
      */
     private final int height = 720;
+//    private final int height = 1200;
 
     /**
      * Application entry point.
@@ -86,14 +86,9 @@ public class CallbackMediaPlayerComponentTest extends VlcjTest {
 
         final Font font = new Font("Sansserif", Font.BOLD, 36);
 
-        BufferFormatCallback bufferFormatCallback = new BufferFormatCallback() {
-            @Override
-            public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
-                return new RV32BufferFormat(width, height);
-            }
-        };
+        Dimension size = new Dimension(width, height);
 
-        mediaPlayerComponent = new CallbackMediaPlayerComponent(null, null, null, bufferFormatCallback, true, new Dimension(width, height), null, null, null) {
+        mediaPlayerComponent = new CallbackMediaPlayerComponent(null, null, null, true, size, null, null, null, null) {
             @Override
             protected void onDrawOverlay(Graphics2D g2) {
                 g2.setColor(Color.white);

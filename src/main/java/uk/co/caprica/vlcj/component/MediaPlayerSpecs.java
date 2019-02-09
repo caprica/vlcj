@@ -97,52 +97,17 @@ public final class MediaPlayerSpecs {
     public static final class CallbackMediaPlayerSpec {
 
         MediaPlayerFactory factory;
-        JComponent videoSurfaceComponent;
-        Dimension size;
-        CallbackImagePainter imagePainter;
-        BufferFormatCallback bufferFormatCallback;
-        RenderCallback renderCallback;
-        boolean lockedBuffers = true;
         FullScreenStrategy fullScreenStrategy;
         InputEvents inputEvents;
+        boolean lockedBuffers = true;
+        Dimension size;
+        CallbackImagePainter imagePainter;
+        RenderCallback renderCallback;
+        BufferFormatCallback bufferFormatCallback;
+        JComponent videoSurfaceComponent;
 
         public CallbackMediaPlayerSpec withFactory(MediaPlayerFactory factory) {
             this.factory = factory;
-            return this;
-        }
-
-        public CallbackMediaPlayerSpec withVideoSurfaceComponent(JComponent videoSurfaceComponent) {
-            this.videoSurfaceComponent = videoSurfaceComponent;
-            return this;
-        }
-
-        public CallbackMediaPlayerSpec withSize(Dimension size) {
-            this.size = new Dimension(size);
-            return this;
-        }
-
-        public CallbackMediaPlayerSpec withImagePainter(CallbackImagePainter imagePainter) {
-            this.imagePainter = imagePainter;
-            return this;
-        }
-
-        public CallbackMediaPlayerSpec withBufferFormatCallback(BufferFormatCallback bufferFormatCallback) {
-            this.bufferFormatCallback = bufferFormatCallback;
-            return this;
-        }
-
-        public CallbackMediaPlayerSpec withRenderCallback(RenderCallback renderCallback) {
-            this.renderCallback = renderCallback;
-            return this;
-        }
-
-        public CallbackMediaPlayerSpec withLockedBuffers(boolean lockedBuffers) {
-            this.lockedBuffers = lockedBuffers;
-            return this;
-        }
-
-        public CallbackMediaPlayerSpec withLockedBuffers() {
-            this.lockedBuffers = true;
             return this;
         }
 
@@ -158,6 +123,41 @@ public final class MediaPlayerSpecs {
 
         public CallbackMediaPlayerSpec withInputEvents(InputEvents inputEvents) {
             this.inputEvents = inputEvents;
+            return this;
+        }
+
+        public CallbackMediaPlayerSpec withLockedBuffers(boolean lockedBuffers) {
+            this.lockedBuffers = lockedBuffers;
+            return this;
+        }
+
+        public CallbackMediaPlayerSpec withLockedBuffers() {
+            this.lockedBuffers = true;
+            return this;
+        }
+
+        public CallbackMediaPlayerSpec withSize(Dimension size) {
+            this.size = new Dimension(size);
+            return this;
+        }
+
+        public CallbackMediaPlayerSpec withImagePainter(CallbackImagePainter imagePainter) {
+            this.imagePainter = imagePainter;
+            return this;
+        }
+
+        public CallbackMediaPlayerSpec withRenderCallback(RenderCallback renderCallback) {
+            this.renderCallback = renderCallback;
+            return this;
+        }
+
+        public CallbackMediaPlayerSpec withBufferFormatCallback(BufferFormatCallback bufferFormatCallback) {
+            this.bufferFormatCallback = bufferFormatCallback;
+            return this;
+        }
+
+        public CallbackMediaPlayerSpec withVideoSurfaceComponent(JComponent videoSurfaceComponent) {
+            this.videoSurfaceComponent = videoSurfaceComponent;
             return this;
         }
 

@@ -73,8 +73,8 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
     /**
      * Construct a media list player component.
      */
-    public CallbackMediaListPlayerComponent(Dimension size) {
-        this(null, null, null, null, true, size, null, null, null);
+    public CallbackMediaListPlayerComponent() {
+        this(null, null, null, null, true, null, null, null, null);
     }
 
     /**
