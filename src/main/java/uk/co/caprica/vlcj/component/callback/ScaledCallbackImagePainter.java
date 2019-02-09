@@ -23,6 +23,9 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+/**
+ * Implementation of a painter that scales to fit the container while preserving the original aspect ratio.
+ */
 public class ScaledCallbackImagePainter implements CallbackImagePainter {
 
     private int lastWidth;

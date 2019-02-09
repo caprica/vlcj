@@ -20,24 +20,44 @@
 package uk.co.caprica.vlcj.component.callback;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 /**
- * Implementation of a painter that centers and paints at a fixed size.
+ * Implementation of a painter that scales to fit the full size of the container.
+ * <p>
+ * Aspect ratio is <em>not</em> preserved, see {@link ScaledCallbackImagePainter} instead.
  */
-public class FixedCallbackImagePainter implements CallbackImagePainter {
+public class FilledCallbackImagePainter implements CallbackImagePainter {
+
+    private int lastWidth;
+    private int lastHeight;
+
+    private AffineTransform transform;
 
     @Override
     public void prepare(Graphics2D g2) {
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
     }
 
     @Override
     public void paint(Graphics2D g2, int width, int height, BufferedImage image) {
         if (image != null) {
-            g2.translate(
-                (width - image.getWidth()) / 2,
-                (height - image.getHeight()) / 2
-            );
+            if (width != lastWidth || height != lastHeight) {
+                lastWidth = width;
+                lastHeight = height;
+
+                float sx = (float) width / image.getWidth();
+                float sy = (float) height / image.getHeight();
+
+                if (sx != 1.0 || sy != 1.0) {
+                    transform = AffineTransform.getScaleInstance(sx, sy);
+                }
+            }
+
+            if (transform != null) {
+                g2.setTransform(transform);
+            }
             g2.drawImage(image, null, 0, 0);
         }
     }
