@@ -228,3 +228,11 @@ If you want to consider a commercial license for vlcj that allows you to use and
 with the GPL then send an email to the address below:
 
 > mark [dot] lee [at] capricasoftware [dot] co [dot] uk
+
+Contributors
+------------
+
+Contributions are welcome and will always be licensed according to the Open Source license terms of the project (currently GPL).
+
+However, for a contribution to be accepted you must agree to transfer any copyright so that your contribution does not
+impede our ability to provide commercial licenses for vlcj.
