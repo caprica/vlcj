@@ -39,13 +39,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Encapsulation of the vlc native log.
  * <p>
- * The native library specifies that implementations of native log handlers (like
- * that encapsulated within this class) must be thread-safe.
+ * The native library specifies that implementations of native log handlers (like that encapsulated within this class)
+ * must be thread-safe.
  * <p>
- * The default log level is {@link LogLevel#NOTICE}, this can be changed
- * by invoking {@link #setLevel(LogLevel)}.
- * <p>
- * <strong>The native log requires vlc 2.1.0 or later.</strong>
+ * The default log level is {@link LogLevel#NOTICE}, this can be changed by invoking {@link #setLevel(LogLevel)}.
  */
 public final class NativeLog {
 
@@ -144,7 +141,6 @@ public final class NativeLog {
      */
     public final void release() {
         eventListenerList.clear();
-
         libvlc.libvlc_log_unset(instance);
     }
 
