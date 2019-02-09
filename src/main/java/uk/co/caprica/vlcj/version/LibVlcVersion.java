@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.version;
 import uk.co.caprica.vlcj.binding.LibVlc;
 
 /**
- * Holder for run-time libvlc actualVersion information.
+ * Holder for runtime LibVLC version information.
  */
 public final class LibVlcVersion {
 
@@ -32,17 +32,19 @@ public final class LibVlcVersion {
     public static final Version requiredVersion = new Version("3.0.0");
 
     /**
-     * Run-time actualVersion of vlc/libvlc.
+     * Runtime version of VLC/LibVLC.
      */
     private final Version actualVersion;
 
     /**
-     *
+     * Git change-set id of the VLC build.
      */
     private final String changeset;
 
     /**
-     * Prevent direct instantiation by others.
+     * Create a version component.
+     *
+     * @param libvlc native library interface
      */
     public LibVlcVersion(LibVlc libvlc) {
         this.actualVersion = new Version(libvlc.libvlc_get_version());
@@ -50,17 +52,18 @@ public final class LibVlcVersion {
     }
 
     /**
+     * Get the required LibVLC version.
      *
-     * @return
+     * @return required version
      */
     public Version getRequiredVersion() {
         return requiredVersion;
     }
 
     /**
-     * Get the run-time actualVersion.
+     * Get the runtime actualVersion.
      *
-     * @return vlc/libvlc actualVersion
+     * @return VLC/LibVLC version.
      */
     public Version getVersion() {
         return actualVersion;

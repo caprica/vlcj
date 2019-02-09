@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 public final class Version implements Comparable<Version> {
 
     /**
-     *
+     * Regular expression for matching versions strings.
      */
     private static final Pattern VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)[\\-_\\s]?(.*)");
 
@@ -70,18 +70,16 @@ public final class Version implements Comparable<Version> {
     public Version(final String version) {
         this.version = version;
         Matcher matcher = VERSION_PATTERN.matcher(version);
-        if(matcher.matches()) {
+        if (matcher.matches()) {
             this.major = Integer.parseInt(matcher.group(1));
             this.minor = Integer.parseInt(matcher.group(2));
             this.revision = Integer.parseInt(matcher.group(3));
-            if(matcher.groupCount() > 3) {
+            if (matcher.groupCount() > 3) {
                 this.extra = matcher.group(4);
-            }
-            else {
+            } else {
                 this.extra = null;
             }
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Can't parse version from '" + version + "'");
         }
     }
@@ -143,9 +141,9 @@ public final class Version implements Comparable<Version> {
 
     @Override
     public int compareTo(Version o) {
-        if(major == o.major) {
-            if(minor == o.minor) {
-                if(revision == o.revision) {
+        if (major == o.major) {
+            if (minor == o.minor) {
+                if (revision == o.revision) {
                     return 0;
                 }
                 else {
@@ -167,4 +165,5 @@ public final class Version implements Comparable<Version> {
         sb.append(version);
         return sb.toString();
     }
+
 }
