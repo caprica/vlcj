@@ -26,6 +26,8 @@ import java.awt.image.BufferedImage;
 /**
  * Implementation of a painter that scales to fit the full size of the container.
  * <p>
+ * The default implementation uses bilinear interpolation when painting the scaled image.
+ * <p>
  * Aspect ratio is <em>not</em> preserved, see {@link ScaledCallbackImagePainter} instead.
  */
 public class FilledCallbackImagePainter implements CallbackImagePainter {
@@ -52,6 +54,8 @@ public class FilledCallbackImagePainter implements CallbackImagePainter {
 
                 if (sx != 1.0 || sy != 1.0) {
                     transform = AffineTransform.getScaleInstance(sx, sy);
+                } else {
+                    transform = null;
                 }
             }
 

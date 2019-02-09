@@ -19,13 +19,33 @@
 
 package uk.co.caprica.vlcj.component.callback;
 
+import uk.co.caprica.vlcj.component.CallbackMediaPlayerComponent;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Specification for a component that paints a video frame in the {@link CallbackMediaPlayerComponent}.
+ */
 public interface CallbackImagePainter {
 
+    /**
+     * Prepare the drawing context.
+     * <p>
+     * This is intended to set context attributes like {@link RenderingHints} before painting the image itself.
+     *
+     * @param g2 graphics context
+     */
     void prepare(Graphics2D g2);
 
+    /**
+     * Paint the image.
+     *
+     * @param g2 graphics context
+     * @param width width of the container component
+     * @param height heigh tof the container component
+     * @param image image to paint
+     */
     void paint(Graphics2D g2, int width, int height, BufferedImage image);
 
 }

@@ -25,6 +25,10 @@ import java.awt.image.BufferedImage;
 
 /**
  * Implementation of a painter that scales to fit the container while preserving the original aspect ratio.
+ * <p>
+ * The default implementation uses bilinear interpolation when painting the scaled image.
+ * <p>
+ * The aspect ratio of the original image is preserved when scaling is applied.
  */
 public class ScaledCallbackImagePainter implements CallbackImagePainter {
 
