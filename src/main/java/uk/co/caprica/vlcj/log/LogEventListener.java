@@ -39,4 +39,5 @@ public interface LogEventListener {
      * @param message log message
      */
     void log(LogLevel level, String module, String file, Integer line, String name, String header, Integer id, String message);
+
 }
