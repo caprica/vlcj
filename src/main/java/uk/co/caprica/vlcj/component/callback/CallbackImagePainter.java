@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.component.callback;
 
 import uk.co.caprica.vlcj.component.CallbackMediaPlayerComponent;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -35,17 +36,17 @@ public interface CallbackImagePainter {
      * This is intended to set context attributes like {@link RenderingHints} before painting the image itself.
      *
      * @param g2 graphics context
+     * @param component component to paint
      */
-    void prepare(Graphics2D g2);
+    void prepare(Graphics2D g2, JComponent component);
 
     /**
      * Paint the image.
      *
      * @param g2 graphics context
-     * @param width width of the container component
-     * @param height heigh tof the container component
+     * @param component component to paint
      * @param image image to paint
      */
-    void paint(Graphics2D g2, int width, int height, BufferedImage image);
+    void paint(Graphics2D g2, JComponent component, BufferedImage image);
 
 }

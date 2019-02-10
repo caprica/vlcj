@@ -20,9 +20,7 @@
 package uk.co.caprica.vlcj.test.component;
 
 import uk.co.caprica.vlcj.component.CallbackMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.embedded.callback.BufferFormat;
-import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.embedded.callback.format.RV32BufferFormat;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import javax.swing.*;
@@ -42,25 +40,11 @@ public class CallbackMediaPlayerComponentTest extends VlcjTest {
     private final CallbackMediaPlayerComponent mediaPlayerComponent;
 
     /**
-     *
-     */
-    private final int width = 1280;
-//    private final int width = 1920;
-
-    /**
-     *
-     */
-    private final int height = 720;
-//    private final int height = 1200;
-
-    /**
      * Application entry point.
      *
      * @param args
      */
     public static void main(String[] args) {
-        args = new String[] {"/home/mark/1.mp4"};
-
         if (args.length != 1) {
             System.out.println("Specify an mrl");
             System.exit(1);
@@ -70,32 +54,40 @@ public class CallbackMediaPlayerComponentTest extends VlcjTest {
 
         setLookAndFeel();
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new CallbackMediaPlayerComponentTest().start(mrl);
-            }
-        });
+        new CallbackMediaPlayerComponentTest().start(mrl);
     }
 
     /**
      * Create a new test.
      */
     private CallbackMediaPlayerComponentTest() {
-        JFrame frame = new JFrame("vlcj Callback Media Player Component Test");
+        final JFrame frame = new JFrame("vlcj Callback Media Player Component Test");
 
         final Font font = new Font("Sansserif", Font.BOLD, 36);
 
-        Dimension size = new Dimension(width, height);
+        mediaPlayerComponent = new CallbackMediaPlayerComponent(null, null, null, true, null, null, null, null) {
 
-        mediaPlayerComponent = new CallbackMediaPlayerComponent(null, null, null, true, size, null, null, null, null) {
             @Override
-            protected void onDrawOverlay(Graphics2D g2) {
+            public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
+                final Dimension size = mediaPlayer.video().getVideoDimension();
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        frame.getContentPane().setPreferredSize(size);
+                        frame.getContentPane().invalidate();
+                        frame.pack();
+                    }
+                });
+            }
+
+            @Override
+            protected void onPaintOverlay(Graphics2D g2) {
                 g2.setColor(Color.white);
                 g2.setFont(font);
                 g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
                 g2.drawString("lightweight overlay", 100, 200);
             }
+
         };
 
         mediaPlayerComponent.getMediaPlayer().overlay().enableOverlay(true);

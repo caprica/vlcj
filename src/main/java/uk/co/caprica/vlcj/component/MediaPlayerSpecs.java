@@ -100,7 +100,6 @@ public final class MediaPlayerSpecs {
         FullScreenStrategy fullScreenStrategy;
         InputEvents inputEvents;
         boolean lockedBuffers = true;
-        Dimension size;
         CallbackImagePainter imagePainter;
         RenderCallback renderCallback;
         BufferFormatCallback bufferFormatCallback;
@@ -133,11 +132,6 @@ public final class MediaPlayerSpecs {
 
         public CallbackMediaPlayerSpec withLockedBuffers() {
             this.lockedBuffers = true;
-            return this;
-        }
-
-        public CallbackMediaPlayerSpec withSize(Dimension size) {
-            this.size = new Dimension(size);
             return this;
         }
 

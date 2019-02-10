@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.component.callback;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -28,16 +29,23 @@ import java.awt.image.BufferedImage;
 public class FixedCallbackImagePainter implements CallbackImagePainter {
 
     @Override
-    public void prepare(Graphics2D g2) {
+    public void prepare(Graphics2D g2, JComponent component) {
     }
 
     @Override
-    public void paint(Graphics2D g2, int width, int height, BufferedImage image) {
+    public void paint(Graphics2D g2, JComponent component, BufferedImage image) {
         if (image != null) {
+            int width = component.getWidth();
+            int height = component.getHeight();
+
+            g2.setColor(component.getBackground());
+            g2.fillRect(0, 0,width, height);
+
             g2.translate(
                 (width - image.getWidth()) / 2,
                 (height - image.getHeight()) / 2
             );
+
             g2.drawImage(image, null, 0, 0);
         }
     }

@@ -49,7 +49,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     static final String[] DEFAULT_FACTORY_ARGUMENTS = MediaPlayerComponentDefaults.EMBEDDED_MEDIA_PLAYER_ARGS;
 
     /**
-     *
+     * Flag if this component created its own {@link MediaPlayerFactory}.
      */
     private boolean ownFactory;
 
@@ -59,17 +59,19 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     protected final MediaPlayerFactory mediaPlayerFactory;
 
     /**
-     *
+     * Default render callback implementation, will be <code>null</code> if the client application provides its own
+     * render callback.
      */
-    private final BufferedImage image;
+    private final DefaultRenderCallback defaultRenderCallback;
 
     /**
-     *
+     * Painter used to render the video, will be <code>null</code>. if the client application provides its own render
+     * callback.
      */
     private final CallbackImagePainter imagePainter;
 
     /**
-     *
+     * Component used as the video surface.
      */
     private final JComponent videoSurfaceComponent;
 
@@ -79,43 +81,44 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     private final EmbeddedMediaPlayer mediaPlayer;
 
     /**
-     *
+     * Image used to render the video.
+     */
+    private BufferedImage image;
+
+    /**
+     * Create a media player component that renders video frames received via native callbacks.
      * <p>
      * This component will provide a reasonable default implementation, but a client application is free to override
      * these defaults with their own implementation.
      * <p>
-     * To rely on the defaults and have this component render the video, the <code>size</code> parameter <em>may</em> be
-     * be specified. This size governs the size of the video buffer that will be used. If a size is not specified, then
-     * the size of the largest bounds of all known graphics devices will be used.
+     * To rely on the defaults and have this component render the video, do not supply a <code>renderCallback</code>.
      * <p>
-     * If a client application wishes to perform its own rendering, then it may omit the size parameter and instead
-     * provide a <code>renderCallback</code>. In this case, the <code>videoSurfaceComponent</code> parameter should also
-     * be provided if the client application wants the video surface they are rendering in to be incorporated into this
-     * component's layout.
+     * If a client application wishes to perform its own rendering, provide a <code>renderCallback</code>, and also a
+     * <code>videoSurfaceComponent</code> if the client application wants the video surface they are rendering in to be
+     * incorporated into this component's layout.
+     *
      * @param mediaPlayerFactory
      * @param fullScreenStrategy
      * @param inputEvents
      * @param lockBuffers
-     * @param size
      * @param renderCallback
      * @param bufferFormatCallback
      * @param videoSurfaceComponent
      */
-    public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, Dimension size, CallbackImagePainter imagePainter, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
+    public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, CallbackImagePainter imagePainter, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
 
-        validateArguments(size, imagePainter, renderCallback, bufferFormatCallback, videoSurfaceComponent);
+        validateArguments(imagePainter, renderCallback, bufferFormatCallback, videoSurfaceComponent);
 
         if (renderCallback == null) {
-            Dimension bufferSize       = initSize(size);
-            this.image                 = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(bufferSize.width, bufferSize.height);
+            this.defaultRenderCallback = new DefaultRenderCallback();
             this.imagePainter          = imagePainter == null ? new ScaledCallbackImagePainter() : imagePainter;
-            this.videoSurfaceComponent = new DefaultVideoSurfaceComponent(bufferSize);
-            bufferFormatCallback       = new DefaultBufferFormatCallback(bufferSize);
-            renderCallback             = new DefaultRenderCallback();
+            this.videoSurfaceComponent = new DefaultVideoSurfaceComponent();
+            bufferFormatCallback       = new DefaultBufferFormatCallback();
+            renderCallback             = this.defaultRenderCallback;
         } else {
-            this.image                 = null;
+            this.defaultRenderCallback = null;
             this.imagePainter          = null;
             this.videoSurfaceComponent = videoSurfaceComponent;
         }
@@ -135,28 +138,27 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         onAfterConstruct();
     }
 
-    public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, Dimension size, CallbackImagePainter imagePainter) {
-        this(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, size, null, null, null, null);
+    public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, CallbackImagePainter imagePainter) {
+        this(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, null, null, null, null);
     }
 
     public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
-        this(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, null, null, renderCallback, bufferFormatCallback, videoSurfaceComponent);
+        this(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, null, renderCallback, bufferFormatCallback, videoSurfaceComponent);
     }
 
     public CallbackMediaPlayerComponent(MediaPlayerSpecs.CallbackMediaPlayerSpec spec) {
-        this(spec.factory, spec.fullScreenStrategy, spec.inputEvents, spec.lockedBuffers, spec.size, spec.imagePainter, spec.renderCallback, spec.bufferFormatCallback, spec.videoSurfaceComponent);
+        this(spec.factory, spec.fullScreenStrategy, spec.inputEvents, spec.lockedBuffers, spec.imagePainter, spec.renderCallback, spec.bufferFormatCallback, spec.videoSurfaceComponent);
     }
 
     public CallbackMediaPlayerComponent() {
-        this(null, null, null, true, null, null, null, null, null);
+        this(null, null, null, true, null, null, null, null);
     }
 
-    private void validateArguments(Dimension size, CallbackImagePainter imagePainter, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
+    private void validateArguments(CallbackImagePainter imagePainter, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
         if (renderCallback == null) {
             if (bufferFormatCallback  != null) throw new IllegalArgumentException("Do not specify bufferFormatCallback without a renderCallback");
             if (videoSurfaceComponent != null) throw new IllegalArgumentException("Do not specify videoSurfaceComponent without a renderCallback");
         } else {
-            if (size                  != null) throw new IllegalArgumentException("Do not specify size with a renderCallback");
             if (imagePainter          != null) throw new IllegalArgumentException("Do not specify imagePainter with a renderCallback");
             if (bufferFormatCallback  == null) throw new IllegalArgumentException("bufferFormatCallback is required with a renderCallback");
             if (videoSurfaceComponent == null) throw new IllegalArgumentException("videoSurfaceComponent is required with a renderCallback");
@@ -168,21 +170,6 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
             mediaPlayerFactory = new MediaPlayerFactory(DEFAULT_FACTORY_ARGUMENTS);
         }
         return mediaPlayerFactory;
-    }
-
-    private Dimension initSize(Dimension size) {
-        if (size == null) {
-            size = new Dimension();
-            for (GraphicsDevice device : GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
-                Rectangle bounds = device.getDefaultConfiguration().getBounds();
-                size.width = Math.max(size.width, bounds.width);
-                size.height = Math.max(size.height, bounds.height);
-            }
-        } else {
-            // Defensive copy
-            size = new Dimension(size);
-        }
-        return size;
     }
 
     private void initInputEvents(InputEvents inputEvents) {
@@ -262,58 +249,70 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     }
 
     /**
-     *
+     * Default implementation of a video surface component that uses a {@link CallbackImagePainter} to render the video
+     * image.
      */
     private class DefaultVideoSurfaceComponent extends JPanel {
 
-        private DefaultVideoSurfaceComponent(Dimension size) {
+        private DefaultVideoSurfaceComponent() {
             setBackground(Color.black);
             setIgnoreRepaint(true); // FIXME dunno?
-            setPreferredSize(size);
+            // Set a reasonable default size for the video surface component in case the client application does
+            // something like using pack() rather than setting a specific size
+            setPreferredSize(new Dimension(640, 360));
         }
 
         @Override
         public void paint(Graphics g) {
             Graphics2D g2 = (Graphics2D)g;
 
-            int width = getWidth();
-            int height = getHeight();
+            imagePainter.prepare(g2, this);
+            imagePainter.paint(g2, this, image);
 
-            g2.setColor(getBackground());
-            g2.fillRect(0, 0,width, height);
-
-            imagePainter.prepare(g2);
-            imagePainter.paint(g2, width, height, image);
-
-            onDrawOverlay(g2);
+            onPaintOverlay(g2);
         }
     }
 
     /**
-     *
+     * Default implementation of a buffer format callback that returns a buffer format suitable for rendering into a
+     * {@link BufferedImage}.
      */
     private class DefaultBufferFormatCallback implements BufferFormatCallback {
 
-        private final BufferFormat bufferFormat;
-
-        private DefaultBufferFormatCallback(Dimension size) {
-            this.bufferFormat = new RV32BufferFormat(size.width, size.height);
-        }
-
         @Override
         public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
-            return bufferFormat;
+            newVideoBuffer(sourceWidth, sourceHeight);
+            return new RV32BufferFormat(sourceWidth, sourceHeight);
         }
 
     }
 
     /**
+     * Used when the default buffer format callback is invoked to setup a new video buffer.
+     * <p>
+     * Here we create a new image to match the video size, and set the data buffer within that image as the data buffer
+     * in the {@link DefaultRenderCallback}.
+     * <p>
+     * We also set a new preferred size on the video surface component in case the client application invalidates their
+     * layout in anticipation of re-sizing their own window to accommodate the new video size.
      *
+     * @param width width of the video
+     * @param height height of the video
+     */
+    private void newVideoBuffer(int width, int height) {
+        image = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(width, height);
+        defaultRenderCallback.setImageBuffer(image);
+        videoSurfaceComponent.setPreferredSize(new Dimension(width, height));
+    }
+
+    /**
+     * Default implementation of a render callback that copies video frame data directly to the data buffer of an image
+     * raster.
      */
     private class DefaultRenderCallback extends RenderCallbackAdapter {
 
-        private DefaultRenderCallback() {
-            super (((DataBufferInt) image.getRaster().getDataBuffer()).getData());
+        private void setImageBuffer(BufferedImage image) {
+            setBuffer(((DataBufferInt) image.getRaster().getDataBuffer()).getData());
         }
 
         @Override
@@ -324,14 +323,15 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     }
 
     /**
-     *
-     *
-     * When this method is invoked, the graphics context will already have a proper scaling applied according to the
+     * Template methods to make it easy for a client application sub-class to render a lightweight overlay on top of the
+     * video.
+     * <p>
+     * When this method is invoked the graphics context will already have a proper scaling applied according to the
      * video size.
      *
-     * @param g2
+     * @param g2 graphics drawing context
      */
-    protected void onDrawOverlay(Graphics2D g2) {
+    protected void onPaintOverlay(Graphics2D g2) {
     }
 
 }

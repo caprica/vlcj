@@ -43,7 +43,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     /**
      * Video data buffer.
      */
-    private final int[] rgbBuffer;
+    private int[] rgbBuffer;
 
     /**
      * Create a new render call-back.
@@ -53,6 +53,14 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
      * @param rgbBuffer video data buffer
      */
     public RenderCallbackAdapter(int[] rgbBuffer) {
+        this.rgbBuffer = rgbBuffer;
+    }
+
+    public RenderCallbackAdapter() {
+    }
+
+    public void setBuffer(int[] rgbBuffer) {
+        System.out.println("SET NEW BUFFER, SIZE IS " + rgbBuffer.length);
         this.rgbBuffer = rgbBuffer;
     }
 
