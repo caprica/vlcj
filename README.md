@@ -159,7 +159,7 @@ supposed to go via the Swing Event Dispatch Thread (EDT). You can achieve this i
 ```
 mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
     @Override
-    public void finished(final MediaPlayer mediaPlayer) {
+    public void finished(MediaPlayer mediaPlayer) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
