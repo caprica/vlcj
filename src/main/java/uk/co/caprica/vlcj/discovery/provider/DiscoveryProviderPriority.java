@@ -24,12 +24,14 @@ package uk.co.caprica.vlcj.discovery.provider;
  */
 public interface DiscoveryProviderPriority {
 
-    int USER_DIR = -1;
+    int JNA_LIBRARY_PATH = -1;
 
-    int INSTALL_DIR = -2;
+    int USER_DIR = -2;
 
-    int WELL_KNOWN_DIRECTORY = -2;
+    int INSTALL_DIR = -3;
 
-    int SYSTEM_PATH = -3;
+    int WELL_KNOWN_DIRECTORY = -3;
+
+    int SYSTEM_PATH = -4;
 
 }

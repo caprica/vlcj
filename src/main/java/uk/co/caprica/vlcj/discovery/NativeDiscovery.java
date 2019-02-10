@@ -5,7 +5,6 @@ import com.sun.jna.NativeLibrary;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
-import uk.co.caprica.vlcj.discovery.strategy.JnaLibraryPathNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.discovery.strategy.LinuxNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.discovery.strategy.NativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.discovery.strategy.OsxNativeDiscoveryStrategy;
@@ -60,7 +59,6 @@ public class NativeDiscovery {
     private boolean alreadyFound;
 
     private static final NativeDiscoveryStrategy[] DEFAULT_STRATEGIES = new NativeDiscoveryStrategy[] {
-        new JnaLibraryPathNativeDiscoveryStrategy(),
         new LinuxNativeDiscoveryStrategy(),
         new OsxNativeDiscoveryStrategy(),
         new WindowsNativeDiscoveryStrategy()
