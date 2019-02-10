@@ -316,7 +316,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         }
 
         @Override
-        protected void onDisplay(MediaPlayer mediaPlayer, int[] rgbBuffer) {
+        protected void onDisplay(MediaPlayer mediaPlayer, int[] buffer) {
             videoSurfaceComponent.repaint();
         }
 

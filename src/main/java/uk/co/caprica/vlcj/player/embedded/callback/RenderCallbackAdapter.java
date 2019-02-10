@@ -24,18 +24,15 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import java.nio.ByteBuffer;
 
 /**
- * A render call-back adapter implementation that fills an array of RGB integer data for an entire
- * video frame.
+ * A render callback adapter implementation that fills an array of integer data for an entire video frame.
  * <p>
- * The media player must be sending pixels in the RV32 format.
+ * If you simply want access to the native memory buffer you should consider implementing {@link RenderCallback}
+ * directly rather than using this class.
  * <p>
- * If you simply want access to the native memory buffer you should consider implementing
- * {@link RenderCallback} directly rather than using this class.
+ * This is probably not the most efficient implementation possible of a render callback, ideally the native video data
+ * would be written directly to some other construct (like a texture).
  * <p>
- * This is probably the most <em>inefficient</em> implementation possible of a render callback,
- * ordinarily the video data should be written directly to some other construct (like a texture).
- * <p>
- * Having said that, the supplied rgbBuffer could be a buffer direct from an image raster, in which case it should be
+ * Having said that, the supplied buffer could be a buffer direct from an image raster, in which case it should be
  * quite quick.
  */
 public abstract class RenderCallbackAdapter implements RenderCallback {
@@ -43,39 +40,50 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     /**
      * Video data buffer.
      */
-    private int[] rgbBuffer;
+    private int[] buffer;
 
     /**
-     * Create a new render call-back.
+     * Create a new render callback.
      * <p>
      * The caller must ensure the supplied data buffer is large enough to hold the video frame data.
      *
-     * @param rgbBuffer video data buffer
+     * @param buffer video data buffer
      */
-    public RenderCallbackAdapter(int[] rgbBuffer) {
-        this.rgbBuffer = rgbBuffer;
+    public RenderCallbackAdapter(int[] buffer) {
+        this.buffer = buffer;
     }
 
+    /**
+     * Create a new render callback.
+     * <p>
+     * The video frame buffer <em>must</em> subsequently by set via {@link #setBuffer(int[])}.
+     */
     public RenderCallbackAdapter() {
     }
 
-    public void setBuffer(int[] rgbBuffer) {
-        System.out.println("SET NEW BUFFER, SIZE IS " + rgbBuffer.length);
-        this.rgbBuffer = rgbBuffer;
+    /**
+     * Set the buffer to use for the video frame data.
+     * <p>
+     * The caller must ensure the supplied data buffer is large enough to hold the video frame data.
+     *
+     * @param buffer buffer
+     */
+    public final void setBuffer(int[] buffer) {
+        this.buffer = buffer;
     }
 
     @Override
     public final void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
-        nativeBuffers[0].asIntBuffer().get(rgbBuffer, 0, bufferFormat.getHeight() * bufferFormat.getWidth());
-        onDisplay(mediaPlayer, rgbBuffer);
+        nativeBuffers[0].asIntBuffer().get(buffer, 0, bufferFormat.getHeight() * bufferFormat.getWidth());
+        onDisplay(mediaPlayer, buffer);
     }
 
     /**
      * Template method invoked when a new frame of video data is ready.
      *
      * @param mediaPlayer media player
-     * @param rgbBuffer video data buffer
+     * @param buffer video data buffer
      */
-    protected abstract void onDisplay(MediaPlayer mediaPlayer, int[] rgbBuffer);
+    protected abstract void onDisplay(MediaPlayer mediaPlayer, int[] buffer);
 
 }
