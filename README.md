@@ -117,8 +117,8 @@ mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 ```
 
 In this example, the `finished` method is being invoked on a native callback thread owned by LibVlc. The implementation
-of this method is calling back into LibVlc when it invokes `playMedia`. This is very likely to cause a terminal JVM
-crash and kill your application.
+of this method is calling back into LibVlc when it invokes `playMedia`. This is very likely to cause a JVM crash and
+kill your application.
 
 In cases such as this, you should make use of an asynchronous task-executor queue conveniently provided by the 
 `MediaPlayer` object passed to the listener method:
