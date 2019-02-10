@@ -152,6 +152,24 @@ If you are attempting to use multiple media players in your application, or usin
 you may need to take some extra care so that you do not have multiple threads calling into LibVlc concurrently. You may
 encounter subtle bugs and races that are very difficult to diagnose.
 
+In addition, you must take care not to update Swing UI components from the native thread - all Swing UI updates are
+supposed to go via the Swing Event Dispatch Thread (EDT). You can achieve this in the usual way by using
+`SwingUtilities#invokeLater` in your event handler:
+
+```
+mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+    @Override
+    public void finished(final MediaPlayer mediaPlayer) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                // ...change UI state here...
+            }
+        });
+    }
+});
+```
+
 Privacy Considerations
 ----------------------
 
