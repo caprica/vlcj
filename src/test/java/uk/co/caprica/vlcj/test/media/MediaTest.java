@@ -25,12 +25,12 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.model.MediaSlave;
 import uk.co.caprica.vlcj.model.TrackInfo;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.media.events.MediaEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class MediaTest extends VlcjTest {
 
@@ -58,6 +58,8 @@ public class MediaTest extends VlcjTest {
         for (MediaSlave slave : slaves) {
             System.out.println(slave);
         }
+
+        final CountDownLatch parseLatch = new CountDownLatch(1);
 
         media.events().addMediaEventListener(new MediaEventAdapter() {
             @Override
@@ -92,6 +94,8 @@ public class MediaTest extends VlcjTest {
                 for (TrackInfo trackInfo : media.info().tracks()) {
                     System.out.println("Track: " + trackInfo);
                 }
+
+                parseLatch.countDown();
             }
 
             @Override
@@ -115,27 +119,9 @@ public class MediaTest extends VlcjTest {
         result = media.parsing().parse();
         System.out.println("parse result is " + result);
 
-        // Just to let the initial parsing finish, it's not necessary for normal use play will kick off a parse if the
-        // media is not yet parsed (this test is being a bit lazy, we really should use events and synchronise when
-        // parse completes
-        Thread.sleep(3000);
-
-        mediaPlayer.media().set(media);
-
-        System.out.println("AFTER SET...");
-
-        mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-            @Override
-            public void mediaPlayerReady(MediaPlayer mediaPlayer) {
-                System.out.println(mediaPlayer.audio().getAudioDescriptions());
-                // This is a track ID, it is not an index or number, the ID comes from the return audio descriptions
-                mediaPlayer.audio().setAudioTrack(3);
-            }
-        });
-
-        mediaPlayer.controls().play();
-
-        Thread.currentThread().join();
+        System.out.println("Waiting for parse...");
+        parseLatch.await();
+        System.out.println("...parse finished");
     }
 
 }
