@@ -48,19 +48,19 @@ public class DvbSubItemTest extends VlcjTest {
         mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void finished(MediaPlayer mediaPlayer) {
-                int subItemCount = mediaPlayer.media().get().subitems().get().items().count();
+                int subItemCount = mediaPlayer.media().subitems().get().items().count();
                 System.out.println("subItemCount=" + subItemCount);
 
                 System.out.println("Getting sub-items...");
 
-                List<String> subItems = mediaPlayer.media().get().subitems().get().items().mrls();
+                List<String> subItems = mediaPlayer.media().subitems().get().items().mrls();
                 for(String subItem : subItems) {
                     System.out.println(subItem);
                 }
 
                 System.out.println("Getting sub-item meta data...");
 
-                MediaList subitems = mediaPlayer.media().get().subitems().get();
+                MediaList subitems = mediaPlayer.media().subitems().get();
                 for (int i = 0; i < subitems.items().count(); i++) {
                     Media media = subitems.items().getMedia(i);
                     System.out.println("title -> " + media.meta().get(Meta.TITLE));

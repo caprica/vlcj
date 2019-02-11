@@ -161,7 +161,7 @@ public class YouTubePlayer extends VlcjTest {
 
     private void play() {
         mediaPlayer.media().prepareMedia(urlTextField.getText());
-        mediaPlayer.media().get().events().addMediaEventListener(new MediaEventAdapter() {
+        mediaPlayer.media().events().addMediaEventListener(new MediaEventAdapter() {
             @Override
             public void mediaSubItemAdded(Media media, libvlc_media_t subItem) {
                 System.out.println("item added");

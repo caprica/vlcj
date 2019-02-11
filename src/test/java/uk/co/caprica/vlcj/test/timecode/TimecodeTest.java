@@ -99,7 +99,7 @@ public class TimecodeTest extends VlcjTest {
     private void showTimecode() {
         // We have to search for the text/spu track containing the timecode...
         Integer timecodeTrack = null;
-        for (TextTrackInfo trackInfo : player.media().get().info().textTracks()) {
+        for (TextTrackInfo trackInfo : player.media().info().textTracks()) {
             if (TIMECODE_CODEC.equals(trackInfo.codecName())) {
                 timecodeTrack = trackInfo.id();
                 break;

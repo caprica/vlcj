@@ -20,8 +20,16 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
+import uk.co.caprica.vlcj.media.EventService;
+import uk.co.caprica.vlcj.media.InfoService;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaFactory;
+import uk.co.caprica.vlcj.media.MetaService;
+import uk.co.caprica.vlcj.media.OptionsService;
+import uk.co.caprica.vlcj.media.ParseService;
+import uk.co.caprica.vlcj.media.SlaveService;
+import uk.co.caprica.vlcj.media.SubitemService;
+import uk.co.caprica.vlcj.media.UserDataService;
 
 /**
  *
@@ -30,21 +38,22 @@ public final class MediaService extends BaseService {
 
     /**
      * Current media.
+     * <p>
+     * It is an important principle that this component "owns" this {@link Media} instance and that the instance is
+     * never exposed directly to client applications. The instance will be freed each time new media is prepared/played
+     * or started.
+     * <p>
+     * Various aspects of the media are exposed to clients by methods here that delegate to the corresponding methods on
+     * the media instance.
+     * <p>
+     * This media instance may be <code>null</code>, this will be the case if no media has been played yet, or there was
+     * an error when trying to play new media.
+     * <p>
+     * A client application must therefore be prepared to handle the case where these delegating methods actually return
+     * <code>null</code> - either by testing the return value from those methods, or by checking the result of
+     * {@link #isValid()} beforehand.
      */
     private Media media;
-
-    /**
-     * Flag if this component created and therefore owns the {@link #media} instance or not.
-     * <p>
-     * This flag will be true if this component created the media instance, e.g. if {@link #playMedia(String, String...)}
-     * was used to set the media. In this case this component is responsible for the lifecycle of the media instance and
-     * will release it when it is no longer needed.
-     * <p>
-     * It will be false if the media was supplied by the caller, i.e. via {@link #set(Media)}. In that case, the caller
-     * owns the media instance and is responsible for its lifecycle - in particular the caller must release the media
-     * instance when it is no longer needed.
-     */
-    private boolean ownMedia;
 
     /**
      * Flag whether or not to automatically replay media after the media has finished playing.
@@ -53,16 +62,6 @@ public final class MediaService extends BaseService {
 
     MediaService(DefaultMediaPlayer mediaPlayer) {
         super(mediaPlayer);
-    }
-
-    /**
-     * Set new media.
-     *
-     * @param media media to set
-     * @return
-     */
-    public boolean set(Media media) {
-        return changeMedia(media, false);
     }
 
     /**
@@ -131,13 +130,40 @@ public final class MediaService extends BaseService {
         }
     }
 
-    /**
-     * Get the current media.
-     *
-     * @return media
-     */
-    public Media get() {
-        return media;
+    public boolean isValid() {
+        return media != null;
+    }
+
+    public EventService events() {
+        return media != null ? media.events() : null;
+    }
+
+    public InfoService info() {
+        return media != null ? media.info() : null;
+    }
+
+    public MetaService meta() {
+        return media != null ? media.meta() : null;
+    }
+
+    public OptionsService options() {
+        return media != null ? media.options() : null;
+    }
+
+    public ParseService parsing() {
+        return media != null ? media.parsing() : null;
+    }
+
+    public SlaveService slaves() {
+        return media != null ? media.slaves() : null;
+    }
+
+    public SubitemService subitems() {
+        return media != null ? media.subitems() : null;
+    }
+
+    public UserDataService userData() {
+        return media != null ? media.userData() : null;
     }
 
     /**
@@ -183,18 +209,15 @@ public final class MediaService extends BaseService {
      * @return <code>true</code> if the media was successfully changed; <code>false</code> on error, or if newMedia was <code>null</code>
      */
     private boolean changeMedia(Media newMedia, boolean ownMedia) {
-        // The old media must only be released if this component originally created it
-        if (this.ownMedia) {
+        if (this.media != null) {
             this.media.release();
         }
         if (newMedia != null) {
             this.media = newMedia;
-            this.ownMedia = ownMedia;
             applyMedia();
             return true;
         } else {
             this.media = null;
-            this.ownMedia = false;
             return false;
         }
     }
@@ -206,7 +229,7 @@ public final class MediaService extends BaseService {
 
     @Override
     protected void release() {
-        if (ownMedia) {
+        if (media != null) {
             media.release();
         }
     }

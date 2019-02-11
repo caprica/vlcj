@@ -33,6 +33,19 @@ import java.util.concurrent.TimeUnit;
 
 // FIXME could almost be renamed BaseMediaPlayer instead of Default
 
+// For the Media issue, it seems like Media should be internal to this component
+// a client should be able to add a media listener and it will be kept when media changes (leaving aside sub-items)
+// A client should NOT be able to play/prepare/set a Media instance - but maybe a libvlc_media_t wrapped (like MediaRef)
+// outside of here, if a client wants to deal with Media instance, it is free to create it
+
+// there should be no getter for Media? it should return a mediaref instead? if the client wants a Media instance, the client creates it
+//  but what about meta() etc which are all services on media? should i provide those methods on MediaService and delegate to the media?
+
+// similar will apply to List i think, somehow...
+
+
+// all the services should be renamed more simply like VideoSurface -> Video, SnapshotService -> Snapshots and so on
+
 /**
  * Base media player implementation.
  */

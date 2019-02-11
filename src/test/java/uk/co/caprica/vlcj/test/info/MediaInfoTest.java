@@ -52,7 +52,7 @@ public class MediaInfoTest extends VlcjTest {
             @Override
             public void mediaPlayerReady(MediaPlayer mediaPlayer) {
                 System.out.println("MEDIA PLAYER READY...");
-                System.out.println("     Track Information: " + mediaPlayer.media().get().info().tracks());
+                System.out.println("     Track Information: " + mediaPlayer.media().info().tracks());
                 System.out.println("    Title Descriptions: " + mediaPlayer.titles().getTitleDescriptions());
                 System.out.println("    Video Descriptions: " + mediaPlayer.video().getVideoDescriptions());
                 System.out.println("    Audio Descriptions: " + mediaPlayer.audio().getAudioDescriptions());
