@@ -20,7 +20,6 @@
 package uk.co.caprica.vlcj.test.viewpoint;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.model.Viewpoint;
 
 import javax.swing.*;
@@ -69,8 +68,6 @@ public class ViewpointTest {
 
     private static Viewpoint viewpoint;
 
-    private static Media media;
-
     public static void main(String[] args) {
         if (args.length != 1) {
             System.out.println("Specify the MRL of a 360-degree video");
@@ -105,7 +102,6 @@ public class ViewpointTest {
             public void windowClosing(WindowEvent e) {
                 mediaPlayer.release();
                 viewpoint.release();
-                media.release();
                 System.exit(0);
             }
         });
@@ -153,9 +149,7 @@ public class ViewpointTest {
     }
 
     private void start(String mrl) {
-        media = mediaPlayer.getMediaPlayerFactory().media().newMedia(mrl);
-        mediaPlayer.getMediaPlayer().media().set(media);
-        mediaPlayer.getMediaPlayer().controls().play();
+        mediaPlayer.getMediaPlayer().media().playMedia(mrl);
     }
 
     private static class MouseHandler extends MouseEventAdapter {
