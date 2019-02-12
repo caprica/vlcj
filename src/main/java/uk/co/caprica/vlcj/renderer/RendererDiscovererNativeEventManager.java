@@ -26,7 +26,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.eventmanager.NativeEventManager;
 import uk.co.caprica.vlcj.renderer.events.RendererDiscovererEventFactory;
-import uk.co.caprica.vlcj.renderer.events.RendererDiscovererEventListener;
 
 final class RendererDiscovererNativeEventManager extends NativeEventManager<RendererDiscoverer, RendererDiscovererEventListener> {
 

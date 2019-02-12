@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.renderer;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.renderer.events.RendererDiscovererEventListener;
+import uk.co.caprica.vlcj.renderer.RendererDiscovererEventListener;
 import uk.co.caprica.vlcj.renderer.RendererDiscoverer;
 import uk.co.caprica.vlcj.renderer.RendererDiscovererDescription;
 import uk.co.caprica.vlcj.renderer.RendererItem;

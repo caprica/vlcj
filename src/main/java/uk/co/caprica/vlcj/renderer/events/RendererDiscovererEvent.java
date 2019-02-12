@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.renderer.events;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.renderer.RendererDiscoverer;
+import uk.co.caprica.vlcj.renderer.RendererDiscovererEventListener;
 
 /**
  * Specification for a renderer discoverer event.

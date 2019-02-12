@@ -21,7 +21,6 @@ package uk.co.caprica.vlcj.renderer;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
-import uk.co.caprica.vlcj.renderer.events.RendererDiscovererEventListener;
 
 // The native API doc implies the event handler has to call HOLD if it wants to use the item, but the API doc also
 // says the item is valid until you get the same pointer in a deleted callback

@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.renderer.events;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.renderer_discoverer_item_added;
+import uk.co.caprica.vlcj.renderer.RendererDiscovererEventListener;
 import uk.co.caprica.vlcj.renderer.RendererItem;
 import uk.co.caprica.vlcj.renderer.RendererDiscoverer;
 

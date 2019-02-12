@@ -17,10 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.renderer.events;
-
-import uk.co.caprica.vlcj.renderer.RendererItem;
-import uk.co.caprica.vlcj.renderer.RendererDiscoverer;
+package uk.co.caprica.vlcj.renderer;
 
 public interface RendererDiscovererEventListener {
 
