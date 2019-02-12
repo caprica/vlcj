@@ -4,6 +4,7 @@ package uk.co.caprica.vlcj.model;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
+import uk.co.caprica.vlcj.medialist.MediaList;
 
 public final class MediaListRef {
 
@@ -18,6 +19,18 @@ public final class MediaListRef {
 
     public libvlc_media_list_t mediaListInstance() {
         return mediaListInstance;
+    }
+
+    /**
+     *
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaList} when it has no further use for it.
+     *
+     * @return
+     */
+    public MediaList newMediaList() {
+        libvlc.libvlc_media_list_retain(mediaListInstance);
+        return new MediaList(libvlc, mediaListInstance);
     }
 
     public void release() {

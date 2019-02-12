@@ -110,6 +110,18 @@ public final class Media {
         return mediaInstance;
     }
 
+    /**
+     *
+     * <p>
+     * The caller <em>must</em> release the returned {@link Media} when it has no further use for it.
+     *
+     * @return
+     */
+    public Media newMedia() {
+        libvlc.libvlc_media_retain(mediaInstance);
+        return new Media(libvlc, mediaInstance);
+    }
+
     public void release() {
         eventService   .release();
         infoService    .release();
