@@ -85,7 +85,7 @@ public final class SubItemService extends BaseService {
     void changeMedia(libvlc_media_t media) {
         MediaListRef mediaListRef = new MediaListRef(libvlc, libvlc.libvlc_media_subitems(media));
         try {
-            mediaListPlayer.list().setMediaList(new MediaListRef(libvlc, libvlc.libvlc_media_subitems(media)));
+            mediaListPlayer.list().setMediaList(mediaListRef);
         }
         finally {
             mediaListRef.release();
