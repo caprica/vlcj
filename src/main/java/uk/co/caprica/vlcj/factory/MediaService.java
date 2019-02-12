@@ -19,11 +19,13 @@
 
 package uk.co.caprica.vlcj.factory;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.medialist.MediaListFactory;
+import uk.co.caprica.vlcj.model.MediaListRef;
+import uk.co.caprica.vlcj.model.MediaRef;
 
 public final class MediaService extends BaseService {
 
@@ -37,7 +39,37 @@ public final class MediaService extends BaseService {
      * @param mrl
      * @return
      */
-    // FIXME rename fromMrl or forMrl? or just from(...)
+    public MediaRef newMediaRef(String mrl, String... options) {
+        return MediaFactory.newMediaRef(libvlc, instance, mrl, options);
+    }
+
+    /**
+     *
+     *
+     * <em>The calling application must make sure to keep hard references to the callback implementation objects to
+     * prevent them from being garbage collected, otherwise a fatal JVM crash may occur.</em>
+     *
+     * @param callbackMedia
+     * @return
+     */
+    public MediaRef newMediaRef(CallbackMedia callbackMedia, String... options) {
+        return MediaFactory.newMediaRef(libvlc, instance, callbackMedia, options);
+    }
+
+    public MediaRef newMediaRef(Media media, String... options) {
+        return MediaFactory.newMediaRef(libvlc, media, options);
+    }
+
+    public MediaRef newMediaRef(MediaRef mediaRef, String... options) {
+        return MediaFactory.newMediaRef(libvlc, mediaRef, options);
+    }
+
+    /**
+     *
+     *
+     * @param mrl
+     * @return
+     */
     public Media newMedia(String mrl, String... options) {
         return MediaFactory.newMedia(libvlc, instance, mrl, options);
     }
@@ -51,9 +83,20 @@ public final class MediaService extends BaseService {
      * @param callbackMedia
      * @return
      */
-    // FIXME rename forCallbacks? or just from(...)
-    public Media newMedia(CallbackMedia callbackMedia) {
-        return MediaFactory.newMedia(libvlc, instance, callbackMedia);
+    public Media newMedia(CallbackMedia callbackMedia, String... options) {
+        return MediaFactory.newMedia(libvlc, instance, callbackMedia, options);
+    }
+
+    public Media newMedia(MediaRef mediaRef, String... options) {
+        return MediaFactory.newMedia(libvlc, mediaRef, options);
+    }
+
+    public Media newMedia(Media media, String... options) {
+        return MediaFactory.newMedia(libvlc, media, options);
+    }
+
+    public MediaListRef newMediaListRef() {
+        return MediaListFactory.newMediaListRef(libvlc, instance);
     }
 
     /**
@@ -62,12 +105,7 @@ public final class MediaService extends BaseService {
      * @return media list instance
      */
     public MediaList newMediaList() {
-        libvlc_media_list_t mediaList = libvlc.libvlc_media_list_new(instance);
-        if (mediaList != null) {
-            return new MediaList(libvlc, mediaList);
-        } else {
-            return null;
-        }
+        return MediaListFactory.newMediaList(libvlc, instance);
     }
 
 }
