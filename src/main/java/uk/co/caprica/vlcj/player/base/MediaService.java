@@ -292,7 +292,7 @@ public final class MediaService extends BaseService {
     private void applyMedia() {
         libvlc_media_t mediaInstance = media.mediaInstance();
         libvlc.libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
-        mediaPlayer.subItems().changeMedia(mediaInstance);
+        mediaPlayer.subitems().changeMedia(mediaInstance);
     }
 
     @Override

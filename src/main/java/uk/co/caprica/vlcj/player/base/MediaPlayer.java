@@ -173,7 +173,7 @@ public interface MediaPlayer {
 
     StatusService status();
 
-    SubItemService subItems();
+    SubitemService subitems();
 
     SubpictureService subpictures();
 

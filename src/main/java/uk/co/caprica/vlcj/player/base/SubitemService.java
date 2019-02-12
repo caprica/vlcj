@@ -32,14 +32,14 @@ import uk.co.caprica.vlcj.player.list.UserDataService;
 
 // FIXME similar to thinking about "persistent" media listener, what about a MediaListListener in the same context too? in this case it would be a bit easier because the medialistplayer never changes instance
 
-public final class SubItemService extends BaseService {
+public final class SubitemService extends BaseService {
 
     /**
      * Media list player used to play the sub-items.
      */
     private final MediaListPlayer mediaListPlayer;
 
-    SubItemService(DefaultMediaPlayer mediaPlayer) {
+    SubitemService(DefaultMediaPlayer mediaPlayer) {
         super(mediaPlayer);
 
         this.mediaListPlayer = new DefaultMediaListPlayer(libvlc, libvlcInstance);
