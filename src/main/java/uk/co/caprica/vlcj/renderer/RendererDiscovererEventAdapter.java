@@ -22,11 +22,11 @@ package uk.co.caprica.vlcj.renderer;
 public class RendererDiscovererEventAdapter implements RendererDiscovererEventListener {
 
     @Override
-    public void rendererDiscovererItemAdded(RendererDiscoverer rendererDiscoverer, RendererItem item) {
+    public void rendererDiscovererItemAdded(RendererDiscoverer rendererDiscoverer, RendererItem itemAdded) {
     }
 
     @Override
-    public void rendererDiscovererItemDeleted(RendererDiscoverer rendererDiscoverer, RendererItem item) {
+    public void rendererDiscovererItemDeleted(RendererDiscoverer rendererDiscoverer, RendererItem itemDeleted) {
     }
 
 }

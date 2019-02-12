@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import com.sun.jna.ptr.IntByReference;
+import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.enums.Position;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
@@ -27,6 +28,7 @@ import uk.co.caprica.vlcj.enums.DeinterlaceMode;
 import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.model.TrackDescription;
 import uk.co.caprica.vlcj.model.Viewpoint;
+import uk.co.caprica.vlcj.renderer.RendererItem;
 
 import java.awt.Dimension;
 import java.util.List;
@@ -332,6 +334,17 @@ public final class VideoService extends BaseService {
      */
     public boolean updateViewpoint(Viewpoint viewpoint, boolean absolute) {
         return libvlc.libvlc_video_update_viewpoint(mediaPlayerInstance, viewpoint.viewpoint(), absolute ? 1 : 0) == 0;
+    }
+
+    /**
+     *
+     *
+     * @param rendererItem
+     * @return
+     */
+    public boolean setRenderer(RendererItem rendererItem) {
+        libvlc_renderer_item_t rendererItemInstance = rendererItem != null ? rendererItem.rendererItemInstance() : null;
+        return libvlc.libvlc_media_player_set_renderer(mediaPlayerInstance, rendererItemInstance) == 0;
     }
 
     /**

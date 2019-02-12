@@ -19,10 +19,19 @@
 
 package uk.co.caprica.vlcj.renderer;
 
-public interface RendererDiscovererEventListener {
+final class RendererItemListEventHandler implements RendererDiscovererEventListener {
 
-    void rendererDiscovererItemAdded(RendererDiscoverer rendererDiscoverer, RendererItem itemAdded);
+    RendererItemListEventHandler() {
+    }
 
-    void rendererDiscovererItemDeleted(RendererDiscoverer rendererDiscoverer, RendererItem itemDeleted);
+    @Override
+    public void rendererDiscovererItemAdded(RendererDiscoverer rendererDiscoverer, RendererItem itemAdded) {
+        rendererDiscoverer.list().itemAdded(itemAdded);
+    }
+
+    @Override
+    public void rendererDiscovererItemDeleted(RendererDiscoverer rendererDiscoverer, RendererItem itemDeleted) {
+        rendererDiscoverer.list().itemDeleted(itemDeleted);
+    }
 
 }

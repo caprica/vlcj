@@ -19,10 +19,20 @@
 
 package uk.co.caprica.vlcj.renderer;
 
-public interface RendererDiscovererEventListener {
+import uk.co.caprica.vlcj.binding.LibVlc;
 
-    void rendererDiscovererItemAdded(RendererDiscoverer rendererDiscoverer, RendererItem itemAdded);
+abstract public class BaseService {
 
-    void rendererDiscovererItemDeleted(RendererDiscoverer rendererDiscoverer, RendererItem itemDeleted);
+    protected final RendererDiscoverer rendererDiscoverer;
+
+    protected final LibVlc libvlc;
+
+    BaseService(RendererDiscoverer rendererDiscoverer) {
+        this.rendererDiscoverer = rendererDiscoverer;
+        this.libvlc = rendererDiscoverer.libvlc;
+    }
+
+    protected void release() {
+    }
 
 }

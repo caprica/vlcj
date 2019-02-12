@@ -76,17 +76,16 @@ public final class RendererItem {
         return canVideo;
     }
 
-    public void hold() {
-        libvlc.libvlc_renderer_item_hold(item);
+    public boolean hold() {
+        return libvlc.libvlc_renderer_item_hold(item) != null;
     }
 
     public void release() {
         libvlc.libvlc_renderer_item_release(item);
     }
 
-    // FIXME should just invert this and expose a getter for the native instance?
-    public boolean setRenderer(MediaPlayer mediaPlayer) {
-        return libvlc.libvlc_media_player_set_renderer(mediaPlayer.mediaPlayerInstance(), item) == 0;
+    public libvlc_renderer_item_t rendererItemInstance() {
+        return item;
     }
 
     @Override

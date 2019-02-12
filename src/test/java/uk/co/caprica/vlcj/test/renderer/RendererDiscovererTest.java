@@ -35,6 +35,8 @@ import java.util.List;
  */
 public class RendererDiscovererTest {
 
+    private static RendererItem currentItem;
+
     public static void main(String[] args) throws Exception {
         if (args.length != 2) {
             System.out.println("Specify <renderer-name> <mrl>");
@@ -56,27 +58,32 @@ public class RendererDiscovererTest {
         RendererDiscoverer discoverer = factory.renderers().discoverer(discoverers.get(0).name());
         System.out.println(discoverer);
 
-        // If the renderer is found, this won't open a native window
+        // If the renderer is found, this won't open a native window when we play
         final MediaPlayer mediaPlayer = factory.mediaPlayers().newMediaPlayer();
 
-        discoverer.addRendererDiscovererEventListener(new RendererDiscovererEventListener() {
+        discoverer.events().addRendererDiscovererEventListener(new RendererDiscovererEventListener() {
             @Override
-            public void rendererDiscovererItemAdded(RendererDiscoverer rendererDiscoverer, RendererItem item) {
-                System.out.println("ADDED " + item);
-                if (item.name().equals(myRendererName)) {
+            public void rendererDiscovererItemAdded(RendererDiscoverer rendererDiscoverer, RendererItem itemAdded) {
+                System.out.println("ADDED " + itemAdded);
+                if (itemAdded.name().equals(myRendererName)) {
                     System.out.println("Found renderer " + myRendererName);
                     // If we want to use this item, we must explicitly hold it (we should release it later when we no
                     // longer need it)
-                    item.hold();
-                    item.setRenderer(mediaPlayer);
-                    boolean result = mediaPlayer.media().playMedia(mrl);
+                    itemAdded.hold();
+
+                    boolean result = mediaPlayer.video().setRenderer(itemAdded);
+                    System.out.println("result of set renderer is " + result);
+
+                    result = mediaPlayer.media().playMedia(mrl);
                     System.out.println("result of play is " + result);
+
+                    currentItem = itemAdded;
                 }
             }
 
             @Override
-            public void rendererDiscovererItemDeleted(RendererDiscoverer rendererDiscoverer, RendererItem item) {
-                System.out.println("REMOVED " + item);
+            public void rendererDiscovererItemDeleted(RendererDiscoverer rendererDiscoverer, RendererItem itemDeleted) {
+                System.out.println("REMOVED " + itemDeleted);
             }
         });
 
@@ -86,6 +93,8 @@ public class RendererDiscovererTest {
         System.out.println("Waiting for renderer...");
 
         Thread.currentThread().join();
+
+//        currentItem.release();
     }
 
 }

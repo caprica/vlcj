@@ -22,35 +22,29 @@ package uk.co.caprica.vlcj.renderer;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
 
-// The native API doc implies the event handler has to call HOLD if it wants to use the item, but the API doc also
-// says the item is valid until you get the same pointer in a deleted callback
-// so i think you can probably choose to hold at any time TBH
-// we will need to expose the item so it can be set on a mediaplayer
+public final class RendererDiscoverer {
 
-// FIXME this doesn't quite follow the pattern of the others...
-//  although i think i can delete all EventService now, so probably move the add/remove listener back to the main class? or a common base class for all these components, e.g. MediaPlayer, Media, MediaListPlayer
+    protected final LibVlc libvlc;
 
-public class RendererDiscoverer {
+    protected final libvlc_renderer_discoverer_t discovererInstance;
 
-    private final LibVlc libvlc;
-
-    private final libvlc_renderer_discoverer_t discovererInstance;
-
-    private final RendererDiscovererNativeEventManager eventManager;
+    private final EventService eventService;
+    private final ListService  listService;
 
     public RendererDiscoverer(LibVlc libvlc, libvlc_renderer_discoverer_t discoverer) {
         this.libvlc             = libvlc;
         this.discovererInstance = discoverer;
 
-        this.eventManager = new RendererDiscovererNativeEventManager(libvlc, this);
+        this.eventService = new EventService(this);
+        this.listService  = new ListService (this);
     }
 
-    public void addRendererDiscovererEventListener(RendererDiscovererEventListener listener) {
-        eventManager.addEventListener(listener);
+    public EventService events() {
+        return eventService;
     }
 
-    public void removeRendererDiscovererEventListener(RendererDiscovererEventListener listener) {
-        eventManager.removeEventListener(listener);
+    public ListService list() {
+        return listService;
     }
 
     public boolean start() {
@@ -66,7 +60,9 @@ public class RendererDiscoverer {
     }
 
     public void release() {
-        eventManager.release();
+        eventService.release();
+        listService.release();
+
         libvlc.libvlc_renderer_discoverer_release(discovererInstance);
     }
 
