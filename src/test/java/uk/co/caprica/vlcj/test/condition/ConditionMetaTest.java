@@ -46,57 +46,56 @@ public class ConditionMetaTest extends VlcjTest {
         "--no-snapshot-preview",    /* no blending in dummy vout */
     };
 
-//    public static void main(String[] args) throws Exception {
-//        if (args.length != 1) {
-//            System.err.println("Usage: <mrl>");
-//            System.exit(1);
-//        }
-//
-//        final String mrl = args[0];
-//
-//        final MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
-//        final MediaPlayer mediaPlayer = factory.mediaPlayers().newMediaPlayer();
-//
-//        mediaPlayer.snapshots().setSnapshotDirectory(new File(".").getAbsolutePath());
-//
-//        // The sequence for getting the meta is...
-//        //
-//        // Play the media
-//        // Wait for parsed condition
-//        //
-//        // There is a small overhead of actually having to start the media - but
-//        // to mitigate this the media player factory configuration has disabled
-//        // audio and video outputs so there will be no visible/audible sign of
-//        // the media playing
-//
-//        mediaPlayer.media().prepareMedia(mrl);
-//
-//        // FIXME this could instead create a Media instance from a return MediaRef (or "MediaInstance" or some such), and then WE are responsible for releasing that Media here)
-//        Media media = mediaPlayer.media().get();
-//
-//        ParsedCondition parsedCondition = new ParsedCondition(media) {
-//            @Override
-//            protected boolean onBefore(Media media) {
-//                // Some media, such as mpg, must be played before all meta data (e.g. duration) is available
-//                mediaPlayer.controls().play();
-//                mediaPlayer.media().parsing().parse(); // asynchronous invocation
-//                return true;
-//            }
-//
-//            @Override
-//            protected void onAfter(Media media, Object result) {
-//                mediaPlayer.controls().stop();
-//            }
-//        };
-//        parsedCondition.await();
-//
-//        MetaData metaData = mediaPlayer.media().meta().asMetaData();
-//        System.out.println(metaData);
-//
-//        mediaPlayer.release();
-//        factory.release();
-//    }
+    public static void main(String[] args) throws Exception {
+        if (args.length != 1) {
+            System.err.println("Usage: <mrl>");
+            System.exit(1);
+        }
 
-    // FIXME
+        final String mrl = args[0];
+
+        final MediaPlayerFactory factory = new MediaPlayerFactory(VLC_ARGS);
+        final MediaPlayer mediaPlayer = factory.mediaPlayers().newMediaPlayer();
+
+        mediaPlayer.snapshots().setSnapshotDirectory(new File(".").getAbsolutePath());
+
+        // The sequence for getting the meta is...
+        //
+        // Play the media
+        // Wait for parsed condition
+        //
+        // There is a small overhead of actually having to start the media - but
+        // to mitigate this the media player factory configuration has disabled
+        // audio and video outputs so there will be no visible/audible sign of
+        // the media playing
+
+        mediaPlayer.media().prepareMedia(mrl);
+
+        Media media = mediaPlayer.media().newMedia();
+
+        ParsedCondition parsedCondition = new ParsedCondition(media) {
+            @Override
+            protected boolean onBefore(Media media) {
+                // Some media, such as mpg, must be played before all meta data (e.g. duration) is available
+                mediaPlayer.controls().play();
+                mediaPlayer.media().parsing().parse(); // asynchronous invocation
+                return true;
+            }
+
+            @Override
+            protected void onAfter(Media media, Object result) {
+                mediaPlayer.controls().stop();
+            }
+        };
+        parsedCondition.await();
+
+        MetaData metaData = mediaPlayer.media().meta().asMetaData();
+        System.out.println(metaData);
+
+        media.release();
+
+        mediaPlayer.release();
+        factory.release();
+    }
 
 }
