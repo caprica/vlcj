@@ -43,7 +43,8 @@ public interface MediaPlayerEventListener {
 
     /**
      * The media changed.
-     *  @param mediaPlayer media player that raised the event
+     *
+     * @param mediaPlayer media player that raised the event
      * @param media new media instance
      */
     void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media);
