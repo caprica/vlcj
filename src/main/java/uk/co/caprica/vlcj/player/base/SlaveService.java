@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import uk.co.caprica.vlcj.enums.MediaSlavePriority;
 import uk.co.caprica.vlcj.enums.MediaSlaveType;
 
 // FIXME rename to simple add?
@@ -32,8 +33,8 @@ public final class SlaveService extends BaseService {
     /**
      * Add an input slave to the current media.
      * <p>
-     * See {@link uk.co.caprica.vlcj.media.SlaveService#add(MediaSlaveType, int, String)} for further important
-     * information regarding this method.
+     * See {@link uk.co.caprica.vlcj.media.SlaveService#add(MediaSlaveType, MediaSlavePriority, String)}  for further
+     * important information regarding this method.
      *
      * @param type type of slave to add
      * @param uri URI of the slave to add

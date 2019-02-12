@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.NativeUri;
+import uk.co.caprica.vlcj.enums.MediaSlavePriority;
 import uk.co.caprica.vlcj.enums.MediaSlaveType;
 import uk.co.caprica.vlcj.model.TrackDescription;
 
@@ -130,8 +131,8 @@ public final class SubpictureService extends BaseService {
      * <p>
      * This method is a convenience for {@link SlaveService#addSlave(MediaSlaveType, String, boolean)}.
      * <p>
-     * See {@link uk.co.caprica.vlcj.media.SlaveService#add(MediaSlaveType, int, String)} for further important
-     * information regarding this method.
+     * See {@link uk.co.caprica.vlcj.media.SlaveService#add(MediaSlaveType, MediaSlavePriority, String)} for further
+     * important information regarding this method.
      *
      * @param uri
      * @return
