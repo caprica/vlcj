@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
 import uk.co.caprica.vlcj.media.EventService;
 import uk.co.caprica.vlcj.media.InfoService;
@@ -30,6 +31,7 @@ import uk.co.caprica.vlcj.media.ParseService;
 import uk.co.caprica.vlcj.media.SlaveService;
 import uk.co.caprica.vlcj.media.SubitemService;
 import uk.co.caprica.vlcj.media.UserDataService;
+import uk.co.caprica.vlcj.model.MediaRef;
 
 /**
  *
@@ -71,9 +73,9 @@ public final class MediaService extends BaseService {
      * @param options zero or more options to attach to the new media
      * @return
      */
-    // FIXME pending rename prepare()
+    // FIXME pending rename prepare() or set()
     public boolean prepareMedia(String mrl, String... options) {
-        return changeMedia(MediaFactory.newMedia(libvlc, libvlcInstance, mrl, options), true);
+        return changeMedia(MediaFactory.newMedia(libvlc, libvlcInstance, mrl, options));
     }
 
     /**
@@ -86,8 +88,7 @@ public final class MediaService extends BaseService {
     // FIXME pending rename play()
     public boolean playMedia(String mrl, String... options) {
         if (prepareMedia(mrl, options)) {
-            mediaPlayer.controls().play();
-            return true;
+            return play();
         } else {
             return false;
         }
@@ -103,20 +104,19 @@ public final class MediaService extends BaseService {
     // FIXME pending rename start()
     public boolean startMedia(String mrl, String... options) {
         if (prepareMedia(mrl, options)) {
-            return mediaPlayer.controls().start();
+            return start();
         } else {
             return false;
         }
     }
 
     public boolean prepare(CallbackMedia callbackMedia, String... options) {
-        return changeMedia(MediaFactory.newMedia(libvlc, libvlcInstance, callbackMedia, options), true);
+        return changeMedia(MediaFactory.newMedia(libvlc, libvlcInstance, callbackMedia, options));
     }
 
     public boolean play(CallbackMedia callbackMedia, String... options) {
         if (prepare(callbackMedia, options)) {
-            mediaPlayer.controls().play();
-            return true;
+            return play();
         } else {
             return false;
         }
@@ -124,7 +124,63 @@ public final class MediaService extends BaseService {
 
     public boolean start(CallbackMedia callbackMedia, String... options) {
         if (prepare(callbackMedia, options)) {
-            return mediaPlayer.controls().start();
+            return start();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     *
+     * <p>
+     * Internally the supplied native media instance is duplicated and any supplied <code>options</code> are added only
+     * to this duplicate.
+     * <p>
+     * The caller <em>must</em> release the supplied {@link MediaRef} when it has no further use for it.
+     *
+     * @param mediaRef
+     * @param options
+     * @return
+     */
+    public boolean prepare(MediaRef mediaRef, String... options) {
+        return changeMedia(MediaFactory.newMedia(libvlc, mediaRef, options));
+    }
+
+    /**
+     *
+     * <p>
+     * Internally the supplied native media instance is duplicated and any supplied <code>options</code> are added only
+     * to this duplicate.
+     * <p>
+     * The caller <em>must</em> release the supplied {@link MediaRef} when it has no further use for it.
+     *
+     * @param mediaRef
+     * @param options
+     * @return
+     */
+    public boolean play(MediaRef mediaRef, String... options) {
+        if (prepare(mediaRef, options)) {
+            return play();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     *
+     * <p>
+     * Internally the supplied native media instance is duplicated and any supplied <code>options</code> are added only
+     * to this duplicate.
+     * <p>
+     * The caller <em>must</em> release the supplied {@link MediaRef} when it has no further use for it.
+     *
+     * @param mediaRef
+     * @param options
+     * @return
+     */
+    public boolean start(MediaRef mediaRef, String... options) {
+        if (prepare(mediaRef, options)) {
+            return start();
         } else {
             return false;
         }
@@ -205,10 +261,9 @@ public final class MediaService extends BaseService {
      * Change media, i.e. clean up the current media and setup the new one.
      *
      * @param newMedia new media - this may be <code>null</code>, in which case the current media is cleaned up only
-     * @param ownMedia <code>true</code> if this component created the media instance; <code>false</code> if it did not
      * @return <code>true</code> if the media was successfully changed; <code>false</code> on error, or if newMedia was <code>null</code>
      */
-    private boolean changeMedia(Media newMedia, boolean ownMedia) {
+    private boolean changeMedia(Media newMedia) {
         if (this.media != null) {
             this.media.release();
         }
@@ -222,9 +277,19 @@ public final class MediaService extends BaseService {
         }
     }
 
+    private boolean play() {
+        mediaPlayer.controls().play();
+        return true;
+    }
+
+    private boolean start() {
+        return mediaPlayer.controls().start();
+    }
+
     private void applyMedia() {
-        libvlc.libvlc_media_player_set_media(mediaPlayerInstance, media.mediaInstance());
-        mediaPlayer.subItems().changeMedia(media);
+        libvlc_media_t mediaInstance = media.mediaInstance();
+        libvlc.libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
+        mediaPlayer.subItems().changeMedia(mediaInstance);
     }
 
     @Override
