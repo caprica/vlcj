@@ -62,7 +62,7 @@ public final class MediaList {
         return itemService;
     }
 
-    public final libvlc_media_list_t mediaListInstance() {
+    public libvlc_media_list_t mediaListInstance() {
         return mediaList;
     }
 
