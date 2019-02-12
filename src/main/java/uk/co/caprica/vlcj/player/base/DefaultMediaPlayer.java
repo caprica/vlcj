@@ -33,16 +33,15 @@ import java.util.concurrent.TimeUnit;
 
 // FIXME could almost be renamed BaseMediaPlayer instead of Default
 
-// For the Media issue, it seems like Media should be internal to this component
-// a client should be able to add a media listener and it will be kept when media changes (leaving aside sub-items)
-// A client should NOT be able to play/prepare/set a Media instance - but maybe a libvlc_media_t wrapped (like MediaRef)
-// outside of here, if a client wants to deal with Media instance, it is free to create it
-
-// there should be no getter for Media? it should return a mediaref instead? if the client wants a Media instance, the client creates it
-//  but what about meta() etc which are all services on media? should i provide those methods on MediaService and delegate to the media?
-
-// similar will apply to List i think, somehow...
-
+// do something like a persistent list of media listeners that gets added automatically each time the media changes?
+//  if you do this it's a bit tricky - you have keep the list and add them when the media changes, AND/OR add them to existing media
+//   i.e. there may or not already be media when you add them, you have to handle BOTH cases
+//   whenever changeMedia(...) you need to get listeners and add them
+//   when you add listeners you need to get media and add the listeners
+//   it's a bit unfortunate to do this coming from two different directions
+//   it's a also a bit problematic for where the api should go, because we still have addMediaEventListener via media().events().addMediaEventListener, and now media().addMediaEventListener too? or mediaPlayer.events().addMediaEventListener - it's a bit ugly
+//   the events semantically belong with mediaplayer.events() i think, client still has the option to add add events directly?
+//   maybe we just say client must listen for mediachanged and add events each time for media? not sure it's not the main issue tbh
 
 // all the services should be renamed more simply like VideoSurface -> Video, SnapshotService -> Snapshots and so on
 
@@ -165,13 +164,13 @@ public class DefaultMediaPlayer implements MediaPlayer {
     }
 
     @Override
-    public final MediaService media() {
-        return mediaService;
+    public final MarqueeService marquee() {
+        return marqueeService;
     }
 
     @Override
-    public final MarqueeService marquee() {
-        return marqueeService;
+    public final MediaService media() {
+        return mediaService;
     }
 
     @Override
