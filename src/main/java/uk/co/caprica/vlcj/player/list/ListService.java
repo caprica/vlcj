@@ -48,16 +48,11 @@ public final class ListService extends BaseService {
         super(mediaListPlayer);
     }
 
-    @Deprecated
-    public void setMediaList(MediaList mediaList) {
-        libvlc.libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaList.mediaListInstance());
-        this.mediaList = mediaList;
-    }
-
     /**
      * Set a new media list.
      * <p>
-     * The supplied {@link MediaListRef} <em>must</em> be released by the caller when it no longer has any use for it.
+     * The supplied {@link MediaListRef} is not kept by this component and <em>must</em> be released by the caller when
+     * the caller no longer has any use for it.
      *
      * @param mediaListRef media list
      */

@@ -136,7 +136,8 @@ public final class MediaService extends BaseService {
      * Internally the supplied native media instance is duplicated and any supplied <code>options</code> are added only
      * to this duplicate.
      * <p>
-     * The caller <em>must</em> release the supplied {@link MediaRef} when it has no further use for it.
+     * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
+     * caller no longer has any use for it.
      *
      * @param mediaRef
      * @param options
@@ -152,7 +153,8 @@ public final class MediaService extends BaseService {
      * Internally the supplied native media instance is duplicated and any supplied <code>options</code> are added only
      * to this duplicate.
      * <p>
-     * The caller <em>must</em> release the supplied {@link MediaRef} when it has no further use for it.
+     * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
+     * caller no longer has any use for it.
      *
      * @param mediaRef
      * @param options
@@ -172,7 +174,8 @@ public final class MediaService extends BaseService {
      * Internally the supplied native media instance is duplicated and any supplied <code>options</code> are added only
      * to this duplicate.
      * <p>
-     * The caller <em>must</em> release the supplied {@link MediaRef} when it has no further use for it.
+     * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
+     * caller no longer has any use for it.
      *
      * @param mediaRef
      * @param options
