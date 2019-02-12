@@ -83,6 +83,10 @@ public final class SubitemService extends BaseService {
      * @param media
      */
     void changeMedia(libvlc_media_t media) {
+        // Stop the media list player before setting a new list - without this, the new subitem list will not start
+        // playing correctly
+        mediaListPlayer.controls().stop();
+
         MediaListRef mediaListRef = new MediaListRef(libvlc, libvlc.libvlc_media_subitems(media));
         try {
             mediaListPlayer.list().setMediaList(mediaListRef);

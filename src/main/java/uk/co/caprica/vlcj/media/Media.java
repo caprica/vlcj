@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.model.MediaRef;
 
 /**
  * Encapsulation of a native media instance.
@@ -108,6 +109,11 @@ public final class Media {
 
     public libvlc_media_t mediaInstance() {
         return mediaInstance;
+    }
+
+    public MediaRef newMediaRef() {
+        libvlc.libvlc_media_retain(mediaInstance);
+        return new MediaRef(libvlc, mediaInstance);
     }
 
     /**

@@ -20,16 +20,43 @@
 package uk.co.caprica.vlcj.medialist;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.model.MediaListRef;
 
+/**
+ *
+ */
 public final class MediaListFactory {
 
-    // FIXME note caller must release the mediaref
-    public static MediaList newMediaList(LibVlc libvlc, MediaListRef mediaListRef) {
-        libvlc_media_list_t mediaListInstance = mediaListRef.mediaListInstance();
-        libvlc.libvlc_media_list_retain(mediaListRef.mediaListInstance());
-        return createMediaList(libvlc, mediaListInstance);
+    /**
+     *
+     *
+     * @param libvlc
+     * @param libvlcInstance
+     * @return
+     */
+    public static MediaListRef newMediaListRef(LibVlc libvlc, libvlc_instance_t libvlcInstance) {
+        return createMediaListRef(libvlc, libvlc.libvlc_media_list_new(libvlcInstance));
+    }
+
+    /**
+     *
+     *
+     * @param libvlc
+     * @param libvlcInstance
+     * @return
+     */
+    public static MediaList newMediaList(LibVlc libvlc, libvlc_instance_t libvlcInstance) {
+        return createMediaList(libvlc, libvlc.libvlc_media_list_new(libvlcInstance));
+    }
+
+    private static MediaListRef createMediaListRef(LibVlc libvlc, libvlc_media_list_t mediaListInstance) {
+        if (mediaListInstance != null) {
+            return new MediaListRef(libvlc, mediaListInstance);
+        } else {
+            return null;
+        }
     }
 
     private static MediaList createMediaList(LibVlc libvlc, libvlc_media_list_t mediaListInstance) {

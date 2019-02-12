@@ -22,7 +22,6 @@ package uk.co.caprica.vlcj.player.list;
 import uk.co.caprica.vlcj.medialist.EventService;
 import uk.co.caprica.vlcj.medialist.ItemService;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.medialist.MediaListFactory;
 import uk.co.caprica.vlcj.model.MediaListRef;
 
 public final class ListService extends BaseService {
@@ -60,7 +59,7 @@ public final class ListService extends BaseService {
         if (this.mediaList != null) {
             this.mediaList.release();
         }
-        this.mediaList = MediaListFactory.newMediaList(libvlc, mediaListRef);
+        this.mediaList = mediaListRef.newMediaList();
         // FIXME if we're going to restore listeners, it must go here, before the next call
         libvlc.libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaListRef.mediaListInstance());
     }

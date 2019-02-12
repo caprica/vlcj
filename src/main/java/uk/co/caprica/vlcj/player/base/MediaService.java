@@ -144,6 +144,8 @@ public final class MediaService extends BaseService {
      * @return
      */
     public boolean prepare(MediaRef mediaRef, String... options) {
+        // The new Media instance is NOT created via the newMedia method on the supplied instance as we prefer to create
+        // a duplicate native media instance rather than simply retain it as that method does
         return changeMedia(MediaFactory.newMedia(libvlc, mediaRef, options));
     }
 
@@ -187,6 +189,10 @@ public final class MediaService extends BaseService {
         } else {
             return false;
         }
+    }
+
+    public Media newMedia() {
+        return media.newMedia();
     }
 
     public boolean isValid() {
