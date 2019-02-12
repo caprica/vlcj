@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.player.list;
 
 import uk.co.caprica.vlcj.enums.PlaybackMode;
 
+// FIXME probably move to Controls?
+
 public final class ModeService extends BaseService {
 
     ModeService(DefaultMediaListPlayer mediaListPlayer) {

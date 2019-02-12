@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.player.list;
 
 import uk.co.caprica.vlcj.enums.State;
 
+// FIXME a whole service for just this? really?
+
 public final class StatusService extends BaseService {
 
     StatusService(DefaultMediaListPlayer mediaListPlayer) {

@@ -22,6 +22,9 @@ package uk.co.caprica.vlcj.media;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 
+// FIXME new list each time? don't think so...
+//  probably requires delegated services instead of exposing the MediaList
+
 public class SubitemService extends BaseService {
 
     SubitemService(Media media) {
