@@ -19,18 +19,18 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.model.MediaListRef;
+import uk.co.caprica.vlcj.player.list.ControlsService;
 import uk.co.caprica.vlcj.player.list.DefaultMediaListPlayer;
+import uk.co.caprica.vlcj.player.list.EventService;
+import uk.co.caprica.vlcj.player.list.ListService;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
+import uk.co.caprica.vlcj.player.list.ModeService;
+import uk.co.caprica.vlcj.player.list.StatusService;
+import uk.co.caprica.vlcj.player.list.UserDataService;
 
-// FIXME really need to nail down and document who owns the MediaList and when/where it is released
-// FIXME do i need to expose the medialistplayer somehow? i shouldn't really have a getter but i could set loop mode and the controls and so on?
-//          controls() in here could return subitem controls used to access the media list player?
-
-// FIXME in light of the new insight gained into playing sub-items and media lists, we should get rid of this service
-//       since it does hardly anything, and merge its functionality into a more appropriate place
-//       problem is where the player() API should go...
+// FIXME similar to thinking about "persistent" media listener, what about a MediaListListener in the same context too? in this case it would be a bit easier because the medialistplayer never changes instance
 
 public final class SubItemService extends BaseService {
 
@@ -47,15 +47,34 @@ public final class SubItemService extends BaseService {
         mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer);
     }
 
-    public MediaListPlayer player() {
-        return mediaListPlayer;
+    public ControlsService controls() {
+        return mediaListPlayer.controls();
+    }
+
+    public EventService events() {
+        return mediaListPlayer.events();
+    }
+
+    public ListService list() {
+        return mediaListPlayer.list();
+    }
+
+    public ModeService mode() {
+        return mediaListPlayer.mode();
+    }
+
+    public StatusService status() {
+        return mediaListPlayer.status();
+    }
+
+    public UserDataService userData() {
+        return mediaListPlayer.userData();
     }
 
     /**
      *
      *
-     * Set a new list for this media's sub-items - this component owns the list so must release it at the appropriate
-     * time.
+     * Set a new list for this media's sub-items.
      * <p>
      * If media was played, the sub-item list will start playing automatically. If you do <em>not</em> want this, then
      * instead of playing the media you should prepare it, then parse it, and wait for the parsed status changed media
@@ -63,21 +82,18 @@ public final class SubItemService extends BaseService {
      *
      * @param media
      */
-    void changeMedia(Media media) {
-        releaseMediaList();
-        mediaListPlayer.list().setMediaList(media.subitems().get());
-    }
-
-    private void releaseMediaList() {
-        MediaList oldList = mediaListPlayer.list().getMediaList();
-        if (oldList != null) {
-            oldList.release();
+    void changeMedia(libvlc_media_t media) {
+        MediaListRef mediaListRef = new MediaListRef(libvlc.libvlc_media_subitems(media));
+        try {
+            mediaListPlayer.list().setMediaList(new MediaListRef(libvlc.libvlc_media_subitems(media)));
+        }
+        finally {
+            mediaListRef.release();
         }
     }
 
     @Override
     protected void release() {
-        releaseMediaList();
         mediaListPlayer.release();
     }
 

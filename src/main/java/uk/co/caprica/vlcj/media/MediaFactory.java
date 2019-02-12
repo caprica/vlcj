@@ -23,6 +23,10 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
+import uk.co.caprica.vlcj.model.MediaRef;
+
+// FIXME so, some of these should probably return MediaRef? or at least have functions that DO do that as well
+// FIXME check packaging/public etc cf MediaListFactory (maybe consolidate)
 
 public final class MediaFactory {
 
@@ -34,21 +38,41 @@ public final class MediaFactory {
         mrl = MediaResourceLocator.encodeMrl(mrl);
 
         libvlc_media_t mediaInstance = MediaResourceLocator.isLocation(mrl) ?
-                libvlc.libvlc_media_new_location(libvlcInstance, mrl) :
-                libvlc.libvlc_media_new_path(libvlcInstance, mrl);
+            libvlc.libvlc_media_new_location(libvlcInstance, mrl) :
+            libvlc.libvlc_media_new_path(libvlcInstance, mrl);
 
         return createMedia(libvlc, mediaInstance, options);
     }
 
     public static Media newMedia(LibVlc libvlc, libvlc_instance_t libvlcInstance, CallbackMedia callbackMedia, String... options) {
         libvlc_media_t mediaInstance = libvlc.libvlc_media_new_callbacks(libvlcInstance,
-                callbackMedia.getOpen(),
-                callbackMedia.getRead(),
-                callbackMedia.getSeek(),
-                callbackMedia.getClose(),
-                callbackMedia.getOpaque()
+            callbackMedia.getOpen(),
+            callbackMedia.getRead(),
+            callbackMedia.getSeek(),
+            callbackMedia.getClose(),
+            callbackMedia.getOpaque()
         );
 
+        return createMedia(libvlc, mediaInstance, options);
+    }
+
+    /**
+     * Create a new Media component from a {@link MediaRef}.
+     * <p>
+     * Internally, the supplied native media instance will be duplicated and any supplied <code>options</code> will be
+     * applied only to this duplicate.
+     * <p>
+     * The caller <em>must</em> release the supplied {@link MediaRef} when it has no further use for it.
+     * <p>
+     * The caller <em>must</em> also release the returned {@link Media} when it has no further use for it.
+     *
+     * @param libvlc
+     * @param mediaRef
+     * @param options
+     * @return
+     */
+    public static Media newMedia(LibVlc libvlc, MediaRef mediaRef, String... options) {
+        libvlc_media_t mediaInstance = libvlc.libvlc_media_duplicate(mediaRef.mediaInstance());
         return createMedia(libvlc, mediaInstance, options);
     }
 

@@ -29,7 +29,7 @@ abstract class BaseService {
 
     protected final LibVlc libvlc;
 
-    private final libvlc_instance_t libvlcInstance;
+    protected final libvlc_instance_t libvlcInstance;
 
     protected final libvlc_media_list_player_t mediaListPlayerInstance;
 

@@ -19,36 +19,74 @@
 
 package uk.co.caprica.vlcj.player.list;
 
+import uk.co.caprica.vlcj.medialist.EventService;
+import uk.co.caprica.vlcj.medialist.ItemService;
 import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.medialist.MediaListFactory;
+import uk.co.caprica.vlcj.model.MediaListRef;
 
 public final class ListService extends BaseService {
 
+    /**
+     * Current media list.
+     * <p>
+     * It is an important principle that this component "owns" this {@link MediaList} instance and that the instance is
+     * never exposed directly to client applications. The instance will be freed each time a new media list is set.
+     * <p>
+     * Various aspects of the media list are exposed to clients by methods here that delegate to the corresponding
+     * methods on the media list instance.
+     * <p>
+     * This media list instance may be <code>null</code>.
+     * <p>
+     * A client application must therefore be prepared to handle the case where these delegating methods actually return
+     * <code>null</code> - either by testing the return value from those methods, or by checking the result of
+     * {@link #isValid()} beforehand.
+     */
     private MediaList mediaList;
 
     ListService(DefaultMediaListPlayer mediaListPlayer) {
         super(mediaListPlayer);
     }
 
-    /**
-     * Set the media list (i.e. the "play" list).
-     * <p>
-     * The caller still "owns" the {@link MediaList} and is responsible for invoke {@link MediaList#release()} at the
-     * appropriate time.
-     *
-     * @param mediaList media list
-     */
+    @Deprecated
     public void setMediaList(MediaList mediaList) {
         libvlc.libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaList.mediaListInstance());
         this.mediaList = mediaList;
     }
 
     /**
-     * Get the media list.
+     * Set a new media list.
+     * <p>
+     * The supplied {@link MediaListRef} <em>must</em> be released by the caller when it no longer has any use for it.
      *
-     * @return media list
+     * @param mediaListRef media list
      */
-    public MediaList getMediaList() {
-        return mediaList;
+    public void setMediaList(MediaListRef mediaListRef) {
+        if (this.mediaList != null) {
+            this.mediaList.release();
+        }
+        this.mediaList = MediaListFactory.newMediaList(libvlc, mediaListRef);
+        // FIXME if we're going to restore listeners, it must go here, before the next call
+        libvlc.libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaListRef.mediaListInstance());
+    }
+
+    public boolean isValid() {
+        return mediaList != null;
+    }
+
+    public EventService events() {
+        return mediaList != null ? mediaList.events() : null;
+    }
+
+    public ItemService items() {
+        return mediaList != null ? mediaList.items() : null;
+    }
+
+    @Override
+    protected void release() {
+        if (mediaList != null) {
+            mediaList.release();
+        }
     }
 
 }
