@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.medialist;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
+import uk.co.caprica.vlcj.model.MediaListRef;
 
 // FIXME developer note - when you do insert, or remove, LibVLC is doing retain and release on the media instance, so we don't need to. we need to really nail down when retain and release are needed
 // FIXME should this be done with services etc like Media ? yes, not currently sure about what has gone where
@@ -64,6 +65,17 @@ public final class MediaList {
 
     public libvlc_media_list_t mediaListInstance() {
         return mediaList;
+    }
+
+    /**
+     *
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaListRef} when it has no further use for it.
+     *
+     * @return
+     */
+    public MediaListRef mediaListRef() {
+        return new MediaListRef(libvlc, mediaList);
     }
 
     public void release() {
