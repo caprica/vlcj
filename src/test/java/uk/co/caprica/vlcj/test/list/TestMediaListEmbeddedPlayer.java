@@ -31,6 +31,7 @@ import uk.co.caprica.vlcj.enums.PlaybackMode;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.model.MediaListRef;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
@@ -80,7 +81,14 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
         mediaList.items().addMedia(mediaPlayerFactory.media().newMedia("/movies/2.mp4"));
         mediaList.items().addMedia(mediaPlayerFactory.media().newMedia("/movies/3.mp4"));
 
-        mediaListPlayer.list().setMediaList(mediaList);
+        MediaListRef mediaListRef = mediaList.mediaListRef();
+        try {
+            mediaListPlayer.list().setMediaList(mediaListRef);
+        }
+        finally {
+            mediaListRef.release();
+        }
+
         mediaListPlayer.mode().setMode(PlaybackMode.LOOP);
 
         mediaListPlayer.controls().play();

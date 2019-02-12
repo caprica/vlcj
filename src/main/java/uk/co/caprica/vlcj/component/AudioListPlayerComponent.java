@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.model.MediaListRef;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 /**
@@ -54,7 +55,7 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
         this.mediaList = getMediaPlayerFactory().media().newMediaList();
         this.mediaList.events().addMediaListEventListener(this);
 
-        this.mediaListPlayer.list().setMediaList(this.mediaList);
+        applyMediaList();
 
         onAfterConstruct();
     }
@@ -65,6 +66,16 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
 
     public AudioListPlayerComponent() {
         this((MediaPlayerFactory) null);
+    }
+
+    private void applyMediaList() {
+        MediaListRef mediaListRef = mediaList.mediaListRef();
+        try {
+            this.mediaListPlayer.list().setMediaList(mediaListRef);
+        }
+        finally {
+            mediaListRef.release();
+        }
     }
 
     /**

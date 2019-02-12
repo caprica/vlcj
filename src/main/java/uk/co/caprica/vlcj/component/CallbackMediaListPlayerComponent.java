@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.component;
 import uk.co.caprica.vlcj.component.callback.CallbackImagePainter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.model.MediaListRef;
 import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
@@ -53,7 +54,7 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
         this.mediaList = getMediaPlayerFactory().media().newMediaList();
         this.mediaList.events().addMediaListEventListener(this);
 
-        this.mediaListPlayer.list().setMediaList(this.mediaList);
+        applyMediaList();
 
         onAfterConstruct();
     }
@@ -75,6 +76,16 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
      */
     public CallbackMediaListPlayerComponent() {
         this(null, null, null, null, true, null, null, null);
+    }
+
+    private void applyMediaList() {
+        MediaListRef mediaListRef = mediaList.mediaListRef();
+        try {
+            this.mediaListPlayer.list().setMediaList(mediaListRef);
+        }
+        finally {
+            mediaListRef.release();
+        }
     }
 
     /**

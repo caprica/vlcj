@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventAdapter;
+import uk.co.caprica.vlcj.model.MediaListRef;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
@@ -76,7 +77,14 @@ public class TestMediaListPlayer extends VlcjTest {
 
         mediaList.items().addMedia(mediaPlayerFactory.media().newMedia("https://www.youtube.com/watch?v=zGt444zwSAM"));
 
-        mediaListPlayer.list().setMediaList(mediaList);
+        MediaListRef mediaListRef = mediaList.mediaListRef();
+        try {
+            mediaListPlayer.list().setMediaList(mediaListRef);
+        }
+        finally {
+            mediaListRef.release();
+        }
+
         mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer);
         mediaPlayer.videoSurface().setVideoSurface(videoSurface);
 
