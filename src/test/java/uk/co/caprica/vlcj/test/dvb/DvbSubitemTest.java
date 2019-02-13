@@ -34,7 +34,7 @@ import java.util.List;
  * <p>
  * This test is not actually constrained to DVB, it will work for any play-list file.
  */
-public class DvbSubItemTest extends VlcjTest {
+public class DvbSubitemTest extends VlcjTest {
 
     public static void main(String[] args) throws Exception {
         if(args.length != 1) {
@@ -48,14 +48,14 @@ public class DvbSubItemTest extends VlcjTest {
         mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void finished(MediaPlayer mediaPlayer) {
-                int subItemCount = mediaPlayer.media().subitems().get().items().count();
-                System.out.println("subItemCount=" + subItemCount);
+                int subitemCount = mediaPlayer.media().subitems().get().items().count();
+                System.out.println("subitemCount=" + subitemCount);
 
                 System.out.println("Getting sub-items...");
 
-                List<String> subItems = mediaPlayer.media().subitems().get().items().mrls();
-                for(String subItem : subItems) {
-                    System.out.println(subItem);
+                List<String> mrls = mediaPlayer.media().subitems().get().items().mrls();
+                for(String mrl : mrls) {
+                    System.out.println(mrl);
                 }
 
                 System.out.println("Getting sub-item meta data...");

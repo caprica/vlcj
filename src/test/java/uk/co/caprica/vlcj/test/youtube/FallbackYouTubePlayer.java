@@ -88,13 +88,13 @@ public class FallbackYouTubePlayer extends VlcjTest {
                 // This is key...
                 //
                 // On receipt of a "finished" event, check if sub-items have been created...
-                List<String> subItems = mediaPlayer.media().subitems().get().items().mrls();
-                System.out.println("subItems=" + subItems);
+                List<String> subitems = mediaPlayer.media().subitems().get().items().mrls();
+                System.out.println("subitems=" + subitems);
                 // If sub-items were created...
-                if(subItems != null && !subItems.isEmpty()) {
+                if(subitems != null && !subitems.isEmpty()) {
                     // Pick the first sub-item, and play it...
-                    String subItemMrl = subItems.get(0);
-                    mediaPlayer.media().playMedia(subItemMrl);
+                    String subitemMrl = subitems.get(0);
+                    mediaPlayer.media().playMedia(subitemMrl);
                     // What will happen next...
                     //
                     // 1. if the vlc lua script finds the streaming MRL via the normal i.e.
