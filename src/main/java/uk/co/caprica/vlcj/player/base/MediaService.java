@@ -181,7 +181,11 @@ public final class MediaService extends BaseService {
     }
 
     public Media newMedia() {
-        return media.newMedia();
+        return media != null ? media.newMedia() : null;
+    }
+
+    public MediaRef newMediaRef() {
+        return media != null ? media.newMediaRef() : null;
     }
 
     public boolean isValid() {
