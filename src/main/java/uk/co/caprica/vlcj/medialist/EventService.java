@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.medialist;
 
-public class EventService extends BaseService {
+public final class EventService extends BaseService {
 
     private final MediaListNativeEventManager eventManager;
 

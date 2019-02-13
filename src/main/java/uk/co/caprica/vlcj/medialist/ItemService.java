@@ -31,7 +31,7 @@ import java.util.List;
 
 // FIXME consider rename, is this really MediaService? (would match the Media component i suppose)
 
-public class ItemService extends BaseService {
+public final class ItemService extends BaseService {
 
     ItemService(MediaList mediaList) {
         super(mediaList);
@@ -210,6 +210,14 @@ public class ItemService extends BaseService {
 
     public boolean isReadOnly() {
         return libvlc.libvlc_media_list_is_readonly(mediaListInstance) != 0;
+    }
+
+    public MediaList newMediaList() {
+        return new MediaList(libvlc, libvlcInstance, mediaListInstance);
+    }
+
+    public MediaListRef newMediaListRef() {
+        return new MediaListRef(libvlc, libvlcInstance, mediaListInstance);
     }
 
     private void lock() {
