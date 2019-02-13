@@ -94,6 +94,6 @@ public class AudioMediaPlayerComponentTest extends VlcjTest {
      */
     private void start(String mrl) {
         // One line of vlcj code to play the media...
-        audioMediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
+        audioMediaPlayerComponent.getMediaPlayer().media().play(mrl);
     }
 }

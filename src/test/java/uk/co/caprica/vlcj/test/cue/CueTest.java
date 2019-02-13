@@ -60,7 +60,7 @@ public class CueTest extends VlcjTest {
         // The sub-items will not be created until the cue sheet is parsed and the parsed status event is raised
         System.out.println("before play");
 
-        player.getMediaPlayer().media().prepareMedia(args[0]);
+        player.getMediaPlayer().media().prepare(args[0]);
         player.getMediaPlayer().media().events().addMediaEventListener(new MediaEventAdapter() {
             @Override
             public void mediaSubItemAdded(Media media, MediaRef newChild) {

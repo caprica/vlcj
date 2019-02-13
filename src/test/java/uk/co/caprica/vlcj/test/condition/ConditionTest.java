@@ -86,7 +86,7 @@ public class ConditionTest extends VlcjTest {
                 protected boolean onBefore(MediaPlayer mediaPlayer) {
                     // You do not have to use onBefore(), but sometimes it is very convenient, and guarantees
                     // that the required media player event listener is added before your condition is tested
-                    mediaPlayer.media().playMedia(mrl);
+                    mediaPlayer.media().play(mrl);
                     return true;
                 }
             };

@@ -79,8 +79,7 @@ public final class MediaService extends BaseService {
      * @param options zero or more options to attach to the new media
      * @return
      */
-    // FIXME pending rename prepare() or set()
-    public boolean prepareMedia(String mrl, String... options) {
+    public boolean prepare(String mrl, String... options) {
         return changeMedia(MediaFactory.newMedia(libvlc, libvlcInstance, mrl, options));
     }
 
@@ -91,9 +90,8 @@ public final class MediaService extends BaseService {
      * @param options zero or more options to attach to the new media
      * @return
      */
-    // FIXME pending rename play()
-    public boolean playMedia(String mrl, String... options) {
-        if (prepareMedia(mrl, options)) {
+    public boolean play(String mrl, String... options) {
+        if (prepare(mrl, options)) {
             return play();
         } else {
             return false;
@@ -107,9 +105,8 @@ public final class MediaService extends BaseService {
      * @param options
      * @return
      */
-    // FIXME pending rename start()
-    public boolean startMedia(String mrl, String... options) {
-        if (prepareMedia(mrl, options)) {
+    public boolean start(String mrl, String... options) {
+        if (prepare(mrl, options)) {
             return start();
         } else {
             return false;

@@ -204,7 +204,7 @@ public class StatsTest extends VlcjTest {
     }
 
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
     }
 
     private void updateStats(MediaStatistics stats) {

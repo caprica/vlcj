@@ -131,7 +131,7 @@ public class OverlayTest extends VlcjTest {
         mediaPlayer.overlay().setOverlay(new Overlay(f));
         mediaPlayer.overlay().enableOverlay(true);
 
-        mediaPlayer.media().playMedia(mrl);
+        mediaPlayer.media().play(mrl);
 
         XFullScreenStrategy strategy = new XFullScreenStrategy(f);
         strategy.enterFullScreenMode();

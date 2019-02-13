@@ -146,14 +146,14 @@ public class DropPlayer extends VlcjTest {
                         if(uris.length > 0) {
                             // Play the first MRL that was dropped (the others are discarded)
                             String uri = uris[0];
-                            mediaPlayer.media().playMedia(uri);
+                            mediaPlayer.media().play(uri);
                         }
                         return true;
                     }
                     else if(transferData instanceof URL) {
                         URL value = (URL)transferData;
                         String uri = value.toExternalForm();
-                        mediaPlayer.media().playMedia(uri);
+                        mediaPlayer.media().play(uri);
                     }
                     else if(transferData instanceof List) {
                         List<?> value = (List<?>)transferData;
@@ -161,7 +161,7 @@ public class DropPlayer extends VlcjTest {
                             // Play the first MRL that was dropped (the others are discarded)
                             File file = (File)value.get(0);
                             String uri = file.getAbsolutePath();
-                            mediaPlayer.media().playMedia(uri);
+                            mediaPlayer.media().play(uri);
                         }
                     }
                 }

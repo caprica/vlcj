@@ -71,7 +71,7 @@ public class VolumeTestPlayer extends VlcjTest {
         Thread.sleep(3000);
 
         for(File file : files) {
-            mediaPlayer.media().playMedia(file.getAbsolutePath());
+            mediaPlayer.media().play(file.getAbsolutePath());
             Thread.sleep(500);
             mediaPlayer.chapters().setChapter(4);
             Thread.sleep(2000);

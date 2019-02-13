@@ -26,10 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
-
-import static uk.co.caprica.vlcj.component.MediaPlayerSpecs.embeddedMediaPlayerSpec;
 
 /**
  * An absolute minimum test player.
@@ -59,7 +56,7 @@ public class MinimalTestPlayer extends VlcjTest {
         f.setContentPane(mediaPlayerComponent);
         f.setVisible(true);
 
-        mediaPlayerComponent.getMediaPlayer().media().playMedia(args[0]);
+        mediaPlayerComponent.getMediaPlayer().media().play(args[0]);
 
         Thread.currentThread().join();
     }

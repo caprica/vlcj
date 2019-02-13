@@ -24,7 +24,6 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
 
 import java.util.Collection;
@@ -34,7 +33,7 @@ import java.util.Collection;
  * <p>
  * When using VLC options/arguments, generally any options that enable/disable modules (e.g. video/audio filters) must
  * be set via the factory instance and not when invoking
- * {@link uk.co.caprica.vlcj.player.base.MediaService#playMedia(String, String...)}. However, the filter-specific
+ * {@link uk.co.caprica.vlcj.player.base.MediaService#play(String, String...)}. However, the filter-specific
  * options <em>may</em> be able to be passed and be effective via a playMedia call.
  * <p>
  * The factory will attempt to automatically discover the location of the required LibVLC native library, so it should

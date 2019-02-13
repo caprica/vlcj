@@ -76,7 +76,7 @@ public class XFullScreenPlayerTest extends VlcjTest {
 
         frame.setVisible(true);
 
-        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
         mediaPlayerComponent.getMediaPlayer().fullScreen().setFullScreen(true);
     }
 

@@ -119,6 +119,6 @@ public class ExclusiveFullScreenTest extends VlcjTest {
         // need to provide a way to choose the desired screen device here
         GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(f);
 
-        mediaPlayer.media().playMedia(args[0]);
+        mediaPlayer.media().play(args[0]);
     }
 }

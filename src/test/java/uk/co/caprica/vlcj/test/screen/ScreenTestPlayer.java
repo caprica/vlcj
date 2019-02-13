@@ -106,6 +106,6 @@ public class ScreenTestPlayer extends VlcjTest {
             ":screen-caching=100"
         };
 
-        mediaPlayer.media().playMedia(mrl, options);
+        mediaPlayer.media().play(mrl, options);
     }
 }

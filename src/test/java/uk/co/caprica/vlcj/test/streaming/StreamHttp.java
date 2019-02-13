@@ -43,7 +43,7 @@ public class StreamHttp extends VlcjTest {
 
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(args);
         MediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newMediaPlayer();
-        mediaPlayer.media().playMedia(media, options);
+        mediaPlayer.media().play(media, options);
 
         // Don't exit
         Thread.currentThread().join();

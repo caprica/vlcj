@@ -163,6 +163,6 @@ public class VisualisationPlayer extends VlcjTest {
 
     private void doPlay() {
         String[] options = {"audio-visual=visual", "effect-list=" + comboBox.getSelectedItem(), "effect-width=" + widthTextField.getText(), "effect-height=" + heightTextField.getText()};
-        mediaPlayer.media().playMedia(mrl, options);
+        mediaPlayer.media().play(mrl, options);
     }
 }

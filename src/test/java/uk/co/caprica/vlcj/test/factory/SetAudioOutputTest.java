@@ -222,7 +222,7 @@ public class SetAudioOutputTest extends VlcjTest {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.media().playMedia(mrl);
+                mediaPlayer.media().play(mrl);
             }
         });
     }

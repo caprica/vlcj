@@ -379,7 +379,7 @@ public class PlayerControlsPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.overlay().enableOverlay(false);
                 if(JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(PlayerControlsPanel.this)) {
-                    mediaPlayer.media().playMedia(fileChooser.getSelectedFile().getAbsolutePath());
+                    mediaPlayer.media().play(fileChooser.getSelectedFile().getAbsolutePath());
                 }
                 mediaPlayer.overlay().enableOverlay(true);
             }
@@ -391,7 +391,7 @@ public class PlayerControlsPanel extends JPanel {
                 mediaPlayer.overlay().enableOverlay(false);
                 String mediaUrl = JOptionPane.showInputDialog(PlayerControlsPanel.this, "Enter a media URL", "Connect to media", JOptionPane.QUESTION_MESSAGE);
                 if(mediaUrl != null && mediaUrl.length() > 0) {
-                    mediaPlayer.media().playMedia(mediaUrl);
+                    mediaPlayer.media().play(mediaUrl);
                 }
                 mediaPlayer.overlay().enableOverlay(true);
             }

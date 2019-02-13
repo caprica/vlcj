@@ -103,7 +103,7 @@ public class DirectTestPlayer extends VlcjTest {
         mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
         mediaPlayer.videoSurface().setVideoSurface(factory.videoSurfaces().newVideoSurface(new TestBufferFormatCallback(), new TestRenderCallback(), true));
 
-        mediaPlayer.media().playMedia(media);
+        mediaPlayer.media().play(media);
     }
 
     public static void main(String[] args) throws Exception {

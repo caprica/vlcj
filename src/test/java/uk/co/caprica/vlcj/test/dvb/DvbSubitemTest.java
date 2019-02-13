@@ -78,7 +78,7 @@ public class DvbSubitemTest extends VlcjTest {
             }
         });
 
-        mediaPlayer.media().playMedia(args[0]);
+        mediaPlayer.media().play(args[0]);
 
         Thread.currentThread().join();
     }

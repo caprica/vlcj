@@ -69,7 +69,7 @@ public class ConditionMetaTest extends VlcjTest {
         // audio and video outputs so there will be no visible/audible sign of
         // the media playing
 
-        mediaPlayer.media().prepareMedia(mrl);
+        mediaPlayer.media().prepare(mrl);
 
         Media media = mediaPlayer.media().newMedia();
 

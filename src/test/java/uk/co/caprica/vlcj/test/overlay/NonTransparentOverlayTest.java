@@ -160,6 +160,6 @@ public class NonTransparentOverlayTest extends VlcjTest {
 
     private void start(String mrl) {
         f.setVisible(true);
-        mediaPlayer.media().playMedia(mrl);
+        mediaPlayer.media().play(mrl);
     }
 }

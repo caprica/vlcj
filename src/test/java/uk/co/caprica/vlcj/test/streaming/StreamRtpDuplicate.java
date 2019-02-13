@@ -67,7 +67,7 @@ public class StreamRtpDuplicate extends VlcjTest {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
 
-        mediaPlayer.media().playMedia(media,
+        mediaPlayer.media().play(media,
             options,
             ":no-sout-rtp-sap",
             ":no-sout-standard-sap",

@@ -111,7 +111,7 @@ public class DirectAudioPlayerTest extends VlcjTest {
      * @param mrl media resource locator
      */
     private void start(String mrl) {
-        audioPlayer.media().playMedia(mrl);
+        audioPlayer.media().play(mrl);
 
         System.out.println("Waiting for finished...");
 

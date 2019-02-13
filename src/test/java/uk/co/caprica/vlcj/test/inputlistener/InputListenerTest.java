@@ -123,7 +123,7 @@ public class InputListenerTest extends VlcjTest {
     }
 
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
     }
 
     private class MouseHandler extends MouseAdapter {

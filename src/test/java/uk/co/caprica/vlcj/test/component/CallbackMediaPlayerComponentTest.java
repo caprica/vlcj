@@ -114,7 +114,7 @@ public class CallbackMediaPlayerComponentTest extends VlcjTest {
      * @param mrl mrl
      */
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
     }
 
 }

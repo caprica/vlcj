@@ -82,7 +82,7 @@ public class RipAudioTest extends VlcjTest {
         // encoding results you want. Of course "dummy" is not a real video codec
         // but specifying it here prevents any video output being created (there
         // may be a better way)
-        mediaPlayer.media().playMedia(args[0], "sout=#transcode{acodec=mp3,channels=2,ab=192,samplerate=44100,vcodec=dummy}:standard{dst=" + args[1] + ",mux=raw,access=file}");
+        mediaPlayer.media().play(args[0], "sout=#transcode{acodec=mp3,channels=2,ab=192,samplerate=44100,vcodec=dummy}:standard{dst=" + args[1] + ",mux=raw,access=file}");
 
         try {
             // Wait here until finished or error

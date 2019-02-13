@@ -104,7 +104,7 @@ public class ScreenRecorder extends VlcjTest {
 
     private void go(String destination) {
         frame.setState(JFrame.ICONIFIED);
-        mediaPlayer.media().playMedia(MRL, getMediaOptions(destination));
+        mediaPlayer.media().play(MRL, getMediaOptions(destination));
     }
 
     private void stop() {

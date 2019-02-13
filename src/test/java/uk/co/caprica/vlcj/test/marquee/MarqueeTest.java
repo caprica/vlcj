@@ -103,7 +103,7 @@ public class MarqueeTest extends VlcjTest {
 
     public void start(String mrl) {
         frame.setVisible(true);
-        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
     }
 
     @SuppressWarnings("serial")

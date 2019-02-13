@@ -87,7 +87,7 @@ public class ThumbsTest extends VlcjTest {
             }
         });
 
-        if (mediaPlayer.media().startMedia(mrl)) {
+        if (mediaPlayer.media().start(mrl)) {
             mediaPlayer.controls().setPosition(VLC_THUMBNAIL_POSITION);
             inPositionLatch.await(); // Might wait forever if error
 

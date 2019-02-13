@@ -160,7 +160,7 @@ public class YouTubePlayer extends VlcjTest {
     }
 
     private void play() {
-        mediaPlayer.media().prepareMedia(urlTextField.getText());
+        mediaPlayer.media().prepare(urlTextField.getText());
         mediaPlayer.media().events().addMediaEventListener(new MediaEventAdapter() {
             @Override
             public void mediaSubItemAdded(Media media, MediaRef newChild) {

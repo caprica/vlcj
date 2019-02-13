@@ -153,7 +153,7 @@ public class RipDvdTest extends VlcjTest {
         System.out.println("          MRL: " + mrl);
         System.out.println("Media Options: " + mediaOptions);
 
-        boolean started = mediaPlayer.media().startMedia(mrl, mediaOptions);
+        boolean started = mediaPlayer.media().start(mrl, mediaOptions);
 
         if(!started) {
             System.out.println("Failed to start");

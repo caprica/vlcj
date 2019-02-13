@@ -113,7 +113,7 @@ public class FullScreenMultiMediaTest extends VlcjTest {
             public void actionPerformed(ActionEvent e) {
                 currentIndex ++ ;
                 if(currentIndex < files.size()) {
-                    mediaPlayer.media().playMedia(files.get(currentIndex).getAbsolutePath());
+                    mediaPlayer.media().play(files.get(currentIndex).getAbsolutePath());
                 }
             }
         });
@@ -125,7 +125,7 @@ public class FullScreenMultiMediaTest extends VlcjTest {
             System.exit(1);
         }
 
-        mediaPlayer.media().playMedia(files.get(0).getAbsolutePath());
+        mediaPlayer.media().play(files.get(0).getAbsolutePath());
     }
 
     private static List<File> scan(File root) {

@@ -119,7 +119,7 @@ public class DialogsTest extends VlcjTest {
             }
         });
 
-        boolean started = mediaPlayer.media().playMedia(mrl);
+        boolean started = mediaPlayer.media().play(mrl);
         System.out.println("started=" + started);
 
         Thread.currentThread().join();

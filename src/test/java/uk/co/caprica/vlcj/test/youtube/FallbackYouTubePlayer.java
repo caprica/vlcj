@@ -94,7 +94,7 @@ public class FallbackYouTubePlayer extends VlcjTest {
                 if(subitems != null && !subitems.isEmpty()) {
                     // Pick the first sub-item, and play it...
                     String subitemMrl = subitems.get(0);
-                    mediaPlayer.media().playMedia(subitemMrl);
+                    mediaPlayer.media().play(subitemMrl);
                     // What will happen next...
                     //
                     // 1. if the vlc lua script finds the streaming MRL via the normal i.e.
@@ -129,6 +129,6 @@ public class FallbackYouTubePlayer extends VlcjTest {
     }
 
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
     }
 }

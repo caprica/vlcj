@@ -131,6 +131,6 @@ public class CaptureTest extends VlcjTest {
         // capture device (ALSA is not likely to work on Windows of course)
         String[] options = {":sout=#transcode{vcodec=mp4v,vb=4096,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=file{dst=" + fileName + "},dst=display}", ":input-slave=alsa://hw:0,0"};
 
-        mediaPlayer.media().playMedia(mrl, options);
+        mediaPlayer.media().play(mrl, options);
     }
 }

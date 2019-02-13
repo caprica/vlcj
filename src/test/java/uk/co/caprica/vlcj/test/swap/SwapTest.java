@@ -196,6 +196,6 @@ public class SwapTest extends VlcjTest {
 
     private void start(String mrl) {
         frame.setVisible(true);
-        mediaPlayer.media().playMedia(mrl);
+        mediaPlayer.media().play(mrl);
     }
 }

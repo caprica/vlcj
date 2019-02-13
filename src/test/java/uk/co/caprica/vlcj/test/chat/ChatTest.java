@@ -279,7 +279,7 @@ public class ChatTest extends VlcjTest {
 
                 String[] localOptions = {formatRtpStream(host, port), ":no-sout-rtp-sap", ":no-sout-standard-sap", ":sout-all", ":sout-keep",};
 
-                localMediaPlayer.media().playMedia(mrl, localOptions);
+                localMediaPlayer.media().play(mrl, localOptions);
             }
             else {
                 JOptionPane.showMessageDialog(frame, "You must specify host:port to stream to.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -292,7 +292,7 @@ public class ChatTest extends VlcjTest {
 
     private void receive() {
         String mrl = streamFromTextField.getText();
-        remoteMediaPlayer.media().playMedia("rtp://@" + mrl);
+        remoteMediaPlayer.media().play("rtp://@" + mrl);
     }
 
     private static String formatRtpStream(String serverAddress, int serverPort) {

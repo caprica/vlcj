@@ -149,7 +149,7 @@ public class ViewpointTest {
     }
 
     private void start(String mrl) {
-        mediaPlayer.getMediaPlayer().media().playMedia(mrl);
+        mediaPlayer.getMediaPlayer().media().play(mrl);
     }
 
     private static class MouseHandler extends MouseEventAdapter {

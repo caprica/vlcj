@@ -82,7 +82,7 @@ public class JavaSoundTest extends VlcjTest {
 
         mediaPlayer.audio().callback(FORMAT, RATE, CHANNELS, new JavaSoundCallback(FORMAT, RATE, CHANNELS));
 
-        mediaPlayer.media().playMedia(mrl);
+        mediaPlayer.media().play(mrl);
 
         try {
             sync.await();

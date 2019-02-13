@@ -21,7 +21,6 @@ package uk.co.caprica.vlcj.test.window;
 
 import uk.co.caprica.vlcj.enums.MarqueePosition;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 
@@ -149,7 +148,7 @@ public class WindowSurfaceTest {
         mediaPlayer.marquee().setMarqueeLocation(10, 10);
         mediaPlayer.marquee().enableMarquee(true);
 
-        mediaPlayer.media().prepareMedia(args[0]);
+        mediaPlayer.media().prepare(args[0]);
     }
 
     private void syncVideoSurface() {

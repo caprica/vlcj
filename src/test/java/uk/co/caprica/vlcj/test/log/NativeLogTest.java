@@ -78,7 +78,7 @@ public class NativeLogTest extends VlcjTest {
             }
         });
 
-        mediaPlayerComponent.getMediaPlayer().media().playMedia(args[0]);
+        mediaPlayerComponent.getMediaPlayer().media().play(args[0]);
 
         // Wait for finished/error
         latch.await();

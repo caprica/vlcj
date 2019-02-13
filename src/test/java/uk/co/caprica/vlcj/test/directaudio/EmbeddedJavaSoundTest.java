@@ -71,7 +71,7 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
     }
 
     private void play(String mrl) throws Exception {
-        mediaPlayerComponent.getMediaPlayer().media().playMedia(mrl);
+        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
         mediaPlayerComponent.getMediaPlayer().controls().setPosition(0.98f);
         try {
             sync.await();

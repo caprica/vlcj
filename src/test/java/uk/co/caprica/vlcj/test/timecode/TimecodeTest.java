@@ -89,7 +89,7 @@ public class TimecodeTest extends VlcjTest {
      * @param mrl mrl
      */
     private void start(String mrl) {
-        player.media().playMedia(mrl);
+        player.media().play(mrl);
         showTimecode();
     }
 

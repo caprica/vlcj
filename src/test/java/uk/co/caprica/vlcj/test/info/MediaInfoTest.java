@@ -61,7 +61,7 @@ public class MediaInfoTest extends VlcjTest {
             }
         });
 
-        mediaPlayer.media().prepareMedia(args[0]);
+        mediaPlayer.media().prepare(args[0]);
         mediaPlayer.controls().start();
 
         try {
