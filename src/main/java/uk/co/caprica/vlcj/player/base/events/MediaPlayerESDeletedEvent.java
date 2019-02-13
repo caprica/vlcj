@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player.base.events;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.media_player_es_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 final class MediaPlayerESDeletedEvent extends MediaPlayerEvent {
 

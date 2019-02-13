@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MediaEventAdapter;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 

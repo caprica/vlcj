@@ -183,7 +183,7 @@ when creating a `MediaPlayerFactory`.
 It should also be possible to prevent such network accesses by using appropriate `ParseFlag` values when requesting to
 parse media.
 
-Even with network access disabled, some media covert art may still appear locally (e.g. ~/.cache/vlc) - this does not
+Even with network access disabled, some media cover art may still appear locally (e.g. ~/.cache/vlc) - this does not
 necessarily mean that a remote network request was made for the cover art, rather the art was embedded in the media
 file and extracted to this temporary cache directory.
 

@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.events.MediaPlayerEventFactory;
 
 /**

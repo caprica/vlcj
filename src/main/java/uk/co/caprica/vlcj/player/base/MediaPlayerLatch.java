@@ -22,8 +22,6 @@ package uk.co.caprica.vlcj.player.base;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-
 /**
  * This class implements a mechanism to play a media item and wait for it to start (or wait for it
  * to raise an error instead of starting).

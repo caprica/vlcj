@@ -23,7 +23,7 @@ import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 

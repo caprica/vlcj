@@ -30,7 +30,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
 import uk.co.caprica.vlcj.test.thumbs.ThumbsTest;

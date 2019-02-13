@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.concurrent.Semaphore;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.callback.DefaultAudioCallbackAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;

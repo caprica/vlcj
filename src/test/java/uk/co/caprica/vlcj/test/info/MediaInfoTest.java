@@ -19,9 +19,9 @@
 
 package uk.co.caprica.vlcj.test.info;
 
-import uk.co.caprica.vlcj.player.*;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**

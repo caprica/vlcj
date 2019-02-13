@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.component.AudioPlayerComponent;
 import uk.co.caprica.vlcj.log.LogEventListener;
 import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**

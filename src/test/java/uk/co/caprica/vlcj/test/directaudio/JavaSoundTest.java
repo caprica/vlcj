@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.directaudio;
 
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.callback.AudioCallbackAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;

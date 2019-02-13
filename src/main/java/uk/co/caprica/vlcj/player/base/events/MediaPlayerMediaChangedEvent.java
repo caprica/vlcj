@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.media_player_media_changed;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 final class MediaPlayerMediaChangedEvent extends MediaPlayerEvent {
 

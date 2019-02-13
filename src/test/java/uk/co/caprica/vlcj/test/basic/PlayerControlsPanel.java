@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.test.basic;
 import uk.co.caprica.vlcj.model.LibVlcConst;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 //import uk.co.caprica.vlcj.filefilters.swing.SwingFileFilterFactory;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
@@ -30,7 +30,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

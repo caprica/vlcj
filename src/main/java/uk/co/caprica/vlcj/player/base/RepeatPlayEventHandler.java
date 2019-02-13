@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-
 /**
  * Event listener implementation that handles auto-repeat.
  */

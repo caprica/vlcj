@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.test.factory;
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.enums.DialogQuestionType;
 import uk.co.caprica.vlcj.factory.*;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;

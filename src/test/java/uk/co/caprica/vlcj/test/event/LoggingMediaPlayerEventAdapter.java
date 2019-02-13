@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.test.event;
 
 import uk.co.caprica.vlcj.media.MediaRef;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**

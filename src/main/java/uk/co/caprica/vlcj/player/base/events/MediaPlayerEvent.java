@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.player.base.events;
 
 import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
  * Specification for a media player event.

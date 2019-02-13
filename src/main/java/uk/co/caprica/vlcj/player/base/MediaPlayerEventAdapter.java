@@ -17,13 +17,11 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player;
+package uk.co.caprica.vlcj.player.base;
 
 import javax.swing.SwingUtilities;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.media.MediaRef;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Default implementation of the media player event listener.
