@@ -71,6 +71,8 @@ Major New Features
    in the vast majority of cases
  - API support for multiple logos (in series, not concurrent)
  - logo and marquee now work without having to explicitly enable the respective native modules
+ - there is now better support for media generally (e.g. using media without a media player, for parsing meta data etc),
+   and also better support for media-lists (e.g. it should now be easier to manage your own play-lists)
 
 There have also been a lot of more general improvements to freshen up the codebase, make it more maintainable for the
 future, and to clear some legacy issues that have dogged the project for quite some time.
@@ -78,6 +80,27 @@ future, and to clear some legacy issues that have dogged the project for quite s
 See also [this issue](https://github.com/caprica/vlcj/issues/696) for more information on the changes.
 
 Despite all of these changes, running on JDK 1.6 is still supported!
+
+API Breakage (vlcj-3)
+---------------------
+
+This is the *tenth year* of the project, the API has been pretty much static for that entire time. The codebase has
+evolved gradually and incrementally in that time and resulted often in sub-optimal implementations and choices, as well
+as some generally unwieldy individual classes containing literally thousands of lines of code. Keeping the API fixed for
+those almost ten years also locked in some long-standing architectural issues that simply could not be resolved.
+
+THe decision to break backwards compatibility with the vlcj-3 API was not taken lightly, but the results have been worth
+it. All legacy architectural issues have been resolved, the giant god-classes have been factored to more manageable
+chunks, and ongoing maintenance will be much easier.
+
+The price for these improvements is a lot of API breakage, sorry.
+
+The short version of the situation is that vlcj-4 can *not* be considered a drop-in upgrade for any vlcj-3 applications.
+If you want to move to vlcj-4 with your existing applications, you *will* be impacted, and you may have to make some
+*deep* changes in your own codebase. There is no automatic migration tool.
+
+The longer version of the situation is documented more fully in
+[this ticket](https://github.com/caprica/vlcj/issues/681). 
 
 Building vlcj - sun.misc.Unsafe
 -------------------------------
