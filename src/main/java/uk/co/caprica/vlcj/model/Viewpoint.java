@@ -23,8 +23,6 @@ package uk.co.caprica.vlcj.model;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 
-// FIXME this may not be final public API
-
 public final class Viewpoint {
 
     private final LibVlc libvlc;
