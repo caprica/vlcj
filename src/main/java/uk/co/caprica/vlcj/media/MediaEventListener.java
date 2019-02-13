@@ -22,8 +22,6 @@ package uk.co.caprica.vlcj.media;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.enums.State;
-import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.model.Picture;
 
 // FIXME wrong package
