@@ -184,8 +184,8 @@ It should also be possible to prevent such network accesses by using appropriate
 parse media.
 
 Even with network access disabled, some media cover art may still appear locally (e.g. ~/.cache/vlc) - this does not
-necessarily mean that a remote network request was made for the cover art, rather the art was embedded in the media
-file and extracted to this temporary cache directory.
+necessarily mean that a remote network request was made for the cover art, rather the art that was already embedded in
+the media file was extracted to this temporary cache directory.
 
 In any case, you need to be aware of this issue and inform users of your application about it.
 
