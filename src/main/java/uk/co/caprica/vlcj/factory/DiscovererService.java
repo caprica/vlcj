@@ -39,7 +39,7 @@ public final class DiscovererService extends BaseService {
 
     public List<MediaDiscovererDescription> discoverers(MediaDiscovererCategory category) {
         PointerByReference ref = new PointerByReference();
-        size_t size = libvlc.libvlc_media_discoverer_list_get(instance, category.intValue(), ref);
+        size_t size = libvlc.libvlc_media_discoverer_list_get(libvlcInstance, category.intValue(), ref);
         try {
             int count = size.intValue();
             List<MediaDiscovererDescription> result = new ArrayList<MediaDiscovererDescription>(count);
@@ -59,9 +59,9 @@ public final class DiscovererService extends BaseService {
     }
 
     public MediaDiscoverer discoverer(String name) {
-        libvlc_media_discoverer_t discoverer = libvlc.libvlc_media_discoverer_new(instance, name);
+        libvlc_media_discoverer_t discoverer = libvlc.libvlc_media_discoverer_new(libvlcInstance, name);
         if (discoverer != null) {
-            return new MediaDiscoverer(libvlc, discoverer);
+            return new MediaDiscoverer(libvlc, libvlcInstance, discoverer);
         } else {
             return null;
         }

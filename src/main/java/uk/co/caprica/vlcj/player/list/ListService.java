@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player.list;
 import uk.co.caprica.vlcj.medialist.EventService;
 import uk.co.caprica.vlcj.medialist.ItemService;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.model.MediaListRef;
+import uk.co.caprica.vlcj.medialist.MediaListRef;
 
 public final class ListService extends BaseService {
 

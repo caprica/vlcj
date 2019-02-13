@@ -31,10 +31,10 @@ public class MediaDiscoverer {
 
     private final MediaList mediaList;
 
-    public MediaDiscoverer(LibVlc libvlc, libvlc_media_discoverer_t discoverer) {
+    public MediaDiscoverer(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_discoverer_t discoverer) {
         this.libvlc = libvlc;
         this.discoverer = discoverer;
-        this.mediaList = new MediaList(libvlc, libvlc.libvlc_media_discoverer_media_list(discoverer));
+        this.mediaList = new MediaList(libvlc, libvlcInstance, libvlc.libvlc_media_discoverer_media_list(discoverer));
     }
 
     public boolean start() {

@@ -22,7 +22,6 @@ package uk.co.caprica.vlcj.medialist;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
-import uk.co.caprica.vlcj.model.MediaListRef;
 
 /**
  *
@@ -37,7 +36,7 @@ public final class MediaListFactory {
      * @return
      */
     public static MediaListRef newMediaListRef(LibVlc libvlc, libvlc_instance_t libvlcInstance) {
-        return createMediaListRef(libvlc, libvlc.libvlc_media_list_new(libvlcInstance));
+        return createMediaListRef(libvlc, libvlcInstance, libvlc.libvlc_media_list_new(libvlcInstance));
     }
 
     /**
@@ -48,20 +47,20 @@ public final class MediaListFactory {
      * @return
      */
     public static MediaList newMediaList(LibVlc libvlc, libvlc_instance_t libvlcInstance) {
-        return createMediaList(libvlc, libvlc.libvlc_media_list_new(libvlcInstance));
+        return createMediaList(libvlc, libvlcInstance, libvlc.libvlc_media_list_new(libvlcInstance));
     }
 
-    private static MediaListRef createMediaListRef(LibVlc libvlc, libvlc_media_list_t mediaListInstance) {
+    private static MediaListRef createMediaListRef(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_list_t mediaListInstance) {
         if (mediaListInstance != null) {
-            return new MediaListRef(libvlc, mediaListInstance);
+            return new MediaListRef(libvlc, libvlcInstance, mediaListInstance);
         } else {
             return null;
         }
     }
 
-    private static MediaList createMediaList(LibVlc libvlc, libvlc_media_list_t mediaListInstance) {
+    private static MediaList createMediaList(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_list_t mediaListInstance) {
         if (mediaListInstance != null) {
-            return new MediaList(libvlc, mediaListInstance);
+            return new MediaList(libvlc, libvlcInstance, mediaListInstance);
         } else {
             return null;
         }

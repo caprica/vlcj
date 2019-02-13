@@ -71,7 +71,7 @@ public final class ApplicationService extends BaseService {
      * @param httpUserAgent application name for HTTP
      */
     public void setUserAgent(String userAgent, String httpUserAgent) {
-        libvlc.libvlc_set_user_agent(instance, userAgent, httpUserAgent);
+        libvlc.libvlc_set_user_agent(libvlcInstance, userAgent, httpUserAgent);
     }
 
     /**
@@ -82,7 +82,7 @@ public final class ApplicationService extends BaseService {
      * @param icon path to application icon
      */
     public void setApplicationId(String id, String version, String icon) {
-        libvlc.libvlc_set_app_id(instance, id, version, icon);
+        libvlc.libvlc_set_app_id(libvlcInstance, id, version, icon);
     }
 
     /**
@@ -91,7 +91,7 @@ public final class ApplicationService extends BaseService {
      * @return native log component, or <code>null</code> if the native log is not available
      */
     public NativeLog newLog() {
-        return new NativeLog(libvlc, instance);
+        return new NativeLog(libvlc, libvlcInstance);
     }
 
     /**

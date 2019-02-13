@@ -23,12 +23,12 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventAdapter;
-import uk.co.caprica.vlcj.model.MediaListRef;
+import uk.co.caprica.vlcj.medialist.MediaListRef;
+import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
-import uk.co.caprica.vlcj.test.event.LoggingMediaListPlayerEventAdapter;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -75,9 +75,11 @@ public class TestMediaListPlayer extends VlcjTest {
         this.mediaList          = mediaPlayerFactory.media().newMediaList();
         this.mediaListPlayer    = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
 
-        mediaList.items().addMedia(mediaPlayerFactory.media().newMedia("https://www.youtube.com/watch?v=zGt444zwSAM"));
+        MediaRef mediaRef = mediaPlayerFactory.media().newMediaRef("https://www.youtube.com/watch?v=zGt444zwSAM");
+        mediaList.items().add(mediaRef);
+        mediaRef.release();
 
-        MediaListRef mediaListRef = mediaList.mediaListRef();
+        MediaListRef mediaListRef = mediaList.newMediaListRef();
         try {
             mediaListPlayer.list().setMediaList(mediaListRef);
         }
@@ -194,7 +196,7 @@ public class TestMediaListPlayer extends VlcjTest {
                 @Override
                 protected void onMediaDropped(String[] uris) {
                     for (String uri : uris) {
-                        mediaList.items().addMedia(mediaPlayerFactory.media().newMedia(uri));
+                        mediaList.items().add(uri);
                     }
                     System.out.println("IS READ ONLY RETURNS " + mediaList.items().isReadOnly());
                 }

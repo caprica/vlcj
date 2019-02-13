@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.model.MediaListRef;
+import uk.co.caprica.vlcj.medialist.MediaListRef;
 import uk.co.caprica.vlcj.player.list.ControlsService;
 import uk.co.caprica.vlcj.player.list.DefaultMediaListPlayer;
 import uk.co.caprica.vlcj.player.list.EventService;
@@ -87,7 +87,7 @@ public final class SubitemService extends BaseService {
         // playing correctly
         mediaListPlayer.controls().stop();
 
-        MediaListRef mediaListRef = new MediaListRef(libvlc, libvlc.libvlc_media_subitems(media));
+        MediaListRef mediaListRef = new MediaListRef(libvlc, libvlcInstance, libvlc.libvlc_media_subitems(media));
         try {
             mediaListPlayer.list().setMediaList(mediaListRef);
         }

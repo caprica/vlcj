@@ -31,7 +31,7 @@ import uk.co.caprica.vlcj.media.ParseService;
 import uk.co.caprica.vlcj.media.SlaveService;
 import uk.co.caprica.vlcj.media.SubitemService;
 import uk.co.caprica.vlcj.media.UserDataService;
-import uk.co.caprica.vlcj.model.MediaRef;
+import uk.co.caprica.vlcj.media.MediaRef;
 
 /**
  *
@@ -133,9 +133,6 @@ public final class MediaService extends BaseService {
     /**
      *
      * <p>
-     * Internally the supplied native media instance is duplicated and any supplied <code>options</code> are added only
-     * to this duplicate.
-     * <p>
      * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
      * caller no longer has any use for it.
      *
@@ -144,16 +141,11 @@ public final class MediaService extends BaseService {
      * @return
      */
     public boolean prepare(MediaRef mediaRef, String... options) {
-        // The new Media instance is NOT created via the newMedia method on the supplied instance as we prefer to create
-        // a duplicate native media instance rather than simply retain it as that method does
-        return changeMedia(MediaFactory.newMedia(libvlc, mediaRef, options));
+        return changeMedia(MediaFactory.newMedia(libvlc, libvlcInstance, mediaRef, options));
     }
 
     /**
      *
-     * <p>
-     * Internally the supplied native media instance is duplicated and any supplied <code>options</code> are added only
-     * to this duplicate.
      * <p>
      * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
      * caller no longer has any use for it.
@@ -172,9 +164,6 @@ public final class MediaService extends BaseService {
 
     /**
      *
-     * <p>
-     * Internally the supplied native media instance is duplicated and any supplied <code>options</code> are added only
-     * to this duplicate.
      * <p>
      * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
      * caller no longer has any use for it.

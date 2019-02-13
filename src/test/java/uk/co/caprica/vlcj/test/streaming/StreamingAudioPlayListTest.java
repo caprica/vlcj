@@ -28,10 +28,9 @@ import java.util.List;
 
 import uk.co.caprica.vlcj.enums.PlaybackMode;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.model.MediaListRef;
+import uk.co.caprica.vlcj.medialist.MediaListRef;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -106,16 +105,13 @@ public class StreamingAudioPlayListTest extends VlcjTest {
         // Prepare the media options for streaming
         String mediaOptions = formatRtpStream(address, port);
         // Add each media file to the play-list...
-        for(File file : files) {
-            // You could instead set standard options on the media list player rather
-            // than setting options each time you add media
-            Media media = factory.media().newMedia(file.getAbsolutePath(), mediaOptions);
-            playList.items().addMedia(media);
+        for (File file : files) {
+            playList.items().add(file.getAbsolutePath(), mediaOptions);
         }
         // Loop the play-list over and over
         mediaListPlayer.mode().setMode(PlaybackMode.LOOP);
         // Attach the play-list to the media list player
-        MediaListRef playlistRef = playList.mediaListRef();
+        MediaListRef playlistRef = playList.newMediaListRef();
         try {
             mediaListPlayer.list().setMediaList(playlistRef);
         }

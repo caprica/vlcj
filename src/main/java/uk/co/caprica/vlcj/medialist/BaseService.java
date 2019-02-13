@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.medialist;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 
 abstract class BaseService {
@@ -28,11 +29,14 @@ abstract class BaseService {
 
     protected final LibVlc libvlc;
 
+    protected final libvlc_instance_t libvlcInstance;
+
     protected final libvlc_media_list_t mediaListInstance;
 
     BaseService(MediaList mediaList) {
         this.mediaList = mediaList;
         this.libvlc = mediaList.libvlc;
+        this.libvlcInstance = mediaList.libvlcInstance;
         this.mediaListInstance = mediaList.mediaListInstance();
     }
 

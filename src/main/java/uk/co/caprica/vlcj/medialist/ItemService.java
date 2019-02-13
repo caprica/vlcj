@@ -20,20 +20,107 @@
 package uk.co.caprica.vlcj.medialist;
 
 import uk.co.caprica.vlcj.binding.internal.*;
+import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.media.MediaFactory;
+import uk.co.caprica.vlcj.media.MediaRef;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// FIXME consider rename
-// FIXME really need to understand what's ref-counted when here... when adding / removing items
-// FIXME is this really MediaService?
+// FIXME consider rename, is this really MediaService? (would match the Media component i suppose)
 
 public class ItemService extends BaseService {
 
     ItemService(MediaList mediaList) {
         super(mediaList);
+    }
+
+    public boolean add(String mrl, String... options) {
+        return add(MediaFactory.newMediaRef(libvlc, libvlcInstance, mrl, options));
+    }
+
+    public boolean add(CallbackMedia callbackMedia, String... options) {
+        return add(MediaFactory.newMediaRef(libvlc, libvlcInstance, callbackMedia, options));
+    }
+
+    public boolean add(MediaRef mediaRef, String... options) {
+        return add(MediaFactory.newMediaRef(libvlc, libvlcInstance, mediaRef, options));
+    }
+
+    private boolean add(MediaRef mediaRef) {
+        if (mediaRef != null && !isReadOnly()) {
+            lock();
+            try {
+                return libvlc.libvlc_media_list_add_media(mediaListInstance, mediaRef.mediaInstance()) == 0;
+            }
+            finally {
+                unlock();
+                mediaRef.release();
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public boolean insert(int index, String mrl, String... options) {
+        return insert(index, MediaFactory.newMediaRef(libvlc, libvlcInstance, mrl, options));
+    }
+
+    public boolean insert(int index, CallbackMedia callbackMedia, String... options) {
+        return insert(index, MediaFactory.newMediaRef(libvlc, libvlcInstance, callbackMedia, options));
+    }
+
+    public boolean insert(int index, MediaRef mediaRef, String... options) {
+        return insert(index, MediaFactory.newMediaRef(libvlc, libvlcInstance, mediaRef, options));
+    }
+
+    private boolean insert(int index, MediaRef mediaRef) {
+        if (mediaRef != null && !isReadOnly()) {
+            lock();
+            try {
+                return libvlc.libvlc_media_list_insert_media(mediaListInstance, mediaRef.mediaInstance(), index) == 0;
+            }
+            finally {
+                unlock();
+                mediaRef.release();
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public boolean remove(int index) {
+        if (!isReadOnly()) {
+            lock();
+            try {
+                return libvlc.libvlc_media_list_remove_index(mediaListInstance, index) == 0;
+            }
+            finally {
+                unlock();
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public boolean clear() {
+        if (!isReadOnly()) {
+            lock();
+            try {
+                int result;
+                do {
+                    result = libvlc.libvlc_media_list_remove_index(mediaListInstance, 0);
+                } while (result == 0);
+                return true;
+            }
+            finally {
+                unlock();
+            }
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -89,62 +176,13 @@ public class ItemService extends BaseService {
         }
     }
 
-    /**
-     * Add a media item to the play-list.
-     *
-     * @param media media to add
-     * @return <code>true</code> if the item was added; <code>false</code> if an error occurred
-     */
-    public boolean addMedia(Media media) {
-        lock();
-        try {
-            return libvlc.libvlc_media_list_add_media(mediaListInstance, media.mediaInstance()) == 0;
-        }
-        finally {
-            unlock();
-        }
-    }
-
-    /**
-     * Insert a media item, with options, to the play-list.
-     *
-     * @param index position at which to insert the media item (counting from zero)
-     * @param media media to insert
-     * @return <code>true</code> if the item was added; <code>false</code> if an error occurred
-     */
-    public boolean insertMedia(int index, Media media) {
-        lock();
-        try {
-            return libvlc.libvlc_media_list_insert_media(mediaListInstance, media.mediaInstance(), index) == 0;
-        }
-        finally {
-            unlock();
-        }
-    }
-
-    /**
-     * Remove a media item from the play-list.
-     *
-     * @param index item to remove (counting from zero)
-     */
-    public boolean removeMedia(int index) {
-        lock();
-        try {
-            // Internally LibVLC is already releasing the media instance
-            return libvlc.libvlc_media_list_remove_index(mediaListInstance, index) == 0;
-        }
-        finally {
-            unlock();
-        }
-    }
-
-    // FIXME....... it should return the same Media instance each time i think... that implies some sort of mirror'd list
-    public Media getMedia(int index) {
+    // client must release MediaRef
+    public MediaRef newMediaRef(int index) {
         lock();
         try {
             libvlc_media_t media = libvlc.libvlc_media_list_item_at_index(mediaListInstance, index);
             if (media != null) {
-                return new Media(libvlc, media);
+                return new MediaRef(libvlc, libvlcInstance, media);
             } else {
                 return null;
             }
@@ -154,21 +192,19 @@ public class ItemService extends BaseService {
         }
     }
 
-    /**
-     * Clear the list.
-     */
-    public void clear() {
-        if (!isReadOnly()) {
-            lock();
-            try {
-                int result;
-                do {
-                    result = libvlc.libvlc_media_list_remove_index(mediaListInstance, 0);
-                } while (result == 0);
+    // client must release Media
+    public Media newMedia(int index) {
+        lock();
+        try {
+            libvlc_media_t media = libvlc.libvlc_media_list_item_at_index(mediaListInstance, index);
+            if (media != null) {
+                return new Media(libvlc, libvlcInstance, media);
+            } else {
+                return null;
             }
-            finally {
-                unlock();
-            }
+        }
+        finally {
+            unlock();
         }
     }
 

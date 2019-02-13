@@ -22,7 +22,6 @@ package uk.co.caprica.vlcj.factory;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.PointerByReference;
-import uk.co.caprica.vlcj.binding.internal.libvlc_chapter_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_rd_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
 import uk.co.caprica.vlcj.binding.support.size_t;
@@ -40,7 +39,7 @@ public final class RendererService extends BaseService {
 
     public List<RendererDiscovererDescription> discoverers() {
         PointerByReference ref = new PointerByReference();
-        size_t size = libvlc.libvlc_renderer_discoverer_list_get(instance, ref);
+        size_t size = libvlc.libvlc_renderer_discoverer_list_get(libvlcInstance, ref);
         try {
             int count = size.intValue();
             List<RendererDiscovererDescription> result = new ArrayList<RendererDiscovererDescription>(count);
@@ -60,7 +59,7 @@ public final class RendererService extends BaseService {
     }
 
     public RendererDiscoverer discoverer(String name) {
-        libvlc_renderer_discoverer_t discoverer = libvlc.libvlc_renderer_discoverer_new(instance, name);
+        libvlc_renderer_discoverer_t discoverer = libvlc.libvlc_renderer_discoverer_new(libvlcInstance, name);
         if (discoverer != null) {
             return new RendererDiscoverer(libvlc, discoverer);
         } else {

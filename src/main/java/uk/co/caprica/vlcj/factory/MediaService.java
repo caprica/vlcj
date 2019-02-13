@@ -24,8 +24,8 @@ import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListFactory;
-import uk.co.caprica.vlcj.model.MediaListRef;
-import uk.co.caprica.vlcj.model.MediaRef;
+import uk.co.caprica.vlcj.medialist.MediaListRef;
+import uk.co.caprica.vlcj.media.MediaRef;
 
 public final class MediaService extends BaseService {
 
@@ -40,7 +40,7 @@ public final class MediaService extends BaseService {
      * @return
      */
     public MediaRef newMediaRef(String mrl, String... options) {
-        return MediaFactory.newMediaRef(libvlc, instance, mrl, options);
+        return MediaFactory.newMediaRef(libvlc, libvlcInstance, mrl, options);
     }
 
     /**
@@ -53,15 +53,15 @@ public final class MediaService extends BaseService {
      * @return
      */
     public MediaRef newMediaRef(CallbackMedia callbackMedia, String... options) {
-        return MediaFactory.newMediaRef(libvlc, instance, callbackMedia, options);
+        return MediaFactory.newMediaRef(libvlc, libvlcInstance, callbackMedia, options);
     }
 
     public MediaRef newMediaRef(Media media, String... options) {
-        return MediaFactory.newMediaRef(libvlc, media, options);
+        return MediaFactory.newMediaRef(libvlc, libvlcInstance, media, options);
     }
 
     public MediaRef newMediaRef(MediaRef mediaRef, String... options) {
-        return MediaFactory.newMediaRef(libvlc, mediaRef, options);
+        return MediaFactory.newMediaRef(libvlc, libvlcInstance, mediaRef, options);
     }
 
     /**
@@ -71,7 +71,7 @@ public final class MediaService extends BaseService {
      * @return
      */
     public Media newMedia(String mrl, String... options) {
-        return MediaFactory.newMedia(libvlc, instance, mrl, options);
+        return MediaFactory.newMedia(libvlc, libvlcInstance, mrl, options);
     }
 
     /**
@@ -84,19 +84,19 @@ public final class MediaService extends BaseService {
      * @return
      */
     public Media newMedia(CallbackMedia callbackMedia, String... options) {
-        return MediaFactory.newMedia(libvlc, instance, callbackMedia, options);
+        return MediaFactory.newMedia(libvlc, libvlcInstance, callbackMedia, options);
     }
 
     public Media newMedia(MediaRef mediaRef, String... options) {
-        return MediaFactory.newMedia(libvlc, mediaRef, options);
+        return MediaFactory.newMedia(libvlc, libvlcInstance, mediaRef, options);
     }
 
     public Media newMedia(Media media, String... options) {
-        return MediaFactory.newMedia(libvlc, media, options);
+        return MediaFactory.newMedia(libvlc, libvlcInstance, media, options);
     }
 
     public MediaListRef newMediaListRef() {
-        return MediaListFactory.newMediaListRef(libvlc, instance);
+        return MediaListFactory.newMediaListRef(libvlc, libvlcInstance);
     }
 
     /**
@@ -105,7 +105,7 @@ public final class MediaService extends BaseService {
      * @return media list instance
      */
     public MediaList newMediaList() {
-        return MediaListFactory.newMediaList(libvlc, instance);
+        return MediaListFactory.newMediaList(libvlc, libvlcInstance);
     }
 
 }

@@ -28,12 +28,12 @@ abstract class BaseService {
 
     protected final LibVlc libvlc;
 
-    protected final libvlc_instance_t instance;
+    protected final libvlc_instance_t libvlcInstance;
 
     BaseService(MediaPlayerFactory factory) {
-        this.factory  = factory;
-        this.libvlc   = factory.libvlc();
-        this.instance = factory.instance();
+        this.factory        = factory;
+        this.libvlc         = factory.libvlc();
+        this.libvlcInstance = factory.instance();
     }
 
     protected void release() {

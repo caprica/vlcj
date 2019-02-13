@@ -34,7 +34,7 @@ public class SubitemService extends BaseService {
     public MediaList get() {
         libvlc_media_list_t list = libvlc.libvlc_media_subitems(mediaInstance);
         if (list != null) {
-            return new MediaList(libvlc, list);
+            return new MediaList(libvlc, libvlcInstance, list);
         } else {
             return null;
         }

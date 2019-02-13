@@ -43,7 +43,7 @@ public final class MediaPlayerService extends BaseService {
      * @return media player instance
      */
     public DefaultMediaPlayer newMediaPlayer() {
-        return new DefaultMediaPlayer(libvlc, instance);
+        return new DefaultMediaPlayer(libvlc, libvlcInstance);
     }
 
     /**
@@ -52,7 +52,7 @@ public final class MediaPlayerService extends BaseService {
      * @return media player instance
      */
     public EmbeddedMediaPlayer newEmbeddedMediaPlayer() {
-        return new DefaultEmbeddedMediaPlayer(libvlc, instance);
+        return new DefaultEmbeddedMediaPlayer(libvlc, libvlcInstance);
     }
 
     /**
@@ -61,7 +61,7 @@ public final class MediaPlayerService extends BaseService {
      * @return media player instance
      */
     public MediaListPlayer newMediaListPlayer() {
-        return new DefaultMediaListPlayer(libvlc, instance);
+        return new DefaultMediaListPlayer(libvlc, libvlcInstance);
     }
 
 }

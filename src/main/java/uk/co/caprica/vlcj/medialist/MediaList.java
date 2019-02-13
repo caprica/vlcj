@@ -20,11 +20,8 @@
 package uk.co.caprica.vlcj.medialist;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
-import uk.co.caprica.vlcj.model.MediaListRef;
-
-// FIXME developer note - when you do insert, or remove, LibVLC is doing retain and release on the media instance, so we don't need to. we need to really nail down when retain and release are needed
-// FIXME should this be done with services etc like Media ? yes, not currently sure about what has gone where
 
 public final class MediaList {
 
@@ -33,10 +30,12 @@ public final class MediaList {
      */
     protected final LibVlc libvlc;
 
+    protected final libvlc_instance_t libvlcInstance;
+
     /**
      * Native media list instance.
      */
-    protected final libvlc_media_list_t mediaList;
+    protected final libvlc_media_list_t mediaListInstance;
 
     private final ItemService  itemService;
     private final EventService eventService;
@@ -47,9 +46,10 @@ public final class MediaList {
      * @param libvlc
      * @param mediaListInstance native media list, the caller must not release this opaque handle, it will be released by this component when it is no longer needed
      */
-    public MediaList(LibVlc libvlc, libvlc_media_list_t mediaListInstance) {
-        this.libvlc = libvlc;
-        this.mediaList = mediaListInstance;
+    public MediaList(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_list_t mediaListInstance) {
+        this.libvlc            = libvlc;
+        this.libvlcInstance    = libvlcInstance;
+        this.mediaListInstance = mediaListInstance;
 
         this.eventService = new EventService(this);
         this.itemService  = new ItemService (this);
@@ -64,7 +64,7 @@ public final class MediaList {
     }
 
     public libvlc_media_list_t mediaListInstance() {
-        return mediaList;
+        return mediaListInstance;
     }
 
     /**
@@ -74,15 +74,21 @@ public final class MediaList {
      *
      * @return
      */
-    public MediaListRef mediaListRef() {
-        return new MediaListRef(libvlc, mediaList);
+    public MediaListRef newMediaListRef() {
+        libvlc.libvlc_media_list_retain(mediaListInstance);
+        return new MediaListRef(libvlc, libvlcInstance, mediaListInstance);
+    }
+
+    public MediaList newMediaList() {
+        libvlc.libvlc_media_list_retain(mediaListInstance);
+        return new MediaList(libvlc, libvlcInstance, mediaListInstance);
     }
 
     public void release() {
         eventService.release();
         itemService .release();
 
-        libvlc.libvlc_media_list_release(mediaList);
+        libvlc.libvlc_media_list_release(mediaListInstance);
     }
 
 }

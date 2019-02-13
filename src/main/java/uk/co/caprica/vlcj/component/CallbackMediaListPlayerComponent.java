@@ -22,14 +22,13 @@ package uk.co.caprica.vlcj.component;
 import uk.co.caprica.vlcj.component.callback.CallbackImagePainter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.model.MediaListRef;
+import uk.co.caprica.vlcj.medialist.MediaListRef;
 import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 import javax.swing.*;
-import java.awt.*;
 
 @SuppressWarnings("serial")
 public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerComponentBase {
@@ -79,7 +78,7 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
     }
 
     private void applyMediaList() {
-        MediaListRef mediaListRef = mediaList.mediaListRef();
+        MediaListRef mediaListRef = mediaList.newMediaListRef();
         try {
             this.mediaListPlayer.list().setMediaList(mediaListRef);
         }

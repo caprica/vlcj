@@ -20,8 +20,8 @@
 package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.model.MediaRef;
 
 /**
  * Encapsulation of a native media instance.
@@ -32,6 +32,8 @@ public final class Media {
      * Native library.
      */
     protected final LibVlc libvlc;
+
+    protected final libvlc_instance_t libvlcInstance;
 
     /**
      * Native media instance.
@@ -61,9 +63,10 @@ public final class Media {
      * @param libvlc native library
      * @param media native media instance
      */
-    public Media(LibVlc libvlc, libvlc_media_t media) {
-        this.libvlc        = libvlc;
-        this.mediaInstance = media;
+    public Media(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_t media) {
+        this.libvlc         = libvlc;
+        this.libvlcInstance = libvlcInstance;
+        this.mediaInstance  = media;
 
         this.eventService    = new EventService   (this);
         this.infoService     = new InfoService    (this);
@@ -113,7 +116,7 @@ public final class Media {
 
     public MediaRef newMediaRef() {
         libvlc.libvlc_media_retain(mediaInstance);
-        return new MediaRef(libvlc, mediaInstance);
+        return new MediaRef(libvlc, libvlcInstance, mediaInstance);
     }
 
     /**
@@ -125,7 +128,7 @@ public final class Media {
      */
     public Media newMedia() {
         libvlc.libvlc_media_retain(mediaInstance);
-        return new Media(libvlc, mediaInstance);
+        return new Media(libvlc, libvlcInstance, mediaInstance);
     }
 
     public void release() {

@@ -44,7 +44,7 @@ public final class AudioService extends BaseService {
      */
     public List<AudioOutput> audioOutputs() {
         List<AudioOutput> result = new ArrayList<AudioOutput>();
-        libvlc_audio_output_t audioOutputs = libvlc.libvlc_audio_output_list_get(instance);
+        libvlc_audio_output_t audioOutputs = libvlc.libvlc_audio_output_list_get(libvlcInstance);
         if (audioOutputs != null) {
             libvlc_audio_output_t audioOutput = audioOutputs;
             while (audioOutput != null) {
@@ -66,7 +66,7 @@ public final class AudioService extends BaseService {
      */
     private List<AudioDevice> getAudioOutputDevices(String outputName) {
         List<AudioDevice> result = new ArrayList<AudioDevice>();
-        libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_list_get(instance, outputName);
+        libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_list_get(libvlcInstance, outputName);
         if (audioDevices != null) {
             libvlc_audio_output_device_t audioDevice = audioDevices;
             while(audioDevice != null) {

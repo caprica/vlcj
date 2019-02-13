@@ -40,11 +40,11 @@ public final class DialogsService extends BaseService {
     }
 
     public void enable(Dialogs dialogs, Pointer userData) {
-        libvlc.libvlc_dialog_set_callbacks(instance, dialogs.callbacks(), userData);
+        libvlc.libvlc_dialog_set_callbacks(libvlcInstance, dialogs.callbacks(), userData);
     }
 
     public void disable(Pointer userData) {
-        libvlc.libvlc_dialog_set_callbacks(instance, null, userData);
+        libvlc.libvlc_dialog_set_callbacks(libvlcInstance, null, userData);
     }
 
     public boolean postLogin(DialogId id, String username, String password, boolean storeCredentials) {

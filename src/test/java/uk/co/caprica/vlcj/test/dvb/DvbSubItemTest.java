@@ -62,8 +62,11 @@ public class DvbSubItemTest extends VlcjTest {
 
                 MediaList subitems = mediaPlayer.media().subitems().get();
                 for (int i = 0; i < subitems.items().count(); i++) {
-                    Media media = subitems.items().getMedia(i);
-                    System.out.println("title -> " + media.meta().get(Meta.TITLE));
+                    Media media = subitems.items().newMedia(i);
+                    if (media != null) {
+                        System.out.println("title -> " + media.meta().get(Meta.TITLE));
+                        media.release();
+                    }
                 }
                 subitems.release();
 
