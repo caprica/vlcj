@@ -17,15 +17,16 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.media.events;
+package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.enums.State;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.model.Picture;
 
+// FIXME wrong package
 public interface MediaEventListener {
 
     /**
@@ -40,9 +41,9 @@ public interface MediaEventListener {
      * A new sub-item was added to the current media.
      *
      * @param media media that raised the event
-     * @param subItem native sub-item handle
+     * @param newChild native sub-item handle
      */
-    void mediaSubItemAdded(Media media, libvlc_media_t subItem);
+    void mediaSubItemAdded(Media media, MediaRef newChild);
 
     /**
      * The current media duration changed.
@@ -64,8 +65,9 @@ public interface MediaEventListener {
      * The current media was freed.
      *
      * @param media media that raised the event
+     * @param mediaFreed
      */
-    void mediaFreed(Media media);
+    void mediaFreed(Media media, MediaRef mediaFreed);
 
     /**
      * The current media state changed.
@@ -81,11 +83,11 @@ public interface MediaEventListener {
      * @param media media that raised the event
      * @param item media item
      */
-    void mediaSubItemTreeAdded(Media media, libvlc_media_t item);
+    void mediaSubItemTreeAdded(Media media, MediaRef item);
 
     /**
      *
-     *  @param media
+     * @param media
      * @param picture
      */
     void mediaThumbnailGenerated(Media media, Picture picture);

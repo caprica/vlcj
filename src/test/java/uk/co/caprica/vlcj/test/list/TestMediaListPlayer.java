@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.test.list;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventAdapter;
@@ -274,7 +273,7 @@ public class TestMediaListPlayer extends VlcjTest {
         private PlaylistModel() {
             mediaList.events().addMediaListEventListener(new MediaListEventAdapter() {
                 @Override
-                public void mediaListItemAdded(MediaList mediaList, libvlc_media_t mediaInstance, final int index) {
+                public void mediaListItemAdded(MediaList mediaList, MediaRef item, final int index) {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
@@ -284,7 +283,7 @@ public class TestMediaListPlayer extends VlcjTest {
                 }
 
                 @Override
-                public void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, final int index) {
+                public void mediaListItemDeleted(MediaList mediaList, MediaRef item, final int index) {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {

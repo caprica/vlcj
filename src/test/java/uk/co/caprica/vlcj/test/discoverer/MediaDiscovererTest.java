@@ -19,11 +19,11 @@
 
 package uk.co.caprica.vlcj.test.discoverer;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.discoverer.MediaDiscovererDescription;
 import uk.co.caprica.vlcj.enums.MediaDiscovererCategory;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventAdapter;
 
@@ -73,13 +73,13 @@ public class MediaDiscovererTest {
 
             list.events().addMediaListEventListener(new MediaListEventAdapter() {
                 @Override
-                public void mediaListItemAdded(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
-                    System.out.println(name + ": added " + mediaInstance);
+                public void mediaListItemAdded(MediaList mediaList, MediaRef item, int index) {
+                    System.out.println(name + ": added " + item);
                 }
 
                 @Override
-                public void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
-                    System.out.println(name + ": deleted " + mediaInstance);
+                public void mediaListItemDeleted(MediaList mediaList, MediaRef item, int index) {
+                    System.out.println(name + ": deleted " + item);
                 }
             });
 

@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.list;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.media.MediaRef;
 
 /**
  * Specification for a component that is interested in receiving event notifications from the media list player.
@@ -44,11 +44,10 @@ public interface MediaListPlayerEventListener {
 
     /**
      * The media list player started playing the next item in the list.
-     *
-     * @param mediaListPlayer media list player that raised the event
+     *  @param mediaListPlayer media list player that raised the event
      * @param item next item instance
      */
-    void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item);
+    void nextItem(MediaListPlayer mediaListPlayer, MediaRef item);
 
     /**
      * The media list player stopped.

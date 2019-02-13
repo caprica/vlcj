@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.medialist.events;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.media_list_item_deleted;
 import uk.co.caprica.vlcj.medialist.MediaList;
@@ -33,7 +35,7 @@ final class MediaListItemDeletedEvent extends MediaListEvent {
     /**
      * Native media instance that was deleted.
      */
-    private final libvlc_media_t mediaInstance;
+    private final libvlc_media_t item;
 
     /**
      * Index from which the item was deleted.
@@ -47,17 +49,18 @@ final class MediaListItemDeletedEvent extends MediaListEvent {
      * @param mediaInstance native media instance that was deleted
      * @param index index from which the item was deleted
      */
-    MediaListItemDeletedEvent(MediaList mediaList, libvlc_event_t event) {
-        super(mediaList);
+    MediaListItemDeletedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaList mediaList, libvlc_event_t event) {
+        super(libvlc, libvlcInstance, mediaList);
 
         media_list_item_deleted itemDeletedEvent = ((media_list_item_deleted) event.u.getTypedValue(media_list_item_deleted.class));
 
-        this.mediaInstance = itemDeletedEvent.item;
+        this.item = itemDeletedEvent.item;
         this.index         = itemDeletedEvent.index;
     }
 
     @Override
     public void notify(MediaListEventListener listener) {
-        listener.mediaListItemDeleted(mediaList, mediaInstance, index);
+        listener.mediaListItemDeleted(mediaList, temporaryMediaRef(item), index);
     }
+
 }

@@ -20,19 +20,28 @@
 package uk.co.caprica.vlcj.media.events;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.media_freed;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaEventListener;
 
 /**
  *
  */
 final class MediaFreedEvent extends MediaEvent {
 
-    MediaFreedEvent(LibVlc libvlc, Media media) {
-        super(libvlc, media);
+    private final libvlc_media_t md;
+
+    MediaFreedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
+        super(libvlc, libvlcInstance, media);
+        this.md = ((media_freed) event.u.getTypedValue(media_freed.class)).md;
     }
 
     @Override
     public void notify(MediaEventListener listener) {
-        listener.mediaFreed(media);
+        listener.mediaFreed(media, temporaryMediaRef(md));
     }
+
 }

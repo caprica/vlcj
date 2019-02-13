@@ -19,8 +19,10 @@
 
 package uk.co.caprica.vlcj.medialist.events;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 
 /**
@@ -34,15 +36,15 @@ public final class MediaListEventFactory {
      * @param event native event
      * @return media list event, or <code>null</code> if the native event type is not known
      */
-    public static MediaListEvent createEvent(MediaList mediaList, libvlc_event_t event) {
+    public static MediaListEvent createEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaList mediaList, libvlc_event_t event) {
         switch(libvlc_event_e.event(event.type)) {
-            case libvlc_MediaListWillAddItem   : return new MediaListWillAddItemEvent   (mediaList, event);
-            case libvlc_MediaListItemAdded     : return new MediaListItemAddedEvent     (mediaList, event);
-            case libvlc_MediaListWillDeleteItem: return new MediaListWillDeleteItemEvent(mediaList, event);
-            case libvlc_MediaListItemDeleted   : return new MediaListItemDeletedEvent   (mediaList, event);
-            case libvlc_MediaListEndReached    : return new MediaListEndReachedEvent    (mediaList);
+            case libvlc_MediaListWillAddItem   : return new MediaListWillAddItemEvent   (libvlc, libvlcInstance, mediaList, event);
+            case libvlc_MediaListItemAdded     : return new MediaListItemAddedEvent     (libvlc, libvlcInstance, mediaList, event);
+            case libvlc_MediaListWillDeleteItem: return new MediaListWillDeleteItemEvent(libvlc, libvlcInstance, mediaList, event);
+            case libvlc_MediaListItemDeleted   : return new MediaListItemDeletedEvent   (libvlc, libvlcInstance, mediaList, event);
+            case libvlc_MediaListEndReached    : return new MediaListEndReachedEvent    (libvlc, libvlcInstance, mediaList       );
 
-            default: return null;
+            default                            : return null;
         }
     }
 

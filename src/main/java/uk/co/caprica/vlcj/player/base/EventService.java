@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.media.events.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.events.MediaPlayerEvent;
 
@@ -30,7 +30,7 @@ public final class EventService extends BaseService {
     EventService(DefaultMediaPlayer mediaPlayer) {
         super(mediaPlayer);
 
-        eventManager = new MediaPlayerNativeEventManager(libvlc, mediaPlayer);
+        eventManager = new MediaPlayerNativeEventManager(libvlc, libvlcInstance, mediaPlayer);
 
         // Add event handlers used for internal implementation
         addMediaPlayerEventListener(new RepeatPlayEventHandler      ());

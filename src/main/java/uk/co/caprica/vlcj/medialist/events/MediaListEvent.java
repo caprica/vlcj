@@ -19,7 +19,11 @@
 
 package uk.co.caprica.vlcj.medialist.events;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.eventmanager.EventNotification;
+import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 
@@ -29,6 +33,10 @@ import uk.co.caprica.vlcj.medialist.MediaListEventListener;
  * Every instance of an event refers to an associated media list.
  */
 abstract class MediaListEvent implements EventNotification<MediaListEventListener> {
+
+    protected final LibVlc libvlc;
+
+    protected final libvlc_instance_t libvlcInstance;
 
     /**
      * The media list the event relates to.
@@ -40,8 +48,15 @@ abstract class MediaListEvent implements EventNotification<MediaListEventListene
      *
      * @param mediaList media list that the event relates to
      */
-    protected MediaListEvent(MediaList mediaList) {
+    protected MediaListEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaList mediaList) {
+        this.libvlc = libvlc;
+        this.libvlcInstance = libvlcInstance;
         this.mediaList = mediaList;
+    }
+
+    // FIXME doc no need to release this, since it's transient
+    protected final MediaRef temporaryMediaRef(libvlc_media_t mediaInstance) {
+        return new MediaRef(libvlc, libvlcInstance, mediaInstance);
     }
 
 }

@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.media.events;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.media.Media;
 
 /**
@@ -35,16 +36,16 @@ public final class MediaEventFactory {
      * @param event native event
      * @return media event, or <code>null</code> if the native event type is not known
      */
-    public static MediaEvent createEvent(LibVlc libvlc, Media media, libvlc_event_t event) {
+    public static MediaEvent createEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
         switch(libvlc_event_e.event(event.type)) {
-            case libvlc_MediaMetaChanged           : return new MediaMetaChangedEvent       (libvlc, media, event);
-            case libvlc_MediaSubItemAdded          : return new MediaSubItemAddedEvent      (libvlc, media, event);
-            case libvlc_MediaDurationChanged       : return new MediaDurationChangedEvent   (libvlc, media, event);
-            case libvlc_MediaParsedChanged         : return new MediaParsedChangedEvent     (libvlc, media, event);
-            case libvlc_MediaFreed                 : return new MediaFreedEvent             (libvlc, media);
-            case libvlc_MediaStateChanged          : return new MediaStateChangedEvent      (libvlc, media, event);
-            case libvlc_MediaSubItemTreeAdded      : return new MediaSubItemTreeAddedEvent  (libvlc, media, event);
-            case libvlc_MediaThumbnailGenerated    : return new MediaThumbnailGeneratedEvent(libvlc, media, event);
+            case libvlc_MediaMetaChanged           : return new MediaMetaChangedEvent       (libvlc, libvlcInstance, media, event);
+            case libvlc_MediaSubItemAdded          : return new MediaSubItemAddedEvent      (libvlc, libvlcInstance, media, event);
+            case libvlc_MediaDurationChanged       : return new MediaDurationChangedEvent   (libvlc, libvlcInstance, media, event);
+            case libvlc_MediaParsedChanged         : return new MediaParsedChangedEvent     (libvlc, libvlcInstance, media, event);
+            case libvlc_MediaFreed                 : return new MediaFreedEvent             (libvlc, libvlcInstance, media, event);
+            case libvlc_MediaStateChanged          : return new MediaStateChangedEvent      (libvlc, libvlcInstance, media, event);
+            case libvlc_MediaSubItemTreeAdded      : return new MediaSubItemTreeAddedEvent  (libvlc, libvlcInstance, media, event);
+            case libvlc_MediaThumbnailGenerated    : return new MediaThumbnailGeneratedEvent(libvlc, libvlcInstance, media, event);
 
             default                                : return null;
         }

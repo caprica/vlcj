@@ -21,16 +21,18 @@ package uk.co.caprica.vlcj.media.events;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.binding.internal.media_parsed_changed;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaEventListener;
 
 final class MediaParsedChangedEvent extends MediaEvent {
 
     private final int newStatus;
 
-    MediaParsedChangedEvent(LibVlc libvlc, Media media, libvlc_event_t event) {
-        super(libvlc, media);
+    MediaParsedChangedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
+        super(libvlc, libvlcInstance, media);
         this.newStatus = ((media_parsed_changed) event.u.getTypedValue(media_parsed_changed.class)).new_status;
     }
 
@@ -38,4 +40,5 @@ final class MediaParsedChangedEvent extends MediaEvent {
     public void notify(MediaEventListener listener) {
         listener.mediaParsedChanged(media, MediaParsedStatus.mediaParsedStatus(newStatus));
     }
+
 }

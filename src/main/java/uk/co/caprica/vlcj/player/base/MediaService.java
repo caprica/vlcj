@@ -32,7 +32,7 @@ import uk.co.caprica.vlcj.media.SlaveService;
 import uk.co.caprica.vlcj.media.SubitemService;
 import uk.co.caprica.vlcj.media.UserDataService;
 import uk.co.caprica.vlcj.media.MediaRef;
-import uk.co.caprica.vlcj.media.events.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaEventListener;
 
 import java.util.ArrayList;
 import java.util.List;

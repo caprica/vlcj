@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.medialist;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.media.MediaRef;
 
 /**
  * Specification for a component that is interested in receiving event notifications from
@@ -29,39 +29,35 @@ public interface MediaListEventListener {
 
     /**
      * A new media item will be added to the list.
-     *
-     * @param mediaList list
-     * @param mediaInstance media instance that will be added
+     *  @param mediaList list
+     * @param item media instance that will be added
      * @param index index in the list at which the media instance will be added
      */
-    void mediaListWillAddItem(MediaList mediaList, libvlc_media_t mediaInstance, int index);
+    void mediaListWillAddItem(MediaList mediaList, MediaRef item, int index);
 
     /**
      * A new media item was added to the list.
-     *
-     * @param mediaList list
-     * @param mediaInstance media instance that was added
+     *  @param mediaList list
+     * @param item media instance that was added
      * @param index index in the list at which the media instance was added
      */
-    void mediaListItemAdded(MediaList mediaList, libvlc_media_t mediaInstance, int index);
+    void mediaListItemAdded(MediaList mediaList, MediaRef item, int index);
 
     /**
      * A new media item will be deleted from the list.
-     *
-     * @param mediaList list
-     * @param mediaInstance media instance that will be deleted
+     *  @param mediaList list
+     * @param item media instance that will be deleted
      * @param index index in the list at which the media instance will be deleted
      */
-    void mediaListWillDeleteItem(MediaList mediaList, libvlc_media_t mediaInstance, int index);
+    void mediaListWillDeleteItem(MediaList mediaList, MediaRef item, int index);
 
     /**
      * A new media item was deleted from the list.
-     *
-     * @param mediaList list
-     * @param mediaInstance media instance that was deleted
+     *  @param mediaList list
+     * @param item media instance that was deleted
      * @param index index in the list at which the media instance was deleted
      */
-    void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, int index);
+    void mediaListItemDeleted(MediaList mediaList, MediaRef item, int index);
 
     /**
      * The end of the media list was reached.

@@ -23,14 +23,21 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.eventmanager.NativeEventManager;
 import uk.co.caprica.vlcj.renderer.events.RendererDiscovererEventFactory;
 
+/**
+ *
+ * <p>
+ * For {@link #onCreateEvent(LibVlc, libvlc_instance_t, libvlc_event_t, RendererDiscoverer)} in this component, the
+ * <code>libvlcInstance</code> parameter will be <code>null</code>.
+ */
 final class RendererDiscovererNativeEventManager extends NativeEventManager<RendererDiscoverer, RendererDiscovererEventListener> {
 
     RendererDiscovererNativeEventManager(LibVlc libvlc, RendererDiscoverer eventObject) {
-        super(libvlc, eventObject, libvlc_event_e.libvlc_RendererDiscovererItemAdded, libvlc_event_e.libvlc_RendererDiscovererItemDeleted, "renderer-discoverer-events");
+        super(libvlc, null, eventObject, libvlc_event_e.libvlc_RendererDiscovererItemAdded, libvlc_event_e.libvlc_RendererDiscovererItemDeleted, "renderer-discoverer-events");
     }
 
     @Override
@@ -39,7 +46,7 @@ final class RendererDiscovererNativeEventManager extends NativeEventManager<Rend
     }
 
     @Override
-    protected EventNotification<RendererDiscovererEventListener> onCreateEvent(LibVlc libvlc, libvlc_event_t event, RendererDiscoverer eventObject) {
+    protected EventNotification<RendererDiscovererEventListener> onCreateEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_event_t event, RendererDiscoverer eventObject) {
         return RendererDiscovererEventFactory.createEvent(libvlc, eventObject, event);
     }
 

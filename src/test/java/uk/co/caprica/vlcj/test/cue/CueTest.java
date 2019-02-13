@@ -19,11 +19,11 @@
 
 package uk.co.caprica.vlcj.test.cue;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.component.AudioPlayerComponent;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.events.MediaEventAdapter;
+import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.MediaEventAdapter;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
@@ -63,12 +63,12 @@ public class CueTest extends VlcjTest {
         player.getMediaPlayer().media().prepareMedia(args[0]);
         player.getMediaPlayer().media().events().addMediaEventListener(new MediaEventAdapter() {
             @Override
-            public void mediaSubItemAdded(Media media, libvlc_media_t subItem) {
+            public void mediaSubItemAdded(Media media, MediaRef newChild) {
                 System.out.println("ITEM ADDED");
             }
 
             @Override
-            public void mediaSubItemTreeAdded(Media media, libvlc_media_t item) {
+            public void mediaSubItemTreeAdded(Media media, MediaRef item) {
                 System.out.println("TREE ADDED");
             }
 

@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.media.events.MediaEventListener;
-
 public class EventService extends BaseService {
 
     private final MediaNativeEventManager eventManager;
@@ -28,7 +26,7 @@ public class EventService extends BaseService {
     EventService(Media media) {
         super(media);
 
-        this.eventManager = new MediaNativeEventManager(libvlc, media);
+        this.eventManager = new MediaNativeEventManager(libvlc, libvlcInstance, media);
     }
 
     /**

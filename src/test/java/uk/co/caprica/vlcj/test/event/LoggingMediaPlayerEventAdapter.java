@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.event;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
@@ -31,7 +31,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener {
 
     @Override
-    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
+    public void mediaChanged(MediaPlayer mediaPlayer, MediaRef media) {
         System.out.printf("mediaChanged(mediaPlayer=%s,media=%s)%n", mediaPlayer, media);
     }
 

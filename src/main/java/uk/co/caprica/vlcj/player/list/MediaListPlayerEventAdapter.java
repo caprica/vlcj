@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.list;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.media.MediaRef;
 
 /**
  * Default implementation of the media player event listener.
@@ -33,7 +33,7 @@ public class MediaListPlayerEventAdapter implements MediaListPlayerEventListener
     }
 
     @Override
-    public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
+    public void nextItem(MediaListPlayer mediaListPlayer, MediaRef item) {
     }
 
     @Override

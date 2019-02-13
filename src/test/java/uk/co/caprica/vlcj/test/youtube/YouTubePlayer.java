@@ -19,10 +19,10 @@
 
 package uk.co.caprica.vlcj.test.youtube;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.events.MediaEventAdapter;
+import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.MediaEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -163,7 +163,7 @@ public class YouTubePlayer extends VlcjTest {
         mediaPlayer.media().prepareMedia(urlTextField.getText());
         mediaPlayer.media().events().addMediaEventListener(new MediaEventAdapter() {
             @Override
-            public void mediaSubItemAdded(Media media, libvlc_media_t subItem) {
+            public void mediaSubItemAdded(Media media, MediaRef newChild) {
                 System.out.println("item added");
                 for (String mrl : media.subitems().get().items().mrls()) {
                     System.out.println("mrl=" + mrl);
@@ -171,7 +171,7 @@ public class YouTubePlayer extends VlcjTest {
             }
 
             @Override
-            public void mediaSubItemTreeAdded(Media media, libvlc_media_t item) {
+            public void mediaSubItemTreeAdded(Media media, MediaRef item) {
                 System.out.println("item tree added");
                 for (String mrl : media.subitems().get().items().mrls()) {
                     System.out.println("mrl=" + mrl);

@@ -21,15 +21,17 @@ package uk.co.caprica.vlcj.media.events;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaEventListener;
 
 final class MediaDurationChangedEvent extends MediaEvent {
 
     private final long newDuration;
 
-    MediaDurationChangedEvent(LibVlc libvlc, Media media, libvlc_event_t event) {
-        super(libvlc, media);
+    MediaDurationChangedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
+        super(libvlc, libvlcInstance, media);
         this.newDuration = ((media_duration_changed) event.u.getTypedValue(media_duration_changed.class)).new_duration;
     }
 
@@ -37,4 +39,5 @@ final class MediaDurationChangedEvent extends MediaEvent {
     public void notify(MediaEventListener listener) {
         listener.mediaDurationChanged(media, newDuration);
     }
+
 }

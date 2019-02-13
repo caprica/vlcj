@@ -19,14 +19,14 @@
 
 package uk.co.caprica.vlcj.test.media;
 
-import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.enums.*;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.model.MediaSlave;
 import uk.co.caprica.vlcj.model.TrackInfo;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.media.events.MediaEventAdapter;
+import uk.co.caprica.vlcj.media.MediaEventAdapter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import java.util.List;
@@ -68,7 +68,7 @@ public class MediaTest extends VlcjTest {
             }
 
             @Override
-            public void mediaSubItemAdded(Media media, libvlc_media_t subItem) {
+            public void mediaSubItemAdded(Media media, MediaRef newChild) {
                 System.out.printf("sub item added%n");
             }
 
@@ -99,7 +99,7 @@ public class MediaTest extends VlcjTest {
             }
 
             @Override
-            public void mediaFreed(Media media) {
+            public void mediaFreed(Media media, MediaRef mediaFreed) {
                 System.out.printf("freed%n");
             }
 
@@ -109,7 +109,7 @@ public class MediaTest extends VlcjTest {
             }
 
             @Override
-            public void mediaSubItemTreeAdded(Media media, libvlc_media_t item) {
+            public void mediaSubItemTreeAdded(Media media, MediaRef item) {
                 System.out.printf("sub item tree added%n");
             }
         });

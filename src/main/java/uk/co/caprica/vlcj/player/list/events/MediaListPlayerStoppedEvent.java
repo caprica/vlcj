@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.list.events;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
@@ -31,11 +33,9 @@ final class MediaListPlayerStoppedEvent extends MediaListPlayerEvent {
      * Create a media player event.
      *
      * @param mediaListPlayer media player the event relates to
-     * @param metaType meta data type
-     * @param mrl media resource locator
      */
-    MediaListPlayerStoppedEvent(MediaListPlayer mediaListPlayer) {
-        super(mediaListPlayer);
+    MediaListPlayerStoppedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaListPlayer mediaListPlayer) {
+        super(libvlc, libvlcInstance, mediaListPlayer);
     }
 
     @Override

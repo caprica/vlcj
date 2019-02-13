@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.condition.mediaplayer;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
@@ -60,7 +61,7 @@ abstract public class MediaPlayerCondition<R> extends Condition<MediaPlayer, R> 
     // === MediaPlayerEventListener ============================================
 
     @Override
-    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
+    public void mediaChanged(MediaPlayer mediaPlayer, MediaRef media) {
     }
 
     @Override

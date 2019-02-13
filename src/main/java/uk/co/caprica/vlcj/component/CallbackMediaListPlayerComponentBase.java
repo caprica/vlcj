@@ -19,9 +19,9 @@
 
 package uk.co.caprica.vlcj.component;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.component.callback.CallbackImagePainter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
@@ -31,7 +31,6 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 import javax.swing.*;
-import java.awt.*;
 
 @SuppressWarnings("serial")
 public class CallbackMediaListPlayerComponentBase extends CallbackMediaPlayerComponent implements MediaListPlayerEventListener, MediaListEventListener {
@@ -53,7 +52,7 @@ public class CallbackMediaListPlayerComponentBase extends CallbackMediaPlayerCom
     }
 
     @Override
-    public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
+    public void nextItem(MediaListPlayer mediaListPlayer, MediaRef item) {
 
     }
 
@@ -65,22 +64,22 @@ public class CallbackMediaListPlayerComponentBase extends CallbackMediaPlayerCom
     // === MediaListEventListener ===============================================
 
     @Override
-    public void mediaListWillAddItem(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+    public void mediaListWillAddItem(MediaList mediaList, MediaRef item, int index) {
 
     }
 
     @Override
-    public void mediaListItemAdded(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+    public void mediaListItemAdded(MediaList mediaList, MediaRef item, int index) {
 
     }
 
     @Override
-    public void mediaListWillDeleteItem(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+    public void mediaListWillDeleteItem(MediaList mediaList, MediaRef item, int index) {
 
     }
 
     @Override
-    public void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+    public void mediaListItemDeleted(MediaList mediaList, MediaRef item, int index) {
 
     }
 

@@ -20,12 +20,18 @@
 package uk.co.caprica.vlcj.media.events;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaRef;
 
 abstract class MediaEvent implements EventNotification<MediaEventListener> {
 
     protected final LibVlc libvlc;
+
+    protected final libvlc_instance_t libvlcInstance;
 
     /**
      * The media list the event relates to.
@@ -37,9 +43,15 @@ abstract class MediaEvent implements EventNotification<MediaEventListener> {
      *
      * @param media media that the event relates to
      */
-    protected MediaEvent(LibVlc libvlc, Media media) {
+    protected MediaEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media) {
         this.libvlc = libvlc;
+        this.libvlcInstance = libvlcInstance;
         this.media = media;
+    }
+
+    // FIXME doc no need to release this, since it's transient
+    protected final MediaRef temporaryMediaRef(libvlc_media_t mediaInstance) {
+        return new MediaRef(libvlc, libvlcInstance, mediaInstance);
     }
 
 }

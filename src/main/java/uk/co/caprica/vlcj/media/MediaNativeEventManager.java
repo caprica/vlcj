@@ -23,15 +23,15 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.eventmanager.NativeEventManager;
 import uk.co.caprica.vlcj.media.events.MediaEventFactory;
-import uk.co.caprica.vlcj.media.events.MediaEventListener;
 
 final class MediaNativeEventManager extends NativeEventManager<Media, MediaEventListener> {
 
-    MediaNativeEventManager(LibVlc libvlc, Media eventObject) {
-        super(libvlc, eventObject, libvlc_event_e.libvlc_MediaMetaChanged, libvlc_event_e.libvlc_MediaThumbnailGenerated, "media-events");
+    MediaNativeEventManager(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media eventObject) {
+        super(libvlc, libvlcInstance, eventObject, libvlc_event_e.libvlc_MediaMetaChanged, libvlc_event_e.libvlc_MediaThumbnailGenerated, "media-events");
     }
 
     @Override
@@ -40,8 +40,8 @@ final class MediaNativeEventManager extends NativeEventManager<Media, MediaEvent
     }
 
     @Override
-    protected EventNotification<MediaEventListener> onCreateEvent(LibVlc libvlc, libvlc_event_t event, Media eventObject) {
-        return MediaEventFactory.createEvent(libvlc, eventObject, event);
+    protected EventNotification<MediaEventListener> onCreateEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_event_t event, Media eventObject) {
+        return MediaEventFactory.createEvent(libvlc, libvlcInstance, eventObject, event);
     }
 
 }

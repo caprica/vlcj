@@ -24,8 +24,8 @@ import uk.co.caprica.vlcj.enums.ParseFlag;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.model.MetaData;
-import uk.co.caprica.vlcj.media.events.MediaEventAdapter;
-import uk.co.caprica.vlcj.media.events.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaEventAdapter;
+import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import java.io.File;

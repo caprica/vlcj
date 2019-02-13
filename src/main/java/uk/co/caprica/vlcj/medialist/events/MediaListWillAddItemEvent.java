@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.medialist.events;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.media_list_will_add_item;
 import uk.co.caprica.vlcj.medialist.MediaList;
@@ -33,7 +35,7 @@ final class MediaListWillAddItemEvent extends MediaListEvent {
     /**
      * Native media instance that will be added.
      */
-    private final libvlc_media_t mediaInstance;
+    private final libvlc_media_t item;
 
     /**
      * Index at which the item will be added.
@@ -47,17 +49,18 @@ final class MediaListWillAddItemEvent extends MediaListEvent {
      * @param mediaInstance native media instance that will be added
      * @param index index at which the item will be added
      */
-    MediaListWillAddItemEvent(MediaList mediaList, libvlc_event_t event) {
-        super(mediaList);
+    MediaListWillAddItemEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaList mediaList, libvlc_event_t event) {
+        super(libvlc, libvlcInstance, mediaList);
 
         media_list_will_add_item addItemEvent = ((media_list_will_add_item) event.u.getTypedValue(media_list_will_add_item.class));
 
-        this.mediaInstance = addItemEvent.item;
-        this.index         = addItemEvent.index;
+        this.item  = addItemEvent.item;
+        this.index = addItemEvent.index;
     }
 
     @Override
     public void notify(MediaListEventListener listener) {
-        listener.mediaListWillAddItem(mediaList, mediaInstance, index);
+        listener.mediaListWillAddItem(mediaList, temporaryMediaRef(item), index);
     }
+
 }

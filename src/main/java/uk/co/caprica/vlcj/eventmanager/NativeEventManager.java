@@ -27,6 +27,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -45,6 +46,11 @@ abstract public class NativeEventManager<E,L> {
      * Native library.
      */
     private final LibVlc libvlc;
+
+    /**
+     *
+     */
+    private final libvlc_instance_t libvlcInstance;
 
     /**
      * Component that generates events.
@@ -91,13 +97,15 @@ abstract public class NativeEventManager<E,L> {
      * Create a new component to manage native events.
      *
      * @param libvlc native library
+     * @param libvlcInstance native library instance, this is allowed to be <code>null</code> for some implementations
      * @param eventObject component that generates events
      * @param firstEvent first event in the range of events to register
      * @param lastEvent last event in the range of events to register
      * @param callbackName name to use for the callback thread initialiser
      */
-    protected NativeEventManager(LibVlc libvlc, E eventObject, libvlc_event_e firstEvent, libvlc_event_e lastEvent, String callbackName) {
+    protected NativeEventManager(LibVlc libvlc, libvlc_instance_t libvlcInstance, E eventObject, libvlc_event_e firstEvent, libvlc_event_e lastEvent, String callbackName) {
         this.libvlc = libvlc;
+        this.libvlcInstance = libvlcInstance;
         this.eventObject = eventObject;
         this.firstEvent = firstEvent;
         this.lastEvent = lastEvent;
@@ -201,7 +209,7 @@ abstract public class NativeEventManager<E,L> {
 
         @Override
         public void callback(libvlc_event_t event, Pointer userData) {
-            raiseEvent(onCreateEvent(libvlc, event, eventObject));
+            raiseEvent(onCreateEvent(libvlc, libvlcInstance, event, eventObject));
         }
 
         private void release() {
@@ -222,10 +230,11 @@ abstract public class NativeEventManager<E,L> {
      * Create an event.
      *
      * @param libvlc native library
+     * @param libvlcInstance
      * @param event native event
      * @param eventObject component that generated the event
      * @return
      */
-    protected abstract EventNotification<L> onCreateEvent(LibVlc libvlc, libvlc_event_t event, E eventObject);
+    protected abstract EventNotification<L> onCreateEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_event_t event, E eventObject);
 
 }

@@ -21,21 +21,24 @@ package uk.co.caprica.vlcj.media.events;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.media_subitemtree_added;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaEventListener;
 
 final class MediaSubItemTreeAddedEvent extends MediaEvent {
 
-    private final libvlc_media_t subItem;
+    private final libvlc_media_t item;
 
-    MediaSubItemTreeAddedEvent(LibVlc libvlc, Media media, libvlc_event_t event) {
-        super(libvlc, media);
-        this.subItem = ((media_subitemtree_added) event.u.getTypedValue(media_subitemtree_added.class)).item;
+    MediaSubItemTreeAddedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
+        super(libvlc, libvlcInstance, media);
+        this.item = ((media_subitemtree_added) event.u.getTypedValue(media_subitemtree_added.class)).item;
     }
 
     @Override
     public void notify(MediaEventListener listener) {
-        listener.mediaSubItemTreeAdded(media, subItem);
+        listener.mediaSubItemTreeAdded(media, temporaryMediaRef(item));
     }
+
 }

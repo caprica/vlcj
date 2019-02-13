@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.medialist;
 
 import javax.swing.SwingUtilities;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.media.MediaRef;
 
 /**
  * Default implementation of the media list event listener.
@@ -35,19 +35,19 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 public class MediaListEventAdapter implements MediaListEventListener {
 
     @Override
-    public void mediaListWillAddItem(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+    public void mediaListWillAddItem(MediaList mediaList, MediaRef item, int index) {
     }
 
     @Override
-    public void mediaListItemAdded(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+    public void mediaListItemAdded(MediaList mediaList, MediaRef item, int index) {
     }
 
     @Override
-    public void mediaListWillDeleteItem(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+    public void mediaListWillDeleteItem(MediaList mediaList, MediaRef item, int index) {
     }
 
     @Override
-    public void mediaListItemDeleted(MediaList mediaList, libvlc_media_t mediaInstance, int index) {
+    public void mediaListItemDeleted(MediaList mediaList, MediaRef item, int index) {
     }
 
     @Override

@@ -22,14 +22,15 @@ package uk.co.caprica.vlcj.media.events;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.model.Picture;
 
 final class MediaThumbnailGeneratedEvent extends MediaEvent {
 
     private final libvlc_picture_t thumbnail;
 
-    MediaThumbnailGeneratedEvent(LibVlc libvlc, Media media, libvlc_event_t event) {
-        super(libvlc, media);
+    MediaThumbnailGeneratedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
+        super(libvlc, libvlcInstance, media);
         this.thumbnail = ((media_thumbnail_generated) event.u.getTypedValue(media_thumbnail_generated.class)).p_thumbnail;
     }
 

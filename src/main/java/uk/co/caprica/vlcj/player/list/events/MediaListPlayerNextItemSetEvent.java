@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.player.list.events;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.media_list_player_next_item_set;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
@@ -39,16 +41,15 @@ final class MediaListPlayerNextItemSetEvent extends MediaListPlayerEvent {
      * Create a media player event.
      *
      * @param mediaListPlayer media player the event relates to
-     * @param metaType meta data type
      */
-    MediaListPlayerNextItemSetEvent(MediaListPlayer mediaListPlayer, libvlc_event_t event) {
-        super(mediaListPlayer);
+    MediaListPlayerNextItemSetEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaListPlayer mediaListPlayer, libvlc_event_t event) {
+        super(libvlc, libvlcInstance, mediaListPlayer);
         this.item = ((media_list_player_next_item_set) event.u.getTypedValue(media_list_player_next_item_set.class)).item;
     }
 
     @Override
     public void notify(MediaListPlayerEventListener listener) {
-        listener.nextItem(mediaListPlayer, item);
+        listener.nextItem(mediaListPlayer, temporaryMediaRef(item));
     }
 
 }

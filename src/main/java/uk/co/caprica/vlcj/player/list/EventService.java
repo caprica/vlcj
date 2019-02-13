@@ -26,7 +26,7 @@ public final class EventService extends BaseService {
     EventService(DefaultMediaListPlayer mediaListPlayer) {
         super(mediaListPlayer);
 
-        this.eventManager = new MediaListPlayerNativeEventManager(libvlc, mediaListPlayer);
+        this.eventManager = new MediaListPlayerNativeEventManager(libvlc, libvlcInstance, mediaListPlayer);
     }
 
     /**

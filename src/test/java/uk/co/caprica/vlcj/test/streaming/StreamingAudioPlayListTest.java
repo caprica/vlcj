@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 
 import uk.co.caprica.vlcj.enums.PlaybackMode;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
@@ -89,7 +89,7 @@ public class StreamingAudioPlayListTest extends VlcjTest {
         mediaListPlayer = factory.mediaPlayers().newMediaListPlayer();
         mediaListPlayer.events().addMediaListPlayerEventListener(new MediaListPlayerEventAdapter() {
             @Override
-            public void nextItem(MediaListPlayer mediaListPlayer, libvlc_media_t item) {
+            public void nextItem(MediaListPlayer mediaListPlayer, MediaRef item) {
                 System.out.println("Playing next item: " + item + ")");
             }
         });

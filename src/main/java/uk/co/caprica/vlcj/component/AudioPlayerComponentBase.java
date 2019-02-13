@@ -24,7 +24,8 @@ import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.events.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.model.Picture;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
@@ -37,7 +38,7 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     // === MediaPlayerEventListener =============================================
 
     @Override
-    public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t media) {
+    public void mediaChanged(MediaPlayer mediaPlayer, MediaRef media) {
     }
 
     @Override
@@ -155,7 +156,7 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void mediaSubItemAdded(Media media, libvlc_media_t subItem) {
+    public void mediaSubItemAdded(Media media, MediaRef newChild) {
     }
 
     @Override
@@ -167,7 +168,7 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void mediaFreed(Media media) {
+    public void mediaFreed(Media media, MediaRef mediaFreed) {
     }
 
     @Override
@@ -175,7 +176,7 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void mediaSubItemTreeAdded(Media media, libvlc_media_t item) {
+    public void mediaSubItemTreeAdded(Media media, MediaRef item) {
     }
 
     @Override

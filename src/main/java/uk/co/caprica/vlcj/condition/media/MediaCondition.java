@@ -19,13 +19,13 @@
 
 package uk.co.caprica.vlcj.condition.media;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.events.MediaEventAdapter;
-import uk.co.caprica.vlcj.media.events.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.MediaEventAdapter;
+import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.model.Picture;
 import uk.co.caprica.vlcj.condition.Condition;
 
@@ -70,7 +70,7 @@ abstract public class MediaCondition<R> extends Condition<Media, R> implements M
     }
 
     @Override
-    public void mediaSubItemAdded(Media media, libvlc_media_t subItem) {
+    public void mediaSubItemAdded(Media media, MediaRef newChild) {
     }
 
     @Override
@@ -82,7 +82,7 @@ abstract public class MediaCondition<R> extends Condition<Media, R> implements M
     }
 
     @Override
-    public void mediaFreed(Media media) {
+    public void mediaFreed(Media media, MediaRef mediaFreed) {
     }
 
     @Override
@@ -90,7 +90,7 @@ abstract public class MediaCondition<R> extends Condition<Media, R> implements M
     }
 
     @Override
-    public void mediaSubItemTreeAdded(Media media, libvlc_media_t item) {
+    public void mediaSubItemTreeAdded(Media media, MediaRef item) {
     }
 
     @Override

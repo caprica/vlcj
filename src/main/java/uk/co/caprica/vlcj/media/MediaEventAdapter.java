@@ -17,13 +17,11 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.media.events;
+package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.enums.State;
-import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.model.Picture;
 
 public class MediaEventAdapter implements MediaEventListener {
@@ -33,7 +31,7 @@ public class MediaEventAdapter implements MediaEventListener {
     }
 
     @Override
-    public void mediaSubItemAdded(Media media, libvlc_media_t subItem) {
+    public void mediaSubItemAdded(Media media, MediaRef newChild) {
     }
 
     @Override
@@ -45,7 +43,7 @@ public class MediaEventAdapter implements MediaEventListener {
     }
 
     @Override
-    public void mediaFreed(Media media) {
+    public void mediaFreed(Media media, MediaRef mediaFreed) {
     }
 
     @Override
@@ -53,7 +51,7 @@ public class MediaEventAdapter implements MediaEventListener {
     }
 
     @Override
-    public void mediaSubItemTreeAdded(Media media, libvlc_media_t item) {
+    public void mediaSubItemTreeAdded(Media media, MediaRef item) {
     }
 
     @Override

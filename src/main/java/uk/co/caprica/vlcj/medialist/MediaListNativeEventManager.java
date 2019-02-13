@@ -23,14 +23,15 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.eventmanager.NativeEventManager;
 import uk.co.caprica.vlcj.medialist.events.MediaListEventFactory;
 
 final class MediaListNativeEventManager extends NativeEventManager<MediaList, MediaListEventListener> {
 
-    MediaListNativeEventManager(LibVlc libvlc, MediaList eventObject) {
-        super(libvlc, eventObject, libvlc_event_e.libvlc_MediaListItemAdded, libvlc_event_e.libvlc_MediaListEndReached, "media-list-events");
+    MediaListNativeEventManager(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaList eventObject) {
+        super(libvlc, libvlcInstance, eventObject, libvlc_event_e.libvlc_MediaListItemAdded, libvlc_event_e.libvlc_MediaListEndReached, "media-list-events");
     }
 
     @Override
@@ -39,8 +40,8 @@ final class MediaListNativeEventManager extends NativeEventManager<MediaList, Me
     }
 
     @Override
-    protected EventNotification<MediaListEventListener> onCreateEvent(LibVlc libvlc, libvlc_event_t event, MediaList eventObject) {
-        return MediaListEventFactory.createEvent(eventObject, event);
+    protected EventNotification<MediaListEventListener> onCreateEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_event_t event, MediaList eventObject) {
+        return MediaListEventFactory.createEvent(libvlc, libvlcInstance, eventObject, event);
     }
 
 }
