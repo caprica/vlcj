@@ -46,12 +46,38 @@ your own risk!
 
 This branch will also introduce significant new features with new API, some headline new features are:
 
- - 360 degree video, changing pitch, yaw, roll etc
- - new API for alternate renderers (e.g. you can now send your media to Chromecast)
- - integrated native dialog callbacks (e.g. you can now be prompted for credentials when accessing a protected stream)
- - use any AWT Component as a video surface, not just a Canvas (Window should work on OSX)
-
 For a full list of changes in this release, check the [release milestone](https://github.com/caprica/vlcj/milestone/14).
+
+Major New Features
+------------------
+
+ - full support for 360 degree video, changing pitch, yaw, roll, field-of-view
+ - full support for discovery and usage of alternate media renderers, e.g. Chromecast
+ - full support for media-slave API to set subtitle tracks and additional/alternate audio tracks
+ - full support for integrated native dialogs, e.g. you can now be prompted for credentials when accessing a protected
+   stream
+ - use any AWT Component as a video surface, not just a Canvas (Window will work on OSX, with limitations)
+ - easy to add support for alternate video surfaces, e.g. an SWT Composite
+ - major changes and improvements to the so-called "direct-rendering" media players, the direct audio and video media
+   players are no longer separate components are instead intrinsic to the staandard media player. For video, a new
+   "Callback" video surface brings a vastly improved implementation, an optional related component provides a good
+   default implementation for direct-rendering and an easy way to deal with re-sizing of the video, with easy extension
+   points for custom video "painters"
+ - improvements to full-screen support with sensible default implementations provided for Linux, Windows and OSX, all
+   using a native solution to provide the best result
+ - automatic handling of subitems (e.g. when playing a YouTube video or a streaming playlist) is now intrinsic to the
+   media player and requires no involvement of the client application
+ - simplified native library discovery, now intrinsic to the media player factory and it should just work out-of-the-box
+   in the vast majority of cases
+ - API support for multiple logos (in series, not concurrent)
+ - logo and marquee now work without having to explicitly enable the respective native modules
+
+There have also been a lot of more general improvements to freshen up the codebase, make it more maintainable for the
+future, and to clear some legacy issues that have dogged the project for quite some time.
+
+See also [this issue](https://github.com/caprica/vlcj/issues/696) for more information on the changes.
+
+Despite all of these changes, running on JDK 1.6 is still supported!
 
 Building vlcj - sun.misc.Unsafe
 -------------------------------
