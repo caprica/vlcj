@@ -28,8 +28,6 @@ import uk.co.caprica.vlcj.model.*;
 
 import java.util.List;
 
-// FIXME this must return codecdescription?
-
 public class InfoService extends BaseService {
 
     private final libvlc_media_stats_t statsInstance = new libvlc_media_stats_t();
