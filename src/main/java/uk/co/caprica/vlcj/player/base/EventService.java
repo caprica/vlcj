@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import uk.co.caprica.vlcj.media.events.MediaEventListener;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.events.MediaPlayerEvent;
 
@@ -42,6 +43,14 @@ public final class EventService extends BaseService {
 
     public void removeMediaPlayerEventListener(MediaPlayerEventListener listener) {
         eventManager.removeEventListener(listener);
+    }
+
+    public void addMediaEventListener(MediaEventListener listener) {
+        mediaPlayer.media().addPersistentMediaEventListener(listener);
+    }
+
+    public void removeMediaEventListener(MediaEventListener listener) {
+        mediaPlayer.media().removePersistentMediaEventListener(listener);
     }
 
     void raiseEvent(MediaPlayerEvent event) {

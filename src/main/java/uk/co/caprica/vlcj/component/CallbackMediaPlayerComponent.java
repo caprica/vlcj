@@ -126,6 +126,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
         this.mediaPlayer.fullScreen().setFullScreenStrategy(fullScreenStrategy);
         this.mediaPlayer.events().addMediaPlayerEventListener(this);
+        this.mediaPlayer.events().addMediaEventListener(this);
 
         this.mediaPlayer.videoSurface().setVideoSurface(this.mediaPlayerFactory.videoSurfaces().newVideoSurface(bufferFormatCallback, renderCallback, lockBuffers));
 

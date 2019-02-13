@@ -157,6 +157,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         this.mediaPlayer.fullScreen().setFullScreenStrategy(fullScreenStrategy);
         this.mediaPlayer.overlay().setOverlay(overlay);
         this.mediaPlayer.events().addMediaPlayerEventListener(this);
+        this.mediaPlayer.events().addMediaEventListener(this);
 
         setBackground(Color.black);
         setLayout(new BorderLayout());

@@ -33,16 +33,6 @@ import java.util.concurrent.TimeUnit;
 
 // FIXME could almost be renamed BaseMediaPlayer instead of Default
 
-// do something like a persistent list of media listeners that gets added automatically each time the media changes?
-//  if you do this it's a bit tricky - you have keep the list and add them when the media changes, AND/OR add them to existing media
-//   i.e. there may or not already be media when you add them, you have to handle BOTH cases
-//   whenever changeMedia(...) you need to get listeners and add them
-//   when you add listeners you need to get media and add the listeners
-//   it's a bit unfortunate to do this coming from two different directions
-//   it's a also a bit problematic for where the api should go, because we still have addMediaEventListener via media().events().addMediaEventListener, and now media().addMediaEventListener too? or mediaPlayer.events().addMediaEventListener - it's a bit ugly
-//   the events semantically belong with mediaplayer.events() i think, client still has the option to add add events directly?
-//   maybe we just say client must listen for mediachanged and add events each time for media? not sure it's not the main issue tbh
-
 // all the services should be renamed more simply like VideoSurface -> Video, SnapshotService -> Snapshots and so on
 
 /**

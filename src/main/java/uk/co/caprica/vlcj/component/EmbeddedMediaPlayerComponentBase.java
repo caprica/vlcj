@@ -20,15 +20,24 @@
 package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.enums.MediaParsedStatus;
+import uk.co.caprica.vlcj.enums.Meta;
+import uk.co.caprica.vlcj.enums.State;
+import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.events.MediaEventListener;
+import uk.co.caprica.vlcj.model.Picture;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
-import uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive.AdaptiveFullScreenStrategy;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 
 /**
@@ -39,7 +48,7 @@ import java.awt.image.BufferedImage;
  * methods.
  */
 @SuppressWarnings("serial")
-abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaPlayerEventListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener  {
+abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaPlayerEventListener, MediaEventListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener  {
 
     /**
      * Blank cursor to use when the cursor is disabled.
@@ -210,6 +219,40 @@ abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaP
 
     @Override
     public void mediaPlayerReady(MediaPlayer mediaPlayer) {
+    }
+
+    // === MediaEventListener ===================================================
+
+    @Override
+    public void mediaMetaChanged(Media media, Meta metaType) {
+    }
+
+    @Override
+    public void mediaSubItemAdded(Media media, libvlc_media_t subItem) {
+    }
+
+    @Override
+    public void mediaDurationChanged(Media media, long newDuration) {
+    }
+
+    @Override
+    public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
+    }
+
+    @Override
+    public void mediaFreed(Media media) {
+    }
+
+    @Override
+    public void mediaStateChanged(Media media, State newState) {
+    }
+
+    @Override
+    public void mediaSubItemTreeAdded(Media media, libvlc_media_t item) {
+    }
+
+    @Override
+    public void mediaThumbnailGenerated(Media media, Picture picture) {
     }
 
     // === MouseListener ========================================================

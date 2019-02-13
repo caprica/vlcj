@@ -32,11 +32,17 @@ import uk.co.caprica.vlcj.media.SlaveService;
 import uk.co.caprica.vlcj.media.SubitemService;
 import uk.co.caprica.vlcj.media.UserDataService;
 import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.events.MediaEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  */
 public final class MediaService extends BaseService {
+
+    private final List<MediaEventListener> persistentMediaEventListeners = new ArrayList<MediaEventListener>();
 
     /**
      * Current media.
@@ -271,6 +277,7 @@ public final class MediaService extends BaseService {
         }
         if (newMedia != null) {
             this.media = newMedia;
+            setPersistentEventListeners();
             applyMedia();
             return true;
         } else {
@@ -292,6 +299,34 @@ public final class MediaService extends BaseService {
         libvlc_media_t mediaInstance = media.mediaInstance();
         libvlc.libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
         mediaPlayer.subitems().changeMedia(mediaInstance);
+    }
+
+    void addPersistentMediaEventListener(MediaEventListener listener) {
+        persistentMediaEventListeners.add(listener);
+        if (this.media != null) {
+            media.events().addMediaEventListener(listener);
+        }
+    }
+
+    void removePersistentMediaEventListener(MediaEventListener listener) {
+        persistentMediaEventListeners.remove(listener);
+        if (this.media != null) {
+            media.events().removeMediaEventListener(listener);
+        }
+    }
+
+    /**
+     * Invoked each time the media is changed to add all registered persistent media event listeners.
+     * <p>
+     * Changing the media already wipes out any previously registered listeners on that media so there is no need to
+     * explicitly unregister them.
+     */
+    private void setPersistentEventListeners() {
+        if (this.media != null) {
+            for (MediaEventListener listener : persistentMediaEventListeners) {
+                media.events().addMediaEventListener(listener);
+            }
+        }
     }
 
     @Override
