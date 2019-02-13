@@ -164,7 +164,6 @@ abstract public class NativeEventManager<E,L> {
                     libvlc.libvlc_event_detach(mediaEventManager, event.intValue(), callback, null);
                 }
             }
-            callback.release();
             callback = null;
         }
     }
@@ -212,9 +211,6 @@ abstract public class NativeEventManager<E,L> {
             raiseEvent(onCreateEvent(libvlc, libvlcInstance, event, eventObject));
         }
 
-        private void release() {
-            cti.detach(this);
-        }
     }
 
     /**
