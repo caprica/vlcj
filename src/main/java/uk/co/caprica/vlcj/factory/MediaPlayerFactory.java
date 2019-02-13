@@ -47,14 +47,13 @@ import java.util.Collection;
  * The factory also provides access to the native libvlc Logger and other resources such as the list of audio outputs,
  * and the list of available audio and video filters.
  * <p>
- * You <em>must</em> make sure you keep a hard reference to the media player (and possibly other)
- * objects created by this factory. If you allow a media player object to go out of scope, then
- * unpredictable behaviour will occur (such as events no longer seeming to fire) even though the
- * video playback continues (since that happens via native code). You may also likely suffer fatal
- * JVM crashes.
+ * You <em>must</em> make sure you keep a hard reference to the components created by this factory to prevent them from
+ * going out of scope and being garbage-collected. If you allow one of these components to go out of scope, then
+ * unpredictable behaviour will occur (such as events no longer seeming to fire) even though the video playback may
+ * continue (since that happens via native code). You will also likely suffer fatal JVM crashes.
  * <p>
- * It is always a better strategy to reuse media player instances, rather than repeatedly creating
- * and destroying instances.
+ * It is <em>always</em> a better strategy to <em>reuse</em> media player instances, rather than repeatedly creating
+ * and destroying them.
  */
 public class MediaPlayerFactory {
 

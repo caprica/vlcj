@@ -48,7 +48,7 @@ abstract public class NativeEventManager<E,L> {
     private final LibVlc libvlc;
 
     /**
-     *
+     * Native library instance.
      */
     private final libvlc_instance_t libvlcInstance;
 
@@ -113,7 +113,7 @@ abstract public class NativeEventManager<E,L> {
     }
 
     /**
-     * Add a component to be notified of media events.
+     * Add a component to be notified of events.
      *
      * @param listener component to notify
      */
@@ -127,7 +127,7 @@ abstract public class NativeEventManager<E,L> {
     }
 
     /**
-     * Remove a component that was previously interested in notifications of media events.
+     * Remove a component that was previously interested in notifications of events.
      *
      * @param listener component to stop notifying
      */
@@ -137,7 +137,7 @@ abstract public class NativeEventManager<E,L> {
     }
 
     /**
-     * Register a call-back to receive media native events.
+     * Register a call-back to receive native events.
      */
     private void addNativeEventListener() {
         if (!callbackRegistered && !eventListenerList.isEmpty()) {
@@ -153,7 +153,7 @@ abstract public class NativeEventManager<E,L> {
     }
 
     /**
-     * De-register the call-back used to receive native media events.
+     * De-register the call-back used to receive native events.
      */
     private void removeNativeEventListener() {
         if (callbackRegistered && eventListenerList.isEmpty()) {

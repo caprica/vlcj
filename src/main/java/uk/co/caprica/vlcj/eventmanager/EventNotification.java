@@ -26,6 +26,11 @@ package uk.co.caprica.vlcj.eventmanager;
  */
 public interface EventNotification<L> {
 
+    /**
+     * Notify a component acting as an event listener of some type.
+     *
+     * @param listener event listener to notify
+     */
     void notify(L listener);
 
 }
