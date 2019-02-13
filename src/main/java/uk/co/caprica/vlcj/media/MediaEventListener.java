@@ -24,7 +24,6 @@ import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.model.Picture;
 
-// FIXME wrong package
 public interface MediaEventListener {
 
     /**
