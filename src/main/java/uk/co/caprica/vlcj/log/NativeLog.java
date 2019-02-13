@@ -145,9 +145,9 @@ public final class NativeLog {
     }
 
     /**
-     *
-     *
-     * This implementation must be thread-safe.
+     * Callback to receive native log events.
+     * <p>
+     * This implementation <em>must</em> be thread-safe - this is why we do not re-use a shared buffer.
      */
     private final class NativeLogCallback implements libvlc_log_cb {
 

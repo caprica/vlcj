@@ -218,7 +218,7 @@ abstract public class NativeEventManager<E,L> {
      *
      * @param libvlc native library
      * @param eventObject component for which to get the event manager (it must provide access to a native resource)
-     * @return
+     * @return native event manager, never <code>null</code>
      */
     protected abstract libvlc_event_manager_t onGetEventManager(LibVlc libvlc, E eventObject);
 
@@ -229,7 +229,7 @@ abstract public class NativeEventManager<E,L> {
      * @param libvlcInstance
      * @param event native event
      * @param eventObject component that generated the event
-     * @return
+     * @return an event, of a type that can intrinsically notify a listener
      */
     protected abstract EventNotification<L> onCreateEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_event_t event, E eventObject);
 
