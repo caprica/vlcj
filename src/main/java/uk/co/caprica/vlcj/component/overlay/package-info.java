@@ -1,5 +1,4 @@
 /**
- * Provides higher-level components used to create overlays for use with
- * embedded media players.
+ * Provides higher-level components used to create overlays for use with embedded media player components.
  */
 package uk.co.caprica.vlcj.component.overlay;

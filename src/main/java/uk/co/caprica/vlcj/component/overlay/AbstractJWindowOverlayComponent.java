@@ -29,16 +29,14 @@ import java.lang.reflect.Method;
 /**
  * Base implementation for a video overlay component.
  * <p>
- * Overlay contents may be implemented by using Swing/AWT components in a layout using
- * {@link #onCreateOverlay()}, and/or by implementing custom painting using
- * {@link #onNewSize(int, int)} and {@link #onPaintOverlay(Graphics2D)}.
+ * Overlay contents may be implemented by using Swing/AWT components in a layout using {@link #onCreateOverlay()},
+ * and/or by implementing custom painting using {@link #onNewSize(int, int)} and {@link #onPaintOverlay(Graphics2D)}.
  * <p>
  * Various template method are provided for sub-classes to provide the required behaviour.
  * <p>
- * The default implementation of the {@link #onSetWindowTransparency()} template method attempts to
- * make a transparent overlay by either the preferred method of simply setting the background colour
- * to a transparent colour for Java7, or by using <code>com.sun.awt.AWTUtilities</code>, if it
- * exists, for Java6.
+ * The default implementation of the {@link #onSetWindowTransparency()} template method attempts to make a transparent
+ * overlay by either the preferred method of simply setting the background colour to a transparent colour for Java7+,
+ * or by using <code>com.sun.awt.AWTUtilities</code>, if it exists, for Java6.
  * <p>
  * Best results will be obtained by <em>disabling</em> any compositing desktop window manager.
  */
@@ -58,8 +56,8 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
     /**
      * Create an overlay.
      * <p>
-     * An "alpha-compatible" graphics configuration will be used when creating the window so as to
-     * enable a transparent overlay.
+     * An "alpha-compatible" graphics configuration will be used when creating the window so as to enable a transparent
+     * overlay.
      *
      * @param owner owning window, must not be <code>null</code>
      * @throws IllegalArgumentException if the <code>owner</code> parameter is <code>null</code>
@@ -77,12 +75,12 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
      */
     public AbstractJWindowOverlayComponent(Window owner, GraphicsConfiguration graphicsConfiguration) {
         super(owner, graphicsConfiguration);
-        if(owner == null) {
+        if (owner == null) {
             throw new IllegalArgumentException("The overlay window owner must not be null");
         }
         onSetWindowTransparency();
         onCreateOverlay();
-        if(onHideCursor()) {
+        if (onHideCursor()) {
             setCursor(getBlankCursor());
         }
     }
@@ -93,7 +91,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
     protected void onSetWindowTransparency() {
         String javaSpecificationVersion = System.getProperty("java.specification.version");
         // If Java7 or later...
-        if("1.7".compareTo(javaSpecificationVersion) <= 0) {
+        if ("1.7".compareTo(javaSpecificationVersion) <= 0) {
             // ...simply set the background colour to a fully transparent colour
             setBackground(new Color(0, 0, 0, 0));
         }
@@ -105,7 +103,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
                 Method setWindowOpaqueMethod = awtUtilitiesClass.getMethod("setWindowOpaque", Window.class, Boolean.class);
                 setWindowOpaqueMethod.invoke(null, this, false);
             }
-            catch(Exception e) {
+            catch (Exception e) {
                 // Fall-back, this is the best that can be done
                 setBackground(new Color(0, 0, 0, 0));
             }
@@ -139,7 +137,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
     @Override
     public final void paint(Graphics g) {
         // The use of the non-short-circuit logical '|' operator here is intentional
-        if(layoutWidth != (layoutWidth = getWidth()) | layoutHeight != (layoutHeight = getHeight())) {
+        if (layoutWidth != (layoutWidth = getWidth()) | layoutHeight != (layoutHeight = getHeight())) {
             onNewSize(layoutWidth, layoutHeight);
         }
         super.paint(g);
