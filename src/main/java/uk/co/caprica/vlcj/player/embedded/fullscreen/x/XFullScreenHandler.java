@@ -25,6 +25,9 @@ import com.sun.jna.platform.unix.X11;
 
 import java.awt.*;
 
+/**
+ * Helper class to encapsulate native X Windows full-screen functionality.
+ */
 final class XFullScreenHandler {
 
     private static final int _NET_WM_STATE_REMOVE = 0;

@@ -27,7 +27,7 @@ import com.sun.jna.win32.W32APIOptions;
 /**
  * Partial implementation of the Win32 User API.
  */
-public interface ExtendedUser32 extends User32 {
+interface ExtendedUser32 extends User32 {
 
     /**
      * Native library instance.

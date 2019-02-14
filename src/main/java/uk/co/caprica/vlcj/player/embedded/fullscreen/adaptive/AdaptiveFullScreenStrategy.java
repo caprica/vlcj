@@ -68,13 +68,19 @@ public class AdaptiveFullScreenStrategy implements FullScreenStrategy {
     }
 
     /**
-     *
+     * Template method invoked before full-screen mode is entered.
+     * <p>
+     * An application can override this method to provide custom code when entering full-screen mode for example to hide
+     * other on-screen components.
      */
     protected void onBeforeEnterFullScreen() {
     }
 
     /**
-     *
+     * Template method invoked after exiting full-screen mode.
+     * <p>
+     * An application can override this method to provide custom code when entering full-screen mode for example to
+     * restore other on-screen components.
      */
     protected void onAfterExitFullScreen() {
     }

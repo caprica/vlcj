@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import java.awt.*;
 
 /**
- * Implementation of a full-screen strategy that attempts to use the native X11 window manager.
+ * Implementation of a full-screen strategy that uses the native X11 window manager.
  * <p>
  * With this full-screen strategy, a full-screen transparent overlay <em>will</em> work correctly,
  * see {@link EmbeddedMediaPlayer#overlay()}.
@@ -78,8 +78,8 @@ public class XFullScreenStrategy implements FullScreenStrategy {
     /**
      * Template method invoked before full-screen mode is entered.
      * <p>
-     * An application can override this method to provide custom code when entering full-screen mode
-     * for example to hide other on-screen components.
+     * An application can override this method to provide custom code when entering full-screen mode for example to hide
+     * other on-screen components.
      */
     protected void onBeforeEnterFullScreenMode() {
     }
@@ -87,8 +87,8 @@ public class XFullScreenStrategy implements FullScreenStrategy {
     /**
      * Template method invoked after exiting full-screen mode.
      * <p>
-     * An application can override this method to provide custom code when entering full-screen mode
-     * for example to restore other on-screen components.
+     * An application can override this method to provide custom code when entering full-screen mode for example to
+     * restore other on-screen components.
      */
     protected void onAfterExitFullScreenMode() {
     }

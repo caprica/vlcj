@@ -28,7 +28,7 @@ import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import java.awt.*;
 
 /**
- *
+ * Implementation of a full-screen strategy that uses the Apple EAWT classes to implement native full-screen.
  */
 public class OsxFullScreenStrategy implements FullScreenStrategy {
 
@@ -71,8 +71,8 @@ public class OsxFullScreenStrategy implements FullScreenStrategy {
     /**
      * Template method invoked before full-screen mode is entered.
      * <p>
-     * An application can override this method to provide custom code when entering full-screen mode
-     * for example to hide other on-screen components.
+     * An application can override this method to provide custom code when entering full-screen mode for example to hide
+     * other on-screen components.
      */
     protected void onBeforeEnterFullScreenMode() {
     }
@@ -80,8 +80,8 @@ public class OsxFullScreenStrategy implements FullScreenStrategy {
     /**
      * Template method invoked after exiting full-screen mode.
      * <p>
-     * An application can override this method to provide custom code when entering full-screen mode
-     * for example to restore other on-screen components.
+     * An application can override this method to provide custom code when entering full-screen mode for example to
+     * restore other on-screen components.
      */
     protected void onAfterExitFullScreenMode() {
     }

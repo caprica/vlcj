@@ -24,21 +24,23 @@ import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import java.awt.*;
 
 /**
- * Default implementation of a full-screen strategy that attempts to use the JDK full-screen
- * exclusive mode support.
+ * Default implementation of a full-screen strategy that attempts to use the JDK full-screen exclusive mode support.
  * <p>
- * Client applications may wish to select a screen device other than the default - extend this class
- * and override {@link #getScreenDevice()} to do so.
+ * Client applications may wish to select a screen device other than the default - extend this class and override
+ * {@link #getScreenDevice()} to do so.
  * <p>
  * Client applications may wish to explicitly set the DisplayMode - extend this class and override
  * {@link #getDisplayMode(DisplayMode[])} to do so.
  * <p>
- * Client applications may also have other requirements such as hiding other on-screen controls when
- * in full-screen mode - extend this class and override {@link #onBeforeEnterFullScreenMode} and
- * {@link #onAfterExitFullScreenMode()} to do so.
+ * Client applications may also have other requirements such as hiding other on-screen controls when in full-screen
+ * mode - extend this class and override {@link #onBeforeEnterFullScreenMode} and {@link #onAfterExitFullScreenMode()}
+ * to do so.
  * <p>
  * It may be useful to specify "-Dsun.java2d.d3d=false" on the Windows platform for performance
  * reasons.
+ * <p>
+ * This strategy implementation is <em>not</em> recommended for use, consider using any of the native strategies
+ * instead.
  */
 public class ExclusiveModeFullScreenStrategy implements FullScreenStrategy {
 
@@ -111,8 +113,8 @@ public class ExclusiveModeFullScreenStrategy implements FullScreenStrategy {
     /**
      * Template method invoked before full-screen mode is entered.
      * <p>
-     * An application can override this method to provide custom code when entering full-screen mode
-     * for example to hide other on-screen components.
+     * An application can override this method to provide custom code when entering full-screen mode for example to hide
+     * other on-screen components.
      */
     protected void onBeforeEnterFullScreenMode() {
     }
@@ -120,8 +122,8 @@ public class ExclusiveModeFullScreenStrategy implements FullScreenStrategy {
     /**
      * Template method invoked after exiting full-screen mode.
      * <p>
-     * An application can override this method to provide custom code when entering full-screen mode
-     * for example to restore other on-screen components.
+     * An application can override this method to provide custom code when entering full-screen mode for example to
+     * restore other on-screen components.
      */
     protected void onAfterExitFullScreenMode() {
     }
