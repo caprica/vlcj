@@ -19,14 +19,16 @@
 
 package uk.co.caprica.vlcj.player.embedded.callback;
 
+import uk.co.caprica.vlcj.player.embedded.videosurface.CallbackVideoSurface;
+
 /**
- * Callback invoked by the {@link uk.co.caprica.vlcj.player.embedded.videosurface.CallbackVideoSurface} when the format of the video changes.
+ * Callback invoked by the {@link CallbackVideoSurface} when the format of the video changes.
  */
 public interface BufferFormatCallback {
 
     /**
-     * Returns a {@link BufferFormat} instance specifying how the
-     * {@link uk.co.caprica.vlcj.player.embedded.videosurface.CallbackVideoSurface} should structure its buffers.
+     * Returns a {@link BufferFormat} instance specifying how the {@link CallbackVideoSurface} should structure its
+     * internal buffers.
      * <p>
      * Note that it is possible that some versions of VLC provide the wrong value for the sourceHeight parameter, and
      * more than that it might invoke this callback multiple times with different values for the sourceHeight. Your own

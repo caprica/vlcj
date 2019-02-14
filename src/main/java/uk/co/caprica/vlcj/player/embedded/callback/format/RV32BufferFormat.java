@@ -37,4 +37,5 @@ public class RV32BufferFormat extends BufferFormat {
     public RV32BufferFormat(int width, int height) {
         super("RV32", width, height, new int[] {width * 4}, new int[] {height});
     }
+
 }
