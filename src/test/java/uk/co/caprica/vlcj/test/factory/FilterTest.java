@@ -37,8 +37,8 @@ public class FilterTest extends VlcjTest {
     public static void main(String[] args) throws Exception {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
-        List<ModuleDescription> audioFilters = factory.modules().audioFilters();
-        List<ModuleDescription> videoFilters = factory.modules().videoFilters();
+        List<ModuleDescription> audioFilters = factory.application().audioFilters();
+        List<ModuleDescription> videoFilters = factory.application().videoFilters();
 
         System.out.println("Audio Filters:");
         System.out.println();
