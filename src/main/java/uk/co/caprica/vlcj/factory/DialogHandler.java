@@ -22,18 +22,80 @@ package uk.co.caprica.vlcj.factory;
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.enums.DialogQuestionType;
 
+/**
+ * Specification for a component that handles native dialogs.
+ * <p>
+ * A dialog need <em>not</em> have a user-interface. For example, a login dialog could load credentials from a file or
+ * system properties and programmatically deal with the dialog.
+ * <p>
+ * Implementations should use {@link MediaPlayerFactory#dialogs()} to interact with the dialogs.
+ */
 public interface DialogHandler {
 
+    /**
+     * Present an error dialog.
+     *
+     * @param userData user data
+     * @param title dialog title
+     * @param text error text
+     */
     void displayError(Pointer userData, String title, String text);
 
+    /**
+     * Present a login dialog.
+     *
+     * @param userData user data
+     * @param id dialog id, used to interact with this dialog
+     * @param title dialog title
+     * @param text login text
+     * @param defaultUsername default username to display in the dialog
+     * @param askStore if <code>true</code>, ask if the credentials should be stored
+     */
     void displayLogin(Pointer userData, DialogId id, String title, String text, String defaultUsername, boolean askStore);
 
+    /**
+     * Present a question dialog.
+     *
+     * @param userData user data
+     * @param id dialog id, used to interact with this dialog
+     * @param title dialog title
+     * @param text question text
+     * @param type type of question
+     * @param cancel cancel action text
+     * @param action1 first action text
+     * @param action2 second action text
+     */
     void displayQuestion(Pointer userData, DialogId id, String title, String text, DialogQuestionType type, String cancel, String action1, String action2);
 
+    /**
+     * Present a progress dialog.
+     *
+     * @param userData user data
+     * @param id dialog id, used to interact with this dialog
+     * @param title dialog title
+     * @param text progress text
+     * @param indeterminate <code>true</code> if the progress is indeterminate; <code>false</code> if it is not
+     * @param position percent completion
+     * @param cancel cancel action text
+     */
     void displayProgress(Pointer userData, DialogId id, String title, String text, int indeterminate, float position, String cancel);
 
+    /**
+     * Present a cancel dialog.
+     *
+     * @param userData user data
+     * @param id dialog id, used to interact with this dialog
+     */
     void cancel(Pointer userData, DialogId id);
 
+    /**
+     * Update a progress dialog.
+     *
+     * @param userData user data
+     * @param id dialog id, used to interact with this dialog
+     * @param position percent completion
+     * @param text progress text
+     */
     void updateProgress(Pointer userData, DialogId id, float position, String text);
 
 }

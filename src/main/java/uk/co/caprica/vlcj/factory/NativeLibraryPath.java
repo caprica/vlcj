@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.factory;
 
 /**
- *
+ * Utility class to help determine the native library search path.
  */
 final class NativeLibraryPath {
 
@@ -28,6 +28,8 @@ final class NativeLibraryPath {
      * Parse out the complete file path of the native library.
      * <p>
      * This depends on the format of the toString() of the JNA implementation class.
+     * <p>
+     * The path may not be available on all platforms.
      *
      * @param library native library instance
      * @return native library path, or simply the toString of the instance if the path could not be parsed out

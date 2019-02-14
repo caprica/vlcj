@@ -27,6 +27,12 @@ import uk.co.caprica.vlcj.model.ModuleDescription;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Behaviour pertaining to the application itself.
+ * <p>
+ * Includes features such as the native library version and build information, the application, user agent, id and icon,
+ * native log, native clock, codec information, and lists of the available native audio and video modules.
+ */
 public final class ApplicationService extends BaseService {
 
     ApplicationService(MediaPlayerFactory factory) {
@@ -102,8 +108,8 @@ public final class ApplicationService extends BaseService {
     /**
      * Get the time as defined by LibVLC.
      * <p>
-     * The time is not meaningful in the sense of what time is it, rather it is a monotonic clock
-     * with an arbitrary starting value.
+     * The time is not meaningful in the sense of what time it is, rather it is a monotonic clock with an arbitrary
+     * starting value.
      *
      * @return current clock time value, in microseconds
      */

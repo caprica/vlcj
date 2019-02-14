@@ -31,10 +31,10 @@ import java.util.Collection;
 /**
  * Factory for creating media player instances and associated components.
  * <p>
- * When using VLC options/arguments, generally any options that enable/disable modules (e.g. video/audio filters) must
- * be set via the factory instance and not when invoking
- * {@link uk.co.caprica.vlcj.player.base.MediaService#play(String, String...)}. However, the filter-specific
- * options <em>may</em> be able to be passed and be effective via a playMedia call.
+ * When using VLC options/arguments to initialise the factory, generally any options that enable/disable modules (e.g.
+ * video/audio filters) must be set via the factory instance and not when invoking
+ * {@link uk.co.caprica.vlcj.player.base.MediaService#play(String, String...)}. However, the module-specific
+ * options <em>may</em> be able to be passed as media options and be effective via that play call.
  * <p>
  * The factory will attempt to automatically discover the location of the required LibVLC native library, so it should
  * just work by default (at least for the most common/likely environment configurations). If you have other requirements
@@ -57,40 +57,39 @@ import java.util.Collection;
  */
 public class MediaPlayerFactory {
 
+    /**
+     * Custom one-time initialisation required for Linux.
+     */
     static {
         if (RuntimeUtil.isNix()) {
             LinuxNativeInit.init();
         }
     }
 
+    /**
+     * Native library.
+     */
     protected final LibVlc libvlc;
 
+    /**
+     * Native library instance.
+     */
     protected final libvlc_instance_t libvlcInstance;
 
-    private final ApplicationService applicationService;
-
-    private final AudioService audioService;
-
-    private final DialogsService dialogsService;
-
-    private final DiscovererService discovererService;
-
-    private final EqualizerService equalizerService;
-
-    private final MediaPlayerService mediaPlayerService;
-
-    private final MediaService mediaService;
-
-    private final ModuleService moduleService;
-
-    private final RendererService rendererService;
-
+    private final ApplicationService  applicationService;
+    private final AudioService        audioService;
+    private final DialogsService      dialogsService;
+    private final DiscovererService   discovererService;
+    private final EqualizerService    equalizerService;
+    private final MediaPlayerService  mediaPlayerService;
+    private final MediaService        mediaService;
+    private final RendererService     rendererService;
     private final VideoSurfaceService videoSurfaceService;
 
     /**
      * Create a new media player factory.
      *
-     * @param discovery optional native discovery implementation, used to locate the native LibVLC library, may be <code>null</code>
+     * @param discovery native discovery used to locate the native LibVLC library, may be <code>null</code>
      * @param libvlcArgs array of options/arguments to pass to LibVLC for initialisation of the native library
      */
     public MediaPlayerFactory(NativeDiscovery discovery, String... libvlcArgs) {
@@ -104,15 +103,15 @@ public class MediaPlayerFactory {
         this.equalizerService    = new EqualizerService   (this);
         this.mediaPlayerService  = new MediaPlayerService (this);
         this.mediaService        = new MediaService       (this);
-        this.moduleService       = new ModuleService      (this);
         this.rendererService     = new RendererService    (this);
         this.videoSurfaceService = new VideoSurfaceService(this);
     }
 
     /**
-     * Create a new media player factory.
+     * Create a new media player factory with default native discovery.
      * <p>
-     * The default {@link NativeDiscovery} implementation will used to locate the native LibVLC library.
+     * If you do not want to use native discovery, use the {@link #MediaPlayerFactory(NativeDiscovery, String...)}
+     * constructor instead, passing <code>null</code>.
      *
      * @param libvlcArgs array of options/arguments to pass to LibVLC for initialisation of the native library
      */
@@ -121,24 +120,40 @@ public class MediaPlayerFactory {
     }
 
     /**
+     * Create a new media player factory.
      *
-     *
-     * @param discovery
-     * @param libvlcArgs
+     * @param discovery native discovery used to locate the native LibVLC library, may be <code>null</code>
+     * @param libvlcArgs collection of options/arguments to pass to LibVLC for initialisation of the native library
      */
     public MediaPlayerFactory(NativeDiscovery discovery, Collection<String> libvlcArgs) {
         this(discovery, libvlcArgs.toArray(new String[libvlcArgs.size()]));
     }
 
     /**
+     * Create a new media player factory with default native discovery.
+     * <p>
+     * If you do not want to use native discovery, use the {@link #MediaPlayerFactory(NativeDiscovery, Collection)}
+     * constructor instead, passing <code>null</code>.
      *
-     *
-     * @param libvlcArgs
+     * @param libvlcArgs collection of options/arguments to pass to LibVLC for initialisation of the native library
      */
     public MediaPlayerFactory(Collection<String> libvlcArgs) {
         this(new NativeDiscovery(), libvlcArgs);
     }
 
+    /**
+     * Create a new media player factory with default native discovery and no initialisation options.
+     */
+    public MediaPlayerFactory() {
+        this(new NativeDiscovery());
+    }
+
+    /**
+     * Run native discovery, if set, and attempt to load the native library.
+     *
+     * @param discovery native discovery used to find the native library, may be <code>null</code>
+     * @return native library
+     */
     private LibVlc discoverNativeLibrary(NativeDiscovery discovery) {
         if (discovery != null) {
             // The discover method return value is not currently used, since we try and load the native library whether
@@ -152,8 +167,7 @@ public class MediaPlayerFactory {
     }
 
     /**
-     *
-     *
+     * Runtime LibVLC version check.
      * <p>
      * This check must be done here even though the default {@link NativeDiscovery} implementation already does it,
      * simply because using the default {@link NativeDiscovery} is optional.
@@ -170,6 +184,12 @@ public class MediaPlayerFactory {
         }
     }
 
+    /**
+     * Get a new LibVLC instance.
+     *
+     * @param libvlcArgs native library initialisation arguments/options
+     * @return native library instance
+     */
     private libvlc_instance_t newLibVlcInstance(String... libvlcArgs) {
         libvlc_instance_t result = libvlc.libvlc_new(libvlcArgs.length, libvlcArgs);
         if (result != null) {
@@ -207,10 +227,6 @@ public class MediaPlayerFactory {
         return mediaService;
     }
 
-    public final ModuleService modules() {
-        return moduleService;
-    }
-
     public final RendererService renderers() {
         return rendererService;
     }
@@ -220,8 +236,13 @@ public class MediaPlayerFactory {
     }
 
     /**
+     * Get, if available, the path to where the native library was loaded from.
+     * <p>
+     * This is provided primarily for diagnostic reasons.
+     * <p>
+     * The mechanism to get the native library path is implementation dependent and may not always be available.
      *
-     * @return
+     * @return native library path
      */
     public final String nativeLibraryPath() {
         return NativeLibraryPath.getNativeLibraryPath(libvlc);
@@ -230,7 +251,7 @@ public class MediaPlayerFactory {
     /**
      * Release all native resources associated with this factory.
      * <p>
-     * The factory must not be used again after it has been released.
+     * The factory must <em>not</em> be used again after it has been released.
      */
     public final void release() {
         onBeforeRelease();
@@ -242,7 +263,6 @@ public class MediaPlayerFactory {
         equalizerService   .release();
         mediaPlayerService .release();
         mediaService       .release();
-        moduleService      .release();
         rendererService    .release();
         videoSurfaceService.release();
 
@@ -251,9 +271,19 @@ public class MediaPlayerFactory {
         onAfterRelease();
     }
 
+    /**
+     * Template method invoked immediately prior to the factory being released.
+     * <p>
+     * A factory sub-class can override this to perform its own clean-up before the factory goes away.
+     */
     protected void onBeforeRelease() {
     }
 
+    /**
+     * Template method invoked immediately after the factory has been released.
+     * <p>
+     * A factory subclass can override this to perform its own clean-up after the factory goes away.
+     */
     protected void onAfterRelease() {
     }
 

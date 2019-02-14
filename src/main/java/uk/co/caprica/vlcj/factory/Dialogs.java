@@ -26,6 +26,11 @@ import uk.co.caprica.vlcj.enums.DialogQuestionType;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Encapsulation of native dialog callbacks.
+ * <p>
+ * Essentially this component bridges native dialog callbacks to methods on a {@link DialogHandler} implementation
+ */
 public class Dialogs {
 
     private final libvlc_dialog_cbs callbacks = createCallbacks();
