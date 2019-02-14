@@ -98,17 +98,6 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
         return mediaListPlayer;
     }
 
-    /**
-     * Get the embedded media list reference.
-     * <p>
-     * This component "owns" the media list and the caller <em>must not</em> release it.
-     *
-     * @return media list
-     */
-    public final MediaList getMediaList() {
-        return mediaList;
-    }
-
     @Override
     protected final void onBeforeRelease() {
         mediaListPlayer.release();

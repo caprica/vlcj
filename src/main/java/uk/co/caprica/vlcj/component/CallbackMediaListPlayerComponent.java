@@ -153,15 +153,6 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
         return mediaListPlayer;
     }
 
-    /**
-     * Get the embedded media list reference.
-     *
-     * @return media list
-     */
-    public final MediaList getMediaList() {
-        return mediaList;
-    }
-
     @Override
     protected final void onBeforeRelease() {
         mediaListPlayer.release();
