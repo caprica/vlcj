@@ -33,13 +33,13 @@ import java.io.IOException;
 /**
  * Base implementation of media that uses the native media callbacks.
  * <p>
- * This implementation mostly encapsulates the native callbacks using template methods, with the
- * exception of the {@link #onRead(Pointer, int)} method. This particular method is used to read
- * data and populate the native buffer. The reason this method exposes a native {@link Pointer} is
- * so sub-classes can access the native buffer as efficiently as possible.
+ * This implementation mostly encapsulates the native callbacks using template methods, with the exception of the
+ * {@link #onRead(Pointer, int)} method. This particular method is used to read data and populate the native buffer. The
+ * reason this method exposes a native {@link Pointer} is so sub-classes can access the native buffer as efficiently as
+ * possible.
  * <p>
- * In most cases it is likely preferable to deal instead with a Java byte array buffer, for this
- * purpose the {@link DefaultCallbackMedia} sub-class should be used instead of this class.
+ * In most cases it is likely preferable to deal instead with a Java byte array buffer, for this purpose the
+ * {@link DefaultCallbackMedia} sub-class should be used instead of this class.
  */
 public abstract class AbstractCallbackMedia implements CallbackMedia {
 
@@ -130,9 +130,8 @@ public abstract class AbstractCallbackMedia implements CallbackMedia {
     /**
      * Read media data.
      * <p>
-     * It <em>is</em> allowable for implementations to block in this method waiting for IO, but
-     * care must be taken not to block indefinitely otherwise the native media player can not be
-     * stopped.
+     * It <em>is</em> allowable for implementations to block in this method waiting for IO, but care must be taken not
+     * to block indefinitely otherwise the native media player can not be stopped.
      *
      * @param buffer buffer to write into
      * @param bufferSize capacity of the buffer to write into

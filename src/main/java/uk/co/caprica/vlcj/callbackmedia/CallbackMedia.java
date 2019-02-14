@@ -29,14 +29,13 @@ import com.sun.jna.Pointer;
 /**
  * Specification for media provided by native callbacks.
  * <p>
- * Implementations <em>are</em> allowed to block the native thread when waiting for IO - however
- * care must be taken, e.g. on error conditions, to not block indefinitely as doing so will prevent
- * the native media player from being stopped.
+ * Implementations <em>are</em> allowed to block the native thread when waiting for IO - however care must be taken,
+ * e.g. on error conditions, to not block indefinitely as doing so will prevent the native media player from being
+ * stopped.
  * <p>
- * <strong>Implementations of this class by definition rely on the use of native callbacks that are
- * implemented in Java code - steps must be taken to prevent instances of implementation classes
- * from being garbage collected otherwise the native code will crash when the Java object
- * disappears.</strong>
+ * <strong>Implementations of this class by definition rely on the use of native callbacks that are implemented in Java
+ * code - steps must be taken to prevent instances of implementation classes from being garbage collected otherwise the
+ * native code will crash when the Java object disappears.</strong>
  */
 public interface CallbackMedia {
 
@@ -74,4 +73,5 @@ public interface CallbackMedia {
      * @return opaque handle
      */
     Pointer getOpaque();
+
 }

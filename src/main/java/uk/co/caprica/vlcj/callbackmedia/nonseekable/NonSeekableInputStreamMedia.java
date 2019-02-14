@@ -88,4 +88,5 @@ public abstract class NonSeekableInputStreamMedia extends NonSeekableCallbackMed
      * @throws IOException if an error occurs
      */
     protected abstract void onCloseStream(InputStream inputStream) throws IOException;
+
 }

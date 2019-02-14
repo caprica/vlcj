@@ -69,4 +69,5 @@ public class FileInputStreamMedia extends NonSeekableInputStreamMedia {
     protected long onGetSize() {
         return file.length();
     }
+
 }

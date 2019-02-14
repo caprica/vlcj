@@ -24,13 +24,12 @@ import java.io.IOException;
 import com.sun.jna.Pointer;
 
 /**
- * Implementation of a {@link CallbackMedia} media that uses a Java byte array for an IO buffer
- * when reading media data.
+ * Implementation of a {@link CallbackMedia} media that uses a Java byte array for an IO buffer when reading media data.
  * <p>
  * A sub-class need only provide an implementation for {@link #onRead(byte[], int)}.
  * <p>
- * This implementation uses a Java byte array, you can instead get direct access to the native
- * buffer by sub-classing {@link AbstractCallbackMedia} directly.
+ * This implementation uses a Java byte array, you can instead get direct access to the native buffer by sub-classing
+ * {@link AbstractCallbackMedia} directly.
  */
 public abstract class DefaultCallbackMedia extends AbstractCallbackMedia {
 
@@ -76,9 +75,8 @@ public abstract class DefaultCallbackMedia extends AbstractCallbackMedia {
     /**
      * Template method used by sub-classes to populate the buffer with media data.
      * <p>
-     * It <em>is</em> allowable for implementations to block in this method waiting for IO, but
-     * care must be taken not to block indefinitely otherwise the native media player can not be
-     * stopped.
+     * It <em>is</em> allowable for implementations to block in this method waiting for IO, but care must be taken not
+     * to block indefinitely otherwise the native media player can not be stopped.
      *
      * @param buffer IO buffer
      * @param bufferSize maximum number of bytes to fill
@@ -86,4 +84,5 @@ public abstract class DefaultCallbackMedia extends AbstractCallbackMedia {
      * @throws IOException if an error occurs
      */
     protected abstract int onRead(byte[] buffer, int bufferSize) throws IOException;
+
 }
