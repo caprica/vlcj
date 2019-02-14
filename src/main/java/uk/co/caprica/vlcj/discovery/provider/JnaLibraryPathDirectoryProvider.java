@@ -38,6 +38,7 @@ public class JnaLibraryPathDirectoryProvider implements DiscoveryDirectoryProvid
 
     @Override
     public String[] directories() {
+        // The null-check is taken care of in the supported() method
         return System.getProperty("jna.library.path").split(File.pathSeparator);
     }
 

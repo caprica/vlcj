@@ -21,7 +21,7 @@ import uk.co.caprica.vlcj.version.LibVlcVersion;
  * implementations are provided.
  * <p>
  * It is possible to provide your own replacement native discovery strategy implementations when creating an instance of
- * this component.
+ * this component, or alternatively to provide none at all to sidestep automatic native discovery.
  * <p>
  * The first discovery strategy implementation that reports that it has found the native libraries "wins" - this means
  * that even if turns out subsequently that the native library can <em>not</em> be loaded via this strategy, any other
