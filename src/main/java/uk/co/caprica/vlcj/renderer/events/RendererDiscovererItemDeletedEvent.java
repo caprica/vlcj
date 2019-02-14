@@ -26,6 +26,9 @@ import uk.co.caprica.vlcj.renderer.RendererDiscovererEventListener;
 import uk.co.caprica.vlcj.renderer.RendererItem;
 import uk.co.caprica.vlcj.renderer.RendererDiscoverer;
 
+/**
+ * Native event used when an item was deleted from the renderer discoverer.
+ */
 final class RendererDiscovererItemDeletedEvent extends RendererDiscovererEvent {
 
     private final RendererItem item;

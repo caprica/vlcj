@@ -39,7 +39,7 @@ abstract class RendererDiscovererEvent implements EventNotification<RendererDisc
     /**
      * Create a media player event.
      *
-     * @param libvlc
+     * @param libvlc native library
      * @param rendererDiscoverer renderer discoverer that the event relates to
      */
     protected RendererDiscovererEvent(LibVlc libvlc, RendererDiscoverer rendererDiscoverer) {

@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.renderer;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 
+
 abstract public class BaseService {
 
     protected final RendererDiscoverer rendererDiscoverer;

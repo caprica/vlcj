@@ -26,6 +26,9 @@ import uk.co.caprica.vlcj.renderer.RendererDiscovererEventListener;
 import uk.co.caprica.vlcj.renderer.RendererItem;
 import uk.co.caprica.vlcj.renderer.RendererDiscoverer;
 
+/**
+ * Native event used when a new item was added to the renderer discoverer.
+ */
 final class RendererDiscovererItemAddedEvent extends RendererDiscovererEvent {
 
     private RendererItem item;
