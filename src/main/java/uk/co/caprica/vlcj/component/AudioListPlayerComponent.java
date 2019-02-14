@@ -27,8 +27,8 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 /**
  * Encapsulation of an audio media list player.
  * <p>
- * This component extends the {@link AudioPlayerComponent} to incorporate a
- * {@link MediaListPlayer} and an associated {@link MediaList}.
+ * This component extends the {@link AudioPlayerComponent} to incorporate a {@link MediaListPlayer} and an associated
+ * {@link MediaList}.
  */
 public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
 
@@ -80,8 +80,6 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
 
     /**
      * Get the embedded media list player reference.
-     * <p>
-     * An application uses this handle to control the media player, add listeners and so on.
      *
      * @return media list player
      */
@@ -91,6 +89,8 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
 
     /**
      * Get the embedded media list reference.
+     * <p>
+     * This component "owns" the media list and the caller <em>must not</em> release it.
      *
      * @return media list
      */

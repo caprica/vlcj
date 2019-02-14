@@ -49,7 +49,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     static final String[] DEFAULT_FACTORY_ARGUMENTS = MediaPlayerComponentDefaults.EMBEDDED_MEDIA_PLAYER_ARGS;
 
     /**
-     * Flag if this component created its own {@link MediaPlayerFactory}.
+     * Flag true if this component created the media player factory, or false if it was supplied by the caller.
      */
     private boolean ownFactory;
 

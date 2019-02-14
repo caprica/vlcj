@@ -1,8 +1,7 @@
 package uk.co.caprica.vlcj.component;
 
 /**
- * Enumeration of flags for controller input (mouse and keyboard) event handling for the video
- * surface.
+ * Enumeration of flags for controller input (mouse and keyboard) event handling for the video surface.
  */
 public enum InputEvents {
 
@@ -22,5 +21,5 @@ public enum InputEvents {
      * This is the mode that is usually required on Windows.
      */
     DISABLE_NATIVE
-}
 
+}

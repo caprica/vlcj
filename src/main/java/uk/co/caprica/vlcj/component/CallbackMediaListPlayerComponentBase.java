@@ -32,9 +32,29 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 import javax.swing.*;
 
+/**
+ *
+ * <p>
+ * This class serves to keep the {@link CallbackMediaListPlayerComponent} concrete implementation clean and
+ * un-cluttered.
+ */
 @SuppressWarnings("serial")
 public class CallbackMediaListPlayerComponentBase extends CallbackMediaPlayerComponent implements MediaListPlayerEventListener, MediaListEventListener {
 
+    /**
+     * Create a media player component.
+     * <p>
+     * All constructor parameters are optional, reasonable defaults will be used as needed.
+     *
+     * @param mediaPlayerFactory factory used to create the component
+     * @param fullScreenStrategy full-screen strategy
+     * @param inputEvents required input events
+     * @param bufferFormatCallback
+     * @param lockBuffers
+     * @param imagePainter
+     * @param videoSurfaceComponent
+     * @param renderCallback
+     */
     public CallbackMediaListPlayerComponentBase(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, BufferFormatCallback bufferFormatCallback, boolean lockBuffers, CallbackImagePainter imagePainter, JComponent videoSurfaceComponent, RenderCallback renderCallback) {
         super(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, imagePainter, renderCallback, bufferFormatCallback, videoSurfaceComponent);
     }

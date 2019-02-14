@@ -44,8 +44,7 @@ import java.awt.image.BufferedImage;
  *
  *
  * <p>
- * Having this class saves cluttering the {@link EmbeddedMediaPlayerComponent} with all of these empty event listener
- * methods.
+ * This class serves to keep the {@link EmbeddedMediaPlayerComponent} concrete implementation clean and un-cluttered.
  */
 @SuppressWarnings("serial")
 abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaPlayerEventListener, MediaEventListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener  {
@@ -56,7 +55,7 @@ abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaP
     private Cursor blankCursor;
 
     /**
-     *
+     * Create a media player component.
      */
     protected EmbeddedMediaPlayerComponentBase() {
     }

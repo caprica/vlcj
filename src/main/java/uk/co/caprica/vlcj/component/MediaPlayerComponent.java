@@ -21,8 +21,18 @@ package uk.co.caprica.vlcj.component;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 
+/**
+ * Minimal specification for a media player component.
+ * <p>
+ * Serves only to ensure a {@link MediaPlayerFactory} is available.
+ */
 public interface MediaPlayerComponent {
 
+    /**
+     * Get the media player factory that was used to create the media player component.
+     *
+     * @return factory
+     */
     MediaPlayerFactory getMediaPlayerFactory();
 
 }

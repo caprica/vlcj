@@ -22,7 +22,6 @@ package uk.co.caprica.vlcj.component;
 /**
  * Consolidated VLC command-line options/switches/arguments used by default in the media player components when creating
  * a {@link uk.co.caprica.vlcj.factory.MediaPlayerFactory}.
- * <p>
  * <pre>
  * --intf=dummy
  *     This is the main interface used by VLC.

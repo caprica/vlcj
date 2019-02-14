@@ -29,8 +29,16 @@ import uk.co.caprica.vlcj.model.Picture;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
+/**
+ *
+ * <p>
+ * This class serves to keep the {@link AudioPlayerComponent} concrete implementation clean and un-cluttered.
+ */
 abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, MediaEventListener {
 
+    /**
+     * Create a media player component.
+     */
     protected AudioPlayerComponentBase() {
     }
 

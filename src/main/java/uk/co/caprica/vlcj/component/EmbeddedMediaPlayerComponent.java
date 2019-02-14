@@ -30,83 +30,7 @@ import java.awt.*;
 /**
  * Encapsulation of an embedded media player.
  * <p>
- * This component encapsulates a media player and an associated video surface suitable for embedding
- * inside a graphical user interface.
- * <p>
- * Most implementation details, like creating a factory and connecting the various objects together,
- * are encapsulated.
- * <p>
- * The default implementation will work out-of-the-box, but there are various template methods
- * available to sub-classes to tailor the behaviour of the component.
- * <p>
- * This class implements the most the most common use-case for an embedded media player and is
- * intended to enable a developer to get quickly started with the vlcj framework. More advanced
- * applications are free to directly use the {@link MediaPlayerFactory}, if required, as has always
- * been the case.
- * <p>
- * This component also implements the various media player listener interfaces, consequently an
- * implementation sub-class can simply override those listener methods to handle events.
- * <p>
- * Applications can get a handle to the underlying media player object by invoking
- * {@link #getMediaPlayer()}.
- * <p>
- * To use, simply create an instance of this class and add it to a visual container component like a
- * {@link JPanel} (or any other {@link Container}).
- * <p>
- * For example, here a media player component is used directly as the content pane of a
- * {@link JFrame}, and only two lines of code that use vlcj are required:
- *
- * <pre>
- * frame = new JFrame();
- * mediaPlayerComponent = new EmbeddedMediaPlayerComponent(); // &lt;--- 1
- * frame.setContentPane(mediaPlayerComponent);
- * frame.setSize(1050, 600);
- * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- * frame.setVisible(true);
- * mediaPlayerComponent.getMediaPlayer().playMedia(mrl); // &lt;--- 2
- * </pre>
- *
- * An example of a sub-class to tailor behaviours and override event handlers:
- *
- * <pre>
- * mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
- *     protected String[] onGetMediaPlayerFactoryArgs() {
- *         return new String[] {&quot;--no-video-title-show&quot;};
- *     }
- *
- *     protected FullScreenStrategy onGetFullScreenStrategy() {
- *         return new XFullScreenStrategy(frame);
- *     }
- *
- *     public void videoOutputAvailable(MediaPlayer mediaPlayer, boolean videoOutput) {
- *     }
- *
- *     public void error(MediaPlayer mediaPlayer) {
- *     }
- *
- *     public void finished(MediaPlayer mediaPlayer) {
- *     }
- * };
- * </pre>
- * This component also provides template methods for mouse and keyboard events - these are events
- * for the <em>video surface</em> and not for the <code>Panel</code> that this component is itself
- * contained in. If for some reason you need events for the <code>Panel</code> you can just add
- * them by calling the usual add listener methods.
- * <p>
- * You can use template methods and/or add your own listeners depending on your needs.
- * <p>
- * Key events will only be delivered if the video surface has the focus. It is up to you to manage
- * that.
- * <p>
- * When the media player component is no longer needed, it should be released by invoking the
- * {@link #release()} method.
- * <p>
- * Since the media player factory associated by this component may be created by this component
- * itself or may be shared with some other media player resources it is the responsibility of
- * the application to also release the media player factory at the appropriate time.
- * <p>
- * It is always a better strategy to reuse media player components, rather than repeatedly creating
- * and destroying instances.
+ * When the media player component is no longer needed, it should be released by invoking the {@link #release()} method.
  */
 @SuppressWarnings("serial")
 public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBase implements MediaPlayerComponent {
@@ -117,7 +41,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     static final String[] DEFAULT_FACTORY_ARGUMENTS = MediaPlayerComponentDefaults.EMBEDDED_MEDIA_PLAYER_ARGS;
 
     /**
-     *
+     * Flag true if this component created the media player factory, or false if it was supplied by the caller.
      */
     private boolean ownFactory;
 
@@ -127,7 +51,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     protected final MediaPlayerFactory mediaPlayerFactory;
 
     /**
-     *
+     * Video surface component.
      */
     private final Component videoSurfaceComponent;
 
