@@ -21,12 +21,24 @@ package uk.co.caprica.vlcj.discoverer;
 
 import uk.co.caprica.vlcj.enums.MediaDiscovererCategory;
 
+/**
+ * Media discoverer description.
+ */
 public final class MediaDiscovererDescription {
 
+    /**
+     * Short name of the media discoverer.
+     */
     private final String name;
 
+    /**
+     * Long name of the media discoverer.
+     */
     private final String longName;
 
+    /**
+     * Category of the media discoverer.
+     */
     private final MediaDiscovererCategory category;
 
     public MediaDiscovererDescription(String name, String longName, MediaDiscovererCategory category) {
@@ -35,14 +47,29 @@ public final class MediaDiscovererDescription {
         this.category = category;
     }
 
+    /**
+     * Get the discoverer short name.
+     *
+     * @return short name
+     */
     public String name() {
         return name;
     }
 
+    /**
+     * Get the discoverer long name.
+     *
+     * @return long name
+     */
     public String longName() {
         return longName;
     }
 
+    /**
+     * Get the discoverer category.
+     *
+     * @return category
+     */
     public MediaDiscovererCategory category() {
         return category;
     }

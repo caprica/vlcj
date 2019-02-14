@@ -26,6 +26,7 @@ import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.binding.support.size_t;
 import uk.co.caprica.vlcj.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.discoverer.MediaDiscovererDescription;
+import uk.co.caprica.vlcj.discoverer.MediaDiscovererFactory;
 import uk.co.caprica.vlcj.enums.MediaDiscovererCategory;
 
 import java.util.ArrayList;
@@ -37,6 +38,12 @@ public final class DiscovererService extends BaseService {
         super(factory);
     }
 
+    /**
+     *
+     *
+     * @param category
+     * @return
+     */
     public List<MediaDiscovererDescription> discoverers(MediaDiscovererCategory category) {
         PointerByReference ref = new PointerByReference();
         size_t size = libvlc.libvlc_media_discoverer_list_get(libvlcInstance, category.intValue(), ref);
@@ -61,7 +68,7 @@ public final class DiscovererService extends BaseService {
     public MediaDiscoverer discoverer(String name) {
         libvlc_media_discoverer_t discoverer = libvlc.libvlc_media_discoverer_new(libvlcInstance, name);
         if (discoverer != null) {
-            return new MediaDiscoverer(libvlc, libvlcInstance, discoverer);
+            return MediaDiscovererFactory.newMediaDiscoverer(libvlc, libvlcInstance, discoverer);
         } else {
             return null;
         }

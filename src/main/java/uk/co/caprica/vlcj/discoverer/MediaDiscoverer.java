@@ -22,38 +22,94 @@ package uk.co.caprica.vlcj.discoverer;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.medialist.MediaListRef;
 
-public class MediaDiscoverer {
+/**
+ * Media discoverer component.
+ */
+public final class MediaDiscoverer {
 
+    /**
+     * Native library.
+     */
     private final LibVlc libvlc;
 
+    /**
+     * Native discoverer instance.
+     */
     private final libvlc_media_discoverer_t discoverer;
 
+    /**
+     * List of discovered media.
+     */
     private final MediaList mediaList;
 
-    public MediaDiscoverer(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_discoverer_t discoverer) {
+    /**
+     * Create a media discoverer
+     *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param discovererInstance native media discoverer instance
+     * @return media discoverer
+     */
+    MediaDiscoverer(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_discoverer_t discovererInstance) {
         this.libvlc = libvlc;
-        this.discoverer = discoverer;
-        this.mediaList = new MediaList(libvlc, libvlcInstance, libvlc.libvlc_media_discoverer_media_list(discoverer));
+        this.discoverer = discovererInstance;
+        this.mediaList = new MediaList(libvlc, libvlcInstance, libvlc.libvlc_media_discoverer_media_list(discovererInstance));
     }
 
+    /**
+     * Start media discovery.
+     *
+     * @return <code>true</code> if successful; <code>false</code> if error
+     */
     public boolean start() {
         return libvlc.libvlc_media_discoverer_start(discoverer) == 0;
     }
 
+    /**
+     * Stop media discovery.
+     */
     public void stop() {
         libvlc.libvlc_media_discoverer_stop(discoverer);
     }
 
+    /**
+     * Is media discovery running?
+     *
+     * @return <code>true</code> if discovery is running; <code>false</code> if it is not
+     */
     public boolean isRunning() {
         return libvlc.libvlc_media_discoverer_is_running(discoverer) != 0;
     }
 
-    public MediaList mediaList() {
-        return mediaList;
+    /**
+     * Get the discovered media list.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaList} when it has no further use for it.
+     *
+     * @return media list
+     */
+    public MediaList newNediaList() {
+        return mediaList.newMediaList();
     }
 
+    /**
+     * Get the discovered media list as a {@link MediaListRef}.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaList} when it has no further use for it.
+     *
+     * @return media list
+     */
+    public MediaListRef newNediaListRef() {
+        return mediaList.newMediaListRef();
+    }
+
+    /**
+     * Release the media discoverer and any associated native resources.
+     */
     public void release() {
+        mediaList.release();
         libvlc.libvlc_media_discoverer_release(discoverer);
     }
 
