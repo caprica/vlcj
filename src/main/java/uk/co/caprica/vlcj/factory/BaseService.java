@@ -32,8 +32,8 @@ abstract class BaseService {
 
     BaseService(MediaPlayerFactory factory) {
         this.factory        = factory;
-        this.libvlc         = factory.libvlc();
-        this.libvlcInstance = factory.instance();
+        this.libvlc         = factory.libvlc;
+        this.libvlcInstance = factory.libvlcInstance;
     }
 
     protected void release() {

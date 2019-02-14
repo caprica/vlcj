@@ -63,9 +63,9 @@ public class MediaPlayerFactory {
         }
     }
 
-    private final LibVlc libvlc; // FIXME maybe just protected and get rid of the getter?
+    protected final LibVlc libvlc;
 
-    private final libvlc_instance_t libvlcInstance; // FIXME maybe just protected and get rid of the getter?
+    protected final libvlc_instance_t libvlcInstance;
 
     private final ApplicationService applicationService;
 
@@ -255,14 +255,6 @@ public class MediaPlayerFactory {
     }
 
     protected void onAfterRelease() {
-    }
-
-    protected final LibVlc libvlc() {
-        return libvlc;
-    }
-
-    protected final libvlc_instance_t instance() {
-        return libvlcInstance;
     }
 
 }
