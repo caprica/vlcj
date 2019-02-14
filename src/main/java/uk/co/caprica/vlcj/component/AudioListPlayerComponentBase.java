@@ -26,7 +26,11 @@ import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
-
+/**
+ * Base implementation for an audio list player.
+ * <p>
+ * This class serves to keep the {@link AudioListPlayerComponent} concrete implementation clean and un-cluttered.
+ */
 abstract class AudioListPlayerComponentBase extends AudioPlayerComponent implements MediaListPlayerEventListener, MediaListEventListener {
 
     /**

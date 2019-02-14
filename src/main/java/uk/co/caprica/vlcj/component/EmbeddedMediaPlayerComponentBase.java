@@ -41,8 +41,7 @@ import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 
 /**
- *
- *
+ * Base implementation of an embedded media player.
  * <p>
  * This class serves to keep the {@link EmbeddedMediaPlayerComponent} concrete implementation clean and un-cluttered.
  */

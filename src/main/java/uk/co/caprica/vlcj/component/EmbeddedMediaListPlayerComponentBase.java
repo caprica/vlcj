@@ -30,7 +30,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 import java.awt.*;
 
 /**
- *
+ * Base implementation of an embedded media list player.
  * <p>
  * This class serves to keep the {@link EmbeddedMediaListPlayerComponent} concrete implementation clean and
  * un-cluttered.

@@ -33,7 +33,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 import javax.swing.*;
 
 /**
- *
+ * Base implementation of a callback "direct-rendering" media player.
  * <p>
  * This class serves to keep the {@link CallbackMediaListPlayerComponent} concrete implementation clean and
  * un-cluttered.
@@ -63,44 +63,36 @@ public class CallbackMediaListPlayerComponentBase extends CallbackMediaPlayerCom
 
     @Override
     public void mediaListEndReached(MediaList mediaList) {
-
     }
 
     @Override
     public void mediaListPlayerFinished(MediaListPlayer mediaListPlayer) {
-
     }
 
     @Override
     public void nextItem(MediaListPlayer mediaListPlayer, MediaRef item) {
-
     }
 
     @Override
     public void stopped(MediaListPlayer mediaListPlayer) {
-
     }
 
     // === MediaListEventListener ===============================================
 
     @Override
     public void mediaListWillAddItem(MediaList mediaList, MediaRef item, int index) {
-
     }
 
     @Override
     public void mediaListItemAdded(MediaList mediaList, MediaRef item, int index) {
-
     }
 
     @Override
     public void mediaListWillDeleteItem(MediaList mediaList, MediaRef item, int index) {
-
     }
 
     @Override
     public void mediaListItemDeleted(MediaList mediaList, MediaRef item, int index) {
-
     }
 
 }

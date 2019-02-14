@@ -28,9 +28,11 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Encapsulation of an embedded media player.
+ * Implementation of an embedded media player.
  * <p>
- * When the media player component is no longer needed, it should be released by invoking the {@link #release()} method.
+ * The component may be added directly to a user interface layout.
+ * <p>
+ * When the component is no longer needed, it should be released by invoking the {@link #release()} method.
  */
 @SuppressWarnings("serial")
 public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBase implements MediaPlayerComponent {
@@ -61,13 +63,15 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     private final EmbeddedMediaPlayer mediaPlayer;
 
     /**
+     * Construct an embedded media player component.
+     * <p>
+     * Any constructor parameter may be <code>null</code>, in which case a reasonable default will be used.
      *
-     *
-     * @param mediaPlayerFactory
-     * @param videoSurfaceComponent
-     * @param fullScreenStrategy
-     * @param inputEvents
-     * @param overlay
+     * @param mediaPlayerFactory media player factory
+     * @param videoSurfaceComponent heavyweight video surface component, will become part of this components UI layout
+     * @param fullScreenStrategy full screen strategy
+     * @param inputEvents keyboard/mouse input event configuration
+     * @param overlay heavyweight overlay
      */
     public EmbeddedMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, Component videoSurfaceComponent, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, Window overlay) {
         this.ownFactory = mediaPlayerFactory == null;
@@ -92,12 +96,17 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         onAfterConstruct();
     }
 
+    /**
+     * Construct an embedded media player component from a builder.
+     *
+     * @param spec builder
+     */
     public EmbeddedMediaPlayerComponent(MediaPlayerSpecs.EmbeddedMediaPlayerSpec spec) {
         this(spec.factory, spec.videoSurfaceComponent, spec.fullScreenStrategy, spec.inputEvents, spec.overlay);
     }
 
     /**
-     * Construct a media player component.
+     * Construct an embedded media player component with reasonable defaults.
      */
     public EmbeddedMediaPlayerComponent() {
         this(null, null, null, null, null);
@@ -162,9 +171,6 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
     /**
      * Release the media player component and the associated native media player resources.
-     * <p>
-     * The associated media player factory will <em>not</em> be released, the client
-     * application is responsible for releasing the factory at the appropriate time.
      */
     public final void release() {
         onBeforeRelease();
@@ -185,11 +191,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         onAfterRelease();
     }
 
-    /**
-     * Get the media player factory reference.
-     *
-     * @return media player factory
-     */
+    @Override
     public final MediaPlayerFactory getMediaPlayerFactory() {
         return mediaPlayerFactory;
     }

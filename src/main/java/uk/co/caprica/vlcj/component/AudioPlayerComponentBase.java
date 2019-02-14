@@ -30,7 +30,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
- *
+ * Base implementation of an audio player.
  * <p>
  * This class serves to keep the {@link AudioPlayerComponent} concrete implementation clean and un-cluttered.
  */

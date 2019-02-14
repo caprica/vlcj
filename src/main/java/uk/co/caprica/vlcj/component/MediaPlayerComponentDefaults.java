@@ -53,17 +53,6 @@ final class MediaPlayerComponentDefaults {
         "--intf=dummy"
     };
 
-    static String[] DIRECT_MEDIA_PLAYER_ARGS = {
-        "--no-snapshot-preview",
-        "--quiet",
-        "--intf=dummy"
-    };
-
-    static String[] DIRECT_AUDIO_PLAYER_ARGS = {
-        "--quiet",
-        "--intf=dummy"
-    };
-
     private MediaPlayerComponentDefaults() {
     }
 

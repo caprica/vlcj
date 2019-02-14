@@ -23,9 +23,9 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 
 /**
- * Encapsulation of an audio player.
+ * Implementation of an audio player.
  * <p>
- * When the media player component is no longer needed, it should be released by invoking the {@link #release()} method.
+ * When the component is no longer needed, it should be released by invoking the {@link #release()} method.
  */
 public class AudioPlayerComponent extends AudioPlayerComponentBase implements MediaPlayerComponent {
 
@@ -51,6 +51,10 @@ public class AudioPlayerComponent extends AudioPlayerComponentBase implements Me
 
     /**
      * Construct a media player component.
+     * <p>
+     * Any constructor parameter may be <code>null</code>, in which case a reasonable default will be used.
+     *
+     * @param mediaPlayerFactory media player factory
      */
     public AudioPlayerComponent(MediaPlayerFactory mediaPlayerFactory) {
         this.ownFactory = mediaPlayerFactory == null;
@@ -63,10 +67,18 @@ public class AudioPlayerComponent extends AudioPlayerComponentBase implements Me
         onAfterConstruct();
     }
 
+    /**
+     * Construct a media player component from a builder.
+     *
+     * @param spec builder
+     */
     public AudioPlayerComponent(MediaPlayerSpecs.AudioPlayerSpec spec) {
         this(spec.factory);
     }
 
+    /**
+     * Construct a media player component with reasonable defaults.
+     */
     public AudioPlayerComponent() {
         this((MediaPlayerFactory) null);
     }
@@ -91,9 +103,6 @@ public class AudioPlayerComponent extends AudioPlayerComponentBase implements Me
 
     /**
      * Release the media player component and the associated native media player resources.
-     * <p>
-     * The associated media player factory will <em>not</em> be released, the client
-     * application is responsible for releasing the factory at the appropriate time.
      */
     public final void release() {
         onBeforeRelease();

@@ -30,6 +30,13 @@ public interface MediaPlayerComponent {
 
     /**
      * Get the media player factory that was used to create the media player component.
+     * <p>
+     * If the client application did not suppl a media player factory when creating the component, then the component is
+     * the "owner" of the returned factory instance. A client application must <em>not</em> releasse the factory in this
+     * case.
+     * <p>
+     * If a client application did supply the factory, then the client application is wholly responsible for the correct
+     * life-cycle of that factory and should release it at the appropriate time.
      *
      * @return factory
      */

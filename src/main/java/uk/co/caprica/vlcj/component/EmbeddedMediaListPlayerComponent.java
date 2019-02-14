@@ -28,10 +28,11 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import java.awt.*;
 
 /**
- * Encapsulation of an embedded media list player.
+ * Implementation of an embedded media list player.
  * <p>
- * This component extends the {@link EmbeddedMediaPlayerComponent} to incorporate a
- * {@link MediaListPlayer} and an associated {@link MediaList}.
+ * The component may be added directly to a user interface layout.
+ * <p>
+ * When the component is no longer needed, it should be released by invoking the {@link #release()} method.
  */
 @SuppressWarnings("serial")
 public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerComponentBase {
@@ -46,6 +47,17 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerCom
      */
     private final MediaList mediaList;
 
+    /**
+     * Construct an embedded media list player component.
+     * <p>
+     * Any constructor parameter may be <code>null</code>, in which case a reasonable default will be used.
+     *
+     * @param mediaPlayerFactory media player factory
+     * @param videoSurfaceComponent heavyweight video surface component, will become part of this components UI layout
+     * @param fullScreenStrategy full screen strategy
+     * @param inputEvents keyboard/mouse input event configuration
+     * @param overlay heavyweight overlay
+     */
     public EmbeddedMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, Component videoSurfaceComponent, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, Window overlay) {
         super(mediaPlayerFactory, videoSurfaceComponent, fullScreenStrategy, inputEvents, overlay);
 
@@ -61,12 +73,17 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerCom
         onAfterConstruct();
     }
 
+    /**
+     * Construct an embedded media list player from a builder.
+     *
+     * @param spec builder
+     */
     public EmbeddedMediaListPlayerComponent(MediaPlayerSpecs.EmbeddedMediaPlayerSpec spec) {
         this(spec.factory, spec.videoSurfaceComponent, spec.fullScreenStrategy, spec.inputEvents, spec.overlay);
     }
 
     /**
-     * Construct a media list player component.
+     * Construct an embedded media list player component with reasonable defaults.
      */
     public EmbeddedMediaListPlayerComponent() {
         this(null, null, null, null, null);

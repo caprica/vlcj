@@ -38,7 +38,13 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 /**
- *
+ * Implementation of a callback "direct-rendering" media player.
+ * <p>
+ * This component renders video frames received via native callbacks.
+ * <p>
+ * The component may be added directly to a user interface layout.
+ * <p>
+ * When the component is no longer needed, it should be released by invoking the {@link #release()} method.
  */
 @SuppressWarnings("serial")
 public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBase implements MediaPlayerComponent {
@@ -86,24 +92,25 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     private BufferedImage image;
 
     /**
-     * Create a media player component that renders video frames received via native callbacks.
+     * Construct a callback media player component.
      * <p>
      * This component will provide a reasonable default implementation, but a client application is free to override
      * these defaults with their own implementation.
      * <p>
      * To rely on the defaults and have this component render the video, do not supply a <code>renderCallback</code>.
      * <p>
-     * If a client application wishes to perform its own rendering, provide a <code>renderCallback</code>, and also a
-     * <code>videoSurfaceComponent</code> if the client application wants the video surface they are rendering in to be
-     * incorporated into this component's layout.
+     * If a client application wishes to perform its own rendering, provide a <code>renderCallback</code>, a
+     * <code>BufferFormatCallback</code>, and optionally (but likely) a <code>videoSurfaceComponent</code> if the client
+     * application wants the video surface they are rendering in to be incorporated into this component's layout.
      *
-     * @param mediaPlayerFactory
-     * @param fullScreenStrategy
-     * @param inputEvents
-     * @param lockBuffers
-     * @param renderCallback
-     * @param bufferFormatCallback
-     * @param videoSurfaceComponent
+     * @param mediaPlayerFactory media player factory
+     * @param fullScreenStrategy full screen strategy
+     * @param inputEvents keyboard/mouse input event configuration
+     * @param lockBuffers <code>true</code> if the native video buffer should be locked; <code>false</code> if not
+     * @param imagePainter image painter (video renderer)
+     * @param renderCallback render callback
+     * @param bufferFormatCallback buffer format callback
+     * @param videoSurfaceComponent lightweight video surface component
      */
     public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, CallbackImagePainter imagePainter, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
         this.ownFactory = mediaPlayerFactory == null;
@@ -139,22 +146,58 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         onAfterConstruct();
     }
 
+    /**
+     * Construct a callback media list player component for intrinsic rendering (by this component).
+     *
+     * @param mediaPlayerFactory media player factory
+     * @param fullScreenStrategy full screen strategy
+     * @param inputEvents keyboard/mouse input event configuration
+     * @param lockBuffers <code>true</code> if the native video buffer should be locked; <code>false</code> if not
+     * @param imagePainter image painter (video renderer)
+     */
     public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, CallbackImagePainter imagePainter) {
         this(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, null, null, null, null);
     }
 
+    /**
+     * Construct a callback media list player component for external rendering (by the client application).
+     *
+     * @param mediaPlayerFactory media player factory
+     * @param fullScreenStrategy full screen strategy
+     * @param inputEvents keyboard/mouse input event configuration
+     * @param lockBuffers <code>true</code> if the native video buffer should be locked; <code>false</code> if not
+     * @param renderCallback render callback
+     * @param bufferFormatCallback buffer format callback
+     * @param videoSurfaceComponent lightweight video surface component
+     */
     public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
         this(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, null, renderCallback, bufferFormatCallback, videoSurfaceComponent);
     }
 
+    /**
+     * Create a callback media player component from a builder.
+     *
+     * @param spec builder
+     */
     public CallbackMediaPlayerComponent(MediaPlayerSpecs.CallbackMediaPlayerSpec spec) {
         this(spec.factory, spec.fullScreenStrategy, spec.inputEvents, spec.lockedBuffers, spec.imagePainter, spec.renderCallback, spec.bufferFormatCallback, spec.videoSurfaceComponent);
     }
 
+    /**
+     * Create a callback media player component with reasonable defaults.
+     */
     public CallbackMediaPlayerComponent() {
         this(null, null, null, true, null, null, null, null);
     }
 
+    /**
+     * Validate that arguments are passed for either intrinsic or external rendering, but not both.
+     *
+     * @param imagePainter image painter (video renderer)
+     * @param renderCallback render callback
+     * @param bufferFormatCallback buffer format callback
+     * @param videoSurfaceComponent video surface component
+     */
     private void validateArguments(CallbackImagePainter imagePainter, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
         if (renderCallback == null) {
             if (bufferFormatCallback  != null) throw new IllegalArgumentException("Do not specify bufferFormatCallback without a renderCallback");
@@ -217,9 +260,6 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
     /**
      * Release the media player component and the associated native media player resources.
-     * <p>
-     * The associated media player factory will <em>not</em> be released, the client
-     * application is responsible for releasing the factory at the appropriate time.
      */
     public final void release() {
         onBeforeRelease();
@@ -240,11 +280,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         onAfterRelease();
     }
 
-    /**
-     * Get the media player factory reference.
-     *
-     * @return media player factory
-     */
+    @Override
     public final MediaPlayerFactory getMediaPlayerFactory() {
         return mediaPlayerFactory;
     }

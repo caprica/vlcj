@@ -25,10 +25,9 @@ import uk.co.caprica.vlcj.medialist.MediaListRef;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 /**
- * Encapsulation of an audio media list player.
+ * Implementation of an audio list player.
  * <p>
- * This component extends the {@link AudioPlayerComponent} to incorporate a {@link MediaListPlayer} and an associated
- * {@link MediaList}.
+ * When the component is no longer needed, it should be released by invoking the {@link #release()} method.
  */
 public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
 
@@ -43,7 +42,11 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
     private final MediaList mediaList;
 
     /**
-     * Construct a media list player component.
+     * Construct an audio list player component.
+     * <p>
+     * Any constructor parameter may be <code>null</code>, in which case a reasonable default will be used.
+     *
+     * @param mediaPlayerFactory media player factory
      */
     public AudioListPlayerComponent(MediaPlayerFactory mediaPlayerFactory) {
         super(mediaPlayerFactory);
@@ -60,10 +63,18 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
         onAfterConstruct();
     }
 
+    /**
+     * Construct an audio list player component from a builder.
+     *
+     * @param spec builder
+     */
     public AudioListPlayerComponent(MediaPlayerSpecs.AudioPlayerSpec spec) {
         this(spec.factory);
     }
 
+    /**
+     * Construct an audio list player component with reasonable defaults.
+     */
     public AudioListPlayerComponent() {
         this((MediaPlayerFactory) null);
     }
