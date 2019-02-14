@@ -20,31 +20,33 @@
 package uk.co.caprica.vlcj.player.base;
 
 /**
- * Event listener implementation that handles auto-repeat.
+ * Event listener implementation that "resets" the media after it has finished playing.
  * <p>
- * This internal handler must be added after {@link ResetMediaEventHandler}.
+ * For some reason, we must invoke stop here to get the media to play again with the subsequent play - note that we
+ * don't just make play itself always invoke stop first, since play may be resuming from a paused state or the media is
+ * already playing (we wouldn't want to stop playback in those circumstances).
+ * <p>
+ * This internal handler must be added before {@link RepeatPlayEventHandler}.
  */
-final class RepeatPlayEventHandler extends MediaPlayerEventAdapter {
+final class ResetMediaEventHandler extends MediaPlayerEventAdapter {
 
     @Override
     public void finished(MediaPlayer mediaPlayer) {
-        if (mediaPlayer.media().getRepeat()) {
-            // It is not allowed to call back into LibVLC from this native thread, so offload to a task to repeat play
-            mediaPlayer.submit(new ReplayMediaTask(mediaPlayer));
-        }
+        // It is not allowed to call back into LibVLC from this native thread, so offload to a task to repeat play
+        mediaPlayer.submit(new ResetMediaTask(mediaPlayer));
     }
 
-    private static class ReplayMediaTask implements Runnable {
+    private static class ResetMediaTask implements Runnable {
 
         private final MediaPlayer mediaPlayer;
 
-        private ReplayMediaTask(MediaPlayer mediaPlayer) {
+        private ResetMediaTask(MediaPlayer mediaPlayer) {
             this.mediaPlayer = mediaPlayer;
         }
 
         @Override
         public void run() {
-            mediaPlayer.controls().play();
+            mediaPlayer.controls().stop();
         }
     }
 

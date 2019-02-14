@@ -228,18 +228,6 @@ public final class MediaService extends BaseService {
     }
 
     /**
-     * Reset the current media, if there is one.
-     * <p>
-     * This simply sets the last played media again so it may be played again. Without this, the current media would not
-     * be able to be played again if it had finished.
-     */
-    public void reset() {
-        if (this.media != null) {
-            applyMedia();
-        }
-    }
-
-    /**
      * Set whether or not the media player should automatically repeat playing the media when it has
      * finished playing.
      * <p>

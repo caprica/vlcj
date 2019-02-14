@@ -31,7 +31,8 @@ public final class EventService extends BaseService {
 
         eventManager = new MediaPlayerNativeEventManager(libvlc, libvlcInstance, mediaPlayer);
 
-        // Add event handlers used for internal implementation
+        // Add event handlers used for internal implementation (ordering here is important)
+        addMediaPlayerEventListener(new ResetMediaEventHandler      ());
         addMediaPlayerEventListener(new RepeatPlayEventHandler      ());
         addMediaPlayerEventListener(new MediaPlayerReadyEventHandler());
     }
