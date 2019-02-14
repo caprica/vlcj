@@ -76,6 +76,22 @@ public final class ListService extends BaseService {
         return mediaList != null ? mediaList.items() : null;
     }
 
+    public MediaList newMediaList() {
+        if (mediaList != null) {
+            return mediaList.newMediaList();
+        } else {
+            return null;
+        }
+    }
+
+    public MediaListRef newMediaListRef() {
+        if (mediaList != null) {
+            return mediaList.newMediaListRef();
+        } else {
+            return null;
+        }
+    }
+
     @Override
     protected void release() {
         if (mediaList != null) {
