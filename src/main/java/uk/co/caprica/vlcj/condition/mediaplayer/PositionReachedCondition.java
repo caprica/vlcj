@@ -22,8 +22,8 @@ package uk.co.caprica.vlcj.condition.mediaplayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
- * Implementation of a condition that waits for the media player to report that
- * it has reached/passed a particular position.
+ * Implementation of a condition that waits for the media player to report that it has reached/passed a particular
+ * position.
  */
 public class PositionReachedCondition extends MediaPlayerCondition<Float> {
 

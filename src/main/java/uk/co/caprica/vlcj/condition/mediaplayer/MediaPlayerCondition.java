@@ -25,10 +25,26 @@ import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.condition.Condition;
 
+/**
+ * Base implementation for a conditional waiter for media player events.
+ *
+ * @param <R> type of result that may be returned when the desired condition arises
+ */
 abstract public class MediaPlayerCondition<R> extends Condition<MediaPlayer, R> implements MediaPlayerEventListener {
 
+    /**
+     * Internal event listener used to fire finished/error completion statuses.
+     * <p>
+     * This additional listener is used so sub-classes can freely override the default empty listener methods without
+     * interfering with proper operation of this component.
+     */
     private final MediaPlayerEventListener internalListener = new InternalListener();
 
+    /**
+     * Create a new conditional waiter for a media player.
+     *
+     * @param component component to wait for
+     */
     protected MediaPlayerCondition(MediaPlayer component) {
         super(component);
     }

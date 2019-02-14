@@ -29,10 +29,26 @@ import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.model.Picture;
 import uk.co.caprica.vlcj.condition.Condition;
 
+/**
+ * Base implementation for a conditional waiter for media events.
+ *
+ * @param <R> type of result that may be returned when the desired condition arises
+ */
 abstract public class MediaCondition<R> extends Condition<Media, R> implements MediaEventListener {
 
+    /**
+     * Internal event listener used to fire finished/error completion statuses.
+     * <p>
+     * This additional listener is used so sub-classes can freely override the default empty listener methods without
+     * interfering with proper operation of this component.
+     */
     private final MediaEventListener internalListener = new InternalListener();
 
+    /**
+     * Create a new conditional waiter for media.
+     *
+     * @param component component to wait for
+     */
     protected MediaCondition(Media component) {
         super(component);
     }

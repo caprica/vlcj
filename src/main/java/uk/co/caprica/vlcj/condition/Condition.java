@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.condition;
 
+import uk.co.caprica.vlcj.condition.media.MediaCondition;
 import uk.co.caprica.vlcj.condition.mediaplayer.MediaPlayerCondition;
 
 import java.util.concurrent.CountDownLatch;
@@ -28,11 +29,9 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Base implementation for a component that waits for specific component state to occur.
  * <p>
- * Instances of this class, or its sub-classes, are <em>not</em> reusable. FIXME this statement may no longer be true
- * <p>
  * This implementation works by adding a temporary event listener to an associated component then waiting, via
  * {@link #await()}, for an internal synchronisation object to trigger, via {@link #ready()} or {@link #ready(Object)}
- * when one or other of the event listener's implementation methods detects the desired media component. The temporary
+ * when one or other of the event listener's implementation methods detects the desired component event. The temporary
  * event listener is then removed and the {@link #await()} method is unblocked and returns.
  * <p>
  * Commonly needed triggers are implemented for {@link #error()} and {@link #finished()}.
@@ -45,34 +44,16 @@ import java.util.concurrent.atomic.AtomicReference;
  * that executes respectively before awaiting the condition and after the condition state is reached.
  * <p>
  * Using {@link #onBefore(Object)} guarantees that the component event listener has been registered with the media
- * player before the condition implementation is executed.
+ * player before the condition implementation is executed (e.g. an implementation of this method could check if the
+ * condition they would otherwise wait for has already been achieved).
  * <p>
  * Note that as with other media player and related component implementations the event callbacks are running in a
  * native thread.
- * <p>
- * Example:
- * <pre>
- *    try {
- *        Condition&lt;?&gt; playingCondition = new PlayingCondition(mediaPlayer) {
- *            {@literal @}Override
- *            protected void onBefore() {
- *                mediaPlayer.play();
- *            }
- *        };
- *        playingCondition.await();
  *
- *        // Do some interesting things, wait for some other conditions...
- *    }
- *    catch (UnexpectedErrorConditionException e) {
- *        // Whatever...
- *    }
- *    catch (UnexpectedFinishedConditionException e) {
- *        // Whatever...
- *    }
- * </pre>
- *
+ * @param <C> type of component
  * @param <R> type of result that may be returned when the desired condition arises
  *
+ * @see MediaCondition
  * @see MediaPlayerCondition
  */
 public abstract class Condition<C, R> {
@@ -177,7 +158,10 @@ public abstract class Condition<C, R> {
 
     /**
      * Template method invoked after the listener has been added but before the {@link #await()} is invoked.
+     * <p>
+     * Returning <code>false</code> will cause {@link BeforeConditionAbortedException} to be thrown.
      *
+     * @param component component
      * @return <code>true</code> to continue; <code>false</code> to abort
      */
     protected boolean onBefore(C component) {
@@ -187,6 +171,7 @@ public abstract class Condition<C, R> {
     /**
      * Template method invoked after the component state has reached the desired condition.
      *
+     * @param component component
      * @param result optional result
      */
     protected void onAfter(C component, R result) {

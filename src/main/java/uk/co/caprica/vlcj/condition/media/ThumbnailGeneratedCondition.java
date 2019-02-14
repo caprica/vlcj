@@ -23,7 +23,8 @@ import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.model.Picture;
 
 /**
- * Implementation of a condition that waits for the media player to report that media has been parsed successfully.
+ * Implementation of a condition that waits for the media player to report that a thumbnail picture has been generated
+ * successfully.
  */
 public class ThumbnailGeneratedCondition extends MediaCondition<Picture> {
 

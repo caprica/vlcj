@@ -22,8 +22,7 @@ package uk.co.caprica.vlcj.condition.mediaplayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
- * Implementation of a condition that waits for the media player to report that
- * it is paused.
+ * Implementation of a condition that waits for the media player to report that it is paused.
  */
 public class PausedCondition extends MediaPlayerCondition<Object> {
 

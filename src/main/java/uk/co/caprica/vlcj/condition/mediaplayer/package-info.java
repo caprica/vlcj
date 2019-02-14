@@ -1,5 +1,5 @@
 /**
- * Default implementations for commonly needed media player conditions used
- * with the synchronous programming framework.
+ * Default implementations for commonly needed media media player conditional waiters used with the synchronous
+ * programming framework.
  */
 package uk.co.caprica.vlcj.condition.mediaplayer;

@@ -22,8 +22,8 @@ package uk.co.caprica.vlcj.condition.mediaplayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
- * Implementation of a condition that waits for the media player to report that
- * it has reached/passed a particular point in time.
+ * Implementation of a condition that waits for the media player to report that it has reached/passed a particular point
+ * in time (i.e. time from the beginning of media playback).
  */
 public class TimeReachedCondition extends MediaPlayerCondition<Long> {
 
