@@ -24,7 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 
 /**
- *
+ * Factory to create {@link MediaList} and {@link MediaListRef} components.
+ * <p>
+ * <em>This factory is <strong>not</strong> intended for use by client applications.</em>
  */
 public final class MediaListFactory {
 

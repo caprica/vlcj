@@ -25,7 +25,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
 
 /**
- * This factory is not intended for use by client applications.
+ * Factory to create {@link Media} and {@link MediaRef} instances.
+ * <p>
+ * <em>This factory is <strong>not</strong> intended for use by client applications.</em>
  */
 public final class MediaFactory {
 
