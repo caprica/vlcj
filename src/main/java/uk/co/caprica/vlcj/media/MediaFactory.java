@@ -31,13 +31,19 @@ import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
  */
 public final class MediaFactory {
 
+    private MediaFactory() {
+    }
+
     /**
+     * Create a new {@link MediaRef} for a native media instance.
+     * <p>
+     * The client application <em>must</em> release the returned {@link MediaRef} when it no long has any use for it.
      *
-     *
-     * @param libvlc
-     * @param mediaInstance
-     * @param options
-     * @return
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param mediaInstance native media instance
+     * @param options options to add to the media
+     * @return media reference
      */
     public static MediaRef newMediaRef(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_t mediaInstance, String... options) {
         MediaRef result = createMediaRef(libvlc, libvlcInstance, mediaInstance, options);
@@ -48,66 +54,100 @@ public final class MediaFactory {
     }
 
     /**
+     * Create a new {@link MediaRef} for a media resource locator.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaRef} when it has no further use for it.
      *
-     *
-     * @param libvlc
-     * @param libvlcInstance
-     * @param mrl
-     * @param options
-     * @return
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param mrl media resource locator
+     * @param options options to add to the media
+     * @return media reference
      */
     public static MediaRef newMediaRef(LibVlc libvlc, libvlc_instance_t libvlcInstance, String mrl, String... options) {
         return createMediaRef(libvlc, libvlcInstance, newMediaInstance(libvlc, libvlcInstance, mrl), options);
     }
 
     /**
+     * Create a new {@link MediaRef} for callback media.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaRef} when it has no further use for it.
      *
-     *
-     * @param libvlc
-     * @param libvlcInstance
-     * @param callbackMedia
-     * @param options
-     * @return
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param callbackMedia callback media component
+     * @param options options to add to the media
+     * @return media reference
      */
     public static MediaRef newMediaRef(LibVlc libvlc, libvlc_instance_t libvlcInstance, CallbackMedia callbackMedia, String... options) {
         return createMediaRef(libvlc, libvlcInstance, newMediaInstance(libvlc, libvlcInstance, callbackMedia), options);
     }
 
     /**
+     * Create a new {@link MediaRef} for a {@link Media}.
+     * <p>
+     * The caller <em>must</em> release the supplied {@link Media} when it has no further use for it.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaRef} when it has no further use for it.
      *
-     *
-     * @param libvlc
-     * @param media
-     * @param options
-     * @return
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param media media
+     * @param options options to add to the media
+     * @return media reference
      */
     public static MediaRef newMediaRef(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, String... options) {
         return createMediaRef(libvlc, libvlcInstance, retain(libvlc, media.mediaInstance()), options);
     }
 
     /**
+     * Create a new {@link MediaRef} for a {@link MediaRef}.
+     * <p>
+     * The caller <em>must</em> release the supplied {@link MediaRef} when it has no further use for it.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaRef} when it has no further use for it.
      *
-     *
-     * @param libvlc
-     * @param mediaRef
-     * @param options
-     * @return
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param mediaRef media reference
+     * @param options options to add to the media
+     * @return media reference
      */
     public static MediaRef newMediaRef(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaRef mediaRef, String... options) {
         return createMediaRef(libvlc, libvlcInstance, retain(libvlc, mediaRef.mediaInstance()), options);
     }
 
+    /**
+     * Create a duplicate {@link MediaRef} for a {@link MediaRef}.
+     * <p>
+     * Unlike the "newMediaRef" functions, this function will duplicate the native media instance, meaning it is
+     * separate from the native media instance in this component and any changes made to it (such as adding new media
+     * options) will <em>not</em> be reflected on the original media.
+     * <p>
+     * The caller <em>must</em> release the supplied {@link MediaRef} when it has no further use for it.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaRef} when it has no further use for it.
+     *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param mediaRef media reference
+     * @param options options to add to the media
+     * @return duplicated media reference
+     */
     public static MediaRef duplicateMediaRef(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaRef mediaRef, String... options) {
         return createMediaRef(libvlc, libvlcInstance, libvlc.libvlc_media_duplicate(mediaRef.mediaInstance()), options);
     }
 
     /**
+     * Create a new {@link Media} component for a native media instance.
+     * <p>
+     * The caller <em>must</em> release the returned {@link Media} when it has no further use for it.
      *
-     *
-     * @param libvlc
-     * @param mediaInstance
-     * @param options
-     * @return
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param mediaInstance native media instance
+     * @param options options to add to the media
+     * @return media
      */
     public static Media newMedia(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_t mediaInstance, String... options) {
         Media result = createMedia(libvlc, libvlcInstance, mediaInstance, options);
@@ -118,59 +158,86 @@ public final class MediaFactory {
     }
 
     /**
+     * Create a new {@link Media} component for a media resource locator.
+     * <p>
+     * The caller <em>must</em> release the returned {@link Media} when it has no further use for it.
      *
-     *
-     * @param libvlc
-     * @param libvlcInstance
-     * @param mrl
-     * @param options
-     * @return
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param mrl media resource locator
+     * @param options options to add to the media
+     * @return media
      */
     public static Media newMedia(LibVlc libvlc, libvlc_instance_t libvlcInstance, String mrl, String... options) {
         return createMedia(libvlc, libvlcInstance, newMediaInstance(libvlc, libvlcInstance, mrl), options);
     }
 
     /**
+     * Create a new {@link Media} component for callback media.
+     * <p>
+     * The caller <em>must</em> release the returned {@link Media} when it has no further use for it.
      *
-     *
-     * @param libvlc
-     * @param libvlcInstance
-     * @param callbackMedia
-     * @param options
-     * @return
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param callbackMedia callback media component
+     * @param options options to add to the media
+     * @return media
      */
     public static Media newMedia(LibVlc libvlc, libvlc_instance_t libvlcInstance, CallbackMedia callbackMedia, String... options) {
         return createMedia(libvlc, libvlcInstance, newMediaInstance(libvlc, libvlcInstance, callbackMedia), options);
     }
 
     /**
-     * Create a new {@link Media} component from a {@link MediaRef}.
+     * Create a new {@link Media} component for a {@link MediaRef}.
      * <p>
      * The caller <em>must</em> release the supplied {@link MediaRef} when it has no further use for it.
      * <p>
-     * The caller <em>must</em> also release the returned {@link Media} when it has no further use for it.
+     * The caller <em>must</em> release the returned {@link Media} when it has no further use for it.
      *
-     * @param libvlc
-     * @param mediaRef
-     * @param options
-     * @return
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param mediaRef media reference
+     * @param options options to add to the media
+     * @return media
      */
     public static Media newMedia(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaRef mediaRef, String... options) {
         return createMedia(libvlc, libvlcInstance, retain(libvlc, mediaRef.mediaInstance()), options);
     }
 
     /**
+     * Create a new {@link Media} component for a {@link Media}.
+     * <p>
+     * The caller <em>must</em> release the supplied {@link Media} when it has no further use for it.
+     * <p>
+     * The caller <em>must</em> release the returned {@link Media} when it has no further use for it.
      *
-     *
-     * @param libvlc
-     * @param media
-     * @param options
-     * @return
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param media media
+     * @param options options to add to the media
+     * @return media
      */
     public static Media newMedia(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, String... options) {
         return createMedia(libvlc, libvlcInstance, retain(libvlc, media.mediaInstance()), options);
     }
 
+    /**
+     * Create a duplicate {@link Media} for a {@link Media}.
+     * <p>
+     * Unlike the "newMedia" functions, this function will duplicate the native media instance, meaning it is separate
+     * from the native media instance in this component and any changes made to it (such as adding new media options)
+     * will <em>not</em> be reflected on the original media.
+     * <p>
+     * The caller <em>must</em> release the supplied {@link Media} when it has no further use for it.
+     * <p>
+     * The caller <em>must</em> release the returned {@link Media} when it has no further use for it.
+     *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param media media
+     * @param options options to add to the media
+     * @return duplicated media
+     */
     public static Media duplicateMedia(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, String... options) {
         return createMedia(libvlc, libvlcInstance, libvlc.libvlc_media_duplicate(media.mediaInstance()), options);
     }
@@ -214,9 +281,6 @@ public final class MediaFactory {
         } else {
             return null;
         }
-    }
-
-    private MediaFactory() {
     }
 
 }

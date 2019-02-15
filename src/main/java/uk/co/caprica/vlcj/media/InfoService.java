@@ -40,41 +40,88 @@ public class InfoService extends BaseService {
         super(media);
     }
 
+    /**
+     * Get the media resource locator for the current media.
+     *
+     * @return media resource locator
+     */
     public String mrl() {
         return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_media_get_mrl(mediaInstance));
     }
 
+    /**
+     * Get the current media type
+     *
+     * @return media type
+     */
     public MediaType type() {
         return MediaType.mediaType(libvlc.libvlc_media_get_type(mediaInstance));
     }
 
+    /**
+     * Get the media state
+     *
+     * @return state
+     */
     public State state() {
         return State.state(libvlc.libvlc_media_get_state(mediaInstance));
     }
 
+    /**
+     * Get the duration
+     *
+     * @return duration, milliseconds
+     */
     public long duration() {
         return libvlc.libvlc_media_get_duration(mediaInstance);
     }
 
+    /**
+     * Get the list of all media tracks, or only those that match specified types.
+     *
+     * @param types zero or more track types, if none specified then all track types will be returned
+     * @return
+     */
     public List<? extends TrackInfo> tracks(TrackType... types) {
         return TrackInformation.getTrackInfo(libvlc, mediaInstance, types);
     }
 
+    /**
+     * Get the list of audio tracks on the current media.
+     *
+     * @return audio tracks
+     */
     @SuppressWarnings("unchecked")
     public List<AudioTrackInfo> audioTracks() {
         return (List<AudioTrackInfo>) tracks(TrackType.AUDIO);
     }
 
+    /**
+     * Get the list of video tracks on the current media.
+     *
+     * @return video tracks
+     */
     @SuppressWarnings("unchecked")
     public List<VideoTrackInfo> videoTracks() {
         return (List<VideoTrackInfo>) tracks(TrackType.VIDEO);
     }
 
+    /**
+     * Get the list of text (subtitle) tracks on the current media.
+     *
+     * @return text tracks
+     */
     @SuppressWarnings("unchecked")
     public List<TextTrackInfo> textTracks() {
         return (List<TextTrackInfo>) tracks(TrackType.TEXT);
     }
 
+    /**
+     * Get playback statistics for the current media.
+     *
+     * @param mediaStatistics caller-supplied structure to receive the media statistics
+     * @return <code>true</code> if the statistics were updated; <code>false</code> on error
+     */
     public boolean statistics(MediaStatistics mediaStatistics) {
         if (libvlc.libvlc_media_get_stats(mediaInstance, statsInstance) != 0) {
             mediaStatistics.apply(statsInstance);

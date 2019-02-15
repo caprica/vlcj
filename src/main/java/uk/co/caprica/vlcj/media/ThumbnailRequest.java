@@ -21,6 +21,11 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_thumbnail_request_t;
 
+/**
+ * Encapsulation of a thumbnail request.
+ * <p>
+ * The internal implementation is opaque to client applications.
+ */
 public final class ThumbnailRequest {
 
     private final libvlc_media_thumbnail_request_t request;

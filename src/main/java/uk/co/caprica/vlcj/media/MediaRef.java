@@ -22,21 +22,48 @@ package uk.co.caprica.vlcj.media;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.medialist.MediaList;
 
+/**
+ * An opaque reference to media.
+ * <p>
+ * This is used to pass around media references without requiring the full-blown {@link Media} component.
+ */
 public final class MediaRef {
 
+    /**
+     * Native library.
+     */
     private final LibVlc libvlc;
 
+    /**
+     * Native library instance.
+     */
     private final libvlc_instance_t libvlcInstance;
 
+    /**
+     * Native media instance.
+     */
     private final libvlc_media_t mediaInstance;
 
+    /**
+     * Create a new media reference.
+     *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param mediaInstance native media instance
+     */
     public MediaRef(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_t mediaInstance) {
         this.libvlc = libvlc;
         this.libvlcInstance = libvlcInstance;
         this.mediaInstance = mediaInstance;
     }
 
+    /**
+     * Get the native media instance.
+     *
+     * @return media instance
+     */
     public libvlc_media_t mediaInstance() {
         return mediaInstance;
     }
@@ -48,26 +75,62 @@ public final class MediaRef {
      * <p>
      * The caller <em>must</em> release the returned media when it is of no further use.
      *
-     * @return
+     * @return media
      */
     public Media newMedia() {
         libvlc.libvlc_media_retain(mediaInstance);
         return new Media(libvlc, libvlcInstance, mediaInstance);
     }
 
+    /**
+     * Return a new {@link MediaRef} for this {@link MediaRef}.
+     * <p>
+     * The returned media reference shares the native media instance with any others that may be created subsequently.
+     * <p>
+     * The caller <em>must</em> release the returned media reference when it is of no further use.
+     *
+     * @return media reference
+     */
     public MediaRef newMediaRef() {
         libvlc.libvlc_media_retain(mediaInstance);
         return new MediaRef(libvlc, libvlcInstance, mediaInstance);
     }
 
+    /**
+     * Return a duplicate {@link Media} component for this {@link MediaRef}.
+     * <p>
+     * Unlike {@link #newMedia()}, this function will duplicate the native media instance, meaning it is separate from
+     * the native media instance in this component and any changes made to it (such as adding new media options) will
+     * <em>not</em> be reflected on the original media.
+     * <p>
+     * The caller <em>must</em> release the returned media when it is of no further use.
+     *
+     * @return duplicated media
+     */
     public Media duplicateMedia() {
         return new Media(libvlc, libvlcInstance, libvlc.libvlc_media_duplicate(mediaInstance));
     }
 
+    /**
+     * Return a duplicate {@link MediaRef} for this {@link MediaRef}.
+     * <p>
+     * Unlike {@link #newMediaRef()}, this function will duplicate the native media instance, meaning it is separate
+     * from the native media instance in this component and any changes made to it (such as adding new media options)
+     * will <em>not</em> be reflected on the original media.
+     * <p>
+     * The caller <em>must</em> release the returned {@link Media} when it has no further use for it.
+     *
+     * @return duplicated media reference
+     */
     public MediaRef duplicateMediaRef() {
         return new MediaRef(libvlc, libvlcInstance, libvlc.libvlc_media_duplicate(mediaInstance));
     }
 
+    /**
+     * Release this component and the associated native resources.
+     * <p>
+     * The component must no longer be used.
+     */
     public void release() {
         libvlc.libvlc_media_release(mediaInstance);
     }

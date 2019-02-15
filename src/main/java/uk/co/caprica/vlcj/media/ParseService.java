@@ -36,6 +36,9 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
  *     <li>0 means that the call will wait indefinitely;</li>
  *     <li>-1 means that the default value set by the "preparse-timeout" native option/argument will be used</li>
  * </ul>
+ * Client applications should add a {@link MediaEventListener} to be notified of changes to the parsed status - an event
+ * will fire if the parsing succeeded, timed-out, or failed for any other reason as per {@link MediaParsedStatus}.
+ * <p>
  * Parsing may trigger the remote downloading of data, including for example performing a search for cover art for the
  * media. This has clear privacy implications.
  * <p>
@@ -55,26 +58,61 @@ public class ParseService extends BaseService {
         super(media);
     }
 
+    /**
+     * Parse the media, asynchronously, with a timeout set by the "preparse-timeout" native option value.
+     *
+     * @return <code>true</code> if the parse request was successful; <code>false</code> on error
+     */
     public boolean parse() {
         return parse(-1, (ParseFlag[]) null);
     }
 
+    /**
+     * Parse the media, asynchronously, with a specific timeout.
+     *
+     * @param timeout timeout, milliseconds
+     * @return <code>true</code> if the parse request was successful; <code>false</code> on error
+     */
     public boolean parse(int timeout) {
         return parse(timeout, (ParseFlag[]) null);
     }
 
+    /**
+     * Parse the media, asynchronously, with specific parse flags, and a timeout set by the "preparse-timeout" native
+     * option value.
+     *
+     * @param flags parse flags
+     * @return <code>true</code> if the parse request was successful; <code>false</code> on error
+     */
     public boolean parse(ParseFlag... flags) {
         return parse(-1, flags);
     }
 
+    /**
+     * Parse the media, asynchronously, with a specific timeout and specific parse flags.
+     *
+     * @param timeout timeout, milliseconds
+     * @param flags parse flags
+     * @return <code>true</code> if the parse request was successful; <code>false</code> on error
+     */
     public boolean parse(int timeout, ParseFlag... flags) {
         return libvlc.libvlc_media_parse_with_options(mediaInstance, flagsToInt(flags), timeout) == 0;
     }
 
+    /**
+     * Stop the asynchronous parsing.
+     */
     public void stop() {
         libvlc.libvlc_media_parse_stop(mediaInstance);
     }
 
+    /**
+     * Get the media parsed status.
+     * <p>
+     * It is recommended to use media events to determine the parse status instead of this.
+     *
+     * @return parsed status
+     */
     public MediaParsedStatus status() {
         return MediaParsedStatus.mediaParsedStatus(libvlc.libvlc_media_get_parsed_status(mediaInstance));
     }

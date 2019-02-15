@@ -146,6 +146,37 @@ public final class Media {
         return new Media(libvlc, libvlcInstance, mediaInstance);
     }
 
+
+    /**
+     * Return a duplicate {@link MediaRef} for this {@link MediaRef}.
+     * <p>
+     * Unlike {@link #newMediaRef()}, this function will duplicate the native media instance, meaning it is separate
+     * from the native media instance in this component and any changes made to it (such as adding new media options)
+     * will <em>not</em> be reflected on the original media.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaRef} when it has no further use for it.
+     *
+     * @return duplicated media reference
+     */
+    public MediaRef duplicateMediaRef() {
+        return new MediaRef(libvlc, libvlcInstance, libvlc.libvlc_media_duplicate(mediaInstance));
+    }
+
+    /**
+     * Return a duplicate {@link Media} component for this {@link MediaRef}.
+     * <p>
+     * Unlike {@link #newMedia()}, this function will duplicate the native media instance, meaning it is separate from
+     * the native media instance in this component and any changes made to it (such as adding new media options) will
+     * <em>not</em> be reflected on the original media.
+     * <p>
+     * The caller <em>must</em> release the returned {@link Media} when it has no further use for it.
+     *
+     * @return duplicated media
+     */
+    public Media duplicateMedia() {
+        return new Media(libvlc, libvlcInstance, libvlc.libvlc_media_duplicate(mediaInstance));
+    }
+
     /**
      * Release this component and the associated native resources.
      * <p>

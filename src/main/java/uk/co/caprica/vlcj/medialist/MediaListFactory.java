@@ -32,6 +32,9 @@ public final class MediaListFactory {
 
     /**
      * Create a new {@link MediaListRef}.
+     * <p>
+     * The client application <em>must</em> release the returned {@link MediaListRef} when it no long has any use for
+     * it.
      *
      * @param libvlc native library
      * @param libvlcInstance native library instance
@@ -43,6 +46,8 @@ public final class MediaListFactory {
 
     /**
      * Create a new {@link MediaList}.
+     * <p>
+     * The client application <em>must</em> release the returned {@link MediaList} when it no longer has any use for it.
      *
      * @param libvlc native library
      * @param libvlcInstance native library instance
