@@ -37,108 +37,136 @@ public final class MediaService extends BaseService {
     }
 
     /**
+     * Create a new {@link MediaRef} for a media resource locator.
+     * <p>
+     * The returned media reference <em>must</em> be freed by the caller when it has no further use for it.
      *
-     *
-     * @param mrl
-     * @return
+     * @param mrl media resource locator
+     * @param options options to add to the media
+     * @return media reference
      */
     public MediaRef newMediaRef(String mrl, String... options) {
         return MediaFactory.newMediaRef(libvlc, libvlcInstance, mrl, options);
     }
 
     /**
+     * Create a new {@link MediaRef} for callback media.
+     * <p>
+     * The returned media reference <em>must</em> be freed by the caller when it has no further use for it.
+     * <p>
+     * <em>The calling application must make sure to keep a hard references to the callback component to prevent it from
+     * being garbage collected, otherwise a fatal JVM crash may occur.</em>
      *
-     *
-     * <em>The calling application must make sure to keep hard references to the callback implementation objects to
-     * prevent them from being garbage collected, otherwise a fatal JVM crash may occur.</em>
-     *
-     * @param callbackMedia
-     * @return
+     * @param callbackMedia callback media component
+     * @param options options to add to the media
+     * @return media reference
      */
     public MediaRef newMediaRef(CallbackMedia callbackMedia, String... options) {
         return MediaFactory.newMediaRef(libvlc, libvlcInstance, callbackMedia, options);
     }
 
     /**
-     *
+     * Create a new {@link MediaRef} for an existing {@link Media}.
+     * <p>
+     * The returned media reference <em>must</em> be freed by the caller when it has no further use for it.
+     * <p>
+     * Alternatively {@link Media#newMediaRef()} could be used.
      *
      * @param media
-     * @param options
-     * @return
+     * @param options options to add to the media
+     * @return media reference
      */
     public MediaRef newMediaRef(Media media, String... options) {
         return MediaFactory.newMediaRef(libvlc, libvlcInstance, media, options);
     }
 
     /**
-     *
+     * Create a new {@link MediaRef} for an existing {@link MediaRef}.
+     * <p>
+     * The returned media reference <em>must</em> be freed by the caller when it has no further use for it.
+     * <p>
+     * Alternatively {@link MediaRef#newMediaRef()} could be used.
      *
      * @param mediaRef
-     * @param options
-     * @return
+     * @param options options to add to the media
+     * @return media reference
      */
     public MediaRef newMediaRef(MediaRef mediaRef, String... options) {
         return MediaFactory.newMediaRef(libvlc, libvlcInstance, mediaRef, options);
     }
 
     /**
+     * Create a new {@link Media} for a media resource locator.
+     * <p>
+     * The returned media <em>must</em> be freed by the caller when it has no further use for it.
      *
-     *
-     * @param mrl
-     * @return
+     * @param mrl media resource locator
+     * @param options options to add to the media
+     * @return media reference
      */
     public Media newMedia(String mrl, String... options) {
         return MediaFactory.newMedia(libvlc, libvlcInstance, mrl, options);
     }
 
     /**
+     * Create a new {@link Media} for callback media.
+     * <p>
+     * The returned media <em>must</em> be freed by the caller when it has no further use for it.
+     * <p>
+     * <em>The calling application must make sure to keep a hard references to the callback component to prevent it from
+     * being garbage collected, otherwise a fatal JVM crash may occur.</em>
      *
-     *
-     * <em>The calling application must make sure to keep hard references to the callback implementation objects to
-     * prevent them from being garbage collected, otherwise a fatal JVM crash may occur.</em>
-     *
-     * @param callbackMedia
-     * @return
+     * @param callbackMedia callback media component
+     * @param options options to add to the media
+     * @return media
      */
     public Media newMedia(CallbackMedia callbackMedia, String... options) {
         return MediaFactory.newMedia(libvlc, libvlcInstance, callbackMedia, options);
     }
 
     /**
+     * Create a new {@link Media} for an existing {@link MediaRef}.
+     * <p>
+     * Alternatively {@link MediaRef#newMedia()} could be used.
+     * <p>
+     * The returned media <em>must</em> be freed by the caller when it has no further use for it.
      *
-     *
-     * @param mediaRef
-     * @param options
-     * @return
+     * @param mediaRef media reference
+     * @param options options to add to the media
+     * @return media reference
      */
     public Media newMedia(MediaRef mediaRef, String... options) {
         return MediaFactory.newMedia(libvlc, libvlcInstance, mediaRef, options);
     }
 
     /**
+     * Create a new {@link Media} for an existing {@link Media}.
+     * <p>
+     * Alternatively {@link Media#newMedia()} could be used.
+     * <p>
+     * The returned media <em>must</em> be freed by the caller when it has no further use for it.
      *
-     *
-     * @param media
-     * @param options
-     * @return
+     * @param media media
+     * @param options options to add to the media
+     * @return media reference
      */
     public Media newMedia(Media media, String... options) {
         return MediaFactory.newMedia(libvlc, libvlcInstance, media, options);
     }
 
     /**
+     * Create a new {@link MediaListRef}.
      *
-     *
-     * @return
+     * @return media list reference
      */
     public MediaListRef newMediaListRef() {
         return MediaListFactory.newMediaListRef(libvlc, libvlcInstance);
     }
 
     /**
-     * Create a new media list for a play-list media player.
+     * Create a new media list.
      *
-     * @return media list instance
+     * @return media list
      */
     public MediaList newMediaList() {
         return MediaListFactory.newMediaList(libvlc, libvlcInstance);
