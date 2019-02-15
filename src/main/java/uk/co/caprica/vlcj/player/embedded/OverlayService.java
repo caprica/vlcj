@@ -31,6 +31,9 @@ import java.awt.event.WindowEvent;
 // FIXME overlay should be disabled depending on the type of videosurface - we need to document that somewhere
 // FIXME need to make sure we only enable the overlay, add listeners etc if the videosurface supports it, that way we don't have a bunch of null checks all over the place
 
+/**
+ * Behaviour pertaining to the heavyweight overlay.
+ */
 public final class OverlayService extends BaseService {
 
     /**
@@ -46,7 +49,7 @@ public final class OverlayService extends BaseService {
     private final OverlayWindowAdapter overlayWindowAdapter = new OverlayWindowAdapter();
 
     /**
-     *
+     * Reusable rectangle to determine the overlay bounds.
      */
     private final Rectangle bounds = new Rectangle();
 
@@ -85,15 +88,14 @@ public final class OverlayService extends BaseService {
      * <p>
      * The new overlay will <strong>not</strong> automatically be enabled.
      * <p>
-     * The overlay should be a sub-class of <code>Window</code> or <code>JWindow</code>. If your
-     * overlay contains dynamically updated content such as a timer or animated graphics, then you
-     * should use <code>JWindow</code> so that your updates will be double-buffered and there will
-     * be no tearing or flickering when you paint the overlay. If you do this, you must take care to
-     * erase the overlay background before you paint it.
+     * The overlay should be a sub-class of <code>Window</code> or <code>JWindow</code>. If your overlay contains
+     * dynamically updated content such as a timer or animated graphics, then you should use <code>JWindow</code> so
+     * that your updates will be double-buffered and there will be no tearing or flickering when you paint the overlay.
+     * If you do this, you must take care to erase the overlay background before you paint it.
      * <p>
-     * <strong>When the overlay is no longer needed it is your responsibility to {@link Window#dispose()}
-     * it - if you do not do this you may leak resources. If you set multiple different overlays you
-     * must remember to dispose the old overlay.</strong>
+     * <strong>When the overlay is no longer needed it is your responsibility to {@link Window#dispose()} it - if you do
+     * not do this you may leak resources. If you set multiple different overlays you must remember to dispose the old
+     * overlay.</strong>
      * <p>
      * It is recommended to set the overlay once as early as possible in your application.
      *
@@ -257,7 +259,9 @@ public final class OverlayService extends BaseService {
     }
 
     /**
-     * This method will only be used if the video surface is a {@link ComponentVideoSurface} so we can forego some
+     * Get the video surface component.
+     * <p>
+     * This method will only be used if the video surface is a {@link ComponentVideoSurface} so we can forgo some
      * checks.
      *
      * @return
@@ -267,11 +271,13 @@ public final class OverlayService extends BaseService {
     }
 
     /**
-     * This method will only be used if the video surface is a {@link ComponentVideoSurface} so we can forego some
+     * Find the Window ancestor for a component.
+     * <p>
+     * This method will only be used if the video surface is a {@link ComponentVideoSurface} so we can forgo some
      * checks.
      *
-     * @param component
-     * @return
+     * @param component component to find the ancestor for
+     * @return ancestor window if found, or <code>null</code>
      */
     private Window getAncestorWindow(Component component) {
         return (Window)SwingUtilities.getAncestorOfClass(Window.class, component);

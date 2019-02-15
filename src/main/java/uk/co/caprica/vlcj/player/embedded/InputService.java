@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.player.embedded;
 
+/**
+ * Behaviour pertaining to keyboard/mouse input-events.
+ */
 public final class InputService extends BaseService {
 
     InputService(DefaultEmbeddedMediaPlayer mediaPlayer) {
@@ -28,12 +31,12 @@ public final class InputService extends BaseService {
     /**
      * Set whether or not to enable native media player mouse input handling.
      * <p>
-     * It may be necessary on some platforms to invoke this method with a <code>false</code> parameter
-     * value for Java mouse and keyboard listeners to work.
+     * It may be necessary on some platforms to invoke this method with a <code>false</code> parameter value for Java
+     * mouse and keyboard listeners to work.
      * <p>
-     * Note that clicking the video surface on certain platforms is not guaranteed to capture mouse
-     * events - it may be necessary to respond to a mouse pressed event on the video surface and
-     * explicitly request the input focus to the video surface.
+     * Note that clicking the video surface on certain platforms is not guaranteed to capture mouse events - it may be
+     * necessary to respond to a mouse pressed event on the video surface and explicitly request the input focus to the
+     * video surface.
      *
      * @param enable <code>true</code> to enable, <code>false</code> to disable
      */
@@ -44,8 +47,8 @@ public final class InputService extends BaseService {
     /**
      * Set whether or not to enable native media player keyboard input handling.
      * <p>
-     * It may be necessary on some platforms to invoke this method with a <code>false</code> parameter
-     * value for Java mouse and keyboard listeners to work.
+     * It may be necessary on some platforms to invoke this method with a <code>false</code> parameter value for Java
+     * mouse and keyboard listeners to work.
      *
      * @param enable <code>true</code> to enable, <code>false</code> to disable
      */

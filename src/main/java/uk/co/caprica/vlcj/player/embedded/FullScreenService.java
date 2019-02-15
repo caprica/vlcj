@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.player.embedded;
 
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
+/**
+ * Behaviour pertaining to full-screen functionality.
+ */
 public final class FullScreenService extends BaseService {
 
     /**
@@ -35,13 +38,7 @@ public final class FullScreenService extends BaseService {
     /**
      * Set a full-screen strategy implementation.
      * <p>
-     * The preferred way to set a full-screen strategy is via a constructor argument, nevertheless
-     * there are scenarios where it is more convenient to set the full-screen strategy <em>after</em>
-     * creation of the media player (depends how the application UI is created).
-     * <p>
-     * <em>Applications should not change the full-screen strategy implementation after initialisation
-     * of the media player. Doing so makes no practical sense and the resultant behaviour is
-     * undefined.</em>
+     * The preferred way to set a full-screen strategy is via a constructor argument when creating the media player.
      *
      * @param fullScreenStrategy full-screen strategy
      */
@@ -52,8 +49,8 @@ public final class FullScreenService extends BaseService {
     /**
      * Toggle whether the video display is in full-screen or not.
      * <p>
-     * Setting the display into or out of full-screen mode is delegate to the
-     * {@link FullScreenStrategy} that was used when the media player was created.
+     * Setting the display into or out of full-screen mode is delegated to the currently set {@link FullScreenStrategy},
+     * which may be <code>null</code> (in which case full-screen mode is not supported).
      */
     public void toggleFullScreen() {
         if (fullScreenStrategy != null) {
@@ -64,8 +61,8 @@ public final class FullScreenService extends BaseService {
     /**
      * Set full-screen mode.
      * <p>
-     * Setting the display into or out of full-screen mode is delegate to the
-     * {@link FullScreenStrategy} that was used when the media player was created.
+     * Setting the display into or out of full-screen mode is delegated to the currently set {@link FullScreenStrategy},
+     * which may be <code>null</code> (in which case full-screen mode is not supported).
      *
      * @param fullScreen true for full-screen, otherwise false
      */
@@ -82,8 +79,8 @@ public final class FullScreenService extends BaseService {
     /**
      * Check whether the full-screen mode is currently active or not.
      * <p>
-     * Testing whether or not the display is in full-screen mode is delegate to the
-     * {@link FullScreenStrategy} that was used when the media player was created.
+     * Testing whether or not the display is in full-screen mode is delegated to the currently set
+     * {@link FullScreenStrategy} which may be <code>null</code> (in which case full-screen mode is not supported).
      *
      * @return true if full-screen is active, otherwise false
      */

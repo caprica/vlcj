@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.player.embedded;
 
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 
+/**
+ * Behaviour pertaining to the video surface.
+ */
 public final class VideoSurfaceService extends BaseService {
 
     /**

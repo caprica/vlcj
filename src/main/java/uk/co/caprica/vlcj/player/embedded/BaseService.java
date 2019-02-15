@@ -26,6 +26,9 @@ import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
 
 // FIXME "Aspect" is gonna be better than "Service"
 
+/**
+ * Internal base implementation.
+ */
 abstract class BaseService {
 
     protected final DefaultEmbeddedMediaPlayer mediaPlayer;
