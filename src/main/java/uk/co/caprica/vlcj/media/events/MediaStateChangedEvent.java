@@ -49,7 +49,7 @@ final class MediaStateChangedEvent extends MediaEvent {
 
     @Override
     public void notify(MediaEventListener listener) {
-        listener.mediaStateChanged(media, State.state(newState));
+        listener.mediaStateChanged(component, State.state(newState));
     }
 
 }

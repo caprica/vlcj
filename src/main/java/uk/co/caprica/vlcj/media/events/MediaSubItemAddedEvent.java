@@ -49,7 +49,7 @@ final class MediaSubItemAddedEvent extends MediaEvent {
 
     @Override
     public void notify(MediaEventListener listener) {
-        listener.mediaSubItemAdded(media, temporaryMediaRef(newChild));
+        listener.mediaSubItemAdded(component, temporaryMediaRef(newChild));
     }
 
 }

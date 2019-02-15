@@ -49,7 +49,7 @@ final class MediaMetaChangedEvent extends MediaEvent {
 
     @Override
     public void notify(MediaEventListener listener) {
-        listener.mediaMetaChanged(media, Meta.meta(metaType));
+        listener.mediaMetaChanged(component, Meta.meta(metaType));
     }
 
 }

@@ -61,7 +61,7 @@ final class MediaListWillDeleteItemEvent extends MediaListEvent {
 
     @Override
     public void notify(MediaListEventListener listener) {
-        listener.mediaListWillDeleteItem(mediaList, temporaryMediaRef(item), index);
+        listener.mediaListWillDeleteItem(component, temporaryMediaRef(item), index);
     }
 
 }

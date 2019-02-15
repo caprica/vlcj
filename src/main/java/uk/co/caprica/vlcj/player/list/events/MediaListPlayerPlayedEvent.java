@@ -44,7 +44,7 @@ final class MediaListPlayerPlayedEvent extends MediaListPlayerEvent {
 
     @Override
     public void notify(MediaListPlayerEventListener listener) {
-        listener.mediaListPlayerFinished(mediaListPlayer);
+        listener.mediaListPlayerFinished(component);
     }
 
 }

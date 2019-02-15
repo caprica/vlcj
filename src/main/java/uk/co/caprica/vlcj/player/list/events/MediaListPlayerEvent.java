@@ -21,31 +21,16 @@ package uk.co.caprica.vlcj.player.list.events;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.eventmanager.EventNotification;
-import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.eventmanager.BaseEvent;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 /**
- * Specification for a media list player event.
+ * Base implementation for media list player events.
+ * <p>
+ * Every instance of an event refers to an associated media list player.
  */
-abstract class MediaListPlayerEvent implements EventNotification<MediaListPlayerEventListener> {
-
-    /**
-     * Native library.
-     */
-    protected final LibVlc libvlc;
-
-    /**
-     * Native library instance.
-     */
-    protected final libvlc_instance_t libvlcInstance;
-
-    /**
-     * The media list player the event relates to.
-     */
-    protected final MediaListPlayer mediaListPlayer;
+abstract class MediaListPlayerEvent extends BaseEvent<MediaListPlayer, MediaListPlayerEventListener> {
 
     /**
      * Create a media player event.
@@ -55,14 +40,7 @@ abstract class MediaListPlayerEvent implements EventNotification<MediaListPlayer
      * @param mediaListPlayer media player that the event relates to
      */
     protected MediaListPlayerEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaListPlayer mediaListPlayer) {
-        this.libvlc = libvlc;
-        this.libvlcInstance = libvlcInstance;
-        this.mediaListPlayer = mediaListPlayer;
-    }
-
-    // FIXME doc no need to release this, since it's transient
-    protected final MediaRef temporaryMediaRef(libvlc_media_t mediaInstance) {
-        return new MediaRef(libvlc, libvlcInstance, mediaInstance);
+        super(libvlc, libvlcInstance, mediaListPlayer);
     }
 
 }

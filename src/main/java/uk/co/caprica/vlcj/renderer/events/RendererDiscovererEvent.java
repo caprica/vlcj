@@ -29,6 +29,9 @@ import uk.co.caprica.vlcj.renderer.RendererDiscovererEventListener;
  */
 abstract class RendererDiscovererEvent implements EventNotification<RendererDiscovererEventListener> {
 
+    /**
+     * Native library.
+     */
     protected final LibVlc libvlc;
 
     /**
@@ -37,7 +40,7 @@ abstract class RendererDiscovererEvent implements EventNotification<RendererDisc
     protected final RendererDiscoverer rendererDiscoverer;
 
     /**
-     * Create a media player event.
+     * Create a renderer discoverer event.
      *
      * @param libvlc native library
      * @param rendererDiscoverer renderer discoverer that the event relates to

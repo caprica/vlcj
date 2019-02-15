@@ -49,7 +49,7 @@ final class MediaParsedChangedEvent extends MediaEvent {
 
     @Override
     public void notify(MediaEventListener listener) {
-        listener.mediaParsedChanged(media, MediaParsedStatus.mediaParsedStatus(newStatus));
+        listener.mediaParsedChanged(component, MediaParsedStatus.mediaParsedStatus(newStatus));
     }
 
 }

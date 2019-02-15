@@ -48,7 +48,7 @@ final class MediaDurationChangedEvent extends MediaEvent {
 
     @Override
     public void notify(MediaEventListener listener) {
-        listener.mediaDurationChanged(media, newDuration);
+        listener.mediaDurationChanged(component, newDuration);
     }
 
 }

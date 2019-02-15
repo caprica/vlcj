@@ -42,7 +42,7 @@ final class MediaListEndReachedEvent extends MediaListEvent {
 
     @Override
     public void notify(MediaListEventListener listener) {
-        listener.mediaListEndReached(mediaList);
+        listener.mediaListEndReached(component);
     }
 
 }

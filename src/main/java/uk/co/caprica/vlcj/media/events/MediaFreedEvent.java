@@ -49,7 +49,7 @@ final class MediaFreedEvent extends MediaEvent {
 
     @Override
     public void notify(MediaEventListener listener) {
-        listener.mediaFreed(media, temporaryMediaRef(md));
+        listener.mediaFreed(component, temporaryMediaRef(md));
     }
 
 }

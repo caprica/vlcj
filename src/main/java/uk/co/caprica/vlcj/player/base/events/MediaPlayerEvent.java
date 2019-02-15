@@ -24,7 +24,9 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
- * Specification for a media player event.
+ * Base implementation for media list player events.
+ * <p>
+ * Every instance of an event refers to an associated media player.
  */
 public abstract class MediaPlayerEvent implements EventNotification<MediaPlayerEventListener> {
 

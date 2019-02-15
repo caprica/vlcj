@@ -48,7 +48,7 @@ final class MediaThumbnailGeneratedEvent extends MediaEvent {
     @Override
     public void notify(MediaEventListener listener) {
         Picture picture = new Picture(libvlc, thumbnail);
-        listener.mediaThumbnailGenerated(media, picture);
+        listener.mediaThumbnailGenerated(component, picture);
     }
 
 }

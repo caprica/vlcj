@@ -21,9 +21,7 @@ package uk.co.caprica.vlcj.medialist.events;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.eventmanager.EventNotification;
-import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.eventmanager.BaseEvent;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 
@@ -32,49 +30,17 @@ import uk.co.caprica.vlcj.medialist.MediaListEventListener;
  * <p>
  * Every instance of an event refers to an associated media list.
  */
-abstract class MediaListEvent implements EventNotification<MediaListEventListener> {
-
-    /**
-     * Native library.
-     */
-    protected final LibVlc libvlc;
-
-    /**
-     * Native library instance.
-     */
-    protected final libvlc_instance_t libvlcInstance;
-
-    /**
-     * The media list the event relates to.
-     */
-    protected final MediaList mediaList;
+abstract class MediaListEvent extends BaseEvent<MediaList, MediaListEventListener> {
 
     /**
      * Create a media list event.
      *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
      * @param mediaList media list that the event relates to
      */
     protected MediaListEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaList mediaList) {
-        this.libvlc = libvlc;
-        this.libvlcInstance = libvlcInstance;
-        this.mediaList = mediaList;
-    }
-
-    /**
-     * Create a temporary media reference to wrap the native media handle.
-     * <p>
-     * Returning this temporary reference does <em>not</em> cause the native media instance to be retained - there is no
-     * need to do so since the reference only exists for the lifetime of the native callback, and since it is not
-     * retained, there is no need to release it either.
-     * <p>
-     * If a client application needs to keep the {@link MediaRef} it must use either {@link MediaRef#newMediaRef()} or
-     * {@link MediaRef#newMedia()}.
-     *
-     * @param mediaInstance native media instance
-     * @return temporary media reference, which must <em>not</em> be released
-     */
-    protected final MediaRef temporaryMediaRef(libvlc_media_t mediaInstance) {
-        return new MediaRef(libvlc, libvlcInstance, mediaInstance);
+        super(libvlc, libvlcInstance, mediaList);
     }
 
 }

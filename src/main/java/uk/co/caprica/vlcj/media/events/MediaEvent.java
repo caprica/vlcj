@@ -21,49 +21,26 @@ package uk.co.caprica.vlcj.media.events;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.eventmanager.EventNotification;
+import uk.co.caprica.vlcj.eventmanager.BaseEvent;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaEventListener;
-import uk.co.caprica.vlcj.media.MediaRef;
 
-abstract class MediaEvent implements EventNotification<MediaEventListener> {
-
-    protected final LibVlc libvlc;
-
-    protected final libvlc_instance_t libvlcInstance;
-
-    /**
-     * The media list the event relates to.
-     */
-    protected final Media media;
+/**
+ * Base implementation for media events.
+ * <p>
+ * Every instance of an event refers to an associated media component.
+ */
+abstract class MediaEvent extends BaseEvent<Media, MediaEventListener> {
 
     /**
      * Create a media list event.
      *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
      * @param media media that the event relates to
      */
     protected MediaEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media) {
-        this.libvlc = libvlc;
-        this.libvlcInstance = libvlcInstance;
-        this.media = media;
-    }
-
-    /**
-     * Create a temporary media reference to wrap the native media handle.
-     * <p>
-     * Returning this temporary reference does <em>not</em> cause the native media instance to be retained - there is no
-     * need to do so since the reference only exists for the lifetime of the native callback, and since it is not
-     * retained, there is no need to release it either.
-     * <p>
-     * If a client application needs to keep the {@link MediaRef} it must use either {@link MediaRef#newMediaRef()} or
-     * {@link MediaRef#newMedia()}.
-     *
-     * @param mediaInstance native media instance
-     * @return temporary media reference, which must <em>not</em> be released
-     */
-    protected final MediaRef temporaryMediaRef(libvlc_media_t mediaInstance) {
-        return new MediaRef(libvlc, libvlcInstance, mediaInstance);
+        super(libvlc, libvlcInstance, media);
     }
 
 }

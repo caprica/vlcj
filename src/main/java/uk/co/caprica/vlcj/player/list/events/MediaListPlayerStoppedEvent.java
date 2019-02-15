@@ -42,7 +42,7 @@ final class MediaListPlayerStoppedEvent extends MediaListPlayerEvent {
 
     @Override
     public void notify(MediaListPlayerEventListener listener) {
-        listener.stopped(mediaListPlayer);
+        listener.stopped(component);
     }
 
 }

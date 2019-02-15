@@ -62,7 +62,7 @@ final class MediaListItemAddedEvent extends MediaListEvent {
 
     @Override
     public void notify(MediaListEventListener listener) {
-        listener.mediaListItemAdded(mediaList, temporaryMediaRef(item), index);
+        listener.mediaListItemAdded(component, temporaryMediaRef(item), index);
     }
 
 }

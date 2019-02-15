@@ -61,7 +61,7 @@ final class MediaListWillAddItemEvent extends MediaListEvent {
 
     @Override
     public void notify(MediaListEventListener listener) {
-        listener.mediaListWillAddItem(mediaList, temporaryMediaRef(item), index);
+        listener.mediaListWillAddItem(component, temporaryMediaRef(item), index);
     }
 
 }

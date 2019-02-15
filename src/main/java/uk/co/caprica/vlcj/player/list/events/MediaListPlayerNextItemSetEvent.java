@@ -51,7 +51,7 @@ final class MediaListPlayerNextItemSetEvent extends MediaListPlayerEvent {
 
     @Override
     public void notify(MediaListPlayerEventListener listener) {
-        listener.nextItem(mediaListPlayer, temporaryMediaRef(item));
+        listener.nextItem(component, temporaryMediaRef(item));
     }
 
 }
