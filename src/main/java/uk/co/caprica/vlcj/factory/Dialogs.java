@@ -22,8 +22,12 @@ package uk.co.caprica.vlcj.factory;
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.enums.DialogQuestionType;
+import uk.co.caprica.vlcj.enums.DialogType;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -33,11 +37,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Dialogs {
 
-    private final libvlc_dialog_cbs callbacks = createCallbacks();
+    private final libvlc_dialog_cbs callbacks;
 
     private final List<DialogHandler> handlerList = new CopyOnWriteArrayList<DialogHandler>();
 
-    Dialogs() {
+    Dialogs(DialogType... dialogTypes) {
+        this.callbacks = createCallbacks(dialogTypes);
     }
 
     public void addDialogHandler(DialogHandler handler) {
@@ -52,15 +57,18 @@ public class Dialogs {
         return callbacks;
     }
 
-    private libvlc_dialog_cbs createCallbacks() {
+    private libvlc_dialog_cbs createCallbacks(DialogType... dialogTypes) {
         libvlc_dialog_cbs callbacks = new libvlc_dialog_cbs();
 
-        callbacks.pf_display_error    = new DisplayError();
-        callbacks.pf_display_login    = new DisplayLogin();
-        callbacks.pf_display_question = new DisplayQuestion();
-        callbacks.pf_display_progress = new DisplayProgress();
+        Set<DialogType> enableTypes = new HashSet<DialogType>();
+        Collections.addAll(enableTypes, dialogTypes != null ? dialogTypes : DialogType.values());
+
+        callbacks.pf_display_error    = enableTypes.contains(DialogType.ERROR   ) ? new DisplayError()    : null;
+        callbacks.pf_display_login    = enableTypes.contains(DialogType.LOGIN   ) ? new DisplayLogin()    : null;
+        callbacks.pf_display_question = enableTypes.contains(DialogType.QUESTION) ? new DisplayQuestion() : null;
+        callbacks.pf_display_progress = enableTypes.contains(DialogType.PROGRESS) ? new DisplayProgress() : null;
+        callbacks.pf_update_progress  = enableTypes.contains(DialogType.PROGRESS) ? new UpdateProgress()  : null;
         callbacks.pf_cancel           = new Cancel();
-        callbacks.pf_update_progress  = new UpdateProgress();
 
         return callbacks;
     }

@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.factory;
 
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.enums.DialogType;
 
 public final class DialogsService extends BaseService {
 
@@ -27,8 +28,14 @@ public final class DialogsService extends BaseService {
         super(factory);
     }
 
-    public Dialogs newDialogs() {
-        return new Dialogs();
+    /**
+     *
+     *
+     * @param dialogTypes types of dialogs to enable, passing no types or <code>null</code> will enable all dialogs
+     * @return
+     */
+    public Dialogs newDialogs(DialogType... dialogTypes) {
+        return new Dialogs(dialogTypes);
     }
 
     public void enable(Dialogs dialogs) {
