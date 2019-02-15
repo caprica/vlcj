@@ -25,13 +25,15 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 /**
- *
+ * Encapsulation of a media list player stopped event.
  */
 final class MediaListPlayerStoppedEvent extends MediaListPlayerEvent {
 
     /**
      * Create a media player event.
      *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
      * @param mediaListPlayer media player the event relates to
      */
     MediaListPlayerStoppedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaListPlayer mediaListPlayer) {

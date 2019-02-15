@@ -32,8 +32,14 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
  */
 abstract class MediaListPlayerEvent implements EventNotification<MediaListPlayerEventListener> {
 
+    /**
+     * Native library.
+     */
     protected final LibVlc libvlc;
 
+    /**
+     * Native library instance.
+     */
     protected final libvlc_instance_t libvlcInstance;
 
     /**
@@ -44,6 +50,8 @@ abstract class MediaListPlayerEvent implements EventNotification<MediaListPlayer
     /**
      * Create a media player event.
      *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
      * @param mediaListPlayer media player that the event relates to
      */
     protected MediaListPlayerEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaListPlayer mediaListPlayer) {

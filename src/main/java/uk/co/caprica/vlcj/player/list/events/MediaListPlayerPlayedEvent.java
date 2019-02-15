@@ -25,13 +25,17 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 /**
- *
+ * Encapsulation of a media list player played event.
+ * <p>
+ * The name of this native event is confusing, it actually means that the entire list <em>finished</em> playing.
  */
 final class MediaListPlayerPlayedEvent extends MediaListPlayerEvent {
 
     /**
      * Create a media player event.
      *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
      * @param mediaListPlayer media player the event relates to
      */
     MediaListPlayerPlayedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaListPlayer mediaListPlayer) {

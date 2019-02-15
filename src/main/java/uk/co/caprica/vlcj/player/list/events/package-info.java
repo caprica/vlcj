@@ -1,5 +1,4 @@
 /**
- * A mechanism to encapsulate native media list player events and dispatch
- * notifications to event listeners.
+ * Media list player events.
  */
 package uk.co.caprica.vlcj.player.list.events;

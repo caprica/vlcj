@@ -28,7 +28,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 /**
- *
+ * Encapsulation of a media list player next item set event.
  */
 final class MediaListPlayerNextItemSetEvent extends MediaListPlayerEvent {
 
@@ -40,6 +40,8 @@ final class MediaListPlayerNextItemSetEvent extends MediaListPlayerEvent {
     /**
      * Create a media player event.
      *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
      * @param mediaListPlayer media player the event relates to
      */
     MediaListPlayerNextItemSetEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaListPlayer mediaListPlayer, libvlc_event_t event) {
