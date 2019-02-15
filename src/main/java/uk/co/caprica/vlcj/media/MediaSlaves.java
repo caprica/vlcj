@@ -33,6 +33,9 @@ import java.util.List;
 
 final class MediaSlaves {
 
+    private MediaSlaves() {
+    }
+
     static List<MediaSlave> getMediaSlaves(LibVlc libvlc, libvlc_media_t media) {
         PointerByReference slavesPointer = new PointerByReference();
         int numberOfSlaves = libvlc.libvlc_media_slaves_get(media, slavesPointer);

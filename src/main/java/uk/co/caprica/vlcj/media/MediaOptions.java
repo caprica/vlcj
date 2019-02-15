@@ -26,6 +26,9 @@ import uk.co.caprica.vlcj.enums.ParseFlag;
 
 final class MediaOptions {
 
+    private MediaOptions() {
+    }
+
     static boolean addMediaOptions(LibVlc libvlc, libvlc_media_t media, String... mediaOptions) {
         if (media != null) {
             if (mediaOptions != null) {
@@ -68,9 +71,6 @@ final class MediaOptions {
             }
         }
         return result;
-    }
-
-    private MediaOptions() {
     }
 
 }

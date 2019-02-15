@@ -22,8 +22,8 @@ package uk.co.caprica.vlcj.media;
 import uk.co.caprica.vlcj.enums.OptionFlag;
 
 /**
- *
- *
+ * Behaviour pertaining to media options.
+ * <p>
  * Generally there is no need to specify option flags, by default the option will be {@link OptionFlag#TRUSTED} and
  * {@link OptionFlag#UNIQUE} although it is possible to use different flag values if required.
  */

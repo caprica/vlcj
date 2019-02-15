@@ -21,9 +21,10 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.enums.ParseFlag;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 
 /**
- * Media parsing functionality.
+ * Behaviour pertaining to parsing of media.
  * <p>
  * Parsing is always asynchronous - you must wait for a parsed changed event before you can read meta data.
  * <p>
@@ -39,7 +40,7 @@ import uk.co.caprica.vlcj.enums.MediaParsedStatus;
  * media. This has clear privacy implications.
  * <p>
  * To affirmatively prevent all network access for meta data, consider trying the "--no-metadata-network-access"
- * argument when creating a {@link uk.co.caprica.vlcj.factory.MediaPlayerFactory}.
+ * argument when creating a {@link MediaPlayerFactory}.
  * <p>
  * It should also be possible to prevent such network accesses by using appropriate {@link ParseFlag} values, see
  * {@link ParseFlag#FETCH_LOCAL} vs {@link ParseFlag#FETCH_NETWORK}.

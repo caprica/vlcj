@@ -26,6 +26,9 @@ import uk.co.caprica.vlcj.model.MediaSlave;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Behaviour pertaining to media slaves, enabling subtitle and audio tracks to be added to the media.
+ */
 public class SlaveService extends BaseService {
 
     SlaveService(Media media) {
@@ -60,10 +63,18 @@ public class SlaveService extends BaseService {
         return libvlc.libvlc_media_slaves_add(mediaInstance, type.intValue(), priority.intValue(), uri) == 0;
     }
 
+    /**
+     * Remove all media slaves from the current media.
+     */
     public void clear() {
         libvlc.libvlc_media_slaves_clear(mediaInstance);
     }
 
+    /**
+     * Get the list of media slaves added to the current media.
+     *
+     * @return media slaves
+     */
     public List<MediaSlave> get() {
         return MediaSlaves.getMediaSlaves(libvlc, mediaInstance);
     }

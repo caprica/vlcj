@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.media;
 
 // there is native api for this, but we don't need it
 
-// maybe the tracks etc stuff in DefaultMEdiaPlayer should be in here!
+// FIXME isn't user data a client problem, maybe remove this?
 
 public class UserDataService extends BaseService {
 

@@ -28,6 +28,10 @@ import uk.co.caprica.vlcj.model.*;
 
 import java.util.List;
 
+/**
+ * Behaviour pertaining to media information, providing things like the media resource locator, type, state and duration
+ * of this media. Also provides access to the various media tracks and playback statistics.
+ */
 public class InfoService extends BaseService {
 
     private final libvlc_media_stats_t statsInstance = new libvlc_media_stats_t();

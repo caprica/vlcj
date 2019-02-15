@@ -33,6 +33,9 @@ public final class Media {
      */
     protected final LibVlc libvlc;
 
+    /**
+     * Native library instance.
+     */
     protected final libvlc_instance_t libvlcInstance;
 
     /**
@@ -110,27 +113,44 @@ public final class Media {
         return userDataService;
     }
 
+    /**
+     * Get the associated native media instance.
+     *
+     * @return media instance
+     */
     public libvlc_media_t mediaInstance() {
         return mediaInstance;
     }
 
+    /**
+     * Create a new {@link MediaRef} from this media.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaRef} when it has no further use for it.
+     *
+     * @return media reference
+     */
     public MediaRef newMediaRef() {
         libvlc.libvlc_media_retain(mediaInstance);
         return new MediaRef(libvlc, libvlcInstance, mediaInstance);
     }
 
     /**
-     *
+     * Create a new {@link Media} from this media.
      * <p>
      * The caller <em>must</em> release the returned {@link Media} when it has no further use for it.
      *
-     * @return
+     * @return media
      */
     public Media newMedia() {
         libvlc.libvlc_media_retain(mediaInstance);
         return new Media(libvlc, libvlcInstance, mediaInstance);
     }
 
+    /**
+     * Release this component and the associated native resources.
+     * <p>
+     * The component must no longer be used.
+     */
     public void release() {
         eventService   .release();
         infoService    .release();

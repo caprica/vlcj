@@ -38,9 +38,6 @@ final class MediaResourceLocator {
      */
     private static final Pattern MRL_LOCATION_PATTERN = Pattern.compile(".+://.*");
 
-    /**
-     * Private constructor to prevent direct instantiation.
-     */
     private MediaResourceLocator() {
     }
 

@@ -24,6 +24,16 @@ import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.enums.State;
 import uk.co.caprica.vlcj.model.Picture;
 
+import javax.swing.*;
+
+/**
+ * Default implementation of the media player event listener.
+ * <p>
+ * Simply override the methods you're interested in.
+ * <p>
+ * Events are <em>not</em> raised on the Swing Event Dispatch thread so if updating user interface components in
+ * response to these events care must be taken to use {@link SwingUtilities#invokeLater(Runnable)}.
+ */
 public class MediaEventAdapter implements MediaEventListener {
 
     @Override

@@ -25,6 +25,8 @@ import uk.co.caprica.vlcj.medialist.MediaList;
 // FIXME new list each time? don't think so...
 //  probably requires delegated services instead of exposing the MediaList
 
+// FIXME a whole service just for this?
+
 public class SubitemService extends BaseService {
 
     SubitemService(Media media) {
