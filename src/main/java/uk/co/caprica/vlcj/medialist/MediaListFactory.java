@@ -31,22 +31,22 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 public final class MediaListFactory {
 
     /**
+     * Create a new {@link MediaListRef}.
      *
-     *
-     * @param libvlc
-     * @param libvlcInstance
-     * @return
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @return media list, or <code>null</code> on error
      */
     public static MediaListRef newMediaListRef(LibVlc libvlc, libvlc_instance_t libvlcInstance) {
         return createMediaListRef(libvlc, libvlcInstance, libvlc.libvlc_media_list_new(libvlcInstance));
     }
 
     /**
+     * Create a new {@link MediaList}.
      *
-     *
-     * @param libvlc
-     * @param libvlcInstance
-     * @return
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @return media list reference, or <code>null</code> on error
      */
     public static MediaList newMediaList(LibVlc libvlc, libvlc_instance_t libvlcInstance) {
         return createMediaList(libvlc, libvlcInstance, libvlc.libvlc_media_list_new(libvlcInstance));

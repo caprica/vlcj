@@ -46,9 +46,10 @@ final class MediaListItemAddedEvent extends MediaListEvent {
     /**
      * Create a media list event.
      *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
      * @param mediaList media list the event relates to
-     * @param mediaInstance native media instance that was added
-     * @param index index at which the item was added
+     * @param event native event
      */
     MediaListItemAddedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaList mediaList, libvlc_event_t event) {
         super(libvlc, libvlcInstance, mediaList);

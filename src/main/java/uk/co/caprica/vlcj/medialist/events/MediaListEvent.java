@@ -34,8 +34,14 @@ import uk.co.caprica.vlcj.medialist.MediaListEventListener;
  */
 abstract class MediaListEvent implements EventNotification<MediaListEventListener> {
 
+    /**
+     * Native library.
+     */
     protected final LibVlc libvlc;
 
+    /**
+     * Native library instance.
+     */
     protected final libvlc_instance_t libvlcInstance;
 
     /**
@@ -54,7 +60,19 @@ abstract class MediaListEvent implements EventNotification<MediaListEventListene
         this.mediaList = mediaList;
     }
 
-    // FIXME doc no need to release this, since it's transient
+    /**
+     * Create a temporary media reference to wrap the native media handle.
+     * <p>
+     * Returning this temporary reference does <em>not</em> cause the native media instance to be retained - there is no
+     * need to do so since the reference only exists for the lifetime of the native callback, and since it is not
+     * retained, there is no need to release it either.
+     * <p>
+     * If a client application needs to keep the {@link MediaRef} it must use either {@link MediaRef#newMediaRef()} or
+     * {@link MediaRef#newMedia()}.
+     *
+     * @param mediaInstance native media instance
+     * @return temporary media reference, which must <em>not</em> be released
+     */
     protected final MediaRef temporaryMediaRef(libvlc_media_t mediaInstance) {
         return new MediaRef(libvlc, libvlcInstance, mediaInstance);
     }

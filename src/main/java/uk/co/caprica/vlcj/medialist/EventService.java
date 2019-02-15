@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.medialist;
 
+/**
+ * Behaviour pertaining to media list events.
+ */
 public final class EventService extends BaseService {
 
     private final MediaListNativeEventManager eventManager;

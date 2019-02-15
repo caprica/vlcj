@@ -23,6 +23,9 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 
+/**
+ * Internal base implementation.
+ */
 abstract class BaseService {
 
     protected final MediaList mediaList;

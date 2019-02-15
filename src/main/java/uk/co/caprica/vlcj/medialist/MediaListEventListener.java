@@ -22,14 +22,14 @@ package uk.co.caprica.vlcj.medialist;
 import uk.co.caprica.vlcj.media.MediaRef;
 
 /**
- * Specification for a component that is interested in receiving event notifications from
- * a media list.
+ * Specification for a component that is interested in receiving event notifications from a media list.
  */
 public interface MediaListEventListener {
 
     /**
      * A new media item will be added to the list.
-     *  @param mediaList list
+     *
+     * @param mediaList list
      * @param item media instance that will be added
      * @param index index in the list at which the media instance will be added
      */
@@ -37,7 +37,8 @@ public interface MediaListEventListener {
 
     /**
      * A new media item was added to the list.
-     *  @param mediaList list
+     *
+     * @param mediaList list
      * @param item media instance that was added
      * @param index index in the list at which the media instance was added
      */
@@ -45,7 +46,8 @@ public interface MediaListEventListener {
 
     /**
      * A new media item will be deleted from the list.
-     *  @param mediaList list
+     *
+     * @param mediaList list
      * @param item media instance that will be deleted
      * @param index index in the list at which the media instance will be deleted
      */
@@ -53,7 +55,8 @@ public interface MediaListEventListener {
 
     /**
      * A new media item was deleted from the list.
-     *  @param mediaList list
+     *
+     * @param mediaList list
      * @param item media instance that was deleted
      * @param index index in the list at which the media instance was deleted
      */
@@ -61,9 +64,10 @@ public interface MediaListEventListener {
 
     /**
      * The end of the media list was reached.
-     * FIXME i don't think this actually fires
+     * FIXME i don't think this native event actually fires
      *
      * @param mediaList list
      */
     void mediaListEndReached(MediaList mediaList);
+
 }

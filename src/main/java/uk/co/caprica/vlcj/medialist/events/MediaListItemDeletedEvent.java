@@ -45,9 +45,10 @@ final class MediaListItemDeletedEvent extends MediaListEvent {
     /**
      * Create a media list event.
      *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
      * @param mediaList media list the event relates to
-     * @param mediaInstance native media instance that was deleted
-     * @param index index from which the item was deleted
+     * @param event native event
      */
     MediaListItemDeletedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaList mediaList, libvlc_event_t event) {
         super(libvlc, libvlcInstance, mediaList);

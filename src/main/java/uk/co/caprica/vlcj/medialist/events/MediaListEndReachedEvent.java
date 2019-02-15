@@ -32,6 +32,8 @@ final class MediaListEndReachedEvent extends MediaListEvent {
     /**
      * Create a media list event.
      *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
      * @param mediaList media list the event relates to
      */
     MediaListEndReachedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaList mediaList) {

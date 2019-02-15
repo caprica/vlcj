@@ -31,20 +31,50 @@ import java.util.List;
 
 // FIXME consider rename, is this really MediaService? (would match the Media component i suppose)
 
+/**
+ * Behaviour pertaining to the media items in the list.
+ */
 public final class ItemService extends BaseService {
 
     ItemService(MediaList mediaList) {
         super(mediaList);
     }
 
+    /**
+     * Add a new item to the list for a media resource locator.
+     * <p>
+     * The list must not be read-only.
+     *
+     * @param mrl media resource locator
+     * @param options options to add to the media
+     * @return <code>true</code> if successful; <code>false</code> if error
+     */
     public boolean add(String mrl, String... options) {
         return add(MediaFactory.newMediaRef(libvlc, libvlcInstance, mrl, options));
     }
 
+    /**
+     * Add a new item to the list for native callback media.
+     * <p>
+     * The list must not be read-only.
+     *
+     * @param callbackMedia callback media component
+     * @param options options to add to the media
+     * @return <code>true</code> if successful; <code>false</code> if error
+     */
     public boolean add(CallbackMedia callbackMedia, String... options) {
         return add(MediaFactory.newMediaRef(libvlc, libvlcInstance, callbackMedia, options));
     }
 
+    /**
+     * Add a new item to the list for a {@link MediaRef}.
+     * <p>
+     * The list must not be read-only.
+     *
+     * @param mediaRef media reference
+     * @param options options to add to the media
+     * @return <code>true</code> if successful; <code>false</code> if error
+     */
     public boolean add(MediaRef mediaRef, String... options) {
         return add(MediaFactory.newMediaRef(libvlc, libvlcInstance, mediaRef, options));
     }
@@ -64,14 +94,44 @@ public final class ItemService extends BaseService {
         }
     }
 
+    /**
+     * Insert an item into the list for a media resource locator.
+     * <p>
+     * The list must not be read-only.
+     *
+     * @param index index at which to insert the item
+     * @param mrl media resource locator
+     * @param options options to add to the media
+     * @return <code>true</code> if successful; <code>false</code> if error
+     */
     public boolean insert(int index, String mrl, String... options) {
         return insert(index, MediaFactory.newMediaRef(libvlc, libvlcInstance, mrl, options));
     }
 
+    /**
+     * Insert an item into the last for native callback media.
+     * <p>
+     * The list must not be read-only.
+     *
+     * @param index index at which to insert the item
+     * @param callbackMedia callback media component
+     * @param options options to add to the media
+     * @return <code>true</code> if successful; <code>false</code> if error
+     */
     public boolean insert(int index, CallbackMedia callbackMedia, String... options) {
         return insert(index, MediaFactory.newMediaRef(libvlc, libvlcInstance, callbackMedia, options));
     }
 
+    /**
+     * Insert an item into the list for a {@link MediaRef}.
+     * <p>
+     * The list must not be read-only.
+     *
+     * @param index index at which to insert the item
+     * @param mediaRef media reference
+     * @param options options to add to the media
+     * @return <code>true</code> if successful; <code>false</code> if error
+     */
     public boolean insert(int index, MediaRef mediaRef, String... options) {
         return insert(index, MediaFactory.newMediaRef(libvlc, libvlcInstance, mediaRef, options));
     }
@@ -91,6 +151,12 @@ public final class ItemService extends BaseService {
         }
     }
 
+    /**
+     * Remove an item from the list.
+     *
+     * @param index index of the item to remove
+     * @return <code>true</code> if successful; <code>false</code> if error
+     */
     public boolean remove(int index) {
         if (!isReadOnly()) {
             lock();
@@ -105,6 +171,11 @@ public final class ItemService extends BaseService {
         }
     }
 
+    /**
+     * Clear the entire list.
+     *
+     * @return <code>true</code> if successful; <code>false</code> if error
+     */
     public boolean clear() {
         if (!isReadOnly()) {
             lock();
@@ -138,6 +209,11 @@ public final class ItemService extends BaseService {
         }
     }
 
+    /**
+     * Get a list of media resource locators for the items in the list.
+     *
+     * @return media resource locators
+     */
     public List<String> mrls() {
         lock();
         try {
@@ -155,6 +231,12 @@ public final class ItemService extends BaseService {
         }
     }
 
+    /**
+     * Get the media resource locator for a particular item in the list.
+     *
+     * @param index item index
+     * @return media resource locator
+     */
     public String mrl(int index) {
         lock();
         try {
@@ -176,7 +258,14 @@ public final class ItemService extends BaseService {
         }
     }
 
-    // client must release MediaRef
+    /**
+     * Get a new {@link MediaRef} for an item in the list.
+     * <p>
+     * The caller must release the returned {@link MediaRef} when it no longer has any use for it.
+     *
+     * @param index item index
+     * @return media reference
+     */
     public MediaRef newMediaRef(int index) {
         lock();
         try {
@@ -192,7 +281,14 @@ public final class ItemService extends BaseService {
         }
     }
 
-    // client must release Media
+    /**
+     * Get a new {@link Media} for an item in the list.
+     * <p>
+     * The caller must release the returned {@link Media} when it no longer has any use for it.
+     *
+     * @param index item index
+     * @return media
+     */
     public Media newMedia(int index) {
         lock();
         try {
@@ -208,14 +304,33 @@ public final class ItemService extends BaseService {
         }
     }
 
+    /**
+     * Is the list read-only?
+     *
+     * @return <code>true</code> if the list is read-only; <code>false</code> if it is not
+     */
     public boolean isReadOnly() {
         return libvlc.libvlc_media_list_is_readonly(mediaListInstance) != 0;
     }
 
+    /**
+     * Create a new {@link MediaList} from this list.
+     * <p>
+     * The caller must release the returned {@link MediaList} when it no longer has any use for it.
+     *
+     * @return media list
+     */
     public MediaList newMediaList() {
         return new MediaList(libvlc, libvlcInstance, mediaListInstance);
     }
 
+    /**
+     * Create a new {@link MediaListRef} from this list.
+     * <p>
+     * The caller must release the returned {@link MediaListRef} when it no longer has any use for it.
+     *
+     * @return media list reference
+     */
     public MediaListRef newMediaListRef() {
         return new MediaListRef(libvlc, libvlcInstance, mediaListInstance);
     }
