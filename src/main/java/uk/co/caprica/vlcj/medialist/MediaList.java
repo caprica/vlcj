@@ -33,6 +33,9 @@ public final class MediaList {
      */
     protected final LibVlc libvlc;
 
+    /**
+     * Native library instance.
+     */
     protected final libvlc_instance_t libvlcInstance;
 
     /**
@@ -58,35 +61,62 @@ public final class MediaList {
         this.itemService  = new ItemService (this);
     }
 
+    /**
+     * Behaviours pertaining to media list events.
+     *
+     * @return events behaviours
+     */
     public EventService events() {
         return eventService;
     }
 
+    /**
+     * Behaviours pertaining to the items in the media list.
+     *
+     * @return list item behaviours
+     */
     public ItemService items() {
         return itemService;
     }
 
+    /**
+     * Get the associated native media list instance
+     *
+     * @return media list instance
+     */
     public libvlc_media_list_t mediaListInstance() {
         return mediaListInstance;
     }
 
     /**
-     *
+     * Create a new {@link MediaListRef} for this media list.
      * <p>
      * The caller <em>must</em> release the returned {@link MediaListRef} when it has no further use for it.
      *
-     * @return
+     * @return media list reference
      */
     public MediaListRef newMediaListRef() {
         libvlc.libvlc_media_list_retain(mediaListInstance);
         return new MediaListRef(libvlc, libvlcInstance, mediaListInstance);
     }
 
+    /**
+     * Create a new {@link MediaList} for this media list.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaList} when it has no further use for it.
+     *
+     * @return media list
+     */
     public MediaList newMediaList() {
         libvlc.libvlc_media_list_retain(mediaListInstance);
         return new MediaList(libvlc, libvlcInstance, mediaListInstance);
     }
 
+    /**
+     * Release this component and the associated native resources.
+     * <p>
+     * The component must no longer be used.
+     */
     public void release() {
         eventService.release();
         itemService .release();
