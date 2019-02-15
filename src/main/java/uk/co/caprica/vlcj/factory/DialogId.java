@@ -21,6 +21,11 @@ package uk.co.caprica.vlcj.factory;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_id;
 
+/**
+ * Encapsulation of a native dialog identifier.
+ * <p>
+ * The internal implementation is opaque to client applications.
+ */
 public final class DialogId {
 
     private final libvlc_dialog_id id;

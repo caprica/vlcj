@@ -28,6 +28,9 @@ import uk.co.caprica.vlcj.binding.NativeString;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Behaviour pertaining to audio.
+ */
 public final class AudioService extends BaseService {
 
     AudioService(MediaPlayerFactory factory) {

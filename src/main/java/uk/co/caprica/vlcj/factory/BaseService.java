@@ -22,6 +22,9 @@ package uk.co.caprica.vlcj.factory;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 
+/**
+ * Internal base implementation.
+ */
 abstract class BaseService {
 
     protected final MediaPlayerFactory factory;

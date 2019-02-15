@@ -31,12 +31,22 @@ import uk.co.caprica.vlcj.renderer.RendererDiscovererDescription;
 import java.util.ArrayList;
 import java.util.List;
 
+// FIXME needs a rename, see also DiscovererService
+
+/**
+ * Behaviour pertaining to renderer discovery.
+ */
 public final class RendererService extends BaseService {
 
     RendererService(MediaPlayerFactory factory) {
         super(factory);
     }
 
+    /**
+     * Get the list of renderer discoverer descriptions.
+     *
+     * @return descriptions, will not be <code>null</code>
+     */
     public List<RendererDiscovererDescription> discoverers() {
         PointerByReference ref = new PointerByReference();
         size_t size = libvlc.libvlc_renderer_discoverer_list_get(libvlcInstance, ref);
@@ -58,6 +68,14 @@ public final class RendererService extends BaseService {
         }
     }
 
+    /**
+     * Get a named renderer discoverer.
+     * <p>
+     * Use {@link #discoverers()} to get the name.
+     *
+     * @param name discoverer name
+     * @return discoverer, may be <code>null</code>
+     */
     public RendererDiscoverer discoverer(String name) {
         libvlc_renderer_discoverer_t discoverer = libvlc.libvlc_renderer_discoverer_new(libvlcInstance, name);
         if (discoverer != null) {

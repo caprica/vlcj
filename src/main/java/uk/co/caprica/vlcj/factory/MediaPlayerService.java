@@ -25,6 +25,9 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.DefaultMediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
+/**
+ * Behaviour pertaining to the creation of various types of media players.
+ */
 public final class MediaPlayerService extends BaseService {
 
     MediaPlayerService(MediaPlayerFactory factory) {

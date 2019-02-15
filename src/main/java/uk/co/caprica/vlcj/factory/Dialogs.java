@@ -45,10 +45,20 @@ public class Dialogs {
         this.callbacks = createCallbacks(dialogTypes);
     }
 
+    /**
+     * Add a handler to process the dialog callbacks.
+     *
+     * @param handler handler
+     */
     public void addDialogHandler(DialogHandler handler) {
         handlerList.add(handler);
     }
 
+    /**
+     * Remove a handler that was processing dialog callbacks.
+     *
+     * @param handler handler
+     */
     public void removeDialogHandler(DialogHandler handler) {
         handlerList.remove(handler);
     }

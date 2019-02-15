@@ -32,6 +32,11 @@ import uk.co.caprica.vlcj.enums.MediaDiscovererCategory;
 import java.util.ArrayList;
 import java.util.List;
 
+// FIXME needs a rename, see also RendererService
+
+/**
+ * Behaviour pertaining to media discovery.
+ */
 public final class DiscovererService extends BaseService {
 
     DiscovererService(MediaPlayerFactory factory) {
@@ -39,10 +44,10 @@ public final class DiscovererService extends BaseService {
     }
 
     /**
+     * Get the list of media discoverer descriptions for a particular category.
      *
-     *
-     * @param category
-     * @return
+     * @param category desired category
+     * @return media discoverer descriptions, will not be <code>null</code>
      */
     public List<MediaDiscovererDescription> discoverers(MediaDiscovererCategory category) {
         PointerByReference ref = new PointerByReference();
@@ -65,6 +70,14 @@ public final class DiscovererService extends BaseService {
         }
     }
 
+    /**
+     * Get a named media discoverer.
+     * <p>
+     * Use {@link #discoverers(MediaDiscovererCategory)} to get the name.
+     *
+     * @param name media discoverer name
+     * @return media discoverer, may be <code>null</code>
+     */
     public MediaDiscoverer discoverer(String name) {
         libvlc_media_discoverer_t discoverer = libvlc.libvlc_media_discoverer_new(libvlcInstance, name);
         if (discoverer != null) {

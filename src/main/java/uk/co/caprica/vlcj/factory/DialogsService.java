@@ -22,6 +22,9 @@ package uk.co.caprica.vlcj.factory;
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.enums.DialogType;
 
+/**
+ * Behaviour pertaining to native dialogs.
+ */
 public final class DialogsService extends BaseService {
 
     DialogsService(MediaPlayerFactory factory) {
@@ -29,39 +32,80 @@ public final class DialogsService extends BaseService {
     }
 
     /**
-     *
+     * Create a new dialogs callback component.
      *
      * @param dialogTypes types of dialogs to enable, passing no types or <code>null</code> will enable all dialogs
-     * @return
+     * @return dialogs callback component
      */
     public Dialogs newDialogs(DialogType... dialogTypes) {
         return new Dialogs(dialogTypes);
     }
 
+    /**
+     * Enable native dialog callbacks.
+     *
+     * @param dialogs dialogs callback component
+     */
     public void enable(Dialogs dialogs) {
         enable(dialogs, null);
     }
 
+    /**
+     * Disable native dialog callbacks.
+     */
     public void disable() {
         disable(null);
     }
 
+    /**
+     * Enable native dialog callbacks, with user data.
+     *
+     * @param dialogs dialogs callback component
+     * @param userData opaque user data associated with each dialog
+     */
     public void enable(Dialogs dialogs, Pointer userData) {
         libvlc.libvlc_dialog_set_callbacks(libvlcInstance, dialogs.callbacks(), userData);
     }
 
+    /**
+     * Disable native dialog callbacks, with user data.
+     *
+     * @param userData opaque user data associated with each dialog
+     */
     public void disable(Pointer userData) {
         libvlc.libvlc_dialog_set_callbacks(libvlcInstance, null, userData);
     }
 
+    /**
+     * Post credentials to a native login dialog.
+     *
+     * @param id identifier of the dialog to post to
+     * @param username username credential
+     * @param password password credential
+     * @param storeCredentials <code>true</code> if the user wants to store the credential; <code>false</code> otherwise
+     * @return <code>true</code> if successful; <code>false</code> if error
+     */
     public boolean postLogin(DialogId id, String username, String password, boolean storeCredentials) {
         return libvlc.libvlc_dialog_post_login(id.id(), username, password, storeCredentials ? 1 : 0) == 0;
     }
 
+    /**
+     * Post (select) an action to a native question dialog.
+     *
+     * @param id identifier of the dialog to post to
+     * @param action action to post
+     * @return <code>true</code> if successful; <code>false</code> if error
+     */
     public boolean postAction(DialogId id, int action) {
         return libvlc.libvlc_dialog_post_action(id.id(), action) == 0;
     }
 
+    /**
+     * Dismiss a native dialog.
+     *
+     * @param id identifier of the dialog to dismiss
+     * @return <code>true</code> if successful; <code>false</code> if error
+     */
     public boolean dismiss(DialogId id) {
         return libvlc.libvlc_dialog_dismiss(id.id()) == 0;
     }

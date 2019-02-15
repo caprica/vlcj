@@ -26,6 +26,9 @@ import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 import java.awt.*;
 
+/**
+ * Behaviour pertaining to the creation of video surfaces.
+ */
 public final class VideoSurfaceService extends BaseService {
 
     VideoSurfaceService(MediaPlayerFactory factory) {
@@ -57,12 +60,12 @@ public final class VideoSurfaceService extends BaseService {
     }
 
     /**
+     * Create a new video surface for "direct" rendering via callbacks.
      *
-     *
-     * @param bufferFormatCallback
-     * @param renderCallback
-     * @param lockBuffers
-     * @return
+     * @param bufferFormatCallback buffer format callback
+     * @param renderCallback render callback
+     * @param lockBuffers <code>true</code> if the video buffer should be locked; <code>false</code> if it should not
+     * @return video surface
      */
     public CallbackVideoSurface newVideoSurface(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers) {
         return new CallbackVideoSurface(bufferFormatCallback, renderCallback, lockBuffers, getVideoSurfaceAdapter());

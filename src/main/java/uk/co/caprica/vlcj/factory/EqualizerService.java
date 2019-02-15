@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.model.Equalizer;
 
 import java.util.*;
 
+/**
+ * Behaviour pertaining to the audio equalizer.
+ */
 public final class EqualizerService extends BaseService {
 
     private final List<Float> bands;
@@ -94,9 +97,8 @@ public final class EqualizerService extends BaseService {
     /**
      * Get all of the available preset equalizer instances.
      * <p>
-     * This will return new equalizer instances (i.e. they are not cached or shared), so
-     * applications are free to change the values in the returned equalizer instances if
-     * so desired.
+     * This will return new equalizer instances (i.e. they are not cached or shared), so applications are free to change
+     * the values in the returned equalizer instances if so desired.
      *
      * @return map of preset name to equalizer instance, sorted by name
      */

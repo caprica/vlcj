@@ -27,6 +27,9 @@ import uk.co.caprica.vlcj.medialist.MediaListFactory;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 import uk.co.caprica.vlcj.media.MediaRef;
 
+/**
+ * Behaviour pertaining to creation of various types of media and media lists.
+ */
 public final class MediaService extends BaseService {
 
     MediaService(MediaPlayerFactory factory) {
@@ -56,10 +59,24 @@ public final class MediaService extends BaseService {
         return MediaFactory.newMediaRef(libvlc, libvlcInstance, callbackMedia, options);
     }
 
+    /**
+     *
+     *
+     * @param media
+     * @param options
+     * @return
+     */
     public MediaRef newMediaRef(Media media, String... options) {
         return MediaFactory.newMediaRef(libvlc, libvlcInstance, media, options);
     }
 
+    /**
+     *
+     *
+     * @param mediaRef
+     * @param options
+     * @return
+     */
     public MediaRef newMediaRef(MediaRef mediaRef, String... options) {
         return MediaFactory.newMediaRef(libvlc, libvlcInstance, mediaRef, options);
     }
@@ -87,14 +104,33 @@ public final class MediaService extends BaseService {
         return MediaFactory.newMedia(libvlc, libvlcInstance, callbackMedia, options);
     }
 
+    /**
+     *
+     *
+     * @param mediaRef
+     * @param options
+     * @return
+     */
     public Media newMedia(MediaRef mediaRef, String... options) {
         return MediaFactory.newMedia(libvlc, libvlcInstance, mediaRef, options);
     }
 
+    /**
+     *
+     *
+     * @param media
+     * @param options
+     * @return
+     */
     public Media newMedia(Media media, String... options) {
         return MediaFactory.newMedia(libvlc, libvlcInstance, media, options);
     }
 
+    /**
+     *
+     *
+     * @return
+     */
     public MediaListRef newMediaListRef() {
         return MediaListFactory.newMediaListRef(libvlc, libvlcInstance);
     }
