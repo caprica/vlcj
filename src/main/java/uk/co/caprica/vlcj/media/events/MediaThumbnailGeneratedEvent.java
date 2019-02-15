@@ -25,10 +25,21 @@ import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.model.Picture;
 
+/**
+ * Encapsulation of a media thumbnail generated event.
+ */
 final class MediaThumbnailGeneratedEvent extends MediaEvent {
 
     private final libvlc_picture_t thumbnail;
 
+    /**
+     * Create a media event.
+     *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param media component the event relates to
+     * @param event native event
+     */
     MediaThumbnailGeneratedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
         super(libvlc, libvlcInstance, media);
         this.thumbnail = ((media_thumbnail_generated) event.u.getTypedValue(media_thumbnail_generated.class)).p_thumbnail;

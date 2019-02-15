@@ -28,12 +28,20 @@ import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaEventListener;
 
 /**
- *
+ * Encapsulation of a media freed event.
  */
 final class MediaFreedEvent extends MediaEvent {
 
     private final libvlc_media_t md;
 
+    /**
+     * Create a media event.
+     *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param media component the event relates to
+     * @param event native event
+     */
     MediaFreedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
         super(libvlc, libvlcInstance, media);
         this.md = ((media_freed) event.u.getTypedValue(media_freed.class)).md;

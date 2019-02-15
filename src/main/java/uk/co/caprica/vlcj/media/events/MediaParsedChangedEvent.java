@@ -27,10 +27,21 @@ import uk.co.caprica.vlcj.binding.internal.media_parsed_changed;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaEventListener;
 
+/**
+ * Encapsulation of a media parsed changed event.
+ */
 final class MediaParsedChangedEvent extends MediaEvent {
 
     private final int newStatus;
 
+    /**
+     * Create a media event.
+     *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param media component the event relates to
+     * @param event native event
+     */
     MediaParsedChangedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
         super(libvlc, libvlcInstance, media);
         this.newStatus = ((media_parsed_changed) event.u.getTypedValue(media_parsed_changed.class)).new_status;

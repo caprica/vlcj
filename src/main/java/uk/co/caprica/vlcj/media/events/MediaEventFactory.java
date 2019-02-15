@@ -33,6 +33,9 @@ public final class MediaEventFactory {
     /**
      * Create an event.
      *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param media component the event relates to
      * @param event native event
      * @return media event, or <code>null</code> if the native event type is not known
      */

@@ -27,10 +27,21 @@ import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaEventListener;
 
+/**
+ * Encapsulation of a media meta changed event.
+ */
 final class MediaMetaChangedEvent extends MediaEvent {
 
     private final int metaType;
 
+    /**
+     * Create a media event.
+     *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param media component the event relates to
+     * @param event native event
+     */
     MediaMetaChangedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
         super(libvlc, libvlcInstance, media);
         this.metaType = ((media_meta_changed) event.u.getTypedValue(media_meta_changed.class)).meta_type;

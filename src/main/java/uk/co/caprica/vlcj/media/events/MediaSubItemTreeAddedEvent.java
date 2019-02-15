@@ -27,10 +27,21 @@ import uk.co.caprica.vlcj.binding.internal.media_subitemtree_added;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaEventListener;
 
+/**
+ * Encapsulation of a media subitem tree added event.
+ */
 final class MediaSubItemTreeAddedEvent extends MediaEvent {
 
     private final libvlc_media_t item;
 
+    /**
+     * Create a media event.
+     *
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param media component the event relates to
+     * @param event native event
+     */
     MediaSubItemTreeAddedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
         super(libvlc, libvlcInstance, media);
         this.item = ((media_subitemtree_added) event.u.getTypedValue(media_subitemtree_added.class)).item;
