@@ -43,7 +43,7 @@ public final class MediaService extends BaseService {
      *
      * @param mrl media resource locator
      * @param options options to add to the media
-     * @return media reference
+     * @return media reference, or <code>null</code> on error
      */
     public MediaRef newMediaRef(String mrl, String... options) {
         return MediaFactory.newMediaRef(libvlc, libvlcInstance, mrl, options);
@@ -59,7 +59,7 @@ public final class MediaService extends BaseService {
      *
      * @param callbackMedia callback media component
      * @param options options to add to the media
-     * @return media reference
+     * @return media reference, or <code>null</code> on error
      */
     public MediaRef newMediaRef(CallbackMedia callbackMedia, String... options) {
         return MediaFactory.newMediaRef(libvlc, libvlcInstance, callbackMedia, options);
@@ -74,7 +74,7 @@ public final class MediaService extends BaseService {
      *
      * @param media
      * @param options options to add to the media
-     * @return media reference
+     * @return media reference, or <code>null</code> on error
      */
     public MediaRef newMediaRef(Media media, String... options) {
         return MediaFactory.newMediaRef(libvlc, libvlcInstance, media, options);
@@ -89,7 +89,7 @@ public final class MediaService extends BaseService {
      *
      * @param mediaRef
      * @param options options to add to the media
-     * @return media reference
+     * @return media reference, or <code>null</code> on error
      */
     public MediaRef newMediaRef(MediaRef mediaRef, String... options) {
         return MediaFactory.newMediaRef(libvlc, libvlcInstance, mediaRef, options);
@@ -102,7 +102,7 @@ public final class MediaService extends BaseService {
      *
      * @param mrl media resource locator
      * @param options options to add to the media
-     * @return media reference
+     * @return media, or <code>null</code> on error
      */
     public Media newMedia(String mrl, String... options) {
         return MediaFactory.newMedia(libvlc, libvlcInstance, mrl, options);
@@ -118,7 +118,7 @@ public final class MediaService extends BaseService {
      *
      * @param callbackMedia callback media component
      * @param options options to add to the media
-     * @return media
+     * @return media, or <code>null</code> on error
      */
     public Media newMedia(CallbackMedia callbackMedia, String... options) {
         return MediaFactory.newMedia(libvlc, libvlcInstance, callbackMedia, options);
@@ -133,7 +133,7 @@ public final class MediaService extends BaseService {
      *
      * @param mediaRef media reference
      * @param options options to add to the media
-     * @return media reference
+     * @return media, or <code>null</code> on error
      */
     public Media newMedia(MediaRef mediaRef, String... options) {
         return MediaFactory.newMedia(libvlc, libvlcInstance, mediaRef, options);
@@ -148,7 +148,7 @@ public final class MediaService extends BaseService {
      *
      * @param media media
      * @param options options to add to the media
-     * @return media reference
+     * @return media, or <code>null</code> on error
      */
     public Media newMedia(Media media, String... options) {
         return MediaFactory.newMedia(libvlc, libvlcInstance, media, options);
@@ -157,7 +157,7 @@ public final class MediaService extends BaseService {
     /**
      * Create a new {@link MediaListRef}.
      *
-     * @return media list reference
+     * @return media list reference, or <code>null</code> on error
      */
     public MediaListRef newMediaListRef() {
         return MediaListFactory.newMediaListRef(libvlc, libvlcInstance);
@@ -166,7 +166,7 @@ public final class MediaService extends BaseService {
     /**
      * Create a new media list.
      *
-     * @return media list
+     * @return media list, or <code>null</code> on error
      */
     public MediaList newMediaList() {
         return MediaListFactory.newMediaList(libvlc, libvlcInstance);
