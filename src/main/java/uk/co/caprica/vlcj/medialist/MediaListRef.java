@@ -30,10 +30,19 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
  */
 public final class MediaListRef {
 
+    /**
+     * Native library.
+     */
     private final LibVlc libvlc;
 
+    /**
+     * Native library instance.
+     */
     private final libvlc_instance_t libvlcInstance;
 
+    /**
+     * Native media list instance.
+     */
     private final libvlc_media_list_t mediaListInstance;
 
     /**
