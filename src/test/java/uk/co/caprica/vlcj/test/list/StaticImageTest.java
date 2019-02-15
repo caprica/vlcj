@@ -64,7 +64,7 @@ public class StaticImageTest extends VlcjTest {
         finally {
             playlistRef.release();
         }
-        player.mode().setMode(PlaybackMode.LOOP);
+        player.controls().setMode(PlaybackMode.LOOP);
         player.controls().play();
         Thread.currentThread().join();
     }

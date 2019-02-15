@@ -109,7 +109,7 @@ public class StreamingAudioPlayListTest extends VlcjTest {
             playList.items().add(file.getAbsolutePath(), mediaOptions);
         }
         // Loop the play-list over and over
-        mediaListPlayer.mode().setMode(PlaybackMode.LOOP);
+        mediaListPlayer.controls().setMode(PlaybackMode.LOOP);
         // Attach the play-list to the media list player
         MediaListRef playlistRef = playList.newMediaListRef();
         try {

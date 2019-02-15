@@ -22,10 +22,15 @@ package uk.co.caprica.vlcj.player.list;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
+/**
+ * Behaviour pertaining to the associated media player.
+ */
 public final class MediaPlayerService extends BaseService {
 
     /**
-     * We pin a reference here in case the client application doesn't.
+     * Media player associated with the media list player.
+     * <p>
+     * We pin this reference here in case the client application has not.
      */
     private MediaPlayer mediaPlayer;
 
@@ -44,7 +49,7 @@ public final class MediaPlayerService extends BaseService {
     }
 
     /**
-     * Get the media player previously associated with the media list player.
+     * Get the media player currently associated with this media list player.
      *
      * @return media player, may be <code>null</code>
      */

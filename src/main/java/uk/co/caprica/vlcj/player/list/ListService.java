@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.medialist.ItemService;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 
+/**
+ * Behaviour pertaining to the list of media items.
+ */
 public final class ListService extends BaseService {
 
     /**
@@ -64,18 +67,42 @@ public final class ListService extends BaseService {
         libvlc.libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaListRef.mediaListInstance());
     }
 
+    /**
+     * Is the media list valid?
+     * <p>
+     * This method could be used to check there is a list before executing the various behaviours.
+     *
+     * @return <code>true</code> if there is a valid list; <code>false</code> if there is not
+     */
     public boolean isValid() {
         return mediaList != null;
     }
 
+    /**
+     * Delegated behaviours pertaining to the associated media list events.
+     *
+     * @return events behaviours, may be <code>null</code> if there is currently no media list
+     */
     public EventService events() {
         return mediaList != null ? mediaList.events() : null;
     }
 
+    /**
+     * Delegated behaviours pertaining to the associated media list items.
+     *
+     * @return item behaviours, may be <code>null</code> if there is currently no media list
+     */
     public ItemService items() {
         return mediaList != null ? mediaList.items() : null;
     }
 
+    /**
+     * Create a new {@link MediaList} for the associated media list.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaList} when it has no further use for it.
+     *
+     * @return media list reference
+     */
     public MediaList newMediaList() {
         if (mediaList != null) {
             return mediaList.newMediaList();
@@ -84,6 +111,13 @@ public final class ListService extends BaseService {
         }
     }
 
+    /**
+     * Create a new {@link MediaListRef} for the associated media list.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaListRef} when it has no further use for it.
+     *
+     * @return media list reference
+     */
     public MediaListRef newMediaListRef() {
         if (mediaList != null) {
             return mediaList.newMediaListRef();

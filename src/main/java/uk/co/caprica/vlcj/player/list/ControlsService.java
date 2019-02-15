@@ -19,6 +19,12 @@
 
 package uk.co.caprica.vlcj.player.list;
 
+import uk.co.caprica.vlcj.enums.PlaybackMode;
+
+/**
+ * Behaviour pertaining to media list player controls, like play, pause, stop of the list as a whole, play a specific
+ * item, play next item, play previous item.
+ */
 public final class ControlsService extends BaseService {
 
     ControlsService(DefaultMediaListPlayer mediaListPlayer) {
@@ -78,6 +84,8 @@ public final class ControlsService extends BaseService {
      * <p>
      * When the mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#REPEAT} this method will replay the current media,
      * not the next one.
+     *
+     * @return <code>true</code> if the next item could be played, otherwise <code>false</code>
      */
     public boolean playNext() {
         attachVideoSurface();
@@ -89,10 +97,30 @@ public final class ControlsService extends BaseService {
      * <p>
      * When the mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#REPEAT} this method will replay the current media,
      * not the previous one.
+     *
+     * @return <code>true</code> if the previous item could be played, otherwise <code>false</code>
      */
     public boolean playPrevious() {
         attachVideoSurface();
         return libvlc.libvlc_media_list_player_previous(mediaListPlayerInstance) == 0;
+    }
+
+    /**
+     * Set the media list play mode.
+     * <p>
+     * Note that if setting the play mode to {@link PlaybackMode#REPEAT} you can not simply play the media list,
+     * you must instead play a particular item (by its index).
+     *
+     * @param mode mode
+     * @return <code>true</code> on success; <code>false</code> on error
+     */
+    public boolean setMode(PlaybackMode mode) {
+        if (mode != null) {
+            libvlc.libvlc_media_list_player_set_playback_mode(mediaListPlayerInstance, mode.intValue());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void attachVideoSurface() {

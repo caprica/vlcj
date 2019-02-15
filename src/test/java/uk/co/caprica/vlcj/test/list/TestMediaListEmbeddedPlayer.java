@@ -89,7 +89,7 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
             mediaListRef.release();
         }
 
-        mediaListPlayer.mode().setMode(PlaybackMode.LOOP);
+        mediaListPlayer.controls().setMode(PlaybackMode.LOOP);
 
         mediaListPlayer.controls().play();
 

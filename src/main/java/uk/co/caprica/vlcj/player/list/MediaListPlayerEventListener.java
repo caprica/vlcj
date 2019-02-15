@@ -44,7 +44,8 @@ public interface MediaListPlayerEventListener {
 
     /**
      * The media list player started playing the next item in the list.
-     *  @param mediaListPlayer media list player that raised the event
+     *
+     * @param mediaListPlayer media list player that raised the event
      * @param item next item instance
      */
     void nextItem(MediaListPlayer mediaListPlayer, MediaRef item);

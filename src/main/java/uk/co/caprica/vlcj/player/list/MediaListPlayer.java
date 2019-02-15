@@ -64,8 +64,6 @@ public interface MediaListPlayer {
 
     MediaPlayerService mediaPlayer();
 
-    ModeService mode();
-
     StatusService status();
 
     UserDataService userData();

@@ -22,8 +22,6 @@ package uk.co.caprica.vlcj.player.list;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Implementation of a media list player.
  * <p>
- * The native media list player will automatically deal properly with media that has sub-items (like YouTube movies), so
+ * The native media list player will automatically deal properly with media that has subitems (like YouTube movies), so
  * simply adding an ordinary MRL/URL is all that is needed for such media.
  */
 public class DefaultMediaListPlayer implements MediaListPlayer {
@@ -69,7 +67,6 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
     private final EventService       eventService;
     private final ListService        listService;
     private final MediaPlayerService mediaPlayerService;
-    private final ModeService        modeService;
     private final StatusService      statusService;
     private final UserDataService    userDataService;
 
@@ -91,7 +88,6 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
         this.eventService       = new EventService      (this);
         this.listService        = new ListService       (this);
         this.mediaPlayerService = new MediaPlayerService(this);
-        this.modeService        = new ModeService       (this);
         this.statusService      = new StatusService     (this);
         this.userDataService    = new UserDataService   (this);
     }
@@ -126,11 +122,6 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
     }
 
     @Override
-    public ModeService mode() {
-        return modeService;
-    }
-
-    @Override
     public StatusService status() {
         return statusService;
     }
@@ -150,7 +141,6 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
         eventService      .release();
         listService       .release();
         mediaPlayerService.release();
-        modeService       .release();
         statusService     .release();
         userDataService   .release();
 

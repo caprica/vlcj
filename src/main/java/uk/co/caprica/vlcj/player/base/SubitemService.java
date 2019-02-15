@@ -26,7 +26,6 @@ import uk.co.caprica.vlcj.player.list.DefaultMediaListPlayer;
 import uk.co.caprica.vlcj.player.list.EventService;
 import uk.co.caprica.vlcj.player.list.ListService;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.ModeService;
 import uk.co.caprica.vlcj.player.list.StatusService;
 import uk.co.caprica.vlcj.player.list.UserDataService;
 
@@ -57,10 +56,6 @@ public final class SubitemService extends BaseService {
 
     public ListService list() {
         return mediaListPlayer.list();
-    }
-
-    public ModeService mode() {
-        return mediaListPlayer.mode();
     }
 
     public StatusService status() {

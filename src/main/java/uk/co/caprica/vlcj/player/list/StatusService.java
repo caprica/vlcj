@@ -23,16 +23,29 @@ import uk.co.caprica.vlcj.enums.State;
 
 // FIXME a whole service for just this? really?
 
+/**
+ * Behaviour pertaining to media list player status.
+ */
 public final class StatusService extends BaseService {
 
     StatusService(DefaultMediaListPlayer mediaListPlayer) {
         super(mediaListPlayer);
     }
 
+    /**
+     * Is the media list player currently playing?
+     *
+     * @return <code>true</code> if playing; <code>false</code> if not
+     */
     public boolean isPlaying() {
         return libvlc.libvlc_media_list_player_is_playing(mediaListPlayerInstance) != 0;
     }
 
+    /**
+     * Get the current media list player state.
+     *
+     * @return state
+     */
     public State getMediaListPlayerState() {
         return State.state(libvlc.libvlc_media_list_player_get_state(mediaListPlayerInstance));
     }

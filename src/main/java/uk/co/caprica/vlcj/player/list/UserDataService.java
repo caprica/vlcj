@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.list;
 
+// FIXME isn't user data really a client problem? i think this service should go
+
 public final class UserDataService extends BaseService {
 
     private Object userData;
