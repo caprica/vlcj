@@ -189,19 +189,26 @@ public interface MediaPlayer {
     void release(); // FIXME add an overload with timeout?
 
     /**
+     * Submit a task for asynchronous execution.
+     * <p>
+     * This is useful in particular for event handling code as native events are generated on a native event callback
+     * thread and it is not allowed to call back into LibVLC from this callback thread. If you do, either the call will
+     * be ineffective, strange behaviour will happen, or a fatal JVM crash may occur.
+     * <p>
+     * To mitigate this, those tasks can be offloaded from the native thread, serialised and executed using this method.
      *
-     *
-     * @param r
+     * @param r task to execute
      */
-    void submit(Runnable r); // FIXME i don't really like this on the interface
+    void submit(Runnable r);
 
     /**
      * Provide access to the native media player instance.
      * <p>
-     * This is exposed on the interface as an implementation side-effect, ordinary applications are
-     * not expected to use this.
+     * This is exposed on the interface as an implementation side-effect, ordinary applications are not expected to use
+     * this.
      *
      * @return media player instance
      */
     libvlc_media_player_t mediaPlayerInstance();
+
 }
