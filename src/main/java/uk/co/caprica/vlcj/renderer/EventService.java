@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.renderer;
 
+/**
+ * Behaviour pertaining to renderer discoverer events.
+ */
 public final class EventService extends BaseService {
 
     private final RendererDiscovererNativeEventManager eventManager;
@@ -32,10 +35,20 @@ public final class EventService extends BaseService {
         addRendererDiscovererEventListener(new RendererItemListEventHandler());
     }
 
+    /**
+     * Add a component to be notified of renderer discoverer events.
+     *
+     * @param listener component to notify
+     */
     public void addRendererDiscovererEventListener(RendererDiscovererEventListener listener) {
         eventManager.addEventListener(listener);
     }
 
+    /**
+     * Remove a component that was previously interested in notifications of renderer discoverer events.
+     *
+     * @param listener component to stop notifying
+     */
     public void removeRendererDiscovererEventListener(RendererDiscovererEventListener listener) {
         eventManager.removeEventListener(listener);
     }

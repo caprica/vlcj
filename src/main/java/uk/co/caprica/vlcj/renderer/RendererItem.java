@@ -22,27 +22,64 @@ package uk.co.caprica.vlcj.renderer;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.VideoService;
 
+/**
+ * Ecnapsulation of a renderer item.
+ */
 public final class RendererItem {
 
+    /**
+     * Native flag value signifying this item can play audio.
+     */
     private static final int CAN_AUDIO = 0x0001;
 
+    /**
+     * Native flag value signifying this item can play video.
+     */
     private static final int CAN_VIDEO = 0x0002;
 
+    /**
+     * Native library.
+     */
     private final LibVlc libvlc;
 
+    /**
+     * Native renderer item instance.
+     */
     private final libvlc_renderer_item_t item;
 
+    /**
+     * Renderer item name.
+     */
     private final String name;
 
+    /**
+     * Renderer item type.
+     */
     private final String type;
 
+    /**
+     * Renderer item icon URI.
+     */
     private final String iconUri;
 
+    /**
+     * Flag if this item can render audio or not.
+     */
     private final boolean canAudio;
 
+    /**
+     * Flag if this item can render video or not.
+     */
     private final boolean canVideo;
 
+    /**
+     * Create a new renderer item.
+     *
+     * @param libvlc native library
+     * @param item native renderer item instance
+     */
     public RendererItem(LibVlc libvlc, libvlc_renderer_item_t item) {
         this.libvlc = libvlc;
         this.item = item;
@@ -56,34 +93,79 @@ public final class RendererItem {
         this.canVideo = (flags & CAN_VIDEO) != 0;
     }
 
+    /**
+     * Get the item name.
+     *
+     * @return name
+     */
     public String name() {
         return name;
     }
 
+    /**
+     * Get the item type.
+     *
+     * @return type
+     */
     public String type() {
         return type;
     }
 
+    /**
+     * Get the item icon URI.
+     *
+     * @return icon URI
+     */
     public String iconUri() {
         return iconUri;
     }
 
+    /**
+     * Can this renderer item play audio?
+     *
+     * @return <code>true</code> if this item can play audio; <code>false</code> if it can not
+     */
     public boolean canAudio() {
         return canAudio;
     }
 
+    /**
+     * Can this renderer item play video?
+     *
+     * @return <code>true</code> if this item can play video; <code>false</code> if it can not
+     */
     public boolean canVideo() {
         return canVideo;
     }
 
+    /**
+     * Hold this renderer item.
+     * <p>
+     * The item <em>must</em> be held prior to setting it via a call to {@link VideoService#setRenderer(RendererItem)}
+     * on {@link MediaPlayer}.
+     * <p>
+     * The item <em>must</em> be released when the caller no longer has any use for it.
+     *
+     * @return <code>true</code> if the renderer item was successfully held; <code>false</code> on error
+     */
     public boolean hold() {
         return libvlc.libvlc_renderer_item_hold(item) != null;
     }
 
+    /**
+     * Release the renderer item.
+     * <p>
+     * The renderer item may still be kept and re-used, invoke {@link #hold()} again.
+     */
     public void release() {
         libvlc.libvlc_renderer_item_release(item);
     }
 
+    /**
+     * Get the native renderer item instance.
+     *
+     * @return renderer item instance
+     */
     public libvlc_renderer_item_t rendererItemInstance() {
         return item;
     }

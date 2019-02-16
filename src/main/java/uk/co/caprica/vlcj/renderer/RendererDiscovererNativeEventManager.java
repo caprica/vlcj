@@ -29,7 +29,7 @@ import uk.co.caprica.vlcj.eventmanager.NativeEventManager;
 import uk.co.caprica.vlcj.renderer.events.RendererDiscovererEventFactory;
 
 /**
- *
+ * Native event manager implementation for the {@link RendererDiscoverer}.
  * <p>
  * For {@link #onCreateEvent(LibVlc, libvlc_instance_t, libvlc_event_t, RendererDiscoverer)} in this component, the
  * <code>libvlcInstance</code> parameter will be <code>null</code>.

@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Behaviour pertaining to the list of discovered renderer items.
+ */
 public final class ListService extends BaseService {
 
     private final List<RendererItem> rendererItems = new CopyOnWriteArrayList<RendererItem>();
@@ -31,10 +34,23 @@ public final class ListService extends BaseService {
         super(rendererDiscoverer);
     }
 
+    /**
+     * Get the current list of renderer items.
+     *
+     * @return
+     */
     public List<RendererItem> rendererItems() {
         return new ArrayList<RendererItem>(rendererItems);
     }
 
+    /**
+     * Check if a particular renderer item is still available.
+     * <p>
+     * Renderer items can come and go as they are discovered or disconnected (or otherwise become unavailable)
+     *
+     * @param containsItem
+     * @return
+     */
     public boolean contains(RendererItem containsItem) {
         for (RendererItem rendererItem : rendererItems) {
             if (rendererItem.rendererItemInstance().equals(containsItem.rendererItemInstance())) {

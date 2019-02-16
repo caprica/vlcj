@@ -22,10 +22,19 @@ package uk.co.caprica.vlcj.renderer;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
 
+/**
+ * Encapsulation of a native renderer discoverer instance.
+ */
 public final class RendererDiscoverer {
 
+    /**
+     * Native library.
+     */
     protected final LibVlc libvlc;
 
+    /**
+     * Native renderer discoverer instance.
+     */
     protected final libvlc_renderer_discoverer_t discovererInstance;
 
     private final EventService eventService;
@@ -39,26 +48,54 @@ public final class RendererDiscoverer {
         this.listService  = new ListService (this);
     }
 
+    /**
+     * Behaviour pertaining to events.
+     *
+     * @return event behaviour
+     */
     public EventService events() {
         return eventService;
     }
 
+    /**
+     * Behaviour pertaining to the list of discovered renderer items.
+     *
+     * @return renderer discoverer item list behaviour
+     */
     public ListService list() {
         return listService;
     }
 
+    /**
+     * Start discovery.
+     *
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
     public boolean start() {
         return libvlc.libvlc_renderer_discoverer_start(discovererInstance) == 0;
     }
 
+    /**
+     * Stop discovery.
+     */
     public void stop() {
         libvlc.libvlc_renderer_discoverer_stop(discovererInstance);
     }
 
+    /**
+     * Get the associated native renderer discoverer instance.
+     *
+     * @return renderer discoverer instance
+     */
     public libvlc_renderer_discoverer_t rendererDiscovererInstance() {
         return discovererInstance;
     }
 
+    /**
+     * Release this component and the associated native resources.
+     * <p>
+     * The component must no longer be used.
+     */
     public void release() {
         eventService.release();
         listService.release();
