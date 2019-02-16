@@ -81,34 +81,74 @@ public final class Media {
         this.userDataService = new UserDataService(this);
     }
 
+    /**
+     * Behaviour pertaining to events.
+     *
+     * @return event behaviour
+     */
     public EventService events() {
         return eventService;
     }
 
+    /**
+     * Behaviour pertaining to information about the media.
+     *
+     * @return information behaviour
+     */
     public InfoService info() {
         return infoService;
     }
 
+    /**
+     * Behaviour pertaining to media meta data.
+     *
+     * @return meta data behaviour
+     */
     public MetaService meta() {
         return metaService;
     }
 
+    /**
+     * Behaviour pertaining to media options.
+     *
+     * @return meida options behaviour
+     */
     public OptionsService options() {
         return optionsService;
     }
 
+    /**
+     * Behaviour pertaining to parsing of the media.
+     *
+     * @return parsing behaviour
+     */
     public ParseService parsing() {
         return parseService;
     }
 
+    /**
+     * Behaviour pertaining to media slaves.
+     *
+     * @return media slave behaviour
+     */
     public SlaveService slaves() {
         return slaveService;
     }
 
+    /**
+     * Behaviour pertianing to media subitems.
+     *
+     * @return subitem behaviour
+     */
     public SubitemService subitems() {
         return subitemService;
     }
 
+    /**
+     * Behaviour pertaining to userdata.
+     *
+     * @return userdata behaviour
+     */
     public UserDataService userData() {
         return userDataService;
     }

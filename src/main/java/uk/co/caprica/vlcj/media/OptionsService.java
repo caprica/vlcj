@@ -33,14 +33,34 @@ public class OptionsService extends BaseService {
         super(media);
     }
 
+    /**
+     * Add options to the media.
+     *
+     * @param options options to add
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
     public boolean addOptions(String... options) {
         return MediaOptions.addMediaOptions(libvlc, mediaInstance, options);
     }
 
+    /**
+     * Add options, with flags, to the media.
+     *
+     * @param options options to add
+     * @param flags option flags
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
     public boolean addOptions(String[] options, OptionFlag... flags) {
         return MediaOptions.addMediaOptions(libvlc, mediaInstance, options, flags);
     }
 
+    /**
+     * Add an option to the media.
+     *
+     * @param option option to add
+     * @param flags option flags
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
     public boolean addOption(String option, OptionFlag... flags) {
         return MediaOptions.addMediaOption(libvlc, mediaInstance, option, flags);
     }

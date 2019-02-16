@@ -21,9 +21,7 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
-
-// FIXME new list each time? don't think so...
-//  probably requires delegated services instead of exposing the MediaList
+import uk.co.caprica.vlcj.medialist.MediaListRef;
 
 // FIXME a whole service just for this?
 
@@ -33,10 +31,33 @@ public class SubitemService extends BaseService {
         super(media);
     }
 
-    public MediaList get() {
+    /**
+     * Get the subitems as a {@link MediaList}.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaList} when it no longer has a use for it
+     *
+     * @return subitems list
+     */
+    public MediaList newMediaList() {
         libvlc_media_list_t list = libvlc.libvlc_media_subitems(mediaInstance);
         if (list != null) {
             return new MediaList(libvlc, libvlcInstance, list);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Get the subitems as a {@link MediaListRef}.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaListRef} when it no longer has a use for it
+     *
+     * @return subitems list reference
+     */
+    public MediaListRef newMediaListRef() {
+        libvlc_media_list_t list = libvlc.libvlc_media_subitems(mediaInstance);
+        if (list != null) {
+            return new MediaListRef(libvlc, libvlcInstance, list);
         } else {
             return null;
         }

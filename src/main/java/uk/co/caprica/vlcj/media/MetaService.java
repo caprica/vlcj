@@ -38,18 +38,42 @@ public class MetaService extends BaseService {
         super(media);
     }
 
+    /**
+     * Get the value for a particular type of meta data.
+     *
+     * @param meta type of meta data
+     * @return meta data value
+     */
     public String get(Meta meta) {
         return getMetaValue(libvlc.libvlc_media_get_meta(mediaInstance, meta.intValue()));
     }
 
+    /**
+     * Set the value for a particular type of meta data.
+     *
+     * @param meta type of meta data
+     * @param value meta data value
+     */
     public void set(Meta meta, String value) {
         libvlc.libvlc_media_set_meta(mediaInstance, meta.intValue(), value);
     }
 
+    /**
+     * Save the meta data to the underlying media.
+     *
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
     public boolean save() {
         return libvlc.libvlc_media_save_meta(mediaInstance) != 0;
     }
 
+    /**
+     * Get all of the meta data values as a {@link MetaData} value lobject.
+     * <p>
+     * The returned object is immutable and "disconnected" from the underlying media.
+     *
+     * @return meta data
+     */
     public MetaData asMetaData() {
         Map<Meta,String> values = new HashMap<Meta,String>(26);
         for (Meta meta : Meta.values()) {

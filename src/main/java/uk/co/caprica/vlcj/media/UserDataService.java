@@ -31,10 +31,20 @@ public class UserDataService extends BaseService {
         super(media);
     }
 
+    /**
+     * Get the userdata.
+     *
+     * @return userdata
+     */
     public Object get() {
         return userData;
     }
 
+    /**
+     * Set the userdata.
+     *
+     * @param userData userdata
+     */
     public void set(Object userData) {
         this.userData = userData;
     }
