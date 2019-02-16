@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player length changed event.
+ */
 final class MediaPlayerLengthChangedEvent extends MediaPlayerEvent {
 
     private final long newLength;
@@ -37,4 +40,5 @@ final class MediaPlayerLengthChangedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.lengthChanged(mediaPlayer, newLength);
     }
+
 }

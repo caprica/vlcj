@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.media_player_scrambled_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player scrambled changed event.
+ */
 final class MediaPlayerScrambledChangedEvent extends MediaPlayerEvent {
 
     private final int newScrambled;
@@ -37,4 +40,5 @@ final class MediaPlayerScrambledChangedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.scrambledChanged(mediaPlayer, newScrambled);
     }
+
 }

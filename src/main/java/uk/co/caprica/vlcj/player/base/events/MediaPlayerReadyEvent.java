@@ -23,15 +23,12 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
- * This is a synthetic event, it is not directly raised by LibVLC.
+ * Encapsulation of a media player ready event.
+ * <p>
+ * This event is unlike the others, it is a "semantic" event that has no native event counterpart.
  */
 final class MediaPlayerReadyEvent extends MediaPlayerEvent {
 
-    /**
-     * Create a media player event.
-     *
-     * @param mediaPlayer media player the event relates to
-     */
     MediaPlayerReadyEvent(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
@@ -40,4 +37,5 @@ final class MediaPlayerReadyEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.mediaPlayerReady(mediaPlayer);
     }
+
 }

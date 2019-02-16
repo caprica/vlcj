@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.media_player_es_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player elementary stream deleted event.
+ */
 final class MediaPlayerESDeletedEvent extends MediaPlayerEvent {
 
     private final int type;
@@ -41,4 +44,5 @@ final class MediaPlayerESDeletedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.elementaryStreamDeleted(mediaPlayer, type, id);
     }
+
 }

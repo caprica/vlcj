@@ -23,15 +23,10 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
- *
+ * Encapsulation of a media player paused changed event.
  */
 final class MediaPlayerPausedEvent extends MediaPlayerEvent {
 
-    /**
-     * Create a media player event.
-     *
-     * @param mediaPlayer media player the event relates to
-     */
     MediaPlayerPausedEvent(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
@@ -40,4 +35,5 @@ final class MediaPlayerPausedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.paused(mediaPlayer);
     }
+
 }

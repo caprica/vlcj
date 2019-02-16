@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.media_player_pausable_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player pausable changed event.
+ */
 final class MediaPlayerPausableChangedEvent extends MediaPlayerEvent {
 
     private final int newPausable;
@@ -37,4 +40,5 @@ final class MediaPlayerPausableChangedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.pausableChanged(mediaPlayer, newPausable);
     }
+
 }

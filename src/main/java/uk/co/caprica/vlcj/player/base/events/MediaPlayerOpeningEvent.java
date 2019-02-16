@@ -23,15 +23,10 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
- *
+ * Encapsulation of a media player opening event.
  */
 final class MediaPlayerOpeningEvent extends MediaPlayerEvent {
 
-    /**
-     * Create a media player event.
-     *
-     * @param mediaPlayer media player the event relates to
-     */
     MediaPlayerOpeningEvent(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
@@ -40,4 +35,5 @@ final class MediaPlayerOpeningEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.opening(mediaPlayer);
     }
+
 }

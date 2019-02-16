@@ -28,6 +28,9 @@ import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player media changed event.
+ */
 final class MediaPlayerMediaChangedEvent extends MediaPlayerEvent {
 
     private final LibVlc libvlc;
@@ -49,4 +52,5 @@ final class MediaPlayerMediaChangedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.mediaChanged(mediaPlayer, new MediaRef(libvlc, libvlcInstance, newMedia));
     }
+
 }

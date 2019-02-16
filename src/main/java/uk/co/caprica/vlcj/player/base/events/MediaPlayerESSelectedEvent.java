@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.media_player_es_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player elementary stream selected event.
+ */
 final class MediaPlayerESSelectedEvent extends MediaPlayerEvent {
 
     private final int type;
@@ -41,4 +44,5 @@ final class MediaPlayerESSelectedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.elementaryStreamSelected(mediaPlayer, type, id);
     }
+
 }

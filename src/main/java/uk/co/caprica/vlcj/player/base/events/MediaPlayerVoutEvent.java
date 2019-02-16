@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.media_player_vout;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player video output created event.
+ */
 final class MediaPlayerVoutEvent extends MediaPlayerEvent {
 
     private final int newCount;
@@ -37,4 +40,5 @@ final class MediaPlayerVoutEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.videoOutput(mediaPlayer, newCount);
     }
+
 }

@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.media_player_seekable_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player seekable changed event.
+ */
 final class MediaPlayerSeekableChangedEvent extends MediaPlayerEvent {
 
     private final int newSeekable;
@@ -37,4 +40,5 @@ final class MediaPlayerSeekableChangedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.seekableChanged(mediaPlayer, newSeekable);
     }
+
 }

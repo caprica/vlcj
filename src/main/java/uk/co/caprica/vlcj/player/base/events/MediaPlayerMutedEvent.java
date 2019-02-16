@@ -22,6 +22,9 @@ package uk.co.caprica.vlcj.player.base.events;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player muted event.
+ */
 final class MediaPlayerMutedEvent extends MediaPlayerEvent {
 
     MediaPlayerMutedEvent(MediaPlayer mediaPlayer) {
@@ -32,4 +35,5 @@ final class MediaPlayerMutedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.muted(mediaPlayer, true);
     }
+
 }

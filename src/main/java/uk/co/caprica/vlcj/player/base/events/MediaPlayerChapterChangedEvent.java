@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.media_player_chapter_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player chapter changed event.
+ */
 final class MediaPlayerChapterChangedEvent extends MediaPlayerEvent {
 
     private final int newChapter;
@@ -37,4 +40,5 @@ final class MediaPlayerChapterChangedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.chapterChanged(mediaPlayer, newChapter);
     }
+
 }

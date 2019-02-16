@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.media_player_snapshot_taken;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player snapshot taken event.
+ */
 final class MediaPlayerSnapshotTakenEvent extends MediaPlayerEvent {
 
     private final String filename;
@@ -37,4 +40,5 @@ final class MediaPlayerSnapshotTakenEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.snapshotTaken(mediaPlayer, filename);
     }
+
 }

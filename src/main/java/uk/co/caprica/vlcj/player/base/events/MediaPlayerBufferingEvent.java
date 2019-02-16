@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.media_player_buffering;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player buffering event.
+ */
 final class MediaPlayerBufferingEvent extends MediaPlayerEvent {
 
     private final float newCache;
@@ -37,4 +40,5 @@ final class MediaPlayerBufferingEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.buffering(mediaPlayer, newCache);
     }
+
 }

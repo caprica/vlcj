@@ -37,7 +37,9 @@ public final class MediaPlayerEventFactory {
      * non-primitive values like Strings) because once the event handler returns the native memory will be gone. Without
      * copying such structure values pointers will become invalid.
      *
-     * @param mediaPlayer
+     * @param libvlc native library
+     * @param libvlcInstance native library instance
+     * @param mediaPlayer component the event relates to
      * @param event native event
      * @return media player event, or <code>null</code> if the native event type is not enabled or otherwise could not be handled
      */
@@ -71,13 +73,21 @@ public final class MediaPlayerEventFactory {
             case libvlc_MediaPlayerMuted           : return new MediaPlayerMutedEvent           (                        mediaPlayer       );
             case libvlc_MediaPlayerUnmuted         : return new MediaPlayerUnmutedEvent         (                        mediaPlayer       );
             case libvlc_MediaPlayerAudioVolume     : return new MediaPlayerAudioVolumeEvent     (                        mediaPlayer, event);
-            case libvlc_MediaPlayerAudioDevice     : return new MediaPlayerAudioDeviceEvent     (                        mediaPlayer, event);
+            case libvlc_MediaPlayerAudioDevice     : return new MediaPlayerAudioDeviceEvent(                        mediaPlayer, event);
             case libvlc_MediaPlayerChapterChanged  : return new MediaPlayerChapterChangedEvent  (                        mediaPlayer, event);
 
             default                                : return null;
         }
     }
 
+    /**
+     * Create a media player ready event.
+     * <p>
+     * This event is a "semantic" event, it has no direct native event counterpart.
+     *
+     * @param mediaPlayer component the event relates to
+     * @return event
+     */
     public static MediaPlayerEvent createMediaPlayerReadyEvent(MediaPlayer mediaPlayer) {
         return new MediaPlayerReadyEvent(mediaPlayer);
     }

@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
- *
+ * Encapsulation of a media player position changed event.
  */
 final class MediaPlayerPositionChangedEvent extends MediaPlayerEvent {
 
@@ -40,4 +40,5 @@ final class MediaPlayerPositionChangedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.positionChanged(mediaPlayer, newPosition);
     }
+
 }

@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.media_player_time_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player time changed event.
+ */
 final class MediaPlayerTimeChangedEvent extends MediaPlayerEvent {
 
     private final long newTime;
@@ -37,4 +40,5 @@ final class MediaPlayerTimeChangedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.timeChanged(mediaPlayer, newTime);
     }
+
 }

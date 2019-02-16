@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
- *
+ * Encapsulation of a media player title changed event.
  */
 final class MediaPlayerTitleChangedEvent extends MediaPlayerEvent {
 
@@ -40,4 +40,5 @@ final class MediaPlayerTitleChangedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.titleChanged(mediaPlayer, newTitle);
     }
+
 }

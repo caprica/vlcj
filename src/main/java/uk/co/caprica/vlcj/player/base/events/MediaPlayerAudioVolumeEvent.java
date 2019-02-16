@@ -24,17 +24,21 @@ import uk.co.caprica.vlcj.binding.internal.media_player_audio_volume;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player audio volume event.
+ */
 final class MediaPlayerAudioVolumeEvent extends MediaPlayerEvent {
 
     private final float volume;
 
     MediaPlayerAudioVolumeEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
         super(mediaPlayer);
-        this.volume = ((media_player_audio_volume )event.u.getTypedValue(media_player_audio_volume.class)).volume;
+        this.volume = ((media_player_audio_volume) event.u.getTypedValue(media_player_audio_volume.class)).volume;
     }
 
     @Override
     public void notify(MediaPlayerEventListener listener) {
         listener.volumeChanged(mediaPlayer, volume);
     }
+
 }

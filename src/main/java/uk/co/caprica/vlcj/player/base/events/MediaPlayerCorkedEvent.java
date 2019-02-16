@@ -22,6 +22,9 @@ package uk.co.caprica.vlcj.player.base.events;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
+/**
+ * Encapsulation of a media player corked event.
+ */
 final class MediaPlayerCorkedEvent extends MediaPlayerEvent {
 
     MediaPlayerCorkedEvent(MediaPlayer mediaPlayer) {
@@ -32,4 +35,5 @@ final class MediaPlayerCorkedEvent extends MediaPlayerEvent {
     public void notify(MediaPlayerEventListener listener) {
         listener.corked(mediaPlayer, true);
     }
+
 }
