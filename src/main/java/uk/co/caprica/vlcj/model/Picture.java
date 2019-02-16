@@ -28,6 +28,9 @@ import uk.co.caprica.vlcj.enums.PictureType;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
+/**
+ * Picture.
+ */
 public final class Picture {
 
     private final int width;
@@ -44,6 +47,12 @@ public final class Picture {
 
     private final int size;
 
+    /**
+     * Create a picture.
+     *
+     * @param libvlc  native library
+     * @param picture native picture instance
+     */
     public Picture(LibVlc libvlc, libvlc_picture_t picture) {
         this.width = libvlc.libvlc_picture_get_width(picture);
         this.height = libvlc.libvlc_picture_get_height(picture);
@@ -60,30 +69,65 @@ public final class Picture {
         return pointer.getByteArray(0, size.getValue().intValue());
     }
 
+    /**
+     * Get the picture width.
+     *
+     * @return width
+     */
     public int width() {
         return width;
     }
 
+    /**
+     * Get the picture height.
+     *
+     * @return height
+     */
     public int height() {
         return height;
     }
 
+    /**
+     * Get the picture stride (depth).
+     *
+     * @return stride
+     */
     public int stride() {
         return stride;
     }
 
+    /**
+     * Get the picture type.
+     *
+     * @return type
+     */
     public PictureType type() {
         return type;
     }
 
+    /**
+     * Get the timestamp when the picture was taken.
+     *
+     * @return time
+     */
     public long time() {
         return time;
     }
 
+    /**
+     * Get the picture buffer.
+     *
+     * @return buffer
+     */
     public byte[] buffer() {
         return buffer;
     }
 
+    /**
+     * Get the picture buffer size.
+     *
+     * @return buffer size
+     */
     public int size() {
         return size;
     }

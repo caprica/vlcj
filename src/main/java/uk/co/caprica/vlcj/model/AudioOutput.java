@@ -25,8 +25,8 @@ import java.util.List;
 /**
  * Description of an audio output.
  * <p>
- * An audio output has zero or more associated audio devices. Each device has a unique identifier
- * than can be used to select the required output device for a media player.
+ * An audio output has zero or more associated audio devices. Each device has a unique identifier than can be used to
+ * select the required output device for a media player.
  */
 public class AudioOutput implements Iterable<AudioDevice> {
 
@@ -99,4 +99,5 @@ public class AudioOutput implements Iterable<AudioDevice> {
     public Iterator<AudioDevice> iterator() {
         return devices.iterator();
     }
+
 }

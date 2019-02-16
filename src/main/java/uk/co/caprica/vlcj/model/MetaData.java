@@ -29,16 +29,36 @@ import java.util.Map;
  */
 public final class MetaData {
 
+    /**
+     * Collection of meta data values.
+     */
     private final Map<Meta,String> values;
 
+    /**
+     * Create a meta data value object.
+     *
+     * @param values meta data values
+     */
     public MetaData(Map<Meta,String> values) {
         this.values = Collections.unmodifiableMap(values);
     }
 
+    /**
+     * Set a particular meta data value.
+     *
+     * @param meta meta data type
+     * @param value meta data value
+     */
     public void set(Meta meta, String value) {
         values.put(meta, value);
     }
 
+    /**
+     * Get a particular meta data value.
+     *
+     * @param meta meta data type
+     * @return value meta data value
+     */
     public String get(Meta meta) {
         return values.get(meta);
     }

@@ -28,10 +28,9 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 /**
  * Encapsulation of audio equalizer settings.
  * <p>
- * Equalizer amplification values are constrained to the range -20.0 Hz to 20.0 Hz,
- * see {@link LibVlcConst#MIN_GAIN} and {@link LibVlcConst#MAX_GAIN}. Attempting to
- * set values outside of this range will cause an {@link IllegalArgumentException}
- * to be thrown.
+ * Equalizer amplification values are constrained to the range -20.0 Hz to 20.0 Hz, see {@link LibVlcConst#MIN_GAIN} and
+ * {@link LibVlcConst#MAX_GAIN}. Attempting to set values outside of this range will cause an
+ * {@link IllegalArgumentException} to be thrown.
  * <p>
  * After creating an equalizer, it may be associated with a media player.
  */
@@ -124,10 +123,9 @@ public final class Equalizer {
      * @throws IllegalArgumentException if the index is outside of the allowed range
      */
     public final float getAmp(int index) {
-        if(index >= 0 && index < bandCount) {
+        if (index >= 0 && index < bandCount) {
             return bandAmps[index];
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Invalid band index");
         }
     }
@@ -141,11 +139,10 @@ public final class Equalizer {
      */
     public final void setAmp(int index, float newAmp) {
         checkAmp(newAmp);
-        if(index >= 0 && index < bandCount) {
+        if (index >= 0 && index < bandCount) {
             bandAmps[index] = newAmp;
             fireEqualizerChanged();
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Invalid band index");
         }
     }
@@ -168,14 +165,13 @@ public final class Equalizer {
      * @throws IllegalArgumentException if the amplification values are <code>null</code>, the wrong length, or outside of the allowed range
      */
     public final void setAmps(float[] newAmps) {
-        if(newAmps != null && newAmps.length == bandCount) {
+        if (newAmps != null && newAmps.length == bandCount) {
             for(float newAmp : newAmps) {
                 checkAmp(newAmp);
             }
             copy(newAmps, bandAmps);
             fireEqualizerChanged();
-        }
-        else {
+        } else {
             throw new IllegalArgumentException();
         }
     }
@@ -186,12 +182,11 @@ public final class Equalizer {
      * @param equalizer equalizer to obtain values from
      */
     public final void setEqualizer(Equalizer equalizer) {
-        if(equalizer != null) {
+        if (equalizer != null) {
             preamp = equalizer.preamp;
             copy(equalizer.bandAmps, bandAmps);
             fireEqualizerChanged();
-        }
-        else {
+        } else {
             throw new IllegalArgumentException();
         }
     }
@@ -201,7 +196,7 @@ public final class Equalizer {
      */
     public final void reset() {
         preamp = 0f;
-        for(int i = 0; i < bandCount; i++) {
+        for (int i = 0; i < bandCount; i++) {
             bandAmps[i] = 0f;
         }
         fireEqualizerChanged();
@@ -214,7 +209,7 @@ public final class Equalizer {
      * @throws IllegalArgumentException if the amplification value is outside of the allowed range
      */
     private void checkAmp(float amp) {
-        if(amp < LibVlcConst.MIN_GAIN || amp > LibVlcConst.MAX_GAIN) {
+        if (amp < LibVlcConst.MIN_GAIN || amp > LibVlcConst.MAX_GAIN) {
             throw new IllegalArgumentException("Invalid amplification value: " + amp);
         }
     }
@@ -233,7 +228,7 @@ public final class Equalizer {
      * Fire an event notification signifying that the equalizer changed.
      */
     private void fireEqualizerChanged() {
-        for(EqualizerListener listener : listeners) {
+        for (EqualizerListener listener : listeners) {
             listener.equalizerChanged(this);
         }
     }
@@ -246,4 +241,5 @@ public final class Equalizer {
         sb.append("bandAmps=").append(Arrays.toString(bandAmps)).append(']');
         return sb.toString();
     }
+
 }

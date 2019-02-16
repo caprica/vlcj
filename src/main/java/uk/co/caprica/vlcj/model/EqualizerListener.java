@@ -30,4 +30,5 @@ public interface EqualizerListener {
      * @param equalizer the equalizer that changed
      */
     void equalizerChanged(Equalizer equalizer);
+
 }

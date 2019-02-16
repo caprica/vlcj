@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.model;
 
 import uk.co.caprica.vlcj.enums.MediaSlaveType;
 
+/**
+ * Media slave.
+ */
 public final class MediaSlave {
 
     private final String uri;
@@ -29,20 +32,42 @@ public final class MediaSlave {
 
     private final int priority;
 
+    /**
+     * Create a media slave.
+     *
+     * @param uri URI
+     * @param type type
+     * @param priority priority
+     */
     public MediaSlave(String uri, MediaSlaveType type, int priority) {
         this.uri = uri;
         this.type = type;
         this.priority = priority;
     }
 
+    /**
+     * Get the media slave URI.
+     *
+     * @return URI
+     */
     public String uri() {
         return uri;
     }
 
+    /**
+     * Get the media slave type.
+     *
+     * @return type
+     */
     public MediaSlaveType type() {
         return type;
     }
 
+    /**
+     * Get the media slave priority.
+     *
+     * @return priority
+     */
     public int priority() {
         return priority;
     }

@@ -97,7 +97,7 @@ public final class Marquee {
     private MarqueePosition position;
 
     /**
-     *
+     * Amount of time before the marquee text is refreshed.
      */
     private Integer refresh;
 
@@ -239,10 +239,10 @@ public final class Marquee {
     }
 
     /**
+     * Set the time before the marquee text will refresh.
      *
-     *
-     * @param refresh
-     * @return
+     * @param refresh refresh time, milliseconds
+     * @return this
      */
     public Marquee refresh(int refresh) {
         this.refresh = refresh;

@@ -111,6 +111,12 @@ public final class Logo {
     private Logo() {
     }
 
+    /**
+     * Set the amount of time the logo will be displayed before displaying the next in sequence (if there is one).
+     *
+     * @param duration duration, milliseconds
+     * @return this
+     */
     public Logo duration(int duration) {
         this.duration = duration;
         return this;
@@ -163,7 +169,7 @@ public final class Logo {
     }
 
     /**
-     *
+     * Set the number of times the logo sequence will repeat.
      * <p>
      * Note that with current versions of VLC you may need to set a repeat count one more than you might expect - this
      * is because on the last loop iteration it appears to stop after only the first logo has been displayed.
@@ -251,6 +257,11 @@ public final class Logo {
         return this;
     }
 
+    /**
+     * Get the duration for the logo.
+     *
+     * @return duration
+     */
     public Integer getDuration() {
         return duration;
     }
@@ -394,4 +405,5 @@ public final class Logo {
             .append("enable=").append(enable).append(']')
             .toString();
     }
+
 }

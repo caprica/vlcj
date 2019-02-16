@@ -88,4 +88,5 @@ public class ChapterDescription {
         sb.append("name=").append(name).append(']');
         return sb.toString();
     }
+
 }
