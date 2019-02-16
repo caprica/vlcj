@@ -34,7 +34,7 @@ public enum PictureType {
     private static final Map<Integer, PictureType> INT_MAP = new HashMap<Integer, PictureType>();
 
     static {
-        for(PictureType event : PictureType.values()) {
+        for (PictureType event : PictureType.values()) {
             INT_MAP.put(event.intValue, event);
         }
     }

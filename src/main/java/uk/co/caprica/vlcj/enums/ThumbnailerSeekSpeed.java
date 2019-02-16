@@ -33,7 +33,7 @@ public enum ThumbnailerSeekSpeed {
     private static final Map<Integer, ThumbnailerSeekSpeed> INT_MAP = new HashMap<Integer, ThumbnailerSeekSpeed>();
 
     static {
-        for(ThumbnailerSeekSpeed event : ThumbnailerSeekSpeed.values()) {
+        for (ThumbnailerSeekSpeed event : ThumbnailerSeekSpeed.values()) {
             INT_MAP.put(event.intValue, event);
         }
     }

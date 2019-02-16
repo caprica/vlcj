@@ -39,7 +39,7 @@ public enum VideoOrientation {
     private static final Map<Integer, VideoOrientation> INT_MAP = new HashMap<Integer, VideoOrientation>();
 
     static {
-        for(VideoOrientation orientation : VideoOrientation.values()) {
+        for (VideoOrientation orientation : VideoOrientation.values()) {
             INT_MAP.put(orientation.intValue, orientation);
         }
     }

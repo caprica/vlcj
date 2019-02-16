@@ -41,7 +41,7 @@ public enum MediaPlayerRole {
     private static final Map<Integer, MediaPlayerRole> INT_MAP = new HashMap<Integer, MediaPlayerRole>();
 
     static {
-        for(MediaPlayerRole role : MediaPlayerRole.values()) {
+        for (MediaPlayerRole role : MediaPlayerRole.values()) {
             INT_MAP.put(role.intValue, role);
         }
     }

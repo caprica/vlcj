@@ -57,7 +57,7 @@ public enum ParseFlag {
     private static final Map<Integer, ParseFlag> INT_MAP = new HashMap<Integer, ParseFlag>();
 
     static {
-        for(ParseFlag value : ParseFlag.values()) {
+        for (ParseFlag value : ParseFlag.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }

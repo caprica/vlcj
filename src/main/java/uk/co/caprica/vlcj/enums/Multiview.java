@@ -38,7 +38,7 @@ public enum Multiview {
     private static final Map<Integer, Multiview> INT_MAP = new HashMap<Integer, Multiview>();
 
     static {
-        for(Multiview multiview : Multiview.values()) {
+        for (Multiview multiview : Multiview.values()) {
             INT_MAP.put(multiview.intValue, multiview);
         }
     }

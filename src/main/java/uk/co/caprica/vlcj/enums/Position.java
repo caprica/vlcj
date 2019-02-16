@@ -44,7 +44,7 @@ public enum Position {
     private static final Map<Integer, Position> INT_MAP = new HashMap<Integer, Position>();
 
     static {
-        for(Position value : Position.values()) {
+        for (Position value : Position.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }

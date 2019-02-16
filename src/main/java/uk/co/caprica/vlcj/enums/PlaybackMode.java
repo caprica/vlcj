@@ -34,7 +34,7 @@ public enum PlaybackMode {
     private static final Map<Integer, PlaybackMode> INT_MAP = new HashMap<Integer, PlaybackMode>();
 
     static {
-        for(PlaybackMode event : PlaybackMode.values()) {
+        for (PlaybackMode event : PlaybackMode.values()) {
             INT_MAP.put(event.intValue, event);
         }
     }

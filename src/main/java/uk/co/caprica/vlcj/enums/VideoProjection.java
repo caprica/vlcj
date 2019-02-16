@@ -34,7 +34,7 @@ public enum VideoProjection {
     private static final Map<Integer, VideoProjection> INT_MAP = new HashMap<Integer, VideoProjection>();
 
     static {
-        for(VideoProjection projection : VideoProjection.values()) {
+        for (VideoProjection projection : VideoProjection.values()) {
             INT_MAP.put(projection.intValue, projection);
         }
     }

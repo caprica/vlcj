@@ -33,7 +33,7 @@ public enum MediaSlaveType {
     private static final Map<Integer, MediaSlaveType> INT_MAP = new HashMap<Integer, MediaSlaveType>();
 
     static {
-        for(MediaSlaveType value : MediaSlaveType.values()) {
+        for (MediaSlaveType value : MediaSlaveType.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }

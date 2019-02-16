@@ -39,7 +39,7 @@ public enum State {
     private static final Map<Integer, State> INT_MAP = new HashMap<Integer, State>();
 
     static {
-        for(State event : State.values()) {
+        for (State event : State.values()) {
             INT_MAP.put(event.intValue, event);
         }
     }

@@ -35,7 +35,7 @@ public enum MediaParsedStatus {
     private static final Map<Integer, MediaParsedStatus> INT_MAP = new HashMap<Integer, MediaParsedStatus>();
 
     static {
-        for(MediaParsedStatus value : MediaParsedStatus.values()) {
+        for (MediaParsedStatus value : MediaParsedStatus.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }

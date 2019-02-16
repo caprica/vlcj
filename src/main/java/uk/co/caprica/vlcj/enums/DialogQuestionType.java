@@ -34,7 +34,7 @@ public enum DialogQuestionType {
     private static final Map<Integer, DialogQuestionType> INT_MAP = new HashMap<Integer, DialogQuestionType>();
 
     static {
-        for(DialogQuestionType questionType : DialogQuestionType.values()) {
+        for (DialogQuestionType questionType : DialogQuestionType.values()) {
             INT_MAP.put(questionType.intValue, questionType);
         }
     }

@@ -51,8 +51,8 @@ public enum AudioOutputDeviceType {
      * @return enumerated value, or <code>null</code> if the native value is not recognised
      */
     public static AudioOutputDeviceType valueOf(int intValue) {
-        for(AudioOutputDeviceType val : AudioOutputDeviceType.values()) {
-            if(val.intValue == intValue) {
+        for (AudioOutputDeviceType val : AudioOutputDeviceType.values()) {
+            if (val.intValue == intValue) {
                 return val;
             }
         }

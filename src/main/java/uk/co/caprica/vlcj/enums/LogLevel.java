@@ -35,7 +35,7 @@ public enum LogLevel {
     private static final Map<Integer, LogLevel> INT_MAP = new HashMap<Integer, LogLevel>();
 
     static {
-        for(LogLevel event : LogLevel.values()) {
+        for (LogLevel event : LogLevel.values()) {
             INT_MAP.put(event.intValue, event);
         }
     }

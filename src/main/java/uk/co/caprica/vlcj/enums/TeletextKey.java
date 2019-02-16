@@ -36,7 +36,7 @@ public enum TeletextKey {
     private static final Map<Integer, TeletextKey> INT_MAP = new HashMap<Integer, TeletextKey>();
 
     static {
-        for(TeletextKey key : TeletextKey.values()) {
+        for (TeletextKey key : TeletextKey.values()) {
             INT_MAP.put(key.intValue, key);
         }
     }

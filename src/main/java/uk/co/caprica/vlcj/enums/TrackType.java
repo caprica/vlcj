@@ -35,7 +35,7 @@ public enum TrackType {
     private static final Map<Integer, TrackType> INT_MAP = new HashMap<Integer, TrackType>();
 
     static {
-        for(TrackType value : TrackType.values()) {
+        for (TrackType value : TrackType.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }

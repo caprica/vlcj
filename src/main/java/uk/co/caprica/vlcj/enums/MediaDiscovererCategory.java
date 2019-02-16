@@ -35,7 +35,7 @@ public enum MediaDiscovererCategory {
     private static final Map<Integer, MediaDiscovererCategory> INT_MAP = new HashMap<Integer, MediaDiscovererCategory>();
 
     static {
-        for(MediaDiscovererCategory value : MediaDiscovererCategory.values()) {
+        for (MediaDiscovererCategory value : MediaDiscovererCategory.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
