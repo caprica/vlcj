@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of video multiview.
+ * Enumeration of video multiview types.
  */
 public enum Multiview {
 

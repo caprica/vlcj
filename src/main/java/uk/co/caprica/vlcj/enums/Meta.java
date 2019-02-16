@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * Enumeration of media meta data types.
  */
 public enum Meta {
 

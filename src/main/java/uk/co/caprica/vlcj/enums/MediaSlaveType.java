@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * Enumeration of media slave types.
  */
 public enum MediaSlaveType {
 

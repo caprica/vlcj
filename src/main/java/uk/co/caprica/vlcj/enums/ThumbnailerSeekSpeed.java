@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of picture types.
+ * Enumeration of thumbnailer seek speeds.
  */
 public enum ThumbnailerSeekSpeed {
 

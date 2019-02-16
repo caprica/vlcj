@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.enums;
 
 /**
- *
+ * Enumeration of media slave priorities.
  */
 public enum MediaSlavePriority {
 

@@ -1,5 +1,4 @@
 /**
- * A mechanism to encapsulate native media player events and dispatch
- * notifications to event listeners.
+ * Various enumerations.
  */
 package uk.co.caprica.vlcj.enums;

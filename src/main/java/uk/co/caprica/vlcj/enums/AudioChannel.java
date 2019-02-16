@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.enums;
 
 /**
- *
+ * Enumeration of audio channels.
  */
 public enum AudioChannel {
 
