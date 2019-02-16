@@ -21,18 +21,18 @@ package uk.co.caprica.vlcj.player.base;
 
 import javax.swing.SwingUtilities;
 
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.MediaRef;
 
 /**
- * Specification for a component that is interested in receiving event notifications from the media
- * player.
+ * Specification for a component that is interested in receiving event notifications from the media player.
  * <p>
- * In most cases any event that fires for a media item will also fire for any sub-item, so for
- * example mediaChanged() will fire for the "main" media item and each subsequent sub-item.
+ * Events are <em>not</em> raised on the Swing Event Dispatch thread so if updating user interface components in
+ * response to these events care must be taken to use {@link SwingUtilities#invokeLater(Runnable)}.
  * <p>
- * Events are likely <em>not</em> raised on the Swing Event Dispatch thread so if updating user
- * interface components in response to these events care must be taken to use
- * {@link SwingUtilities#invokeLater(Runnable)}.
+ * Equally, care must be taken not to call back into LibVLC from the event handling thread - if an event handler needs
+ * to call back into LibVLC it should use the {@link MediaPlayer#submit(Runnable)} method to submit a task for
+ * asynchronous execution.
  *
  * @see MediaPlayerEventAdapter
  */

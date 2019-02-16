@@ -24,6 +24,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.eventmanager.TaskExecutor;
 import uk.co.caprica.vlcj.version.LibVlcVersion;
 
 import java.util.Collection;
@@ -75,6 +76,13 @@ public class MediaPlayerFactory {
      * Native library instance.
      */
     protected final libvlc_instance_t libvlcInstance;
+
+    /**
+     * Single-threaded service to execute tasks that need to be off-loaded from a native callback thread.
+     * <p>
+     * See {@link #submit(Runnable)}.
+     */
+    private final TaskExecutor executor = new TaskExecutor();
 
     private final ApplicationService  applicationService;
     private final AudioService        audioService;
@@ -236,6 +244,21 @@ public class MediaPlayerFactory {
     }
 
     /**
+     * Submit a task for asynchronous execution.
+     * <p>
+     * This is useful in particular for event handling code as native events are generated on a native event callback
+     * thread and it is not allowed to call back into LibVLC from this callback thread. If you do, either the call will
+     * be ineffective, strange behaviour will happen, or a fatal JVM crash may occur.
+     * <p>
+     * To mitigate this, those tasks can be offloaded from the native thread, serialised and executed using this method.
+     *
+     * @param r task to execute
+     */
+    public final void submit(Runnable r) {
+        executor.submit(r);
+    }
+
+    /**
      * Get, if available, the path to where the native library was loaded from.
      * <p>
      * This is provided primarily for diagnostic reasons.
@@ -254,6 +277,8 @@ public class MediaPlayerFactory {
      * The factory must <em>not</em> be used again after it has been released.
      */
     public final void release() {
+        executor.release();
+
         onBeforeRelease();
 
         applicationService .release();

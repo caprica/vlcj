@@ -19,10 +19,38 @@
 
 package uk.co.caprica.vlcj.renderer;
 
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+
+import javax.swing.*;
+
+/**
+ * Specification for a component that is interested in receiving event notifications from a renderer discoverer.
+ * <p>
+ * Events are <em>not</em> raised on the Swing Event Dispatch thread so if updating user interface components in
+ * response to these events care must be taken to use {@link SwingUtilities#invokeLater(Runnable)}.
+ * <p>
+ * Equally, care must be taken not to call back into LibVLC from the event handling thread - if an event handler needs
+ * to call back into LibVLC it should use the {@link MediaPlayerFactory#submit(Runnable)} method to submit a task for
+ * asynchronous execution.
+ *
+ * @see RendererDiscovererEventAdapter
+ */
 public interface RendererDiscovererEventListener {
 
+    /**
+     * An item was added (discovered).
+     *
+     * @param rendererDiscoverer component the event relates to
+     * @param itemAdded item that was added
+     */
     void rendererDiscovererItemAdded(RendererDiscoverer rendererDiscoverer, RendererItem itemAdded);
 
+    /**
+     * An item was deleted.
+     *
+     * @param rendererDiscoverer component the event relates to
+     * @param itemDeleted item that was deleted
+     */
     void rendererDiscovererItemDeleted(RendererDiscoverer rendererDiscoverer, RendererItem itemDeleted);
 
 }

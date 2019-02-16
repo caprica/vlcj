@@ -22,9 +22,8 @@ package uk.co.caprica.vlcj.player.list;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
+import uk.co.caprica.vlcj.eventmanager.TaskExecutor;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -53,15 +52,9 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
     /**
      * Single-threaded service to execute tasks that need to be off-loaded from a native callback thread.
      * <p>
-     * Native events are generated on a native event callback thread. It is not allowed to call back into LibVLC from
-     * this thread, if you do either the call will be ineffective, strange behaviour will happen, or a fatal JVM crash
-     * may occur.
-     * <p>
-     * To mitigate this, tasks can be serialised and executed using this service.
-     * <p>
      * See {@link #submit(Runnable)}.
      */
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final TaskExecutor executor = new TaskExecutor();
 
     private final ControlsService    controlsService;
     private final EventService       eventService;
@@ -131,9 +124,25 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
         return userDataService;
     }
 
+    /**
+     * Submit a task for asynchronous execution.
+     * <p>
+     * This is useful in particular for event handling code as native events are generated on a native event callback
+     * thread and it is not allowed to call back into LibVLC from this callback thread. If you do, either the call will
+     * be ineffective, strange behaviour will happen, or a fatal JVM crash may occur.
+     * <p>
+     * To mitigate this, those tasks can be offloaded from the native thread, serialised and executed using this method.
+     *
+     * @param r task to execute
+     */
+    @Override
+    public final void submit(Runnable r) {
+        executor.submit(r);
+    }
+
     @Override
     public final void release() {
-        shutdownExecutor();
+        executor.release();
 
         onBeforeRelease();
 
@@ -147,40 +156,6 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
         libvlc.libvlc_media_list_player_release(mediaListPlayerInstance);
 
         onAfterRelease();
-    }
-
-    /**
-     * Shutdown the task executor service.
-     * <p>
-     * Care must be taken to prevent fatal JVM crashes during shutdown due to tasks that may be still be waiting in the
-     * queue to be executed (e.g. we do not want to destroy the native media player if a task is running that is going
-     * to invoke a call on the native media player).
-     * <p>
-     * So, we first shutdown the executor service then await termination of all tasks. If there are no pending tasks we
-     * will terminate immediately as normal. If there are tasks, we wait for a short timeout period before forcing a
-     * termination anyway.
-     * <p>
-     * We should never really be waiting any significant amount of time for the queued tasks to terminate because they
-     * will be very few in number, and should execute very quickly anyway. Even the short wait before timeout may be
-     * useful to avoid any hard crashes during clean-up.
-     */
-    private void shutdownExecutor() {
-        executor.shutdownNow();
-        try {
-            executor.awaitTermination(5, TimeUnit.SECONDS);
-        }
-        catch (InterruptedException e) {
-        }
-    }
-
-    /**
-     *
-     *
-     * @param r
-     */
-    @Override
-    public final void submit(Runnable r) {
-        executor.submit(r);
     }
 
     /**

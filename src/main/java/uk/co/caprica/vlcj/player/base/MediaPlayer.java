@@ -186,7 +186,7 @@ public interface MediaPlayer {
     /**
      * Release the media player, freeing all associated (including native) resources.
      */
-    void release();
+    void release(); // FIXME add an overload with timeout?
 
     /**
      *

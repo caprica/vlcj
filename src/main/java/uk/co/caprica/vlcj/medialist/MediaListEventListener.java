@@ -19,10 +19,22 @@
 
 package uk.co.caprica.vlcj.medialist;
 
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.MediaRef;
+
+import javax.swing.*;
 
 /**
  * Specification for a component that is interested in receiving event notifications from a media list.
+ * <p>
+ * Events are <em>not</em> raised on the Swing Event Dispatch thread so if updating user interface components in
+ * response to these events care must be taken to use {@link SwingUtilities#invokeLater(Runnable)}.
+ * <p>
+ * Equally, care must be taken not to call back into LibVLC from the event handling thread - if an event handler needs
+ * to call back into LibVLC it should use the {@link MediaPlayerFactory#submit(Runnable)} method to submit a task for
+ * asynchronous execution.
+ *
+ * @see MediaListEventAdapter
  */
 public interface MediaListEventListener {
 
