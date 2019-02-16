@@ -131,6 +131,8 @@ public class MediaPlayerFactory {
 
     /**
      * Create a new media player factory.
+     * <p>
+     * If you do not want to use native discovery, pass <code>null</code> for the <code>discovery</code> parameter.
      *
      * @param discovery native discovery used to locate the native LibVLC library, may be <code>null</code>
      * @param libvlcArgs collection of options/arguments to pass to LibVLC for initialisation of the native library
