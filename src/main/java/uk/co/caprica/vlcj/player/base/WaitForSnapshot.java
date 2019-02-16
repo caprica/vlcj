@@ -24,8 +24,8 @@ import java.io.File;
 import uk.co.caprica.vlcj.condition.mediaplayer.SnapshotTakenCondition;
 
 /**
- * Private helper to take a snapshot and wait until the corresponding snapshot
- * taken event is received (or an error occurs).
+ * Private helper to take a snapshot and wait until the corresponding snapshot taken event is received (or an error
+ * occurs).
  */
 final class WaitForSnapshot extends SnapshotTakenCondition {
 

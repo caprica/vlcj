@@ -70,7 +70,7 @@ public final class ListService extends BaseService {
     /**
      * Is the media list valid?
      * <p>
-     * This method could be used to check there is a list before executing the various behaviours.
+     * This method could be used to check there is a list before using the various behaviours.
      *
      * @return <code>true</code> if there is a valid list; <code>false</code> if there is not
      */
@@ -79,18 +79,18 @@ public final class ListService extends BaseService {
     }
 
     /**
-     * Delegated behaviours pertaining to the associated media list events.
+     * Delegated behaviour pertaining to the associated media list events.
      *
-     * @return events behaviours, may be <code>null</code> if there is currently no media list
+     * @return events behaviour, may be <code>null</code> if there is currently no media list
      */
     public EventService events() {
         return mediaList != null ? mediaList.events() : null;
     }
 
     /**
-     * Delegated behaviours pertaining to the associated media list items.
+     * Delegated behaviour pertaining to the associated media list items.
      *
-     * @return item behaviours, may be <code>null</code> if there is currently no media list
+     * @return item behaviour, may be <code>null</code> if there is currently no media list
      */
     public ItemService items() {
         return mediaList != null ? mediaList.items() : null;

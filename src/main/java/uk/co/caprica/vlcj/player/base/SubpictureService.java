@@ -27,6 +27,9 @@ import uk.co.caprica.vlcj.model.TrackDescription;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Behaviour pertaining to subpictures (sub-titles).
+ */
 public final class SubpictureService extends BaseService {
 
     SubpictureService(DefaultMediaPlayer mediaPlayer) {
@@ -134,8 +137,8 @@ public final class SubpictureService extends BaseService {
      * See {@link uk.co.caprica.vlcj.media.SlaveService#add(MediaSlaveType, MediaSlavePriority, String)} for further
      * important information regarding this method.
      *
-     * @param uri
-     * @return
+     * @param uri sub-title URI
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean setSubTitleUri(String uri) {
         return mediaPlayer.slave().addSlave(MediaSlaveType.SUBTITLE, uri, true);

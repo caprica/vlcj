@@ -23,33 +23,17 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * This class implements a mechanism to play a media item and wait for it to start (or wait for it
- * to raise an error instead of starting).
+ * This class implements a mechanism to play a media item and wait for it to start (or wait for it to raise an error
+ * instead of starting).
  * <p>
- * Ordinarily a call to play new media returns immediately and the native media player attempts to
- * open and start playing the media asynchronously. This can make it a little difficult for
- * application code to know if the media successfully started or failed to start because of an
- * error.
+ * Ordinarily a call to play new media returns immediately and the native media player attempts to open and start
+ * playing the media asynchronously. This can make it a little difficult for application code to know if the media
+ * successfully started or failed to start because of an error.
  * <p>
- * It is possible for application code to respond to media player events to determine whether the
- * media started successfully or failed because of an error but this class serves as a convenient
- * encapsulation of that functionality.
+ * It is possible for application code to respond to media player events to determine whether the media started
+ * successfully or failed because of an error but this class serves as a convenient encapsulation of that functionality.
  * <p>
- * The strategy is simply to block the play call until a media player "playing" or "error" event is
- * received.
- * <p>
- * Example usage:
- *
- * <pre>
- * mediaPlayer.prepareMedia(mrl, options);
- * boolean definitelyStarted = new MediaPlayerLatch(mediaPlayer).play();
- * </pre>
- *
- * The {@link DefaultMediaPlayer} uses this class for the "play and wait..." implementation, see
- * {@link MediaPlayer#startMedia(String, String...)}.
- * <p>
- * Most applications are not expected to need this class and use the "start media" functionality on
- * the media player instead.
+ * The strategy is simply to block the play call until a media player "playing" or "error" event is received.
  */
 final class MediaPlayerLatch {
 
@@ -70,9 +54,7 @@ final class MediaPlayerLatch {
     /**
      * Play the media and wait for it to either start playing or error.
      *
-     * @return true if the media definitely started playing and false if it did not or the thread
-     *          was interrupted while waiting (unlikely, but in which case the media player
-     *          <em>might</em> still start)
+     * @return true only if the media definitely started playing; <code>false</code> otherwise, it may yet have started
      */
     boolean play() {
         // If the media player is already playing, then the latch will wait for an event that

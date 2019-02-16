@@ -25,9 +25,12 @@ import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
 
 /**
- *
- *
- * Once callbacks are enabled for a media player, they can not be disabled.
+ * Encapsulation of native audio callbacks.
+ * <p>
+ * This component acts as a bridge between the native callbacks and an implementation of an {@link AudioCallback}
+ * component used to process the audio samples in some way (like playing them).
+ * <p>
+ * Once callbacks are enabled for a media player, they can <em>not</em> be disabled.
  */
 final class AudioCallbacks {
 

@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Behaviour pertaining to the current media.
  */
 public final class MediaService extends BaseService {
 
@@ -77,7 +77,7 @@ public final class MediaService extends BaseService {
      *
      * @param mrl media resource locator
      * @param options zero or more options to attach to the new media
-     * @return
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean prepare(String mrl, String... options) {
         return changeMedia(MediaFactory.newMedia(libvlc, libvlcInstance, mrl, options));
@@ -88,7 +88,7 @@ public final class MediaService extends BaseService {
      *
      * @param mrl media resource locator
      * @param options zero or more options to attach to the new media
-     * @return
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean play(String mrl, String... options) {
         if (prepare(mrl, options)) {
@@ -99,11 +99,11 @@ public final class MediaService extends BaseService {
     }
 
     /**
+     * Set new media, play it, and wait for it to start playing (or error).
      *
-     *
-     * @param mrl
-     * @param options
-     * @return
+     * @param mrl media resource locator
+     * @param options zero or more options to attach to the new media
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean start(String mrl, String... options) {
         if (prepare(mrl, options)) {
@@ -113,10 +113,24 @@ public final class MediaService extends BaseService {
         }
     }
 
+    /**
+     * Prepare new media (set it, do not play it).
+     *
+     * @param callbackMedia callback media
+     * @param options zero or more options to attach to the new media
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
     public boolean prepare(CallbackMedia callbackMedia, String... options) {
         return changeMedia(MediaFactory.newMedia(libvlc, libvlcInstance, callbackMedia, options));
     }
 
+    /**
+     * Set new media and play it.
+     *
+     * @param callbackMedia callback media
+     * @param options zero or more options to attach to the new media
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
     public boolean play(CallbackMedia callbackMedia, String... options) {
         if (prepare(callbackMedia, options)) {
             return play();
@@ -125,6 +139,13 @@ public final class MediaService extends BaseService {
         }
     }
 
+    /**
+     * Set new media, play it, and wait for it to start playing (or error).
+     *
+     * @param callbackMedia callback media
+     * @param options zero or more options to attach to the new media
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
     public boolean start(CallbackMedia callbackMedia, String... options) {
         if (prepare(callbackMedia, options)) {
             return start();
@@ -134,28 +155,28 @@ public final class MediaService extends BaseService {
     }
 
     /**
-     *
+     * Prepare new media (set it, do not play it).
      * <p>
      * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
      * caller no longer has any use for it.
      *
-     * @param mediaRef
-     * @param options
-     * @return
+     * @param mediaRef media reference
+     * @param options zero or more options to attach to the new media
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean prepare(MediaRef mediaRef, String... options) {
         return changeMedia(MediaFactory.newMedia(libvlc, libvlcInstance, mediaRef, options));
     }
 
     /**
-     *
+     * Set new media and play it.
      * <p>
      * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
      * caller no longer has any use for it.
      *
-     * @param mediaRef
-     * @param options
-     * @return
+     * @param mediaRef media reference
+     * @param options zero or more options to attach to the new media
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean play(MediaRef mediaRef, String... options) {
         if (prepare(mediaRef, options)) {
@@ -166,14 +187,14 @@ public final class MediaService extends BaseService {
     }
 
     /**
-     *
+     * Set new media, play it, and wait for it to start playing (or error).
      * <p>
      * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
      * caller no longer has any use for it.
      *
-     * @param mediaRef
-     * @param options
-     * @return
+     * @param mediaRef media reference
+     * @param options zero or more options to attach to the new media
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean start(MediaRef mediaRef, String... options) {
         if (prepare(mediaRef, options)) {
@@ -183,46 +204,107 @@ public final class MediaService extends BaseService {
         }
     }
 
+    /**
+     * Create a new {@link Media} component for the current media.
+     * <p>
+     * The caller <em>must</em> release the returned {@link Media} when it no longer has any use for it.
+     *
+     * @return media
+     */
     public Media newMedia() {
         return media != null ? media.newMedia() : null;
     }
 
+    /**
+     * Create a new {@link MediaRef} for the current media.
+     * <p>
+     * The caller <em>must</em> release the returned {@link MediaRef} when it no longer has any use for it.
+     *
+     * @return media reference
+     */
     public MediaRef newMediaRef() {
         return media != null ? media.newMediaRef() : null;
     }
 
+    /**
+     * Is the media valid?
+     * <p>
+     * This method could be used to check there is media before using the various behaviours.
+     *
+     * @return <code>true</code> if there is a valid media; <code>false</code> if there is not
+     */
     public boolean isValid() {
         return media != null;
     }
 
+    /**
+     * Delegated behaviour pertaining to the associated media events.
+     *
+     * @return media event behaviour
+     */
     public EventService events() {
         return media != null ? media.events() : null;
     }
 
+    /**
+     * Delegated behaviour pertaining to the associated media information.
+     *
+     * @return media information behaviour
+     */
     public InfoService info() {
         return media != null ? media.info() : null;
     }
 
+    /**
+     * Delegated behaviour pertaining to the associated media meta data.
+     *
+     * @return media meta data behaviour
+     */
     public MetaService meta() {
         return media != null ? media.meta() : null;
     }
 
+    /**
+     * Delegated behaviour pertaining to media options.
+     *
+     * @return media option behaviour
+     */
     public OptionsService options() {
         return media != null ? media.options() : null;
     }
 
+    /**
+     * Delegated behaviour pertaining to parsing of the associated media.
+     *
+     * @return parsing behaviour
+     */
     public ParseService parsing() {
         return media != null ? media.parsing() : null;
     }
 
+    /**
+     * Delegated behaviour pertaining to media slaves for the associated media.
+     *
+     * @return media slave behaviour
+     */
     public SlaveService slaves() {
         return media != null ? media.slaves() : null;
     }
 
+    /**
+     * Delegated behaviour pertaining to the associated media subitems.
+     *
+     * @return subitem behaviour
+     */
     public SubitemService subitems() {
         return media != null ? media.subitems() : null;
     }
 
+    /**
+     * Delegated behaviour pertaining to the associated media userdata.
+     *
+     * @return userdata behaviour
+     */
     public UserDataService userData() {
         return media != null ? media.userData() : null;
     }

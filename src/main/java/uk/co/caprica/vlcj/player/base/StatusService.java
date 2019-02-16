@@ -21,6 +21,11 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.enums.State;
 
+/**
+ * Behaviour pertaining to the status of the media player.
+ * <p>
+ * It is recommended instead to rely on events to track the media player status.
+ */
 public final class StatusService extends BaseService {
 
     StatusService(DefaultMediaPlayer mediaPlayer) {

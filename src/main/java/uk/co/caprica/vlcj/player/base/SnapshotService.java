@@ -26,6 +26,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Behaviour pertaining to video snapshots.
+ */
 public final class SnapshotService extends BaseService {
 
     /**
@@ -201,17 +204,17 @@ public final class SnapshotService extends BaseService {
             file = File.createTempFile("vlcj-snapshot-", ".png");
             return ImageIO.read(new File(new WaitForSnapshot(mediaPlayer, file, width, height).await()));
         }
-        catch(IOException e) {
+        catch (IOException e) {
             throw new RuntimeException("Failed to get snapshot image", e);
         }
-        catch(InterruptedException e) {
+        catch (InterruptedException e) {
             throw new RuntimeException("Failed to get snapshot image", e);
         }
-        catch(BeforeConditionAbortedException e) {
+        catch (BeforeConditionAbortedException e) {
             return null;
         }
         finally {
-            if(file != null) {
+            if (file != null) {
                 file.delete();
             }
         }

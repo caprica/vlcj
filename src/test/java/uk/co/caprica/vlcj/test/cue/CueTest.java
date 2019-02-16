@@ -91,7 +91,7 @@ public class CueTest extends VlcjTest {
 
     private static void dump(MediaPlayer player) {
         // Dump meta (this is just a demo, we would actually have to parse the media to get the meta)
-        MediaList subitems = player.media().subitems().get();
+        MediaList subitems = player.media().subitems().newMediaList();
         for (int i = 0; i < subitems.items().count(); i++) {
             Media media = subitems.items().newMedia(i);
             if (media != null) {

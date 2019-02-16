@@ -25,8 +25,8 @@ import uk.co.caprica.vlcj.player.base.events.MediaPlayerEventFactory;
  * Event listener implementation that waits for the first position changed event and raises a synthetic media player
  * ready event.
  * <p>
- * Some media player operations require that the media be definitively playing before they are effective (things like
- * setting logo and marquee amongst others) and the playing event itself does not guarantee this.
+ * Some media player operations require that the media be definitively playing before they are effective and the
+ * "playing" event itself does not guarantee this.
  */
 final class MediaPlayerReadyEventHandler extends MediaPlayerEventAdapter {
 

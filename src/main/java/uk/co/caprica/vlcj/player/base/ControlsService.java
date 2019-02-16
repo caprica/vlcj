@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+/**
+ * Behaviour pertaining to media player controls.
+ */
 public final class ControlsService extends BaseService {
 
     ControlsService(DefaultMediaPlayer mediaPlayer) {
@@ -42,7 +45,7 @@ public final class ControlsService extends BaseService {
      * <p>
      * This call will <strong>block</strong> until the media starts or errors.
      *
-     * @return <code>true</code> if the media started playing, <code>false</code> if the media failed to start because of an error
+     * @return <code>true</code> if the media started playing, <code>false</code> on error
      */
     public boolean start() {
         return new MediaPlayerLatch(mediaPlayer).play();

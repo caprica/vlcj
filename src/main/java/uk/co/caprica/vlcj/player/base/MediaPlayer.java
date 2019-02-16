@@ -24,163 +24,128 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 
 /**
  * Specification for a media player component.
- * <p>
- * A media player provides the following functions:
- * <ul>
- *   <li>Status controls - e.g. length, time</li>
- *   <li>Play-back controls - play, pause, stop, skip, back</li>
- *   <li>Volume controls - volume level, mute</li>
- *   <li>Chapter controls - next/previous/set chapter, chapter count</li>
- *   <li>Sub-picture/sub-title controls - get/set, count</li>
- *   <li>Snapshot controls</li>
- *   <li>Logo controls - enable/disable, set opacity, file</li>
- *   <li>Marquee controls - enable/disable, set colour, size, opacity, timeout</li>
- *   <li>Video adjustment controls - contrast, brightness, hue, saturation, gamma</li>
- *   <li>Audio adjustment controls - delay</li>
- * </ul>
- * <p>
- * The basic life-cycle is:
- *
- * <pre>
- *   // Set some options for libvlc
- *   String[] libvlcArgs = {...add options here...};
- *
- *   // Create a factory
- *   MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(libvlcArgs);
- *
- *   // Create a full-screen strategy
- *   FullScreenStrategy fullScreenStrategy = new ExclusiveModeFullScreenStrategy(mainFrame);
- *
- *   // Create a media player instance (in this example an embedded media player)
- *   EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(fullScreenStrategy);
- *
- *   // Set standard options as needed to be applied to all subsequently played media items
- *   String[] standardMediaOptions = {"video-filter=logo", "logo-file=vlcj-logo.png", "logo-opacity=25"};
- *   mediaPlayer.setStandardMediaOptions(standardMediaOptions);
- *
- *   // Add a component to be notified of player events
- *   mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {...add implementation here...});
- *
- *   // Create and set a new component to display the rendered video (not shown: add the Canvas to a Frame)
- *   Canvas canvas = new Canvas();
- *   CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(canvas);
- *   mediaPlayer.setVideoSurface(videoSurface);
- *
- *   // Play a particular item, with options if necessary
- *   String mediaPath = "/path/to/some/movie.mpg";
- *   String[] mediaOptions = {...add options here...};
- *   mediaPlayer.playMedia(mediaPath, mediaOptions);
- *
- *   // Do some interesting things in the application
- *   ...
- *
- *   // Cleanly dispose of the media player instance and any associated native resources
- *   mediaPlayer.release();
- *
- *   // Cleanly dispose of the media player factory and any associated native resources
- *   mediaPlayerFactory.release();
- * </pre>
- *
- * With regard to overlaying logos there are three approaches.
- * <p>
- * The first way is to specify standard options for the media player - this will set the logo for
- * any subsequently played media item, for example:
- *
- * <pre>
- * String[] standardMediaOptions = {&quot;video-filter=logo&quot;, &quot;logo-file=vlcj-logo.png&quot;, &quot;logo-opacity=25&quot;};
- * mediaPlayer.setStandardMediaOptions(standardMediaOptions);
- * </pre>
- *
- * The second way is to specify options when playing the media item, for example:
- *
- * <pre>
- * String[] mediaOptions = {&quot;video-filter=logo&quot;, &quot;logo-file=vlcj-logo.png&quot;, &quot;logo-opacity=25&quot;};
- * mediaPlayer.playMedia(mediaPath, mediaOptions);
- * </pre>
- *
- * The final way is to use the methods of this class to set various logo properties, for example:
- *
- * <pre>
- * mediaPlayer.setLogoFile(&quot;vlcj-logo.png&quot;);
- * mediaPlayer.setLogoOpacity(25);
- * mediaPlayer.setLogoLocation(10, 10);
- * mediaPlayer.enableLogo(true);
- * </pre>
- *
- * For this latter method, it is not possible to enable the logo until after the video has started
- * playing. There is also a noticeable stutter in video play-back when enabling the logo filter in
- * this way.
- * <p>
- * With regard to overlaying marquees, again there are three approaches (similar to those for
- * logos).
- * <p>
- * In this instance only the final way showing the usage of the API is used, for example:
- *
- * <pre>
- * mediaPlayer.setMarqueeText(&quot;VLCJ is quite good&quot;);
- * mediaPlayer.setMarqueeSize(60);
- * mediaPlayer.setMarqueeOpacity(70);
- * mediaPlayer.setMarqueeColour(Color.green);
- * mediaPlayer.setMarqueeTimeout(3000);
- * mediaPlayer.setMarqueeLocation(300, 400);
- * mediaPlayer.enableMarquee(true);
- * </pre>
- *
- * With regard to video adjustment controls, after the video has started playing:
- *
- * <pre>
- * mediaPlayer.setAdjustVideo(true);
- * mediaPlayer.setGamma(0.9f);
- * mediaPlayer.setHue(10);
- * </pre>
- *
- * <p>
- * When using options, generally any options that enable/disable modules (e.g. video/audio filters) must be set via the
- * factory instance and not when invoking {@link MediaService#play(String, String...)}. However, the filter-specific
- * options <em>may</em> be able to be passed and be effective via a playMedia call.
- * <p>
- * It is always a better strategy to reuse media player instances, rather than repeatedly creating
- * and destroying instances.
- * <p>
- * Note that media player implementations will guarantee that native media player events are delivered
- * in a single-threaded sequential manner.
  *
  * @see EmbeddedMediaPlayerComponent
  */
 public interface MediaPlayer {
 
+    /**
+     * Behaviour pertaining to media player audio.
+     *
+     * @return audio behaviour
+     */
     AudioService audio();
 
+    /**
+     * Behaviour pertaining to chapters.
+     *
+     * @return chapter behaviour
+     */
     ChapterService chapters();
 
+    /**
+     * Behaviour pertaining to media player controls.
+     *
+     * @return controls behaviour
+     */
     ControlsService controls();
 
+    /**
+     * Behaviour pertaining to media player events.
+     *
+     * @return event behaviour.
+     */
     EventService events();
 
+    /**
+     * Behaviour pertaining to the logo.
+     *
+     * @return logo behaviour
+     */
     LogoService logo();
 
+    /**
+     * Behaviour pertaining to the current media.
+     *
+     * @return media behaviour
+     */
     MediaService media();
 
+    /**
+     * Behaviour pertaining to the marquee.
+     *
+     * @return marquee behaviour
+     */
     MarqueeService marquee();
 
+    /**
+     * Behaviour pertaining to the menu.
+     *
+     * @return menu behaviour
+     */
     MenuService menu();
 
+    /**
+     * Behaviour pertaining to the media player role.
+     *
+     * @return role behaviour
+     */
     RoleService role();
 
+    /**
+     * Behaviour pertaining to media slavs.
+     *
+     * @return media slave behaviour
+     */
     SlaveService slave();
 
+    /**
+     * Behaviour pertaining to video snapshots.
+     *
+     * @return snapshot behaviour
+     */
     SnapshotService snapshots();
 
+    /**
+     * Behaviour pertaining to the status of the media player.
+     *
+     * @return status behaviour
+     */
     StatusService status();
 
+    /**
+     * Behaviour pertaining to subitems.
+     *
+     * @return subitems behaviour
+     */
     SubitemService subitems();
 
+    /**
+     * Behaviour pertaining to subpictures.
+     *
+     * @return subpicture behaviour
+     */
     SubpictureService subpictures();
 
+    /**
+     * Behaviour pertaining to teletext.
+     *
+     * @return teletext behaviour
+     */
     TeletextService teletext();
 
+    /**
+     * Behaviour pertaining to titles.
+     *
+     * @return titles behaviour
+     */
     TitleService titles();
 
+    /**
+     * Behaviour pertaining to media player video.
+     *
+     * @return video behaviour
+     */
     VideoService video();
 
     /**
@@ -209,6 +174,6 @@ public interface MediaPlayer {
      *
      * @return media player instance
      */
-    libvlc_media_player_t mediaPlayerInstance();
+    libvlc_media_player_t mediaPlayerInstance(); // FIXME needs to be on interface?
 
 }

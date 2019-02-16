@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+/**
+ * Behaviour pertaining to userdata.
+ */
 public final class UserDataService extends BaseService {
 
     private Object userData;

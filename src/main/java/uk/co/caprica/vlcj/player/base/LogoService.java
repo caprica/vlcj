@@ -28,6 +28,9 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Behaviour pertaining to the logo.
+ */
 public final class LogoService extends BaseService {
 
     LogoService(DefaultMediaPlayer mediaPlayer) {
@@ -46,9 +49,11 @@ public final class LogoService extends BaseService {
     }
 
     /**
+     * Set the time that the logo will be displayed.
+     * <p>
+     * After this time passes, the logo will be removed and the next one (if there is one) displayed.
      *
-     *
-     * @param duration
+     * @param duration duration, milliseconds
      */
     public void setLogoDuration(int duration) {
         libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_delay.intValue(), duration);
@@ -94,8 +99,7 @@ public final class LogoService extends BaseService {
     }
 
     /**
-     *
-     *
+     * Set how many times the logo sequence should repeat.
      * <p>
      * Note that with current versions of VLC you may need to set a repeat count one more than you might expect - this
      * is because on the last loop iteration it appears to stop after only the first logo has been displayed.
@@ -132,16 +136,15 @@ public final class LogoService extends BaseService {
     /**
      * Set the logo image.
      * <p>
-     * The image will first be written to a temporary file, before invoking
-     * {@link #setLogoFile(String)}. This is not optimal, but creating a temporary file for the logo
-     * in this way is unavoidable.
+     * The image will first be written to a temporary file, before invoking {@link #setLogoFile(String)}. This is not
+     * optimal, but creating a temporary file for the logo in this way is unavoidable.
      * <p>
-     * The temporary file will persist until the JVM exits. The file can not be deleted immediately
-     * due to the asynchronous nature of the native API call that sets the logo from the file.
+     * The temporary file will persist until the JVM exits. The file can not be deleted immediately due to the
+     * asynchronous nature of the native API call that sets the logo from the file.
      * <p>
-     * There are circumstances under which this temporary file may <em>fail</em> to be deleted, as
-     * per {@link File#deleteOnExit()} - i.e. "Deletion will be attempted only for normal termination
-     * of the virtual machine".
+     * There are circumstances under which this temporary file may <em>fail</em> to be deleted, as per
+     * {@link File#deleteOnExit()} - i.e. "Deletion will be attempted only for normal termination of the virtual
+     * machine".
      *
      * @param logoImage logo image
      */
@@ -166,9 +169,9 @@ public final class LogoService extends BaseService {
     }
 
     /**
-     * Set a logo.
+     * Set a logo from a builder.
      *
-     * @param logo logo
+     * @param logo logo builder
      */
     public void setLogo(Logo logo) {
         logo.apply(mediaPlayer);

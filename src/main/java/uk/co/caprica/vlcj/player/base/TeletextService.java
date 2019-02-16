@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.enums.TeletextKey;
 
+/**
+ * Behaviour pertaining to teletext.
+ */
 public final class TeletextService extends BaseService {
 
     TeletextService(DefaultMediaPlayer mediaPlayer) {

@@ -31,10 +31,13 @@ import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Behaviour pertaining to media player audio.
+ */
 public final class AudioService extends BaseService implements EqualizerListener {
 
     /**
-     *
+     * Audio callbacks component.
      */
     private final AudioCallbacks audioCallbacks;
 
@@ -308,6 +311,14 @@ public final class AudioService extends BaseService implements EqualizerListener
         return Descriptions.audioTrackDescriptions(libvlc, mediaPlayerInstance);
     }
 
+    /**
+     * Enable audio callbacks and set the component used to process the audio samples.
+     *
+     * @param format audio buffer format
+     * @param rate audio buffer bit-rate
+     * @param channels number of audio channels
+     * @param audioCallback component that will process the audio samples
+     */
     public void callback(String format, int rate, int channels, AudioCallback audioCallback) {
         audioCallbacks.callback(format, rate, channels, audioCallback);
     }

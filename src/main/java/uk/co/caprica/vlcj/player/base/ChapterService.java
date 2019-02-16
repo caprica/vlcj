@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.model.ChapterDescription;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Behaviour pertaining to chapters (e.g. for DVD or Bluray).
+ */
 public final class ChapterService extends BaseService {
 
     ChapterService(DefaultMediaPlayer mediaPlayer) {
@@ -108,7 +111,7 @@ public final class ChapterService extends BaseService {
     public List<List<ChapterDescription>> getAllChapterDescriptions() {
         int titleCount = mediaPlayer.titles().getTitleCount();
         List<List<ChapterDescription>> result = new ArrayList<List<ChapterDescription>>(Math.max(titleCount, 0));
-        for(int i = 0; i < titleCount; i ++ ) {
+        for (int i = 0; i < titleCount; i ++ ) {
             result.add(getChapterDescriptions(i));
         }
         return result;

@@ -23,6 +23,9 @@ import uk.co.caprica.vlcj.model.TitleDescription;
 
 import java.util.List;
 
+/**
+ * Behaviour pertaining to media titles (e.g. DVD and Bluray titles).
+ */
 public final class TitleService extends BaseService {
 
     TitleService(DefaultMediaPlayer mediaPlayer) {

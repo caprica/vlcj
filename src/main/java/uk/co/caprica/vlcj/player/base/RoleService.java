@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.enums.MediaPlayerRole;
 
+/**
+ * Behaviour pertaining to the role of this media player.
+ */
 public final class RoleService extends BaseService {
 
     RoleService(DefaultMediaPlayer mediaPlayer) {

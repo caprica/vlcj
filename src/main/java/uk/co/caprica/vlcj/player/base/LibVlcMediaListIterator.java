@@ -28,21 +28,20 @@ import java.util.Iterator;
 /**
  * A one-time media list iterator.
  * <p>
- * For simplicities sake, and since this is a <em>private implementation
- * class</em>, the iterator may not be re-used and the implementation takes some liberties to ensure
- * that native resources are properly released.
+ * For simplicity's sake, and since this is a <em>private implementation class</em>, the iterator may not be re-used and
+ * the implementation takes some liberties to ensure that native resources are properly released.
  * <p>
- * Specifically, the native media instance for each sub-item must be explicitly released. The only
- * reliable place to carry this out is in the {@link #hasNext()} method implementation.
+ * Specifically, the native media instance for each sub-item must be explicitly released. The only reliable place to
+ * carry this out is in the {@link #hasNext()} method implementation.
  * <p>
- * Consequently a user of this class <strong>must</strong> invoke {@link #hasNext()} after
- * processing each sub item. Since in any event this is the typical usage pattern for an iterator,
- * this is no big deal.
+ * Consequently a user of this class <strong>must</strong> invoke {@link #hasNext()} after processing each sub item.
+ * Since in any event this is the typical usage pattern for an iterator this is no big deal.
  * <p>
- * The reason that this class is used, despite the issues described above, is that it makes the code
- * in the media player implementation that deals with sub-items a lot simpler and reduces a lot of
- * code duplication when iterating the sub-items.
+ * The reason that this class is used, despite the issues described above, is that it makes the code in the media player
+ * implementation that deals with sub-items a lot simpler and reduces a lot of code duplication when iterating the
+ * sub-items.
  */
+// FIXME delete this unused class?
 class LibVlcMediaListIterator implements Iterable<libvlc_media_t>, Iterator<libvlc_media_t> {
 
     /**

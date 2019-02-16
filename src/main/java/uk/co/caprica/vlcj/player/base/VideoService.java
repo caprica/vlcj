@@ -33,6 +33,9 @@ import uk.co.caprica.vlcj.renderer.RendererItem;
 import java.awt.Dimension;
 import java.util.List;
 
+/**
+ * Behaviour pertaining to media player video.
+ */
 public final class VideoService extends BaseService {
 
     VideoService(DefaultMediaPlayer mediaPlayer) {

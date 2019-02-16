@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MediaEventAdapter;
+import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -165,17 +166,21 @@ public class YouTubePlayer extends VlcjTest {
             @Override
             public void mediaSubItemAdded(Media media, MediaRef newChild) {
                 System.out.println("item added");
-                for (String mrl : media.subitems().get().items().mrls()) {
+                MediaList mediaList = mediaPlayer.media().subitems().newMediaList();
+                for (String mrl : mediaList.items().mrls()) {
                     System.out.println("mrl=" + mrl);
                 }
+                mediaList.release();
             }
 
             @Override
             public void mediaSubItemTreeAdded(Media media, MediaRef item) {
                 System.out.println("item tree added");
-                for (String mrl : media.subitems().get().items().mrls()) {
+                MediaList mediaList = mediaPlayer.media().subitems().newMediaList();
+                for (String mrl : mediaList.items().mrls()) {
                     System.out.println("mrl=" + mrl);
                 }
+                mediaList.release();
             }
         });
         mediaPlayer.controls().play();

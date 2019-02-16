@@ -25,6 +25,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 
 // FIXME "Aspect" is gonna be better than "Service"
 
+/**
+ * Internal base implementation.
+ */
 abstract class BaseService {
 
     protected final DefaultMediaPlayer mediaPlayer;

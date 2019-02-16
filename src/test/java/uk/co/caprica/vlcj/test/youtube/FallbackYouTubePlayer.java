@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.test.youtube;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -29,34 +30,11 @@ import java.util.List;
 /**
  * This test demonstrates how to manually handle the playing of YouTube videos.
  * <p>
- * Ordinarily, vlcj will play YouTube videos automatically if you simply invoke
- * {@link MediaPlayer#setPlaySubItems(boolean)}. This will instruct the media player to
- * automatically play any sub-items that get created.
- * <p>
- * To play a YouTube video with vlc, vlc is given the http: "watch" URL - this is not itself a
- * streaming MRL, it is a web-page. This web-page is then scraped, by a LUA script inside of vlc,
- * to locate the actual streaming MRL. If the vlc LUA script finds the MRL, then a sub-item gets
- * created containing that MRL.
+ * To play a YouTube video with vlc, vlc is given the http: "watch" URL - this is not itself a streaming MRL, it is a
+ * web-page. This web-page is then scraped, by a LUA script inside of VLC, to locate the actual streaming MRL. If the
+ * VLC LUA script finds the MRL, then a sub-item gets created containing that MRL.
  * <p>
  * This sub-item MRL must then itself be played.
- * <p>
- * At this point, either the movie will start playing, or the vlc LUA script did not find the MRL,
- * so it falls back to a "secondary" API which attempts to scrape the streaming MRL in a different
- * way. The result of this secondary API is yet another sub-item, (i.e. sub-item of the sub-item of
- * the original media), and you play that.
- * <p>
- * That all sounds long-winded and complicated, but in essence, to manually handle YouTube videos,
- * you simply play your URL, and in the "finished" event handler you simply keep playing the first
- * sub-item until there are no more.
- * <p>
- * Note that the primary API is the preferred API - the vlc LUA script is out-of-sync with the
- * YouTube web-page format. Ideally the LUA script would be changed. The whole scheme is brittle
- * since the YouTube web-page format could change at any time and be incompatible with the vlc LUA
- * script.
- * <p>
- * The secondary API is invoked by the vlc LUA script as a last-resort.
- * <p>
- * <em>A future version of vlcj will likely support this automatically.</em>
  */
 @SuppressWarnings("serial")
 public class FallbackYouTubePlayer extends VlcjTest {
@@ -88,7 +66,9 @@ public class FallbackYouTubePlayer extends VlcjTest {
                 // This is key...
                 //
                 // On receipt of a "finished" event, check if sub-items have been created...
-                List<String> subitems = mediaPlayer.media().subitems().get().items().mrls();
+                MediaList mediaList = mediaPlayer.media().subitems().newMediaList();
+                List<String> subitems = mediaList.items().mrls();
+                mediaList.release();
                 System.out.println("subitems=" + subitems);
                 // If sub-items were created...
                 if(subitems != null && !subitems.isEmpty()) {

@@ -22,6 +22,9 @@ package uk.co.caprica.vlcj.player.base;
 import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.player.base.events.MediaPlayerEvent;
 
+/**
+ * Behaviour pertaining to media player events.
+ */
 public final class EventService extends BaseService {
 
     private final MediaPlayerNativeEventManager eventManager;
@@ -37,18 +40,41 @@ public final class EventService extends BaseService {
         addMediaPlayerEventListener(new MediaPlayerReadyEventHandler());
     }
 
+    /**
+     * Add a component to be notified of media player events.
+     *
+     * @param listener component to notify
+     */
     public void addMediaPlayerEventListener(MediaPlayerEventListener listener) {
         eventManager.addEventListener(listener);
     }
 
+    /**
+     * Remove a component that was previously interested in notifications of media player events.
+     *
+     * @param listener component to stop notifying
+     */
     public void removeMediaPlayerEventListener(MediaPlayerEventListener listener) {
         eventManager.removeEventListener(listener);
     }
 
+    /**
+     * Add a component to be notified of media events.
+     * <p>
+     * As the current media changes, this listener will automatically be removed from the previous media and added to
+     * the new.
+     *
+     * @param listener component to notify
+     */
     public void addMediaEventListener(MediaEventListener listener) {
         mediaPlayer.media().addPersistentMediaEventListener(listener);
     }
 
+    /**
+     * Remove a component that was previously interested in notifications of media events.
+     *
+     * @param listener component to stop notifying
+     */
     public void removeMediaEventListener(MediaEventListener listener) {
         mediaPlayer.media().removePersistentMediaEventListener(listener);
     }

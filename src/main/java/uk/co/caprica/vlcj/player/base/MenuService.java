@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
 
+/**
+ * Behaviour pertaining to the menu (e.g. DVD and Bluray menus).
+ */
 public final class MenuService extends BaseService {
 
     MenuService(DefaultMediaPlayer mediaPlayer) {

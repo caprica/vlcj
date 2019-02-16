@@ -24,6 +24,9 @@ import uk.co.caprica.vlcj.enums.MediaSlaveType;
 
 // FIXME rename to simple add?
 
+/**
+ * Behaviour pertaining to media slaves.
+ */
 public final class SlaveService extends BaseService {
 
     SlaveService(DefaultMediaPlayer mediaPlayer) {

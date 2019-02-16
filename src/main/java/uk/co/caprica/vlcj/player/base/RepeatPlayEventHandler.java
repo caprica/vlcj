@@ -23,6 +23,8 @@ package uk.co.caprica.vlcj.player.base;
  * Event listener implementation that handles auto-repeat.
  * <p>
  * This internal handler must be added after {@link ResetMediaEventHandler}.
+ * <p>
+ * Since we depend on that reset media event handler, the only requirement here is to invoke play().
  */
 final class RepeatPlayEventHandler extends MediaPlayerEventAdapter {
 

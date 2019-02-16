@@ -25,6 +25,9 @@ import uk.co.caprica.vlcj.model.Marquee;
 
 import java.awt.*;
 
+/**
+ * Behaviour pertaining to the marquee.
+ */
 public final class MarqueeService extends BaseService {
 
     MarqueeService(DefaultMediaPlayer mediaPlayer) {
@@ -143,18 +146,18 @@ public final class MarqueeService extends BaseService {
     }
 
     /**
+     * Set the delay before refreshing the marquee text.
      *
-     *
-     * @param refresh
+     * @param refresh refresh delay, milliseconds
      */
     public void setMarqueeRefresh(int refresh) {
         libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Refresh.intValue(), refresh);
     }
 
     /**
-     * Set a marquee.
+     * Set a marquee from a builder.
      *
-     * @param marquee marquee
+     * @param marquee marquee builder
      */
     public void setMarquee(Marquee marquee) {
         marquee.apply(mediaPlayer);
