@@ -31,12 +31,32 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
  */
 public interface EmbeddedMediaPlayer extends MediaPlayer {
 
+    /**
+     * Behaviour pertaining to full-screen functionality.
+     *
+     * @return full-screen behaviour
+     */
     FullScreenService fullScreen();
 
+    /**
+     * Behaviour pertaining to keyboard/mouse input-events.
+     *
+     * @return input-event behaviour
+     */
     InputService input();
 
+    /**
+     * Behaviour pertaining to the heavyweight overlay.
+     *
+     * @return overlay behaviour
+     */
     OverlayService overlay();
 
+    /**
+     * Behaviour pertaining to the video surface.
+     *
+     * @return video surface behaviour
+     */
     VideoSurfaceService videoSurface();
 
 }

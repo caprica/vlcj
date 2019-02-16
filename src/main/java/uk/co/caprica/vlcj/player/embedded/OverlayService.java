@@ -28,11 +28,10 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-// FIXME overlay should be disabled depending on the type of videosurface - we need to document that somewhere
-// FIXME need to make sure we only enable the overlay, add listeners etc if the videosurface supports it, that way we don't have a bunch of null checks all over the place
-
 /**
  * Behaviour pertaining to the heavyweight overlay.
+ * <p>
+ * Overlay is only support if the video surface associated with the media player is a {@link ComponentVideoSurface}.
  */
 public final class OverlayService extends BaseService {
 
