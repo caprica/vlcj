@@ -83,7 +83,7 @@ evolved gradually and incrementally in that time and resulted often in sub-optim
 as some generally unwieldy individual classes containing literally thousands of lines of code. Keeping the API fixed for
 those almost ten years also locked in some long-standing architectural issues that simply could not be resolved.
 
-THe decision to break backwards compatibility with the vlcj-3 API was not taken lightly, but the results have been worth
+The decision to break backwards compatibility with the vlcj-3 API was not taken lightly, but the results have been worth
 it. All legacy architectural issues have been resolved, the giant god-classes have been factored to more manageable
 chunks, and ongoing maintenance will be much easier.
 
