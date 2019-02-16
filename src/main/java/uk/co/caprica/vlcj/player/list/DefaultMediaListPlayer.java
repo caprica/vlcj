@@ -24,8 +24,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.eventmanager.TaskExecutor;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * Implementation of a media list player.
  * <p>

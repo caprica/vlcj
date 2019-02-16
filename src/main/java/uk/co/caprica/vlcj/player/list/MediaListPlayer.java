@@ -56,16 +56,46 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
  */
 public interface MediaListPlayer {
 
+    /**
+     * Behaviour pertaining to media list player controls.
+     *
+     * @return controls behaviour
+     */
     ControlsService controls();
 
+    /**
+     * Behaviour pertaining to media list player events.
+     *
+     * @return event behaviour
+     */
     EventService events();
 
+    /**
+     * Behaviour pertaining to the media list.
+     *
+     * @return media list behaviour
+     */
     ListService list();
 
+    /**
+     * Behaviour pertaining to the associated media player.
+     *
+     * @return media player behaviour
+     */
     MediaPlayerService mediaPlayer();
 
+    /**
+     * Behaviour pertaining to the status of the media list player.
+     *
+     * @return status behaviour
+     */
     StatusService status();
 
+    /**
+     * Behaviour pertaining to userdata.
+     *
+     * @return userdata behaviour
+     */
     UserDataService userData();
 
     /**
@@ -73,8 +103,27 @@ public interface MediaListPlayer {
      */
     void release();
 
+    /**
+     * Submit a task for asynchronous execution.
+     * <p>
+     * This is useful in particular for event handling code as native events are generated on a native event callback
+     * thread and it is not allowed to call back into LibVLC from this callback thread. If you do, either the call will
+     * be ineffective, strange behaviour will happen, or a fatal JVM crash may occur.
+     * <p>
+     * To mitigate this, those tasks can be offloaded from the native thread, serialised and executed using this method.
+     *
+     * @param r task to execute
+     */
     void submit(Runnable r);
 
+    /**
+     * Provide access to the native media player instance.
+     * <p>
+     * This is exposed on the interface as an implementation side-effect, ordinary applications are not expected to use
+     * this.
+     *
+     * @return media player instance
+     */
     libvlc_media_list_player_t mediaListPlayerInstance(); // FIXME check this needs to be on interface
 
 }
