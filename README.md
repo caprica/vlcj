@@ -90,8 +90,11 @@ chunks, and ongoing maintenance will be much easier.
 The price for these improvements is a lot of API breakage, sorry.
 
 The short version of the situation is that vlcj-4 can *not* be considered a drop-in upgrade for any vlcj-3 applications.
-If you want to move to vlcj-4 with your existing applications, you *will* be impacted, and you may have to make some
-*deep* changes in your own codebase. There is no automatic migration tool.
+If you want to move to vlcj-4 with your existing applications, you *will* be impacted, at best you will need to use new
+names for existing methods, at worst although very unlikely you may have to make some *deep* changes in your own
+codebase. 
+
+There is no automatic migration tool.
 
 The longer version of the situation is documented more fully in
 [this ticket](https://github.com/caprica/vlcj/issues/681). 
@@ -116,7 +119,7 @@ work just fine when using Maven to build the project from the command-line, or w
 
 However, if you use IntelliJ IDEA you may encounter some compilation problems...
 
-When compiling, IDEA will complain that package sun.misc does not exist - the Unsafe class from this package is
+When compiling, IDEA will complain that package sun.misc does not exist - the `Unsafe` class from this package is
 required for the "direct" media players.
 
 This can be worked around in a number of ways:
