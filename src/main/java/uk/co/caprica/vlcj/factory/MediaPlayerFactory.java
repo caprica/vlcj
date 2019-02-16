@@ -19,7 +19,9 @@
 
 package uk.co.caprica.vlcj.factory;
 
+import com.sun.jna.Library;
 import com.sun.jna.Native;
+import com.sun.jna.NativeLibrary;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
@@ -170,8 +172,9 @@ public class MediaPlayerFactory {
         }
         LibVlc nativeLibrary = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
         checkVersion(nativeLibrary);
-        // FIXME likely we must use a synchronized instance
-        return nativeLibrary;
+        // A synchronised library is required since there are multiple asynchronous task queues in use that could
+        // potentially call into LibVLC concurrently
+        return (LibVlc) Native.synchronizedLibrary(nativeLibrary);
     }
 
     /**
