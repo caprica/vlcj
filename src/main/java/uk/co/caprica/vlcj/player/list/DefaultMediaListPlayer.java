@@ -71,8 +71,6 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
         this.libvlc         = libvlc;
         this.libvlcInstance = libvlcInstance;
 
-        // Add event handlers for internal implementation - the order in which these are added (and therefore the order
-        // in which they execute) is important in some cases (as per the individual class Javadoc)
         this.mediaListPlayerInstance = newNativeMediaListPlayer();
 
         this.controlsService    = new ControlsService   (this);
