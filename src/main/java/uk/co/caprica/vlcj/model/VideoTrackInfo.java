@@ -89,12 +89,7 @@ public class VideoTrackInfo extends TrackInfo {
     private final float fov;
 
     /**
-     *
-     */
-    private final float zoom;
-
-    /**
-     *
+     * Video multiview type.
      */
     private final Multiview multiview;
 
@@ -121,10 +116,10 @@ public class VideoTrackInfo extends TrackInfo {
      * @param pitch pitch (degrees)
      * @param roll roll (degrees)
      * @param fov field of view (degrees)
-     * @param multiview
+     * @param multiview multiview video type
      * @param codecDescription codec description
      */
-    public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, VideoOrientation orientation, VideoProjection projection, float yaw, float pitch, float roll, float fov, float zoom, Multiview multiview, String codecDescription) {
+    public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, VideoOrientation orientation, VideoProjection projection, float yaw, float pitch, float roll, float fov, Multiview multiview, String codecDescription) {
         super(codec, originalCodec, id, profile, level, bitRate, language, description, codecDescription);
         this.width = width;
         this.height = height;
@@ -138,7 +133,6 @@ public class VideoTrackInfo extends TrackInfo {
         this.pitch = pitch;
         this.roll = roll;
         this.fov = fov;
-        this.zoom = zoom;
         this.multiview = multiview;
     }
 
@@ -200,7 +194,6 @@ public class VideoTrackInfo extends TrackInfo {
      * Get the video orientation.
      *
      * @return video orientation
-     * @since LibVLC 3.0.0
      */
     public final VideoOrientation orientation() {
         return orientation;
@@ -210,7 +203,6 @@ public class VideoTrackInfo extends TrackInfo {
      * Get the video projection.
      *
      * @return video projection
-     * @since LibVLC 3.0.0
      */
     public final VideoProjection projection() {
         return projection;
@@ -220,7 +212,6 @@ public class VideoTrackInfo extends TrackInfo {
      * Get the yaw, for spherical video.
      *
      * @return yaw (degrees)
-     * @since LibVLC 3.0.0
      */
     public final float yaw() {
         return yaw;
@@ -230,7 +221,6 @@ public class VideoTrackInfo extends TrackInfo {
      * Get the pitch, for spherical video.
      *
      * @return pitch (degrees)
-     * @since LibVLC 3.0.0
      */
     public final float pitch() {
         return pitch;
@@ -240,7 +230,6 @@ public class VideoTrackInfo extends TrackInfo {
      * Get the roll, for spherical video.
      *
      * @return roll (degrees)
-     * @since LibVLC 3.0.0
      */
     public final float roll() {
         return roll;
@@ -250,25 +239,17 @@ public class VideoTrackInfo extends TrackInfo {
      * Get the field of view, for spherical video.
      *
      * @return field of view (degrees)
-     * @since LibVLC 3.0.0
      */
     public final float fov() {
         return fov;
     }
 
     /**
+     * Get the video multiview type.
+     * <p>
+     * <strong>This is currently unused and is a placeholder for future implementation.</strong>
      *
-     *
-     * @return
-     */
-    public final float zoom() {
-        return zoom;
-    }
-
-    /**
-     *
-     *
-     * @return
+     * @return multiview type
      */
     public final Multiview multiview() {
         return multiview;
@@ -290,7 +271,6 @@ public class VideoTrackInfo extends TrackInfo {
         sb.append("pitch=").append(pitch).append(',');
         sb.append("roll=").append(roll).append(',');
         sb.append("fov=").append(fov).append(',');
-        sb.append("zoom=").append(zoom).append(',');
         sb.append("multiview=").append(multiview).append(']');
         return sb.toString();
     }

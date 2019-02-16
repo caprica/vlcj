@@ -41,7 +41,6 @@ public class libvlc_video_viewpoint_t extends Structure {
     public float f_pitch;         /** view point pitch in degrees */
     public float f_roll;          /** view point roll in degrees */
     public float f_field_of_view; /** field of view in degrees (default 80.0f) */
-    public float f_zoom;          /** zoom factor, [-1.f, 1.f] range, default to 0.f */
 
     @Override
     protected List<String> getFieldOrder() {

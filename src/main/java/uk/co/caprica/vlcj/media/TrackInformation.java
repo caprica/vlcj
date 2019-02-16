@@ -139,8 +139,8 @@ final class TrackInformation {
             track.u.video.pose.f_pitch,
             track.u.video.pose.f_roll,
             track.u.video.pose.f_field_of_view,
-            track.u.video.pose.f_zoom,
-            Multiview.multiview(track.u.video.i_multiview),
+//            Multiview.multiview(track.u.video.i_multiview), // FIXME this is not available until LibVLC 4.0.0
+            null,
             codecDescription(libvlc, TrackType.VIDEO, track.i_codec)
         );
     }
