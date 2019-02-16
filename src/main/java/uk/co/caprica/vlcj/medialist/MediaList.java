@@ -62,18 +62,18 @@ public final class MediaList {
     }
 
     /**
-     * Behaviours pertaining to media list events.
+     * Behaviour pertaining to media list events.
      *
-     * @return events behaviours
+     * @return events behaviour
      */
     public EventService events() {
         return eventService;
     }
 
     /**
-     * Behaviours pertaining to the items in the media list.
+     * Behaviour pertaining to the items in the media list.
      *
-     * @return list item behaviours
+     * @return list item behaviour
      */
     public ItemService items() {
         return itemService;
