@@ -32,24 +32,18 @@ vlcj-4
 This is the new development branch for the next major release of vlcj. Most things will stay the same but vlcj is
 undergoing a significant refactoring exercise for the long-term health of the project and ease of further development.
 
-As such, at the present time the API is fluid and completely subject to change. If you are migraging from vlcj-3 then
+As such, at the present time the API is fluid and completely subject to change. If you are migrating from vlcj-3 then
 you will have to make changes to your own code. The implementation behind the API is pretty much the same as it ever
 was, although there have been and will continue to be significant improvements in some areas, nevertheless if you are
 using this branch you do so at your own risk.
 
-Any issues raised pertaining to these API changes will be summarily deleted, perhaps with a snarky comment, although
-sensible suggestions for improvements and genuine problems (i.e. problems other than "why did this change?" and "my code
-doesn't compile any more") are still welcome. 
-
 At the present time there is no cut-off for API changes or in fact any other breaking changes, so use this branch at
 your own risk!
 
-This branch will also introduce significant new features with new API, some headline new features are:
-
-For a full list of changes in this release, check the [release milestone](https://github.com/caprica/vlcj/milestone/14).
-
 Major New Features
 ------------------
+
+Headline changes:
 
  - full support for 360 degree video, changing pitch, yaw, roll, field-of-view
  - full support for discovery and usage of alternate media renderers, e.g. Chromecast
@@ -77,7 +71,7 @@ Major New Features
 There have also been a lot of more general improvements to freshen up the codebase, make it more maintainable for the
 future, and to clear some legacy issues that have dogged the project for quite some time.
 
-See also [this issue](https://github.com/caprica/vlcj/issues/696) for more information on the changes.
+For a full list of changes in this release, check the [release milestone](https://github.com/caprica/vlcj/milestone/14).
 
 Despite all of these changes, running on JDK 1.6 is still supported!
 
