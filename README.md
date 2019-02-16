@@ -96,6 +96,14 @@ If you want to move to vlcj-4 with your existing applications, you *will* be imp
 The longer version of the situation is documented more fully in
 [this ticket](https://github.com/caprica/vlcj/issues/681). 
 
+Tutorials
+---------
+
+At the present time, the available tutorials are for vlcj-3. Whilst the underlying conecpts are the same for vlcj-4, the
+API has changed a LOT and this is not yet reflected in those tutorials.
+
+New tutorials for vlcj-4 will come soon.
+
 Building vlcj - sun.misc.Unsafe
 -------------------------------
 
