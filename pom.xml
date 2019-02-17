@@ -28,7 +28,7 @@
 
     <name>vlcj</name>
     <description>Java Framework for the vlc Media Player.</description>
-    <url>http://capricasoftware.co.uk/#/projects/vlcj</url>
+    <url>http://capricasoftware.co.uk/projects/vlcj</url>
     <inceptionYear>2009</inceptionYear>
 
     <packaging>jar</packaging>
