@@ -75,20 +75,15 @@
     </scm>
 
     <properties>
-        <jna.version>5.2.0</jna.version>
+        <vlcjNatives.version>4.0.0-SNAPSHOT</vlcjNatives.version>
         <vlcjOsxStubs.version>1.0.0</vlcjOsxStubs.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna</artifactId>
-            <version>${jna.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna-platform</artifactId>
-            <version>${jna.version}</version>
+            <groupId>uk.co.caprica</groupId>
+            <artifactId>vlcj-natives</artifactId>
+            <version>${vlcjNatives.version}</version>
         </dependency>
         <dependency>
             <groupId>uk.co.caprica</groupId>

@@ -147,6 +147,16 @@ Add the following Maven dependency to your own project pom.xml:
 
 *This artefact may not be available for quite some time, we do not push snapshot releases to Maven Central.*
 
+The core vlcj project now no longer contains the required JNA bindings to LibVLC, these are provided instead by the
+separate [vlcj-natives](https://github.com/caprica/vlcj-natives) project. The vlcj core project therefore has a new
+required dependency on the vlcj-natives project.
+
+If you are using Maven (or similar) to manage your dependencies, the vlcj-natives dependency will be handled
+automatically for you (you only need to explicitly add vlcj to your project, not vlcj-natives).
+
+If you are installing vlcj manually, then you will need to include the new vlcj-natives jar file along with the existing
+vlcj jar file.  
+
 Threading Model
 ---------------
 
@@ -270,6 +280,7 @@ see [vlcj-player](https://github.com/caprica/vlcj-player).
 Related Projects
 ----------------
 
+ * [vlcj-natives](https://github.com/caprica/vlcj-natives)
  * [vlcj-player](https://github.com/caprica/vlcj-player)
  * [vlcj-javafx](https://github.com/caprica/vlcj-javafx)
  * [vlcj-mrls](https://github.com/caprica/vlcj-mrls)
