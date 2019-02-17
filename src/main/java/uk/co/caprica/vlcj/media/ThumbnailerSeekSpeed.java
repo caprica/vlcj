@@ -17,47 +17,39 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.media;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of logo positions.
+ * Enumeration of thumbnailer seek speeds.
  */
-public enum LogoPosition {
+public enum ThumbnailerSeekSpeed {
 
-    CENTRE      ( 0),
-    LEFT        ( 1),
-    RIGHT       ( 2),
+    PRECISE(0),
+    FAST   (1);
 
-    TOP         ( 4),
-    TOP_LEFT    ( 5),
-    TOP_RIGHT   ( 6),
-
-    BOTTOM      ( 8),
-    BOTTOM_LEFT ( 9),
-    BOTTOM_RIGHT(10);
-
-    private static final Map<Integer, LogoPosition> INT_MAP = new HashMap<Integer, LogoPosition>();
+    private static final Map<Integer, ThumbnailerSeekSpeed> INT_MAP = new HashMap<Integer, ThumbnailerSeekSpeed>();
 
     static {
-        for (LogoPosition value : LogoPosition.values()) {
-            INT_MAP.put(value.intValue, value);
+        for (ThumbnailerSeekSpeed event : ThumbnailerSeekSpeed.values()) {
+            INT_MAP.put(event.intValue, event);
         }
     }
 
-    public static LogoPosition position(int intValue) {
+    public static ThumbnailerSeekSpeed pictureType(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    LogoPosition(int intValue) {
+    ThumbnailerSeekSpeed(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
+
 }

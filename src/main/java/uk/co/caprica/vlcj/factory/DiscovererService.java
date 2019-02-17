@@ -27,7 +27,7 @@ import uk.co.caprica.vlcj.binding.support.size_t;
 import uk.co.caprica.vlcj.media.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererDescription;
 import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererFactory;
-import uk.co.caprica.vlcj.enums.MediaDiscovererCategory;
+import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererCategory;
 
 import java.util.ArrayList;
 import java.util.List;

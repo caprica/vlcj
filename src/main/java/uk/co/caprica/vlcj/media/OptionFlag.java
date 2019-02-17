@@ -7,7 +7,7 @@
  * (at your option) any later version.
  *
  * VLCJ is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * but WITHOUT ANY WARRANTY, without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
@@ -17,36 +17,19 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
-
-import java.util.HashMap;
-import java.util.Map;
+package uk.co.caprica.vlcj.media;
 
 /**
- * Enumeration of media parsed statuses.
+ * Enumeration of media option flags.
  */
-public enum MediaParsedStatus {
+public enum OptionFlag {
 
-    SKIPPED(1),
-    FAILED (2),
-    TIMEOUT(3),
-    DONE   (4);
-
-    private static final Map<Integer, MediaParsedStatus> INT_MAP = new HashMap<Integer, MediaParsedStatus>();
-
-    static {
-        for (MediaParsedStatus value : MediaParsedStatus.values()) {
-            INT_MAP.put(value.intValue, value);
-        }
-    }
-
-    public static MediaParsedStatus mediaParsedStatus(int intValue) {
-        return INT_MAP.get(intValue);
-    }
+    TRUSTED(0X2),
+    UNIQUE (0X100);
 
     private final int intValue;
 
-    MediaParsedStatus(int intValue) {
+    OptionFlag(int intValue) {
         this.intValue = intValue;
     }
 

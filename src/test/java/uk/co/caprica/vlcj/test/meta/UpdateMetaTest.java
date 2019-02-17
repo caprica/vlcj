@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.test.meta;
 
 import uk.co.caprica.vlcj.condition.media.ParsedCondition;
-import uk.co.caprica.vlcj.enums.Meta;
+import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.test.VlcjTest;

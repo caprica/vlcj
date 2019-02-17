@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.list;
 
-import uk.co.caprica.vlcj.enums.State;
+import uk.co.caprica.vlcj.player.base.State;
 
 // FIXME a whole service for just this? really?
 

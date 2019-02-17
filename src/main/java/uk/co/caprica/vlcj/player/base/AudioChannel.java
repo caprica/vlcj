@@ -7,7 +7,7 @@
  * (at your option) any later version.
  *
  * VLCJ is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY, without even the implied warranty of
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
@@ -17,19 +17,23 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.player.base;
 
 /**
- * Enumeration of media option flags.
+ * Enumeration of audio channels.
  */
-public enum OptionFlag {
+public enum AudioChannel {
 
-    TRUSTED(0X2),
-    UNIQUE (0X100);
+    ERROR  (-1),
+    STEREO ( 1),
+    RSTEREO( 2),
+    LEFT   ( 3),
+    RIGHT  ( 4),
+    DOLBYS ( 5);
 
     private final int intValue;
 
-    OptionFlag(int intValue) {
+    AudioChannel(int intValue) {
         this.intValue = intValue;
     }
 

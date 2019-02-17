@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.dvb;
 
-import uk.co.caprica.vlcj.enums.Meta;
+import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.medialist.MediaList;

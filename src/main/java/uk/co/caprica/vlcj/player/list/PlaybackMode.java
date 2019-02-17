@@ -17,36 +17,35 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.player.list;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of media discoverer categories.
+ * Enumeration of media list player playback modes.
  */
-public enum MediaDiscovererCategory {
+public enum PlaybackMode {
 
-    DEVICES   (0), // devices, like portable music player
-    LAN       (1), // lan/wan services, like upnp, smb, or sap
-    PODCASTS  (2), // podcasts
-    LOCAL_DIRS(3); // local directories, like video, music or pictures directories
+    DEFAULT(0),
+    LOOP   (1),
+    REPEAT (2);
 
-    private static final Map<Integer, MediaDiscovererCategory> INT_MAP = new HashMap<Integer, MediaDiscovererCategory>();
+    private static final Map<Integer, PlaybackMode> INT_MAP = new HashMap<Integer, PlaybackMode>();
 
     static {
-        for (MediaDiscovererCategory value : MediaDiscovererCategory.values()) {
-            INT_MAP.put(value.intValue, value);
+        for (PlaybackMode event : PlaybackMode.values()) {
+            INT_MAP.put(event.intValue, event);
         }
     }
 
-    public static MediaDiscovererCategory mediaDiscovererCategory(int intValue) {
+    public static PlaybackMode event(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    MediaDiscovererCategory(int intValue) {
+    PlaybackMode(int intValue) {
         this.intValue = intValue;
     }
 

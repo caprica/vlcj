@@ -19,12 +19,9 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.enums.MediaParsedStatus;
-import uk.co.caprica.vlcj.enums.Meta;
-import uk.co.caprica.vlcj.enums.State;
+import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.model.Picture;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import javax.swing.*;
 

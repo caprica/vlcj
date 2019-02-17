@@ -14,30 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2019 Caprica Software Limited.
+ * Copyright 2009-2017 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.factory;
 
 /**
- * Enumeration of media slave priorities.
+ * Enumeration of dialog types.
  */
-public enum MediaSlavePriority {
+public enum DialogType {
 
-    LOWEST (0),
-    LOW    (1),
-    MEDIUM (2),
-    HIGH   (3),
-    HIGHEST(4);
-
-    private final int intValue;
-
-    MediaSlavePriority(int intValue) {
-        this.intValue = intValue;
-    }
-
-    public int intValue() {
-        return intValue;
-    }
+    ERROR,
+    LOGIN,
+    QUESTION,
+    PROGRESS
 
 }

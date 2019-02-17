@@ -19,9 +19,9 @@
 
 package uk.co.caprica.vlcj.model;
 
-import uk.co.caprica.vlcj.enums.Multiview;
-import uk.co.caprica.vlcj.enums.VideoOrientation;
-import uk.co.caprica.vlcj.enums.VideoProjection;
+import uk.co.caprica.vlcj.media.Multiview;
+import uk.co.caprica.vlcj.media.VideoOrientation;
+import uk.co.caprica.vlcj.media.VideoProjection;
 
 /**
  * Video track info.

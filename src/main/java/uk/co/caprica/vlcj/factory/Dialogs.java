@@ -21,8 +21,6 @@ package uk.co.caprica.vlcj.factory;
 
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.binding.internal.*;
-import uk.co.caprica.vlcj.enums.DialogQuestionType;
-import uk.co.caprica.vlcj.enums.DialogType;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -35,7 +33,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * <p>
  * Essentially this component bridges native dialog callbacks to methods on a {@link DialogHandler} implementation
  */
-public class Dialogs {
+public final class Dialogs {
 
     private final libvlc_dialog_cbs callbacks;
 

@@ -14,37 +14,42 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2019 Caprica Software Limited.
+ * Copyright 2009-2017 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.media;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of thumbnailer seek speeds.
+ * Enumeration of video multiview types.
  */
-public enum ThumbnailerSeekSpeed {
+public enum Multiview {
 
-    PRECISE(0),
-    FAST   (1);
+    TWO_D       (0), /** No stereoscopy: 2D picture. */
+    STEREO_SBS  (1), /** Side-by-side */
+    STEREO_TB   (2), /** Top-bottom */
+    STEREO_ROW  (3), /** Row sequential */
+    STEREO_COL  (4), /** Column sequential */
+    STEREO_FRAME(5), /** Frame sequential */
+    CHECKERBOARD(6); /** Checkerboard pattern */
 
-    private static final Map<Integer, ThumbnailerSeekSpeed> INT_MAP = new HashMap<Integer, ThumbnailerSeekSpeed>();
+    private static final Map<Integer, Multiview> INT_MAP = new HashMap<Integer, Multiview>();
 
     static {
-        for (ThumbnailerSeekSpeed event : ThumbnailerSeekSpeed.values()) {
-            INT_MAP.put(event.intValue, event);
+        for (Multiview multiview : Multiview.values()) {
+            INT_MAP.put(multiview.intValue, multiview);
         }
     }
 
-    public static ThumbnailerSeekSpeed pictureType(int intValue) {
+    public static Multiview multiview(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    ThumbnailerSeekSpeed(int intValue) {
+    Multiview(int intValue) {
         this.intValue = intValue;
     }
 

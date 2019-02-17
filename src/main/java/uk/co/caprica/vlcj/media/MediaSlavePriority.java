@@ -14,40 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2017 Caprica Software Limited.
+ * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
-
-import java.util.HashMap;
-import java.util.Map;
+package uk.co.caprica.vlcj.media;
 
 /**
- * Enumeration of teletext keys.
+ * Enumeration of media slave priorities.
  */
-public enum TeletextKey {
+public enum MediaSlavePriority {
 
-    RED   ('r' << 16),
-    GREEN ('g' << 16),
-    YELLOW('y' << 16),
-    BLUE  ('b' << 16),
-    INDEX ('i' << 16);
-
-    private static final Map<Integer, TeletextKey> INT_MAP = new HashMap<Integer, TeletextKey>();
-
-    static {
-        for (TeletextKey key : TeletextKey.values()) {
-            INT_MAP.put(key.intValue, key);
-        }
-    }
-
-    public static TeletextKey key(int intValue) {
-        return INT_MAP.get(intValue);
-    }
+    LOWEST (0),
+    LOW    (1),
+    MEDIUM (2),
+    HIGH   (3),
+    HIGHEST(4);
 
     private final int intValue;
 
-    TeletextKey(int intValue) {
+    MediaSlavePriority(int intValue) {
         this.intValue = intValue;
     }
 

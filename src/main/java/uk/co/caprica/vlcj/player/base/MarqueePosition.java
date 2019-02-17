@@ -17,23 +17,43 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.player.base;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Enumeration of audio channels.
+ * Enumeration of marquee positions.
  */
-public enum AudioChannel {
+public enum MarqueePosition {
 
-    ERROR  (-1),
-    STEREO ( 1),
-    RSTEREO( 2),
-    LEFT   ( 3),
-    RIGHT  ( 4),
-    DOLBYS ( 5);
+    CENTRE      ( 0),
+    LEFT        ( 1),
+    RIGHT       ( 2),
+
+    TOP         ( 4),
+    TOP_LEFT    ( 5),
+    TOP_RIGHT   ( 6),
+
+    BOTTOM      ( 8),
+    BOTTOM_LEFT ( 9),
+    BOTTOM_RIGHT(10);
+
+    private static final Map<Integer, MarqueePosition> INT_MAP = new HashMap<Integer, MarqueePosition>();
+
+    static {
+        for (MarqueePosition value : MarqueePosition.values()) {
+            INT_MAP.put(value.intValue, value);
+        }
+    }
+
+    public static MarqueePosition position(int intValue) {
+        return INT_MAP.get(intValue);
+    }
 
     private final int intValue;
 
-    AudioChannel(int intValue) {
+    MarqueePosition(int intValue) {
         this.intValue = intValue;
     }
 

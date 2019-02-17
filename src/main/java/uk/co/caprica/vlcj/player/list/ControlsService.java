@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.player.list;
 
-import uk.co.caprica.vlcj.enums.PlaybackMode;
-
 /**
  * Behaviour pertaining to media list player controls, like play, pause, stop of the list as a whole, play a specific
  * item, play next item, play previous item.
@@ -34,7 +32,7 @@ public final class ControlsService extends BaseService {
     /**
      * Play the media list.
      * <p>
-     * If the play mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#REPEAT} no item will be played and a "media list end reached"
+     * If the play mode is {@link PlaybackMode#REPEAT} no item will be played and a "media list end reached"
      * event will be raised.
      */
     public void play() {
@@ -68,7 +66,7 @@ public final class ControlsService extends BaseService {
     /**
      * Play a particular item on the media list.
      * <p>
-     * When the mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#REPEAT} this method is the only way to successfully
+     * When the mode is {@link PlaybackMode#REPEAT} this method is the only way to successfully
      * play media in the list.
      *
      * @param itemIndex index of the item to play
@@ -82,7 +80,7 @@ public final class ControlsService extends BaseService {
     /**
      * Play the next item in the media list.
      * <p>
-     * When the mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#REPEAT} this method will replay the current media,
+     * When the mode is {@link PlaybackMode#REPEAT} this method will replay the current media,
      * not the next one.
      *
      * @return <code>true</code> if the next item could be played, otherwise <code>false</code>
@@ -95,7 +93,7 @@ public final class ControlsService extends BaseService {
     /**
      * Play the previous item in the media list.
      * <p>
-     * When the mode is {@link uk.co.caprica.vlcj.enums.PlaybackMode#REPEAT} this method will replay the current media,
+     * When the mode is {@link PlaybackMode#REPEAT} this method will replay the current media,
      * not the previous one.
      *
      * @return <code>true</code> if the previous item could be played, otherwise <code>false</code>

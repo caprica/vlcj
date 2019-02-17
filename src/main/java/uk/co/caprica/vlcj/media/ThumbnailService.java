@@ -20,8 +20,6 @@
 package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_thumbnail_request_t;
-import uk.co.caprica.vlcj.enums.PictureType;
-import uk.co.caprica.vlcj.enums.ThumbnailerSeekSpeed;
 
 /**
  * Behaviour pertaining to media thumbnails.

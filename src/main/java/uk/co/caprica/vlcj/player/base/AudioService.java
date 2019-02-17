@@ -173,7 +173,7 @@ public final class AudioService extends BaseService implements EqualizerListener
     /**
      * Get the current audio channel.
      *
-     * For channel values see {@link uk.co.caprica.vlcj.enums.AudioChannel}.
+     * For channel values see {@link AudioChannel}.
      *
      * @return audio channel
      */
@@ -184,7 +184,7 @@ public final class AudioService extends BaseService implements EqualizerListener
     /**
      * Set the audio channel.
      *
-     * For channel values see {@link uk.co.caprica.vlcj.enums.AudioChannel}.
+     * For channel values see {@link AudioChannel}.
      *
      * @param channel channel
      */

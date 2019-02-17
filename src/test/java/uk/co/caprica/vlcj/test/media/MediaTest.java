@@ -19,14 +19,18 @@
 
 package uk.co.caprica.vlcj.test.media;
 
-import uk.co.caprica.vlcj.enums.*;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.MediaSlavePriority;
+import uk.co.caprica.vlcj.media.MediaSlaveType;
+import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.model.MediaSlave;
 import uk.co.caprica.vlcj.model.TrackInfo;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.media.MediaEventAdapter;
+import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import java.util.List;

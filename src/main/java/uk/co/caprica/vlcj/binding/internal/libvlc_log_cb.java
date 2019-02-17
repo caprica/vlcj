@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.binding.internal;
 
 import com.sun.jna.Callback;
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.enums.LogLevel;
+import uk.co.caprica.vlcj.log.LogLevel;
 
 /**
  * Specification for a callback that handles native log messages.

@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.enums.State;
-
 /**
  * Behaviour pertaining to the status of the media player.
  * <p>

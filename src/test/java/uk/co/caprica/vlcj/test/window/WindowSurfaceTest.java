@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.window;
 
-import uk.co.caprica.vlcj.enums.MarqueePosition;
+import uk.co.caprica.vlcj.player.base.MarqueePosition;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;

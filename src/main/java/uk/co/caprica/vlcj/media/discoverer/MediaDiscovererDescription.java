@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.media.discoverer;
 
-import uk.co.caprica.vlcj.enums.MediaDiscovererCategory;
-
 /**
  * Media discoverer description.
  */

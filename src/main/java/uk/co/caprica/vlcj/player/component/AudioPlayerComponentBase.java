@@ -19,9 +19,9 @@
 
 package uk.co.caprica.vlcj.player.component;
 
-import uk.co.caprica.vlcj.enums.MediaParsedStatus;
-import uk.co.caprica.vlcj.enums.Meta;
-import uk.co.caprica.vlcj.enums.State;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
+import uk.co.caprica.vlcj.media.Meta;
+import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MediaEventListener;

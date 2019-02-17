@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.sun.jna.Structure;
-import uk.co.caprica.vlcj.enums.Meta;
+import uk.co.caprica.vlcj.media.Meta;
 
 /**
  *

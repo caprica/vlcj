@@ -17,38 +17,34 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.media;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of media types.
+ * Enumeration of media slave types.
  */
-public enum MediaType {
+public enum MediaSlaveType {
 
-    UNKNOWN  (0),
-    FILE     (1),
-    DIRECTORY(2),
-    DISC     (3),
-    STREAM   (4),
-    PLAYLIST (5);
+    SUBTITLE(0),
+    AUDIO   (1);
 
-    private static final Map<Integer, MediaType> INT_MAP = new HashMap<Integer, MediaType>();
+    private static final Map<Integer, MediaSlaveType> INT_MAP = new HashMap<Integer, MediaSlaveType>();
 
     static {
-        for (MediaType value : MediaType.values()) {
+        for (MediaSlaveType value : MediaSlaveType.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static MediaType mediaType(int intValue) {
+    public static MediaSlaveType mediaSlaveType(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    MediaType(int intValue) {
+    MediaSlaveType(int intValue) {
         this.intValue = intValue;
     }
 

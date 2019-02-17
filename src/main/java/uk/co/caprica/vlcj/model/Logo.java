@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.model;
 
-import uk.co.caprica.vlcj.enums.LogoPosition;
+import uk.co.caprica.vlcj.player.base.LogoPosition;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import java.awt.image.RenderedImage;

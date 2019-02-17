@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.model;
 
-import uk.co.caprica.vlcj.enums.MediaSlaveType;
+import uk.co.caprica.vlcj.media.MediaSlaveType;
 
 /**
  * Media slave.

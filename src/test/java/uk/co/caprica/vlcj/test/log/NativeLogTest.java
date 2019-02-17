@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.log;
 
 import java.util.concurrent.CountDownLatch;
 
-import uk.co.caprica.vlcj.enums.LogLevel;
+import uk.co.caprica.vlcj.log.LogLevel;
 import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
 import uk.co.caprica.vlcj.log.LogEventListener;
 import uk.co.caprica.vlcj.log.NativeLog;

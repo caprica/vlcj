@@ -17,41 +17,47 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.player.base;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of native log levels.
+ * Enumeration of logo positions.
  */
-public enum LogLevel {
+public enum LogoPosition {
 
-    DEBUG  (0), // Debug message
-    NOTICE (2), // Important informational message
-    WARNING(3), // Warning (potential error) message
-    ERROR  (4); // Error message
+    CENTRE      ( 0),
+    LEFT        ( 1),
+    RIGHT       ( 2),
 
-    private static final Map<Integer, LogLevel> INT_MAP = new HashMap<Integer, LogLevel>();
+    TOP         ( 4),
+    TOP_LEFT    ( 5),
+    TOP_RIGHT   ( 6),
+
+    BOTTOM      ( 8),
+    BOTTOM_LEFT ( 9),
+    BOTTOM_RIGHT(10);
+
+    private static final Map<Integer, LogoPosition> INT_MAP = new HashMap<Integer, LogoPosition>();
 
     static {
-        for (LogLevel event : LogLevel.values()) {
-            INT_MAP.put(event.intValue, event);
+        for (LogoPosition value : LogoPosition.values()) {
+            INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static LogLevel level(int intValue) {
+    public static LogoPosition position(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    LogLevel(int intValue) {
+    LogoPosition(int intValue) {
         this.intValue = intValue;
     }
 
     public int intValue() {
         return intValue;
     }
-
 }

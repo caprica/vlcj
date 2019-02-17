@@ -17,45 +17,36 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.media;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of positions, e.g. for the video title.
+ * Enumeration of media parsed statuses.
  */
-public enum Position {
+public enum MediaParsedStatus {
 
-    DISABLE     (-1),
+    SKIPPED(1),
+    FAILED (2),
+    TIMEOUT(3),
+    DONE   (4);
 
-    CENTER      ( 0),
-    LEFT        ( 1),
-    RIGHT       ( 2),
-
-    TOP         ( 3),
-    TOP_LEFT    ( 4),
-    TOP_RIGHT   ( 5),
-
-    BOTTOM      ( 6),
-    BOTTOM_LEFT ( 7),
-    BOTTOM_RIGHT( 8);
-
-    private static final Map<Integer, Position> INT_MAP = new HashMap<Integer, Position>();
+    private static final Map<Integer, MediaParsedStatus> INT_MAP = new HashMap<Integer, MediaParsedStatus>();
 
     static {
-        for (Position value : Position.values()) {
+        for (MediaParsedStatus value : MediaParsedStatus.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static Position position(int intValue) {
+    public static MediaParsedStatus mediaParsedStatus(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    Position(int intValue) {
+    MediaParsedStatus(int intValue) {
         this.intValue = intValue;
     }
 

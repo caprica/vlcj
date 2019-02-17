@@ -20,7 +20,6 @@
 package uk.co.caprica.vlcj.media;
 
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.enums.Meta;
 import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.model.MetaData;
 

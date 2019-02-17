@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.condition.media;
 
-import uk.co.caprica.vlcj.enums.MediaParsedStatus;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.Media;
 
 /**

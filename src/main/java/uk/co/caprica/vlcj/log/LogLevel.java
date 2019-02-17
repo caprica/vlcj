@@ -17,34 +17,36 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.log;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of media slave types.
+ * Enumeration of native log levels.
  */
-public enum MediaSlaveType {
+public enum LogLevel {
 
-    SUBTITLE(0),
-    AUDIO   (1);
+    DEBUG  (0), // Debug message
+    NOTICE (2), // Important informational message
+    WARNING(3), // Warning (potential error) message
+    ERROR  (4); // Error message
 
-    private static final Map<Integer, MediaSlaveType> INT_MAP = new HashMap<Integer, MediaSlaveType>();
+    private static final Map<Integer, LogLevel> INT_MAP = new HashMap<Integer, LogLevel>();
 
     static {
-        for (MediaSlaveType value : MediaSlaveType.values()) {
-            INT_MAP.put(value.intValue, value);
+        for (LogLevel event : LogLevel.values()) {
+            INT_MAP.put(event.intValue, event);
         }
     }
 
-    public static MediaSlaveType mediaSlaveType(int intValue) {
+    public static LogLevel level(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    MediaSlaveType(int intValue) {
+    LogLevel(int intValue) {
         this.intValue = intValue;
     }
 

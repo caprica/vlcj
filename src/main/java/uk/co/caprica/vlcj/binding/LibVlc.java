@@ -62,14 +62,16 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 import uk.co.caprica.vlcj.binding.support.size_tByReference;
-import uk.co.caprica.vlcj.enums.ParseFlag;
-import uk.co.caprica.vlcj.enums.State;
+import uk.co.caprica.vlcj.media.ParseFlag;
+import uk.co.caprica.vlcj.media.PictureType;
+import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.binding.support.size_t;
 
 import com.sun.jna.Library;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
 import uk.co.caprica.vlcj.player.renderer.RendererItem;
 
 /**
@@ -650,7 +652,7 @@ public interface LibVlc extends Library {
     /**
      * Get Parsed status for media descriptor object.
      *
-     * @see uk.co.caprica.vlcj.enums.MediaParsedStatus
+     * @see MediaParsedStatus
      *
      * @param p_md media descriptor object
      * @return a value of the libvlc_media_parsed_status_t enum
@@ -736,7 +738,7 @@ public interface LibVlc extends Library {
      * @since libvlc 4.0 or later
      *
      * @see libvlc_picture_t
-     * @see uk.co.caprica.vlcj.enums.PictureType
+     * @see PictureType
      */
     libvlc_media_thumbnail_request_t libvlc_media_thumbnail_request_by_time(libvlc_media_t md, long time, int speed, int width, int height, int picture_type, long timeout);
 
@@ -759,7 +761,7 @@ public interface LibVlc extends Library {
      * @since libvlc 4.0 or later
      *
      * @see libvlc_picture_t
-     * @see uk.co.caprica.vlcj.enums.PictureType
+     * @see PictureType
      */
     libvlc_media_thumbnail_request_t libvlc_media_thumbnail_request_by_pos(libvlc_media_t md, float pos, int speed, int width, int height, int picture_type, long timeout);
 
@@ -2945,7 +2947,7 @@ public interface LibVlc extends Library {
      * Returns the picture type
      *
      * @param pic A picture object
-     * @see uk.co.caprica.vlcj.enums.PictureType
+     * @see PictureType
      */
     int libvlc_picture_type(libvlc_picture_t pic);
 

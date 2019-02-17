@@ -17,62 +17,39 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.media;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of native media/player states.
+ * Enumeration of track types.
  */
-public enum State {
+public enum TrackType {
 
-    NOTHING_SPECIAL(0),
-    OPENING        (1),
-    BUFFERING      (2), // Deprecated, use  libvlc_MediaPlayerBuffering events instead
-    PLAYING        (3),
-    PAUSED         (4),
-    STOPPED        (5),
-    ENDED          (6),
-    ERROR          (7);
+    UNKNOWN(-1),
+    AUDIO  ( 0),
+    VIDEO  ( 1),
+    TEXT   ( 2);
 
-    private static final Map<Integer, State> INT_MAP = new HashMap<Integer, State>();
+    private static final Map<Integer, TrackType> INT_MAP = new HashMap<Integer, TrackType>();
 
     static {
-        for (State event : State.values()) {
-            INT_MAP.put(event.intValue, event);
+        for (TrackType value : TrackType.values()) {
+            INT_MAP.put(value.intValue, value);
         }
     }
 
-    /**
-     * Get an enumerated value for a native value.
-     *
-     * @param intValue native value
-     * @return enumerated value
-     */
-    public static State state(int intValue) {
+    public static TrackType trackType(int intValue) {
         return INT_MAP.get(intValue);
     }
 
-    /**
-     * Native value.
-     */
     private final int intValue;
 
-    /**
-     * Create an enumerated value.
-     *
-     * @param intValue native value
-     */
-    State(int intValue) {
+    TrackType(int intValue) {
         this.intValue = intValue;
     }
 
-    /**
-     * Get the native value.
-     *
-     * @return value
-     */
     public int intValue() {
         return intValue;
     }

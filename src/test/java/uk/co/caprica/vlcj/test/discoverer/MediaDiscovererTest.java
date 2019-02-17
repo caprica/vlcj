@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.discoverer;
 
 import uk.co.caprica.vlcj.media.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererDescription;
-import uk.co.caprica.vlcj.enums.MediaDiscovererCategory;
+import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererCategory;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.medialist.MediaList;

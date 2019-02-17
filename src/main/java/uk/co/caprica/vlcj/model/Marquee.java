@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.model;
 
 import java.awt.Color;
 
-import uk.co.caprica.vlcj.enums.MarqueePosition;
+import uk.co.caprica.vlcj.player.base.MarqueePosition;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**

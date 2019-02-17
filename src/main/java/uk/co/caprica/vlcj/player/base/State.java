@@ -17,38 +17,62 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.player.base;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of picture types.
+ * Enumeration of native media/player states.
  */
-public enum PictureType {
+public enum State {
 
-    ARGB(0),
-    PNG (1),
-    JPG (2);
+    NOTHING_SPECIAL(0),
+    OPENING        (1),
+    BUFFERING      (2), // Deprecated, use  libvlc_MediaPlayerBuffering events instead
+    PLAYING        (3),
+    PAUSED         (4),
+    STOPPED        (5),
+    ENDED          (6),
+    ERROR          (7);
 
-    private static final Map<Integer, PictureType> INT_MAP = new HashMap<Integer, PictureType>();
+    private static final Map<Integer, State> INT_MAP = new HashMap<Integer, State>();
 
     static {
-        for (PictureType event : PictureType.values()) {
+        for (State event : State.values()) {
             INT_MAP.put(event.intValue, event);
         }
     }
 
-    public static PictureType pictureType(int intValue) {
+    /**
+     * Get an enumerated value for a native value.
+     *
+     * @param intValue native value
+     * @return enumerated value
+     */
+    public static State state(int intValue) {
         return INT_MAP.get(intValue);
     }
 
+    /**
+     * Native value.
+     */
     private final int intValue;
 
-    PictureType(int intValue) {
+    /**
+     * Create an enumerated value.
+     *
+     * @param intValue native value
+     */
+    State(int intValue) {
         this.intValue = intValue;
     }
 
+    /**
+     * Get the native value.
+     *
+     * @return value
+     */
     public int intValue() {
         return intValue;
     }

@@ -14,38 +14,40 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2019 Caprica Software Limited.
+ * Copyright 2009-2017 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.player.base;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of media list player playback modes.
+ * Enumeration of teletext keys.
  */
-public enum PlaybackMode {
+public enum TeletextKey {
 
-    DEFAULT(0),
-    LOOP   (1),
-    REPEAT (2);
+    RED   ('r' << 16),
+    GREEN ('g' << 16),
+    YELLOW('y' << 16),
+    BLUE  ('b' << 16),
+    INDEX ('i' << 16);
 
-    private static final Map<Integer, PlaybackMode> INT_MAP = new HashMap<Integer, PlaybackMode>();
+    private static final Map<Integer, TeletextKey> INT_MAP = new HashMap<Integer, TeletextKey>();
 
     static {
-        for (PlaybackMode event : PlaybackMode.values()) {
-            INT_MAP.put(event.intValue, event);
+        for (TeletextKey key : TeletextKey.values()) {
+            INT_MAP.put(key.intValue, key);
         }
     }
 
-    public static PlaybackMode event(int intValue) {
+    public static TeletextKey key(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    PlaybackMode(int intValue) {
+    TeletextKey(int intValue) {
         this.intValue = intValue;
     }
 

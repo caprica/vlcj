@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.enums.ParseFlag;
-import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 
 /**

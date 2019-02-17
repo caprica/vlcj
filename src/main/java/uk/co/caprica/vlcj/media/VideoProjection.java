@@ -17,42 +17,35 @@
  * Copyright 2009-2017 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.media;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of media player roles.
+ * Enumeration of video projections.
  */
-public enum MediaPlayerRole {
+public enum VideoProjection {
 
-    NONE         (0), /* Don't use a media player role */
-    MUSIC        (1), /* Music (or radio) playback */
-    VIDEO        (2), /* Video playback */
-    COMMUNICATION(3), /* Speech, real-time communication */
-    GAME         (4), /* Video game */
-    NOTIFICATION (5), /* User interaction feedback */
-    ANIMATION    (6), /* Embedded animation (e.g. in web page) */
-    PRODUCTION   (7), /* Audio editting/production */
-    ACCESSIBILITY(8), /* Accessibility */
-    TEST         (9); /* Testing */
+    RECTANGULAR            (0),
+    EQUIRECTANGULAR        (1),     /* 360 spherical */
+    CUBEMAP_LAYOUT_STANDARD(0x100);
 
-    private static final Map<Integer, MediaPlayerRole> INT_MAP = new HashMap<Integer, MediaPlayerRole>();
+    private static final Map<Integer, VideoProjection> INT_MAP = new HashMap<Integer, VideoProjection>();
 
     static {
-        for (MediaPlayerRole role : MediaPlayerRole.values()) {
-            INT_MAP.put(role.intValue, role);
+        for (VideoProjection projection : VideoProjection.values()) {
+            INT_MAP.put(projection.intValue, projection);
         }
     }
 
-    public static MediaPlayerRole role(int intValue) {
+    public static VideoProjection videoProjection(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    MediaPlayerRole(int intValue) {
+    VideoProjection(int intValue) {
         this.intValue = intValue;
     }
 

@@ -14,42 +14,39 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2017 Caprica Software Limited.
+ * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.media.discoverer;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of video multiview types.
+ * Enumeration of media discoverer categories.
  */
-public enum Multiview {
+public enum MediaDiscovererCategory {
 
-    TWO_D       (0), /** No stereoscopy: 2D picture. */
-    STEREO_SBS  (1), /** Side-by-side */
-    STEREO_TB   (2), /** Top-bottom */
-    STEREO_ROW  (3), /** Row sequential */
-    STEREO_COL  (4), /** Column sequential */
-    STEREO_FRAME(5), /** Frame sequential */
-    CHECKERBOARD(6); /** Checkerboard pattern */
+    DEVICES   (0), // devices, like portable music player
+    LAN       (1), // lan/wan services, like upnp, smb, or sap
+    PODCASTS  (2), // podcasts
+    LOCAL_DIRS(3); // local directories, like video, music or pictures directories
 
-    private static final Map<Integer, Multiview> INT_MAP = new HashMap<Integer, Multiview>();
+    private static final Map<Integer, MediaDiscovererCategory> INT_MAP = new HashMap<Integer, MediaDiscovererCategory>();
 
     static {
-        for (Multiview multiview : Multiview.values()) {
-            INT_MAP.put(multiview.intValue, multiview);
+        for (MediaDiscovererCategory value : MediaDiscovererCategory.values()) {
+            INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static Multiview multiview(int intValue) {
+    public static MediaDiscovererCategory mediaDiscovererCategory(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    Multiview(int intValue) {
+    MediaDiscovererCategory(int intValue) {
         this.intValue = intValue;
     }
 

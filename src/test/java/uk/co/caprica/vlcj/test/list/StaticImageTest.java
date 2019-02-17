@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.list;
 
-import uk.co.caprica.vlcj.enums.PlaybackMode;
+import uk.co.caprica.vlcj.player.list.PlaybackMode;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaListRef;

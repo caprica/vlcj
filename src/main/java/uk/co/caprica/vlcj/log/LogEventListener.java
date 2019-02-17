@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.log;
 
-import uk.co.caprica.vlcj.enums.LogLevel;
-
 /**
  * Specification for a component that will receive native log messages.
  */

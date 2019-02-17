@@ -17,36 +17,45 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.player.base;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of track types.
+ * Enumeration of positions, e.g. for the video title.
  */
-public enum TrackType {
+public enum Position {
 
-    UNKNOWN(-1),
-    AUDIO  ( 0),
-    VIDEO  ( 1),
-    TEXT   ( 2);
+    DISABLE     (-1),
 
-    private static final Map<Integer, TrackType> INT_MAP = new HashMap<Integer, TrackType>();
+    CENTER      ( 0),
+    LEFT        ( 1),
+    RIGHT       ( 2),
+
+    TOP         ( 3),
+    TOP_LEFT    ( 4),
+    TOP_RIGHT   ( 5),
+
+    BOTTOM      ( 6),
+    BOTTOM_LEFT ( 7),
+    BOTTOM_RIGHT( 8);
+
+    private static final Map<Integer, Position> INT_MAP = new HashMap<Integer, Position>();
 
     static {
-        for (TrackType value : TrackType.values()) {
+        for (Position value : Position.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static TrackType trackType(int intValue) {
+    public static Position position(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    TrackType(int intValue) {
+    Position(int intValue) {
         this.intValue = intValue;
     }
 

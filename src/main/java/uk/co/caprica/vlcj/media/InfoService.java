@@ -20,10 +20,8 @@
 package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.NativeString;
-import uk.co.caprica.vlcj.enums.State;
-import uk.co.caprica.vlcj.enums.TrackType;
+import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
-import uk.co.caprica.vlcj.enums.MediaType;
 import uk.co.caprica.vlcj.model.*;
 
 import java.util.List;

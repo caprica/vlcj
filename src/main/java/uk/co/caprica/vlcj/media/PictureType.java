@@ -17,43 +17,35 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.enums;
+package uk.co.caprica.vlcj.media;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of marquee positions.
+ * Enumeration of picture types.
  */
-public enum MarqueePosition {
+public enum PictureType {
 
-    CENTRE      ( 0),
-    LEFT        ( 1),
-    RIGHT       ( 2),
+    ARGB(0),
+    PNG (1),
+    JPG (2);
 
-    TOP         ( 4),
-    TOP_LEFT    ( 5),
-    TOP_RIGHT   ( 6),
-
-    BOTTOM      ( 8),
-    BOTTOM_LEFT ( 9),
-    BOTTOM_RIGHT(10);
-
-    private static final Map<Integer, MarqueePosition> INT_MAP = new HashMap<Integer, MarqueePosition>();
+    private static final Map<Integer, PictureType> INT_MAP = new HashMap<Integer, PictureType>();
 
     static {
-        for (MarqueePosition value : MarqueePosition.values()) {
-            INT_MAP.put(value.intValue, value);
+        for (PictureType event : PictureType.values()) {
+            INT_MAP.put(event.intValue, event);
         }
     }
 
-    public static MarqueePosition position(int intValue) {
+    public static PictureType pictureType(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    MarqueePosition(int intValue) {
+    PictureType(int intValue) {
         this.intValue = intValue;
     }
 
