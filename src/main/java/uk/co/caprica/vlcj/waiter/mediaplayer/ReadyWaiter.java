@@ -17,37 +17,27 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition.mediaplayer;
+package uk.co.caprica.vlcj.waiter.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
- * Implementation of a condition that waits for the media player to report that it has reached/passed a particular
- * position.
+ * Implementation of a condition that waits for the media player to report that it is "ready".
  */
-public class PositionReachedCondition extends MediaPlayerCondition<Float> {
-
-    /**
-     * Target position (percentage, 0.0 to 1.0).
-     */
-    protected final float targetPosition;
+public class ReadyWaiter extends MediaPlayerWaiter<Object> {
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
-     * @param targetPosition target position (percentage, 0.0 to 1.0)
      */
-    public PositionReachedCondition(MediaPlayer mediaPlayer, float targetPosition) {
+    public ReadyWaiter(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
-        this.targetPosition = targetPosition;
     }
 
     @Override
-    public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
-        if (newPosition >= targetPosition) {
-            ready(targetPosition);
-        }
+    public void mediaPlayerReady(MediaPlayer mediaPlayer) {
+        ready();
     }
 
 }

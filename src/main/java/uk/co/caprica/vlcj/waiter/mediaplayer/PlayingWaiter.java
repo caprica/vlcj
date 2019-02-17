@@ -17,26 +17,26 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition.mediaplayer;
+package uk.co.caprica.vlcj.waiter.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
- * Implementation of a condition that waits for the media player to report that it is "ready".
+ * Implementation of a condition that waits for the media player to report that it is playing.
  */
-public class ReadyCondition extends MediaPlayerCondition<Object> {
+public class PlayingWaiter extends MediaPlayerWaiter<Object> {
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
      */
-    public ReadyCondition(MediaPlayer mediaPlayer) {
+    public PlayingWaiter(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 
     @Override
-    public void mediaPlayerReady(MediaPlayer mediaPlayer) {
+    public void playing(MediaPlayer mediaPlayer) {
         ready();
     }
 

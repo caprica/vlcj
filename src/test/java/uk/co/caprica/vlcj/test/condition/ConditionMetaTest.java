@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MetaData;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.condition.media.ParsedCondition;
+import uk.co.caprica.vlcj.waiter.media.ParsedWaiter;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -73,7 +73,7 @@ public class ConditionMetaTest extends VlcjTest {
 
         Media media = mediaPlayer.media().newMedia();
 
-        ParsedCondition parsedCondition = new ParsedCondition(media) {
+        ParsedWaiter parsedWaiter = new ParsedWaiter(media) {
             @Override
             protected boolean onBefore(Media media) {
                 // Some media, such as mpg, must be played before all meta data (e.g. duration) is available
@@ -87,7 +87,7 @@ public class ConditionMetaTest extends VlcjTest {
                 mediaPlayer.controls().stop();
             }
         };
-        parsedCondition.await();
+        parsedWaiter.await();
 
         MetaData metaData = mediaPlayer.media().meta().asMetaData();
         System.out.println(metaData);

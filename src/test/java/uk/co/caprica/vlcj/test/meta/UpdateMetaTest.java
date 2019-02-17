@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.meta;
 
-import uk.co.caprica.vlcj.condition.media.ParsedCondition;
+import uk.co.caprica.vlcj.waiter.media.ParsedWaiter;
 import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
@@ -69,7 +69,7 @@ public class UpdateMetaTest extends VlcjTest {
         final Media media = factory.media().newMedia(mrl);
 
         // Parsing is asynchronous, we use a conditional waiter to parse the media and wait for it to finish parsing
-        ParsedCondition parsed = new ParsedCondition(media) {
+        ParsedWaiter parsed = new ParsedWaiter(media) {
             @Override
             protected boolean onBefore(Media component) {
                 return media.parsing().parse();

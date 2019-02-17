@@ -21,13 +21,13 @@ package uk.co.caprica.vlcj.test.condition;
 
 import java.io.File;
 
-import uk.co.caprica.vlcj.condition.mediaplayer.ReadyCondition;
-import uk.co.caprica.vlcj.condition.mediaplayer.SnapshotTakenCondition;
-import uk.co.caprica.vlcj.condition.mediaplayer.TimeReachedCondition;
+import uk.co.caprica.vlcj.waiter.mediaplayer.ReadyWaiter;
+import uk.co.caprica.vlcj.waiter.mediaplayer.SnapshotTakenWaiter;
+import uk.co.caprica.vlcj.waiter.mediaplayer.TimeReachedWaiter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.condition.UnexpectedErrorConditionException;
-import uk.co.caprica.vlcj.condition.UnexpectedFinishedConditionException;
+import uk.co.caprica.vlcj.waiter.UnexpectedWaiterErrorException;
+import uk.co.caprica.vlcj.waiter.UnexpectedWaiterFinishedException;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -81,7 +81,7 @@ public class ConditionTest extends VlcjTest {
         // The media player must be playing or else the required time changed events will not be fired.
 
         try {
-            ReadyCondition readyCondition = new ReadyCondition(mediaPlayer) {
+            ReadyWaiter readyWaiter = new ReadyWaiter(mediaPlayer) {
                 @Override
                 protected boolean onBefore(MediaPlayer mediaPlayer) {
                     // You do not have to use onBefore(), but sometimes it is very convenient, and guarantees
@@ -90,7 +90,7 @@ public class ConditionTest extends VlcjTest {
                     return true;
                 }
             };
-            readyCondition.await();
+            readyWaiter.await();
 
             long time = period;
 
@@ -107,31 +107,31 @@ public class ConditionTest extends VlcjTest {
 
                 System.out.println("Snapshot " + i);
 
-                TimeReachedCondition timeReachedCondition = new TimeReachedCondition(mediaPlayer, time) {
+                TimeReachedWaiter timeReachedWaiter = new TimeReachedWaiter(mediaPlayer, time) {
                     @Override
                     protected boolean onBefore(MediaPlayer mediaPlayer) {
                         mediaPlayer.controls().setTime(targetTime);
                         return true;
                     }
                 };
-                timeReachedCondition.await();
+                timeReachedWaiter.await();
 
                 // This step may not be necessary, but the purpose of this test is to demo these conditional waiters
-                SnapshotTakenCondition snapshotTakenCondition = new SnapshotTakenCondition(mediaPlayer) {
+                SnapshotTakenWaiter snapshotTakenWaiter = new SnapshotTakenWaiter(mediaPlayer) {
                     @Override
                     protected boolean onBefore(MediaPlayer mediaPlayer) {
                         return mediaPlayer.snapshots().saveSnapshot(640, 480);
                     }
                 };
-                snapshotTakenCondition.await();
+                snapshotTakenWaiter.await();
 
                 time += period;
             }
         }
-        catch(UnexpectedErrorConditionException e) {
+        catch(UnexpectedWaiterErrorException e) {
             System.out.println("ERROR!");
         }
-        catch(UnexpectedFinishedConditionException e) {
+        catch(UnexpectedWaiterFinishedException e) {
             System.out.println("FINISHED!");
         }
 

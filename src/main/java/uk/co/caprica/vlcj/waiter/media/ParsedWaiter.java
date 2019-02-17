@@ -17,27 +17,32 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition.mediaplayer;
+package uk.co.caprica.vlcj.waiter.media;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
+import uk.co.caprica.vlcj.media.Media;
 
 /**
- * Implementation of a condition that waits for the media player to report that it has finished taking a snapshot.
+ * Implementation of a condition that waits for the media player to report that media has been parsed successfully.
  */
-public class SnapshotTakenCondition extends MediaPlayerCondition<String> {
+public class ParsedWaiter extends MediaWaiter<Object> {
 
     /**
      * Create a condition.
      *
-     * @param mediaPlayer media player
+     * @param media media
      */
-    public SnapshotTakenCondition(MediaPlayer mediaPlayer) {
-        super(mediaPlayer);
+    public ParsedWaiter(Media media) {
+        super(media);
     }
 
     @Override
-    public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
-        ready(filename);
+    public final void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
+        if (newStatus == MediaParsedStatus.DONE) {
+            ready();
+        } else {
+            error();
+        }
     }
 
 }

@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.condition.BeforeConditionAbortedException;
+import uk.co.caprica.vlcj.waiter.BeforeWaiterAbortedException;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -210,7 +210,7 @@ public final class SnapshotService extends BaseService {
         catch (InterruptedException e) {
             throw new RuntimeException("Failed to get snapshot image", e);
         }
-        catch (BeforeConditionAbortedException e) {
+        catch (BeforeWaiterAbortedException e) {
             return null;
         }
         finally {

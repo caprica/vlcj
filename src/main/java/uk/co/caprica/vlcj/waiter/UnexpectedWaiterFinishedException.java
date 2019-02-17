@@ -17,26 +17,16 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition;
+package uk.co.caprica.vlcj.waiter;
 
 /**
- * Enumeration of result status.
+ * Exception thrown when a media player condition instance triggers in response to the media finishing (reaching the
+ * end) unexpectedly before the conditional wait is satisfied.
  */
-enum ResultStatus {
+@SuppressWarnings("serial")
+public final class UnexpectedWaiterFinishedException extends RuntimeException {
 
-    /**
-     * Processing completed normally.
-     */
-    NORMAL,
-
-    /**
-     * An error occurred.
-     */
-    ERROR,
-
-    /**
-     * The media finished unexpectedly.
-     */
-    FINISHED
+    UnexpectedWaiterFinishedException() {
+    }
 
 }

@@ -17,27 +17,27 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition.mediaplayer;
+package uk.co.caprica.vlcj.waiter.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
- * Implementation of a condition that waits for the media player to report that the media length has changed.
+ * Implementation of a condition that waits for the media player to report that it has finished taking a snapshot.
  */
-public class LengthChangedCondition extends MediaPlayerCondition<Long> {
+public class SnapshotTakenWaiter extends MediaPlayerWaiter<String> {
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
      */
-    public LengthChangedCondition(MediaPlayer mediaPlayer) {
+    public SnapshotTakenWaiter(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 
     @Override
-    public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
-        ready(newLength);
+    public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
+        ready(filename);
     }
 
 }

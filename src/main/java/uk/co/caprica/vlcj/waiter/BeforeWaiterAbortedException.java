@@ -17,29 +17,15 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition.media;
-
-import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.Picture;
+package uk.co.caprica.vlcj.waiter;
 
 /**
- * Implementation of a condition that waits for the media player to report that a thumbnail picture has been generated
- * successfully.
+ * Exception thrown when a media player condition instance triggers aborts by returning <code>false</code> in an
  */
-public class ThumbnailGeneratedCondition extends MediaCondition<Picture> {
+@SuppressWarnings("serial")
+public final class BeforeWaiterAbortedException extends RuntimeException {
 
-    /**
-     * Create a condition.
-     *
-     * @param media media
-     */
-    public ThumbnailGeneratedCondition(Media media) {
-        super(media);
-    }
-
-    @Override
-    public void mediaThumbnailGenerated(Media media, Picture picture) {
-        ready(picture);
+    BeforeWaiterAbortedException() {
     }
 
 }

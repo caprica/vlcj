@@ -17,27 +17,26 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition.mediaplayer;
-
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
+package uk.co.caprica.vlcj.waiter;
 
 /**
- * Implementation of a condition that waits for the media player to report that a video output has been created.
+ * Enumeration of result status.
  */
-public class VideoOutputCreatedCondition extends MediaPlayerCondition<Integer> {
+enum ResultStatus {
 
     /**
-     * Create a condition.
-     *
-     * @param mediaPlayer media player
+     * Processing completed normally.
      */
-    public VideoOutputCreatedCondition(MediaPlayer mediaPlayer) {
-        super(mediaPlayer);
-    }
+    NORMAL,
 
-    @Override
-    public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-        ready(newCount);
-    }
+    /**
+     * An error occurred.
+     */
+    ERROR,
+
+    /**
+     * The media finished unexpectedly.
+     */
+    FINISHED
 
 }

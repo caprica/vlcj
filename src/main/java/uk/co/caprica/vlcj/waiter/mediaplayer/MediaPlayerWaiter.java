@@ -17,20 +17,20 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition.mediaplayer;
+package uk.co.caprica.vlcj.waiter.mediaplayer;
 
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.condition.Condition;
+import uk.co.caprica.vlcj.waiter.Waiter;
 
 /**
  * Base implementation for a conditional waiter for media player events.
  *
  * @param <R> type of result that may be returned when the desired condition arises
  */
-abstract public class MediaPlayerCondition<R> extends Condition<MediaPlayer, R> implements MediaPlayerEventListener {
+abstract public class MediaPlayerWaiter<R> extends Waiter<MediaPlayer, R> implements MediaPlayerEventListener {
 
     /**
      * Internal event listener used to fire finished/error completion statuses.
@@ -45,7 +45,7 @@ abstract public class MediaPlayerCondition<R> extends Condition<MediaPlayer, R> 
      *
      * @param component component to wait for
      */
-    protected MediaPlayerCondition(MediaPlayer component) {
+    protected MediaPlayerWaiter(MediaPlayer component) {
         super(component);
     }
 
@@ -64,12 +64,12 @@ abstract public class MediaPlayerCondition<R> extends Condition<MediaPlayer, R> 
     private class InternalListener extends MediaPlayerEventAdapter {
         @Override
         public void finished(MediaPlayer mediaPlayer) {
-            MediaPlayerCondition.super.finished();
+            MediaPlayerWaiter.super.finished();
         }
 
         @Override
         public void error(MediaPlayer mediaPlayer) {
-            MediaPlayerCondition.super.error();
+            MediaPlayerWaiter.super.error();
         }
     };
 

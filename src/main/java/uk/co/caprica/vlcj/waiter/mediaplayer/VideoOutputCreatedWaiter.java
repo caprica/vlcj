@@ -17,37 +17,27 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition.mediaplayer;
+package uk.co.caprica.vlcj.waiter.mediaplayer;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
- * Implementation of a condition that waits for the media player to report that it has reached/passed a particular point
- * in time (i.e. time from the beginning of media playback).
+ * Implementation of a condition that waits for the media player to report that a video output has been created.
  */
-public class TimeReachedCondition extends MediaPlayerCondition<Long> {
-
-    /**
-     * Target time (number of milliseconds since start of media).
-     */
-    protected final long targetTime;
+public class VideoOutputCreatedWaiter extends MediaPlayerWaiter<Integer> {
 
     /**
      * Create a condition.
      *
      * @param mediaPlayer media player
-     * @param targetTime target time (milliseconds since start)
      */
-    public TimeReachedCondition(MediaPlayer mediaPlayer, long targetTime) {
+    public VideoOutputCreatedWaiter(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
-        this.targetTime = targetTime;
     }
 
     @Override
-    public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-        if (newTime >= targetTime) {
-            ready(targetTime);
-        }
+    public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
+        ready(newCount);
     }
 
 }

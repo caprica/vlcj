@@ -17,32 +17,27 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition.media;
+package uk.co.caprica.vlcj.waiter.mediaplayer;
 
-import uk.co.caprica.vlcj.media.MediaParsedStatus;
-import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
- * Implementation of a condition that waits for the media player to report that media has been parsed successfully.
+ * Implementation of a condition that waits for the media player to report that the media length has changed.
  */
-public class ParsedCondition extends MediaCondition<Object> {
+public class LengthChangedWaiter extends MediaPlayerWaiter<Long> {
 
     /**
      * Create a condition.
      *
-     * @param media media
+     * @param mediaPlayer media player
      */
-    public ParsedCondition(Media media) {
-        super(media);
+    public LengthChangedWaiter(MediaPlayer mediaPlayer) {
+        super(mediaPlayer);
     }
 
     @Override
-    public final void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
-        if (newStatus == MediaParsedStatus.DONE) {
-            ready();
-        } else {
-            error();
-        }
+    public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
+        ready(newLength);
     }
 
 }

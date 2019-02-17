@@ -17,16 +17,29 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition;
+package uk.co.caprica.vlcj.waiter.media;
+
+import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.Picture;
 
 /**
- * Exception thrown when a media player condition instance triggers in response to the media finishing (reaching the
- * end) unexpectedly before the conditional wait is satisfied.
+ * Implementation of a condition that waits for the media player to report that a thumbnail picture has been generated
+ * successfully.
  */
-@SuppressWarnings("serial")
-public final class UnexpectedFinishedConditionException extends RuntimeException {
+public class ThumbnailGeneratedWaiter extends MediaWaiter<Picture> {
 
-    UnexpectedFinishedConditionException() {
+    /**
+     * Create a condition.
+     *
+     * @param media media
+     */
+    public ThumbnailGeneratedWaiter(Media media) {
+        super(media);
+    }
+
+    @Override
+    public void mediaThumbnailGenerated(Media media, Picture picture) {
+        ready(picture);
     }
 
 }

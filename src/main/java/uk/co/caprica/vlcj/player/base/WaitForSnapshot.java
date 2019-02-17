@@ -21,13 +21,13 @@ package uk.co.caprica.vlcj.player.base;
 
 import java.io.File;
 
-import uk.co.caprica.vlcj.condition.mediaplayer.SnapshotTakenCondition;
+import uk.co.caprica.vlcj.waiter.mediaplayer.SnapshotTakenWaiter;
 
 /**
  * Private helper to take a snapshot and wait until the corresponding snapshot taken event is received (or an error
  * occurs).
  */
-final class WaitForSnapshot extends SnapshotTakenCondition {
+final class WaitForSnapshot extends SnapshotTakenWaiter {
 
     /**
      * File to save the snapshot into.

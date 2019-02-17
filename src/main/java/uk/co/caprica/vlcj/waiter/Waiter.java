@@ -17,10 +17,10 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition;
+package uk.co.caprica.vlcj.waiter;
 
-import uk.co.caprica.vlcj.condition.media.MediaCondition;
-import uk.co.caprica.vlcj.condition.mediaplayer.MediaPlayerCondition;
+import uk.co.caprica.vlcj.waiter.media.MediaWaiter;
+import uk.co.caprica.vlcj.waiter.mediaplayer.MediaPlayerWaiter;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -53,10 +53,10 @@ import java.util.concurrent.atomic.AtomicReference;
  * @param <C> type of component
  * @param <R> type of result that may be returned when the desired condition arises
  *
- * @see MediaCondition
- * @see MediaPlayerCondition
+ * @see MediaWaiter
+ * @see MediaPlayerWaiter
  */
-public abstract class Condition<C, R> {
+public abstract class Waiter<C, R> {
 
     /**
      * Synchronisation object used to wait until the component state reaches the desired condition.
@@ -88,7 +88,7 @@ public abstract class Condition<C, R> {
      *
      * @param component component to wait for
      */
-    public Condition(C component) {
+    public Waiter(C component) {
         this.component = component;
     }
 
@@ -97,10 +97,10 @@ public abstract class Condition<C, R> {
      *
      * @return optional result
      * @throws InterruptedException if the condition was interrupted while waiting
-     * @throws UnexpectedErrorConditionException if an unexpected error occurred
-     * @throws UnexpectedFinishedConditionException if the condition finished unexpectedly
+     * @throws UnexpectedWaiterErrorException if an unexpected error occurred
+     * @throws UnexpectedWaiterFinishedException if the condition finished unexpectedly
      */
-    public final R await() throws InterruptedException, UnexpectedErrorConditionException, UnexpectedFinishedConditionException {
+    public final R await() throws InterruptedException, UnexpectedWaiterErrorException, UnexpectedWaiterFinishedException {
         startListening(component);
         if (onBefore(component)) {
             completionLatch.await();
@@ -109,14 +109,14 @@ public abstract class Condition<C, R> {
                     onAfter(component, this.result.get());
                     return result.get();
                 case ERROR:
-                    throw new UnexpectedErrorConditionException();
+                    throw new UnexpectedWaiterErrorException();
                 case FINISHED:
-                    throw new UnexpectedFinishedConditionException();
+                    throw new UnexpectedWaiterFinishedException();
                 default:
                     throw new IllegalStateException("Unexpected result status: " + resultStatus.get());
             }
         } else {
-            throw new BeforeConditionAbortedException();
+            throw new BeforeWaiterAbortedException();
         }
     }
 
@@ -159,7 +159,7 @@ public abstract class Condition<C, R> {
     /**
      * Template method invoked after the listener has been added but before the {@link #await()} is invoked.
      * <p>
-     * Returning <code>false</code> will cause {@link BeforeConditionAbortedException} to be thrown.
+     * Returning <code>false</code> will cause {@link BeforeWaiterAbortedException} to be thrown.
      *
      * @param component component
      * @return <code>true</code> to continue; <code>false</code> to abort

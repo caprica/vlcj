@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.condition.media;
+package uk.co.caprica.vlcj.waiter.media;
 
 import uk.co.caprica.vlcj.media.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.Meta;
@@ -27,14 +27,14 @@ import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MediaEventAdapter;
 import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.media.Picture;
-import uk.co.caprica.vlcj.condition.Condition;
+import uk.co.caprica.vlcj.waiter.Waiter;
 
 /**
  * Base implementation for a conditional waiter for media events.
  *
  * @param <R> type of result that may be returned when the desired condition arises
  */
-abstract public class MediaCondition<R> extends Condition<Media, R> implements MediaEventListener {
+abstract public class MediaWaiter<R> extends Waiter<Media, R> implements MediaEventListener {
 
     /**
      * Internal event listener used to fire finished/error completion statuses.
@@ -49,7 +49,7 @@ abstract public class MediaCondition<R> extends Condition<Media, R> implements M
      *
      * @param component component to wait for
      */
-    protected MediaCondition(Media component) {
+    protected MediaWaiter(Media component) {
         super(component);
     }
 
@@ -70,10 +70,10 @@ abstract public class MediaCondition<R> extends Condition<Media, R> implements M
         public void mediaStateChanged(Media media, State newState) {
             switch (newState) {
                 case ENDED:
-                    MediaCondition.super.finished();
+                    MediaWaiter.super.finished();
                     break;
                 case ERROR:
-                    MediaCondition.super.error();
+                    MediaWaiter.super.error();
                     break;
             }
         }
