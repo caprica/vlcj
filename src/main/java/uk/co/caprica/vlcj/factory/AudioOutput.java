@@ -17,7 +17,9 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.model;
+package uk.co.caprica.vlcj.factory;
+
+import uk.co.caprica.vlcj.player.base.AudioDevice;
 
 import java.util.Iterator;
 import java.util.List;

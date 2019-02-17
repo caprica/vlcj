@@ -17,12 +17,9 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.model;
+package uk.co.caprica.vlcj.player.base;
 
 import java.awt.Color;
-
-import uk.co.caprica.vlcj.player.base.MarqueePosition;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Builder for a Marquee.

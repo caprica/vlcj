@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MediaEventListener;
-import uk.co.caprica.vlcj.model.Picture;
+import uk.co.caprica.vlcj.media.Picture;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 

@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.model.MediaSlave;
-
 import java.io.File;
 import java.util.List;
 

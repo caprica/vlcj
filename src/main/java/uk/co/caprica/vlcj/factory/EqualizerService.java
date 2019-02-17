@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.factory;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
-import uk.co.caprica.vlcj.model.Equalizer;
+import uk.co.caprica.vlcj.player.base.Equalizer;
 
 import java.util.*;
 

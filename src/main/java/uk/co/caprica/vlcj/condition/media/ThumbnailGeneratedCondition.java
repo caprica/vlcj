@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.condition.media;
 
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.model.Picture;
+import uk.co.caprica.vlcj.media.Picture;
 
 /**
  * Implementation of a condition that waits for the media player to report that a thumbnail picture has been generated

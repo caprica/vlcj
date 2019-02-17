@@ -17,13 +17,11 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.model;
+package uk.co.caprica.vlcj.player.base;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Encapsulation of audio equalizer settings.

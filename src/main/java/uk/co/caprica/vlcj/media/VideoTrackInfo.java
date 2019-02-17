@@ -17,11 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.model;
-
-import uk.co.caprica.vlcj.media.Multiview;
-import uk.co.caprica.vlcj.media.VideoOrientation;
-import uk.co.caprica.vlcj.media.VideoProjection;
+package uk.co.caprica.vlcj.media;
 
 /**
  * Video track info.

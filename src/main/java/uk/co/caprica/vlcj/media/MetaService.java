@@ -21,7 +21,6 @@ package uk.co.caprica.vlcj.media;
 
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.binding.NativeString;
-import uk.co.caprica.vlcj.model.MetaData;
 
 import java.util.HashMap;
 import java.util.Map;

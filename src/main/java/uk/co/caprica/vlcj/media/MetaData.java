@@ -17,59 +17,58 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.model;
+package uk.co.caprica.vlcj.media;
+
+import uk.co.caprica.vlcj.media.Meta;
+
+import java.util.Collections;
+import java.util.Map;
 
 /**
- * Description of an audio output device.
+ * Immutable meta data value object.
  */
-public class AudioDevice {
+public final class MetaData {
 
     /**
-     * Device identifier.
+     * Collection of meta data values.
      */
-    private final String deviceId;
+    private final Map<Meta,String> values;
 
     /**
-     * Long name.
-     */
-    private final String longName;
-
-    /**
-     * Create an audio device.
+     * Create a meta data value object.
      *
-     * @param deviceId device identifier
-     * @param longName long name
+     * @param values meta data values
      */
-    public AudioDevice(String deviceId, String longName) {
-        this.deviceId = deviceId;
-        this.longName = longName;
+    public MetaData(Map<Meta,String> values) {
+        this.values = Collections.unmodifiableMap(values);
     }
 
     /**
-     * Get the device identifier.
+     * Set a particular meta data value.
      *
-     * @return device identifier
+     * @param meta meta data type
+     * @param value meta data value
      */
-    public String getDeviceId() {
-        return deviceId;
+    public void set(Meta meta, String value) {
+        values.put(meta, value);
     }
 
     /**
-     * Get the long name.
+     * Get a particular meta data value.
      *
-     * @return long name
+     * @param meta meta data type
+     * @return value meta data value
      */
-    public String getLongName() {
-        return longName;
+    public String get(Meta meta) {
+        return values.get(meta);
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(60);
+        StringBuilder sb = new StringBuilder(300);
         sb.append(getClass().getSimpleName()).append('[');
-        sb.append("deviceId=").append(deviceId).append(',');
-        sb.append("longName=").append(longName).append(']');
+        sb.append("values=").append(values).append(']');
         return sb.toString();
-    }
+   }
 
 }

@@ -23,7 +23,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaEventListener;
-import uk.co.caprica.vlcj.model.Picture;
+import uk.co.caprica.vlcj.media.Picture;
 
 /**
  * Encapsulation of a media thumbnail generated event.

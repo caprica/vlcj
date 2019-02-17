@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.marquee;
 
-import static uk.co.caprica.vlcj.model.Marquee.marquee;
+import static uk.co.caprica.vlcj.player.base.Marquee.marquee;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

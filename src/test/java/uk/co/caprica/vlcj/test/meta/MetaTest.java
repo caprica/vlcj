@@ -23,7 +23,7 @@ import uk.co.caprica.vlcj.condition.media.ParsedCondition;
 import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.model.MetaData;
+import uk.co.caprica.vlcj.media.MetaData;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import javax.imageio.ImageIO;

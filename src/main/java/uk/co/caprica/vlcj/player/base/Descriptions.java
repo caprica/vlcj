@@ -27,10 +27,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_chapter_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_title_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
-import uk.co.caprica.vlcj.model.ChapterDescription;
 import uk.co.caprica.vlcj.binding.NativeString;
-import uk.co.caprica.vlcj.model.TitleDescription;
-import uk.co.caprica.vlcj.model.TrackDescription;
 
 import java.util.ArrayList;
 import java.util.List;

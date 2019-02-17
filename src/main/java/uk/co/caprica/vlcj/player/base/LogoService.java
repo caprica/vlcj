@@ -20,7 +20,6 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_logo_option_t;
-import uk.co.caprica.vlcj.model.Logo;
 
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;

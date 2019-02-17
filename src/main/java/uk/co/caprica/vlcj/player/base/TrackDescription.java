@@ -17,58 +17,58 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.model;
-
-import uk.co.caprica.vlcj.media.Meta;
-
-import java.util.Collections;
-import java.util.Map;
+package uk.co.caprica.vlcj.player.base;
 
 /**
- * Immutable meta data value object.
+ * Description of a track, e.g. a video or audio track.
  */
-public final class MetaData {
+public class TrackDescription {
 
     /**
-     * Collection of meta data values.
+     * Identifier.
      */
-    private final Map<Meta,String> values;
+    private final int id;
 
     /**
-     * Create a meta data value object.
+     * Description.
+     */
+    private final String description;
+
+    /**
+     * Create a track description.
      *
-     * @param values meta data values
+     * @param id track identifier
+     * @param description track description
      */
-    public MetaData(Map<Meta,String> values) {
-        this.values = Collections.unmodifiableMap(values);
+    public TrackDescription(int id, String description) {
+        this.id = id;
+        this.description = description;
     }
 
     /**
-     * Set a particular meta data value.
+     * Get the track identifier
      *
-     * @param meta meta data type
-     * @param value meta data value
+     * @return identifier
      */
-    public void set(Meta meta, String value) {
-        values.put(meta, value);
+    public int id() {
+        return id;
     }
 
     /**
-     * Get a particular meta data value.
+     * Get the track description
      *
-     * @param meta meta data type
-     * @return value meta data value
+     * @return description
      */
-    public String get(Meta meta) {
-        return values.get(meta);
+    public String description() {
+        return description;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(300);
+        StringBuilder sb = new StringBuilder(60);
         sb.append(getClass().getSimpleName()).append('[');
-        sb.append("values=").append(values).append(']');
+        sb.append("id=").append(id).append(',');
+        sb.append("description=").append(description).append(']');
         return sb.toString();
-   }
-
+    }
 }

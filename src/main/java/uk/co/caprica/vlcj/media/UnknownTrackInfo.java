@@ -17,22 +17,15 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.model;
+package uk.co.caprica.vlcj.media;
 
 /**
- * Text track info.
- * <p>
- * "Text" includes subtitles, sub-pictures and so on.
+ * Unknown track info.
  */
-public class TextTrackInfo extends TrackInfo {
+public class UnknownTrackInfo extends TrackInfo {
 
     /**
-     * Encoding.
-     */
-    private final String encoding;
-
-    /**
-     * Create a new SPU (subtitle) track info.
+     * Create an unknown track info.
      *
      * @param codec codec
      * @param originalCodec original codec
@@ -42,28 +35,9 @@ public class TextTrackInfo extends TrackInfo {
      * @param bitRate bit-rate
      * @param language language
      * @param description description
-     * @param encoding encoding
      * @param codecDescription codec description
      */
-    public TextTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String encoding, String codecDescription) {
+    public UnknownTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String codecDescription) {
         super(codec, originalCodec, id, profile, level, bitRate, language, description, codecDescription);
-        this.encoding = encoding;
-    }
-
-    /**
-     * Get the encoding
-     *
-     * @return encoding
-     */
-    public final String encoding() {
-        return encoding;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(200);
-        sb.append(super.toString()).append('[');
-        sb.append("encoding=").append(encoding).append(']');
-        return sb.toString();
     }
 }

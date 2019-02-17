@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MediaEventAdapter;
 import uk.co.caprica.vlcj.media.MediaEventListener;
-import uk.co.caprica.vlcj.model.Picture;
+import uk.co.caprica.vlcj.media.Picture;
 import uk.co.caprica.vlcj.condition.Condition;
 
 /**

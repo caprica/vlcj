@@ -22,7 +22,6 @@ package uk.co.caprica.vlcj.player.base;
 import uk.co.caprica.vlcj.binding.NativeUri;
 import uk.co.caprica.vlcj.media.MediaSlavePriority;
 import uk.co.caprica.vlcj.media.MediaSlaveType;
-import uk.co.caprica.vlcj.model.TrackDescription;
 
 import java.io.File;
 import java.util.List;

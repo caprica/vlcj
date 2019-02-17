@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.model.ChapterDescription;
-
 import java.util.ArrayList;
 import java.util.List;
 

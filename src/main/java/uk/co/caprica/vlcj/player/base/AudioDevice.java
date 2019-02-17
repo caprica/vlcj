@@ -17,58 +17,59 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.model;
+package uk.co.caprica.vlcj.player.base;
 
 /**
- * Description of a track, e.g. a video or audio track.
+ * Description of an audio output device.
  */
-public class TrackDescription {
+public class AudioDevice {
 
     /**
-     * Identifier.
+     * Device identifier.
      */
-    private final int id;
+    private final String deviceId;
 
     /**
-     * Description.
+     * Long name.
      */
-    private final String description;
+    private final String longName;
 
     /**
-     * Create a track description.
+     * Create an audio device.
      *
-     * @param id track identifier
-     * @param description track description
+     * @param deviceId device identifier
+     * @param longName long name
      */
-    public TrackDescription(int id, String description) {
-        this.id = id;
-        this.description = description;
+    public AudioDevice(String deviceId, String longName) {
+        this.deviceId = deviceId;
+        this.longName = longName;
     }
 
     /**
-     * Get the track identifier
+     * Get the device identifier.
      *
-     * @return identifier
+     * @return device identifier
      */
-    public int id() {
-        return id;
+    public String getDeviceId() {
+        return deviceId;
     }
 
     /**
-     * Get the track description
+     * Get the long name.
      *
-     * @return description
+     * @return long name
      */
-    public String description() {
-        return description;
+    public String getLongName() {
+        return longName;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(60);
         sb.append(getClass().getSimpleName()).append('[');
-        sb.append("id=").append(id).append(',');
-        sb.append("description=").append(description).append(']');
+        sb.append("deviceId=").append(deviceId).append(',');
+        sb.append("longName=").append(longName).append(']');
         return sb.toString();
     }
+
 }
