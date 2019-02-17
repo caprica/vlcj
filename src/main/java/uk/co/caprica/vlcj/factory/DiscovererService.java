@@ -24,9 +24,9 @@ import com.sun.jna.Structure;
 import com.sun.jna.ptr.PointerByReference;
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.binding.support.size_t;
-import uk.co.caprica.vlcj.discoverer.MediaDiscoverer;
-import uk.co.caprica.vlcj.discoverer.MediaDiscovererDescription;
-import uk.co.caprica.vlcj.discoverer.MediaDiscovererFactory;
+import uk.co.caprica.vlcj.media.discoverer.MediaDiscoverer;
+import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererDescription;
+import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererFactory;
 import uk.co.caprica.vlcj.enums.MediaDiscovererCategory;
 
 import java.util.ArrayList;

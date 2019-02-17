@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.test.component;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**

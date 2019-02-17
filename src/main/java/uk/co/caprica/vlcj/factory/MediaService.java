@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.factory;
 
-import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
+import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;

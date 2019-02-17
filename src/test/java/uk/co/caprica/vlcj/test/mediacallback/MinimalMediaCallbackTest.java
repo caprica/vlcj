@@ -26,9 +26,8 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.callbackmedia.seekable.RandomAccessFileMedia;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.media.callback.seekable.RandomAccessFileMedia;
 import uk.co.caprica.vlcj.test.VlcjTest;
 import uk.co.caprica.vlcj.test.minimal.MinimalTestPlayer;
 

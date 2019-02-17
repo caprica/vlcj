@@ -70,7 +70,7 @@ import com.sun.jna.Library;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
-import uk.co.caprica.vlcj.renderer.RendererItem;
+import uk.co.caprica.vlcj.player.renderer.RendererItem;
 
 /**
  * JNA interface to the libvlc native library.

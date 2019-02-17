@@ -23,9 +23,9 @@ import com.sun.jna.Native;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.discovery.NativeDiscovery;
-import uk.co.caprica.vlcj.discovery.strategy.NativeDiscoveryStrategy;
-import uk.co.caprica.vlcj.version.LibVlcVersion;
+import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
+import uk.co.caprica.vlcj.support.version.LibVlcVersion;
 
 /**
  * A trivial test to demonstrate automatic discovery of the libvlc native shared libraries.

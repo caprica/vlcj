@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.medialist.events;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.eventmanager.BaseEvent;
+import uk.co.caprica.vlcj.support.eventmanager.BaseEvent;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventListener;
 

@@ -23,7 +23,7 @@ import com.sun.jna.Native;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
-import uk.co.caprica.vlcj.version.Version;
+import uk.co.caprica.vlcj.support.version.Version;
 
 /**
  * Simple test for versions.

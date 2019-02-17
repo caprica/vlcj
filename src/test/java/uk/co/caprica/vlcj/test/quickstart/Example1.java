@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.test.quickstart;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 /**
  * Minimal quick-start example.

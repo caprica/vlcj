@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.cue;
 
-import uk.co.caprica.vlcj.component.AudioPlayerComponent;
+import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
 import uk.co.caprica.vlcj.enums.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaRef;

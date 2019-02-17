@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.medialist;
 
 import uk.co.caprica.vlcj.binding.internal.*;
-import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
+import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.media.MediaFactory;

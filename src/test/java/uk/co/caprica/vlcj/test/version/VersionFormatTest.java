@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.version;
 
-import uk.co.caprica.vlcj.version.Version;
+import uk.co.caprica.vlcj.support.version.Version;
 
 /**
  * Simple test for vlc version string formats.

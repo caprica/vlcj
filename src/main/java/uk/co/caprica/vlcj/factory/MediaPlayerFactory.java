@@ -19,15 +19,13 @@
 
 package uk.co.caprica.vlcj.factory;
 
-import com.sun.jna.Library;
 import com.sun.jna.Native;
-import com.sun.jna.NativeLibrary;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.discovery.NativeDiscovery;
-import uk.co.caprica.vlcj.eventmanager.TaskExecutor;
-import uk.co.caprica.vlcj.version.LibVlcVersion;
+import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
+import uk.co.caprica.vlcj.support.version.LibVlcVersion;
 
 import java.util.Collection;
 

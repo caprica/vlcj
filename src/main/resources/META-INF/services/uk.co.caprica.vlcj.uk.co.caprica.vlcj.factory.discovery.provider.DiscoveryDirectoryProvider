@@ -1,0 +1,6 @@
+uk.co.caprica.vlcj.factory.discovery.provider.JnaLibraryPathDirectoryProvider
+uk.co.caprica.vlcj.factory.discovery.provider.LinuxWellKnownDirectoryProvider
+uk.co.caprica.vlcj.factory.discovery.provider.OsxWellKnownDirectoryProvider
+uk.co.caprica.vlcj.factory.discovery.provider.SystemPathDirectoryProvider
+uk.co.caprica.vlcj.factory.discovery.provider.UserDirDirectoryProvider
+uk.co.caprica.vlcj.factory.discovery.provider.WindowsInstallDirectoryProvider

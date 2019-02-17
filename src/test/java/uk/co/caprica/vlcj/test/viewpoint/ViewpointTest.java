@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.viewpoint;
 
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.model.Viewpoint;
 
 import javax.swing.*;

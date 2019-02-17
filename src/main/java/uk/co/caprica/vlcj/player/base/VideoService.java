@@ -28,7 +28,7 @@ import uk.co.caprica.vlcj.enums.DeinterlaceMode;
 import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.model.TrackDescription;
 import uk.co.caprica.vlcj.model.Viewpoint;
-import uk.co.caprica.vlcj.renderer.RendererItem;
+import uk.co.caprica.vlcj.player.renderer.RendererItem;
 
 import java.awt.Dimension;
 import java.util.List;

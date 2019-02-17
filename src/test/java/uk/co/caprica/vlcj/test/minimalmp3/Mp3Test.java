@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.minimalmp3;
 
-import uk.co.caprica.vlcj.component.AudioPlayerComponent;
+import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;
 

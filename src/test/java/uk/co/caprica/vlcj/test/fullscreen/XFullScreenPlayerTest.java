@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.fullscreen;
 
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.x.XFullScreenStrategy;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
@@ -27,7 +27,7 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import static uk.co.caprica.vlcj.component.MediaPlayerSpecs.embeddedMediaPlayerSpec;
+import static uk.co.caprica.vlcj.player.component.MediaPlayerSpecs.embeddedMediaPlayerSpec;
 
 /**
  * An example of using the "X" full-screen strategy.

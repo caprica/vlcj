@@ -1,6 +1,6 @@
 package uk.co.caprica.vlcj.test.discovery;
 
-import uk.co.caprica.vlcj.discovery.provider.DiscoveryDirectoryProvider;
+import uk.co.caprica.vlcj.factory.discovery.provider.DiscoveryDirectoryProvider;
 
 /**
  * Remember that you need to add a META-INF/services entry for any new provider implementation.

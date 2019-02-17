@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.callbackmedia.CallbackMedia;
+import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 import uk.co.caprica.vlcj.media.EventService;
 import uk.co.caprica.vlcj.media.InfoService;
 import uk.co.caprica.vlcj.media.Media;

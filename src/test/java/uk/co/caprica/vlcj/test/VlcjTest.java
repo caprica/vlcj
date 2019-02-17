@@ -20,8 +20,7 @@
 package uk.co.caprica.vlcj.test;
 
 import com.sun.jna.NativeLibrary;
-import uk.co.caprica.vlcj.Info;
-import uk.co.caprica.vlcj.binding.LibC;
+import uk.co.caprica.vlcj.support.Info;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 import javax.swing.*;

@@ -24,7 +24,7 @@ package uk.co.caprica.vlcj.player.base;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
-import uk.co.caprica.vlcj.eventmanager.TaskExecutor;
+import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
 
 // FIXME
 //  still need to think about what Interfaces i actually need (e.g. vlcj-pro impact is currently unknown)

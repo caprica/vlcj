@@ -25,8 +25,8 @@ import com.sun.jna.ptr.PointerByReference;
 import uk.co.caprica.vlcj.binding.internal.libvlc_rd_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
 import uk.co.caprica.vlcj.binding.support.size_t;
-import uk.co.caprica.vlcj.renderer.RendererDiscoverer;
-import uk.co.caprica.vlcj.renderer.RendererDiscovererDescription;
+import uk.co.caprica.vlcj.player.renderer.RendererDiscoverer;
+import uk.co.caprica.vlcj.player.renderer.RendererDiscovererDescription;
 
 import java.util.ArrayList;
 import java.util.List;
