@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.renderer.RendererItem;
 
 /**
  * Specification for a media player component.
@@ -140,6 +141,16 @@ public interface MediaPlayer {
      * @return video behaviour
      */
     VideoService video();
+
+    /**
+     * Set an alternate media renderer.
+     * <p>
+     * This must be set before playback starts.
+     *
+     * @param rendererItem media renderer
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
+    boolean setRenderer(RendererItem rendererItem);
 
     /**
      * Get the user data associated with the media player.

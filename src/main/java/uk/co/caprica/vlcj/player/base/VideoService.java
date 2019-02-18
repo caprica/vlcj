@@ -338,19 +338,6 @@ public final class VideoService extends BaseService {
     }
 
     /**
-     * Set an alternate media renderer.
-     * <p>
-     * This must be set before playback starts.
-     *
-     * @param rendererItem media renderer
-     * @return <code>true</code> if successful; <code>false</code> on error
-     */
-    public boolean setRenderer(RendererItem rendererItem) {
-        libvlc_renderer_item_t rendererItemInstance = rendererItem != null ? rendererItem.rendererItemInstance() : null;
-        return libvlc.libvlc_media_player_set_renderer(mediaPlayerInstance, rendererItemInstance) == 0;
-    }
-
-    /**
      * Get the video (i.e. "title") track descriptions.
      * <p>
      * The media must be playing before this information is available.

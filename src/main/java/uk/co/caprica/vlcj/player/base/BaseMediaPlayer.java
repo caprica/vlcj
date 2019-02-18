@@ -24,14 +24,9 @@ package uk.co.caprica.vlcj.player.base;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
+import uk.co.caprica.vlcj.player.renderer.RendererItem;
 import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
-
-// FIXME
-//  still need to think about what Interfaces i actually need (e.g. vlcj-pro impact is currently unknown)
-
-// FIXME could almost be renamed BaseMediaPlayer instead of Default
-
-// all the services should be renamed more simply like VideoSurface -> Video, SnapshotService -> Snapshots and so on
 
 /**
  * Base media player implementation.
@@ -199,6 +194,12 @@ public class BaseMediaPlayer implements MediaPlayer {
     @Override
     public final VideoService video() {
         return videoService;
+    }
+
+    @Override
+    public boolean setRenderer(RendererItem rendererItem) {
+        libvlc_renderer_item_t rendererItemInstance = rendererItem != null ? rendererItem.rendererItemInstance() : null;
+        return libvlc.libvlc_media_player_set_renderer(mediaPlayerInstance, rendererItemInstance) == 0;
     }
 
     @Override
