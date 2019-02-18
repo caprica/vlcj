@@ -46,7 +46,7 @@ public final class SubitemService extends BaseService {
      */
     private final MediaListPlayer mediaListPlayer;
 
-    SubitemService(DefaultMediaPlayer mediaPlayer) {
+    SubitemService(BaseMediaPlayer mediaPlayer) {
         super(mediaPlayer);
 
         this.mediaListPlayer = new DefaultMediaListPlayer(libvlc, libvlcInstance);

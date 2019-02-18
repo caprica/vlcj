@@ -31,7 +31,7 @@ import java.io.IOException;
  */
 public final class LogoService extends BaseService {
 
-    LogoService(DefaultMediaPlayer mediaPlayer) {
+    LogoService(BaseMediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

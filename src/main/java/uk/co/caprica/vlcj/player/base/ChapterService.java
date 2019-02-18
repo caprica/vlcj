@@ -27,7 +27,7 @@ import java.util.List;
  */
 public final class ChapterService extends BaseService {
 
-    ChapterService(DefaultMediaPlayer mediaPlayer) {
+    ChapterService(BaseMediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

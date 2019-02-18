@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.factory;
 
-import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
+import uk.co.caprica.vlcj.player.base.BaseMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.DefaultMediaListPlayer;
@@ -45,8 +45,8 @@ public final class MediaPlayerService extends BaseService {
      *
      * @return media player instance
      */
-    public DefaultMediaPlayer newMediaPlayer() {
-        return new DefaultMediaPlayer(libvlc, libvlcInstance);
+    public BaseMediaPlayer newMediaPlayer() {
+        return new BaseMediaPlayer(libvlc, libvlcInstance);
     }
 
     /**

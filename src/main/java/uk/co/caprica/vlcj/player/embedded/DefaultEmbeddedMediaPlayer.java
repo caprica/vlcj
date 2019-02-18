@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.player.embedded;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
+import uk.co.caprica.vlcj.player.base.BaseMediaPlayer;
 
 /**
  * Implementation of a media player that renders video to an embedded Canvas component.
@@ -58,7 +58,7 @@ import uk.co.caprica.vlcj.player.base.DefaultMediaPlayer;
  * <strong>Finally, the overlay is experimental and support for the overlay may be changed or
  * removed.</strong>
  */
-public class DefaultEmbeddedMediaPlayer extends DefaultMediaPlayer implements EmbeddedMediaPlayer {
+public class DefaultEmbeddedMediaPlayer extends BaseMediaPlayer implements EmbeddedMediaPlayer {
 
     /**
      * Native library interface.

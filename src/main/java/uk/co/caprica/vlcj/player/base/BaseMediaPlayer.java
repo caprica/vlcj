@@ -36,7 +36,7 @@ import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
 /**
  * Base media player implementation.
  */
-public class DefaultMediaPlayer implements MediaPlayer {
+public class BaseMediaPlayer implements MediaPlayer {
 
     /**
      * Native library interface.
@@ -88,7 +88,7 @@ public class DefaultMediaPlayer implements MediaPlayer {
      * @param libvlc native library interface
      * @param instance libvlc instance
      */
-    public DefaultMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
+    public BaseMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
         this.libvlc         = libvlc;
         this.libvlcInstance = instance;
 

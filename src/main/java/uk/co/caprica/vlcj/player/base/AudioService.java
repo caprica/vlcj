@@ -49,7 +49,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      */
     private libvlc_equalizer_t equalizerInstance;
 
-    AudioService(DefaultMediaPlayer mediaPlayer) {
+    AudioService(BaseMediaPlayer mediaPlayer) {
         super(mediaPlayer);
         audioCallbacks = new AudioCallbacks(libvlc, mediaPlayer);
     }

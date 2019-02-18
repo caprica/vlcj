@@ -26,7 +26,7 @@ import java.util.List;
  */
 public final class TitleService extends BaseService {
 
-    TitleService(DefaultMediaPlayer mediaPlayer) {
+    TitleService(BaseMediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

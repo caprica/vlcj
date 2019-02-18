@@ -34,7 +34,7 @@ import java.util.List;
  */
 public final class VideoService extends BaseService {
 
-    VideoService(DefaultMediaPlayer mediaPlayer) {
+    VideoService(BaseMediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

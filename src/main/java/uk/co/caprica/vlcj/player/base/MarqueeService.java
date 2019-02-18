@@ -28,7 +28,7 @@ import java.awt.*;
  */
 public final class MarqueeService extends BaseService {
 
-    MarqueeService(DefaultMediaPlayer mediaPlayer) {
+    MarqueeService(BaseMediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

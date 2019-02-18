@@ -24,7 +24,7 @@ package uk.co.caprica.vlcj.player.base;
  */
 public final class RoleService extends BaseService {
 
-    RoleService(DefaultMediaPlayer mediaPlayer) {
+    RoleService(BaseMediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

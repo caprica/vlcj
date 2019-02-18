@@ -28,7 +28,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
  */
 abstract class BaseService {
 
-    protected final DefaultMediaPlayer mediaPlayer;
+    protected final BaseMediaPlayer mediaPlayer;
 
     protected final LibVlc libvlc;
 
@@ -36,7 +36,7 @@ abstract class BaseService {
 
     protected final libvlc_media_player_t mediaPlayerInstance;
 
-    protected BaseService(DefaultMediaPlayer mediaPlayer) {
+    protected BaseService(BaseMediaPlayer mediaPlayer) {
         this.mediaPlayer         = mediaPlayer;
         this.libvlc              = mediaPlayer.libvlc;
         this.libvlcInstance      = mediaPlayer.libvlcInstance;
