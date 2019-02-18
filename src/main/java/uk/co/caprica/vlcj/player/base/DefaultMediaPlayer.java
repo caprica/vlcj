@@ -60,6 +60,11 @@ public class DefaultMediaPlayer implements MediaPlayer {
      */
     private final TaskExecutor executor = new TaskExecutor();
 
+    /**
+     * Arbitrary object associated with this media list player.
+     */
+    private Object userData;
+
     private final AudioService      audioService;
     private final ChapterService    chapterService;
     private final ControlsService   controlsService;
@@ -76,7 +81,6 @@ public class DefaultMediaPlayer implements MediaPlayer {
     private final SubpictureService subpictureService;
     private final TeletextService   teletextService;
     private final TitleService      titleService;
-    private final UserDataService   userDataService;
     private final VideoService      videoService;
 
     /**
@@ -103,11 +107,10 @@ public class DefaultMediaPlayer implements MediaPlayer {
         slaveService      = new SlaveService     (this);
         snapshotService   = new SnapshotService  (this);
         statusService     = new StatusService    (this);
-        subitemService    = new SubitemService(this);
+        subitemService    = new SubitemService   (this);
         subpictureService = new SubpictureService(this);
         teletextService   = new TeletextService  (this);
         titleService      = new TitleService     (this);
-        userDataService   = new UserDataService  (this);
         videoService      = new VideoService     (this);
     }
 
@@ -206,6 +209,16 @@ public class DefaultMediaPlayer implements MediaPlayer {
     }
 
     @Override
+    public Object userData() {
+        return userData;
+    }
+
+    @Override
+    public void userData(Object userData) {
+        this.userData = userData;
+    }
+
+    @Override
     public final void submit(Runnable r) {
         executor.submit(r);
     }
@@ -232,7 +245,6 @@ public class DefaultMediaPlayer implements MediaPlayer {
         subpictureService.release();
         teletextService  .release();
         titleService     .release();
-        userDataService  .release();
         videoService     .release();
 
         libvlc.libvlc_media_player_release(mediaPlayerInstance);

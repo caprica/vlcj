@@ -149,9 +149,18 @@ public interface MediaPlayer {
     VideoService video();
 
     /**
-     * Release the media player, freeing all associated (including native) resources.
+     * Get the user data associated with the media player.
+     *
+     * @return user data
      */
-    void release(); // FIXME add an overload with timeout?
+    Object userData();
+
+    /**
+     * Set user data to associate with the media player.
+     *
+     * @param userData user data
+     */
+    void userData(Object userData);
 
     /**
      * Submit a task for asynchronous execution.
@@ -167,6 +176,11 @@ public interface MediaPlayer {
     void submit(Runnable r);
 
     /**
+     * Release the media player, freeing all associated (including native) resources.
+     */
+    void release();
+
+    /**
      * Provide access to the native media player instance.
      * <p>
      * This is exposed on the interface as an implementation side-effect, ordinary applications are not expected to use
@@ -174,6 +188,6 @@ public interface MediaPlayer {
      *
      * @return media player instance
      */
-    libvlc_media_player_t mediaPlayerInstance(); // FIXME needs to be on interface?
+    libvlc_media_player_t mediaPlayerInstance();
 
 }
