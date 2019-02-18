@@ -72,7 +72,7 @@ public final class VideoService extends BaseService {
      *
      * @return contrast, in the range from 0.0 to 2.0
      */
-    public float getContrast() {
+    public float contrast() {
         return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Contrast.intValue());
     }
 
@@ -92,7 +92,7 @@ public final class VideoService extends BaseService {
      *
      * @return brightness, in the range from 0.0 to 2.0
      */
-    public float getBrightness() {
+    public float brightness() {
         return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Brightness.intValue());
     }
 
@@ -114,7 +114,7 @@ public final class VideoService extends BaseService {
      *
      * @return hue, in the range from -180.0 to 180.0
      */
-    public float getHue() {
+    public float hue() {
         return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue());
     }
 
@@ -134,7 +134,7 @@ public final class VideoService extends BaseService {
      *
      * @return saturation, in the range from 0.0 to 3.0
      */
-    public float getSaturation() {
+    public float saturation() {
         return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Saturation.intValue());
     }
 
@@ -156,7 +156,7 @@ public final class VideoService extends BaseService {
      *
      * @return gamma value, in the range from 0.01 to 10.0
      */
-    public float getGamma() {
+    public float gamma() {
         return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue());
     }
 
@@ -190,7 +190,7 @@ public final class VideoService extends BaseService {
      *
      * @return aspect ratio
      */
-    public String getAspectRatio() {
+    public String aspectRatio() {
         return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_video_get_aspect_ratio(mediaPlayerInstance));
     }
 
@@ -208,7 +208,7 @@ public final class VideoService extends BaseService {
      *
      * @return scale
      */
-    public float getScale() {
+    public float scale() {
         return libvlc.libvlc_video_get_scale(mediaPlayerInstance);
     }
 
@@ -226,7 +226,7 @@ public final class VideoService extends BaseService {
      *
      * @return crop geometry
      */
-    public String getCropGeometry() {
+    public String cropGeometry() {
         return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_video_get_crop_geometry(mediaPlayerInstance));
     }
 
@@ -260,7 +260,7 @@ public final class VideoService extends BaseService {
      *
      * @return video size if available, or <code>null</code>
      */
-    public Dimension getVideoDimension() {
+    public Dimension videoDimension() {
         IntByReference px = new IntByReference();
         IntByReference py = new IntByReference();
         int result = libvlc.libvlc_video_get_size(mediaPlayerInstance, 0, px, py);
@@ -277,43 +277,45 @@ public final class VideoService extends BaseService {
      *
      * @return number of tracks
      */
-    public int getVideoTrackCount() {
+    public int trackCount() {
         return libvlc.libvlc_video_get_track_count(mediaPlayerInstance);
     }
 
     /**
      * Get the current video track.
      *
-     * @return track identifier, see {@link #getVideoDescriptions()}
+     * @return track identifier, see {@link #trackDescriptions()}
      */
-    public int getVideoTrack() {
+    public int track() {
         return libvlc.libvlc_video_get_track(mediaPlayerInstance);
     }
 
     /**
      * Set a new video track to play.
      * <p>
-     * The track identifier must be one of those returned by {@link #getVideoDescriptions()}.
+     * The track identifier must be one of those returned by {@link #trackDescriptions()}.
      * <p>
      * Video can be disabled by passing here the identifier of the track with a description of
      * "Disable".
      * <p>
      * There is no guarantee that the available track identifiers go in sequence from zero up to
-     * {@link #getVideoTrackCount()}-1. The {@link #getVideoDescriptions()} method should always
+     * {@link #trackCount()}-1. The {@link #trackDescriptions()} method should always
      * be used to ascertain the available track identifiers.
      *
      * @param track track identifier
      * @return current video track identifier
      */
-    public int setVideoTrack(int track) {
+    public int setTrack(int track) {
         libvlc.libvlc_video_set_track(mediaPlayerInstance, track);
-        return getVideoTrack(); // FIXME does this actually update synchronously?
+        return track(); // FIXME does this actually update synchronously?
     }
 
     /**
+     * Create a new viewpoint instance for 360 degree video.
+     * <p>
+     * The caller <em>must</em> release the returned instance when it no longer has a use for it
      *
-     *
-     * @return
+     * @return viewpoint, or <code>null</code> on error
      */
     public Viewpoint newViewpoint() {
         libvlc_video_viewpoint_t viewpoint = libvlc.libvlc_video_new_viewpoint();
@@ -325,21 +327,23 @@ public final class VideoService extends BaseService {
     }
 
     /**
+     * Update the viewpoint for 360 degree video.
      *
-     *
-     * @param viewpoint
-     * @param absolute
-     * @return
+     * @param viewpoint new viewpoint
+     * @param absolute <code>true</code> if viewpoint contains absolute values; <code>false</code> if they are relative
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean updateViewpoint(Viewpoint viewpoint, boolean absolute) {
         return libvlc.libvlc_video_update_viewpoint(mediaPlayerInstance, viewpoint.viewpoint(), absolute ? 1 : 0) == 0;
     }
 
     /**
+     * Set an alternate media renderer.
+     * <p>
+     * This must be set before playback starts.
      *
-     *
-     * @param rendererItem
-     * @return
+     * @param rendererItem media renderer
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean setRenderer(RendererItem rendererItem) {
         libvlc_renderer_item_t rendererItemInstance = rendererItem != null ? rendererItem.rendererItemInstance() : null;
@@ -353,8 +357,7 @@ public final class VideoService extends BaseService {
      *
      * @return list of descriptions, may be empty but will never be <code>null</code>
      */
-    // FIXME rename trackDescrptions()? or videoTrackDescriptions()?
-    public List<TrackDescription> getVideoDescriptions() {
+    public List<TrackDescription> trackDescriptions() {
         return Descriptions.videoTrackDescriptions(libvlc, mediaPlayerInstance);
     }
 

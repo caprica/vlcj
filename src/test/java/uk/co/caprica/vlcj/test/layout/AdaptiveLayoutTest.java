@@ -204,7 +204,7 @@ public class AdaptiveLayoutTest extends VlcjTest {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if(e.getButton() == MouseEvent.BUTTON3) {
-                        mediaPlayer.mediaPlayer().controls().skip(10000);
+                        mediaPlayer.mediaPlayer().controls().skipTime(10000);
                     }
                     else {
                         layoutManager.focus(VideoPane.this.id);

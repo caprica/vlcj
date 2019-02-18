@@ -64,7 +64,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      * @param output name of the desired audio output
      * @return <code>true</code> if the output was successfully set, otherwise <code>false</code>
      */
-    public boolean setAudioOutput(String output) {
+    public boolean setOutput(String output) {
         return 0 == libvlc.libvlc_audio_output_set(mediaPlayerInstance, output);
     }
 
@@ -75,7 +75,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      *
      * @return identifier of the current audio output device, or <code>null</code> if not available
      */
-    public String getAudioOutputDevice() {
+    public String outputDevice() {
         return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_audio_output_device_get(mediaPlayerInstance));
     }
 
@@ -92,7 +92,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      * @param output name of the desired audio output
      * @param outputDeviceId id of the desired audio output device
      */
-    public void setAudioOutputDevice(String output, String outputDeviceId) {
+    public void setOutputDevice(String output, String outputDeviceId) {
         libvlc.libvlc_audio_output_device_set(mediaPlayerInstance, output, outputDeviceId);
     }
 
@@ -101,7 +101,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      *
      * @return list of audio devices, or <code>null</code> if not available
      */
-    public List<AudioDevice> getAudioOutputDevices() {
+    public List<AudioDevice> outputDevices() {
         List<AudioDevice> result = new ArrayList<AudioDevice>();
         libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_enum(mediaPlayerInstance);
         if (audioDevices != null) {
@@ -150,7 +150,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      *
      * @return volume, a percentage of full volume in the range 0 to 200
      */
-    public int getVolume() {
+    public int volume() {
         return libvlc.libvlc_audio_get_volume(mediaPlayerInstance);
     }
 
@@ -173,7 +173,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      *
      * @return audio channel
      */
-    public int getAudioChannel() {
+    public int channel() {
         return libvlc.libvlc_audio_get_channel(mediaPlayerInstance);
     }
 
@@ -184,7 +184,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      *
      * @param channel channel
      */
-    public void setAudioChannel(int channel) {
+    public void setChannel(int channel) {
         libvlc.libvlc_audio_set_channel(mediaPlayerInstance, channel);
     }
 
@@ -193,7 +193,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      *
      * @return audio delay, in microseconds
      */
-    public long getAudioDelay() {
+    public long delay() {
         return libvlc.libvlc_audio_get_delay(mediaPlayerInstance);
     }
 
@@ -205,7 +205,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      *
      * @param delay desired audio delay, in microseconds
      */
-    public void setAudioDelay(long delay) {
+    public void setDelay(long delay) {
         libvlc.libvlc_audio_set_delay(mediaPlayerInstance, delay);
     }
 
@@ -214,7 +214,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      *
      * @return equalizer, or <code>null</code> if there is no active equalizer
      */
-    public Equalizer getEqualizer() {
+    public Equalizer equalizer() {
         return equalizer;
     }
 
@@ -247,9 +247,9 @@ public final class AudioService extends BaseService implements EqualizerListener
      */
     private void applyEqualizer() {
         if (equalizerInstance != null) {
-            libvlc.libvlc_audio_equalizer_set_preamp(equalizerInstance, equalizer.getPreamp());
+            libvlc.libvlc_audio_equalizer_set_preamp(equalizerInstance, equalizer.preamp());
             for(int i = 0; i < libvlc.libvlc_audio_equalizer_get_band_count(); i ++ ) {
-                libvlc.libvlc_audio_equalizer_set_amp_at_index(equalizerInstance, equalizer.getAmp(i), i);
+                libvlc.libvlc_audio_equalizer_set_amp_at_index(equalizerInstance, equalizer.amp(i), i);
             }
             libvlc.libvlc_media_player_set_equalizer(mediaPlayerInstance, equalizerInstance);
         }
@@ -263,37 +263,37 @@ public final class AudioService extends BaseService implements EqualizerListener
      *
      * @return track count
      */
-    public int getAudioTrackCount() {
+    public int trackCount() {
         return libvlc.libvlc_audio_get_track_count(mediaPlayerInstance);
     }
 
     /**
      * Get the current audio track.
      *
-     * @return track identifier, see {@link #getAudioDescriptions()}
+     * @return track identifier, see {@link #trackDescriptions()}
      */
-    public int getAudioTrack() {
+    public int track() {
         return libvlc.libvlc_audio_get_track(mediaPlayerInstance);
     }
 
     /**
      * Set a new audio track to play.
      * <p>
-     * The track identifier must be one of those returned by {@link #getAudioDescriptions()}.
+     * The track identifier must be one of those returned by {@link #trackDescriptions()}.
      * <p>
      * Audio can be disabled by passing here the identifier of the track with a description of
      * "Disable".
      * <p>
      * There is no guarantee that the available track identifiers go in sequence from zero up to
-     * {@link #getAudioTrackCount()}-1. The {@link #getAudioDescriptions()} method should always
+     * {@link #trackCount()}-1. The {@link #trackDescriptions()} method should always
      * be used to ascertain the available track identifiers.
      *
      * @param track track identifier
      * @return current audio track identifier
      */
-    public int setAudioTrack(int track) {
+    public int setTrack(int track) {
         libvlc.libvlc_audio_set_track(mediaPlayerInstance, track);
-        return getAudioTrack();
+        return track();
     }
 
     /**
@@ -303,7 +303,7 @@ public final class AudioService extends BaseService implements EqualizerListener
      *
      * @return list of descriptions, may be empty but will never be <code>null</code>
      */
-    public java.util.List<TrackDescription> getAudioDescriptions() {
+    public List<TrackDescription> trackDescriptions() {
         return Descriptions.audioTrackDescriptions(libvlc, mediaPlayerInstance);
     }
 

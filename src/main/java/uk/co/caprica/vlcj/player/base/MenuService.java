@@ -33,35 +33,35 @@ public final class MenuService extends BaseService {
     /**
      * Activate a menu.
      */
-    public void menuActivate() {
+    public void activate() {
         doMenuAction(libvlc_navigate_mode_e.libvlc_navigate_activate);
     }
 
     /**
      * Navigate up a menu.
      */
-    public void menuUp() {
+    public void up() {
         doMenuAction(libvlc_navigate_mode_e.libvlc_navigate_up);
     }
 
     /**
      * Navigate down a menu.
      */
-    public void menuDown() {
+    public void down() {
         doMenuAction(libvlc_navigate_mode_e.libvlc_navigate_down);
     }
 
     /**
      * Navigate left a menu.
      */
-    public void menuLeft() {
+    public void left() {
         doMenuAction(libvlc_navigate_mode_e.libvlc_navigate_left);
     }
 
     /**
      * Navigate right a menu.
      */
-    public void menuRight() {
+    public void right() {
         doMenuAction(libvlc_navigate_mode_e.libvlc_navigate_right);
     }
 

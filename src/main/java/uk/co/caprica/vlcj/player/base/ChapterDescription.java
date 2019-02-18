@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player.base;
 /**
  * Chapter description.
  */
-public class ChapterDescription {
+public final class ChapterDescription {
 
     /**
      * Chapter offset (milliseconds).
@@ -57,7 +57,7 @@ public class ChapterDescription {
      *
      * @return offset (milliseconds)
      */
-    public long getOffset() {
+    public long offset() {
         return offset;
     }
 
@@ -66,7 +66,7 @@ public class ChapterDescription {
      *
      * @return duration (milliseconds)
      */
-    public long getDuration() {
+    public long duration() {
         return duration;
     }
 
@@ -75,7 +75,7 @@ public class ChapterDescription {
      *
      * @return name
      */
-    public String getName() {
+    public String name() {
         return name;
     }
 

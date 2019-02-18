@@ -69,7 +69,7 @@ public class CallbackMediaPlayerComponentTest extends VlcjTest {
 
             @Override
             public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-                final Dimension size = mediaPlayer.video().getVideoDimension();
+                final Dimension size = mediaPlayer.video().videoDimension();
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {

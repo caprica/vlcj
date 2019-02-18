@@ -256,10 +256,10 @@ public class PlayerControlsPanel extends JPanel {
                 mediaPlayer.controls().pause();
             }
         }
-        long time = mediaPlayer.status().getTime();
-        int position = (int)(mediaPlayer.status().getPosition() * 1000.0f);
-        int chapter = mediaPlayer.chapters().getChapter();
-        int chapterCount = mediaPlayer.chapters().getChapterCount();
+        long time = mediaPlayer.status().time();
+        int position = (int)(mediaPlayer.status().position() * 1000.0f);
+        int chapter = mediaPlayer.chapters().chapter();
+        int chapterCount = mediaPlayer.chapters().count();
         updateTime(time);
         updatePosition(position);
         updateChapter(chapter, chapterCount);
@@ -267,8 +267,8 @@ public class PlayerControlsPanel extends JPanel {
 
     private void skip(int skipTime) {
         // Only skip time if can handle time setting
-        if(mediaPlayer.status().getLength() > 0) {
-            mediaPlayer.controls().skip(skipTime);
+        if(mediaPlayer.status().length() > 0) {
+            mediaPlayer.controls().skipTime(skipTime);
             updateUIState();
         }
     }
@@ -304,7 +304,7 @@ public class PlayerControlsPanel extends JPanel {
         previousChapterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.chapters().previousChapter();
+                mediaPlayer.chapters().previous();
             }
         });
 
@@ -346,7 +346,7 @@ public class PlayerControlsPanel extends JPanel {
         nextChapterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.chapters().nextChapter();
+                mediaPlayer.chapters().next();
             }
         });
 
@@ -370,7 +370,7 @@ public class PlayerControlsPanel extends JPanel {
         captureButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.snapshots().saveSnapshot();
+                mediaPlayer.snapshots().save();
             }
         });
 
@@ -407,17 +407,17 @@ public class PlayerControlsPanel extends JPanel {
         subTitlesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int spu = mediaPlayer.subpictures().getSpu();
+                int spu = mediaPlayer.subpictures().track();
                 if(spu > -1) {
                     spu ++ ;
-                    if(spu > mediaPlayer.subpictures().getSpuCount()) {
+                    if(spu > mediaPlayer.subpictures().trackCount()) {
                         spu = -1;
                     }
                 }
                 else {
                     spu = 0;
                 }
-                mediaPlayer.subpictures().setSpu(spu);
+                mediaPlayer.subpictures().setTrack(spu);
             }
         });
     }
@@ -432,10 +432,10 @@ public class PlayerControlsPanel extends JPanel {
 
         @Override
         public void run() {
-            final long time = mediaPlayer.status().getTime();
-            final int position = (int)(mediaPlayer.status().getPosition() * 1000.0f);
-            final int chapter = mediaPlayer.chapters().getChapter();
-            final int chapterCount = mediaPlayer.chapters().getChapterCount();
+            final long time = mediaPlayer.status().time();
+            final int position = (int)(mediaPlayer.status().position() * 1000.0f);
+            final int chapter = mediaPlayer.chapters().chapter();
+            final int chapterCount = mediaPlayer.chapters().count();
 
             // Updates to user interface components must be executed on the Event
             // Dispatch Thread

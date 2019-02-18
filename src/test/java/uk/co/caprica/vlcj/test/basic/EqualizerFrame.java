@@ -195,8 +195,8 @@ public class EqualizerFrame extends JFrame implements ChangeListener, ActionList
                 Equalizer presetEqualizer = mediaPlayerFactory.equalizers().newEqualizer(presetName);
                 if(presetEqualizer != null) {
                     applyingPreset = true;
-                    preampControl.getSlider().setValue((int)(presetEqualizer.getPreamp() * 100f));
-                    float[] amps = presetEqualizer.getAmps();
+                    preampControl.getSlider().setValue((int)(presetEqualizer.preamp() * 100f));
+                    float[] amps = presetEqualizer.amps();
                     for(int i = 0; i < amps.length; i++) {
                         bandControls[i].getSlider().setValue((int)(amps[i] * 100f));
                     }

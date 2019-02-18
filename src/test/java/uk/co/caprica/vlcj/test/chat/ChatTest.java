@@ -239,7 +239,7 @@ public class ChatTest extends VlcjTest {
         sendSnapshotButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                localMediaPlayer.snapshots().saveSnapshot();
+                localMediaPlayer.snapshots().save();
             }
         });
 
@@ -253,7 +253,7 @@ public class ChatTest extends VlcjTest {
         receiveSnapshotButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                remoteMediaPlayer.snapshots().saveSnapshot();
+                remoteMediaPlayer.snapshots().save();
             }
         });
     }

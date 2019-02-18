@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player.base;
 /**
  * Description of an audio output device.
  */
-public class AudioDevice {
+public final class AudioDevice {
 
     /**
      * Device identifier.

@@ -42,7 +42,7 @@ public final class LogoService extends BaseService {
      *
      * @param enable <code>true</code> to show the logo, <code>false</code> to hide it
      */
-    public void enableLogo(boolean enable) {
+    public void enable(boolean enable) {
         libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_enable.intValue(), enable ? 1 : 0);
     }
 
@@ -53,7 +53,7 @@ public final class LogoService extends BaseService {
      *
      * @param duration duration, milliseconds
      */
-    public void setLogoDuration(int duration) {
+    public void setDuration(int duration) {
         libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_delay.intValue(), duration);
     }
 
@@ -62,7 +62,7 @@ public final class LogoService extends BaseService {
      *
      * @param opacity opacity in the range 0 to 255 where 255 is fully opaque
      */
-    public void setLogoOpacity(int opacity) {
+    public void setOpacity(int opacity) {
         libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_opacity.intValue(), opacity);
     }
 
@@ -71,7 +71,7 @@ public final class LogoService extends BaseService {
      *
      * @param opacity opacity percentage in the range 0.0 to 1.0 where 1.0 is fully opaque
      */
-    public void setLogoOpacity(float opacity) {
+    public void setOpacity(float opacity) {
         int opacityValue = Math.round(opacity * 255.0f);
         libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_opacity.intValue(), opacityValue);
     }
@@ -82,7 +82,7 @@ public final class LogoService extends BaseService {
      * @param x x co-ordinate for the top left of the logo
      * @param y y co-ordinate for the top left of the logo
      */
-    public void setLogoLocation(int x, int y) {
+    public void setLocation(int x, int y) {
         libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_x.intValue(), x);
         libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_y.intValue(), y);
     }
@@ -92,7 +92,7 @@ public final class LogoService extends BaseService {
      *
      * @param position position
      */
-    public void setLogoPosition(LogoPosition position) {
+    public void setPosition(LogoPosition position) {
         libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_position.intValue(), position.intValue());
     }
 
@@ -104,7 +104,7 @@ public final class LogoService extends BaseService {
      *
      * @param repeat number of times to repeat the logos, or -1 for indefinite, or 0 to disable looping
      */
-    public void setLogoRepeat(int repeat) {
+    public void setRepeat(int repeat) {
         libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_repeat.intValue(), repeat);
     }
 
@@ -120,21 +120,21 @@ public final class LogoService extends BaseService {
      * Since the delay and opacity values are optional, simply leave them out but make sure to include the expected
      * number of commas.
      * <p>
-     * When an optional value is not present, a default will be used as per {@link #setLogoOpacity(int)} amd
-     * {@link #setLogoDuration(int)}.
+     * When an optional value is not present, a default will be used as per {@link #setOpacity(int)} amd
+     * {@link #setDuration(int)}.
      * <p>
-     * In addition, {@link #setLogoRepeat(int)} can be used to loop the sequence of logos.
+     * In addition, {@link #setRepeat(int)} can be used to loop the sequence of logos.
      *
      * @param logoFile logo file name
      */
-    public void setLogoFile(String logoFile) {
+    public void setFile(String logoFile) {
         libvlc.libvlc_video_set_logo_string(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_file.intValue(), logoFile);
     }
 
     /**
      * Set the logo image.
      * <p>
-     * The image will first be written to a temporary file, before invoking {@link #setLogoFile(String)}. This is not
+     * The image will first be written to a temporary file, before invoking {@link #setFile(String)}. This is not
      * optimal, but creating a temporary file for the logo in this way is unavoidable.
      * <p>
      * The temporary file will persist until the JVM exits. The file can not be deleted immediately due to the
@@ -146,7 +146,7 @@ public final class LogoService extends BaseService {
      *
      * @param logoImage logo image
      */
-    public void setLogoImage(RenderedImage logoImage) {
+    public void setImage(RenderedImage logoImage) {
         File file = null;
         try {
             // Create a temporary file for the logo...
@@ -154,14 +154,14 @@ public final class LogoService extends BaseService {
             ImageIO.write(logoImage, "png", file);
             if (file.exists()) {
                 // ...then set the logo as normal
-                setLogoFile(file.getAbsolutePath());
+                setFile(file.getAbsolutePath());
                 // Flag the temporary file to be deleted when the JVM exits - the file can not be
                 // deleted immediately because setLogoFile ultimately invokes an asynchronous
                 // native method to set the logo from the file
                 file.deleteOnExit();
             }
         }
-        catch(IOException e) {
+        catch (IOException e) {
             throw new RuntimeException("Failed to set logo image", e);
         }
     }
@@ -171,7 +171,7 @@ public final class LogoService extends BaseService {
      *
      * @param logo logo builder
      */
-    public void setLogo(Logo logo) {
+    public void set(Logo logo) {
         logo.apply(mediaPlayer);
     }
 

@@ -139,14 +139,14 @@ public class WindowSurfaceTest {
 
         window.setVisible(true);
 
-        mediaPlayer.logo().setLogoFile("etc/vlcj-logo.png");
-        mediaPlayer.logo().setLogoOpacity(0.3f);
-        mediaPlayer.logo().enableLogo(true);
+        mediaPlayer.logo().setFile("etc/vlcj-logo.png");
+        mediaPlayer.logo().setOpacity(0.3f);
+        mediaPlayer.logo().enable(true);
 
-        mediaPlayer.marquee().setMarqueeText("Window video surface");
-        mediaPlayer.marquee().setMarqueePosition(MarqueePosition.BOTTOM_RIGHT);
-        mediaPlayer.marquee().setMarqueeLocation(10, 10);
-        mediaPlayer.marquee().enableMarquee(true);
+        mediaPlayer.marquee().setText("Window video surface");
+        mediaPlayer.marquee().setPosition(MarqueePosition.BOTTOM_RIGHT);
+        mediaPlayer.marquee().setLocation(10, 10);
+        mediaPlayer.marquee().enable(true);
 
         mediaPlayer.media().prepare(args[0]);
     }

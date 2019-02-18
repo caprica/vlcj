@@ -383,37 +383,37 @@ public final class Marquee {
      */
     public void apply(MediaPlayer mediaPlayer) {
         if (text != null) {
-            mediaPlayer.marquee().setMarqueeText(text);
+            mediaPlayer.marquee().setText(text);
         }
         if (colour != null) {
-            mediaPlayer.marquee().setMarqueeColour(colour);
+            mediaPlayer.marquee().setColour(colour);
         }
         if (rgb != null) {
-            mediaPlayer.marquee().setMarqueeColour(rgb);
+            mediaPlayer.marquee().setColour(rgb);
         }
         if (intOpacity != null) {
-            mediaPlayer.marquee().setMarqueeOpacity(intOpacity);
+            mediaPlayer.marquee().setOpacity(intOpacity);
         }
         if (floatOpacity != null) {
-            mediaPlayer.marquee().setMarqueeOpacity(floatOpacity);
+            mediaPlayer.marquee().setOpacity(floatOpacity);
         }
         if (size != null) {
-            mediaPlayer.marquee().setMarqueeSize(size);
+            mediaPlayer.marquee().setSize(size);
         }
         if (timeout != null) {
-            mediaPlayer.marquee().setMarqueeTimeout(timeout);
+            mediaPlayer.marquee().setTimeout(timeout);
         }
         if (x != null && y != null && x >= 0 && y >= 0) {
-            mediaPlayer.marquee().setMarqueeLocation(x, y);
+            mediaPlayer.marquee().setLocation(x, y);
         }
         if (position != null) {
-            mediaPlayer.marquee().setMarqueePosition(position);
+            mediaPlayer.marquee().setPosition(position);
         }
         if (refresh != null) {
-            mediaPlayer.marquee().setMarqueeRefresh(refresh);
+            mediaPlayer.marquee().setRefresh(refresh);
         }
         if (enable) {
-            mediaPlayer.marquee().enableMarquee(true);
+            mediaPlayer.marquee().enable(true);
         }
     }
 

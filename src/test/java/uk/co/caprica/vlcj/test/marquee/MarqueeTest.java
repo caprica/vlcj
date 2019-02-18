@@ -182,14 +182,14 @@ public class MarqueeTest extends VlcjTest {
             enableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mediaPlayerComponent.mediaPlayer().marquee().enableMarquee(true);
+                    mediaPlayerComponent.mediaPlayer().marquee().enable(true);
                 }
             });
 
             disableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mediaPlayerComponent.mediaPlayer().marquee().enableMarquee(false);
+                    mediaPlayerComponent.mediaPlayer().marquee().enable(false);
                 }
             });
         }

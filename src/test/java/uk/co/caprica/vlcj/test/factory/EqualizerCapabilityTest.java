@@ -54,8 +54,8 @@ public class EqualizerCapabilityTest extends VlcjTest {
         for(String presetName : allPresets.keySet()) {
             System.out.printf("%s:%n", presetName);
             Equalizer preset = allPresets.get(presetName);
-            System.out.printf("%10s : %f Hz%n", "preamp", preset.getPreamp());
-            float[] amps = preset.getAmps();
+            System.out.printf("%10s : %f Hz%n", "preamp", preset.preamp());
+            float[] amps = preset.amps();
             for(int i = 0; i < amps.length; i++) {
                 float freq = bandFrequencies.get(i);
                 String unit;

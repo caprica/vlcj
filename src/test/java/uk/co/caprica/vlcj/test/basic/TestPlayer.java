@@ -141,9 +141,9 @@ public class TestPlayer extends VlcjTest {
                             mainFrame.invalidate();
                             mainFrame.validate();
                         } else if (keyEvent.getKeyCode() == KeyEvent.VK_A) {
-                            mediaPlayer.audio().setAudioDelay(mediaPlayer.audio().getAudioDelay() - 50000);
+                            mediaPlayer.audio().setDelay(mediaPlayer.audio().delay() - 50000);
                         } else if (keyEvent.getKeyCode() == KeyEvent.VK_S) {
-                            mediaPlayer.audio().setAudioDelay(mediaPlayer.audio().getAudioDelay() + 50000);
+                            mediaPlayer.audio().setDelay(mediaPlayer.audio().delay() + 50000);
                         } else if (keyEvent.getKeyCode() == KeyEvent.VK_1) {
                             mediaPlayer.controls().setTime(60000 * 1);
                         } else if (keyEvent.getKeyCode() == KeyEvent.VK_2) {
@@ -166,20 +166,20 @@ public class TestPlayer extends VlcjTest {
         // You can set a logo like this if you like...
         File logoFile = new File("./etc/vlcj-logo.png");
         if (logoFile.exists()) {
-            mediaPlayer.logo().setLogoFile(logoFile.getAbsolutePath());
-            mediaPlayer.logo().setLogoOpacity(0.5f);
-            mediaPlayer.logo().setLogoLocation(10, 10);
-            mediaPlayer.logo().enableLogo(true);
+            mediaPlayer.logo().setFile(logoFile.getAbsolutePath());
+            mediaPlayer.logo().setOpacity(0.5f);
+            mediaPlayer.logo().setLocation(10, 10);
+            mediaPlayer.logo().enable(true);
         }
 
         // Demo the marquee
-        mediaPlayer.marquee().setMarqueeText("vlcj java bindings for vlc");
-        mediaPlayer.marquee().setMarqueeSize(40);
-        mediaPlayer.marquee().setMarqueeOpacity(95);
-        mediaPlayer.marquee().setMarqueeColour(Color.white);
-        mediaPlayer.marquee().setMarqueeTimeout(5000);
-        mediaPlayer.marquee().setMarqueeLocation(50, 120);
-        mediaPlayer.marquee().enableMarquee(true);
+        mediaPlayer.marquee().setText("vlcj java bindings for vlc");
+        mediaPlayer.marquee().setSize(40);
+        mediaPlayer.marquee().setOpacity(95);
+        mediaPlayer.marquee().setColour(Color.white);
+        mediaPlayer.marquee().setTimeout(5000);
+        mediaPlayer.marquee().setLocation(50, 120);
+        mediaPlayer.marquee().enable(true);
     }
 
     private JMenuBar buildMenuBar() {
@@ -254,7 +254,7 @@ public class TestPlayer extends VlcjTest {
             if (newCount == 0) {
                 return;
             }
-            final Dimension dimension = mediaPlayer.video().getVideoDimension();
+            final Dimension dimension = mediaPlayer.video().videoDimension();
             if (dimension != null) {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override

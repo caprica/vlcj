@@ -40,7 +40,7 @@ public final class SubpictureService extends BaseService {
      *
      * @return number of sub-title tracks
      */
-    public int getSpuCount() {
+    public int trackCount() {
         return libvlc.libvlc_video_get_spu_count(mediaPlayerInstance);
     }
 
@@ -49,20 +49,20 @@ public final class SubpictureService extends BaseService {
      *
      * @return sub-title number, or -1 if none
      */
-    public int getSpu() {
+    public int track() {
         return libvlc.libvlc_video_get_spu(mediaPlayerInstance);
     }
 
     /**
      * Set the current sub-title track.
      * <p>
-     * The track identifier must be one of those returned by {@link #getSpuDescriptions()}.
+     * The track identifier must be one of those returned by {@link #trackDescriptions()}.
      * <p>
      * Subtitles can be disabled by passing here the identifier of the track with a description of
      * "Disable".
      * <p>
      * There is no guarantee that the available subtitle identifiers go in sequence from zero up to
-     * {@link #getSpuCount()}-1. The {@link #getSpuDescriptions()} method should always
+     * {@link #trackCount()}-1. The {@link #trackDescriptions()} method should always
      * be used to ascertain the available subtitle identifiers.
      * <p>
      * The implementation of the corresponding <em>native</em> method in libvlc is bugged before
@@ -72,9 +72,9 @@ public final class SubpictureService extends BaseService {
      * @param spu sub-title identifier, or -1 for none
      * @return current sub-title identifier
      */
-    public int setSpu(int spu) {
+    public int setTrack(int spu) {
         libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
-        return getSpu(); // FIXME does this work or is it actually async?
+        return track(); // FIXME does this work or is it actually async?
     }
 
     /**
@@ -82,7 +82,7 @@ public final class SubpictureService extends BaseService {
      *
      * @return sub-title delay, in microseconds
      */
-    public long getSpuDelay() {
+    public long delay() {
         return libvlc.libvlc_video_get_spu_delay(mediaPlayerInstance);
     }
 
@@ -94,7 +94,7 @@ public final class SubpictureService extends BaseService {
      *
      * @param delay desired sub-title delay, in microseconds
      */
-    public void setSpuDelay(long delay) {
+    public void setDelay(long delay) {
         libvlc.libvlc_video_set_spu_delay(mediaPlayerInstance, delay);
     }
 
@@ -103,7 +103,7 @@ public final class SubpictureService extends BaseService {
      * <p>
      * These sub-titles will be automatically selected.
      * <p>
-     * This method is a convenience for {@link SlaveService#addSlave(MediaSlaveType, String, boolean)}.
+     * This method is a convenience for {@link SlaveService#add(MediaSlaveType, String, boolean)}.
      *
      * @param subTitleFileName name of the local file containing the sub-titles
      * @return
@@ -117,7 +117,7 @@ public final class SubpictureService extends BaseService {
      * <p>
      * These sub-titles will be automatically selected.
      * <p>
-     * This method is a convenience for {@link SlaveService#addSlave(MediaSlaveType, String, boolean)}.
+     * This method is a convenience for {@link SlaveService#add(MediaSlaveType, String, boolean)}.
      *
      * @param subTitleFile file containing the sub-titles
      * @return
@@ -131,7 +131,7 @@ public final class SubpictureService extends BaseService {
      * <p>
      * These sub-titles will be automatically selected.
      * <p>
-     * This method is a convenience for {@link SlaveService#addSlave(MediaSlaveType, String, boolean)}.
+     * This method is a convenience for {@link SlaveService#add(MediaSlaveType, String, boolean)}.
      * <p>
      * See {@link uk.co.caprica.vlcj.media.SlaveService#add(MediaSlaveType, MediaSlavePriority, String)} for further
      * important information regarding this method.
@@ -140,7 +140,7 @@ public final class SubpictureService extends BaseService {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean setSubTitleUri(String uri) {
-        return mediaPlayer.slave().addSlave(MediaSlaveType.SUBTITLE, uri, true);
+        return mediaPlayer.slave().add(MediaSlaveType.SUBTITLE, uri, true);
     }
 
     /**
@@ -150,7 +150,7 @@ public final class SubpictureService extends BaseService {
      *
      * @return list of descriptions, may be empty but will never be <code>null</code>
      */
-    public List<TrackDescription> getSpuDescriptions() {
+    public List<TrackDescription> trackDescriptions() {
         return Descriptions.spuTrackDescriptions(libvlc, mediaPlayerInstance);
     }
 

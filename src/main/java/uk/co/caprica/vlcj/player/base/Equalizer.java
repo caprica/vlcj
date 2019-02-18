@@ -88,7 +88,7 @@ public final class Equalizer {
      *
      * @return number of frequency bands
      */
-    public final int getBandCount() {
+    public final int bandCount() {
         return bandCount;
     }
 
@@ -97,7 +97,7 @@ public final class Equalizer {
      *
      * @return pre-amplification value (Hz)
      */
-    public final float getPreamp() {
+    public final float preamp() {
         return preamp;
     }
 
@@ -120,7 +120,7 @@ public final class Equalizer {
      * @return amplification value
      * @throws IllegalArgumentException if the index is outside of the allowed range
      */
-    public final float getAmp(int index) {
+    public final float amp(int index) {
         if (index >= 0 && index < bandCount) {
             return bandAmps[index];
         } else {
@@ -150,7 +150,7 @@ public final class Equalizer {
      *
      * @return current amplification values
      */
-    public final float[] getAmps() {
+    public final float[] amps() {
        float[] result = new float[bandCount];
        copy(bandAmps, result);
        return result;

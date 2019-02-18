@@ -73,8 +73,8 @@ public final class SnapshotService extends BaseService {
      *
      * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
      */
-    public boolean saveSnapshot() {
-        return saveSnapshot(0, 0);
+    public boolean save() {
+        return save(0, 0);
     }
 
     /**
@@ -89,7 +89,7 @@ public final class SnapshotService extends BaseService {
      * If one of width or height is zero the original image aspect ratio will be preserved.
      * <p>
      * If both width and height are zero, the original image size will be used, see
-     * {@link #saveSnapshot()}.
+     * {@link #save()}.
      * <p>
      * Taking a snapshot is an asynchronous function, the snapshot is not available until
      * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
@@ -99,10 +99,10 @@ public final class SnapshotService extends BaseService {
      * @param height desired image height
      * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
      */
-    public boolean saveSnapshot(int width, int height) {
+    public boolean save(int width, int height) {
         File snapshotDirectory = new File(snapshotDirectoryName == null ? System.getProperty("user.home") : snapshotDirectoryName);
         File snapshotFile = new File(snapshotDirectory, "vlcj-snapshot-" + System.currentTimeMillis() + ".png");
-        return saveSnapshot(snapshotFile, width, height);
+        return save(snapshotFile, width, height);
     }
 
     /**
@@ -120,8 +120,8 @@ public final class SnapshotService extends BaseService {
      * @param file file to contain the snapshot
      * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
      */
-    public boolean saveSnapshot(File file) {
-        return saveSnapshot(file, 0, 0);
+    public boolean save(File file) {
+        return save(file, 0, 0);
     }
 
     /**
@@ -132,7 +132,7 @@ public final class SnapshotService extends BaseService {
      * If one of width or height is zero the original image aspect ratio will be preserved.
      * <p>
      * If both width and height are zero, the original image size will be used, see
-     * {@link #saveSnapshot(File)}.
+     * {@link #save(File)}.
      * <p>
      * Taking a snapshot is an asynchronous function, the snapshot is not available until
      * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
@@ -143,7 +143,7 @@ public final class SnapshotService extends BaseService {
      * @param height desired image height
      * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
      */
-    public boolean saveSnapshot(File file, int width, int height) {
+    public boolean save(File file, int width, int height) {
         File snapshotDirectory = file.getParentFile();
         if (snapshotDirectory == null) {
             snapshotDirectory = new File(".");
@@ -174,8 +174,8 @@ public final class SnapshotService extends BaseService {
      *
      * @return snapshot image, or <code>null</code> if a snapshot could not be taken
      */
-    public BufferedImage getSnapshot() {
-        return getSnapshot(0, 0);
+    public BufferedImage get() {
+        return get(0, 0);
     }
 
     /**
@@ -188,7 +188,7 @@ public final class SnapshotService extends BaseService {
      * If one of width or height is zero the original image aspect ratio will be preserved.
      * <p>
      * If both width and height are zero, the original image size will be used, see
-     * {@link #getSnapshot()}
+     * {@link #get()}
      * <p>
      * Taking a snapshot is an asynchronous function, the snapshot is not available until
      * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
@@ -198,7 +198,7 @@ public final class SnapshotService extends BaseService {
      * @param height desired image height
      * @return snapshot image, or <code>null</code> if a snapshot could not be taken
      */
-    public BufferedImage getSnapshot(int width, int height) {
+    public BufferedImage get(int width, int height) {
         File file = null;
         try {
             file = File.createTempFile("vlcj-snapshot-", ".png");

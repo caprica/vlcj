@@ -110,7 +110,7 @@ public class TimecodeTest extends VlcjTest {
 
         // If we found the timecode track, enable it
         if (timecodeTrack != null) {
-            player.subpictures().setSpu(timecodeTrack);
+            player.subpictures().setTrack(timecodeTrack);
         }
     }
 

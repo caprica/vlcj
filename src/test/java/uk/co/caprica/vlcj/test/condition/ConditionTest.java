@@ -100,7 +100,7 @@ public class ConditionTest extends VlcjTest {
                 // 1. The duration may not be available yet, even if the media player is playing
                 // 2. For some media types it is not possible to set the position past the end - this means that you
                 //    would have to wait for playback to reach the end normally
-                long duration = mediaPlayer.status().getLength();
+                long duration = mediaPlayer.status().length();
                 if (duration > 0 && time >= duration) {
                     break;
                 }
@@ -120,7 +120,7 @@ public class ConditionTest extends VlcjTest {
                 SnapshotTakenWaiter snapshotTakenWaiter = new SnapshotTakenWaiter(mediaPlayer) {
                     @Override
                     protected boolean onBefore(MediaPlayer mediaPlayer) {
-                        return mediaPlayer.snapshots().saveSnapshot(640, 480);
+                        return mediaPlayer.snapshots().save(640, 480);
                     }
                 };
                 snapshotTakenWaiter.await();

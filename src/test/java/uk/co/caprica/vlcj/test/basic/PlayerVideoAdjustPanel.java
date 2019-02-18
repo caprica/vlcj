@@ -120,11 +120,11 @@ public class PlayerVideoAdjustPanel extends JPanel {
         gammaSlider.setToolTipText("Change ");
         gammaSlider.setEnabled(false);
 
-        contrastSlider.setValue(Math.round(mediaPlayer.video().getBrightness() * 100.0f));
-        brightnessSlider.setValue(Math.round(mediaPlayer.video().getContrast() * 100.0f));
-        hueSlider.setValue(Math.round(mediaPlayer.video().getHue() * 100.0f));
-        saturationSlider.setValue(Math.round(mediaPlayer.video().getSaturation() * 100.0f));
-        gammaSlider.setValue(Math.round(mediaPlayer.video().getGamma() * 100.0f));
+        contrastSlider.setValue(Math.round(mediaPlayer.video().brightness() * 100.0f));
+        brightnessSlider.setValue(Math.round(mediaPlayer.video().contrast() * 100.0f));
+        hueSlider.setValue(Math.round(mediaPlayer.video().hue() * 100.0f));
+        saturationSlider.setValue(Math.round(mediaPlayer.video().saturation() * 100.0f));
+        gammaSlider.setValue(Math.round(mediaPlayer.video().gamma() * 100.0f));
     }
 
     private void layoutControls() {

@@ -80,7 +80,7 @@ public final class StatusService extends BaseService {
      *
      * @return length, in milliseconds
      */
-    public long getLength() {
+    public long length() {
         return libvlc.libvlc_media_player_get_length(mediaPlayerInstance);
     }
 
@@ -89,7 +89,7 @@ public final class StatusService extends BaseService {
      *
      * @return current time, expressed as a number of milliseconds
      */
-    public long getTime() {
+    public long time() {
         return libvlc.libvlc_media_player_get_time(mediaPlayerInstance);
     }
 
@@ -98,7 +98,7 @@ public final class StatusService extends BaseService {
      *
      * @return current position, expressed as a percentage (e.g. 0.15 is returned for 15% complete)
      */
-    public float getPosition() {
+    public float position() {
         return libvlc.libvlc_media_player_get_position(mediaPlayerInstance);
     }
 
@@ -107,7 +107,7 @@ public final class StatusService extends BaseService {
      *
      * @return rate, where 1.0 is normal speed, 0.5 is half speed, 2.0 is double speed and so on
      */
-    public float getRate() {
+    public float rate() {
         return libvlc.libvlc_media_player_get_rate(mediaPlayerInstance);
     }
 
@@ -116,16 +116,18 @@ public final class StatusService extends BaseService {
      *
      * @return number of video outputs, may be zero
      */
-    public int getVideoOutputs() {
+    public int videoOutputs() {
         return libvlc.libvlc_media_player_has_vout(mediaPlayerInstance);
     }
 
     /**
      * Get the media player current state.
+     * <p>
+     * It is recommended to listen to events instead of using this.
      *
      * @return state current media player state
      */
-    public State getMediaPlayerState() {
+    public State state() {
         return State.state(libvlc.libvlc_media_player_get_state(mediaPlayerInstance));
     }
 

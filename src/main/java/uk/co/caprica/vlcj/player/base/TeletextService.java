@@ -33,7 +33,7 @@ public final class TeletextService extends BaseService {
      *
      * @return page number
      */
-    public int getTeletextPage() {
+    public int page() {
         return libvlc.libvlc_video_get_teletext(mediaPlayerInstance);
     }
 
@@ -42,7 +42,7 @@ public final class TeletextService extends BaseService {
      *
      * @param pageNumber page number
      */
-    public void setTeletextPage(int pageNumber) {
+    public void setPage(int pageNumber) {
         libvlc.libvlc_video_set_teletext(mediaPlayerInstance, pageNumber);
     }
 
@@ -51,7 +51,7 @@ public final class TeletextService extends BaseService {
      *
      * @param key teletext key
      */
-    public void setTeletextKey(TeletextKey key) {
+    public void setKey(TeletextKey key) {
         libvlc.libvlc_video_set_teletext(mediaPlayerInstance, key.intValue());
     }
 

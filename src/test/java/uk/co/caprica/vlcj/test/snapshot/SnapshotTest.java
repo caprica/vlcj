@@ -71,16 +71,16 @@ public class SnapshotTest extends VlcjTest {
 
         File file3 = new File("vlcj-snapshot1.png");
         file3.deleteOnExit();
-        mediaPlayer.snapshots().saveSnapshot(file3);
+        mediaPlayer.snapshots().save(file3);
         BufferedImage image3 = ImageIO.read(file3);
 
         File file4 = new File("vlcj-snapshot2.png");
         file4.deleteOnExit();
-        mediaPlayer.snapshots().saveSnapshot(file4, 500, 0);
+        mediaPlayer.snapshots().save(file4, 500, 0);
         BufferedImage image4 = ImageIO.read(file4);
 
-        BufferedImage image5 = mediaPlayer.snapshots().getSnapshot();
-        BufferedImage image6 = mediaPlayer.snapshots().getSnapshot(300, 600);
+        BufferedImage image5 = mediaPlayer.snapshots().get();
+        BufferedImage image6 = mediaPlayer.snapshots().get(300, 600);
 
         show("Named file saveSnapshot", image3, 3);
         show("Named file sized saveSnapshot", image4, 4);

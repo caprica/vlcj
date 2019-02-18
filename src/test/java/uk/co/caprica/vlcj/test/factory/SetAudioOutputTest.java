@@ -161,9 +161,9 @@ public class SetAudioOutputTest extends VlcjTest {
                 String audioOutputName = (String)source.getClientProperty("AudioOutputName");
                 String audioDeviceId = (String)source.getClientProperty("AudioDeviceId");
 
-                mediaPlayer.audio().setAudioOutput(audioOutputName);
+                mediaPlayer.audio().setOutput(audioOutputName);
                 if(audioDeviceId != null) {
-                    mediaPlayer.audio().setAudioOutputDevice(audioOutputName, audioDeviceId);
+                    mediaPlayer.audio().setOutputDevice(audioOutputName, audioDeviceId);
                 }
 
                 audioOutputTextField.setText(audioOutputName);

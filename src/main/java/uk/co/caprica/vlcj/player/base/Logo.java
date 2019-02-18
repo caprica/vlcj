@@ -344,31 +344,31 @@ public final class Logo {
      */
     public void apply(MediaPlayer mediaPlayer) {
         if (duration != null) {
-            mediaPlayer.logo().setLogoDuration(duration);
+            mediaPlayer.logo().setDuration(duration);
         }
         if (intOpacity != null) {
-            mediaPlayer.logo().setLogoOpacity(intOpacity);
+            mediaPlayer.logo().setOpacity(intOpacity);
         }
         if (floatOpacity != null) {
-            mediaPlayer.logo().setLogoOpacity(floatOpacity);
+            mediaPlayer.logo().setOpacity(floatOpacity);
         }
         if (x != null && y != null && x >= 0 && y >= 0) {
-            mediaPlayer.logo().setLogoLocation(x, y);
+            mediaPlayer.logo().setLocation(x, y);
         }
         if (position != null) {
-            mediaPlayer.logo().setLogoPosition(position);
+            mediaPlayer.logo().setPosition(position);
         }
         if (repeat != null) {
-            mediaPlayer.logo().setLogoRepeat(repeat);
+            mediaPlayer.logo().setRepeat(repeat);
         }
         if (!files.isEmpty()) {
-            mediaPlayer.logo().setLogoFile(convertFileSpecs());
+            mediaPlayer.logo().setFile(convertFileSpecs());
         }
         if (image != null) {
-            mediaPlayer.logo().setLogoImage(image);
+            mediaPlayer.logo().setImage(image);
         }
         if (enable) {
-            mediaPlayer.logo().enableLogo(true);
+            mediaPlayer.logo().enable(true);
         }
     }
 

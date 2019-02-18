@@ -91,7 +91,7 @@ public class ThumbsTest extends VlcjTest {
             mediaPlayer.controls().setPosition(VLC_THUMBNAIL_POSITION);
             inPositionLatch.await(); // Might wait forever if error
 
-            mediaPlayer.snapshots().saveSnapshot(snapshotFile, imageWidth, 0);
+            mediaPlayer.snapshots().save(snapshotFile, imageWidth, 0);
             snapshotTakenLatch.await(); // Might wait forever if error
 
             mediaPlayer.controls().stop();

@@ -61,7 +61,7 @@ final class WaitForSnapshot extends SnapshotTakenWaiter {
 
     @Override
     protected boolean onBefore(MediaPlayer mediaPlayer) {
-        return mediaPlayer.snapshots().saveSnapshot(file, width, height);
+        return mediaPlayer.snapshots().save(file, width, height);
     }
 
 }

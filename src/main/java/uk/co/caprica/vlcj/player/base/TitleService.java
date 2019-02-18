@@ -35,7 +35,7 @@ public final class TitleService extends BaseService {
      *
      * @return number of titles, or -1 if none
      */
-    public int getTitleCount() {
+    public int titleCount() {
         return libvlc.libvlc_media_player_get_title_count(mediaPlayerInstance);
     }
 
@@ -44,7 +44,7 @@ public final class TitleService extends BaseService {
      *
      * @return title number
      */
-    public int getTitle() {
+    public int title() {
         return libvlc.libvlc_media_player_get_title(mediaPlayerInstance);
     }
 
@@ -64,7 +64,7 @@ public final class TitleService extends BaseService {
      *
      * @return list of descriptions, may be empty but will never be <code>null</code>
      */
-    public List<TitleDescription> getTitleDescriptions() {
+    public List<TitleDescription> titleDescriptions() {
         return Descriptions.titleDescriptions(libvlc, mediaPlayerInstance);
     }
 

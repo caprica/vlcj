@@ -92,8 +92,8 @@ public final class ControlsService extends BaseService {
      *
      * @param delta time period, in milliseconds
      */
-    public void skip(long delta) {
-        long current = mediaPlayer.status().getTime();
+    public void skipTime(long delta) {
+        long current = mediaPlayer.status().time();
         if (current != -1) {
             setTime(current + delta);
         }
@@ -107,7 +107,7 @@ public final class ControlsService extends BaseService {
      * @param delta amount to skip
      */
     public void skipPosition(float delta) {
-        float current = mediaPlayer.status().getPosition();
+        float current = mediaPlayer.status().position();
         if (current != -1) {
             setPosition(current + delta);
         }

@@ -53,10 +53,10 @@ public class MediaInfoTest extends VlcjTest {
             public void mediaPlayerReady(MediaPlayer mediaPlayer) {
                 System.out.println("MEDIA PLAYER READY...");
                 System.out.println("     Track Information: " + mediaPlayer.media().info().tracks());
-                System.out.println("    Title Descriptions: " + mediaPlayer.titles().getTitleDescriptions());
-                System.out.println("    Video Descriptions: " + mediaPlayer.video().getVideoDescriptions());
-                System.out.println("    Audio Descriptions: " + mediaPlayer.audio().getAudioDescriptions());
-                System.out.println("Chapter Descriptions: " + mediaPlayer.chapters().getAllChapterDescriptions());
+                System.out.println("    Title Descriptions: " + mediaPlayer.titles().titleDescriptions());
+                System.out.println("    Video Descriptions: " + mediaPlayer.video().trackDescriptions());
+                System.out.println("    Audio Descriptions: " + mediaPlayer.audio().trackDescriptions());
+                System.out.println("Chapter Descriptions: " + mediaPlayer.chapters().allDescriptions());
                 System.out.println();
             }
         });

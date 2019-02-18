@@ -182,14 +182,14 @@ public class LogoTest extends VlcjTest {
             enableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mediaPlayerComponent.mediaPlayer().logo().enableLogo(true);
+                    mediaPlayerComponent.mediaPlayer().logo().enable(true);
                 }
             });
 
             disableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mediaPlayerComponent.mediaPlayer().logo().enableLogo(false);
+                    mediaPlayerComponent.mediaPlayer().logo().enable(false);
                 }
             });
 
