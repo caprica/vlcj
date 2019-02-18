@@ -93,13 +93,6 @@ public interface MediaPlayer {
     RoleService role();
 
     /**
-     * Behaviour pertaining to media slavs.
-     *
-     * @return media slave behaviour
-     */
-    SlaveService slave();
-
-    /**
      * Behaviour pertaining to video snapshots.
      *
      * @return snapshot behaviour

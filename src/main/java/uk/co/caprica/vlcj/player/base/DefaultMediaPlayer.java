@@ -74,7 +74,6 @@ public class DefaultMediaPlayer implements MediaPlayer {
     private final MediaService      mediaService;
     private final MenuService       menuService;
     private final RoleService       roleService;
-    private final SlaveService      slaveService;
     private final SnapshotService   snapshotService;
     private final StatusService     statusService;
     private final SubitemService    subitemService;
@@ -104,7 +103,6 @@ public class DefaultMediaPlayer implements MediaPlayer {
         mediaService      = new MediaService     (this);
         menuService       = new MenuService      (this);
         roleService       = new RoleService      (this);
-        slaveService      = new SlaveService     (this);
         snapshotService   = new SnapshotService  (this);
         statusService     = new StatusService    (this);
         subitemService    = new SubitemService   (this);
@@ -166,11 +164,6 @@ public class DefaultMediaPlayer implements MediaPlayer {
     @Override
     public final RoleService role() {
         return roleService;
-    }
-
-    @Override
-    public final SlaveService slave() {
-        return slaveService;
     }
 
     @Override
@@ -238,7 +231,6 @@ public class DefaultMediaPlayer implements MediaPlayer {
         mediaService     .release();
         menuService      .release();
         roleService      .release();
-        slaveService     .release();
         snapshotService  .release();
         statusService    .release();
         subitemService   .release();

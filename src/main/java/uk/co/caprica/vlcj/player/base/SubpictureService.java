@@ -103,10 +103,10 @@ public final class SubpictureService extends BaseService {
      * <p>
      * These sub-titles will be automatically selected.
      * <p>
-     * This method is a convenience for {@link SlaveService#add(MediaSlaveType, String, boolean)}.
+     * This method is a convenience for {@link MediaService#addSlave(MediaSlaveType, String, boolean)}.
      *
      * @param subTitleFileName name of the local file containing the sub-titles
-     * @return
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean setSubTitleFile(String subTitleFileName) {
         return setSubTitleUri(NativeUri.encodeUri(subTitleFileName));
@@ -117,10 +117,10 @@ public final class SubpictureService extends BaseService {
      * <p>
      * These sub-titles will be automatically selected.
      * <p>
-     * This method is a convenience for {@link SlaveService#add(MediaSlaveType, String, boolean)}.
+     * This method is a convenience for {@link MediaService#addSlave(MediaSlaveType, String, boolean)}.
      *
      * @param subTitleFile file containing the sub-titles
-     * @return
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean setSubTitleFile(File subTitleFile) {
         return setSubTitleUri(NativeUri.encodeUri(subTitleFile.getAbsolutePath()));
@@ -131,7 +131,7 @@ public final class SubpictureService extends BaseService {
      * <p>
      * These sub-titles will be automatically selected.
      * <p>
-     * This method is a convenience for {@link SlaveService#add(MediaSlaveType, String, boolean)}.
+     * This method is a convenience for {@link MediaService#addSlave(MediaSlaveType, String, boolean)}.
      * <p>
      * See {@link uk.co.caprica.vlcj.media.SlaveService#add(MediaSlaveType, MediaSlavePriority, String)} for further
      * important information regarding this method.
@@ -140,7 +140,7 @@ public final class SubpictureService extends BaseService {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean setSubTitleUri(String uri) {
-        return mediaPlayer.slave().add(MediaSlaveType.SUBTITLE, uri, true);
+        return mediaPlayer.media().addSlave(MediaSlaveType.SUBTITLE, uri, true);
     }
 
     /**

@@ -20,6 +20,8 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.media.MediaSlavePriority;
+import uk.co.caprica.vlcj.media.MediaSlaveType;
 import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 import uk.co.caprica.vlcj.media.EventService;
 import uk.co.caprica.vlcj.media.InfoService;
@@ -320,6 +322,21 @@ public final class MediaService extends BaseService {
      */
     public boolean getRepeat() {
         return repeat;
+    }
+
+    /**
+     * Add an input slave to the current media.
+     * <p>
+     * See {@link uk.co.caprica.vlcj.media.SlaveService#add(MediaSlaveType, MediaSlavePriority, String)}  for further
+     * important information regarding this method.
+     *
+     * @param type type of slave to add
+     * @param uri URI of the slave to add
+     * @param select <code>true</code> if this slave should be automatically selected when added
+     * @return <code>true</code> on success; <code>false</code> otherwise
+     */
+    public boolean addSlave(MediaSlaveType type, String uri, boolean select) {
+        return libvlc.libvlc_media_player_add_slave(mediaPlayerInstance, type.intValue(), uri, select ? 1 : 0) == 0;
     }
 
     /**
