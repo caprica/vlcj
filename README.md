@@ -79,9 +79,10 @@ API Breakage (vlcj-3)
 ---------------------
 
 This is the *tenth year* of the project, the API has been pretty much static for that entire time. The codebase has
-evolved gradually and incrementally in that time and resulted often in sub-optimal implementations and choices, as well
-as some generally unwieldy individual classes containing literally thousands of lines of code. Keeping the API fixed for
-those almost ten years also locked in some long-standing architectural issues that simply could not be resolved.
+evolved gradually and incrementally in that time and resulted sometimes in sub-optimal implementations and choices, as
+well as some generally unwieldy individual classes containing literally thousands of lines of code. Keeping the API
+fixed for those almost ten years also locked in some long-standing architectural issues that simply could not be
+resolved.
 
 The decision to break backwards compatibility with the vlcj-3 API was not taken lightly, but the results have been worth
 it. All legacy architectural issues have been resolved, the giant god-classes have been factored to more manageable
@@ -162,10 +163,10 @@ Threading Model
 
 This section is very important.
 
-With vlcj-4, every native event coming from LibVlc is processed on the native callback thread. This should give some
+With vlcj-4, every native event coming from LibVLC is processed on the native callback thread. This should give some
 small performance gains when compared with vlcj-3.
 
-The critical issue is that it is generally not permitted to call back into LibVlc from the event callback thread. Doing
+The critical issue is that it is generally not permitted to call back into LibVLC from the event callback thread. Doing
 so may cause subtle failures or outright hard JVM crashes.
 
 A prime example of the sort of trap waiting for you is the very common case of handling a media player "finished" event
@@ -180,8 +181,8 @@ mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 });
 ```
 
-In this example, the `finished` method is being invoked on a native callback thread owned by LibVlc. The implementation
-of this method is calling back into LibVlc when it invokes `playMedia`. This is very likely to cause a JVM crash and
+In this example, the `finished` method is being invoked on a native callback thread owned by LibVLC. The implementation
+of this method is calling back into LibVLC when it invokes `playMedia`. This is very likely to cause a JVM crash and
 kill your application.
 
 In cases such as this, you should make use of an asynchronous task-executor queue conveniently provided by the 
@@ -201,7 +202,7 @@ mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 });
 ```
 
-You should *not* use this mechanism for *all* of your event handlers, *only those that will call back into LibVlc*.
+You should *not* use this mechanism for *all* of your event handlers, *only those that will call back into LibVLC*.
 
 Other high-level vlcj components may also provide their own asynchronous task executor, it is not limited to the media
 player.
@@ -213,7 +214,7 @@ Your event handler implementations must *not* throw an `Exception`, failure of y
 any thrown exception may prevent other listeners from being notified of the event.
 
 If you are attempting to use multiple media players in your application, or using media players from multiple threads,
-you may need to take some extra care so that you do not have multiple threads calling into LibVlc concurrently. You may
+you may need to take some extra care so that you do not have multiple threads calling into LibVLC concurrently. You may
 encounter subtle bugs and races that are very difficult to diagnose.
 
 In addition, you must take care not to update Swing UI components from the native thread - all Swing UI updates are
