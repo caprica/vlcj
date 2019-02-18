@@ -24,6 +24,8 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
  * Specification for an audio callback.
+ *
+ * @see AudioCallbackAdapter
  */
 public interface AudioCallback {
 

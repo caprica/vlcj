@@ -30,6 +30,8 @@ import java.nio.ByteBuffer;
  * for the full video frame then consider using {@link RenderCallbackAdapter}.
  * <p>
  * The render call-back is invoked by a <em>native</em> thread.
+ *
+ * @see RenderCallbackAdapter
  */
 public interface RenderCallback {
 

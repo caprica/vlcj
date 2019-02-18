@@ -30,7 +30,7 @@ import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
 
 /**
- *
+ * Implementation of a video surface that uses native callbacks to receive video frame data for rendering.
  */
 public class CallbackVideoSurface extends VideoSurface {
 
@@ -50,12 +50,12 @@ public class CallbackVideoSurface extends VideoSurface {
     private BufferFormat bufferFormat;
 
     /**
+     * Create a video surface.
      *
-     *
-     * @param bufferFormatCallback
-     * @param renderCallback
-     * @param lockBuffers
-     * @param videoSurfaceAdapter
+     * @param bufferFormatCallback callback providing the video buffer format
+     * @param renderCallback callback used to render the video frame buffer
+     * @param lockBuffers <code>true</code> if the video buffer should be locked; <code>false</code> if not
+     * @param videoSurfaceAdapter adapter to attach a video surface to a native media player
      */
     public CallbackVideoSurface(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers, VideoSurfaceAdapter videoSurfaceAdapter) {
         super(videoSurfaceAdapter);
@@ -88,7 +88,6 @@ public class CallbackVideoSurface extends VideoSurface {
         }
 
         /**
-         *
          * Set the desired video format properties - space for these structures is already allocated by LibVlc, we
          * simply fill the existing memory.
          * <p>
