@@ -83,15 +83,6 @@ public final class RendererDiscoverer {
     }
 
     /**
-     * Get the associated native renderer discoverer instance.
-     *
-     * @return renderer discoverer instance
-     */
-    public libvlc_renderer_discoverer_t rendererDiscovererInstance() {
-        return discovererInstance;
-    }
-
-    /**
      * Release this component and the associated native resources.
      * <p>
      * The component must no longer be used.
@@ -101,6 +92,15 @@ public final class RendererDiscoverer {
         listService.release();
 
         libvlc.libvlc_renderer_discoverer_release(discovererInstance);
+    }
+
+    /**
+     * Get the associated native renderer discoverer instance.
+     *
+     * @return renderer discoverer instance
+     */
+    public libvlc_renderer_discoverer_t rendererDiscovererInstance() {
+        return discovererInstance;
     }
 
 }
