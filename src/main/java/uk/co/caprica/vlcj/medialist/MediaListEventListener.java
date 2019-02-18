@@ -76,7 +76,8 @@ public interface MediaListEventListener {
 
     /**
      * The end of the media list was reached.
-     * FIXME i don't think this native event actually fires
+     * <p>
+     * The corresponding native event may in fact never fire.
      *
      * @param mediaList list
      */
