@@ -30,7 +30,6 @@ import uk.co.caprica.vlcj.media.OptionsService;
 import uk.co.caprica.vlcj.media.ParseService;
 import uk.co.caprica.vlcj.media.SlaveService;
 import uk.co.caprica.vlcj.media.SubitemService;
-import uk.co.caprica.vlcj.media.UserDataService;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MediaEventListener;
 
@@ -298,15 +297,6 @@ public final class MediaService extends BaseService {
      */
     public SubitemService subitems() {
         return media != null ? media.subitems() : null;
-    }
-
-    /**
-     * Delegated behaviour pertaining to the associated media userdata.
-     *
-     * @return userdata behaviour
-     */
-    public UserDataService userData() {
-        return media != null ? media.userData() : null;
     }
 
     /**

@@ -43,17 +43,13 @@ public final class Media {
      */
     protected final libvlc_media_t mediaInstance;
 
-    /**
-     *
-     */
-    private final EventService    eventService;
-    private final InfoService     infoService;
-    private final MetaService     metaService;
-    private final OptionsService  optionsService;
-    private final ParseService    parseService;
-    private final SlaveService    slaveService;
-    private final SubitemService  subitemService;
-    private final UserDataService userDataService;
+    private final EventService   eventService;
+    private final InfoService    infoService;
+    private final MetaService    metaService;
+    private final OptionsService optionsService;
+    private final ParseService   parseService;
+    private final SlaveService   slaveService;
+    private final SubitemService subitemService;
 
     /**
      * Create a new media item.
@@ -71,14 +67,13 @@ public final class Media {
         this.libvlcInstance = libvlcInstance;
         this.mediaInstance  = media;
 
-        this.eventService    = new EventService   (this);
-        this.infoService     = new InfoService    (this);
-        this.metaService     = new MetaService    (this);
-        this.optionsService  = new OptionsService (this);
-        this.parseService    = new ParseService   (this);
-        this.slaveService    = new SlaveService   (this);
-        this.subitemService  = new SubitemService (this);
-        this.userDataService = new UserDataService(this);
+        this.eventService    = new EventService  (this);
+        this.infoService     = new InfoService   (this);
+        this.metaService     = new MetaService   (this);
+        this.optionsService  = new OptionsService(this);
+        this.parseService    = new ParseService  (this);
+        this.slaveService    = new SlaveService  (this);
+        this.subitemService  = new SubitemService(this);
     }
 
     /**
@@ -142,15 +137,6 @@ public final class Media {
      */
     public SubitemService subitems() {
         return subitemService;
-    }
-
-    /**
-     * Behaviour pertaining to userdata.
-     *
-     * @return userdata behaviour
-     */
-    public UserDataService userData() {
-        return userDataService;
     }
 
     /**
@@ -223,14 +209,13 @@ public final class Media {
      * The component must no longer be used.
      */
     public void release() {
-        eventService   .release();
-        infoService    .release();
-        optionsService .release();
-        parseService   .release();
-        metaService    .release();
-        slaveService   .release();
-        subitemService .release();
-        userDataService.release();
+        eventService  .release();
+        infoService   .release();
+        optionsService.release();
+        parseService  .release();
+        metaService   .release();
+        slaveService  .release();
+        subitemService.release();
 
         libvlc.libvlc_media_release(mediaInstance);
     }
