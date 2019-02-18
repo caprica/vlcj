@@ -222,7 +222,7 @@ public class MediaPlayerFactory {
         return dialogsService;
     }
 
-    public final MediaDiscovererService discoverers() {
+    public final MediaDiscovererService mediaDiscoverers() {
         return mediaDiscovererService;
     }
 

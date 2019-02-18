@@ -53,7 +53,7 @@ public class MediaDiscovererTest {
         dump(factory, MediaDiscovererCategory.PODCASTS);
         dump(factory, MediaDiscovererCategory.LOCAL_DIRS);
 
-        List<MediaDiscovererDescription> discoverers = factory.discoverers().discoverers(MediaDiscovererCategory.LOCAL_DIRS);
+        List<MediaDiscovererDescription> discoverers = factory.mediaDiscoverers().discoverers(MediaDiscovererCategory.LOCAL_DIRS);
         System.out.println("discoverers=" + discoverers);
 
         if (discoverers.size() == 0) {
@@ -63,7 +63,7 @@ public class MediaDiscovererTest {
         for (MediaDiscovererDescription description : discoverers) {
             final String name = description.name();
             System.out.println("name=" + name);
-            MediaDiscoverer discoverer = factory.discoverers().discoverer(name);
+            MediaDiscoverer discoverer = factory.mediaDiscoverers().discoverer(name);
             allDiscoverers.add(discoverer);
             System.out.println("discoverer=" + discoverer);
 
@@ -91,7 +91,7 @@ public class MediaDiscovererTest {
     }
 
     private static void dump(MediaPlayerFactory factory, MediaDiscovererCategory category) {
-        List<MediaDiscovererDescription> discoverers = factory.discoverers().discoverers(category);
+        List<MediaDiscovererDescription> discoverers = factory.mediaDiscoverers().discoverers(category);
         System.out.println("discoverers=" + discoverers);
 
         for (MediaDiscovererDescription description : discoverers) {
