@@ -43,7 +43,7 @@ public final class MediaList {
      */
     protected final libvlc_media_list_t mediaListInstance;
 
-    private final ItemService  itemService;
+    private final MediaService itemService;
     private final EventService eventService;
 
     /**
@@ -58,7 +58,7 @@ public final class MediaList {
         this.mediaListInstance = mediaListInstance;
 
         this.eventService = new EventService(this);
-        this.itemService  = new ItemService (this);
+        this.itemService  = new MediaService(this);
     }
 
     /**
@@ -75,7 +75,7 @@ public final class MediaList {
      *
      * @return list item behaviour
      */
-    public ItemService items() {
+    public MediaService items() {
         return itemService;
     }
 

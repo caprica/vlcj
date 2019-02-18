@@ -29,14 +29,12 @@ import uk.co.caprica.vlcj.media.MediaRef;
 import java.util.ArrayList;
 import java.util.List;
 
-// FIXME consider rename, is this really MediaService? (would match the Media component i suppose)
-
 /**
  * Behaviour pertaining to the media items in the list.
  */
-public final class ItemService extends BaseService {
+public final class MediaService extends BaseService {
 
-    ItemService(MediaList mediaList) {
+    MediaService(MediaList mediaList) {
         super(mediaList);
     }
 

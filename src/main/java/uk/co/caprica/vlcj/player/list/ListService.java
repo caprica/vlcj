@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.player.list;
 
 import uk.co.caprica.vlcj.medialist.EventService;
-import uk.co.caprica.vlcj.medialist.ItemService;
+import uk.co.caprica.vlcj.medialist.MediaService;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 
@@ -92,7 +92,7 @@ public final class ListService extends BaseService {
      *
      * @return item behaviour, may be <code>null</code> if there is currently no media list
      */
-    public ItemService items() {
+    public MediaService items() {
         return mediaList != null ? mediaList.items() : null;
     }
 
