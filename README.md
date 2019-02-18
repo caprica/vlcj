@@ -155,7 +155,7 @@ If you are using Maven (or similar) to manage your dependencies, the vlcj-native
 automatically for you (you only need to explicitly add vlcj to your project, not vlcj-natives).
 
 If you are installing vlcj manually, then you will need to include the new vlcj-natives jar file along with the existing
-vlcj jar file.  
+vlcj jar file.
 
 Threading Model
 ---------------
