@@ -21,8 +21,6 @@ package uk.co.caprica.vlcj.player.list;
 
 import uk.co.caprica.vlcj.player.base.State;
 
-// FIXME a whole service for just this? really?
-
 /**
  * Behaviour pertaining to media list player status.
  */

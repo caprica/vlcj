@@ -98,6 +98,6 @@ public interface MediaListPlayer {
      *
      * @return media player instance
      */
-    libvlc_media_list_player_t mediaListPlayerInstance(); // FIXME check this needs to be on interface
+    libvlc_media_list_player_t mediaListPlayerInstance();
 
 }

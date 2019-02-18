@@ -78,7 +78,7 @@ public class CueTest extends VlcjTest {
                 dump(player.getMediaPlayer());
                 // Play an arbitrary sub-item to prove it works for the sake of example, this will fail of course if the
                 // index is out of range for your playlist
-                player.getMediaPlayer().subitems().controls().playItem(2);
+                player.getMediaPlayer().subitems().controls().play(2);
             }
         });
 

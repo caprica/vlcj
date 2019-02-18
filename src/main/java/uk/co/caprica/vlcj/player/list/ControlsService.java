@@ -52,7 +52,7 @@ public final class ControlsService extends BaseService {
      *
      * @param pause <code>true</code> to pause; <code>false</code> to un-pause
      */
-    public void setPause(boolean pause) {
+    public void pause(boolean pause) {
         libvlc.libvlc_media_list_player_set_pause(mediaListPlayerInstance, pause ? 1 : 0);
     }
 
@@ -72,7 +72,7 @@ public final class ControlsService extends BaseService {
      * @param itemIndex index of the item to play
      * @return <code>true</code> if the item could be played, otherwise <code>false</code>
      */
-    public boolean playItem(int itemIndex) {
+    public boolean play(int itemIndex) {
         attachVideoSurface();
         return libvlc.libvlc_media_list_player_play_item_at_index(mediaListPlayerInstance, itemIndex) == 0;
     }

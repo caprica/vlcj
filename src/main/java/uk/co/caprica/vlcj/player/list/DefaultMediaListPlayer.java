@@ -30,7 +30,7 @@ import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
  * The native media list player will automatically deal properly with media that has subitems (like YouTube movies), so
  * simply adding an ordinary MRL/URL is all that is needed for such media.
  */
-public class DefaultMediaListPlayer implements MediaListPlayer {
+public final class DefaultMediaListPlayer implements MediaListPlayer {
 
     /**
      * Native library interface.
@@ -171,8 +171,8 @@ public class DefaultMediaListPlayer implements MediaListPlayer {
     }
 
     @Override
-    public final libvlc_media_list_player_t mediaListPlayerInstance() {
+    public libvlc_media_list_player_t mediaListPlayerInstance() {
         return mediaListPlayerInstance;
-    } // FIXME check it has to be public and on the interface, ideally no...
+    }
 
 }

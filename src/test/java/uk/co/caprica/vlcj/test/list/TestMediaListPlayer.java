@@ -214,7 +214,7 @@ public class TestMediaListPlayer extends VlcjTest {
                     if (e.getClickCount() == 2) {
                         int index = list.locationToIndex(e.getPoint());
                         if (index != -1) {
-                            mediaListPlayer.controls().playItem(index);
+                            mediaListPlayer.controls().play(index);
                         }
                     }
                 }
