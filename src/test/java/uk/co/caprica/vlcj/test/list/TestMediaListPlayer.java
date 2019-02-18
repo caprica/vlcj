@@ -75,7 +75,7 @@ public class TestMediaListPlayer extends VlcjTest {
         this.mediaListPlayer    = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
 
         MediaRef mediaRef = mediaPlayerFactory.media().newMediaRef("https://www.youtube.com/watch?v=zGt444zwSAM");
-        mediaList.items().add(mediaRef);
+        mediaList.media().add(mediaRef);
         mediaRef.release();
 
         MediaListRef mediaListRef = mediaList.newMediaListRef();
@@ -195,9 +195,9 @@ public class TestMediaListPlayer extends VlcjTest {
                 @Override
                 protected void onMediaDropped(String[] uris) {
                     for (String uri : uris) {
-                        mediaList.items().add(uri);
+                        mediaList.media().add(uri);
                     }
-                    System.out.println("IS READ ONLY RETURNS " + mediaList.items().isReadOnly());
+                    System.out.println("IS READ ONLY RETURNS " + mediaList.media().isReadOnly());
                 }
             });
 
@@ -258,7 +258,7 @@ public class TestMediaListPlayer extends VlcjTest {
             clearButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    mediaList.items().clear();
+                    mediaList.media().clear();
                 }
             });
         }
@@ -296,12 +296,12 @@ public class TestMediaListPlayer extends VlcjTest {
 
         @Override
         public int getSize() {
-            return mediaList.items().count();
+            return mediaList.media().count();
         }
 
         @Override
         public Object getElementAt(int i) {
-            return mediaList.items().mrl(i);
+            return mediaList.media().mrl(i);
         }
     }
 

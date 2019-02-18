@@ -75,7 +75,7 @@ public final class MediaList {
      *
      * @return list item behaviour
      */
-    public MediaService items() {
+    public MediaService media() {
         return itemService;
     }
 

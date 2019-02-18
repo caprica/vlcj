@@ -93,7 +93,7 @@ public final class ListService extends BaseService {
      * @return item behaviour, may be <code>null</code> if there is currently no media list
      */
     public MediaService items() {
-        return mediaList != null ? mediaList.items() : null;
+        return mediaList != null ? mediaList.media() : null;
     }
 
     /**

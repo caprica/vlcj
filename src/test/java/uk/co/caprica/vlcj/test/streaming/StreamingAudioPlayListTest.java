@@ -106,7 +106,7 @@ public class StreamingAudioPlayListTest extends VlcjTest {
         String mediaOptions = formatRtpStream(address, port);
         // Add each media file to the play-list...
         for (File file : files) {
-            playList.items().add(file.getAbsolutePath(), mediaOptions);
+            playList.media().add(file.getAbsolutePath(), mediaOptions);
         }
         // Loop the play-list over and over
         mediaListPlayer.controls().setMode(PlaybackMode.LOOP);

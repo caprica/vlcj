@@ -50,20 +50,20 @@ public class DvbSubitemTest extends VlcjTest {
             public void finished(MediaPlayer mediaPlayer) {
                 MediaList mediaList = mediaPlayer.media().subitems().newMediaList();
 
-                int subitemCount = mediaList.items().count();
+                int subitemCount = mediaList.media().count();
                 System.out.println("subitemCount=" + subitemCount);
 
                 System.out.println("Getting sub-items...");
 
-                List<String> mrls = mediaList.items().mrls();
+                List<String> mrls = mediaList.media().mrls();
                 for(String mrl : mrls) {
                     System.out.println(mrl);
                 }
 
                 System.out.println("Getting sub-item meta data...");
 
-                for (int i = 0; i < mediaList.items().count(); i++) {
-                    Media media = mediaList.items().newMedia(i);
+                for (int i = 0; i < mediaList.media().count(); i++) {
+                    Media media = mediaList.media().newMedia(i);
                     if (media != null) {
                         System.out.println("title -> " + media.meta().get(Meta.TITLE));
                         media.release();

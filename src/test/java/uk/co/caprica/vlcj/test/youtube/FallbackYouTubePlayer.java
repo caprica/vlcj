@@ -67,7 +67,7 @@ public class FallbackYouTubePlayer extends VlcjTest {
                 //
                 // On receipt of a "finished" event, check if sub-items have been created...
                 MediaList mediaList = mediaPlayer.media().subitems().newMediaList();
-                List<String> subitems = mediaList.items().mrls();
+                List<String> subitems = mediaList.media().mrls();
                 mediaList.release();
                 System.out.println("subitems=" + subitems);
                 // If sub-items were created...

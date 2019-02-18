@@ -167,7 +167,7 @@ public class YouTubePlayer extends VlcjTest {
             public void mediaSubItemAdded(Media media, MediaRef newChild) {
                 System.out.println("item added");
                 MediaList mediaList = mediaPlayer.media().subitems().newMediaList();
-                for (String mrl : mediaList.items().mrls()) {
+                for (String mrl : mediaList.media().mrls()) {
                     System.out.println("mrl=" + mrl);
                 }
                 mediaList.release();
@@ -177,7 +177,7 @@ public class YouTubePlayer extends VlcjTest {
             public void mediaSubItemTreeAdded(Media media, MediaRef item) {
                 System.out.println("item tree added");
                 MediaList mediaList = mediaPlayer.media().subitems().newMediaList();
-                for (String mrl : mediaList.items().mrls()) {
+                for (String mrl : mediaList.media().mrls()) {
                     System.out.println("mrl=" + mrl);
                 }
                 mediaList.release();
