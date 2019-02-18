@@ -25,7 +25,7 @@ package uk.co.caprica.vlcj.media;
  * Generally there is no need to specify option flags, by default the option will be {@link OptionFlag#TRUSTED} and
  * {@link OptionFlag#UNIQUE} although it is possible to use different flag values if required.
  */
-public class OptionsService extends BaseService {
+public final class OptionsService extends BaseService {
 
     OptionsService(Media media) {
         super(media);
@@ -37,7 +37,7 @@ public class OptionsService extends BaseService {
      * @param options options to add
      * @return <code>true</code> if successful; <code>false</code> on error
      */
-    public boolean addOptions(String... options) {
+    public boolean add(String... options) {
         return MediaOptions.addMediaOptions(libvlc, mediaInstance, options);
     }
 
@@ -48,7 +48,7 @@ public class OptionsService extends BaseService {
      * @param flags option flags
      * @return <code>true</code> if successful; <code>false</code> on error
      */
-    public boolean addOptions(String[] options, OptionFlag... flags) {
+    public boolean add(String[] options, OptionFlag... flags) {
         return MediaOptions.addMediaOptions(libvlc, mediaInstance, options, flags);
     }
 
@@ -59,7 +59,7 @@ public class OptionsService extends BaseService {
      * @param flags option flags
      * @return <code>true</code> if successful; <code>false</code> on error
      */
-    public boolean addOption(String option, OptionFlag... flags) {
+    public boolean add(String option, OptionFlag... flags) {
         return MediaOptions.addMediaOption(libvlc, mediaInstance, option, flags);
     }
 

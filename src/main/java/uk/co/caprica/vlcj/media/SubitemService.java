@@ -23,9 +23,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 
-// FIXME a whole service just for this?
-
-public class SubitemService extends BaseService {
+public final class SubitemService extends BaseService {
 
     SubitemService(Media media) {
         super(media);

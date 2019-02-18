@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * Behaviour pertaining to media meta data.
  */
-public class MetaService extends BaseService {
+public final class MetaService extends BaseService {
 
     MetaService(Media media) {
         super(media);

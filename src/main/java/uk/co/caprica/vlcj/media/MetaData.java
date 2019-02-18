@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.media.Meta;
-
 import java.util.Collections;
 import java.util.Map;
 

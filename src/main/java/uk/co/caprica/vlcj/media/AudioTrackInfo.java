@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.media;
 /**
  * Audio track info.
  */
-public class AudioTrackInfo extends TrackInfo {
+public final class AudioTrackInfo extends TrackInfo {
 
     /**
      * Number of audio channels.
@@ -60,7 +60,7 @@ public class AudioTrackInfo extends TrackInfo {
      *
      * @return channel count
      */
-    public final int channels() {
+    public int channels() {
         return channels;
     }
 
@@ -69,7 +69,7 @@ public class AudioTrackInfo extends TrackInfo {
      *
      * @return rate
      */
-    public final int rate() {
+    public int rate() {
         return rate;
     }
 

@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.media;
 /**
  * Unknown track info.
  */
-public class UnknownTrackInfo extends TrackInfo {
+public final class UnknownTrackInfo extends TrackInfo {
 
     /**
      * Create an unknown track info.

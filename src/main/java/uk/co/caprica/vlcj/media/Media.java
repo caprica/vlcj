@@ -140,15 +140,6 @@ public final class Media {
     }
 
     /**
-     * Get the associated native media instance.
-     *
-     * @return media instance
-     */
-    public libvlc_media_t mediaInstance() {
-        return mediaInstance;
-    }
-
-    /**
      * Create a new {@link MediaRef} from this media.
      * <p>
      * The caller <em>must</em> release the returned {@link MediaRef} when it has no further use for it.
@@ -218,6 +209,15 @@ public final class Media {
         subitemService.release();
 
         libvlc.libvlc_media_release(mediaInstance);
+    }
+
+    /**
+     * Get the associated native media instance.
+     *
+     * @return media instance
+     */
+    public libvlc_media_t mediaInstance() {
+        return mediaInstance;
     }
 
 }

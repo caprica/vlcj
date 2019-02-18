@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Behaviour pertaining to media slaves, enabling subtitle and audio tracks to be added to the media.
  */
-public class SlaveService extends BaseService {
+public final class SlaveService extends BaseService {
 
     SlaveService(Media media) {
         super(media);

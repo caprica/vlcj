@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.media;
 /**
  * Behaviour pertaining to media events.
  */
-public class EventService extends BaseService {
+public final class EventService extends BaseService {
 
     private final MediaNativeEventManager eventManager;
 

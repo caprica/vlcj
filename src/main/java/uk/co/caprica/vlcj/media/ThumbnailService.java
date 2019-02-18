@@ -24,7 +24,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_thumbnail_request_t;
 /**
  * Behaviour pertaining to media thumbnails.
  */
-public class ThumbnailService extends BaseService {
+public final class ThumbnailService extends BaseService {
 
     ThumbnailService(Media media) {
         super(media);

@@ -50,7 +50,7 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
  * necessarily mean that a remote network request was made for the cover art, rather the art was embedded in the media
  * file and extracted to this temporary cache directory.
  */
-public class ParseService extends BaseService {
+public final class ParseService extends BaseService {
 
     ParseService(Media media) {
         super(media);

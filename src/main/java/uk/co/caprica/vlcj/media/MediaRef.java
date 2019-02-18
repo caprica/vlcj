@@ -60,15 +60,6 @@ public final class MediaRef {
     }
 
     /**
-     * Get the native media instance.
-     *
-     * @return media instance
-     */
-    public libvlc_media_t mediaInstance() {
-        return mediaInstance;
-    }
-
-    /**
      * Return a new {@link Media} component for this {@link MediaRef}.
      * <p>
      * The returned media component shares the native media instance with any others that may be created subsequently.
@@ -133,6 +124,15 @@ public final class MediaRef {
      */
     public void release() {
         libvlc.libvlc_media_release(mediaInstance);
+    }
+
+    /**
+     * Get the native media instance.
+     *
+     * @return media instance
+     */
+    public libvlc_media_t mediaInstance() {
+        return mediaInstance;
     }
 
 }

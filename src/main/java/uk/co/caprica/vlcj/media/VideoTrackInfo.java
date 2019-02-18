@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.media;
 /**
  * Video track info.
  */
-public class VideoTrackInfo extends TrackInfo {
+public final class VideoTrackInfo extends TrackInfo {
 
     /**
      * Video width.

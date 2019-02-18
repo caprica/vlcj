@@ -24,7 +24,7 @@ package uk.co.caprica.vlcj.media;
  * <p>
  * "Text" includes subtitles, sub-pictures and so on.
  */
-public class TextTrackInfo extends TrackInfo {
+public final class TextTrackInfo extends TrackInfo {
 
     /**
      * Encoding.

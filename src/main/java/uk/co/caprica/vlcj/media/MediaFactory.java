@@ -276,7 +276,7 @@ public final class MediaFactory {
     private static Media createMedia(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_t mediaInstance, String... options) {
         if (mediaInstance != null) {
             Media media = new Media(libvlc, libvlcInstance, mediaInstance);
-            media.options().addOptions(options);
+            media.options().add(options);
             return media;
         } else {
             return null;
