@@ -66,16 +66,18 @@ public interface MediaListPlayer {
     StatusService status();
 
     /**
-     * Behaviour pertaining to userdata.
+     * Get the user data associated with the media player.
      *
-     * @return userdata behaviour
+     * @return user data
      */
-    UserDataService userData();
+    Object userData();
 
     /**
-     * Release the media list player resources.
+     * Set user data to associate with the media player.
+     *
+     * @param userData user data
      */
-    void release();
+    void userData(Object userData);
 
     /**
      * Submit a task for asynchronous execution.
@@ -89,6 +91,11 @@ public interface MediaListPlayer {
      * @param r task to execute
      */
     void submit(Runnable r);
+
+    /**
+     * Release the media list player resources.
+     */
+    void release();
 
     /**
      * Provide access to the native media player instance.

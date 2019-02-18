@@ -54,12 +54,16 @@ public final class DefaultMediaListPlayer implements MediaListPlayer {
      */
     private final TaskExecutor executor = new TaskExecutor();
 
+    /**
+     * Arbitrary object associated with this media list player.
+     */
+    private Object userData;
+
     private final ControlsService    controlsService;
     private final EventService       eventService;
     private final ListService        listService;
     private final MediaPlayerService mediaPlayerService;
     private final StatusService      statusService;
-    private final UserDataService    userDataService;
 
     /**
      * Create a new media list player.
@@ -78,7 +82,6 @@ public final class DefaultMediaListPlayer implements MediaListPlayer {
         this.listService        = new ListService       (this);
         this.mediaPlayerService = new MediaPlayerService(this);
         this.statusService      = new StatusService     (this);
-        this.userDataService    = new UserDataService   (this);
     }
 
     private libvlc_media_list_player_t newNativeMediaListPlayer() {
@@ -116,8 +119,13 @@ public final class DefaultMediaListPlayer implements MediaListPlayer {
     }
 
     @Override
-    public UserDataService userData() {
-        return userDataService;
+    public Object userData() {
+        return userData;
+    }
+
+    @Override
+    public void userData(Object userData) {
+        this.userData = userData;
     }
 
     /**
@@ -147,7 +155,6 @@ public final class DefaultMediaListPlayer implements MediaListPlayer {
         listService       .release();
         mediaPlayerService.release();
         statusService     .release();
-        userDataService   .release();
 
         libvlc.libvlc_media_list_player_release(mediaListPlayerInstance);
 

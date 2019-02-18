@@ -27,7 +27,6 @@ import uk.co.caprica.vlcj.player.list.EventService;
 import uk.co.caprica.vlcj.player.list.ListService;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.StatusService;
-import uk.co.caprica.vlcj.player.list.UserDataService;
 
 // FIXME similar to thinking about "persistent" media listener, what about a MediaListListener in the same context too? in this case it would be a bit easier because the medialistplayer never changes instance
 
@@ -89,15 +88,6 @@ public final class SubitemService extends BaseService {
      */
     public StatusService status() {
         return mediaListPlayer.status();
-    }
-
-    /**
-     * Delegated userdata behaviour on the associated media list player.
-     *
-     * @return media list player userdata behaviour
-     */
-    public UserDataService userData() {
-        return mediaListPlayer.userData();
     }
 
     /**
