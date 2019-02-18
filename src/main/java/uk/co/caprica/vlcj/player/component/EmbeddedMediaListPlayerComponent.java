@@ -61,11 +61,11 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerCom
     public EmbeddedMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, Component videoSurfaceComponent, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, Window overlay) {
         super(mediaPlayerFactory, videoSurfaceComponent, fullScreenStrategy, inputEvents, overlay);
 
-        this.mediaListPlayer = getMediaPlayerFactory().mediaPlayers().newMediaListPlayer();
-        this.mediaListPlayer.mediaPlayer().setMediaPlayer(getMediaPlayer());
+        this.mediaListPlayer = mediaPlayerFactory().mediaPlayers().newMediaListPlayer();
+        this.mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer());
         this.mediaListPlayer.events().addMediaListPlayerEventListener(this);
 
-        this.mediaList = getMediaPlayerFactory().media().newMediaList();
+        this.mediaList = mediaPlayerFactory().media().newMediaList();
         this.mediaList.events().addMediaListEventListener(this);
 
         applyMediaList();
@@ -106,7 +106,7 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerCom
      *
      * @return media list player
      */
-    public final MediaListPlayer getMediaListPlayer() {
+    public final MediaListPlayer mediaListPlayer() {
         return mediaListPlayer;
     }
 

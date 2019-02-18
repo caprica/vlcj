@@ -83,8 +83,8 @@ public class BasicEmbeddedMediaListPlayerComponentTest extends VlcjTest {
      */
     private void start(String mrl) {
         // One line of vlcj code to add the media to the play-list...
-        mediaListPlayerComponent.getMediaListPlayer().list().items().add(mrl);
+        mediaListPlayerComponent.mediaListPlayer().list().items().add(mrl);
         // Another line of vlcj code to play the media...
-        mediaListPlayerComponent.getMediaListPlayer().controls().play();
+        mediaListPlayerComponent.mediaListPlayer().controls().play();
     }
 }

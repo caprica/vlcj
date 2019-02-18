@@ -103,7 +103,7 @@ public class LogoTest extends VlcjTest {
 
     public void start(String mrl) {
         frame.setVisible(true);
-        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
+        mediaPlayerComponent.mediaPlayer().media().play(mrl);
     }
 
     @SuppressWarnings("serial")
@@ -175,21 +175,21 @@ public class LogoTest extends VlcjTest {
                     catch(NumberFormatException e) {
                     }
 
-                    logo().file(fileTextField.getText()).location(x, y).position((LogoPosition)positionCombo.getSelectedItem()).opacity(opacitySlider.getValue()).enable(enableCheckBox.isSelected()).apply(mediaPlayerComponent.getMediaPlayer());
+                    logo().file(fileTextField.getText()).location(x, y).position((LogoPosition)positionCombo.getSelectedItem()).opacity(opacitySlider.getValue()).enable(enableCheckBox.isSelected()).apply(mediaPlayerComponent.mediaPlayer());
                 }
             });
 
             enableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mediaPlayerComponent.getMediaPlayer().logo().enableLogo(true);
+                    mediaPlayerComponent.mediaPlayer().logo().enableLogo(true);
                 }
             });
 
             disableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mediaPlayerComponent.getMediaPlayer().logo().enableLogo(false);
+                    mediaPlayerComponent.mediaPlayer().logo().enableLogo(false);
                 }
             });
 

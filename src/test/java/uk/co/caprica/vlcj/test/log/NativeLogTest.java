@@ -52,7 +52,7 @@ public class NativeLogTest extends VlcjTest {
         // "finished" event is raised
         final CountDownLatch latch = new CountDownLatch(1);
 
-        NativeLog log = mediaPlayerComponent.getMediaPlayerFactory().application().newLog();
+        NativeLog log = mediaPlayerComponent.mediaPlayerFactory().application().newLog();
         if (log == null) {
             System.out.println("Native log not available on this platform");
             System.exit(1);
@@ -66,7 +66,7 @@ public class NativeLogTest extends VlcjTest {
             }
         });
 
-        mediaPlayerComponent.getMediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        mediaPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void finished(MediaPlayer mediaPlayer) {
                 latch.countDown();
@@ -78,7 +78,7 @@ public class NativeLogTest extends VlcjTest {
             }
         });
 
-        mediaPlayerComponent.getMediaPlayer().media().play(args[0]);
+        mediaPlayerComponent.mediaPlayer().media().play(args[0]);
 
         // Wait for finished/error
         latch.await();

@@ -83,6 +83,6 @@ public class BasicEmbeddedMediaPlayerComponentTest extends VlcjTest {
      */
     private void start(String mrl) {
         // One line of vlcj code to play the media...
-        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
+        mediaPlayerComponent.mediaPlayer().media().play(mrl);
     }
 }

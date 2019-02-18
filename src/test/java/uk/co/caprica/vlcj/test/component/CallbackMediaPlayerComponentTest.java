@@ -90,7 +90,7 @@ public class CallbackMediaPlayerComponentTest extends VlcjTest {
 
         };
 
-        mediaPlayerComponent.getMediaPlayer().overlay().enable(true);
+        mediaPlayerComponent.mediaPlayer().overlay().enable(true);
 
         frame.setBackground(Color.black);
         frame.setContentPane(mediaPlayerComponent);
@@ -114,7 +114,7 @@ public class CallbackMediaPlayerComponentTest extends VlcjTest {
      * @param mrl mrl
      */
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
+        mediaPlayerComponent.mediaPlayer().media().play(mrl);
     }
 
 }

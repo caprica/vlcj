@@ -49,7 +49,7 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
 
     public EmbeddedJavaSoundTest() throws Exception {
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
-        mediaPlayerComponent.getMediaPlayer().audio().callback(FORMAT, RATE, CHANNELS, new JavaSoundCallback(FORMAT, RATE, CHANNELS));
+        mediaPlayerComponent.mediaPlayer().audio().callback(FORMAT, RATE, CHANNELS, new JavaSoundCallback(FORMAT, RATE, CHANNELS));
 
         JPanel cp = new JPanel();
         cp.setLayout(new BorderLayout());
@@ -71,8 +71,8 @@ public class EmbeddedJavaSoundTest extends VlcjTest {
     }
 
     private void play(String mrl) throws Exception {
-        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
-        mediaPlayerComponent.getMediaPlayer().controls().setPosition(0.98f);
+        mediaPlayerComponent.mediaPlayer().media().play(mrl);
+        mediaPlayerComponent.mediaPlayer().controls().setPosition(0.98f);
         try {
             sync.await();
         }

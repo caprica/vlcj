@@ -40,6 +40,6 @@ public interface MediaPlayerComponent {
      *
      * @return factory
      */
-    MediaPlayerFactory getMediaPlayerFactory();
+    MediaPlayerFactory mediaPlayerFactory();
 
 }

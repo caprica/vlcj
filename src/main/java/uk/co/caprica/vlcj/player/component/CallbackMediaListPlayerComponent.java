@@ -76,11 +76,11 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
     public CallbackMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, CallbackImagePainter imagePainter, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
         super(mediaPlayerFactory, fullScreenStrategy, inputEvents, bufferFormatCallback, lockBuffers, imagePainter, videoSurfaceComponent, renderCallback);
 
-        this.mediaListPlayer = getMediaPlayerFactory().mediaPlayers().newMediaListPlayer();
-        this.mediaListPlayer.mediaPlayer().setMediaPlayer(getMediaPlayer());
+        this.mediaListPlayer = mediaPlayerFactory().mediaPlayers().newMediaListPlayer();
+        this.mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer());
         this.mediaListPlayer.events().addMediaListPlayerEventListener(this);
 
-        this.mediaList = getMediaPlayerFactory().media().newMediaList();
+        this.mediaList = mediaPlayerFactory().media().newMediaList();
         this.mediaList.events().addMediaListEventListener(this);
 
         applyMediaList();
@@ -149,7 +149,7 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
      *
      * @return media list player
      */
-    public final MediaListPlayer getMediaListPlayer() {
+    public final MediaListPlayer mediaListPlayer() {
         return mediaListPlayer;
     }
 

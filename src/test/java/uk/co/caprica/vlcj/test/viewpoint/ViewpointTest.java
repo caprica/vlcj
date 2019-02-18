@@ -82,11 +82,11 @@ public class ViewpointTest {
 
         MouseHandler mouseHandler = new MouseHandler();
         
-        mediaPlayer.getVideoSurfaceComponent().addMouseListener(mouseHandler);
-        mediaPlayer.getVideoSurfaceComponent().addMouseMotionListener(mouseHandler);
-        mediaPlayer.getVideoSurfaceComponent().addMouseWheelListener(mouseHandler);
+        mediaPlayer.videoSurfaceComponent().addMouseListener(mouseHandler);
+        mediaPlayer.videoSurfaceComponent().addMouseMotionListener(mouseHandler);
+        mediaPlayer.videoSurfaceComponent().addMouseWheelListener(mouseHandler);
 
-        viewpoint = mediaPlayer.getMediaPlayer().video().newViewpoint();
+        viewpoint = mediaPlayer.mediaPlayer().video().newViewpoint();
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
@@ -113,7 +113,7 @@ public class ViewpointTest {
         pauseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mediaPlayer.getMediaPlayer().controls().pause();
+                mediaPlayer.mediaPlayer().controls().pause();
             }
         });
 
@@ -126,7 +126,7 @@ public class ViewpointTest {
                 viewpoint.setYaw(0);
                 viewpoint.setRoll(0);
                 viewpoint.setFov(resetFov);
-                mediaPlayer.getMediaPlayer().video().updateViewpoint(viewpoint, true);
+                mediaPlayer.mediaPlayer().video().updateViewpoint(viewpoint, true);
             }
         });
 
@@ -139,7 +139,7 @@ public class ViewpointTest {
                 viewpoint.setYaw(180.0f);
                 viewpoint.setRoll(0);
                 viewpoint.setFov(resetFov);
-                mediaPlayer.getMediaPlayer().video().updateViewpoint(viewpoint, true);
+                mediaPlayer.mediaPlayer().video().updateViewpoint(viewpoint, true);
             }
         });
 
@@ -149,7 +149,7 @@ public class ViewpointTest {
     }
 
     private void start(String mrl) {
-        mediaPlayer.getMediaPlayer().media().play(mrl);
+        mediaPlayer.mediaPlayer().media().play(mrl);
     }
 
     private static class MouseHandler extends MouseEventAdapter {
@@ -210,7 +210,7 @@ public class ViewpointTest {
                     viewpoint.setFov(0);
                 }
 
-                mediaPlayer.getMediaPlayer().video().updateViewpoint(viewpoint, false);
+                mediaPlayer.mediaPlayer().video().updateViewpoint(viewpoint, false);
             } else {
                 lastPoint = newPoint;
             }
@@ -225,7 +225,7 @@ public class ViewpointTest {
             viewpoint.setPitch(0);
 
             viewpoint.setFov(rotation > 0 ? fovWheelDelta : -fovWheelDelta);
-            mediaPlayer.getMediaPlayer().video().updateViewpoint(viewpoint, false);
+            mediaPlayer.mediaPlayer().video().updateViewpoint(viewpoint, false);
         }
     }
 

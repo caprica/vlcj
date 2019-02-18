@@ -103,7 +103,7 @@ public class MarqueeTest extends VlcjTest {
 
     public void start(String mrl) {
         frame.setVisible(true);
-        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
+        mediaPlayerComponent.mediaPlayer().media().play(mrl);
     }
 
     @SuppressWarnings("serial")
@@ -175,21 +175,21 @@ public class MarqueeTest extends VlcjTest {
                     catch(NumberFormatException e) {
                     }
 
-                    marquee().text(textTextField.getText()).location(x, y).position((MarqueePosition)positionCombo.getSelectedItem()).opacity(opacitySlider.getValue()).enable(enableCheckBox.isSelected()).apply(mediaPlayerComponent.getMediaPlayer());
+                    marquee().text(textTextField.getText()).location(x, y).position((MarqueePosition)positionCombo.getSelectedItem()).opacity(opacitySlider.getValue()).enable(enableCheckBox.isSelected()).apply(mediaPlayerComponent.mediaPlayer());
                 }
             });
 
             enableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mediaPlayerComponent.getMediaPlayer().marquee().enableMarquee(true);
+                    mediaPlayerComponent.mediaPlayer().marquee().enableMarquee(true);
                 }
             });
 
             disableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mediaPlayerComponent.getMediaPlayer().marquee().enableMarquee(false);
+                    mediaPlayerComponent.mediaPlayer().marquee().enableMarquee(false);
                 }
             });
         }

@@ -51,7 +51,7 @@ public class Mp3Test extends VlcjTest {
         };
 
         // Play the MRL specified by the first command-line argument
-        audioPlayer.getMediaPlayer().media().play(args[0]);
+        audioPlayer.mediaPlayer().media().play(args[0]);
         // Wait forever
         Thread.currentThread().join();
     }

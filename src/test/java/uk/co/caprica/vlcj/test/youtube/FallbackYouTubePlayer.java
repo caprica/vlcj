@@ -109,6 +109,6 @@ public class FallbackYouTubePlayer extends VlcjTest {
     }
 
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
+        mediaPlayerComponent.mediaPlayer().media().play(mrl);
     }
 }

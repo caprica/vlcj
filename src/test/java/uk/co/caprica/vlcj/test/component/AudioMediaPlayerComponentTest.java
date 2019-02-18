@@ -69,7 +69,7 @@ public class AudioMediaPlayerComponentTest extends VlcjTest {
      */
     private AudioMediaPlayerComponentTest() {
         audioMediaPlayerComponent = new AudioPlayerComponent();
-        audioMediaPlayerComponent.getMediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        audioMediaPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void stopped(MediaPlayer mediaPlayer) {
                 System.exit(0);
@@ -94,6 +94,6 @@ public class AudioMediaPlayerComponentTest extends VlcjTest {
      */
     private void start(String mrl) {
         // One line of vlcj code to play the media...
-        audioMediaPlayerComponent.getMediaPlayer().media().play(mrl);
+        audioMediaPlayerComponent.mediaPlayer().media().play(mrl);
     }
 }

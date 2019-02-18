@@ -60,6 +60,6 @@ public class Example2 {
     }
 
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
+        mediaPlayerComponent.mediaPlayer().media().play(mrl);
     }
 }

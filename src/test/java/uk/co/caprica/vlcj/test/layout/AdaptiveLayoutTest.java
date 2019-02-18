@@ -200,11 +200,11 @@ public class AdaptiveLayoutTest extends VlcjTest {
 
             mediaPlayer = new EmbeddedMediaPlayerComponent(embeddedMediaPlayerSpec().withFactory(mediaPlayerFactory));
 
-            mediaPlayer.getVideoSurfaceComponent().addMouseListener(new MouseAdapter() {
+            mediaPlayer.videoSurfaceComponent().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if(e.getButton() == MouseEvent.BUTTON3) {
-                        mediaPlayer.getMediaPlayer().controls().skip(10000);
+                        mediaPlayer.mediaPlayer().controls().skip(10000);
                     }
                     else {
                         layoutManager.focus(VideoPane.this.id);
@@ -223,7 +223,7 @@ public class AdaptiveLayoutTest extends VlcjTest {
         }
 
         MediaPlayer mediaPlayer() {
-            return mediaPlayer.getMediaPlayer();
+            return mediaPlayer.mediaPlayer();
         }
     }
 

@@ -243,7 +243,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      *
      * @return media player
      */
-    public final EmbeddedMediaPlayer getMediaPlayer() {
+    public final EmbeddedMediaPlayer mediaPlayer() {
         return mediaPlayer;
     }
 
@@ -254,7 +254,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      *
      * @return video surface component
      */
-    public final JComponent getVideoSurfaceComponent() {
+    public final JComponent videoSurfaceComponent() {
         return videoSurfaceComponent;
     }
 
@@ -281,7 +281,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     }
 
     @Override
-    public final MediaPlayerFactory getMediaPlayerFactory() {
+    public final MediaPlayerFactory mediaPlayerFactory() {
         return mediaPlayerFactory;
     }
 

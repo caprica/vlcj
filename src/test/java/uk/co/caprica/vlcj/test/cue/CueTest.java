@@ -46,9 +46,9 @@ public class CueTest extends VlcjTest {
 
         final AudioPlayerComponent player = new AudioPlayerComponent();
 
-        System.out.println(player.getMediaPlayerFactory().nativeLibraryPath());
+        System.out.println(player.mediaPlayerFactory().nativeLibraryPath());
 
-        player.getMediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        player.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 
             @Override
             public void finished(final MediaPlayer mediaPlayer) {
@@ -60,8 +60,8 @@ public class CueTest extends VlcjTest {
         // The sub-items will not be created until the cue sheet is parsed and the parsed status event is raised
         System.out.println("before play");
 
-        player.getMediaPlayer().media().prepare(args[0]);
-        player.getMediaPlayer().media().events().addMediaEventListener(new MediaEventAdapter() {
+        player.mediaPlayer().media().prepare(args[0]);
+        player.mediaPlayer().media().events().addMediaEventListener(new MediaEventAdapter() {
             @Override
             public void mediaSubItemAdded(Media media, MediaRef newChild) {
                 System.out.println("ITEM ADDED");
@@ -75,14 +75,14 @@ public class CueTest extends VlcjTest {
             @Override
             public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
                 System.out.println("PARSED " + newStatus);
-                dump(player.getMediaPlayer());
+                dump(player.mediaPlayer());
                 // Play an arbitrary sub-item to prove it works for the sake of example, this will fail of course if the
                 // index is out of range for your playlist
-                player.getMediaPlayer().subitems().controls().play(2);
+                player.mediaPlayer().subitems().controls().play(2);
             }
         });
 
-        player.getMediaPlayer().media().parsing().parse();
+        player.mediaPlayer().media().parsing().parse();
 
         System.out.println("played");
 

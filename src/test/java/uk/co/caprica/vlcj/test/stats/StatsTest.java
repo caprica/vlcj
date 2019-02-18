@@ -187,8 +187,8 @@ public class StatsTest extends VlcjTest {
             @Override
             public void run() {
                 for(;;) {
-                    if(mediaPlayerComponent.getMediaPlayer().status().isPlaying()) {
-                        if (mediaPlayerComponent.getMediaPlayer().media().info().statistics(mediaStatistics)) {
+                    if(mediaPlayerComponent.mediaPlayer().status().isPlaying()) {
+                        if (mediaPlayerComponent.mediaPlayer().media().info().statistics(mediaStatistics)) {
                             updateStats(mediaStatistics);
                         }
                     }
@@ -204,7 +204,7 @@ public class StatsTest extends VlcjTest {
     }
 
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
+        mediaPlayerComponent.mediaPlayer().media().play(mrl);
     }
 
     private void updateStats(MediaStatistics stats) {

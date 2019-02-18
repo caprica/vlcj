@@ -153,7 +153,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      *
      * @return media player
      */
-    public final EmbeddedMediaPlayer getMediaPlayer() {
+    public final EmbeddedMediaPlayer mediaPlayer() {
         return mediaPlayer;
     }
 
@@ -164,7 +164,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      *
      * @return video surface component
      */
-    public final Component getVideoSurfaceComponent() {
+    public final Component videoSurfaceComponent() {
         return videoSurfaceComponent;
     }
 
@@ -191,7 +191,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     }
 
     @Override
-    public final MediaPlayerFactory getMediaPlayerFactory() {
+    public final MediaPlayerFactory mediaPlayerFactory() {
         return mediaPlayerFactory;
     }
 

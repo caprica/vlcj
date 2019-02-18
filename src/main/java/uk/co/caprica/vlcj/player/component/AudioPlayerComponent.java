@@ -97,7 +97,7 @@ public class AudioPlayerComponent extends AudioPlayerComponentBase implements Me
      *
      * @return media player
      */
-    public final MediaPlayer getMediaPlayer() {
+    public final MediaPlayer mediaPlayer() {
         return mediaPlayer;
     }
 
@@ -117,7 +117,7 @@ public class AudioPlayerComponent extends AudioPlayerComponentBase implements Me
     }
 
     @Override
-    public final MediaPlayerFactory getMediaPlayerFactory() {
+    public final MediaPlayerFactory mediaPlayerFactory() {
         return mediaPlayerFactory;
     }
 

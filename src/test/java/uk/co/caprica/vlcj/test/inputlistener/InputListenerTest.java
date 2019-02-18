@@ -91,18 +91,18 @@ public class InputListenerTest extends VlcjTest {
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
 
         // You *must* do this...
-        mediaPlayerComponent.getMediaPlayer().input().enableKeyInputHandling(false);
-        mediaPlayerComponent.getMediaPlayer().input().enableMouseInputHandling(false);
+        mediaPlayerComponent.mediaPlayer().input().enableKeyInputHandling(false);
+        mediaPlayerComponent.mediaPlayer().input().enableMouseInputHandling(false);
 
         // Add regular Java listeners, no native hook or global event listener shenanigans...
         MouseHandler mouseHandler = new MouseHandler();
         KeyHandler keyHandler = new KeyHandler();
 
-        mediaPlayerComponent.getVideoSurfaceComponent().addMouseListener(mouseHandler);
-        mediaPlayerComponent.getVideoSurfaceComponent().addMouseMotionListener(mouseHandler);
-        mediaPlayerComponent.getVideoSurfaceComponent().addMouseWheelListener(mouseHandler);
+        mediaPlayerComponent.videoSurfaceComponent().addMouseListener(mouseHandler);
+        mediaPlayerComponent.videoSurfaceComponent().addMouseMotionListener(mouseHandler);
+        mediaPlayerComponent.videoSurfaceComponent().addMouseWheelListener(mouseHandler);
 
-        mediaPlayerComponent.getVideoSurfaceComponent().addKeyListener(keyHandler);
+        mediaPlayerComponent.videoSurfaceComponent().addKeyListener(keyHandler);
 
         mainFrame = new JFrame("vlcj input listener test");
         mainFrame.setBounds(50, 50, 800, 500);
@@ -119,11 +119,11 @@ public class InputListenerTest extends VlcjTest {
         // You must explicitly request focus to the video surface, this is one way to do it...
         // Clicking in the Canvas will *not* by default set focus (you could request focus in
         // response to a mouse-clicked event)
-        mediaPlayerComponent.getVideoSurfaceComponent().requestFocusInWindow();
+        mediaPlayerComponent.videoSurfaceComponent().requestFocusInWindow();
     }
 
     private void start(String mrl) {
-        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
+        mediaPlayerComponent.mediaPlayer().media().play(mrl);
     }
 
     private class MouseHandler extends MouseAdapter {

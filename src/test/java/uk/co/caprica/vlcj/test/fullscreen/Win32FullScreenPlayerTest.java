@@ -62,7 +62,7 @@ public class Win32FullScreenPlayerTest extends VlcjTest {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                mediaPlayerComponent.getMediaPlayer().controls().stop();
+                mediaPlayerComponent.mediaPlayer().controls().stop();
                 mediaPlayerComponent.release();
             }
         });
@@ -75,8 +75,8 @@ public class Win32FullScreenPlayerTest extends VlcjTest {
 
         frame.setVisible(true);
 
-        mediaPlayerComponent.getMediaPlayer().media().play(mrl);
-        mediaPlayerComponent.getMediaPlayer().fullScreen().set(true);
+        mediaPlayerComponent.mediaPlayer().media().play(mrl);
+        mediaPlayerComponent.mediaPlayer().fullScreen().set(true);
     }
 
 }
