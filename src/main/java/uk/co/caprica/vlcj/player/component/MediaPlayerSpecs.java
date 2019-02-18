@@ -74,7 +74,7 @@ public final class MediaPlayerSpecs {
      * Builder for an embedded media or media list player.
      */
     public static final class EmbeddedMediaPlayerSpec {
-//
+
         MediaPlayerFactory factory;
         Component videoSurfaceComponent;
         FullScreenStrategy fullScreenStrategy;
