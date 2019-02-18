@@ -175,7 +175,7 @@ public class ChatTest extends VlcjTest {
         localStreamControls.add(sendSnapshotButton);
 
         localVideoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(localCanvas);
-        localMediaPlayer.videoSurface().setVideoSurface(localVideoSurface);
+        localMediaPlayer.videoSurface().set(localVideoSurface);
 
         localPanel = new JPanel();
         localPanel.setBorder(new TitledBorder("Local"));
@@ -210,7 +210,7 @@ public class ChatTest extends VlcjTest {
         remoteStreamControls.add(receiveSnapshotButton);
 
         remoteVideoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(remoteCanvas);
-        remoteMediaPlayer.videoSurface().setVideoSurface(remoteVideoSurface);
+        remoteMediaPlayer.videoSurface().set(remoteVideoSurface);
 
         remotePanel = new JPanel();
         remotePanel.setBorder(new TitledBorder("Remote"));

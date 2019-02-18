@@ -91,8 +91,8 @@ public class InputListenerTest extends VlcjTest {
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
 
         // You *must* do this...
-        mediaPlayerComponent.getMediaPlayer().input().setEnableKeyInputHandling(false);
-        mediaPlayerComponent.getMediaPlayer().input().setEnableMouseInputHandling(false);
+        mediaPlayerComponent.getMediaPlayer().input().enableKeyInputHandling(false);
+        mediaPlayerComponent.getMediaPlayer().input().enableMouseInputHandling(false);
 
         // Add regular Java listeners, no native hook or global event listener shenanigans...
         MouseHandler mouseHandler = new MouseHandler();

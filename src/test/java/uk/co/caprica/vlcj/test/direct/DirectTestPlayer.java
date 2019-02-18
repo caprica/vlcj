@@ -101,7 +101,7 @@ public class DirectTestPlayer extends VlcjTest {
 
         factory = new MediaPlayerFactory();
         mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.videoSurface().setVideoSurface(factory.videoSurfaces().newVideoSurface(new TestBufferFormatCallback(), new TestRenderCallback(), true));
+        mediaPlayer.videoSurface().set(factory.videoSurfaces().newVideoSurface(new TestBufferFormatCallback(), new TestRenderCallback(), true));
 
         mediaPlayer.media().play(media);
     }

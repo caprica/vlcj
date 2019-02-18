@@ -113,7 +113,7 @@ public class CaptureTest extends VlcjTest {
 
         videoSurface = factory.videoSurfaces().newVideoSurface(canvas);
 
-        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().set(videoSurface);
     }
 
     private void start(String mrl) {

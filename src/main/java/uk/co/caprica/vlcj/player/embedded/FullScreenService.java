@@ -42,7 +42,7 @@ public final class FullScreenService extends BaseService {
      *
      * @param fullScreenStrategy full-screen strategy
      */
-    public void setFullScreenStrategy(FullScreenStrategy fullScreenStrategy) {
+    public void strategy(FullScreenStrategy fullScreenStrategy) {
         this.fullScreenStrategy = fullScreenStrategy;
     }
 
@@ -52,9 +52,9 @@ public final class FullScreenService extends BaseService {
      * Setting the display into or out of full-screen mode is delegated to the currently set {@link FullScreenStrategy},
      * which may be <code>null</code> (in which case full-screen mode is not supported).
      */
-    public void toggleFullScreen() {
+    public void toggle() {
         if (fullScreenStrategy != null) {
-            setFullScreen(!fullScreenStrategy.isFullScreenMode());
+            set(!fullScreenStrategy.isFullScreenMode());
         }
     }
 
@@ -66,7 +66,7 @@ public final class FullScreenService extends BaseService {
      *
      * @param fullScreen true for full-screen, otherwise false
      */
-    public void setFullScreen(boolean fullScreen) {
+    public void set(boolean fullScreen) {
         if (fullScreenStrategy != null) {
             if (fullScreen) {
                 fullScreenStrategy.enterFullScreenMode();

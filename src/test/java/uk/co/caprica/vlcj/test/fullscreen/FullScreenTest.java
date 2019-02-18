@@ -70,7 +70,7 @@ public class FullScreenTest extends VlcjTest {
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
         EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
 
-        mediaPlayer.fullScreen().setFullScreenStrategy(new FullScreenStrategy() {
+        mediaPlayer.fullScreen().strategy(new FullScreenStrategy() {
 
             @Override
             public void enterFullScreenMode() {
@@ -96,11 +96,11 @@ public class FullScreenTest extends VlcjTest {
             }
         });
 
-        mediaPlayer.videoSurface().setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(c));
+        mediaPlayer.videoSurface().set(mediaPlayerFactory.videoSurfaces().newVideoSurface(c));
 
         f.setVisible(true);
 
-        mediaPlayer.fullScreen().setFullScreen(true);
+        mediaPlayer.fullScreen().set(true);
         mediaPlayer.media().play(args[0]);
     }
 }

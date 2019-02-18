@@ -25,9 +25,9 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
  * Specification for a media player component that is intended to be embedded in a user-interface
  * component.
  *  <p>
- * Note that to get mouse and keyboard events delivered via listeners on some platforms (i.e. Windows)
- * you will likely need to invoke {@link InputService#setEnableMouseInputHandling(boolean)} <em>and</em>
- * {@link InputService#setEnableKeyInputHandling(boolean)}.
+ * Note that to get mouse and keyboard events delivered via listeners on some platforms (i.e. Windows) you will likely
+ * need to invoke {@link InputService#enableMouseInputHandling(boolean)} <em>and</em>
+ * {@link InputService#enableKeyInputHandling(boolean)}.
  */
 public interface EmbeddedMediaPlayer extends MediaPlayer {
 

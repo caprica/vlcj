@@ -377,30 +377,30 @@ public class PlayerControlsPanel extends JPanel {
         ejectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.overlay().enableOverlay(false);
+                mediaPlayer.overlay().enable(false);
                 if(JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(PlayerControlsPanel.this)) {
                     mediaPlayer.media().play(fileChooser.getSelectedFile().getAbsolutePath());
                 }
-                mediaPlayer.overlay().enableOverlay(true);
+                mediaPlayer.overlay().enable(true);
             }
         });
 
         connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.overlay().enableOverlay(false);
+                mediaPlayer.overlay().enable(false);
                 String mediaUrl = JOptionPane.showInputDialog(PlayerControlsPanel.this, "Enter a media URL", "Connect to media", JOptionPane.QUESTION_MESSAGE);
                 if(mediaUrl != null && mediaUrl.length() > 0) {
                     mediaPlayer.media().play(mediaUrl);
                 }
-                mediaPlayer.overlay().enableOverlay(true);
+                mediaPlayer.overlay().enable(true);
             }
         });
 
         fullScreenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.fullScreen().toggleFullScreen();
+                mediaPlayer.fullScreen().toggle();
             }
         });
 

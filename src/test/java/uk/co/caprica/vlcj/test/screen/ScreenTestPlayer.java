@@ -93,7 +93,7 @@ public class ScreenTestPlayer extends VlcjTest {
 
         videoSurface = factory.videoSurfaces().newVideoSurface(canvas);
 
-        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().set(videoSurface);
     }
 
     private void start() {

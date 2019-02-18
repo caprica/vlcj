@@ -127,7 +127,7 @@ public class TestMultiPlayer extends VlcjTest {
 
         for(int i = 0; i < medias.length; i ++ ) {
             EmbeddedMediaPlayer player = factory.mediaPlayers().newEmbeddedMediaPlayer();
-            player.fullScreen().setFullScreenStrategy(fullScreenStrategy);
+            player.fullScreen().strategy(fullScreenStrategy);
             PlayerInstance playerInstance = new PlayerInstance(player);
             players.add(playerInstance);
 
@@ -147,7 +147,7 @@ public class TestMultiPlayer extends VlcjTest {
             @Override
             public void run() {
                 for(int i = 0; i < medias.length; i ++ ) {
-                    players.get(i).mediaPlayer().videoSurface().setVideoSurface(factory.videoSurfaces().newVideoSurface(players.get(i).videoSurface()));
+                    players.get(i).mediaPlayer().videoSurface().set(factory.videoSurfaces().newVideoSurface(players.get(i).videoSurface()));
                     players.get(i).mediaPlayer().media().start(medias[i]);
                 }
 

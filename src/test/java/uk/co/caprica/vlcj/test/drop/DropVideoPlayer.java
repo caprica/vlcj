@@ -92,7 +92,7 @@ public class DropVideoPlayer extends VlcjTest {
         canvas.setBackground(Color.black);
 
         videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
-        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().set(videoSurface);
 
         contentPane = new JPanel();
         contentPane.setBackground(Color.black);

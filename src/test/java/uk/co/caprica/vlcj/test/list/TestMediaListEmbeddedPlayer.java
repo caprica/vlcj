@@ -51,7 +51,7 @@ public class TestMediaListEmbeddedPlayer extends VlcjTest {
         VideoSurface videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
 
         EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().set(videoSurface);
 
         MediaListPlayer mediaListPlayer = mediaPlayerFactory.mediaPlayers().newMediaListPlayer();
 

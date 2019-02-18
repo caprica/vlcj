@@ -131,11 +131,11 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         }
 
         this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
-        this.mediaPlayer.fullScreen().setFullScreenStrategy(fullScreenStrategy);
+        this.mediaPlayer.fullScreen().strategy(fullScreenStrategy);
         this.mediaPlayer.events().addMediaPlayerEventListener(this);
         this.mediaPlayer.events().addMediaEventListener(this);
 
-        this.mediaPlayer.videoSurface().setVideoSurface(this.mediaPlayerFactory.videoSurfaces().newVideoSurface(bufferFormatCallback, renderCallback, lockBuffers));
+        this.mediaPlayer.videoSurface().set(this.mediaPlayerFactory.videoSurfaces().newVideoSurface(bufferFormatCallback, renderCallback, lockBuffers));
 
         setBackground(Color.black);
         setLayout(new BorderLayout());
@@ -224,8 +224,8 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
             case NONE:
                 break;
             case DISABLE_NATIVE:
-                mediaPlayer.input().setEnableKeyInputHandling(false);
-                mediaPlayer.input().setEnableMouseInputHandling(false);
+                mediaPlayer.input().enableKeyInputHandling(false);
+                mediaPlayer.input().enableMouseInputHandling(false);
                 // Case fall-through is by design
             case DEFAULT:
                 videoSurfaceComponent.addMouseListener(this);

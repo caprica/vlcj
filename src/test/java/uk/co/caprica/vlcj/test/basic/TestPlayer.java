@@ -90,11 +90,11 @@ public class TestPlayer extends VlcjTest {
         mediaPlayerFactory.application().setUserAgent("vlcj test player");
 
         mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.fullScreen().setFullScreenStrategy(fullScreenStrategy);
-        mediaPlayer.videoSurface().setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(videoSurface));
+        mediaPlayer.fullScreen().strategy(fullScreenStrategy);
+        mediaPlayer.videoSurface().set(mediaPlayerFactory.videoSurfaces().newVideoSurface(videoSurface));
 
-        mediaPlayer.input().setEnableKeyInputHandling(false);
-        mediaPlayer.input().setEnableMouseInputHandling(false);
+        mediaPlayer.input().enableKeyInputHandling(false);
+        mediaPlayer.input().enableMouseInputHandling(false);
 
         mediaPlayer.media().setRepeat(true);
 

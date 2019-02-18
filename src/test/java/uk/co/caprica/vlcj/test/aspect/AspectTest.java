@@ -136,7 +136,7 @@ public class AspectTest extends VlcjTest {
 
         videoSurface = factory.videoSurfaces().newVideoSurface(videoCanvas);
 
-        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().set(videoSurface);
 
         standardAspectLabel = new JLabel("Standard Aspect:");
         standardAspectLabel.setDisplayedMnemonic('s');

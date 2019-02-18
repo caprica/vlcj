@@ -151,7 +151,7 @@ public class VisualisationPlayer extends VlcjTest {
         });
 
         videoSurface = factory.videoSurfaces().newVideoSurface(canvas);
-        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().set(videoSurface);
 
         widthTextField.setText("1000");
         heightTextField.setText("100");

@@ -152,7 +152,7 @@ public class SwapTest extends VlcjTest {
         showPreviewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.videoSurface().setVideoSurface(previewVideoSurface);
+                mediaPlayer.videoSurface().set(previewVideoSurface);
                 mediaPlayer.videoSurface().attachVideoSurface();
             }
         });
@@ -160,7 +160,7 @@ public class SwapTest extends VlcjTest {
         showMainButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayer.videoSurface().setVideoSurface(mainVideoSurface);
+                mediaPlayer.videoSurface().set(mainVideoSurface);
                 mediaPlayer.videoSurface().attachVideoSurface();
             }
         });

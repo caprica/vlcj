@@ -64,7 +64,7 @@ public class VolumeTestPlayer extends VlcjTest {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
         EmbeddedMediaPlayer mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.videoSurface().setVideoSurface(factory.videoSurfaces().newVideoSurface(vs));
+        mediaPlayer.videoSurface().set(factory.videoSurfaces().newVideoSurface(vs));
 
         List<File> files = scanMedia(new File("/movies"));
 

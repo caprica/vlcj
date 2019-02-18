@@ -40,7 +40,7 @@ public final class InputService extends BaseService {
      *
      * @param enable <code>true</code> to enable, <code>false</code> to disable
      */
-    public void setEnableMouseInputHandling(boolean enable) {
+    public void enableMouseInputHandling(boolean enable) {
         libvlc.libvlc_video_set_mouse_input(mediaPlayerInstance, enable ? 1 : 0);
     }
 
@@ -52,7 +52,7 @@ public final class InputService extends BaseService {
      *
      * @param enable <code>true</code> to enable, <code>false</code> to disable
      */
-    public void setEnableKeyInputHandling(boolean enable) {
+    public void enableKeyInputHandling(boolean enable) {
         libvlc.libvlc_video_set_key_input(mediaPlayerInstance, enable ? 1 : 0);
     }
 

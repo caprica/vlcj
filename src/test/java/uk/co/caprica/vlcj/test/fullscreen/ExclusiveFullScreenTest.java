@@ -103,7 +103,7 @@ public class ExclusiveFullScreenTest extends VlcjTest {
         final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
         final EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
 
-        mediaPlayer.videoSurface().setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(c));
+        mediaPlayer.videoSurface().set(mediaPlayerFactory.videoSurfaces().newVideoSurface(c));
 
         p.getActionMap().put("start", new AbstractAction() {
             @Override

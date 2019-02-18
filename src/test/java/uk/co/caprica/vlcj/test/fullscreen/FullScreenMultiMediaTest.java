@@ -99,12 +99,12 @@ public class FullScreenMultiMediaTest extends VlcjTest {
 
         final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
         final EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
-        mediaPlayer.fullScreen().setFullScreenStrategy(new ExclusiveModeFullScreenStrategy(f));
-        mediaPlayer.videoSurface().setVideoSurface(mediaPlayerFactory.videoSurfaces().newVideoSurface(c));
+        mediaPlayer.fullScreen().strategy(new ExclusiveModeFullScreenStrategy(f));
+        mediaPlayer.videoSurface().set(mediaPlayerFactory.videoSurfaces().newVideoSurface(c));
 
         f.setVisible(true);
 
-        mediaPlayer.fullScreen().setFullScreen(true);
+        mediaPlayer.fullScreen().set(true);
 
         final List<File> files = scan(new File(args[0]));
 

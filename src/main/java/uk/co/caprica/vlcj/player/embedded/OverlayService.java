@@ -76,7 +76,7 @@ public final class OverlayService extends BaseService {
      *
      * @return overlay component, may be <code>null</code>
      */
-    public Window getOverlay() {
+    public Window get() {
         return overlay;
     }
 
@@ -100,10 +100,10 @@ public final class OverlayService extends BaseService {
      *
      * @param overlay overlay component, may be <code>null</code>
      */
-    public void setOverlay(Window overlay) {
+    public void set(Window overlay) {
         if (mediaPlayer.videoSurface().getVideoSurface() instanceof ComponentVideoSurface) {
             // Disable the current overlay if there is one
-            enableOverlay(false);
+            enable(false);
             // Remove the existing overlay if there is one
             removeOverlay();
             // Add the new overlay, but do not enable it
@@ -119,7 +119,7 @@ public final class OverlayService extends BaseService {
      *
      * @param enable whether to enable the overlay or disable it
      */
-    public void enableOverlay(boolean enable) {
+    public void enable(boolean enable) {
         requestedOverlay = enable;
         if (overlay != null) {
             if (enable) {
@@ -148,7 +148,7 @@ public final class OverlayService extends BaseService {
      *
      * @return true if there is an overlay enabled, otherwise false
      */
-    public boolean overlayEnabled() {
+    public boolean enabled() {
         return overlay != null && overlay.isVisible();
     }
 
@@ -240,7 +240,7 @@ public final class OverlayService extends BaseService {
      */
     private void showOverlay() {
         if (restoreOverlay) {
-            enableOverlay(true);
+            enable(true);
         }
     }
 
@@ -250,7 +250,7 @@ public final class OverlayService extends BaseService {
     private void hideOverlay() {
         if (requestedOverlay) {
             restoreOverlay = true;
-            enableOverlay(false);
+            enable(false);
         }
         else {
             restoreOverlay = false;

@@ -138,7 +138,7 @@ public class CropTest extends VlcjTest {
 
         videoSurface = factory.videoSurfaces().newVideoSurface(videoCanvas);
 
-        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().set(videoSurface);
 
         standardCropLabel = new JLabel("Standard Crop:");
         standardCropLabel.setDisplayedMnemonic('s');

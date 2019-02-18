@@ -58,7 +58,7 @@ public class StreamRtpDuplicate extends VlcjTest {
         Canvas canvas = new Canvas();
         canvas.setBackground(Color.black);
         VideoSurface videoSurface = mediaPlayerFactory.videoSurfaces().newVideoSurface(canvas);
-        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().set(videoSurface);
 
         JFrame f = new JFrame("vlcj duplicate output test");
         f.setIconImage(new ImageIcon(StreamRtpDuplicate.class.getResource("/icons/vlcj-logo.png")).getImage());

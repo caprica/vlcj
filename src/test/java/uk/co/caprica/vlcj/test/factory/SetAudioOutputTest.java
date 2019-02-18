@@ -147,7 +147,7 @@ public class SetAudioOutputTest extends VlcjTest {
         contentPane.add(controlsPanel, BorderLayout.SOUTH);
 
         videoSurface = factory.videoSurfaces().newVideoSurface(canvas);
-        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().set(videoSurface);
 
         menuBar = new JMenuBar();
 

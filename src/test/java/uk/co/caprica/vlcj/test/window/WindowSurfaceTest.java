@@ -74,7 +74,7 @@ public class WindowSurfaceTest {
         window = new Window(frame);
         window.setBackground(Color.black);
         videoSurface = factory.videoSurfaces().newVideoSurface(window);
-        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().set(videoSurface);
         window.setBounds(100, 100, 800, 600);
         window.setIgnoreRepaint(true);
 

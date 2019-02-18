@@ -155,7 +155,7 @@ public class NonTransparentOverlayTest extends VlcjTest {
         mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
 
         VideoSurface cvs = factory.videoSurfaces().newVideoSurface(c);
-        mediaPlayer.videoSurface().setVideoSurface(cvs);
+        mediaPlayer.videoSurface().set(cvs);
     }
 
     private void start(String mrl) {

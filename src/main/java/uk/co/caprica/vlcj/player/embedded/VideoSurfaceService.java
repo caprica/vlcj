@@ -50,7 +50,7 @@ public final class VideoSurfaceService extends BaseService {
      *
      * @param videoSurface component to render video to
      */
-    public void setVideoSurface(VideoSurface videoSurface) {
+    public void set(VideoSurface videoSurface) {
         this.videoSurface = videoSurface;
     }
 

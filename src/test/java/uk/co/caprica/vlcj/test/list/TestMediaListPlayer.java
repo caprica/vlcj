@@ -87,7 +87,7 @@ public class TestMediaListPlayer extends VlcjTest {
         }
 
         mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer);
-        mediaPlayer.videoSurface().setVideoSurface(videoSurface);
+        mediaPlayer.videoSurface().set(videoSurface);
 
         mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer);
 
