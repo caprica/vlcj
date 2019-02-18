@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.factory;
 /**
  * Description of a module (e.g. audio/video filter).
  */
-public class ModuleDescription {
+public final class ModuleDescription {
 
     /**
      * Name.

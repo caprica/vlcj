@@ -32,14 +32,12 @@ import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererCategory;
 import java.util.ArrayList;
 import java.util.List;
 
-// FIXME needs a rename, see also RendererService
-
 /**
  * Behaviour pertaining to media discovery.
  */
-public final class DiscovererService extends BaseService {
+public final class MediaDiscovererService extends BaseService {
 
-    DiscovererService(MediaPlayerFactory factory) {
+    MediaDiscovererService(MediaPlayerFactory factory) {
         super(factory);
     }
 

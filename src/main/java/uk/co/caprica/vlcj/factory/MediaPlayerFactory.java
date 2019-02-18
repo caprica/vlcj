@@ -84,15 +84,15 @@ public class MediaPlayerFactory {
      */
     private final TaskExecutor executor = new TaskExecutor();
 
-    private final ApplicationService  applicationService;
-    private final AudioService        audioService;
-    private final DialogsService      dialogsService;
-    private final DiscovererService   discovererService;
-    private final EqualizerService    equalizerService;
-    private final MediaPlayerService  mediaPlayerService;
-    private final MediaService        mediaService;
-    private final RendererService     rendererService;
-    private final VideoSurfaceService videoSurfaceService;
+    private final ApplicationService     applicationService;
+    private final AudioService           audioService;
+    private final DialogsService         dialogsService;
+    private final MediaDiscovererService mediaDiscovererService;
+    private final EqualizerService       equalizerService;
+    private final MediaPlayerService     mediaPlayerService;
+    private final MediaService           mediaService;
+    private final RendererService        rendererService;
+    private final VideoSurfaceService    videoSurfaceService;
 
     /**
      * Create a new media player factory.
@@ -104,15 +104,15 @@ public class MediaPlayerFactory {
         this.libvlc         = discoverNativeLibrary(discovery);
         this.libvlcInstance = newLibVlcInstance(libvlcArgs != null ? libvlcArgs : new String[0]);
 
-        this.applicationService  = new ApplicationService (this);
-        this.audioService        = new AudioService       (this);
-        this.dialogsService      = new DialogsService     (this);
-        this.discovererService   = new DiscovererService  (this);
-        this.equalizerService    = new EqualizerService   (this);
-        this.mediaPlayerService  = new MediaPlayerService (this);
-        this.mediaService        = new MediaService       (this);
-        this.rendererService     = new RendererService    (this);
-        this.videoSurfaceService = new VideoSurfaceService(this);
+        this.applicationService     = new ApplicationService    (this);
+        this.audioService           = new AudioService          (this);
+        this.dialogsService         = new DialogsService        (this);
+        this.mediaDiscovererService = new MediaDiscovererService(this);
+        this.equalizerService       = new EqualizerService      (this);
+        this.mediaPlayerService     = new MediaPlayerService    (this);
+        this.mediaService           = new MediaService          (this);
+        this.rendererService        = new RendererService       (this);
+        this.videoSurfaceService    = new VideoSurfaceService   (this);
     }
 
     /**
@@ -222,8 +222,8 @@ public class MediaPlayerFactory {
         return dialogsService;
     }
 
-    public final DiscovererService discoverers() {
-        return discovererService;
+    public final MediaDiscovererService discoverers() {
+        return mediaDiscovererService;
     }
 
     public final EqualizerService equalizers() {
@@ -284,15 +284,15 @@ public class MediaPlayerFactory {
 
         onBeforeRelease();
 
-        applicationService .release();
-        audioService       .release();
-        dialogsService     .release();
-        discovererService  .release();
-        equalizerService   .release();
-        mediaPlayerService .release();
-        mediaService       .release();
-        rendererService    .release();
-        videoSurfaceService.release();
+        applicationService    .release();
+        audioService          .release();
+        dialogsService        .release();
+        mediaDiscovererService.release();
+        equalizerService      .release();
+        mediaPlayerService    .release();
+        mediaService          .release();
+        rendererService       .release();
+        videoSurfaceService   .release();
 
         libvlc.libvlc_release(this.libvlcInstance);
 

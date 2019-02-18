@@ -31,8 +31,6 @@ import uk.co.caprica.vlcj.player.renderer.RendererDiscovererDescription;
 import java.util.ArrayList;
 import java.util.List;
 
-// FIXME needs a rename, see also DiscovererService
-
 /**
  * Behaviour pertaining to renderer discovery.
  */
