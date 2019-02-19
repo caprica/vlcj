@@ -1,7 +1,7 @@
 ![vlcj](https://github.com/caprica/vlcj/raw/master/etc/vlcj-logo.png "vlcj")
 
-*You are currently looking at the development branch for vlcj-4.0.0, if you want a stable version of vlcj you should
-switch to the [vlcj-3.x branch](https://github.com/caprica/vlcj/tree/vlcj-3.x).* 
+*You are currently looking at the development branch for vlcj-4.0.0, if you are looking for the previous version of vlcj
+you should switch to the [vlcj-3.x branch](https://github.com/caprica/vlcj/tree/vlcj-3.x).* 
 
 vlcj
 ====
@@ -29,16 +29,13 @@ more information as well as some new simple tutorials.
 vlcj-4
 ======
 
-This is the new development branch for the next major release of vlcj. Most things will stay the same but vlcj is
-undergoing a significant refactoring exercise for the long-term health of the project and ease of further development.
+vlcj-4 has a new API, but there is still a lot of similarity with vlcj-3 and under the covers there is still mostly the
+same mature and stable implementation.
 
-As such, at the present time the API is fluid and completely subject to change. If you are migrating from vlcj-3 then
-you will have to make changes to your own code. The implementation behind the API is pretty much the same as it ever
-was, although there have been and will continue to be significant improvements in some areas, nevertheless if you are
-using this branch you do so at your own risk.
+The vlcj-4 API is now pretty much stable, although some changes may be made depending on feedback and usage after the
+first release of 4.0.0 is let loose into the wild - but no further *major* API changes are planned or expected.
 
-At the present time there is no cut-off for API changes or in fact any other breaking changes, so use this branch at
-your own risk!
+If you are interested in using vlcj-4, now is a good time to start.
 
 Major New Features
 ------------------
@@ -107,6 +104,13 @@ At the present time, the available tutorials are for vlcj-3. Whilst the underlyi
 API has changed a LOT and this is not yet reflected in those tutorials.
 
 New tutorials for vlcj-4 will come soon.
+
+There are simple tests or demo applications available for pretty much every aspect of vlcj functionality, these are
+provided in the
+ [project test sources](https://github.com/caprica/vlcj/tree/master/src/test/java/uk/co/caprica/vlcj/test).
+
+There is also a major demo application available at the [vlcj-player](https://github.com/caprica/vlcj-player) project
+page.
 
 Building vlcj - sun.misc.Unsafe
 -------------------------------
@@ -262,7 +266,8 @@ You can follow @capricasoftware on Twitter for more vlcj news.
 Documentation
 -------------
 
-Some new tutorials are available at the [official project page](http://capricasoftware.co.uk/projects/vlcj/tutorials).
+Tutorials will be made available, not yet, at the
+[official project page](http://capricasoftware.co.uk/projects/vlcj/tutorials).
 
 The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at github").
 
