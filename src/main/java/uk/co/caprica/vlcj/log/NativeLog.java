@@ -164,8 +164,8 @@ public final class NativeLog {
                 int size = LibC.INSTANCE.vsnprintf(byteBuffer, byteBuffer.capacity(), format, args);
                 // If the message was formatted without error...
                 if (size >= 0) {
-                    // FIXME could reallocate a new buffer here and try again if size > capacity?
-                    // Determine the number of available characters (actually number of bytes)
+                    // Determine the number of available characters (actually number of bytes) - note that the message
+                    // may have been truncated if the buffer was not large enough
                     size = Math.min(size, BUFFER_SIZE);
                     // Create a new string from the byte buffer contents
                     byte[] bytes = new byte[size];
@@ -192,6 +192,7 @@ public final class NativeLog {
                     }
                 }
                 else {
+                    // This occurs when vsnprintf failed, rather than just truncating the message
                     raiseLogEvent(LogLevel.ERROR, null, null, null, null, null, null, "Failed to format native log message");
                 }
             }

@@ -264,12 +264,10 @@ public class TestMediaListPlayer extends VlcjTest {
         }
     }
 
-    // FIXME
     // This is not really ideal, there could be an update from a native thread between getSize() and something else...
     // it's almost like each change should copy the native list to a java list really.
     private class PlaylistModel extends AbstractListModel {
 
-        // FIXME document this, remember we're on a native thread here, not the EDT!
         private PlaylistModel() {
             mediaList.events().addMediaListEventListener(new MediaListEventAdapter() {
                 @Override

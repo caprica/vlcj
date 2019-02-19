@@ -63,7 +63,6 @@ public final class ListService extends BaseService {
             this.mediaList.release();
         }
         this.mediaList = mediaListRef.newMediaList();
-        // FIXME if we're going to restore listeners, it must go here, before the next call
         libvlc.libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaListRef.mediaListInstance());
     }
 

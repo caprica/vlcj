@@ -27,8 +27,6 @@ import uk.co.caprica.vlcj.player.list.EventService;
 import uk.co.caprica.vlcj.player.list.ListService;
 import uk.co.caprica.vlcj.player.list.StatusService;
 
-// FIXME similar to thinking about "persistent" media listener, what about a MediaListListener in the same context too? in this case it would be a bit easier because the medialistplayer never changes instance
-
 /**
  * Behaviour pertaining to media subitems.
  */

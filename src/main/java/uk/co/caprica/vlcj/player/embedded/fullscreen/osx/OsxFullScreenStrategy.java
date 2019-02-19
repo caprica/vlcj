@@ -45,7 +45,7 @@ public class OsxFullScreenStrategy implements FullScreenStrategy {
     public OsxFullScreenStrategy(Window window) {
         if (window != null) {
             this.window = window;
-            FullScreenUtilities.addFullScreenListenerTo(window, new FullScreenHandler()); // FIXME this is never removed, is it a problem?
+            FullScreenUtilities.addFullScreenListenerTo(window, new FullScreenHandler());
             FullScreenUtilities.setWindowCanFullScreen(window, true);
         }
         else {

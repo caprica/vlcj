@@ -293,7 +293,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
         private DefaultVideoSurfaceComponent() {
             setBackground(Color.black);
-            setIgnoreRepaint(true); // FIXME dunno?
+            setIgnoreRepaint(true);
             // Set a reasonable default size for the video surface component in case the client application does
             // something like using pack() rather than setting a specific size
             setPreferredSize(new Dimension(640, 360));
