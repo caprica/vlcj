@@ -305,7 +305,7 @@ public final class VideoService extends BaseService {
      */
     public int setTrack(int track) {
         libvlc.libvlc_video_set_track(mediaPlayerInstance, track);
-        return track(); // FIXME does this actually update synchronously?
+        return track();
     }
 
     /**

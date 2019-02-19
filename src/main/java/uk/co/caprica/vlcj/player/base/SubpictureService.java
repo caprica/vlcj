@@ -74,7 +74,7 @@ public final class SubpictureService extends BaseService {
      */
     public int setTrack(int spu) {
         libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
-        return track(); // FIXME does this work or is it actually async?
+        return track();
     }
 
     /**

@@ -24,8 +24,6 @@ import uk.co.caprica.vlcj.binding.LibX11;
 import javax.swing.*;
 import java.awt.*;
 
-// FIXME if i remove logging, i should at least provide a list of diagnostics messages?
-
 /**
  * Private helper class to ensure the native libraries are properly initialised on Linux.
  * <p>

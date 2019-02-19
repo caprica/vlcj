@@ -91,7 +91,7 @@ public final class EmbeddedMediaPlayer extends MediaPlayer {
         this.videoSurfaceService = new VideoSurfaceService(this);
     }
 
-    public FullScreenService fullScreen() { // FIXME or fullscreen ?
+    public FullScreenService fullScreen() {
         return fullScreenService;
     }
 

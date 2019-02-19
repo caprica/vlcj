@@ -25,8 +25,6 @@ import uk.co.caprica.vlcj.binding.NativeString;
 import java.util.HashMap;
 import java.util.Map;
 
-// FIXME consolidate with infoservice?
-
 /**
  * Behaviour pertaining to media meta data.
  */
