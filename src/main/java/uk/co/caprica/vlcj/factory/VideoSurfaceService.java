@@ -79,7 +79,7 @@ public final class VideoSurfaceService extends BaseService {
         } else if(RuntimeUtil.isMac()) {
             return new OsxVideoSurfaceAdapter();
         } else {
-            throw new RuntimeException("Unable to create a media player - failed to detect a supported operating system");
+            throw new RuntimeException("Unable to create a video surface - failed to detect a supported operating system");
         }
     }
 
