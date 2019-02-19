@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
  */
 public final class MenuService extends BaseService {
 
-    MenuService(BaseMediaPlayer mediaPlayer) {
+    MenuService(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

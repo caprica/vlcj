@@ -46,7 +46,7 @@ public final class ListService extends BaseService {
      */
     private MediaList mediaList;
 
-    ListService(DefaultMediaListPlayer mediaListPlayer) {
+    ListService(MediaListPlayer mediaListPlayer) {
         super(mediaListPlayer);
     }
 

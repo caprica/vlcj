@@ -31,7 +31,7 @@ public final class FullScreenService extends BaseService {
      */
     private FullScreenStrategy fullScreenStrategy;
 
-    FullScreenService(DefaultEmbeddedMediaPlayer mediaPlayer) {
+    FullScreenService(EmbeddedMediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

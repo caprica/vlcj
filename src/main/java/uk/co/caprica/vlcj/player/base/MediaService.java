@@ -69,7 +69,7 @@ public final class MediaService extends BaseService {
      */
     private boolean repeat;
 
-    MediaService(BaseMediaPlayer mediaPlayer) {
+    MediaService(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

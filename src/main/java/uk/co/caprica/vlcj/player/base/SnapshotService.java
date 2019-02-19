@@ -38,7 +38,7 @@ public final class SnapshotService extends BaseService {
      */
     private String snapshotDirectoryName;
 
-    SnapshotService(BaseMediaPlayer mediaPlayer) {
+    SnapshotService(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

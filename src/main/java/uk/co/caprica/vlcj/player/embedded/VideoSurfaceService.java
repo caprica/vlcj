@@ -31,7 +31,7 @@ public final class VideoSurfaceService extends BaseService {
      */
     private VideoSurface videoSurface;
 
-    VideoSurfaceService(DefaultEmbeddedMediaPlayer mediaPlayer) {
+    VideoSurfaceService(EmbeddedMediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

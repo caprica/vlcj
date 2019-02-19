@@ -31,7 +31,7 @@ import java.util.List;
  */
 public final class SubpictureService extends BaseService {
 
-    SubpictureService(BaseMediaPlayer mediaPlayer) {
+    SubpictureService(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

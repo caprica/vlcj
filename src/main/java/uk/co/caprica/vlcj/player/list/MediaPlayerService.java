@@ -34,7 +34,7 @@ public final class MediaPlayerService extends BaseService {
      */
     private MediaPlayer mediaPlayer;
 
-    MediaPlayerService(DefaultMediaListPlayer mediaListPlayer) {
+    MediaPlayerService(MediaListPlayer mediaListPlayer) {
         super(mediaListPlayer);
     }
 

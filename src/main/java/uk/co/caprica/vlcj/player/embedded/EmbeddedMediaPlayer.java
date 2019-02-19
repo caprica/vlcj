@@ -19,44 +19,104 @@
 
 package uk.co.caprica.vlcj.player.embedded;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
- * Specification for a media player component that is intended to be embedded in a user-interface
- * component.
- *  <p>
+ * Implementation of a media player that renders video to an video surface embedded in the application user interface.
+ * <p>
  * Note that to get mouse and keyboard events delivered via listeners on some platforms (i.e. Windows) you will likely
  * need to invoke {@link InputService#enableMouseInputHandling(boolean)} <em>and</em>
  * {@link InputService#enableKeyInputHandling(boolean)}.
+ * <p>
+ * This implementation supports the use of a heavyweight 'overlay' window that will track the video surface position and
+ * size. Such an overlay could be used to paint custom graphics over the top of the video.
+ * <p>
+ * The overlay window should be non-opaque - support for this depends on the JVM, desktop window manager and graphics
+ * device hardware and software.
+ * <p>
+ * The overlay also has some significant limitations, it is a component that covers the video surface component and will
+ * prevent mouse and keyboard events from being processed by the video surface. Workarounds to delegate the mouse and
+ * keyboard events to the underlying component may be possible but that is a responsibility of the overlay itself.
+ * <p>
+ * The overlay will also 'lag' the main application frame when the frame is dragged - the event used to track the frame
+ * position does not fire until after the window drag operation has completed (i.e. the mouse pointer is released).
+ * <p>
+ * A further limitation is that the overlay will not appear when full-screen exclusive mode is used - if an overlay is
+ * required in full-screen mode then the full-screen mode must be simulated (by re-sizing the main window, removing
+ * decorations and so on).
+ * <p>
+ * If an overlay is used, then because the window is required to be non-opaque then it will appear in front of
+ * <strong>all</strong> other desktop windows, including application dialog windows. For this reason, it may be
+ * necessary to disable the overlay while displaying dialog boxes, or when the window is deactivated.
+ * <p>
+ * The overlay implementation in this class simply keeps a supplied window in sync with the video surface. It is the
+ * responsibility of the client application itself to supply an appropriate overlay component.
  */
-public interface EmbeddedMediaPlayer extends MediaPlayer {
+public final class EmbeddedMediaPlayer extends MediaPlayer {
 
     /**
-     * Behaviour pertaining to full-screen functionality.
-     *
-     * @return full-screen behaviour
+     * Native library interface.
      */
-    FullScreenService fullScreen();
+    protected final LibVlc libvlc;
 
     /**
-     * Behaviour pertaining to keyboard/mouse input-events.
-     *
-     * @return input-event behaviour
+     * Libvlc instance.
      */
-    InputService input();
+    protected final libvlc_instance_t libvlcInstance;
+
+    private final FullScreenService   fullScreenService;
+    private final InputService        inputService;
+    private final OverlayService      overlayService;
+    private final VideoSurfaceService videoSurfaceService;
 
     /**
-     * Behaviour pertaining to the heavyweight overlay.
+     * Create a new media player.
+     * <p>
+     * Full-screen will not be supported.
      *
-     * @return overlay behaviour
+     * @param libvlc native interface
+     * @param instance libvlc instance
      */
-    OverlayService overlay();
+    public EmbeddedMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
+        super(libvlc, instance);
 
-    /**
-     * Behaviour pertaining to the video surface.
-     *
-     * @return video surface behaviour
-     */
-    VideoSurfaceService videoSurface();
+        this.libvlc = libvlc;
+        this.libvlcInstance = instance;
+
+        this.fullScreenService   = new FullScreenService  (this);
+        this.inputService        = new InputService       (this);
+        this.overlayService      = new OverlayService     (this);
+        this.videoSurfaceService = new VideoSurfaceService(this);
+    }
+
+    public FullScreenService fullScreen() { // FIXME or fullscreen ?
+        return fullScreenService;
+    }
+
+    public InputService input() {
+        return inputService;
+    }
+
+    public OverlayService overlay() {
+        return overlayService;
+    }
+
+    public VideoSurfaceService videoSurface() {
+        return videoSurfaceService;
+    }
+
+    protected final void onBeforePlay() {
+        videoSurface().attachVideoSurface();
+    }
+
+    @Override
+    protected void onBeforeRelease() {
+        fullScreenService  .release();
+        inputService       .release();
+        overlayService     .release();
+        videoSurfaceService.release();
+    }
 
 }

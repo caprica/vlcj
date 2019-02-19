@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.player.base.State;
  */
 public final class StatusService extends BaseService {
 
-    StatusService(DefaultMediaListPlayer mediaListPlayer) {
+    StatusService(MediaListPlayer mediaListPlayer) {
         super(mediaListPlayer);
     }
 

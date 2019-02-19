@@ -25,7 +25,7 @@ package uk.co.caprica.vlcj.player.list;
  */
 public final class ControlsService extends BaseService {
 
-    ControlsService(DefaultMediaListPlayer mediaListPlayer) {
+    ControlsService(MediaListPlayer mediaListPlayer) {
         super(mediaListPlayer);
     }
 

@@ -17,130 +17,171 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
+// Was 2500 lines
+
 package uk.co.caprica.vlcj.player.base;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.player.renderer.RendererItem;
+import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
 
 /**
- * Specification for a media player component.
- *
- * @see EmbeddedMediaPlayerComponent
+ * Base media player implementation.
+ * <p>
+ * This can be used for those media players that do not require a video surface embedded into a user interface, for
+ * example audio-only players, or less likely media players that will use a native window created by LibVLC.
  */
-public interface MediaPlayer {
+public class MediaPlayer {
 
     /**
-     * Behaviour pertaining to media player audio.
-     *
-     * @return audio behaviour
+     * Native library interface.
      */
-    AudioService audio();
+    protected final LibVlc libvlc;
 
     /**
-     * Behaviour pertaining to chapters.
-     *
-     * @return chapter behaviour
+     * Libvlc instance.
      */
-    ChapterService chapters();
+    protected final libvlc_instance_t libvlcInstance;
 
     /**
-     * Behaviour pertaining to media player controls.
-     *
-     * @return controls behaviour
+     * Native media player instance.
      */
-    ControlsService controls();
+    private final libvlc_media_player_t mediaPlayerInstance;
 
     /**
-     * Behaviour pertaining to media player events.
-     *
-     * @return event behaviour.
+     * Single-threaded service to execute tasks that need to be off-loaded from a native callback thread.
+     * <p>
+     * See {@link #submit(Runnable)}.
      */
-    EventService events();
+    private final TaskExecutor executor = new TaskExecutor();
 
     /**
-     * Behaviour pertaining to the logo.
-     *
-     * @return logo behaviour
+     * Arbitrary object associated with this media list player.
      */
-    LogoService logo();
+    private Object userData;
+
+    private final AudioService      audioService;
+    private final ChapterService    chapterService;
+    private final ControlsService   controlsService;
+    private final EventService      eventService;
+    private final LogoService       logoService;
+    private final MarqueeService    marqueeService;
+    private final MediaService      mediaService;
+    private final MenuService       menuService;
+    private final RoleService       roleService;
+    private final SnapshotService   snapshotService;
+    private final StatusService     statusService;
+    private final SubitemService    subitemService;
+    private final SubpictureService subpictureService;
+    private final TeletextService   teletextService;
+    private final TitleService      titleService;
+    private final VideoService      videoService;
 
     /**
-     * Behaviour pertaining to the current media.
+     * Create a new media player.
      *
-     * @return media behaviour
+     * @param libvlc native library interface
+     * @param instance libvlc instance
      */
-    MediaService media();
+    public MediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
+        this.libvlc         = libvlc;
+        this.libvlcInstance = instance;
 
-    /**
-     * Behaviour pertaining to the marquee.
-     *
-     * @return marquee behaviour
-     */
-    MarqueeService marquee();
+        this.mediaPlayerInstance = newNativeMediaPlayer();
 
-    /**
-     * Behaviour pertaining to the menu.
-     *
-     * @return menu behaviour
-     */
-    MenuService menu();
+        audioService      = new AudioService     (this);
+        chapterService    = new ChapterService   (this);
+        controlsService   = new ControlsService  (this);
+        eventService      = new EventService     (this);
+        logoService       = new LogoService      (this);
+        marqueeService    = new MarqueeService   (this);
+        mediaService      = new MediaService     (this);
+        menuService       = new MenuService      (this);
+        roleService       = new RoleService      (this);
+        snapshotService   = new SnapshotService  (this);
+        statusService     = new StatusService    (this);
+        subitemService    = new SubitemService   (this);
+        subpictureService = new SubpictureService(this);
+        teletextService   = new TeletextService  (this);
+        titleService      = new TitleService     (this);
+        videoService      = new VideoService     (this);
+    }
 
-    /**
-     * Behaviour pertaining to the media player role.
-     *
-     * @return role behaviour
-     */
-    RoleService role();
+    private libvlc_media_player_t newNativeMediaPlayer() {
+        libvlc_media_player_t result = libvlc.libvlc_media_player_new(libvlcInstance);
+        if (result != null) {
+            return result;
+        } else {
+            throw new RuntimeException("Failed to get a new native media player instance");
+        }
+    }
 
-    /**
-     * Behaviour pertaining to video snapshots.
-     *
-     * @return snapshot behaviour
-     */
-    SnapshotService snapshots();
+    public final AudioService audio() {
+        return audioService;
+    }
 
-    /**
-     * Behaviour pertaining to the status of the media player.
-     *
-     * @return status behaviour
-     */
-    StatusService status();
+    public final ChapterService chapters() {
+        return chapterService;
+    }
 
-    /**
-     * Behaviour pertaining to subitems.
-     *
-     * @return subitems behaviour
-     */
-    SubitemService subitems();
+    public final ControlsService controls() {
+        return controlsService;
+    }
 
-    /**
-     * Behaviour pertaining to subpictures.
-     *
-     * @return subpicture behaviour
-     */
-    SubpictureService subpictures();
+    public final EventService events() {
+        return eventService;
+    }
 
-    /**
-     * Behaviour pertaining to teletext.
-     *
-     * @return teletext behaviour
-     */
-    TeletextService teletext();
+    public final LogoService logo() {
+        return logoService;
+    }
 
-    /**
-     * Behaviour pertaining to titles.
-     *
-     * @return titles behaviour
-     */
-    TitleService titles();
+    public final MarqueeService marquee() {
+        return marqueeService;
+    }
 
-    /**
-     * Behaviour pertaining to media player video.
-     *
-     * @return video behaviour
-     */
-    VideoService video();
+    public final MediaService media() {
+        return mediaService;
+    }
+
+    public final MenuService menu() {
+        return menuService;
+    }
+
+    public final RoleService role() {
+        return roleService;
+    }
+
+    public final SnapshotService snapshots() {
+        return snapshotService;
+    }
+
+    public final StatusService status() {
+        return statusService;
+    }
+
+    public final SubitemService subitems() {
+        return subitemService;
+    }
+
+    public final SubpictureService subpictures() {
+        return subpictureService;
+    }
+
+    public final TeletextService teletext() {
+        return teletextService;
+    }
+
+    public final TitleService titles() {
+        return titleService;
+    }
+
+    public final VideoService video() {
+        return videoService;
+    }
 
     /**
      * Set an alternate media renderer.
@@ -150,21 +191,28 @@ public interface MediaPlayer {
      * @param rendererItem media renderer
      * @return <code>true</code> if successful; <code>false</code> on error
      */
-    boolean setRenderer(RendererItem rendererItem);
+    public final boolean setRenderer(RendererItem rendererItem) {
+        libvlc_renderer_item_t rendererItemInstance = rendererItem != null ? rendererItem.rendererItemInstance() : null;
+        return libvlc.libvlc_media_player_set_renderer(mediaPlayerInstance, rendererItemInstance) == 0;
+    }
 
     /**
      * Get the user data associated with the media player.
      *
      * @return user data
      */
-    Object userData();
+    public final Object userData() {
+        return userData;
+    }
 
     /**
      * Set user data to associate with the media player.
      *
      * @param userData user data
      */
-    void userData(Object userData);
+    public final void userData(Object userData) {
+        this.userData = userData;
+    }
 
     /**
      * Submit a task for asynchronous execution.
@@ -177,12 +225,62 @@ public interface MediaPlayer {
      *
      * @param r task to execute
      */
-    void submit(Runnable r);
+    public final void submit(Runnable r) {
+        executor.submit(r);
+    }
 
     /**
      * Release the media player, freeing all associated (including native) resources.
      */
-    void release();
+    public final void release() {
+        executor.release();
+
+        onBeforeRelease();
+
+        audioService     .release();
+        chapterService   .release();
+        controlsService  .release();
+        eventService     .release();
+        logoService      .release();
+        marqueeService   .release();
+        mediaService     .release();
+        menuService      .release();
+        roleService      .release();
+        snapshotService  .release();
+        statusService    .release();
+        subitemService   .release();
+        subpictureService.release();
+        teletextService  .release();
+        titleService     .release();
+        videoService     .release();
+
+        libvlc.libvlc_media_player_release(mediaPlayerInstance);
+
+        onAfterRelease();
+    }
+
+    /**
+     * Provided to enable sub-classes to do something just before the video is started.
+     */
+    protected void onBeforePlay() {
+        // Base implementation does nothing
+    }
+
+    /**
+     * Provided to enable sub-classes to implement their own clean-up immediately before the media player resources will
+     * be freed.
+     */
+    protected void onBeforeRelease() {
+        // Base implementation does nothing
+    }
+
+    /**
+     * Provided to enable sub-classes to implement their own clean-up immediately after the media player resources have
+     * been freed.
+     */
+    protected void onAfterRelease() {
+        // Base implementation does nothing
+    }
 
     /**
      * Provide access to the native media player instance.
@@ -192,6 +290,8 @@ public interface MediaPlayer {
      *
      * @return media player instance
      */
-    libvlc_media_player_t mediaPlayerInstance();
+    public final libvlc_media_player_t mediaPlayerInstance() {
+        return mediaPlayerInstance;
+    }
 
 }

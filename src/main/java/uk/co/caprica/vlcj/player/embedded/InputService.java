@@ -24,7 +24,7 @@ package uk.co.caprica.vlcj.player.embedded;
  */
 public final class InputService extends BaseService {
 
-    InputService(DefaultEmbeddedMediaPlayer mediaPlayer) {
+    InputService(EmbeddedMediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

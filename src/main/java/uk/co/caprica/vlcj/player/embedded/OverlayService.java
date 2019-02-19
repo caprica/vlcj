@@ -67,7 +67,7 @@ public final class OverlayService extends BaseService {
      */
     private boolean restoreOverlay;
 
-    OverlayService(DefaultEmbeddedMediaPlayer mediaPlayer) {
+    OverlayService(EmbeddedMediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

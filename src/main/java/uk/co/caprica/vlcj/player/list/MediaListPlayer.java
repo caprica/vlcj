@@ -19,65 +19,120 @@
 
 package uk.co.caprica.vlcj.player.list;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
 
 /**
- * Specification for a media list player component.
+ * Implementation of a media list player.
  * <p>
  * A media list player can be used with an embedded media player (without this a native video window will be opened when
  * video is played).
+ * <p>
+ * The native media list player will automatically deal properly with media that has subitems (like YouTube movies), so
+ * simply adding an ordinary MRL/URL is all that is needed for such media.
  */
-public interface MediaListPlayer {
+public final class MediaListPlayer {
 
     /**
-     * Behaviour pertaining to media list player controls.
-     *
-     * @return controls behaviour
+     * Native library interface.
      */
-    ControlsService controls();
+    protected final LibVlc libvlc;
 
     /**
-     * Behaviour pertaining to media list player events.
-     *
-     * @return event behaviour
+     * Libvlc instance.
      */
-    EventService events();
+    protected final libvlc_instance_t libvlcInstance;
 
     /**
-     * Behaviour pertaining to the media list.
-     *
-     * @return media list behaviour
+     * Native media player instance.
      */
-    ListService list();
+    private libvlc_media_list_player_t mediaListPlayerInstance;
 
     /**
-     * Behaviour pertaining to the associated media player.
-     *
-     * @return media player behaviour
+     * Single-threaded service to execute tasks that need to be off-loaded from a native callback thread.
+     * <p>
+     * See {@link #submit(Runnable)}.
      */
-    MediaPlayerService mediaPlayer();
+    private final TaskExecutor executor = new TaskExecutor();
 
     /**
-     * Behaviour pertaining to the status of the media list player.
-     *
-     * @return status behaviour
+     * Arbitrary object associated with this media list player.
      */
-    StatusService status();
+    private Object userData;
+
+    private final ControlsService    controlsService;
+    private final EventService       eventService;
+    private final ListService        listService;
+    private final MediaPlayerService mediaPlayerService;
+    private final StatusService      statusService;
+
+    /**
+     * Create a new media list player.
+     *
+     * @param libvlc native library interface
+     * @param libvlcInstance libvlc instance
+     */
+    public MediaListPlayer(LibVlc libvlc, libvlc_instance_t libvlcInstance) {
+        this.libvlc         = libvlc;
+        this.libvlcInstance = libvlcInstance;
+
+        this.mediaListPlayerInstance = newNativeMediaListPlayer();
+
+        this.controlsService    = new ControlsService   (this);
+        this.eventService       = new EventService      (this);
+        this.listService        = new ListService       (this);
+        this.mediaPlayerService = new MediaPlayerService(this);
+        this.statusService      = new StatusService     (this);
+    }
+
+    private libvlc_media_list_player_t newNativeMediaListPlayer() {
+        libvlc_media_list_player_t result = libvlc.libvlc_media_list_player_new(libvlcInstance);
+        if (result != null) {
+            return result;
+        } else {
+            throw new RuntimeException("Failed to get a new native media list player instance");
+        }
+    }
+
+    public ControlsService controls() {
+        return controlsService;
+    }
+
+    public EventService events() {
+        return eventService;
+    }
+
+    public ListService list() {
+        return listService;
+    }
+
+    public MediaPlayerService mediaPlayer() {
+        return mediaPlayerService;
+    }
+
+    public StatusService status() {
+        return statusService;
+    }
 
     /**
      * Get the user data associated with the media player.
      *
      * @return user data
      */
-    Object userData();
+    public Object userData() {
+        return userData;
+    }
 
     /**
      * Set user data to associate with the media player.
      *
      * @param userData user data
      */
-    void userData(Object userData);
+    public void userData(Object userData) {
+        this.userData = userData;
+    }
 
     /**
      * Submit a task for asynchronous execution.
@@ -90,12 +145,44 @@ public interface MediaListPlayer {
      *
      * @param r task to execute
      */
-    void submit(Runnable r);
+    public void submit(Runnable r) {
+        executor.submit(r);
+    }
 
     /**
-     * Release the media list player resources.
+     * Release the media player, freeing all associated (including native) resources.
      */
-    void release();
+    public void release() {
+        executor.release();
+
+        onBeforeRelease();
+
+        controlsService   .release();
+        eventService      .release();
+        listService       .release();
+        mediaPlayerService.release();
+        statusService     .release();
+
+        libvlc.libvlc_media_list_player_release(mediaListPlayerInstance);
+
+        onAfterRelease();
+    }
+
+    /**
+     * Provided to enable sub-classes to implement their own clean-up immediately before the media player resources will
+     * be freed.
+     */
+    protected void onBeforeRelease() {
+        // Base implementation does nothing
+    }
+
+    /**
+     * Provided to enable sub-classes to implement their own clean-up immediately after the media player resources have
+     * been freed.
+     */
+    protected void onAfterRelease() {
+        // Base implementation does nothing
+    }
 
     /**
      * Provide access to the native media player instance.
@@ -105,6 +192,8 @@ public interface MediaListPlayer {
      *
      * @return media player instance
      */
-    libvlc_media_list_player_t mediaListPlayerInstance();
+    public libvlc_media_list_player_t mediaListPlayerInstance() {
+        return mediaListPlayerInstance;
+    }
 
 }

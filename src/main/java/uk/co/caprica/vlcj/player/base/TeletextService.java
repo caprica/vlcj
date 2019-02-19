@@ -24,7 +24,7 @@ package uk.co.caprica.vlcj.player.base;
  */
 public final class TeletextService extends BaseService {
 
-    TeletextService(BaseMediaPlayer mediaPlayer) {
+    TeletextService(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 

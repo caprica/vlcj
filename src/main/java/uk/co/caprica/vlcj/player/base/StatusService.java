@@ -26,7 +26,7 @@ package uk.co.caprica.vlcj.player.base;
  */
 public final class StatusService extends BaseService {
 
-    StatusService(BaseMediaPlayer mediaPlayer) {
+    StatusService(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 
