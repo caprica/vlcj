@@ -271,9 +271,11 @@ Tutorials will be made available, not yet, at the
 
 The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at github").
 
-Online Javadoc is *not yet available* but will appear here in due course:
+Online Javadoc is available here:
 
-* [4.0.0 (current)](http://caprica.github.com/vlcj/javadoc/4.0.0/index.html "4.0.0 Javadoc")
+* [4.0.0 (current)](http://caprica.github.com/vlcj/javadoc/4.0.0-SNAPSHOT/index.html "4.0.0-SNAPSHOT Javadoc")
+
+This is a snapshot of the current 4.0.0 Javadoc in advance of a full release.
 
 Examples
 --------
