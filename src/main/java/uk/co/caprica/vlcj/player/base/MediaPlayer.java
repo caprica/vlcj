@@ -188,7 +188,7 @@ public class MediaPlayer {
      * <p>
      * This must be set before playback starts.
      *
-     * @param rendererItem media renderer
+     * @param rendererItem media renderer, or <code>null</code> to render as normal
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public final boolean setRenderer(RendererItem rendererItem) {
