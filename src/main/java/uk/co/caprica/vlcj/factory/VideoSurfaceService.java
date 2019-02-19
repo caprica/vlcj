@@ -46,7 +46,7 @@ public final class VideoSurfaceService extends BaseService {
      * @return video surface
      */
     public ComponentVideoSurface newVideoSurface(Component component) {
-        return new ComponentVideoSurface(component, getVideoSurfaceAdapter());
+        return new ComponentVideoSurface(component, VideoSurfaceAdapters.getVideoSurfaceAdapter());
     }
 
     /**
@@ -56,7 +56,7 @@ public final class VideoSurfaceService extends BaseService {
      * @return video surface
      */
     public ComponentIdVideoSurface newVideoSurface(long componentId) {
-        return new ComponentIdVideoSurface(componentId, getVideoSurfaceAdapter());
+        return new ComponentIdVideoSurface(componentId, VideoSurfaceAdapters.getVideoSurfaceAdapter());
     }
 
     /**
@@ -68,19 +68,7 @@ public final class VideoSurfaceService extends BaseService {
      * @return video surface
      */
     public CallbackVideoSurface newVideoSurface(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers) {
-        return new CallbackVideoSurface(bufferFormatCallback, renderCallback, lockBuffers, getVideoSurfaceAdapter());
-    }
-
-    private VideoSurfaceAdapter getVideoSurfaceAdapter() {
-        if (RuntimeUtil.isNix()) {
-            return new LinuxVideoSurfaceAdapter();
-        } else if(RuntimeUtil.isWindows()) {
-            return new WindowsVideoSurfaceAdapter();
-        } else if(RuntimeUtil.isMac()) {
-            return new OsxVideoSurfaceAdapter();
-        } else {
-            throw new RuntimeException("Unable to create a video surface - failed to detect a supported operating system");
-        }
+        return new CallbackVideoSurface(bufferFormatCallback, renderCallback, lockBuffers, VideoSurfaceAdapters.getVideoSurfaceAdapter());
     }
 
 }
