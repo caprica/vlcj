@@ -27,8 +27,8 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
  * Implementation of a media player that renders video to an video surface embedded in the application user interface.
  * <p>
  * Note that to get mouse and keyboard events delivered via listeners on some platforms (i.e. Windows) you will likely
- * need to invoke {@link InputService#enableMouseInputHandling(boolean)} <em>and</em>
- * {@link InputService#enableKeyInputHandling(boolean)}.
+ * need to invoke {@link InputApi#enableMouseInputHandling(boolean)} <em>and</em>
+ * {@link InputApi#enableKeyInputHandling(boolean)}.
  * <p>
  * This implementation supports the use of a heavyweight 'overlay' window that will track the video surface position and
  * size. Such an overlay could be used to paint custom graphics over the top of the video.
@@ -66,10 +66,10 @@ public final class EmbeddedMediaPlayer extends MediaPlayer {
      */
     protected final libvlc_instance_t libvlcInstance;
 
-    private final FullScreenService   fullScreenService;
-    private final InputService        inputService;
-    private final OverlayService      overlayService;
-    private final VideoSurfaceService videoSurfaceService;
+    private final FullScreenApi   fullScreenApi;
+    private final InputApi        inputApi;
+    private final OverlayApi      overlayApi;
+    private final VideoSurfaceApi videoSurfaceApi;
 
     /**
      * Create a new media player.
@@ -85,26 +85,26 @@ public final class EmbeddedMediaPlayer extends MediaPlayer {
         this.libvlc = libvlc;
         this.libvlcInstance = instance;
 
-        this.fullScreenService   = new FullScreenService  (this);
-        this.inputService        = new InputService       (this);
-        this.overlayService      = new OverlayService     (this);
-        this.videoSurfaceService = new VideoSurfaceService(this);
+        this.fullScreenApi   = new FullScreenApi  (this);
+        this.inputApi        = new InputApi       (this);
+        this.overlayApi      = new OverlayApi     (this);
+        this.videoSurfaceApi = new VideoSurfaceApi(this);
     }
 
-    public FullScreenService fullScreen() {
-        return fullScreenService;
+    public FullScreenApi fullScreen() {
+        return fullScreenApi;
     }
 
-    public InputService input() {
-        return inputService;
+    public InputApi input() {
+        return inputApi;
     }
 
-    public OverlayService overlay() {
-        return overlayService;
+    public OverlayApi overlay() {
+        return overlayApi;
     }
 
-    public VideoSurfaceService videoSurface() {
-        return videoSurfaceService;
+    public VideoSurfaceApi videoSurface() {
+        return videoSurfaceApi;
     }
 
     protected final void onBeforePlay() {
@@ -113,10 +113,10 @@ public final class EmbeddedMediaPlayer extends MediaPlayer {
 
     @Override
     protected void onBeforeRelease() {
-        fullScreenService  .release();
-        inputService       .release();
-        overlayService     .release();
-        videoSurfaceService.release();
+        fullScreenApi  .release();
+        inputApi       .release();
+        overlayApi     .release();
+        videoSurfaceApi.release();
     }
 
 }

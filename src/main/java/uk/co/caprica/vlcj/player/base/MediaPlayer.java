@@ -63,22 +63,22 @@ public class MediaPlayer {
      */
     private Object userData;
 
-    private final AudioService      audioService;
-    private final ChapterService    chapterService;
-    private final ControlsService   controlsService;
-    private final EventService      eventService;
-    private final LogoService       logoService;
-    private final MarqueeService    marqueeService;
-    private final MediaService      mediaService;
-    private final MenuService       menuService;
-    private final RoleService       roleService;
-    private final SnapshotService   snapshotService;
-    private final StatusService     statusService;
-    private final SubitemService    subitemService;
-    private final SubpictureService subpictureService;
-    private final TeletextService   teletextService;
-    private final TitleService      titleService;
-    private final VideoService      videoService;
+    private final AudioApi      audioApi;
+    private final ChapterApi    chapterApi;
+    private final ControlsApi   controlsApi;
+    private final EventApi      eventApi;
+    private final LogoApi       logoApi;
+    private final MarqueeApi    marqueeApi;
+    private final MediaApi      mediaApi;
+    private final MenuApi       menuApi;
+    private final RoleApi       roleApi;
+    private final SnapshotApi   snapshotApi;
+    private final StatusApi     statusApi;
+    private final SubitemApi    subitemApi;
+    private final SubpictureApi subpictureApi;
+    private final TeletextApi   teletextApi;
+    private final TitleApi      titleApi;
+    private final VideoApi      videoApi;
 
     /**
      * Create a new media player.
@@ -92,22 +92,22 @@ public class MediaPlayer {
 
         this.mediaPlayerInstance = newNativeMediaPlayer();
 
-        audioService      = new AudioService     (this);
-        chapterService    = new ChapterService   (this);
-        controlsService   = new ControlsService  (this);
-        eventService      = new EventService     (this);
-        logoService       = new LogoService      (this);
-        marqueeService    = new MarqueeService   (this);
-        mediaService      = new MediaService     (this);
-        menuService       = new MenuService      (this);
-        roleService       = new RoleService      (this);
-        snapshotService   = new SnapshotService  (this);
-        statusService     = new StatusService    (this);
-        subitemService    = new SubitemService   (this);
-        subpictureService = new SubpictureService(this);
-        teletextService   = new TeletextService  (this);
-        titleService      = new TitleService     (this);
-        videoService      = new VideoService     (this);
+        audioApi      = new AudioApi     (this);
+        chapterApi    = new ChapterApi   (this);
+        controlsApi   = new ControlsApi  (this);
+        eventApi      = new EventApi     (this);
+        logoApi       = new LogoApi      (this);
+        marqueeApi    = new MarqueeApi   (this);
+        mediaApi      = new MediaApi     (this);
+        menuApi       = new MenuApi      (this);
+        roleApi       = new RoleApi      (this);
+        snapshotApi   = new SnapshotApi  (this);
+        statusApi     = new StatusApi    (this);
+        subitemApi    = new SubitemApi   (this);
+        subpictureApi = new SubpictureApi(this);
+        teletextApi   = new TeletextApi  (this);
+        titleApi      = new TitleApi     (this);
+        videoApi      = new VideoApi     (this);
     }
 
     private libvlc_media_player_t newNativeMediaPlayer() {
@@ -119,68 +119,68 @@ public class MediaPlayer {
         }
     }
 
-    public final AudioService audio() {
-        return audioService;
+    public final AudioApi audio() {
+        return audioApi;
     }
 
-    public final ChapterService chapters() {
-        return chapterService;
+    public final ChapterApi chapters() {
+        return chapterApi;
     }
 
-    public final ControlsService controls() {
-        return controlsService;
+    public final ControlsApi controls() {
+        return controlsApi;
     }
 
-    public final EventService events() {
-        return eventService;
+    public final EventApi events() {
+        return eventApi;
     }
 
-    public final LogoService logo() {
-        return logoService;
+    public final LogoApi logo() {
+        return logoApi;
     }
 
-    public final MarqueeService marquee() {
-        return marqueeService;
+    public final MarqueeApi marquee() {
+        return marqueeApi;
     }
 
-    public final MediaService media() {
-        return mediaService;
+    public final MediaApi media() {
+        return mediaApi;
     }
 
-    public final MenuService menu() {
-        return menuService;
+    public final MenuApi menu() {
+        return menuApi;
     }
 
-    public final RoleService role() {
-        return roleService;
+    public final RoleApi role() {
+        return roleApi;
     }
 
-    public final SnapshotService snapshots() {
-        return snapshotService;
+    public final SnapshotApi snapshots() {
+        return snapshotApi;
     }
 
-    public final StatusService status() {
-        return statusService;
+    public final StatusApi status() {
+        return statusApi;
     }
 
-    public final SubitemService subitems() {
-        return subitemService;
+    public final SubitemApi subitems() {
+        return subitemApi;
     }
 
-    public final SubpictureService subpictures() {
-        return subpictureService;
+    public final SubpictureApi subpictures() {
+        return subpictureApi;
     }
 
-    public final TeletextService teletext() {
-        return teletextService;
+    public final TeletextApi teletext() {
+        return teletextApi;
     }
 
-    public final TitleService titles() {
-        return titleService;
+    public final TitleApi titles() {
+        return titleApi;
     }
 
-    public final VideoService video() {
-        return videoService;
+    public final VideoApi video() {
+        return videoApi;
     }
 
     /**
@@ -235,22 +235,22 @@ public class MediaPlayer {
 
         onBeforeRelease();
 
-        audioService     .release();
-        chapterService   .release();
-        controlsService  .release();
-        eventService     .release();
-        logoService      .release();
-        marqueeService   .release();
-        mediaService     .release();
-        menuService      .release();
-        roleService      .release();
-        snapshotService  .release();
-        statusService    .release();
-        subitemService   .release();
-        subpictureService.release();
-        teletextService  .release();
-        titleService     .release();
-        videoService     .release();
+        audioApi     .release();
+        chapterApi   .release();
+        controlsApi  .release();
+        eventApi     .release();
+        logoApi      .release();
+        marqueeApi   .release();
+        mediaApi     .release();
+        menuApi      .release();
+        roleApi      .release();
+        snapshotApi  .release();
+        statusApi    .release();
+        subitemApi   .release();
+        subpictureApi.release();
+        teletextApi  .release();
+        titleApi     .release();
+        videoApi     .release();
 
         libvlc.libvlc_media_player_release(mediaPlayerInstance);
 

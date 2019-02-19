@@ -43,13 +43,13 @@ public final class Media {
      */
     protected final libvlc_media_t mediaInstance;
 
-    private final EventService   eventService;
-    private final InfoService    infoService;
-    private final MetaService    metaService;
-    private final OptionsService optionsService;
-    private final ParseService   parseService;
-    private final SlaveService   slaveService;
-    private final SubitemService subitemService;
+    private final EventApi   eventApi;
+    private final InfoApi    infoApi;
+    private final MetaApi    metaApi;
+    private final OptionsApi optionsApi;
+    private final ParseApi   parseApi;
+    private final SlaveApi   slaveApi;
+    private final SubitemApi subitemApi;
 
     /**
      * Create a new media item.
@@ -67,13 +67,13 @@ public final class Media {
         this.libvlcInstance = libvlcInstance;
         this.mediaInstance  = media;
 
-        this.eventService    = new EventService  (this);
-        this.infoService     = new InfoService   (this);
-        this.metaService     = new MetaService   (this);
-        this.optionsService  = new OptionsService(this);
-        this.parseService    = new ParseService  (this);
-        this.slaveService    = new SlaveService  (this);
-        this.subitemService  = new SubitemService(this);
+        this.eventApi    = new EventApi  (this);
+        this.infoApi     = new InfoApi   (this);
+        this.metaApi     = new MetaApi   (this);
+        this.optionsApi  = new OptionsApi(this);
+        this.parseApi    = new ParseApi  (this);
+        this.slaveApi    = new SlaveApi  (this);
+        this.subitemApi  = new SubitemApi(this);
     }
 
     /**
@@ -81,8 +81,8 @@ public final class Media {
      *
      * @return event behaviour
      */
-    public EventService events() {
-        return eventService;
+    public EventApi events() {
+        return eventApi;
     }
 
     /**
@@ -90,8 +90,8 @@ public final class Media {
      *
      * @return information behaviour
      */
-    public InfoService info() {
-        return infoService;
+    public InfoApi info() {
+        return infoApi;
     }
 
     /**
@@ -99,8 +99,8 @@ public final class Media {
      *
      * @return meta data behaviour
      */
-    public MetaService meta() {
-        return metaService;
+    public MetaApi meta() {
+        return metaApi;
     }
 
     /**
@@ -108,8 +108,8 @@ public final class Media {
      *
      * @return meida options behaviour
      */
-    public OptionsService options() {
-        return optionsService;
+    public OptionsApi options() {
+        return optionsApi;
     }
 
     /**
@@ -117,8 +117,8 @@ public final class Media {
      *
      * @return parsing behaviour
      */
-    public ParseService parsing() {
-        return parseService;
+    public ParseApi parsing() {
+        return parseApi;
     }
 
     /**
@@ -126,8 +126,8 @@ public final class Media {
      *
      * @return media slave behaviour
      */
-    public SlaveService slaves() {
-        return slaveService;
+    public SlaveApi slaves() {
+        return slaveApi;
     }
 
     /**
@@ -135,8 +135,8 @@ public final class Media {
      *
      * @return subitem behaviour
      */
-    public SubitemService subitems() {
-        return subitemService;
+    public SubitemApi subitems() {
+        return subitemApi;
     }
 
     /**
@@ -200,13 +200,13 @@ public final class Media {
      * The component must no longer be used.
      */
     public void release() {
-        eventService  .release();
-        infoService   .release();
-        optionsService.release();
-        parseService  .release();
-        metaService   .release();
-        slaveService  .release();
-        subitemService.release();
+        eventApi  .release();
+        infoApi   .release();
+        optionsApi.release();
+        parseApi  .release();
+        metaApi   .release();
+        slaveApi  .release();
+        subitemApi.release();
 
         libvlc.libvlc_media_release(mediaInstance);
     }

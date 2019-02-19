@@ -43,8 +43,8 @@ public final class MediaList {
      */
     protected final libvlc_media_list_t mediaListInstance;
 
-    private final MediaService itemService;
-    private final EventService eventService;
+    private final MediaApi itemApi;
+    private final EventApi eventApi;
 
     /**
      * Create a new media list.
@@ -57,8 +57,8 @@ public final class MediaList {
         this.libvlcInstance    = libvlcInstance;
         this.mediaListInstance = mediaListInstance;
 
-        this.eventService = new EventService(this);
-        this.itemService  = new MediaService(this);
+        this.eventApi = new EventApi(this);
+        this.itemApi  = new MediaApi(this);
     }
 
     /**
@@ -66,8 +66,8 @@ public final class MediaList {
      *
      * @return events behaviour
      */
-    public EventService events() {
-        return eventService;
+    public EventApi events() {
+        return eventApi;
     }
 
     /**
@@ -75,8 +75,8 @@ public final class MediaList {
      *
      * @return list item behaviour
      */
-    public MediaService media() {
-        return itemService;
+    public MediaApi media() {
+        return itemApi;
     }
 
     /**
@@ -118,8 +118,8 @@ public final class MediaList {
      * The component must no longer be used.
      */
     public void release() {
-        eventService.release();
-        itemService .release();
+        eventApi.release();
+        itemApi .release();
 
         libvlc.libvlc_media_list_release(mediaListInstance);
     }

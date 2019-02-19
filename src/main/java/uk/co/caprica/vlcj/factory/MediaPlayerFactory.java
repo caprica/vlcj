@@ -34,7 +34,7 @@ import java.util.Collection;
  * <p>
  * When using VLC options/arguments to initialise the factory, generally any options that enable/disable modules (e.g.
  * video/audio filters) must be set via the factory instance and not when invoking
- * {@link uk.co.caprica.vlcj.player.base.MediaService#play(String, String...)}. However, the module-specific
+ * {@link uk.co.caprica.vlcj.player.base.MediaApi#play(String, String...)}. However, the module-specific
  * options <em>may</em> be able to be passed as media options and be effective via that play call.
  * <p>
  * The factory will attempt to automatically discover the location of the required LibVLC native library, so it should
@@ -84,15 +84,15 @@ public class MediaPlayerFactory {
      */
     private final TaskExecutor executor = new TaskExecutor();
 
-    private final ApplicationService     applicationService;
-    private final AudioService           audioService;
-    private final DialogsService         dialogsService;
-    private final MediaDiscovererService mediaDiscovererService;
-    private final EqualizerService       equalizerService;
-    private final MediaPlayerService     mediaPlayerService;
-    private final MediaService           mediaService;
-    private final RendererService        rendererService;
-    private final VideoSurfaceService    videoSurfaceService;
+    private final ApplicationApi     applicationApi;
+    private final AudioApi           audioApi;
+    private final DialogsApi         dialogsApi;
+    private final MediaDiscovererApi mediaDiscovererApi;
+    private final EqualizerApi       equalizerApi;
+    private final MediaPlayerApi     mediaPlayerApi;
+    private final MediaApi           mediaApi;
+    private final RendererApi        rendererApi;
+    private final VideoSurfaceApi    videoSurfaceApi;
 
     /**
      * Create a new media player factory.
@@ -104,15 +104,15 @@ public class MediaPlayerFactory {
         this.libvlc         = discoverNativeLibrary(discovery);
         this.libvlcInstance = newLibVlcInstance(libvlcArgs != null ? libvlcArgs : new String[0]);
 
-        this.applicationService     = new ApplicationService    (this);
-        this.audioService           = new AudioService          (this);
-        this.dialogsService         = new DialogsService        (this);
-        this.mediaDiscovererService = new MediaDiscovererService(this);
-        this.equalizerService       = new EqualizerService      (this);
-        this.mediaPlayerService     = new MediaPlayerService    (this);
-        this.mediaService           = new MediaService          (this);
-        this.rendererService        = new RendererService       (this);
-        this.videoSurfaceService    = new VideoSurfaceService   (this);
+        this.applicationApi     = new ApplicationApi    (this);
+        this.audioApi           = new AudioApi          (this);
+        this.dialogsApi         = new DialogsApi        (this);
+        this.mediaDiscovererApi = new MediaDiscovererApi(this);
+        this.equalizerApi       = new EqualizerApi      (this);
+        this.mediaPlayerApi     = new MediaPlayerApi    (this);
+        this.mediaApi           = new MediaApi          (this);
+        this.rendererApi        = new RendererApi       (this);
+        this.videoSurfaceApi    = new VideoSurfaceApi   (this);
     }
 
     /**
@@ -210,40 +210,40 @@ public class MediaPlayerFactory {
         }
     }
 
-    public final ApplicationService application() {
-        return applicationService;
+    public final ApplicationApi application() {
+        return applicationApi;
     }
 
-    public final AudioService audio() {
-        return audioService;
+    public final AudioApi audio() {
+        return audioApi;
     }
 
-    public final DialogsService dialogs() {
-        return dialogsService;
+    public final DialogsApi dialogs() {
+        return dialogsApi;
     }
 
-    public final MediaDiscovererService mediaDiscoverers() {
-        return mediaDiscovererService;
+    public final MediaDiscovererApi mediaDiscoverers() {
+        return mediaDiscovererApi;
     }
 
-    public final EqualizerService equalizers() {
-        return equalizerService;
+    public final EqualizerApi equalizers() {
+        return equalizerApi;
     }
 
-    public final MediaPlayerService mediaPlayers() {
-        return mediaPlayerService;
+    public final MediaPlayerApi mediaPlayers() {
+        return mediaPlayerApi;
     }
 
-    public final MediaService media() {
-        return mediaService;
+    public final MediaApi media() {
+        return mediaApi;
     }
 
-    public final RendererService renderers() {
-        return rendererService;
+    public final RendererApi renderers() {
+        return rendererApi;
     }
 
-    public final VideoSurfaceService videoSurfaces() {
-        return videoSurfaceService;
+    public final VideoSurfaceApi videoSurfaces() {
+        return videoSurfaceApi;
     }
 
     /**
@@ -284,15 +284,15 @@ public class MediaPlayerFactory {
 
         onBeforeRelease();
 
-        applicationService    .release();
-        audioService          .release();
-        dialogsService        .release();
-        mediaDiscovererService.release();
-        equalizerService      .release();
-        mediaPlayerService    .release();
-        mediaService          .release();
-        rendererService       .release();
-        videoSurfaceService   .release();
+        applicationApi.release();
+        audioApi          .release();
+        dialogsApi        .release();
+        mediaDiscovererApi.release();
+        equalizerApi      .release();
+        mediaPlayerApi    .release();
+        mediaApi          .release();
+        rendererApi       .release();
+        videoSurfaceApi   .release();
 
         libvlc.libvlc_release(this.libvlcInstance);
 

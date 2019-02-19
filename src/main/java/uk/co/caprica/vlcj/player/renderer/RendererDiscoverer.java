@@ -37,15 +37,15 @@ public final class RendererDiscoverer {
      */
     protected final libvlc_renderer_discoverer_t discovererInstance;
 
-    private final EventService eventService;
-    private final ListService  listService;
+    private final EventApi eventApi;
+    private final ListApi  listApi;
 
     public RendererDiscoverer(LibVlc libvlc, libvlc_renderer_discoverer_t discoverer) {
         this.libvlc             = libvlc;
         this.discovererInstance = discoverer;
 
-        this.eventService = new EventService(this);
-        this.listService  = new ListService (this);
+        this.eventApi = new EventApi(this);
+        this.listApi  = new ListApi(this);
     }
 
     /**
@@ -53,8 +53,8 @@ public final class RendererDiscoverer {
      *
      * @return event behaviour
      */
-    public EventService events() {
-        return eventService;
+    public EventApi events() {
+        return eventApi;
     }
 
     /**
@@ -62,8 +62,8 @@ public final class RendererDiscoverer {
      *
      * @return renderer discoverer item list behaviour
      */
-    public ListService list() {
-        return listService;
+    public ListApi list() {
+        return listApi;
     }
 
     /**
@@ -88,8 +88,8 @@ public final class RendererDiscoverer {
      * The component must no longer be used.
      */
     public void release() {
-        eventService.release();
-        listService.release();
+        eventApi.release();
+        listApi .release();
 
         libvlc.libvlc_renderer_discoverer_release(discovererInstance);
     }

@@ -22,7 +22,6 @@ package uk.co.caprica.vlcj.player.renderer;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.base.VideoService;
 
 /**
  * Encapsulation of a renderer item.

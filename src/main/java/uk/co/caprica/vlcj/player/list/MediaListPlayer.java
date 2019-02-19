@@ -62,11 +62,11 @@ public final class MediaListPlayer {
      */
     private Object userData;
 
-    private final ControlsService    controlsService;
-    private final EventService       eventService;
-    private final ListService        listService;
-    private final MediaPlayerService mediaPlayerService;
-    private final StatusService      statusService;
+    private final ControlsApi    controlsApi;
+    private final EventApi       eventApi;
+    private final ListApi        listApi;
+    private final MediaPlayerApi mediaPlayerApi;
+    private final StatusApi      statusApi;
 
     /**
      * Create a new media list player.
@@ -80,11 +80,11 @@ public final class MediaListPlayer {
 
         this.mediaListPlayerInstance = newNativeMediaListPlayer();
 
-        this.controlsService    = new ControlsService   (this);
-        this.eventService       = new EventService      (this);
-        this.listService        = new ListService       (this);
-        this.mediaPlayerService = new MediaPlayerService(this);
-        this.statusService      = new StatusService     (this);
+        this.controlsApi    = new ControlsApi   (this);
+        this.eventApi       = new EventApi      (this);
+        this.listApi        = new ListApi       (this);
+        this.mediaPlayerApi = new MediaPlayerApi(this);
+        this.statusApi      = new StatusApi     (this);
     }
 
     private libvlc_media_list_player_t newNativeMediaListPlayer() {
@@ -96,24 +96,24 @@ public final class MediaListPlayer {
         }
     }
 
-    public ControlsService controls() {
-        return controlsService;
+    public ControlsApi controls() {
+        return controlsApi;
     }
 
-    public EventService events() {
-        return eventService;
+    public EventApi events() {
+        return eventApi;
     }
 
-    public ListService list() {
-        return listService;
+    public ListApi list() {
+        return listApi;
     }
 
-    public MediaPlayerService mediaPlayer() {
-        return mediaPlayerService;
+    public MediaPlayerApi mediaPlayer() {
+        return mediaPlayerApi;
     }
 
-    public StatusService status() {
-        return statusService;
+    public StatusApi status() {
+        return statusApi;
     }
 
     /**
@@ -157,11 +157,11 @@ public final class MediaListPlayer {
 
         onBeforeRelease();
 
-        controlsService   .release();
-        eventService      .release();
-        listService       .release();
-        mediaPlayerService.release();
-        statusService     .release();
+        controlsApi   .release();
+        eventApi      .release();
+        listApi       .release();
+        mediaPlayerApi.release();
+        statusApi     .release();
 
         libvlc.libvlc_media_list_player_release(mediaListPlayerInstance);
 
