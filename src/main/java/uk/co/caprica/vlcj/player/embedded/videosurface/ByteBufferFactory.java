@@ -26,7 +26,6 @@ import java.nio.ByteOrder;
 
 import sun.misc.Unsafe;
 
-// FIXME move package, not public - might still keep some things in their own package, like Rendercallback, BufferFormatCallback etc? maybe not... maybe they all belong in embedded, actually, i could have embedded.callback package for it
 /**
  * Factory for creating property aligned native byte buffers.
  * <p>
@@ -34,7 +33,7 @@ import sun.misc.Unsafe;
  * <p>
  * Original credit: http://psy-lob-saw.blogspot.co.uk/2013/01/direct-memory-alignment-in-java.html
  */
-public final class ByteBufferFactory {
+final class ByteBufferFactory {
 
     private static final long addressOffset = getAddressOffset();
 
@@ -49,7 +48,7 @@ public final class ByteBufferFactory {
      * @param capacity required size for the buffer
      * @return aligned byte buffer
      */
-    public static ByteBuffer allocateAlignedBuffer(int capacity) {
+    static ByteBuffer allocateAlignedBuffer(int capacity) {
         return allocateAlignedBuffer(capacity, LIBVLC_ALIGNMENT);
     }
 
@@ -59,7 +58,7 @@ public final class ByteBufferFactory {
      * @param buffer buffer
      * @return native address pointer
      */
-    public static long getAddress(ByteBuffer buffer) {
+    static long getAddress(ByteBuffer buffer) {
         return UnsafeAccess.UNSAFE.getLong(buffer, addressOffset);
     }
 
@@ -110,6 +109,9 @@ public final class ByteBufferFactory {
             }
         }
 
+    }
+
+    private ByteBufferFactory() {
     }
 
 }
