@@ -368,6 +368,15 @@ public final class Marquee {
     }
 
     /**
+     * Get the text refresh.
+     *
+     * @return refresh time, milliseconds
+     */
+    public Integer getRefresh() {
+        return refresh;
+    }
+
+    /**
      * Get the enabled flag.
      *
      * @return enabled/disabled
