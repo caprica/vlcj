@@ -99,7 +99,6 @@ public final class VideoApi extends BaseApi {
      * <p>
      * Video adjustments must be enabled for this to have any effect.
      * <p>
-     * <strong>Requires vlc 1.1.1 or later.</strong>
      *
      * @param brightness brightness value, in the range from 0.0 to 2.0
      */
@@ -149,8 +148,6 @@ public final class VideoApi extends BaseApi {
 
     /**
      * Get the current video gamma.
-     * <p>
-     * <strong>Requires vlc 1.1.1 or later.</strong>
      *
      * @return gamma value, in the range from 0.01 to 10.0
      */
@@ -162,8 +159,6 @@ public final class VideoApi extends BaseApi {
      * Set the video gamma.
      * <p>
      * Video adjustments must be enabled for this to have any effect.
-     * <p>
-     * <strong>Requires vlc 1.1.1 or later.</strong>
      * <p>
      * Changing gamma may not be supported by all video outputs, e.g. vdpau
      *
