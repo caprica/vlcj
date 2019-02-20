@@ -68,7 +68,8 @@ Headline changes:
 There have also been a lot of more general improvements to freshen up the codebase, make it more maintainable for the
 future, and to clear some legacy issues that have dogged the project for quite some time.
 
-For a full list of changes in this release, check the [release milestone](https://github.com/caprica/vlcj/milestone/14).
+For a full list of changes in this release, check the
+[release milestone](https://github.com/caprica/vlcj/milestone/14?closed=1).
 
 Despite all of these changes, running on JDK 1.6 is still supported!
 
