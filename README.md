@@ -151,8 +151,6 @@ Add the following Maven dependency to your own project pom.xml:
 </dependency>
 ```
 
-*This artefact may not be available for quite some time, we do not push snapshot releases to Maven Central.*
-
 The core vlcj project now no longer contains the required JNA bindings to LibVLC, these are provided instead by the
 separate [vlcj-natives](https://github.com/caprica/vlcj-natives) project. The vlcj core project therefore has a new
 required dependency on the vlcj-natives project.
@@ -274,9 +272,7 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available here:
 
-* [4.0.0-SNAPSHOT (current)](http://caprica.github.com/vlcj/javadoc/4.0.0-SNAPSHOT/index.html "4.0.0-SNAPSHOT Javadoc")
-
-This is a snapshot of the current 4.0.0 Javadoc in advance of a full release.
+* [4.0.0 (current)](http://caprica.github.com/vlcj/javadoc/4.0.0/index.html "4.0.0 Javadoc")
 
 Examples
 --------
