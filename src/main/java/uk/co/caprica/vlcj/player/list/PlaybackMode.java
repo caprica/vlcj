@@ -39,7 +39,7 @@ public enum PlaybackMode {
         }
     }
 
-    public static PlaybackMode event(int intValue) {
+    public static PlaybackMode playbackMode(int intValue) {
         return INT_MAP.get(intValue);
     }
 
