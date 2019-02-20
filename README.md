@@ -26,6 +26,11 @@ This is the open source vlcj project page, see also the 'official'
 [home page](http://capricasoftware.co.uk/projects/vlcj "Official vlcj home page at Caprica Software") where you can find
 more information as well as some new simple tutorials.
 
+News
+====
+
+20th February, 2019 - vlcj 4.0.0 released, available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
+
 vlcj-4
 ======
 
