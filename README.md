@@ -31,6 +31,8 @@ News
 
 20th February, 2019 - vlcj 4.0.0 released, available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
+You can follow @capricasoftware on Twitter for more vlcj news.
+
 vlcj-4
 ======
 
@@ -261,11 +263,6 @@ necessarily mean that a remote network request was made for the cover art, rathe
 the media file was extracted to this temporary cache directory.
 
 In any case, you need to be aware of this issue and inform users of your application about it.
-
-News
-----
-
-You can follow @capricasoftware on Twitter for more vlcj news.
 
 Documentation
 -------------
