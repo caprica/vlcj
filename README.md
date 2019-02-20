@@ -80,6 +80,13 @@ For a full list of changes in this release, check the
 
 Despite all of these changes, running on JDK 1.6 is still supported!
 
+Known Issues
+------------
+
+ - When using the new alternate renderer API, if you attempt to play another media while a media is already being sent
+   to something like Chromecast you may experience problems - even if you stop the current media first. The cause of
+   this is currently unknown, but it may be a native issue.
+
 API Breakage (vlcj-3)
 ---------------------
 
