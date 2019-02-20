@@ -86,7 +86,7 @@ The decision to break backwards compatibility with the vlcj-3 API was not taken 
 it. All legacy architectural issues have been resolved, the giant god-classes have been factored to more manageable
 chunks, and ongoing maintenance will be much easier.
 
-The price for these improvements is a lot of API breakage, sorry.
+The price for these improvements is some API breakage, sorry.
 
 The short version of the situation is that vlcj-4 can *not* be considered a drop-in upgrade for any vlcj-3 applications.
 If you want to move to vlcj-4 with your existing applications, you *will* be impacted, at best you will need to use new
@@ -102,13 +102,13 @@ Tutorials
 ---------
 
 At the present time, the available tutorials are for vlcj-3. Whilst the underlying conecpts are the same for vlcj-4, the
-API has changed a LOT and this is not yet reflected in those tutorials.
+API has changed and this is not yet reflected in those tutorials.
 
 New tutorials for vlcj-4 will come soon.
 
 There are simple tests or demo applications available for pretty much every aspect of vlcj functionality, these are
 provided in the
- [project test sources](https://github.com/caprica/vlcj/tree/master/src/test/java/uk/co/caprica/vlcj/test).
+[project test sources](https://github.com/caprica/vlcj/tree/master/src/test/java/uk/co/caprica/vlcj/test).
 
 There is also a major demo application available at the [vlcj-player](https://github.com/caprica/vlcj-player) project
 page.
