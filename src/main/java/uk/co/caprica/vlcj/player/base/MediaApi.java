@@ -64,11 +64,6 @@ public final class MediaApi extends BaseApi {
      */
     private Media media;
 
-    /**
-     * Flag whether or not to automatically replay media after the media has finished playing.
-     */
-    private boolean repeat;
-
     MediaApi(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
@@ -299,29 +294,6 @@ public final class MediaApi extends BaseApi {
      */
     public SubitemApi subitems() {
         return media != null ? media.subitems() : null;
-    }
-
-    /**
-     * Set whether or not the media player should automatically repeat playing the media when it has
-     * finished playing.
-     * <p>
-     * There is <em>no</em> guarantee of seamless play-back when using this method - see instead
-     * {@link uk.co.caprica.vlcj.player.list.MediaListPlayer MediaListPlayer}.
-     *
-     * @param repeat <code>true</code> to automatically replay the media, otherwise <code>false</code>
-     */
-    public void setRepeat(boolean repeat) {
-        this.repeat = repeat;
-    }
-
-    /**
-     * Get whether or not the media player will automatically repeat playing the media when it has
-     * finished playing.
-     *
-     * @return <code>true</code> if the media will be automatically replayed, otherwise <code>false</code>
-     */
-    public boolean getRepeat() {
-        return repeat;
     }
 
     /**

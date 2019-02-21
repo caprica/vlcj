@@ -96,7 +96,7 @@ public class TestPlayer extends VlcjTest {
         mediaPlayer.input().enableKeyInputHandling(false);
         mediaPlayer.input().enableMouseInputHandling(false);
 
-        mediaPlayer.media().setRepeat(true);
+        mediaPlayer.controls().setRepeat(true);
 
         controlsPanel = new PlayerControlsPanel(mediaPlayerFactory, mediaPlayer);
         videoAdjustPanel = new PlayerVideoAdjustPanel(mediaPlayer);

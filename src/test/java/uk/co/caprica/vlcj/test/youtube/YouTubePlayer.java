@@ -146,7 +146,7 @@ public class YouTubePlayer extends VlcjTest {
         mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
         mediaPlayer.videoSurface().set(factory.videoSurfaces().newVideoSurface(vs));
 
-        mediaPlayer.media().setRepeat(false);
+        mediaPlayer.controls().setRepeat(false);
 
         mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
