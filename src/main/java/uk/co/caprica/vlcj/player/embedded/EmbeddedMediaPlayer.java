@@ -54,7 +54,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
  * The overlay implementation in this class simply keeps a supplied window in sync with the video surface. It is the
  * responsibility of the client application itself to supply an appropriate overlay component.
  */
-public final class EmbeddedMediaPlayer extends MediaPlayer {
+public class EmbeddedMediaPlayer extends MediaPlayer {
 
     /**
      * Native library interface.
@@ -91,19 +91,19 @@ public final class EmbeddedMediaPlayer extends MediaPlayer {
         this.videoSurfaceApi = new VideoSurfaceApi(this);
     }
 
-    public FullScreenApi fullScreen() {
+    public final FullScreenApi fullScreen() {
         return fullScreenApi;
     }
 
-    public InputApi input() {
+    public final InputApi input() {
         return inputApi;
     }
 
-    public OverlayApi overlay() {
+    public final OverlayApi overlay() {
         return overlayApi;
     }
 
-    public VideoSurfaceApi videoSurface() {
+    public final VideoSurfaceApi videoSurface() {
         return videoSurfaceApi;
     }
 
@@ -112,7 +112,7 @@ public final class EmbeddedMediaPlayer extends MediaPlayer {
     }
 
     @Override
-    protected void onBeforeRelease() {
+    protected final void onBeforeRelease() {
         fullScreenApi  .release();
         inputApi       .release();
         overlayApi     .release();
