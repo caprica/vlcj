@@ -132,7 +132,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      *
      * @param mute <code>true</code> to mute the volume, <code>false</code> to un-mute it
      */
-    public void mute(boolean mute) {
+    public void setMute(boolean mute) {
         libvlc.libvlc_audio_set_mute(mediaPlayerInstance, mute ? 1 : 0);
     }
 
