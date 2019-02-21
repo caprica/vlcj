@@ -52,7 +52,7 @@ public final class ControlsApi extends BaseApi {
      *
      * @param pause <code>true</code> to pause; <code>false</code> to un-pause
      */
-    public void pause(boolean pause) {
+    public void setPause(boolean pause) {
         libvlc.libvlc_media_list_player_set_pause(mediaListPlayerInstance, pause ? 1 : 0);
     }
 
