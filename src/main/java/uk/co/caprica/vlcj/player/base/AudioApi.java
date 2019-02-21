@@ -99,7 +99,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
     /**
      * Get the available audio devices for the media player audio output.
      *
-     * @return list of audio devices, or <code>null</code> if not available
+     * @return list of audio devices, may be empty but not <code>null</code>
      */
     public List<AudioDevice> outputDevices() {
         List<AudioDevice> result = new ArrayList<AudioDevice>();
