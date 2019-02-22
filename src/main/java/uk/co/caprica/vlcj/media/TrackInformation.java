@@ -31,7 +31,7 @@ import java.util.*;
 final class TrackInformation {
 
     static List<TrackInfo> getTrackInfo(LibVlc libvlc, libvlc_media_t media, TrackType... types) {
-        List<TrackInfo> result = null;
+        List<TrackInfo> result;
         if (media != null) {
             Set<TrackType> requestedTypes;
             if (types == null || types.length == 0) {
@@ -44,6 +44,8 @@ final class TrackInformation {
                 }
             }
             result = TrackInformation.getTrackInfo(libvlc, media, requestedTypes);
+        } else {
+            result = Collections.emptyList();
         }
         return result;
     }

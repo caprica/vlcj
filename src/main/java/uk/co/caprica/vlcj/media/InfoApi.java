@@ -77,7 +77,7 @@ public final class InfoApi extends BaseApi {
      * Get the list of all media tracks, or only those that match specified types.
      *
      * @param types zero or more track types, if none specified then all track types will be returned
-     * @return
+     * @return track information, empty list if no tracks
      */
     public List<? extends TrackInfo> tracks(TrackType... types) {
         return TrackInformation.getTrackInfo(libvlc, mediaInstance, types);
@@ -86,7 +86,7 @@ public final class InfoApi extends BaseApi {
     /**
      * Get the list of audio tracks on the current media.
      *
-     * @return audio tracks
+     * @return audio tracks, empty list if none
      */
     @SuppressWarnings("unchecked")
     public List<AudioTrackInfo> audioTracks() {
@@ -96,7 +96,7 @@ public final class InfoApi extends BaseApi {
     /**
      * Get the list of video tracks on the current media.
      *
-     * @return video tracks
+     * @return video tracks, empty list if none
      */
     @SuppressWarnings("unchecked")
     public List<VideoTrackInfo> videoTracks() {
@@ -106,7 +106,7 @@ public final class InfoApi extends BaseApi {
     /**
      * Get the list of text (subtitle) tracks on the current media.
      *
-     * @return text tracks
+     * @return text tracks, empty list if none
      */
     @SuppressWarnings("unchecked")
     public List<TextTrackInfo> textTracks() {
