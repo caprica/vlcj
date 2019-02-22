@@ -128,4 +128,19 @@ public final class InfoApi extends BaseApi {
         }
     }
 
+    /**
+     * Get playback statistics for the current media.
+     *
+     * @return media statistics, or <code>null</code> on error
+     */
+    public MediaStatistics statistics() {
+        if (libvlc.libvlc_media_get_stats(mediaInstance, statsInstance) != 0) {
+            MediaStatistics mediaStatistics = new MediaStatistics();
+            mediaStatistics.apply(statsInstance);
+            return mediaStatistics;
+        } else {
+            return null;
+        }
+    }
+
 }
