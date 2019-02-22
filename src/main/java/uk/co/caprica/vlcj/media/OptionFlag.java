@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.media;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Enumeration of media option flags.
  */
@@ -26,6 +29,18 @@ public enum OptionFlag {
 
     TRUSTED(0X2),
     UNIQUE (0X100);
+
+    private static final Map<Integer, OptionFlag> INT_MAP = new HashMap<Integer, OptionFlag>();
+
+    static {
+        for (OptionFlag value : OptionFlag.values()) {
+            INT_MAP.put(value.intValue, value);
+        }
+    }
+
+    public static OptionFlag optionFlag(int intValue) {
+        return INT_MAP.get(intValue);
+    }
 
     private final int intValue;
 
