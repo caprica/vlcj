@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.media;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Enumeration of media slave priorities.
  */
@@ -29,6 +32,18 @@ public enum MediaSlavePriority {
     MEDIUM (2),
     HIGH   (3),
     HIGHEST(4);
+
+    private static final Map<Integer, MediaSlavePriority> INT_MAP = new HashMap<Integer, MediaSlavePriority>();
+
+    static {
+        for (MediaSlavePriority value : MediaSlavePriority.values()) {
+            INT_MAP.put(value.intValue, value);
+        }
+    }
+
+    public static MediaSlavePriority mediaSlavePriority(int intValue) {
+        return INT_MAP.get(intValue);
+    }
 
     private final int intValue;
 
