@@ -43,16 +43,6 @@ public final class MetaData {
     }
 
     /**
-     * Set a particular meta data value.
-     *
-     * @param meta meta data type
-     * @param value meta data value
-     */
-    public void set(Meta meta, String value) {
-        values.put(meta, value);
-    }
-
-    /**
      * Get a particular meta data value.
      *
      * @param meta meta data type
