@@ -91,7 +91,7 @@ public final class ListApi extends BaseApi {
      *
      * @return item behaviour, may be <code>null</code> if there is currently no media list
      */
-    public MediaApi items() {
+    public MediaApi media() {
         return mediaList != null ? mediaList.media() : null;
     }
 
