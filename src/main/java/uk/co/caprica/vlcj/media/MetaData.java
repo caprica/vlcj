@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.media;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -59,6 +60,15 @@ public final class MetaData {
      */
     public String get(Meta meta) {
         return values.get(meta);
+    }
+
+    /**
+     * Get all of the meta data values.
+     *
+     * @return copy of the meta data values collection
+     */
+    public Map<Meta,String> values() {
+        return new HashMap<Meta,String>(values);
     }
 
     @Override
