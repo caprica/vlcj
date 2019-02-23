@@ -115,6 +115,7 @@ final class TrackInformation {
 
     private static TrackInfo getVideoTrackInfo(LibVlc libvlc, libvlc_media_track_t track) {
         track.u.setType(libvlc_video_track_t.class);
+        track.u.read();
         return new VideoTrackInfo(
             track.i_codec,
             track.i_original_fourcc,
@@ -143,6 +144,7 @@ final class TrackInformation {
 
     private static TrackInfo getAudioTrackInfo(LibVlc libvlc, libvlc_media_track_t track) {
         track.u.setType(libvlc_audio_track_t.class);
+        track.u.read();
         return new AudioTrackInfo(
             track.i_codec,
             track.i_original_fourcc,
@@ -160,6 +162,7 @@ final class TrackInformation {
 
     private static TrackInfo getTextTrackInfo(LibVlc libvlc, libvlc_media_track_t track) {
         track.u.setType(libvlc_subtitle_track_t.class);
+        track.u.read();
         return new TextTrackInfo(
             track.i_codec,
             track.i_original_fourcc,
