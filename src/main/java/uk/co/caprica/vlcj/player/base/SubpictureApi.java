@@ -110,7 +110,7 @@ public final class SubpictureApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean setSubTitleFile(String subTitleFileName) {
-        return setSubTitleUri(NativeUri.encodeUri(subTitleFileName));
+        return setSubTitleUri(NativeUri.encodeFileUri(subTitleFileName));
     }
 
     /**
@@ -124,7 +124,7 @@ public final class SubpictureApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean setSubTitleFile(File subTitleFile) {
-        return setSubTitleUri(NativeUri.encodeUri(subTitleFile.getAbsolutePath()));
+        return setSubTitleUri(NativeUri.encodeFileUri(subTitleFile.getAbsolutePath()));
     }
 
     /**
