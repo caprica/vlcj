@@ -73,7 +73,10 @@ public final class MetaApi extends BaseApi {
     public MetaData asMetaData() {
         Map<Meta,String> values = new HashMap<Meta,String>(26);
         for (Meta meta : Meta.values()) {
-            values.put(meta, get(meta));
+            String value = get(meta);
+            if (value != null) {
+                values.put(meta, value);
+            }
         }
         return new MetaData(values);
     }
