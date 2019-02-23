@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Enumeration of audio channels.
  */
@@ -30,6 +33,18 @@ public enum AudioChannel {
     LEFT   ( 3),
     RIGHT  ( 4),
     DOLBYS ( 5);
+
+    private static final Map<Integer, AudioChannel> INT_MAP = new HashMap<Integer, AudioChannel>();
+
+    static {
+        for (AudioChannel value : AudioChannel.values()) {
+            INT_MAP.put(value.intValue, value);
+        }
+    }
+
+    public static AudioChannel audioChannel(int intValue) {
+        return INT_MAP.get(intValue);
+    }
 
     private final int intValue;
 

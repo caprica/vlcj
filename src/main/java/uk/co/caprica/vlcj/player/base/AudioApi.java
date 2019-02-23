@@ -173,8 +173,8 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      *
      * @return audio channel
      */
-    public int channel() {
-        return libvlc.libvlc_audio_get_channel(mediaPlayerInstance);
+    public AudioChannel channel() {
+        return AudioChannel.audioChannel(libvlc.libvlc_audio_get_channel(mediaPlayerInstance));
     }
 
     /**
@@ -184,8 +184,8 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      *
      * @param channel channel
      */
-    public void setChannel(int channel) {
-        libvlc.libvlc_audio_set_channel(mediaPlayerInstance, channel);
+    public void setChannel(AudioChannel channel) {
+        libvlc.libvlc_audio_set_channel(mediaPlayerInstance, channel.intValue());
     }
 
     /**
