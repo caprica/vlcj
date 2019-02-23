@@ -201,6 +201,21 @@ public final class MediaApi extends BaseApi {
     }
 
     /**
+     * Add an input slave to the current media.
+     * <p>
+     * See {@link SlaveApi#add(MediaSlaveType, MediaSlavePriority, String)}  for further
+     * important information regarding this method.
+     *
+     * @param type type of slave to add
+     * @param uri URI of the slave to add
+     * @param select <code>true</code> if this slave should be automatically selected when added
+     * @return <code>true</code> on success; <code>false</code> otherwise
+     */
+    public boolean addSlave(MediaSlaveType type, String uri, boolean select) {
+        return libvlc.libvlc_media_player_add_slave(mediaPlayerInstance, type.intValue(), uri, select ? 1 : 0) == 0;
+    }
+
+    /**
      * Create a new {@link Media} component for the current media.
      * <p>
      * The caller <em>must</em> release the returned {@link Media} when it no longer has any use for it.
@@ -294,21 +309,6 @@ public final class MediaApi extends BaseApi {
      */
     public SubitemApi subitems() {
         return media != null ? media.subitems() : null;
-    }
-
-    /**
-     * Add an input slave to the current media.
-     * <p>
-     * See {@link SlaveApi#add(MediaSlaveType, MediaSlavePriority, String)}  for further
-     * important information regarding this method.
-     *
-     * @param type type of slave to add
-     * @param uri URI of the slave to add
-     * @param select <code>true</code> if this slave should be automatically selected when added
-     * @return <code>true</code> on success; <code>false</code> otherwise
-     */
-    public boolean addSlave(MediaSlaveType type, String uri, boolean select) {
-        return libvlc.libvlc_media_player_add_slave(mediaPlayerInstance, type.intValue(), uri, select ? 1 : 0) == 0;
     }
 
     /**
