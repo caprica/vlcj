@@ -57,7 +57,7 @@ public class TitleDescription {
      *
      * @return duration (milliseconds)
      */
-    public long getDuration() {
+    public long duration() {
         return duration;
     }
 
@@ -66,7 +66,7 @@ public class TitleDescription {
      *
      * @return name
      */
-    public String getName() {
+    public String name() {
         return name;
     }
 
