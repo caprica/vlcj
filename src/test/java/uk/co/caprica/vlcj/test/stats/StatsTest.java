@@ -211,7 +211,7 @@ public class StatsTest extends VlcjTest {
         readBytesValueLabel.setText(String.valueOf(stats.inputBytesRead()));
         inputBitrateValueLabel.setText(String.valueOf(stats.inputBitrate()));
         demuxReadBytesValueLabel.setText(String.valueOf(stats.demuxBytesRead()));
-        demuxBitrateValueLabel.setText(String.valueOf(stats.demuxBitRate()));
+        demuxBitrateValueLabel.setText(String.valueOf(stats.demuxBitrate()));
         demuxCorruptedValueLabel.setText(String.valueOf(stats.demuxCorrupted()));
         demuxDiscontinuityValueLabel.setText(String.valueOf(stats.demuxDiscontinuity()));
         decodedVideoValueLabel.setText(String.valueOf(stats.decodedVideo()));

@@ -29,7 +29,7 @@ public class MediaStatistics {
     private int   inputBytesRead;
     private float inputBitrate;
     private int   demuxBytesRead;
-    private float demuxBitRate;
+    private float demuxBitrate;
     private int   demuxCorrupted;
     private int   demuxDiscontinuity;
     private int   decodedVideo;
@@ -54,8 +54,8 @@ public class MediaStatistics {
         return demuxBytesRead;
     }
 
-    public float demuxBitRate() {
-        return demuxBitRate;
+    public float demuxBitrate() {
+        return demuxBitrate;
     }
 
     public int demuxCorrupted() {
@@ -106,7 +106,7 @@ public class MediaStatistics {
         this.inputBytesRead     = stats.i_read_bytes;
         this.inputBitrate       = stats.f_input_bitrate;
         this.demuxBytesRead     = stats.i_demux_read_bytes;
-        this.demuxBitRate       = stats.f_demux_bitrate;
+        this.demuxBitrate       = stats.f_demux_bitrate;
         this.demuxCorrupted     = stats.i_demux_corrupted;
         this.demuxDiscontinuity = stats.i_demux_discontinuity;
         this.decodedVideo       = stats.i_decoded_video;
