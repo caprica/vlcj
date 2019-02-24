@@ -42,6 +42,27 @@ public class MediaStatistics {
     private int   sentBytes;
     private float sendBitrate;
 
+    public MediaStatistics() {
+    }
+
+    public MediaStatistics(int inputBytesRead, float inputBitrate, int demuxBytesRead, float demuxBitrate, int demuxCorrupted, int demuxDiscontinuity, int decodedVideo, int decodedAudio, int picturesDisplayed, int picturesLost, int audioBuffersPlayed, int audioBuffersLost, int sentPackets, int sentBytes, float sendBitrate) {
+        this.inputBytesRead     = inputBytesRead;
+        this.inputBitrate       = inputBitrate;
+        this.demuxBytesRead     = demuxBytesRead;
+        this.demuxBitrate       = demuxBitrate;
+        this.demuxCorrupted     = demuxCorrupted;
+        this.demuxDiscontinuity = demuxDiscontinuity;
+        this.decodedVideo       = decodedVideo;
+        this.decodedAudio       = decodedAudio;
+        this.picturesDisplayed  = picturesDisplayed;
+        this.picturesLost       = picturesLost;
+        this.audioBuffersPlayed = audioBuffersPlayed;
+        this.audioBuffersLost   = audioBuffersLost;
+        this.sentPackets        = sentPackets;
+        this.sentBytes          = sentBytes;
+        this.sendBitrate        = sendBitrate;
+    }
+
     public int inputBytesRead() {
         return inputBytesRead;
     }
