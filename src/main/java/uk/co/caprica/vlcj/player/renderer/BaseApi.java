@@ -21,8 +21,7 @@ package uk.co.caprica.vlcj.player.renderer;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 
-
-abstract public class BaseApi {
+abstract class BaseApi {
 
     protected final RendererDiscoverer rendererDiscoverer;
 
