@@ -50,7 +50,7 @@ public final class Viewpoint {
      *
      * @return yaw, degrees
      */
-    public float getYaw() {
+    public float yaw() {
         return viewpoint.f_yaw;
     }
 
@@ -69,7 +69,7 @@ public final class Viewpoint {
      * @return pitch
      * @return pitch, degrees
      */
-    public float getPitch() {
+    public float pitch() {
         return viewpoint.f_pitch;
     }
 
@@ -87,7 +87,7 @@ public final class Viewpoint {
      *
      * @return roll, degrees
      */
-    public float getRoll() {
+    public float roll() {
         return viewpoint.f_roll;
     }
 
@@ -105,7 +105,7 @@ public final class Viewpoint {
      *
      * @return field of view, degrees
      */
-    public float getFov() {
+    public float fov() {
         return viewpoint.f_field_of_view;
     }
 
