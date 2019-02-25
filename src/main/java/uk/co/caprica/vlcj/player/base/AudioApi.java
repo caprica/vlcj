@@ -183,9 +183,10 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * For channel values see {@link AudioChannel}.
      *
      * @param channel channel
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
-    public void setChannel(AudioChannel channel) {
-        libvlc.libvlc_audio_set_channel(mediaPlayerInstance, channel.intValue());
+    public boolean setChannel(AudioChannel channel) {
+        return libvlc.libvlc_audio_set_channel(mediaPlayerInstance, channel.intValue()) == 0;
     }
 
     /**
