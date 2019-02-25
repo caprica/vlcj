@@ -284,6 +284,7 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available here:
 
+* [4.0.1 (pending)](http://caprica.github.com/vlcj/javadoc/4.0.1/index.html "4.0.1 Javadoc")
 * [4.0.0 (current)](http://caprica.github.com/vlcj/javadoc/4.0.0/index.html "4.0.0 Javadoc")
 
 Examples
