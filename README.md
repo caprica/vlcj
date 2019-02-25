@@ -29,7 +29,8 @@ more information as well as some new simple tutorials.
 News
 ====
 
-20th February, 2019 - vlcj 4.0.0 released, available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
+- Upcoming - vlcj 4.0.1, primarily fixes a small number of minor public API issues
+- 20th February, 2019 - vlcj 4.0.0 released, available at [Maven Central](https://search.maven.org/search?q=a:vlcj)
 
 You can follow @capricasoftware on Twitter for more vlcj news.
 
@@ -75,8 +76,10 @@ Headline changes:
 There have also been a lot of more general improvements to freshen up the codebase, make it more maintainable for the
 future, and to clear some legacy issues that have dogged the project for quite some time.
 
-For a full list of changes in this release, check the
-[release milestone](https://github.com/caprica/vlcj/milestone/14?closed=1).
+For a full list of changes in this release, check the release milestones:
+
+- [vlcj 4.0.0 release milestone](https://github.com/caprica/vlcj/milestone/14?closed=1)
+- [vlcj 4.0.1 release milestone](https://github.com/caprica/vlcj/milestone/32?closed=1)
 
 Despite all of these changes, running on JDK 1.6 is still supported!
 
