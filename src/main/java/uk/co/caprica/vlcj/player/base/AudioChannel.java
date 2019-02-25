@@ -24,15 +24,22 @@ import java.util.Map;
 
 /**
  * Enumeration of audio channels.
+ * <p>
+ * Note that {@link #UNSET}, {@link #HEADPHONES}, and {@link #MONO} do <em>not</em> appear in
+ * <code>libvlc_audio_output_channel_t</code> although from reading the native source in <code>vlc_aout.h</code> they
+ * may work.
  */
 public enum AudioChannel {
 
-    ERROR  (-1),
-    STEREO ( 1),
-    RSTEREO( 2),
-    LEFT   ( 3),
-    RIGHT  ( 4),
-    DOLBYS ( 5);
+    ERROR     (-1),
+    UNSET     ( 0),
+    STEREO    ( 1),
+    RSTEREO   ( 2),
+    LEFT      ( 3),
+    RIGHT     ( 4),
+    DOLBYS    ( 5),
+    HEADPHONES( 6),
+    MONO      ( 7);
 
     private static final Map<Integer, AudioChannel> INT_MAP = new HashMap<Integer, AudioChannel>();
 
