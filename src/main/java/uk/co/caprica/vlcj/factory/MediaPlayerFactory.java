@@ -285,7 +285,7 @@ public class MediaPlayerFactory {
 
         onBeforeRelease();
 
-        applicationApi.release();
+        applicationApi    .release();
         audioApi          .release();
         dialogsApi        .release();
         mediaDiscovererApi.release();
