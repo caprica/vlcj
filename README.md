@@ -29,8 +29,10 @@ more information as well as some new simple tutorials.
 News
 ====
 
-- Upcoming - vlcj 4.0.1, primarily fixes a small number of minor public API issues
-- 20th February, 2019 - vlcj 4.0.0 released, available at [Maven Central](https://search.maven.org/search?q=a:vlcj)
+- 27th Feburary, 2019 - vlcj 4.0.1 released, primarily fixes a small number of minor public API issues
+- 20th February, 2019 - vlcj 4.0.0 released
+
+All releases available at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
 You can follow @capricasoftware on Twitter for more vlcj news.
 
@@ -164,7 +166,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1</version>
 </dependency>
 ```
 
@@ -284,8 +286,8 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available here:
 
-* [4.0.1 (pending)](http://caprica.github.com/vlcj/javadoc/4.0.1/index.html "4.0.1 Javadoc")
-* [4.0.0 (current)](http://caprica.github.com/vlcj/javadoc/4.0.0/index.html "4.0.0 Javadoc")
+* [4.0.1 (current)](http://caprica.github.com/vlcj/javadoc/4.0.1/index.html "4.0.1 Javadoc")
+* [4.0.0](http://caprica.github.com/vlcj/javadoc/4.0.0/index.html "4.0.0 Javadoc")
 
 Examples
 --------
