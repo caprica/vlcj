@@ -29,10 +29,10 @@ more information as well as some new simple tutorials.
 News
 ====
 
-- 27th Feburary, 2019 - vlcj 4.0.1 released, primarily fixes a small number of minor public API issues
+- 27th February, 2019 - vlcj 4.0.1 released, primarily fixes a small number of minor public API issues
 - 20th February, 2019 - vlcj 4.0.0 released
 
-All releases available at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
+All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
 You can follow @capricasoftware on Twitter for more vlcj news.
 
