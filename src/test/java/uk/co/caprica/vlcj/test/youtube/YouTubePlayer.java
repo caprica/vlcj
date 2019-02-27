@@ -113,7 +113,7 @@ public class YouTubePlayer extends VlcjTest {
         playButton = new JButton("Play");
         playButton.setMnemonic('p');
 
-        urlTextField.setText("https://www.youtube.com/watch?v=zGt444zwSAM");
+        urlTextField.setText("https://www.youtube.com/watch?v=prB-gL0rq7E");
 
         ip.add(urlLabel);
         ip.add(urlTextField);
