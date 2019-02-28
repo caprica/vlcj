@@ -173,9 +173,7 @@ public class MediaPlayerFactory {
         }
         LibVlc nativeLibrary = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
         checkVersion(nativeLibrary);
-        // A synchronised library is required since there are multiple asynchronous task queues in use that could
-        // potentially call into LibVLC concurrently
-        return (LibVlc) Native.synchronizedLibrary(nativeLibrary);
+        return nativeLibrary;
     }
 
     /**
