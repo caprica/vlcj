@@ -17,7 +17,7 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded.callback;
+package uk.co.caprica.vlcj.player.embedded.videosurface.callback;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 

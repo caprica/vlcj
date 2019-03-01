@@ -25,9 +25,9 @@ import com.sun.jna.ptr.PointerByReference;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.*;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.callback.BufferFormat;
-import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
 
 /**
  * Implementation of a video surface that uses native callbacks to receive video frame data for rendering.

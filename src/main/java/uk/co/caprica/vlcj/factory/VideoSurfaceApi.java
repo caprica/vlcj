@@ -19,8 +19,8 @@
 
 package uk.co.caprica.vlcj.factory;
 
-import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.*;
 
 import java.awt.*;

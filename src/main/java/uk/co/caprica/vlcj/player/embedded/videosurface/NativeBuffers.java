@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.binding.Kernel32;
 import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.support.size_t;
-import uk.co.caprica.vlcj.player.embedded.callback.BufferFormat;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 
 import java.nio.ByteBuffer;
 

@@ -25,11 +25,11 @@ import uk.co.caprica.vlcj.player.component.callback.ScaledCallbackImagePainter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.callback.BufferFormat;
-import uk.co.caprica.vlcj.player.embedded.callback.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.embedded.callback.RenderCallback;
-import uk.co.caprica.vlcj.player.embedded.callback.RenderCallbackAdapter;
-import uk.co.caprica.vlcj.player.embedded.callback.format.RV32BufferFormat;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallbackAdapter;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.format.RV32BufferFormat;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
 import javax.swing.*;
