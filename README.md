@@ -29,7 +29,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
-- 1st March, 2019 - vlcj 4.0.3 released, fixes a problem with native discovery directory providers
+- 1st March, 2019 - vlcj 4.0.3 released, fixes a problem with native discovery directory providers and minor API changes
 - 28th February, 2019 - vlcj 4.0.2 released, resolves a potential deadlock (upgrade to this version strongly recommended)
 - 27th February, 2019 - vlcj 4.0.1 released, primarily fixes a small number of minor public API issues
 - 20th February, 2019 - vlcj 4.0.0 released
@@ -290,7 +290,7 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available here:
 
-* [4.0.3 (current)](http://caprica.github.com/vlcj/javadoc/4.0.1/index.html "4.0.3 Javadoc")
+* [4.0.3 (current)](http://caprica.github.com/vlcj/javadoc/4.0.3/index.html "4.0.3 Javadoc")
 * [4.0.2](http://caprica.github.com/vlcj/javadoc/4.0.2/index.html "4.0.2 Javadoc")
 * [4.0.1](http://caprica.github.com/vlcj/javadoc/4.0.1/index.html "4.0.1 Javadoc")
 * [4.0.0](http://caprica.github.com/vlcj/javadoc/4.0.0/index.html "4.0.0 Javadoc")
