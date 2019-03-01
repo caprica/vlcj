@@ -29,6 +29,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 1st March, 2019 - vlcj 4.0.3 released, fixes a problem with native discovery directory providers
 - 28th February, 2019 - vlcj 4.0.2 released, resolves a potential deadlock (upgrade to this version strongly recommended)
 - 27th February, 2019 - vlcj 4.0.1 released, primarily fixes a small number of minor public API issues
 - 20th February, 2019 - vlcj 4.0.0 released
@@ -84,6 +85,7 @@ For a full list of changes in this release, check the release milestones:
 - [vlcj 4.0.0 release milestone](https://github.com/caprica/vlcj/milestone/14?closed=1)
 - [vlcj 4.0.1 release milestone](https://github.com/caprica/vlcj/milestone/32?closed=1)
 - [vlcj 4.0.2 release milestone](https://github.com/caprica/vlcj/milestone/33?closed=1)
+- [vlcj 4.0.3 release milestone](https://github.com/caprica/vlcj/milestone/34?closed=1)
 
 Despite all of these changes, running on JDK 1.6 is still supported!
 
@@ -168,7 +170,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.0.2</version>
+    <version>4.0.3</version>
 </dependency>
 ```
 
@@ -288,8 +290,9 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available here:
 
-* [4.0.2 (current)](http://caprica.github.com/vlcj/javadoc/4.0.1/index.html "4.0.1 Javadoc")
-* [4.0.1](http://caprica.github.com/vlcj/javadoc/4.0.2/index.html "4.0.2 Javadoc")
+* [4.0.3 (current)](http://caprica.github.com/vlcj/javadoc/4.0.1/index.html "4.0.3 Javadoc")
+* [4.0.2](http://caprica.github.com/vlcj/javadoc/4.0.2/index.html "4.0.2 Javadoc")
+* [4.0.1](http://caprica.github.com/vlcj/javadoc/4.0.1/index.html "4.0.1 Javadoc")
 * [4.0.0](http://caprica.github.com/vlcj/javadoc/4.0.0/index.html "4.0.0 Javadoc")
 
 Examples
