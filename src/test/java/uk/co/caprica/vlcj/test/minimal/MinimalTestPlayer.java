@@ -34,8 +34,6 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class MinimalTestPlayer extends VlcjTest {
 
     public static void main(String[] args) throws Exception {
-        args = new String[] {"https://www.youtube.com/watch?v=d4GGZluIqJo"};
-
         if(args.length != 1) {
             System.out.println("Specify an MRL to play");
             System.exit(1);
