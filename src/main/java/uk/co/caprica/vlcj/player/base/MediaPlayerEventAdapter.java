@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.player.base;
 import javax.swing.SwingUtilities;
 
 import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.TrackType;
 
 /**
  * Default implementation of the media player event listener.
@@ -112,15 +113,15 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
-    public void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id) {
+    public void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id) {
     }
 
     @Override
-    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id) {
+    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, TrackType type, int id) {
     }
 
     @Override
-    public void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id) {
+    public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id) {
     }
 
     @Override

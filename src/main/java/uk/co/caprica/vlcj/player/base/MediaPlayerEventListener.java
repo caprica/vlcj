@@ -21,8 +21,8 @@ package uk.co.caprica.vlcj.player.base;
 
 import javax.swing.SwingUtilities;
 
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.TrackType;
 
 /**
  * Specification for a component that is interested in receiving event notifications from the media player.
@@ -186,7 +186,7 @@ public interface MediaPlayerEventListener {
      * @param type type of stream
      * @param id identifier of stream
      */
-    void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id);
+    void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id);
 
     /**
      * An elementary stream was deleted.
@@ -195,7 +195,7 @@ public interface MediaPlayerEventListener {
      * @param type type of stream
      * @param id identifier of stream
      */
-    void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id);
+    void elementaryStreamDeleted(MediaPlayer mediaPlayer, TrackType type, int id);
 
     /**
      * An elementary stream was selected.
@@ -204,7 +204,7 @@ public interface MediaPlayerEventListener {
      * @param type type of stream
      * @param id identifier of stream
      */
-    void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id);
+    void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id);
 
     /**
      * The media player was corked/un-corked.

@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.waiter.mediaplayer;
 
 import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
@@ -71,7 +72,7 @@ abstract public class MediaPlayerWaiter<R> extends Waiter<MediaPlayer, R> implem
         public void error(MediaPlayer mediaPlayer) {
             MediaPlayerWaiter.super.error();
         }
-    };
+    }
 
     // === MediaPlayerEventListener ============================================
 
@@ -148,15 +149,15 @@ abstract public class MediaPlayerWaiter<R> extends Waiter<MediaPlayer, R> implem
     }
 
     @Override
-    public void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id) {
+    public void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id) {
     }
 
     @Override
-    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id) {
+    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, TrackType type, int id) {
     }
 
     @Override
-    public void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id) {
+    public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id) {
     }
 
     @Override

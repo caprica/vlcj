@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player.base.events;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.media_player_es_changed;
+import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
@@ -42,7 +43,7 @@ final class MediaPlayerESDeletedEvent extends MediaPlayerEvent {
 
     @Override
     public void notify(MediaPlayerEventListener listener) {
-        listener.elementaryStreamDeleted(mediaPlayer, type, id);
+        listener.elementaryStreamDeleted(mediaPlayer, TrackType.trackType(type), id);
     }
 
 }

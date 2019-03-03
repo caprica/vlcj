@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.test.event;
 
 import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
@@ -121,17 +122,17 @@ public class LoggingMediaPlayerEventAdapter implements MediaPlayerEventListener 
     }
 
     @Override
-    public void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id) {
+    public void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id) {
         System.out.printf("elementaryStreamAdded(mediaPlayer=%s,type=%d,id=%d)%n", mediaPlayer, type, id);
     }
 
     @Override
-    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id) {
+    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, TrackType type, int id) {
         System.out.printf("elementaryStreamDeleted(mediaPlayer=%s,type=%d,id=%d)%n", mediaPlayer, type, id);
     }
 
     @Override
-    public void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id) {
+    public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id) {
         System.out.printf("elementaryStreamSelected(mediaPlayer=%s,type=%d,id=%d)%n", mediaPlayer, type, id);
     }
 

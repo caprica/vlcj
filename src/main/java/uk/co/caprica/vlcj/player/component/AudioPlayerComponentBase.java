@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player.component;
 
 import uk.co.caprica.vlcj.media.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.Meta;
+import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaRef;
@@ -117,15 +118,15 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void elementaryStreamAdded(MediaPlayer mediaPlayer, int type, int id) {
+    public void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id) {
     }
 
     @Override
-    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, int type, int id) {
+    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, TrackType type, int id) {
     }
 
     @Override
-    public void elementaryStreamSelected(MediaPlayer mediaPlayer, int type, int id) {
+    public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id) {
     }
 
     @Override
