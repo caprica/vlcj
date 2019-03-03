@@ -225,7 +225,7 @@ public class MediaPlayerFactory {
         return mediaDiscovererApi;
     }
 
-    public final EqualizerApi equalizers() {
+    public final EqualizerApi equalizer() {
         return equalizerApi;
     }
 
