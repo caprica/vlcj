@@ -124,10 +124,7 @@ The longer version of the situation is documented more fully in
 Tutorials
 ---------
 
-At the present time, the available tutorials are for vlcj-3. Whilst the underlying conecpts are the same for vlcj-4, the
-API has changed and this is not yet reflected in those tutorials.
-
-New tutorials for vlcj-4 will come soon.
+New tutorials for vlcj-4 are available [here](http://capricasoftware.co.uk/projects/vlcj-4/tutorials).
 
 There are simple tests or demo applications available for pretty much every aspect of vlcj functionality, these are
 provided in the
