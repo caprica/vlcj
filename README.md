@@ -202,13 +202,13 @@ so that you can then play the next item in a play-list:
 mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
     @Override
     public void finished(MediaPlayer mediaPlayer) {
-        mediaPlayer.media().playMedia(nextMrl); // <-- This is VERY BAD INDEED
+        mediaPlayer.media().play(nextMrl); // <-- This is VERY BAD INDEED
     }
 });
 ```
 
 In this example, the `finished` method is being invoked on a native callback thread owned by LibVLC. The implementation
-of this method is calling back into LibVLC when it invokes `playMedia`. This is very likely to cause a JVM crash and
+of this method is calling back into LibVLC when it invokes `play`. This is very likely to cause a JVM crash and
 kill your application.
 
 In cases such as this, you should make use of an asynchronous task-executor queue conveniently provided by the 
@@ -221,7 +221,7 @@ mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
         mediaPlayer.submit(new Runnable() {
             @Override
             public void run() {
-                mediaPlayer.media().playMedia(nextMrl);
+                mediaPlayer.media().play(nextMrl);
             }
         });
     }
