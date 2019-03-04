@@ -36,7 +36,10 @@ public class ScaledCallbackImagePainter implements CallbackImagePainter {
     private int lastWidth;
     private int lastHeight;
 
-    private AffineTransform transform;
+    private float offsetX;
+    private float offsetY;
+
+    private Float scale;
 
     @Override
     public void prepare(Graphics2D g2, JComponent component) {
@@ -53,24 +56,29 @@ public class ScaledCallbackImagePainter implements CallbackImagePainter {
                 lastWidth = width;
                 lastHeight = height;
 
-                float sx = (float) width / image.getWidth();
-                float sy = (float) height / image.getHeight();
-                float sf = Math.min(sx, sy);
-                float scaledW = image.getWidth() * sf;
-                float scaledH = image.getHeight() * sf;
-                float offsetX = (width - scaledW) / 2;
-                float offsetY = (height - scaledH) / 2;
+                int imageWidth = image.getWidth();
+                int imageHeight = image.getHeight();
 
-                transform = AffineTransform.getTranslateInstance(offsetX, offsetY);
-                if (sf != 1.0) {
-                    transform.concatenate(AffineTransform.getScaleInstance(sf, sf));
-                }
+                float sx = (float) width / imageWidth;
+                float sy = (float) height / imageHeight;
+                float sf = Math.min(sx, sy);
+                float scaledW = imageWidth * sf;
+                float scaledH = imageHeight * sf;
+
+                offsetX = (width - scaledW) / 2;
+                offsetY = (height - scaledH) / 2;
+
+                scale = sf != 1.0 ? sf : null;
             }
 
             g2.setColor(component.getBackground());
-            g2.fillRect(0, 0,width, height);
+            g2.fillRect(0, 0, width, height);
 
-            g2.setTransform(transform);
+            g2.translate(offsetX, offsetY);
+            if (scale != null) {
+                g2.scale(scale, scale);
+            }
+
             g2.drawImage(image, null, 0, 0);
         }
     }

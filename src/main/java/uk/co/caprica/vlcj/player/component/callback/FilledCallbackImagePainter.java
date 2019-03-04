@@ -36,7 +36,8 @@ public class FilledCallbackImagePainter implements CallbackImagePainter {
     private int lastWidth;
     private int lastHeight;
 
-    private AffineTransform transform;
+    private Float scaleX;
+    private Float scaleY;
 
     @Override
     public void prepare(Graphics2D g2, JComponent component) {
@@ -57,15 +58,18 @@ public class FilledCallbackImagePainter implements CallbackImagePainter {
                 float sy = (float) height / image.getHeight();
 
                 if (sx != 1.0 || sy != 1.0) {
-                    transform = AffineTransform.getScaleInstance(sx, sy);
+                    scaleX = sx;
+                    scaleY = sy;
                 } else {
-                    transform = null;
+                    scaleX = null;
+                    scaleY = null;
                 }
             }
 
-            if (transform != null) {
-                g2.setTransform(transform);
+            if (scaleX != null) {
+                g2.scale(scaleX, scaleY);
             }
+
             g2.drawImage(image, null, 0, 0);
         }
     }
