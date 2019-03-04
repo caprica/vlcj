@@ -156,7 +156,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * @param imagePainter image painter (video renderer)
      */
     public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, CallbackImagePainter imagePainter) {
-        this(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, null, null, null, null);
+        this(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, imagePainter, null, null, null);
     }
 
     /**
