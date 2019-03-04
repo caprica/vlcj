@@ -51,4 +51,8 @@ public class AudioCallbackAdapter implements AudioCallback {
     public void drain(MediaPlayer mediaPlayer) {
     }
 
+    @Override
+    public void setVolume(float volume, boolean mute) {
+    }
+
 }

@@ -70,4 +70,12 @@ public interface AudioCallback {
      */
     void drain(MediaPlayer mediaPlayer);
 
+    /**
+     * Adjust audio volume.
+     *
+     * @param volume volume
+     * @param mute <code>true</code> if audio should be muted; <code>false</code> for un-muted
+     */
+    void setVolume(float volume, boolean mute);
+
 }

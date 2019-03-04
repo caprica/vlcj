@@ -310,6 +310,10 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
 
     /**
      * Enable audio callbacks and set the component used to process the audio samples.
+     * <p>
+     * The callback will not manage audio volume.
+     * <p>
+     * @see #callback(String, int, int, AudioCallback, boolean)
      *
      * @param format audio buffer format
      * @param rate audio buffer bit-rate
@@ -317,7 +321,20 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @param audioCallback component that will process the audio samples
      */
     public void callback(String format, int rate, int channels, AudioCallback audioCallback) {
-        audioCallbacks.callback(format, rate, channels, audioCallback);
+        this.callback(format, rate, channels, audioCallback, false);
+    }
+
+    /**
+     * Enable audio callbacks and set the component used to process the audio samples.
+     *
+     * @param format audio buffer format
+     * @param rate audio buffer bit-rate
+     * @param channels number of audio channels
+     * @param audioCallback component that will process the audio samples
+     * @param manageVolume <code>true</code> if the callback will manage audio volume</code>; <code>false</code> if not
+     */
+    public void callback(String format, int rate, int channels, AudioCallback audioCallback, boolean manageVolume) {
+        audioCallbacks.callback(format, rate, channels, audioCallback, manageVolume);
     }
 
     @Override

@@ -39,6 +39,7 @@ final class AudioCallbacks {
     private final libvlc_audio_resume_cb resumeCallback = new ResumeCallback();
     private final libvlc_audio_flush_cb flushCallback = new FlushCallback();
     private final libvlc_audio_drain_cb drainCallback = new DrainCallback();
+    private final libvlc_audio_set_volume_cb setVolumeCallback = new SetVolumeCallback();
 
     private final LibVlc libvlc;
 
@@ -51,14 +52,17 @@ final class AudioCallbacks {
         this.mediaPlayer = mediaPlayer;
     }
 
-    void callback(String format, int rate, int channels, AudioCallback audioCallback) {
+    void callback(String format, int rate, int channels, AudioCallback audioCallback, boolean manageVolume) {
         this.audioCallback = audioCallback;
-        enableCallbacks(format, rate, channels);
+        enableCallbacks(format, rate, channels, manageVolume);
     }
 
-    private void enableCallbacks(String format, int rate, int channels) {
+    private void enableCallbacks(String format, int rate, int channels, boolean manageVolume) {
         libvlc.libvlc_audio_set_format(mediaPlayer.mediaPlayerInstance(), format, rate, channels);
         libvlc.libvlc_audio_set_callbacks(mediaPlayer.mediaPlayerInstance(), playCallback, pauseCallback, resumeCallback, flushCallback, drainCallback, null);
+        if (manageVolume) {
+            libvlc.libvlc_audio_set_volume_callback(mediaPlayer.mediaPlayerInstance(), setVolumeCallback);
+        }
     }
 
     /**
@@ -114,6 +118,18 @@ final class AudioCallbacks {
         public void drain(Pointer data) {
             audioCallback.drain(mediaPlayer);
         }
+    }
+
+    /**
+     * Implementation of a callback invoked by the native library to adjust the audio volume.
+     */
+    private class SetVolumeCallback implements libvlc_audio_set_volume_cb {
+
+        @Override
+        public void setVolume(Pointer data, float volume, int mute) {
+            audioCallback.setVolume(volume, mute == 0);
+        }
+
     }
 
 }
