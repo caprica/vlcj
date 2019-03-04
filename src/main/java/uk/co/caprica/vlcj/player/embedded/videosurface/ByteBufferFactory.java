@@ -83,12 +83,14 @@ final class ByteBufferFactory {
         ByteBuffer buffer = ByteBuffer.allocateDirect(capacity + alignment);
         long address = getAddress(buffer);
         if ((address & (alignment - 1)) == 0) {
-            buffer.limit(capacity);
+            // Stupid cast required see #829
+            ((Buffer) buffer).limit(capacity);
             result = buffer.slice().order(ByteOrder.nativeOrder());
         } else {
             int newPosition = (int) (alignment - (address & (alignment - 1)));
-            buffer.position(newPosition);
-            buffer.limit(newPosition + capacity);
+            // Stupid casts required see #829
+            ((Buffer) buffer).position(newPosition);
+            ((Buffer) buffer).limit(newPosition + capacity);
             result = buffer.slice().order(ByteOrder.nativeOrder());
         }
         return result;
