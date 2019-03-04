@@ -34,13 +34,13 @@ public class FixedCallbackImagePainter implements CallbackImagePainter {
 
     @Override
     public void paint(Graphics2D g2, JComponent component, BufferedImage image) {
+        int width = component.getWidth();
+        int height = component.getHeight();
+
+        g2.setColor(component.getBackground());
+        g2.fillRect(0, 0, width, height);
+
         if (image != null) {
-            int width = component.getWidth();
-            int height = component.getHeight();
-
-            g2.setColor(component.getBackground());
-            g2.fillRect(0, 0,width, height);
-
             g2.translate(
                 (width - image.getWidth()) / 2,
                 (height - image.getHeight()) / 2

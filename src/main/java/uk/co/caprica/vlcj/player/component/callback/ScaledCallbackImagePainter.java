@@ -33,14 +33,6 @@ import java.awt.image.BufferedImage;
  */
 public class ScaledCallbackImagePainter implements CallbackImagePainter {
 
-    private int lastWidth;
-    private int lastHeight;
-
-    private float offsetX;
-    private float offsetY;
-
-    private Float scale;
-
     @Override
     public void prepare(Graphics2D g2, JComponent component) {
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -48,35 +40,31 @@ public class ScaledCallbackImagePainter implements CallbackImagePainter {
 
     @Override
     public void paint(Graphics2D g2, JComponent component, BufferedImage image) {
+        int width = component.getWidth();
+        int height = component.getHeight();
+
+        g2.setColor(component.getBackground());
+        g2.fillRect(0, 0, width, height);
+
         if (image != null) {
-            int width = component.getWidth();
-            int height = component.getHeight();
+            int imageWidth = image.getWidth();
+            int imageHeight = image.getHeight();
 
-            if (width != lastWidth || height != lastHeight) {
-                lastWidth = width;
-                lastHeight = height;
+            float sx = (float) width / imageWidth;
+            float sy = (float) height / imageHeight;
 
-                int imageWidth = image.getWidth();
-                int imageHeight = image.getHeight();
+            float sf = Math.min(sx, sy);
 
-                float sx = (float) width / imageWidth;
-                float sy = (float) height / imageHeight;
-                float sf = Math.min(sx, sy);
-                float scaledW = imageWidth * sf;
-                float scaledH = imageHeight * sf;
+            float scaledW = imageWidth * sf;
+            float scaledH = imageHeight * sf;
 
-                offsetX = (width - scaledW) / 2;
-                offsetY = (height - scaledH) / 2;
+            g2.translate(
+                (width - scaledW) / 2,
+                (height - scaledH) / 2
+            );
 
-                scale = sf != 1.0 ? sf : null;
-            }
-
-            g2.setColor(component.getBackground());
-            g2.fillRect(0, 0, width, height);
-
-            g2.translate(offsetX, offsetY);
-            if (scale != null) {
-                g2.scale(scale, scale);
+            if (sf != 1.0) {
+                g2.scale(sf, sf);
             }
 
             g2.drawImage(image, null, 0, 0);

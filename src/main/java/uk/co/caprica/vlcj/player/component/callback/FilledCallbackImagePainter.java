@@ -33,12 +33,6 @@ import java.awt.image.BufferedImage;
  */
 public class FilledCallbackImagePainter implements CallbackImagePainter {
 
-    private int lastWidth;
-    private int lastHeight;
-
-    private Float scaleX;
-    private Float scaleY;
-
     @Override
     public void prepare(Graphics2D g2, JComponent component) {
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -46,31 +40,21 @@ public class FilledCallbackImagePainter implements CallbackImagePainter {
 
     @Override
     public void paint(Graphics2D g2, JComponent component, BufferedImage image) {
+        int width = component.getWidth();
+        int height = component.getHeight();
+
         if (image != null) {
-            int width = component.getWidth();
-            int height = component.getHeight();
+            float sx = (float) width / image.getWidth();
+            float sy = (float) height / image.getHeight();
 
-            if (width != lastWidth || height != lastHeight) {
-                lastWidth = width;
-                lastHeight = height;
-
-                float sx = (float) width / image.getWidth();
-                float sy = (float) height / image.getHeight();
-
-                if (sx != 1.0 || sy != 1.0) {
-                    scaleX = sx;
-                    scaleY = sy;
-                } else {
-                    scaleX = null;
-                    scaleY = null;
-                }
-            }
-
-            if (scaleX != null) {
-                g2.scale(scaleX, scaleY);
+            if (sx != 1.0 || sy != 1.0) {
+                g2.scale(sx, sy);
             }
 
             g2.drawImage(image, null, 0, 0);
+        } else {
+            g2.setColor(component.getBackground());
+            g2.fillRect(0, 0, width, height);
         }
     }
 
