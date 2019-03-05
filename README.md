@@ -98,6 +98,11 @@ Despite all of these changes, running on JDK 1.6 is still supported!
 Known Issues
 ------------
 
+ - `CallbackMediaPlayerComponent` does not properly render media that does not have a sample-aspect-ratio (SAR) 1:1,
+   this mostly affects DVD ISO, you can still provide your own implementation that handles other SAR's if you need to.
+   In any case, using the callback media player with DVD ISO is somewhat of a niche combination and for the vast
+   majority of media types this will not be an issue. This may be improved in a later release.
+
  - When using the new alternate renderer API, if you attempt to play another media while a media is already being sent
    to something like Chromecast you may experience problems - even if you stop the current media first. The cause of
    this is currently unknown, but it may be a native issue.
