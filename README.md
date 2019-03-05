@@ -29,6 +29,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 5th March, 2019 - vlcj 4.0.6 released, fixes issues with image painters when using CallbackMediaPlayerComponent
 - 4th March, 2019 - vlcj 4.0.5 released, fixes a problem using ByteBuffer on Java8
 - 4th March, 2019 - vlcj 4.0.4 released, audio callbacks can now optionally manage audio volume, some minor API changes
 - 1st March, 2019 - vlcj 4.0.3 released, fixes a problem with native discovery directory providers and minor API changes
@@ -90,6 +91,7 @@ For a full list of changes in this release, check the release milestones:
 - [vlcj 4.0.3 release milestone](https://github.com/caprica/vlcj/milestone/34?closed=1)
 - [vlcj 4.0.4 release milestone](https://github.com/caprica/vlcj/milestone/35?closed=1)
 - [vlcj 4.0.5 release milestone](https://github.com/caprica/vlcj/milestone/36?closed=1)
+- [vlcj 4.0.6 release milestone](https://github.com/caprica/vlcj/milestone/37?closed=1)
 
 Despite all of these changes, running on JDK 1.6 is still supported!
 
@@ -171,7 +173,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.0.5</version>
+    <version>4.0.6</version>
 </dependency>
 ```
 
@@ -291,7 +293,8 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available here:
 
-* [4.0.5 (current)](http://caprica.github.com/vlcj/javadoc/4.0.5/index.html "4.0.5 Javadoc")
+* [4.0.6 (current)](http://caprica.github.com/vlcj/javadoc/4.0.6/index.html "4.0.6 Javadoc")
+* [4.0.5](http://caprica.github.com/vlcj/javadoc/4.0.5/index.html "4.0.5 Javadoc")
 * [4.0.4](http://caprica.github.com/vlcj/javadoc/4.0.4/index.html "4.0.4 Javadoc")
 * [4.0.3](http://caprica.github.com/vlcj/javadoc/4.0.3/index.html "4.0.3 Javadoc")
 * [4.0.2](http://caprica.github.com/vlcj/javadoc/4.0.2/index.html "4.0.2 Javadoc")
