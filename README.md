@@ -326,6 +326,7 @@ Related Projects
  * [vlcj-swt-demo](https://github.com/caprica/vlcj-swt-demo)
  * [vlcj-swt-swing](https://github.com/caprica/vlcj-swt-swing)
  * [vlcj-info](https://github.com/caprica/vlcj-info)
+ * [vlcj-radio-demo](https://github.com/caprica/vlcj-radio-demo)
 
 Support
 -------
