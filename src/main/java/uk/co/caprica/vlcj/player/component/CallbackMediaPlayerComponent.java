@@ -73,8 +73,10 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     /**
      * Painter used to render the video, will be <code>null</code>. if the client application provides its own render
      * callback.
+     * <p>
+     * Ordinarily set via constructor, but may be changed via {@link #setImagePainter(CallbackImagePainter)}.
      */
-    private final CallbackImagePainter imagePainter;
+    private CallbackImagePainter imagePainter;
 
     /**
      * Component used as the video surface.
@@ -234,6 +236,20 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
                 videoSurfaceComponent.addKeyListener(this);
                 break;
         }
+    }
+
+    /**
+     * Set a new image painter.
+     * <p>
+     * The image painter should only be changed when the media is stopped, changing an image painter during playback has
+     * undefined behaviour.
+     * <p>
+     * This is <em>not</em> used if the application has supplied its own {@link RenderCallback} on instance creation.
+     *
+     * @param imagePainter image painter
+     */
+    public final void setImagePainter(CallbackImagePainter imagePainter) {
+        this.imagePainter = imagePainter;
     }
 
     /**
