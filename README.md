@@ -29,6 +29,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 18th March, 2019 - published a Yeoman generator for vlcj starter projects, see [generator-vlcj](https://github.com/caprica/generator-vlcj)
 - 5th March, 2019 - vlcj 4.0.6 released, fixes issues with image painters when using CallbackMediaPlayerComponent
 - 4th March, 2019 - vlcj 4.0.5 released, fixes a problem using ByteBuffer on Java8
 - 4th March, 2019 - vlcj 4.0.4 released, audio callbacks can now optionally manage audio volume, some minor API changes
@@ -327,6 +328,7 @@ Related Projects
  * [vlcj-swt-swing](https://github.com/caprica/vlcj-swt-swing)
  * [vlcj-info](https://github.com/caprica/vlcj-info)
  * [vlcj-radio-demo](https://github.com/caprica/vlcj-radio-demo)
+ * [generator-vlcj](https://github.com/caprica/generator-vlcj)
 
 Support
 -------
