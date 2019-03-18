@@ -274,6 +274,58 @@ mediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 });
 ```
 
+Garbage Collection
+------------------
+
+This section is also very important.
+
+Ordinarily when developing with Java you will be used to not thinking about the scope and life-cycle of the objects that
+you create, instead you will rely on the garbage collector in the Java Virtual Machine to just take of things for you.
+
+With vlcj's `MediaPlayerFactory`, `MediaPlayer`, and associated classes, you must take care to prevent those objects
+from being garbage collected - if you do not, at best your media player will simply unexpectedly stop working and at
+worst you may see a fatal JVM crash.
+
+Those vlcj objects wrap a native resource (e.g. a native media player). Those media player resources know nothing about
+any JVM. So just because a native media player is still "alive" it will not prevent your object instance from being
+garbage collected. If your object instance does get garbage collected, the native resource still has no idea, and will
+will keeping sending native events back to the JVM via a callback. If your object is gone, that native callback has
+nowhere to go and will most likely crash your JVM.
+
+A very common mistake is to declare vlcj objects on the local heap in some sort of initialisation method:
+
+```
+    private void setup() {
+        MediaPlayerFactory factory = new MediaPlayerFactory();
+        EmbeddedMediaPlayer mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
+        // ... other initialisation ...
+    }
+```
+
+When this method returns, the `factory` and `mediaPlayer` objects go out of scope and become eligible for garbage
+collection. The garbage collection may happen immediately, or some time later.
+
+The most common solution is to change those local heap declarations to class fields:
+
+```
+    private MediaPlayerFactory factory;
+
+    private EmbeddedMediaPlayer mediaPlayer;
+
+    private void setup() {
+        factory = new MediaPlayerFactory();
+        mediaPlayer = factory.mediaPlayers().newEmbeddedMediaPlayer();
+        // ... other initialisation ...
+    }
+
+```
+
+This is fine and will work in most cases, but you must still make sure that the enclosing class does not itself get
+garbage collected!
+
+See this [vlcj garbage collection tutorial](http://capricasoftware.co.uk/projects/vlcj-4/tutorials/garbage-collection)
+for more information.
+
 Privacy Considerations
 ----------------------
 
