@@ -66,8 +66,8 @@ Headline changes:
  - use any AWT Component as a video surface, not just a Canvas (Window will work on OSX, with limitations)
  - easy to add support for alternate video surfaces, e.g. an SWT Composite
  - major changes and improvements to the so-called "direct-rendering" media players, the direct audio and video media
-   players are no longer separate components are instead intrinsic to the staandard media player. For video, a new
-   "Callback" video surface brings a vastly improved implementation, an optional related component provides a good
+   players are no longer separate components and are now instead intrinsic to the standard media player. For video, a
+   new "Callback" video surface brings a vastly improved implementation, an optional related component provides a good
    default implementation for direct-rendering and an easy way to deal with re-sizing of the video, with easy extension
    points for custom video "painters"
  - improvements to full-screen support with sensible default implementations provided for Linux, Windows and OSX, all
