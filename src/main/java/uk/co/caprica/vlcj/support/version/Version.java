@@ -45,17 +45,17 @@ public final class Version implements Comparable<Version> {
     /**
      * Major version number.
      */
-    private final Integer major;
+    private final int major;
 
     /**
      * Minor version number.
      */
-    private final Integer minor;
+    private final int minor;
 
     /**
      * Revision number.
      */
-    private final Integer revision;
+    private final int revision;
 
     /**
      * Extra.
@@ -141,22 +141,15 @@ public final class Version implements Comparable<Version> {
 
     @Override
     public int compareTo(Version o) {
-        if (major == o.major) {
-            if (minor == o.minor) {
-                if (revision == o.revision) {
-                    return 0;
-                }
-                else {
-                    return revision - o.revision;
-                }
-            }
-            else {
-                return minor - o.minor;
+        int delta = major - o.major;
+        if (delta == 0) {
+            delta = minor - o.minor;
+            if (delta == 0) {
+                delta = revision - o.revision;
+                // We don't care about "extra" - it is a legacy artifact that is no longer used in LibVLC versions
             }
         }
-        else {
-            return major - o.major;
-        }
+        return delta;
     }
 
     @Override
