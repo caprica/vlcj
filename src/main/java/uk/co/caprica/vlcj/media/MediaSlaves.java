@@ -21,22 +21,24 @@ package uk.co.caprica.vlcj.media;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
-import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.NativeString;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_slaves_get;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_slaves_release;
 
 final class MediaSlaves {
 
     private MediaSlaves() {
     }
 
-    static List<MediaSlave> getMediaSlaves(LibVlc libvlc, libvlc_media_t media) {
+    static List<MediaSlave> getMediaSlaves(libvlc_media_t media) {
         PointerByReference slavesPointer = new PointerByReference();
-        int numberOfSlaves = libvlc.libvlc_media_slaves_get(media, slavesPointer);
+        int numberOfSlaves = libvlc_media_slaves_get(media, slavesPointer);
         List<MediaSlave> result = new ArrayList<MediaSlave>(numberOfSlaves);
         if (numberOfSlaves > 0) {
             Pointer[] pointers = slavesPointer.getValue().getPointerArray(0, numberOfSlaves);
@@ -46,7 +48,7 @@ final class MediaSlaves {
             }
         }
         // In this case the native structure must be freed even if the count is zero
-        libvlc.libvlc_media_slaves_release(slavesPointer.getValue(), numberOfSlaves);
+        libvlc_media_slaves_release(slavesPointer.getValue(), numberOfSlaves);
         return result;
     }
 

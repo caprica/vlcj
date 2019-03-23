@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.player.embedded;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
@@ -57,11 +56,6 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 public class EmbeddedMediaPlayer extends MediaPlayer {
 
     /**
-     * Native library interface.
-     */
-    protected final LibVlc libvlc;
-
-    /**
      * Libvlc instance.
      */
     protected final libvlc_instance_t libvlcInstance;
@@ -76,13 +70,11 @@ public class EmbeddedMediaPlayer extends MediaPlayer {
      * <p>
      * Full-screen will not be supported.
      *
-     * @param libvlc native interface
      * @param instance libvlc instance
      */
-    public EmbeddedMediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
-        super(libvlc, instance);
+    public EmbeddedMediaPlayer(libvlc_instance_t instance) {
+        super(instance);
 
-        this.libvlc = libvlc;
         this.libvlcInstance = instance;
 
         this.fullScreenApi   = new FullScreenApi  (this);

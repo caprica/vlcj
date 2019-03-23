@@ -19,14 +19,14 @@
 
 package uk.co.caprica.vlcj.test.cue;
 
-import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
-import uk.co.caprica.vlcj.media.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MediaEventAdapter;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
+import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
@@ -45,8 +45,6 @@ public class CueTest extends VlcjTest {
         }
 
         final AudioPlayerComponent player = new AudioPlayerComponent();
-
-        System.out.println(player.mediaPlayerFactory().nativeLibraryPath());
 
         player.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 

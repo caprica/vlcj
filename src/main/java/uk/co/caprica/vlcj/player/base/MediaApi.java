@@ -20,23 +20,26 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.media.MediaSlavePriority;
-import uk.co.caprica.vlcj.media.MediaSlaveType;
-import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 import uk.co.caprica.vlcj.media.EventApi;
 import uk.co.caprica.vlcj.media.InfoApi;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.media.MediaFactory;
+import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.MediaSlavePriority;
+import uk.co.caprica.vlcj.media.MediaSlaveType;
 import uk.co.caprica.vlcj.media.MetaApi;
 import uk.co.caprica.vlcj.media.OptionsApi;
 import uk.co.caprica.vlcj.media.ParseApi;
 import uk.co.caprica.vlcj.media.SlaveApi;
 import uk.co.caprica.vlcj.media.SubitemApi;
-import uk.co.caprica.vlcj.media.MediaRef;
-import uk.co.caprica.vlcj.media.MediaEventListener;
+import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_add_slave;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_media;
 
 /**
  * Behaviour pertaining to the current media.
@@ -76,7 +79,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean prepare(String mrl, String... options) {
-        return changeMedia(MediaFactory.newMedia(libvlc, libvlcInstance, mrl, options));
+        return changeMedia(MediaFactory.newMedia(libvlcInstance, mrl, options));
     }
 
     /**
@@ -117,7 +120,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean prepare(CallbackMedia callbackMedia, String... options) {
-        return changeMedia(MediaFactory.newMedia(libvlc, libvlcInstance, callbackMedia, options));
+        return changeMedia(MediaFactory.newMedia(libvlcInstance, callbackMedia, options));
     }
 
     /**
@@ -161,7 +164,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean prepare(MediaRef mediaRef, String... options) {
-        return changeMedia(MediaFactory.newMedia(libvlc, libvlcInstance, mediaRef, options));
+        return changeMedia(MediaFactory.newMedia(libvlcInstance, mediaRef, options));
     }
 
     /**
@@ -212,7 +215,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> on success; <code>false</code> otherwise
      */
     public boolean addSlave(MediaSlaveType type, String uri, boolean select) {
-        return libvlc.libvlc_media_player_add_slave(mediaPlayerInstance, type.intValue(), uri, select ? 1 : 0) == 0;
+        return libvlc_media_player_add_slave(mediaPlayerInstance, type.intValue(), uri, select ? 1 : 0) == 0;
     }
 
     /**
@@ -343,7 +346,7 @@ public final class MediaApi extends BaseApi {
 
     private void applyMedia() {
         libvlc_media_t mediaInstance = media.mediaInstance();
-        libvlc.libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
+        libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
         mediaPlayer.subitems().changeMedia(mediaInstance);
     }
 

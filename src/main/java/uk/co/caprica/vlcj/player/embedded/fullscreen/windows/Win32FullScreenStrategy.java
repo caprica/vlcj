@@ -19,9 +19,9 @@
 
 package uk.co.caprica.vlcj.player.embedded.fullscreen.windows;
 
-import java.awt.Window;
-
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
+
+import java.awt.*;
 
 /**
  * Implementation of a full screen strategy that uses the native Win32 API.

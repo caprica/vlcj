@@ -20,10 +20,15 @@
 package uk.co.caprica.vlcj.media;
 
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_picture_t;
 import uk.co.caprica.vlcj.binding.support.size_tByReference;
-import uk.co.caprica.vlcj.media.PictureType;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_get_buffer;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_get_height;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_get_stride;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_get_time;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_get_width;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_type;
 
 /**
  * Picture.
@@ -47,22 +52,21 @@ public final class Picture {
     /**
      * Create a picture.
      *
-     * @param libvlc  native library
      * @param picture native picture instance
      */
-    public Picture(LibVlc libvlc, libvlc_picture_t picture) {
-        this.width = libvlc.libvlc_picture_get_width(picture);
-        this.height = libvlc.libvlc_picture_get_height(picture);
-        this.stride = libvlc.libvlc_picture_get_stride(picture);
-        this.type = PictureType.pictureType(libvlc.libvlc_picture_type(picture));
-        this.time = libvlc.libvlc_picture_get_time(picture);
-        this.buffer = initBuffer(libvlc, picture);
-        this.size = this.buffer.length;
+    public Picture(libvlc_picture_t picture) {
+        this.width  = libvlc_picture_get_width(picture);
+        this.height = libvlc_picture_get_height(picture);
+        this.stride = libvlc_picture_get_stride(picture);
+        this.type   = PictureType.pictureType(libvlc_picture_type(picture));
+        this.time   = libvlc_picture_get_time(picture);
+        this.buffer = initBuffer(picture);
+        this.size   = this.buffer.length;
     }
 
-    private byte[] initBuffer(LibVlc libvlc, libvlc_picture_t picture) {
+    private byte[] initBuffer(libvlc_picture_t picture) {
         size_tByReference size = new size_tByReference();
-        Pointer pointer = libvlc.libvlc_picture_get_buffer(picture, size);
+        Pointer pointer = libvlc_picture_get_buffer(picture, size);
         return pointer.getByteArray(0, size.getValue().intValue());
     }
 

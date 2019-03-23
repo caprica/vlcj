@@ -22,6 +22,12 @@ package uk.co.caprica.vlcj.player.base;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_chapter;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_chapter_count;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_next_chapter;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_previous_chapter;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_chapter;
+
 /**
  * Behaviour pertaining to chapters (e.g. for DVD or Bluray).
  */
@@ -37,7 +43,7 @@ public final class ChapterApi extends BaseApi {
      * @return number of chapters, or -1 if no chapters
      */
     public int count() {
-        return libvlc.libvlc_media_player_get_chapter_count(mediaPlayerInstance);
+        return libvlc_media_player_get_chapter_count(mediaPlayerInstance);
     }
 
     /**
@@ -46,7 +52,7 @@ public final class ChapterApi extends BaseApi {
      * @return chapter number, where zero is the first chatper, or -1 if no media
      */
     public int chapter() {
-        return libvlc.libvlc_media_player_get_chapter(mediaPlayerInstance);
+        return libvlc_media_player_get_chapter(mediaPlayerInstance);
     }
 
     /**
@@ -55,7 +61,7 @@ public final class ChapterApi extends BaseApi {
      * @param chapterNumber chapter number, where zero is the first chapter
      */
     public void setChapter(int chapterNumber) {
-        libvlc.libvlc_media_player_set_chapter(mediaPlayerInstance, chapterNumber);
+        libvlc_media_player_set_chapter(mediaPlayerInstance, chapterNumber);
     }
 
     /**
@@ -64,7 +70,7 @@ public final class ChapterApi extends BaseApi {
      * If the play-back is already at the last chapter, this will have no effect.
      */
     public void next() {
-        libvlc.libvlc_media_player_next_chapter(mediaPlayerInstance);
+        libvlc_media_player_next_chapter(mediaPlayerInstance);
     }
 
     /**
@@ -73,7 +79,7 @@ public final class ChapterApi extends BaseApi {
      * If the play-back is already at the first chapter, this will have no effect.
      */
     public void previous() {
-        libvlc.libvlc_media_player_previous_chapter(mediaPlayerInstance);
+        libvlc_media_player_previous_chapter(mediaPlayerInstance);
     }
 
     /**
@@ -85,7 +91,7 @@ public final class ChapterApi extends BaseApi {
      * @return list of descriptions (which may be empty), or <code>null</code> if there is no such title
      */
     public List<ChapterDescription> descriptions(int title) {
-        return Descriptions.chapterDescriptions(libvlc, mediaPlayerInstance, title);
+        return Descriptions.chapterDescriptions(mediaPlayerInstance, title);
     }
 
     /**

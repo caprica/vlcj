@@ -19,9 +19,10 @@
 
 package uk.co.caprica.vlcj.medialist;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_new;
 
 /**
  * Factory to create {@link MediaList} and {@link MediaListRef} components.
@@ -36,12 +37,11 @@ public final class MediaListFactory {
      * The client application <em>must</em> release the returned {@link MediaListRef} when it no long has any use for
      * it.
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @return media list, or <code>null</code> on error
      */
-    public static MediaListRef newMediaListRef(LibVlc libvlc, libvlc_instance_t libvlcInstance) {
-        return createMediaListRef(libvlc, libvlcInstance, libvlc.libvlc_media_list_new(libvlcInstance));
+    public static MediaListRef newMediaListRef(libvlc_instance_t libvlcInstance) {
+        return createMediaListRef(libvlcInstance, libvlc_media_list_new(libvlcInstance));
     }
 
     /**
@@ -49,25 +49,24 @@ public final class MediaListFactory {
      * <p>
      * The client application <em>must</em> release the returned {@link MediaList} when it no longer has any use for it.
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @return media list reference, or <code>null</code> on error
      */
-    public static MediaList newMediaList(LibVlc libvlc, libvlc_instance_t libvlcInstance) {
-        return createMediaList(libvlc, libvlcInstance, libvlc.libvlc_media_list_new(libvlcInstance));
+    public static MediaList newMediaList(libvlc_instance_t libvlcInstance) {
+        return createMediaList(libvlcInstance, libvlc_media_list_new(libvlcInstance));
     }
 
-    private static MediaListRef createMediaListRef(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_list_t mediaListInstance) {
+    private static MediaListRef createMediaListRef(libvlc_instance_t libvlcInstance, libvlc_media_list_t mediaListInstance) {
         if (mediaListInstance != null) {
-            return new MediaListRef(libvlc, libvlcInstance, mediaListInstance);
+            return new MediaListRef(libvlcInstance, mediaListInstance);
         } else {
             return null;
         }
     }
 
-    private static MediaList createMediaList(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_list_t mediaListInstance) {
+    private static MediaList createMediaList(libvlc_instance_t libvlcInstance, libvlc_media_list_t mediaListInstance) {
         if (mediaListInstance != null) {
-            return new MediaList(libvlc, libvlcInstance, mediaListInstance);
+            return new MediaList(libvlcInstance, mediaListInstance);
         } else {
             return null;
         }

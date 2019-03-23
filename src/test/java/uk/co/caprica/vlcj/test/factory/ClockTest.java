@@ -19,11 +19,11 @@
 
 package uk.co.caprica.vlcj.test.factory;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Simple test to dump out the libvlc clock.

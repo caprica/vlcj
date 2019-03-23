@@ -19,12 +19,12 @@
 
 package uk.co.caprica.vlcj.test.factory;
 
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.base.Equalizer;
+import uk.co.caprica.vlcj.test.VlcjTest;
+
 import java.util.List;
 import java.util.Map;
-
-import uk.co.caprica.vlcj.player.base.Equalizer;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * Test of the static equalizer preset data provided by the media player factory.

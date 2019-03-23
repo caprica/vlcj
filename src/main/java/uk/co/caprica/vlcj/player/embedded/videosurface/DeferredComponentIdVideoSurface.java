@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
@@ -44,8 +43,8 @@ public abstract class DeferredComponentIdVideoSurface extends VideoSurface {
     }
 
     @Override
-    public void attach(LibVlc libvlc, MediaPlayer mediaPlayer) {
-        videoSurfaceAdapter.attach(libvlc, mediaPlayer, getComponentId());
+    public void attach(MediaPlayer mediaPlayer) {
+        videoSurfaceAdapter.attach(mediaPlayer, getComponentId());
     }
 
     /**

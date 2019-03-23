@@ -19,14 +19,14 @@
 
 package uk.co.caprica.vlcj.test.condition;
 
-import java.io.File;
-
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MetaData;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.waiter.media.ParsedWaiter;
 import uk.co.caprica.vlcj.test.VlcjTest;
+import uk.co.caprica.vlcj.waiter.media.ParsedWaiter;
+
+import java.io.File;
 
 /**
  * Demonstration of the synchronous approach to media player programming when using media player conditional waiter

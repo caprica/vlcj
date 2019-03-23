@@ -24,6 +24,8 @@ import uk.co.caprica.vlcj.medialist.MediaApi;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_set_media_list;
+
 /**
  * Behaviour pertaining to the list of media items.
  */
@@ -63,7 +65,7 @@ public final class ListApi extends BaseApi {
             this.mediaList.release();
         }
         this.mediaList = mediaListRef.newMediaList();
-        libvlc.libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaListRef.mediaListInstance());
+        libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaListRef.mediaListInstance());
     }
 
     /**

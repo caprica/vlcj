@@ -23,6 +23,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
 
 import java.awt.*;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_marquee_int;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_marquee_string;
+
 /**
  * Behaviour pertaining to the marquee.
  */
@@ -40,7 +43,7 @@ public final class MarqueeApi extends BaseApi {
      * @param enable <code>true</code> to show the marquee, <code>false</code> to hide it
      */
     public void enable(boolean enable) {
-        libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Enable.intValue(), enable ? 1 : 0);
+        libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Enable.intValue(), enable ? 1 : 0);
     }
 
     /**
@@ -65,7 +68,7 @@ public final class MarqueeApi extends BaseApi {
      * @param text text
      */
     public void setText(String text) {
-        libvlc.libvlc_video_set_marquee_string(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Text.intValue(), text);
+        libvlc_video_set_marquee_string(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Text.intValue(), text);
     }
 
     /**
@@ -83,7 +86,7 @@ public final class MarqueeApi extends BaseApi {
      * @param colour RGB colour value
      */
     public void setColour(int colour) {
-        libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Color.intValue(), colour);
+        libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Color.intValue(), colour);
     }
 
     /**
@@ -92,7 +95,7 @@ public final class MarqueeApi extends BaseApi {
      * @param opacity opacity in the range 0 to 100 where 255 is fully opaque
      */
     public void setOpacity(int opacity) {
-        libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Opacity.intValue(), opacity);
+        libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Opacity.intValue(), opacity);
     }
 
     /**
@@ -102,7 +105,7 @@ public final class MarqueeApi extends BaseApi {
      */
     public void setOpacity(float opacity) {
         int opacityValue = Math.round(opacity * 255.0f);
-        libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Opacity.intValue(), opacityValue);
+        libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Opacity.intValue(), opacityValue);
     }
 
     /**
@@ -111,7 +114,7 @@ public final class MarqueeApi extends BaseApi {
      * @param size size, height of the marquee text in pixels
      */
     public void setSize(int size) {
-        libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Size.intValue(), size);
+        libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Size.intValue(), size);
     }
 
     /**
@@ -120,7 +123,7 @@ public final class MarqueeApi extends BaseApi {
      * @param timeout timeout, in milliseconds
      */
     public void setTimeout(int timeout) {
-        libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Timeout.intValue(), timeout);
+        libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Timeout.intValue(), timeout);
     }
 
     /**
@@ -130,8 +133,8 @@ public final class MarqueeApi extends BaseApi {
      * @param y y co-ordinate for the top left of the marquee
      */
     public void setLocation(int x, int y) {
-        libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_X.intValue(), x);
-        libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Y.intValue(), y);
+        libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_X.intValue(), x);
+        libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Y.intValue(), y);
     }
 
     /**
@@ -140,7 +143,7 @@ public final class MarqueeApi extends BaseApi {
      * @param position position
      */
     public void setPosition(MarqueePosition position) {
-        libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Position.intValue(), position.intValue());
+        libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Position.intValue(), position.intValue());
     }
 
     /**
@@ -149,7 +152,7 @@ public final class MarqueeApi extends BaseApi {
      * @param refresh refresh delay, milliseconds
      */
     public void setRefresh(int refresh) {
-        libvlc.libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Refresh.intValue(), refresh);
+        libvlc_video_set_marquee_int(mediaPlayerInstance, libvlc_video_marquee_option_t.libvlc_marquee_Refresh.intValue(), refresh);
     }
 
     /**

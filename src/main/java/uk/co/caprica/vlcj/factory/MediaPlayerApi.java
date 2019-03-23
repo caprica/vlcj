@@ -44,7 +44,7 @@ public final class MediaPlayerApi extends BaseApi {
      * @return media player instance
      */
     public MediaPlayer newMediaPlayer() {
-        return new MediaPlayer(libvlc, libvlcInstance);
+        return new MediaPlayer(libvlcInstance);
     }
 
     /**
@@ -53,7 +53,7 @@ public final class MediaPlayerApi extends BaseApi {
      * @return media player instance
      */
     public EmbeddedMediaPlayer newEmbeddedMediaPlayer() {
-        return new EmbeddedMediaPlayer(libvlc, libvlcInstance);
+        return new EmbeddedMediaPlayer(libvlcInstance);
     }
 
     /**
@@ -62,7 +62,7 @@ public final class MediaPlayerApi extends BaseApi {
      * @return media player instance
      */
     public MediaListPlayer newMediaListPlayer() {
-        return new MediaListPlayer(libvlc, libvlcInstance);
+        return new MediaListPlayer(libvlcInstance);
     }
 
 }

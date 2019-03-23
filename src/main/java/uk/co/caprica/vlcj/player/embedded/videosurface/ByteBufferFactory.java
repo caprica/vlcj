@@ -19,12 +19,12 @@
 
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
+import sun.misc.Unsafe;
+
 import java.lang.reflect.Field;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-
-import sun.misc.Unsafe;
 
 /**
  * Factory for creating property aligned native byte buffers.

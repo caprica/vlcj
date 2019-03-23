@@ -25,6 +25,10 @@ import uk.co.caprica.vlcj.binding.NativeString;
 import java.util.HashMap;
 import java.util.Map;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_meta;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_save_meta;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_set_meta;
+
 /**
  * Behaviour pertaining to media meta data.
  */
@@ -41,7 +45,7 @@ public final class MetaApi extends BaseApi {
      * @return meta data value
      */
     public String get(Meta meta) {
-        return getMetaValue(libvlc.libvlc_media_get_meta(mediaInstance, meta.intValue()));
+        return getMetaValue(libvlc_media_get_meta(mediaInstance, meta.intValue()));
     }
 
     /**
@@ -51,7 +55,7 @@ public final class MetaApi extends BaseApi {
      * @param value meta data value
      */
     public void set(Meta meta, String value) {
-        libvlc.libvlc_media_set_meta(mediaInstance, meta.intValue(), value);
+        libvlc_media_set_meta(mediaInstance, meta.intValue(), value);
     }
 
     /**
@@ -60,7 +64,7 @@ public final class MetaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean save() {
-        return libvlc.libvlc_media_save_meta(mediaInstance) != 0;
+        return libvlc_media_save_meta(mediaInstance) != 0;
     }
 
     /**
@@ -82,7 +86,7 @@ public final class MetaApi extends BaseApi {
     }
 
     private String getMetaValue(Pointer pointer) {
-        return NativeString.copyAndFreeNativeString(libvlc, pointer);
+        return NativeString.copyAndFreeNativeString(pointer);
     }
 
 }

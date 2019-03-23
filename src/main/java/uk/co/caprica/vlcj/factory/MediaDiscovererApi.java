@@ -22,15 +22,20 @@ package uk.co.caprica.vlcj.factory;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.PointerByReference;
-import uk.co.caprica.vlcj.binding.internal.*;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_description_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 import uk.co.caprica.vlcj.binding.support.size_t;
 import uk.co.caprica.vlcj.media.discoverer.MediaDiscoverer;
+import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererCategory;
 import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererDescription;
 import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererFactory;
-import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererCategory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_list_get;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_new;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_discoverer_list_release;
 
 /**
  * Behaviour pertaining to media discovery.
@@ -49,7 +54,7 @@ public final class MediaDiscovererApi extends BaseApi {
      */
     public List<MediaDiscovererDescription> discoverers(MediaDiscovererCategory category) {
         PointerByReference ref = new PointerByReference();
-        size_t size = libvlc.libvlc_media_discoverer_list_get(libvlcInstance, category.intValue(), ref);
+        size_t size = libvlc_media_discoverer_list_get(libvlcInstance, category.intValue(), ref);
         try {
             int count = size.intValue();
             List<MediaDiscovererDescription> result = new ArrayList<MediaDiscovererDescription>(count);
@@ -64,7 +69,7 @@ public final class MediaDiscovererApi extends BaseApi {
             return result;
         }
         finally {
-            libvlc.libvlc_renderer_discoverer_list_release(ref.getValue(), size);
+            libvlc_renderer_discoverer_list_release(ref.getValue(), size);
         }
     }
 
@@ -77,9 +82,9 @@ public final class MediaDiscovererApi extends BaseApi {
      * @return media discoverer, may be <code>null</code>
      */
     public MediaDiscoverer discoverer(String name) {
-        libvlc_media_discoverer_t discoverer = libvlc.libvlc_media_discoverer_new(libvlcInstance, name);
+        libvlc_media_discoverer_t discoverer = libvlc_media_discoverer_new(libvlcInstance, name);
         if (discoverer != null) {
-            return MediaDiscovererFactory.newMediaDiscoverer(libvlc, libvlcInstance, discoverer);
+            return MediaDiscovererFactory.newMediaDiscoverer(libvlcInstance, discoverer);
         } else {
             return null;
         }

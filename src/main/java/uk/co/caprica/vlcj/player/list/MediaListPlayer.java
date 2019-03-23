@@ -19,10 +19,12 @@
 
 package uk.co.caprica.vlcj.player.list;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_new;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_release;
 
 /**
  * Implementation of a media list player.
@@ -34,11 +36,6 @@ import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
  * simply adding an ordinary MRL/URL is all that is needed for such media.
  */
 public final class MediaListPlayer {
-
-    /**
-     * Native library interface.
-     */
-    protected final LibVlc libvlc;
 
     /**
      * Libvlc instance.
@@ -71,11 +68,9 @@ public final class MediaListPlayer {
     /**
      * Create a new media list player.
      *
-     * @param libvlc native library interface
      * @param libvlcInstance libvlc instance
      */
-    public MediaListPlayer(LibVlc libvlc, libvlc_instance_t libvlcInstance) {
-        this.libvlc         = libvlc;
+    public MediaListPlayer(libvlc_instance_t libvlcInstance) {
         this.libvlcInstance = libvlcInstance;
 
         this.mediaListPlayerInstance = newNativeMediaListPlayer();
@@ -88,7 +83,7 @@ public final class MediaListPlayer {
     }
 
     private libvlc_media_list_player_t newNativeMediaListPlayer() {
-        libvlc_media_list_player_t result = libvlc.libvlc_media_list_player_new(libvlcInstance);
+        libvlc_media_list_player_t result = libvlc_media_list_player_new(libvlcInstance);
         if (result != null) {
             return result;
         } else {
@@ -163,7 +158,7 @@ public final class MediaListPlayer {
         mediaPlayerApi.release();
         statusApi     .release();
 
-        libvlc.libvlc_media_list_player_release(mediaListPlayerInstance);
+        libvlc_media_list_player_release(mediaListPlayerInstance);
 
         onAfterRelease();
     }

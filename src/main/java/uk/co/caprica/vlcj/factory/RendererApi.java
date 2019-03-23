@@ -31,6 +31,10 @@ import uk.co.caprica.vlcj.player.renderer.RendererDiscovererDescription;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_discoverer_list_get;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_discoverer_list_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_discoverer_new;
+
 /**
  * Behaviour pertaining to renderer discovery.
  */
@@ -47,7 +51,7 @@ public final class RendererApi extends BaseApi {
      */
     public List<RendererDiscovererDescription> discoverers() {
         PointerByReference ref = new PointerByReference();
-        size_t size = libvlc.libvlc_renderer_discoverer_list_get(libvlcInstance, ref);
+        size_t size = libvlc_renderer_discoverer_list_get(libvlcInstance, ref);
         try {
             int count = size.intValue();
             List<RendererDiscovererDescription> result = new ArrayList<RendererDiscovererDescription>(count);
@@ -62,7 +66,7 @@ public final class RendererApi extends BaseApi {
             return result;
         }
         finally {
-            libvlc.libvlc_renderer_discoverer_list_release(ref.getValue(), size);
+            libvlc_renderer_discoverer_list_release(ref.getValue(), size);
         }
     }
 
@@ -75,9 +79,9 @@ public final class RendererApi extends BaseApi {
      * @return discoverer, may be <code>null</code>
      */
     public RendererDiscoverer discoverer(String name) {
-        libvlc_renderer_discoverer_t discoverer = libvlc.libvlc_renderer_discoverer_new(libvlcInstance, name);
+        libvlc_renderer_discoverer_t discoverer = libvlc_renderer_discoverer_new(libvlcInstance, name);
         if (discoverer != null) {
-            return new RendererDiscoverer(libvlc, discoverer);
+            return new RendererDiscoverer(discoverer);
         } else {
             return null;
         }

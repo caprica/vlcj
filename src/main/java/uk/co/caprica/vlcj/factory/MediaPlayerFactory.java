@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.factory;
 
-import com.sun.jna.Native;
+import com.sun.jna.StringArray;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LinuxNativeInit;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
@@ -29,6 +29,9 @@ import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
 import uk.co.caprica.vlcj.support.version.LibVlcVersion;
 
 import java.util.Collection;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_new;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_release;
 
 /**
  * Factory for creating media player instances and associated components.
@@ -69,11 +72,6 @@ public class MediaPlayerFactory {
     }
 
     /**
-     * Native library.
-     */
-    protected final LibVlc libvlc;
-
-    /**
      * Native library instance.
      */
     protected final libvlc_instance_t libvlcInstance;
@@ -100,9 +98,11 @@ public class MediaPlayerFactory {
      *
      * @param discovery native discovery used to locate the native LibVLC library, may be <code>null</code>
      * @param libvlcArgs array of options/arguments to pass to LibVLC for initialisation of the native library
+     * @throws NativeLibraryMappingException if one or more of the declared method bindings in {@link LibVlc} could not be found in the native library that was loaded
      */
     public MediaPlayerFactory(NativeDiscovery discovery, String... libvlcArgs) {
-        this.libvlc         = discoverNativeLibrary(discovery);
+        discoverNativeLibrary(discovery);
+
         this.libvlcInstance = newLibVlcInstance(libvlcArgs != null ? libvlcArgs : new String[0]);
 
         this.applicationApi     = new ApplicationApi    (this);
@@ -137,7 +137,7 @@ public class MediaPlayerFactory {
      * @param libvlcArgs collection of options/arguments to pass to LibVLC for initialisation of the native library
      */
     public MediaPlayerFactory(NativeDiscovery discovery, Collection<String> libvlcArgs) {
-        this(discovery, libvlcArgs.toArray(new String[libvlcArgs.size()]));
+        this(discovery, libvlcArgs.toArray(new String[0]));
     }
 
     /**
@@ -163,17 +163,20 @@ public class MediaPlayerFactory {
      * Run native discovery, if set, and attempt to load the native library.
      *
      * @param discovery native discovery used to find the native library, may be <code>null</code>
-     * @return native library
+     * @throws NativeLibraryMappingException if one or more of the declared method bindings in {@link LibVlc} could not be found in the native library that was loaded
      */
-    private LibVlc discoverNativeLibrary(NativeDiscovery discovery) {
+    private void discoverNativeLibrary(NativeDiscovery discovery) {
         if (discovery != null) {
             // The discover method return value is not currently used, since we try and load the native library whether
             // discovery worked or not
             discovery.discover();
         }
-        LibVlc nativeLibrary = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-        checkVersion(nativeLibrary);
-        return nativeLibrary;
+        try {
+            checkVersion();
+        }
+        catch (NoClassDefFoundError e) {
+            throw new NativeLibraryMappingException("Failed to properly initialise the native library", e);
+        }
     }
 
     /**
@@ -181,16 +184,13 @@ public class MediaPlayerFactory {
      * <p>
      * This check must be done here even though the default {@link NativeDiscovery} implementation already does it,
      * simply because using the default {@link NativeDiscovery} is optional.
-     *
-     * @param nativeLibrary
      */
-    private void checkVersion(LibVlc nativeLibrary) {
-        LibVlcVersion version = new LibVlcVersion(nativeLibrary);
+    private void checkVersion() {
+        LibVlcVersion version = new LibVlcVersion();
         if (!version.isSupported()) {
-            throw new RuntimeException(String.format("Failed to find minimum required VLC version %s, found %s in %s",
+            throw new RuntimeException(String.format("Failed to find minimum required VLC version %s, found %s",
                 version.getRequiredVersion(),
-                version.getVersion(),
-                NativeLibraryPath.getNativeLibraryPath(nativeLibrary)));
+                version.getVersion()));
         }
     }
 
@@ -201,7 +201,7 @@ public class MediaPlayerFactory {
      * @return native library instance
      */
     private libvlc_instance_t newLibVlcInstance(String... libvlcArgs) {
-        libvlc_instance_t result = libvlc.libvlc_new(libvlcArgs.length, libvlcArgs);
+        libvlc_instance_t result = libvlc_new(libvlcArgs.length, new StringArray(libvlcArgs));
         if (result != null) {
             return result;
         } else {
@@ -261,19 +261,6 @@ public class MediaPlayerFactory {
     }
 
     /**
-     * Get, if available, the path to where the native library was loaded from.
-     * <p>
-     * This is provided primarily for diagnostic reasons.
-     * <p>
-     * The mechanism to get the native library path is implementation dependent and may not always be available.
-     *
-     * @return native library path
-     */
-    public final String nativeLibraryPath() {
-        return NativeLibraryPath.getNativeLibraryPath(libvlc);
-    }
-
-    /**
      * Release all native resources associated with this factory.
      * <p>
      * The factory must <em>not</em> be used again after it has been released.
@@ -293,7 +280,7 @@ public class MediaPlayerFactory {
         rendererApi       .release();
         videoSurfaceApi   .release();
 
-        libvlc.libvlc_release(this.libvlcInstance);
+        libvlc_release(this.libvlcInstance);
 
         onAfterRelease();
     }

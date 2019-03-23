@@ -19,13 +19,18 @@
 
 package uk.co.caprica.vlcj.factory;
 
+import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.player.base.AudioDevice;
-import uk.co.caprica.vlcj.binding.NativeString;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_list_get;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_list_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_list_get;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_list_release;
 
 /**
  * Behaviour pertaining to audio.
@@ -46,7 +51,7 @@ public final class AudioApi extends BaseApi {
      */
     public List<AudioOutput> audioOutputs() {
         List<AudioOutput> result = new ArrayList<AudioOutput>();
-        libvlc_audio_output_t audioOutputs = libvlc.libvlc_audio_output_list_get(libvlcInstance);
+        libvlc_audio_output_t audioOutputs = libvlc_audio_output_list_get(libvlcInstance);
         if (audioOutputs != null) {
             libvlc_audio_output_t audioOutput = audioOutputs;
             while (audioOutput != null) {
@@ -55,7 +60,7 @@ public final class AudioApi extends BaseApi {
                 result.add(new AudioOutput(name, description, getAudioOutputDevices(name)));
                 audioOutput = audioOutput.p_next;
             }
-            libvlc.libvlc_audio_output_list_release(audioOutputs.getPointer());
+            libvlc_audio_output_list_release(audioOutputs.getPointer());
         }
         return result;
     }
@@ -68,7 +73,7 @@ public final class AudioApi extends BaseApi {
      */
     private List<AudioDevice> getAudioOutputDevices(String outputName) {
         List<AudioDevice> result = new ArrayList<AudioDevice>();
-        libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_list_get(libvlcInstance, outputName);
+        libvlc_audio_output_device_t audioDevices = libvlc_audio_output_device_list_get(libvlcInstance, outputName);
         if (audioDevices != null) {
             libvlc_audio_output_device_t audioDevice = audioDevices;
             while(audioDevice != null) {
@@ -77,7 +82,7 @@ public final class AudioApi extends BaseApi {
                 result.add(new AudioDevice(device, description));
                 audioDevice = audioDevice.p_next;
             }
-            libvlc.libvlc_audio_output_device_list_release(audioDevices.getPointer());
+            libvlc_audio_output_device_list_release(audioDevices.getPointer());
         }
         return result;
     }

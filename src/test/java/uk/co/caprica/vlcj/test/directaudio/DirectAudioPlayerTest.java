@@ -19,17 +19,17 @@
 
 package uk.co.caprica.vlcj.test.directaudio;
 
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.callback.DefaultAudioCallbackAdapter;
+import uk.co.caprica.vlcj.test.VlcjTest;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.Semaphore;
-
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.base.callback.DefaultAudioCallbackAdapter;
-import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * Test for the {@link DirectAudioPlayer}.

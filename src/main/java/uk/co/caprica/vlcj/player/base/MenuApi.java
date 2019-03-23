@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_navigate;
+
 /**
  * Behaviour pertaining to the menu (e.g. DVD and Bluray menus).
  */
@@ -66,7 +68,7 @@ public final class MenuApi extends BaseApi {
     }
 
     private void doMenuAction(libvlc_navigate_mode_e action) {
-        libvlc.libvlc_media_player_navigate(mediaPlayerInstance, action.intValue());
+        libvlc_media_player_navigate(mediaPlayerInstance, action.intValue());
     }
 
 }

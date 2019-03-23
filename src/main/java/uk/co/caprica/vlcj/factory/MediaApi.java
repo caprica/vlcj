@@ -19,13 +19,13 @@
 
 package uk.co.caprica.vlcj.factory;
 
-import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaFactory;
+import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListFactory;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
-import uk.co.caprica.vlcj.media.MediaRef;
 
 /**
  * Behaviour pertaining to creation of various types of media and media lists.
@@ -46,7 +46,7 @@ public final class MediaApi extends BaseApi {
      * @return media reference, or <code>null</code> on error
      */
     public MediaRef newMediaRef(String mrl, String... options) {
-        return MediaFactory.newMediaRef(libvlc, libvlcInstance, mrl, options);
+        return MediaFactory.newMediaRef(libvlcInstance, mrl, options);
     }
 
     /**
@@ -62,7 +62,7 @@ public final class MediaApi extends BaseApi {
      * @return media reference, or <code>null</code> on error
      */
     public MediaRef newMediaRef(CallbackMedia callbackMedia, String... options) {
-        return MediaFactory.newMediaRef(libvlc, libvlcInstance, callbackMedia, options);
+        return MediaFactory.newMediaRef(libvlcInstance, callbackMedia, options);
     }
 
     /**
@@ -77,7 +77,7 @@ public final class MediaApi extends BaseApi {
      * @return media reference, or <code>null</code> on error
      */
     public MediaRef newMediaRef(Media media, String... options) {
-        return MediaFactory.newMediaRef(libvlc, libvlcInstance, media, options);
+        return MediaFactory.newMediaRef(libvlcInstance, media, options);
     }
 
     /**
@@ -92,7 +92,7 @@ public final class MediaApi extends BaseApi {
      * @return media reference, or <code>null</code> on error
      */
     public MediaRef newMediaRef(MediaRef mediaRef, String... options) {
-        return MediaFactory.newMediaRef(libvlc, libvlcInstance, mediaRef, options);
+        return MediaFactory.newMediaRef(libvlcInstance, mediaRef, options);
     }
 
     /**
@@ -105,7 +105,7 @@ public final class MediaApi extends BaseApi {
      * @return media, or <code>null</code> on error
      */
     public Media newMedia(String mrl, String... options) {
-        return MediaFactory.newMedia(libvlc, libvlcInstance, mrl, options);
+        return MediaFactory.newMedia(libvlcInstance, mrl, options);
     }
 
     /**
@@ -121,7 +121,7 @@ public final class MediaApi extends BaseApi {
      * @return media, or <code>null</code> on error
      */
     public Media newMedia(CallbackMedia callbackMedia, String... options) {
-        return MediaFactory.newMedia(libvlc, libvlcInstance, callbackMedia, options);
+        return MediaFactory.newMedia(libvlcInstance, callbackMedia, options);
     }
 
     /**
@@ -136,7 +136,7 @@ public final class MediaApi extends BaseApi {
      * @return media, or <code>null</code> on error
      */
     public Media newMedia(MediaRef mediaRef, String... options) {
-        return MediaFactory.newMedia(libvlc, libvlcInstance, mediaRef, options);
+        return MediaFactory.newMedia(libvlcInstance, mediaRef, options);
     }
 
     /**
@@ -151,7 +151,7 @@ public final class MediaApi extends BaseApi {
      * @return media, or <code>null</code> on error
      */
     public Media newMedia(Media media, String... options) {
-        return MediaFactory.newMedia(libvlc, libvlcInstance, media, options);
+        return MediaFactory.newMedia(libvlcInstance, media, options);
     }
 
     /**
@@ -160,7 +160,7 @@ public final class MediaApi extends BaseApi {
      * @return media list reference, or <code>null</code> on error
      */
     public MediaListRef newMediaListRef() {
-        return MediaListFactory.newMediaListRef(libvlc, libvlcInstance);
+        return MediaListFactory.newMediaListRef(libvlcInstance);
     }
 
     /**
@@ -169,7 +169,7 @@ public final class MediaApi extends BaseApi {
      * @return media list, or <code>null</code> on error
      */
     public MediaList newMediaList() {
-        return MediaListFactory.newMediaList(libvlc, libvlcInstance);
+        return MediaListFactory.newMediaList(libvlcInstance);
     }
 
 }

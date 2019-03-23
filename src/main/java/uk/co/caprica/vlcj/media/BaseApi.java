@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 
@@ -30,15 +29,12 @@ abstract class BaseApi {
 
     protected final Media media;
 
-    protected final LibVlc libvlc;
-
     protected final libvlc_instance_t libvlcInstance;
 
     protected final libvlc_media_t mediaInstance;
 
     BaseApi(Media media) {
         this.media = media;
-        this.libvlc = media.libvlc;
         this.libvlcInstance = media.libvlcInstance;
         this.mediaInstance = media.mediaInstance();
     }

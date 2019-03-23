@@ -20,10 +20,13 @@
 package uk.co.caprica.vlcj.test.factory;
 
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.factory.DialogHandler;
+import uk.co.caprica.vlcj.factory.DialogId;
 import uk.co.caprica.vlcj.factory.DialogQuestionType;
-import uk.co.caprica.vlcj.factory.*;
-import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.factory.Dialogs;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;

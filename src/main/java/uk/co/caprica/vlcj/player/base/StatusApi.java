@@ -19,6 +19,18 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_can_pause;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_length;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_position;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_rate;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_state;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_time;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_has_vout;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_is_playing;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_is_seekable;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_program_scrambled;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_will_play;
+
 /**
  * Behaviour pertaining to the status of the media player.
  * <p>
@@ -36,7 +48,7 @@ public final class StatusApi extends BaseApi {
      * @return <code>true</code> if the current media is playable, otherwise <code>false</code>
      */
     public boolean isPlayable() {
-        return libvlc.libvlc_media_player_will_play(mediaPlayerInstance) == 1;
+        return libvlc_media_player_will_play(mediaPlayerInstance) == 1;
     }
 
     /**
@@ -45,7 +57,7 @@ public final class StatusApi extends BaseApi {
      * @return <code>true</code> if the media player is playing, otherwise <code>false</code>
      */
     public boolean isPlaying() {
-        return libvlc.libvlc_media_player_is_playing(mediaPlayerInstance) == 1;
+        return libvlc_media_player_is_playing(mediaPlayerInstance) == 1;
     }
 
     /**
@@ -54,7 +66,7 @@ public final class StatusApi extends BaseApi {
      * @return <code>true</code> if the current media is seekable, otherwise <code>false</code>
      */
     public boolean isSeekable() {
-        return libvlc.libvlc_media_player_is_seekable(mediaPlayerInstance) == 1;
+        return libvlc_media_player_is_seekable(mediaPlayerInstance) == 1;
     }
 
     /**
@@ -63,7 +75,7 @@ public final class StatusApi extends BaseApi {
      * @return <code>true</code> if the current media can be paused, otherwise <code>false</code>
      */
     public boolean canPause() {
-        return libvlc.libvlc_media_player_can_pause(mediaPlayerInstance) == 1;
+        return libvlc_media_player_can_pause(mediaPlayerInstance) == 1;
     }
 
     /**
@@ -72,7 +84,7 @@ public final class StatusApi extends BaseApi {
      * @return <code>true</code> if the current program is scrambled, otherwise <code>false</code>
      */
     public boolean programScrambled() {
-        return libvlc.libvlc_media_player_program_scrambled(mediaPlayerInstance) == 1;
+        return libvlc_media_player_program_scrambled(mediaPlayerInstance) == 1;
     }
 
     /**
@@ -81,7 +93,7 @@ public final class StatusApi extends BaseApi {
      * @return length, in milliseconds
      */
     public long length() {
-        return libvlc.libvlc_media_player_get_length(mediaPlayerInstance);
+        return libvlc_media_player_get_length(mediaPlayerInstance);
     }
 
     /**
@@ -90,7 +102,7 @@ public final class StatusApi extends BaseApi {
      * @return current time, expressed as a number of milliseconds
      */
     public long time() {
-        return libvlc.libvlc_media_player_get_time(mediaPlayerInstance);
+        return libvlc_media_player_get_time(mediaPlayerInstance);
     }
 
     /**
@@ -99,7 +111,7 @@ public final class StatusApi extends BaseApi {
      * @return current position, expressed as a percentage (e.g. 0.15 is returned for 15% complete)
      */
     public float position() {
-        return libvlc.libvlc_media_player_get_position(mediaPlayerInstance);
+        return libvlc_media_player_get_position(mediaPlayerInstance);
     }
 
     /**
@@ -108,7 +120,7 @@ public final class StatusApi extends BaseApi {
      * @return rate, where 1.0 is normal speed, 0.5 is half speed, 2.0 is double speed and so on
      */
     public float rate() {
-        return libvlc.libvlc_media_player_get_rate(mediaPlayerInstance);
+        return libvlc_media_player_get_rate(mediaPlayerInstance);
     }
 
     /**
@@ -117,7 +129,7 @@ public final class StatusApi extends BaseApi {
      * @return number of video outputs, may be zero
      */
     public int videoOutputs() {
-        return libvlc.libvlc_media_player_has_vout(mediaPlayerInstance);
+        return libvlc_media_player_has_vout(mediaPlayerInstance);
     }
 
     /**
@@ -128,7 +140,7 @@ public final class StatusApi extends BaseApi {
      * @return state current media player state
      */
     public State state() {
-        return State.state(libvlc.libvlc_media_player_get_state(mediaPlayerInstance));
+        return State.state(libvlc_media_player_get_state(mediaPlayerInstance));
     }
 
 }

@@ -19,11 +19,11 @@
 
 package uk.co.caprica.vlcj.test.meta;
 
-import uk.co.caprica.vlcj.waiter.media.ParsedWaiter;
-import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.test.VlcjTest;
+import uk.co.caprica.vlcj.waiter.media.ParsedWaiter;
 
 /**
  * Simple test to update local file meta data.

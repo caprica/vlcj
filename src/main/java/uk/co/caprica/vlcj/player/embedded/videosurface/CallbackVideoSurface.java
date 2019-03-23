@@ -22,12 +22,18 @@ package uk.co.caprica.vlcj.player.embedded.videosurface;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.internal.*;
+import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_callbacks;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_format_callbacks;
 
 /**
  * Implementation of a video surface that uses native callbacks to receive video frame data for rendering.
@@ -66,11 +72,11 @@ public class CallbackVideoSurface extends VideoSurface {
     }
 
     @Override
-    public void attach(LibVlc libvlc, MediaPlayer mediaPlayer) {
+    public void attach(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
 
-        libvlc.libvlc_video_set_format_callbacks(mediaPlayer.mediaPlayerInstance(), setup, cleanup);
-        libvlc.libvlc_video_set_callbacks(mediaPlayer.mediaPlayerInstance(), lock, unlock, display, null);
+        libvlc_video_set_format_callbacks(mediaPlayer.mediaPlayerInstance(), setup, cleanup);
+        libvlc_video_set_callbacks(mediaPlayer.mediaPlayerInstance(), lock, unlock, display, null);
     }
 
     /**

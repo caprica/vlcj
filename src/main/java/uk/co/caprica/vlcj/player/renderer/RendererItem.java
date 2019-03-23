@@ -19,9 +19,15 @@
 
 package uk.co.caprica.vlcj.player.renderer;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_flags;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_hold;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_icon_uri;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_name;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_type;
 
 /**
  * Encapsulation of a renderer item.
@@ -37,11 +43,6 @@ public final class RendererItem {
      * Native flag value signifying this item can play video.
      */
     private static final int CAN_VIDEO = 0x0002;
-
-    /**
-     * Native library.
-     */
-    private final LibVlc libvlc;
 
     /**
      * Native renderer item instance.
@@ -76,18 +77,16 @@ public final class RendererItem {
     /**
      * Create a new renderer item.
      *
-     * @param libvlc native library
      * @param item native renderer item instance
      */
-    public RendererItem(LibVlc libvlc, libvlc_renderer_item_t item) {
-        this.libvlc = libvlc;
+    public RendererItem(libvlc_renderer_item_t item) {
         this.item = item;
 
-        this.name = libvlc.libvlc_renderer_item_name(item);
-        this.type = libvlc.libvlc_renderer_item_type(item);
-        this.iconUri = libvlc.libvlc_renderer_item_icon_uri(item);
+        this.name = libvlc_renderer_item_name(item);
+        this.type = libvlc_renderer_item_type(item);
+        this.iconUri = libvlc_renderer_item_icon_uri(item);
 
-        int flags = libvlc.libvlc_renderer_item_flags(item);
+        int flags = libvlc_renderer_item_flags(item);
         this.canAudio = (flags & CAN_AUDIO) != 0;
         this.canVideo = (flags & CAN_VIDEO) != 0;
     }
@@ -148,7 +147,7 @@ public final class RendererItem {
      * @return <code>true</code> if the renderer item was successfully held; <code>false</code> on error
      */
     public boolean hold() {
-        return libvlc.libvlc_renderer_item_hold(item) != null;
+        return libvlc_renderer_item_hold(item) != null;
     }
 
     /**
@@ -157,7 +156,7 @@ public final class RendererItem {
      * The renderer item may still be kept and re-used, invoke {@link #hold()} again.
      */
     public void release() {
-        libvlc.libvlc_renderer_item_release(item);
+        libvlc_renderer_item_release(item);
     }
 
     /**

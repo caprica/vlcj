@@ -21,6 +21,11 @@ package uk.co.caprica.vlcj.factory;
 
 import com.sun.jna.Pointer;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_dismiss;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_post_action;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_post_login;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_set_callbacks;
+
 /**
  * Behaviour pertaining to native dialogs.
  */
@@ -63,7 +68,7 @@ public final class DialogsApi extends BaseApi {
      * @param userData opaque user data associated with each dialog
      */
     public void enable(Dialogs dialogs, Pointer userData) {
-        libvlc.libvlc_dialog_set_callbacks(libvlcInstance, dialogs.callbacks(), userData);
+        libvlc_dialog_set_callbacks(libvlcInstance, dialogs.callbacks(), userData);
     }
 
     /**
@@ -72,7 +77,7 @@ public final class DialogsApi extends BaseApi {
      * @param userData opaque user data associated with each dialog
      */
     public void disable(Pointer userData) {
-        libvlc.libvlc_dialog_set_callbacks(libvlcInstance, null, userData);
+        libvlc_dialog_set_callbacks(libvlcInstance, null, userData);
     }
 
     /**
@@ -85,7 +90,7 @@ public final class DialogsApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean postLogin(DialogId id, String username, String password, boolean storeCredentials) {
-        return libvlc.libvlc_dialog_post_login(id.id(), username, password, storeCredentials ? 1 : 0) == 0;
+        return libvlc_dialog_post_login(id.id(), username, password, storeCredentials ? 1 : 0) == 0;
     }
 
     /**
@@ -96,7 +101,7 @@ public final class DialogsApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean postAction(DialogId id, int action) {
-        return libvlc.libvlc_dialog_post_action(id.id(), action) == 0;
+        return libvlc_dialog_post_action(id.id(), action) == 0;
     }
 
     /**
@@ -106,7 +111,7 @@ public final class DialogsApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean dismiss(DialogId id) {
-        return libvlc.libvlc_dialog_dismiss(id.id()) == 0;
+        return libvlc_dialog_dismiss(id.id()) == 0;
     }
 
 }

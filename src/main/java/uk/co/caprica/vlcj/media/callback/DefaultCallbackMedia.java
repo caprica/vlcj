@@ -19,9 +19,9 @@
 
 package uk.co.caprica.vlcj.media.callback;
 
-import java.io.IOException;
-
 import com.sun.jna.Pointer;
+
+import java.io.IOException;
 
 /**
  * Implementation of a {@link CallbackMedia} media that uses a Java byte array for an IO buffer when reading media data.

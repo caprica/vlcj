@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.player.renderer.events;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscoverer;
@@ -36,13 +35,14 @@ public final class RendererDiscovererEventFactory {
      * non-primitive values like Strings) because once the event handler returns the native memory will be gone. Without
      * copying such structure values pointers will become invalid.
      *
+     * @param rendererDiscoverer component the event relates to
      * @param event native event
      * @return media player event, or <code>null</code> if the native event type is not enabled or otherwise could not be handled
      */
-    public static RendererDiscovererEvent createEvent(LibVlc libvlc, RendererDiscoverer rendererDiscoverer, libvlc_event_t event) {
+    public static RendererDiscovererEvent createEvent(RendererDiscoverer rendererDiscoverer, libvlc_event_t event) {
         switch(libvlc_event_e.event(event.type)) {
-            case libvlc_RendererDiscovererItemAdded  : return new RendererDiscovererItemAddedEvent  (libvlc, rendererDiscoverer, event);
-            case libvlc_RendererDiscovererItemDeleted: return new RendererDiscovererItemDeletedEvent(libvlc, rendererDiscoverer, event);
+            case libvlc_RendererDiscovererItemAdded  : return new RendererDiscovererItemAddedEvent  (rendererDiscoverer, event);
+            case libvlc_RendererDiscovererItemDeleted: return new RendererDiscovererItemDeletedEvent(rendererDiscoverer, event);
 
             default                                  : return null;
         }

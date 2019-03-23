@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.medialist.events;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -45,13 +44,12 @@ final class MediaListWillDeleteItemEvent extends MediaListEvent {
     /**
      * Create a media list event.
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @param mediaList media list the event relates to
      * @param event native event
      */
-    MediaListWillDeleteItemEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaList mediaList, libvlc_event_t event) {
-        super(libvlc, libvlcInstance, mediaList);
+    MediaListWillDeleteItemEvent(libvlc_instance_t libvlcInstance, MediaList mediaList, libvlc_event_t event) {
+        super(libvlcInstance, mediaList);
 
         media_list_will_delete_item deleteItemEvent = ((media_list_will_delete_item) event.u.getTypedValue(media_list_will_delete_item.class));
 

@@ -19,24 +19,19 @@
 
 package uk.co.caprica.vlcj.test.list;
 
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import uk.co.caprica.vlcj.player.list.PlaybackMode;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.list.PlaybackMode;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Example showing how to combine a media list player with an embedded media player.

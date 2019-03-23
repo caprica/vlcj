@@ -19,16 +19,16 @@
 
 package uk.co.caprica.vlcj.test.condition;
 
-import java.io.File;
-
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.test.VlcjTest;
+import uk.co.caprica.vlcj.waiter.UnexpectedWaiterErrorException;
+import uk.co.caprica.vlcj.waiter.UnexpectedWaiterFinishedException;
 import uk.co.caprica.vlcj.waiter.mediaplayer.ReadyWaiter;
 import uk.co.caprica.vlcj.waiter.mediaplayer.SnapshotTakenWaiter;
 import uk.co.caprica.vlcj.waiter.mediaplayer.TimeReachedWaiter;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.waiter.UnexpectedWaiterErrorException;
-import uk.co.caprica.vlcj.waiter.UnexpectedWaiterFinishedException;
-import uk.co.caprica.vlcj.test.VlcjTest;
+
+import java.io.File;
 
 /**
  * Demonstration of the synchronous approach to media player programming when using media player conditional waiter

@@ -19,20 +19,14 @@
 
 package uk.co.caprica.vlcj.test.dwm;
 
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import uk.co.caprica.vlcj.binding.LibDwmApi;
-
 import com.sun.jna.platform.win32.WinNT.HRESULT;
 import com.sun.jna.ptr.IntByReference;
+import uk.co.caprica.vlcj.binding.LibDwmApi;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Simple test to enable/disable desktop compositing on Windows.

@@ -19,12 +19,12 @@
 
 package uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive;
 
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveModeFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.osx.OsxFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.windows.Win32FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.x.XFullScreenStrategy;
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 import java.awt.*;
 

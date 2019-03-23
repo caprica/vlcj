@@ -21,6 +21,10 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_thumbnail_request_t;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_thumbnail_cancel;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_thumbnail_request_by_pos;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_thumbnail_request_by_time;
+
 /**
  * Behaviour pertaining to media thumbnails.
  */
@@ -42,7 +46,7 @@ public final class ThumbnailApi extends BaseApi {
      * @return thunbnail request
      */
     public ThumbnailRequest requestByTime(long time, ThumbnailerSeekSpeed speed, int width, int height, PictureType pictureType, long timeout) {
-        libvlc_media_thumbnail_request_t request = libvlc.libvlc_media_thumbnail_request_by_time(mediaInstance, time, speed.intValue(), width, height, pictureType.intValue(), timeout);
+        libvlc_media_thumbnail_request_t request = libvlc_media_thumbnail_request_by_time(mediaInstance, time, speed.intValue(), width, height, pictureType.intValue(), timeout);
         if (request != null) {
             return new ThumbnailRequest(request);
         } else {
@@ -62,7 +66,7 @@ public final class ThumbnailApi extends BaseApi {
      * @return thunbnail request
      */
     public ThumbnailRequest requestByPosition(float position, ThumbnailerSeekSpeed speed, int width, int height, PictureType pictureType, long timeout) {
-        libvlc_media_thumbnail_request_t request = libvlc.libvlc_media_thumbnail_request_by_pos(mediaInstance, position, speed.intValue(), width, height, pictureType.intValue(), timeout);
+        libvlc_media_thumbnail_request_t request = libvlc_media_thumbnail_request_by_pos(mediaInstance, position, speed.intValue(), width, height, pictureType.intValue(), timeout);
         if (request != null) {
             return new ThumbnailRequest(request);
         } else {
@@ -76,7 +80,7 @@ public final class ThumbnailApi extends BaseApi {
      * @param request request to cancel
      */
     public void cancel(ThumbnailRequest request) {
-        libvlc.libvlc_media_thumbnail_cancel(request.instance());
+        libvlc_media_thumbnail_cancel(request.instance());
     }
 
 }

@@ -19,19 +19,13 @@
 
 package uk.co.caprica.vlcj.test.screen;
 
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * An example of "playing" the screen/desktop.

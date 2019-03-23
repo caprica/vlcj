@@ -19,7 +19,8 @@
 
 package uk.co.caprica.vlcj.support.version;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_changeset;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_version;
 
 /**
  * Holder for runtime LibVLC version information.
@@ -43,12 +44,10 @@ public final class LibVlcVersion {
 
     /**
      * Create a version component.
-     *
-     * @param libvlc native library interface
      */
-    public LibVlcVersion(LibVlc libvlc) {
-        this.actualVersion = new Version(libvlc.libvlc_get_version());
-        this.changeset = libvlc.libvlc_get_changeset();
+    public LibVlcVersion() {
+        this.actualVersion = new Version(libvlc_get_version());
+        this.changeset = libvlc_get_changeset();
     }
 
     /**

@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.media.events;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.media_duration_changed;
@@ -36,13 +35,12 @@ final class MediaDurationChangedEvent extends MediaEvent {
     /**
      * Create a media event.
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @param media component the event relates to
      * @param event native event
      */
-    MediaDurationChangedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
-        super(libvlc, libvlcInstance, media);
+    MediaDurationChangedEvent(libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
+        super(libvlcInstance, media);
         this.newDuration = ((media_duration_changed) event.u.getTypedValue(media_duration_changed.class)).new_duration;
     }
 

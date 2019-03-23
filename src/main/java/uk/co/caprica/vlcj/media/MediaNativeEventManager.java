@@ -19,29 +19,30 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.media.events.MediaEventFactory;
 import uk.co.caprica.vlcj.support.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.support.eventmanager.NativeEventManager;
-import uk.co.caprica.vlcj.media.events.MediaEventFactory;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_event_manager;
 
 final class MediaNativeEventManager extends NativeEventManager<Media, MediaEventListener> {
 
-    MediaNativeEventManager(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media eventObject) {
-        super(libvlc, libvlcInstance, eventObject, libvlc_event_e.libvlc_MediaMetaChanged, libvlc_event_e.libvlc_MediaThumbnailGenerated, "media-events");
+    MediaNativeEventManager(libvlc_instance_t libvlcInstance, Media eventObject) {
+        super(libvlcInstance, eventObject, libvlc_event_e.libvlc_MediaMetaChanged, libvlc_event_e.libvlc_MediaThumbnailGenerated, "media-events");
     }
 
     @Override
-    protected libvlc_event_manager_t onGetEventManager(LibVlc libvlc, Media eventObject) {
-        return libvlc.libvlc_media_event_manager(eventObject.mediaInstance());
+    protected libvlc_event_manager_t onGetEventManager(Media eventObject) {
+        return libvlc_media_event_manager(eventObject.mediaInstance());
     }
 
     @Override
-    protected EventNotification<MediaEventListener> onCreateEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_event_t event, Media eventObject) {
-        return MediaEventFactory.createEvent(libvlc, libvlcInstance, eventObject, event);
+    protected EventNotification<MediaEventListener> onCreateEvent(libvlc_instance_t libvlcInstance, libvlc_event_t event, Media eventObject) {
+        return MediaEventFactory.createEvent(libvlcInstance, eventObject, event);
     }
 
 }

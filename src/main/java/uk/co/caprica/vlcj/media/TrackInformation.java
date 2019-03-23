@@ -22,15 +22,26 @@ package uk.co.caprica.vlcj.media;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.PointerByReference;
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.NativeString;
-import uk.co.caprica.vlcj.binding.internal.*;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_track_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_subtitle_track_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_track_t;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_codec_description;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_tracks_get;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_tracks_release;
 
 final class TrackInformation {
 
-    static List<TrackInfo> getTrackInfo(LibVlc libvlc, libvlc_media_t media, TrackType... types) {
+    static List<TrackInfo> getTrackInfo(libvlc_media_t media, TrackType... types) {
         List<TrackInfo> result;
         if (media != null) {
             Set<TrackType> requestedTypes;
@@ -43,63 +54,63 @@ final class TrackInformation {
                     requestedTypes.add(type);
                 }
             }
-            result = TrackInformation.getTrackInfo(libvlc, media, requestedTypes);
+            result = TrackInformation.getTrackInfo(media, requestedTypes);
         } else {
             result = Collections.emptyList();
         }
         return result;
     }
 
-    private static List<TrackInfo> getTrackInfo(LibVlc libvlc, libvlc_media_t media, Set<TrackType> types) {
+    private static List<TrackInfo> getTrackInfo(libvlc_media_t media, Set<TrackType> types) {
         PointerByReference tracksPointer = new PointerByReference();
-        int numberOfTracks = libvlc.libvlc_media_tracks_get(media, tracksPointer);
+        int numberOfTracks = libvlc_media_tracks_get(media, tracksPointer);
         List<TrackInfo> result = new ArrayList<TrackInfo>(numberOfTracks);
         if (numberOfTracks > 0) {
             Pointer[] tracks = tracksPointer.getValue().getPointerArray(0, numberOfTracks);
             for (Pointer track : tracks) {
-                TrackInfo trackInfo = getTrackInfo(libvlc, track, types);
+                TrackInfo trackInfo = getTrackInfo(track, types);
                 if (trackInfo != null) {
                     result.add(trackInfo);
                 }
             }
-            libvlc.libvlc_media_tracks_release(tracksPointer.getValue(), numberOfTracks);
+            libvlc_media_tracks_release(tracksPointer.getValue(), numberOfTracks);
         }
         return result;
     }
 
-    private static TrackInfo getTrackInfo(LibVlc libvlc, Pointer pointer, Set<TrackType> types) {
+    private static TrackInfo getTrackInfo(Pointer pointer, Set<TrackType> types) {
         TrackInfo result = null;
         libvlc_media_track_t track = Structure.newInstance(libvlc_media_track_t.class, pointer);
         track.read();
         switch (TrackType.trackType(track.i_type)) {
             case UNKNOWN:
                 if (types == null || types.contains(TrackType.UNKNOWN)) {
-                    result = getUnknownTrackInfo(libvlc, track);
+                    result = getUnknownTrackInfo(track);
                 }
                 break;
 
             case VIDEO:
                 if (types == null || types.contains(TrackType.VIDEO)) {
-                    result = getVideoTrackInfo(libvlc, track);
+                    result = getVideoTrackInfo(track);
                 }
                 break;
 
             case AUDIO:
                 if (types == null || types.contains(TrackType.AUDIO)) {
-                    result = getAudioTrackInfo(libvlc, track);
+                    result = getAudioTrackInfo(track);
                 }
                 break;
 
             case TEXT:
                 if (types == null || types.contains(TrackType.TEXT)) {
-                    result = getTextTrackInfo(libvlc, track);
+                    result = getTextTrackInfo(track);
                 }
                 break;
         }
         return result;
     }
 
-    private static TrackInfo getUnknownTrackInfo(LibVlc libvlc, libvlc_media_track_t track) {
+    private static TrackInfo getUnknownTrackInfo(libvlc_media_track_t track) {
         return new UnknownTrackInfo(
             track.i_codec,
             track.i_original_fourcc,
@@ -109,11 +120,11 @@ final class TrackInformation {
             track.i_bitrate,
             NativeString.copyNativeString(track.psz_language),
             NativeString.copyNativeString(track.psz_description),
-            codecDescription(libvlc, TrackType.UNKNOWN, track.i_codec)
+            codecDescription(TrackType.UNKNOWN, track.i_codec)
         );
     }
 
-    private static TrackInfo getVideoTrackInfo(LibVlc libvlc, libvlc_media_track_t track) {
+    private static TrackInfo getVideoTrackInfo(libvlc_media_track_t track) {
         track.u.setType(libvlc_video_track_t.class);
         track.u.read();
         return new VideoTrackInfo(
@@ -138,11 +149,11 @@ final class TrackInformation {
             track.u.video.pose.f_roll,
             track.u.video.pose.f_field_of_view,
             null,
-            codecDescription(libvlc, TrackType.VIDEO, track.i_codec)
+            codecDescription(TrackType.VIDEO, track.i_codec)
         );
     }
 
-    private static TrackInfo getAudioTrackInfo(LibVlc libvlc, libvlc_media_track_t track) {
+    private static TrackInfo getAudioTrackInfo(libvlc_media_track_t track) {
         track.u.setType(libvlc_audio_track_t.class);
         track.u.read();
         return new AudioTrackInfo(
@@ -156,11 +167,11 @@ final class TrackInformation {
             NativeString.copyNativeString(track.psz_description),
             track.u.audio.i_channels,
             track.u.audio.i_rate,
-            codecDescription(libvlc, TrackType.AUDIO, track.i_codec)
+            codecDescription(TrackType.AUDIO, track.i_codec)
         );
     }
 
-    private static TrackInfo getTextTrackInfo(LibVlc libvlc, libvlc_media_track_t track) {
+    private static TrackInfo getTextTrackInfo(libvlc_media_track_t track) {
         track.u.setType(libvlc_subtitle_track_t.class);
         track.u.read();
         return new TextTrackInfo(
@@ -173,12 +184,12 @@ final class TrackInformation {
             NativeString.copyNativeString(track.psz_language),
             NativeString.copyNativeString(track.psz_description),
             NativeString.copyNativeString(track.u.subtitle.psz_encoding),
-            codecDescription(libvlc, TrackType.TEXT, track.i_codec)
+            codecDescription(TrackType.TEXT, track.i_codec)
         );
     }
 
-    private static String codecDescription(LibVlc libvlc, TrackType type, int codec) {
-        return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
+    private static String codecDescription(TrackType type, int codec) {
+        return libvlc_media_get_codec_description(type.intValue(), codec);
     }
 
     private TrackInformation() {

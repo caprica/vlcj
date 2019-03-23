@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
@@ -46,9 +45,8 @@ public abstract class VideoSurface {
      * <p>
      * The video surface component <em>must</em> be visible at this point otherwise the native call will fail.
      *
-     * @param libvlc native library interface
      * @param mediaPlayer media player instance
      */
-    public abstract void attach(LibVlc libvlc, MediaPlayer mediaPlayer);
+    public abstract void attach(MediaPlayer mediaPlayer);
 
 }

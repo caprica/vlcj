@@ -19,17 +19,15 @@
 
 package uk.co.caprica.vlcj.test.mediacallback;
 
+import uk.co.caprica.vlcj.media.callback.seekable.RandomAccessFileMedia;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.test.VlcjTest;
+import uk.co.caprica.vlcj.test.minimal.MinimalTestPlayer;
+
+import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.media.callback.seekable.RandomAccessFileMedia;
-import uk.co.caprica.vlcj.test.VlcjTest;
-import uk.co.caprica.vlcj.test.minimal.MinimalTestPlayer;
 
 /**
  * Minimal test for the media callbacks.

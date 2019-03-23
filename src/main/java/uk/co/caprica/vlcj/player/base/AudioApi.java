@@ -27,6 +27,30 @@ import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_band_count;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_new;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_set_amp_at_index;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_set_preamp;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_channel;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_delay;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_mute;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_track;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_track_count;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_volume;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_enum;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_get;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_list_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_set;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_set;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_channel;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_delay;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_mute;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_track;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_volume;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_toggle_mute;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_equalizer;
+
 /**
  * Behaviour pertaining to media player audio.
  */
@@ -51,7 +75,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
 
     AudioApi(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
-        audioCallbacks = new AudioCallbacks(libvlc, mediaPlayer);
+        audioCallbacks = new AudioCallbacks(mediaPlayer);
     }
 
     /**
@@ -65,7 +89,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return <code>true</code> if the output was successfully set, otherwise <code>false</code>
      */
     public boolean setOutput(String output) {
-        return 0 == libvlc.libvlc_audio_output_set(mediaPlayerInstance, output);
+        return 0 == libvlc_audio_output_set(mediaPlayerInstance, output);
     }
 
     /**
@@ -76,7 +100,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return identifier of the current audio output device, or <code>null</code> if not available
      */
     public String outputDevice() {
-        return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_audio_output_device_get(mediaPlayerInstance));
+        return NativeString.copyAndFreeNativeString(libvlc_audio_output_device_get(mediaPlayerInstance));
     }
 
     /**
@@ -93,7 +117,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @param outputDeviceId id of the desired audio output device
      */
     public void setOutputDevice(String output, String outputDeviceId) {
-        libvlc.libvlc_audio_output_device_set(mediaPlayerInstance, output, outputDeviceId);
+        libvlc_audio_output_device_set(mediaPlayerInstance, output, outputDeviceId);
     }
 
     /**
@@ -103,7 +127,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      */
     public List<AudioDevice> outputDevices() {
         List<AudioDevice> result = new ArrayList<AudioDevice>();
-        libvlc_audio_output_device_t audioDevices = libvlc.libvlc_audio_output_device_enum(mediaPlayerInstance);
+        libvlc_audio_output_device_t audioDevices = libvlc_audio_output_device_enum(mediaPlayerInstance);
         if (audioDevices != null) {
             libvlc_audio_output_device_t audioDevice = audioDevices;
             while (audioDevice != null) {
@@ -112,7 +136,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
                 result.add(new AudioDevice(device, description));
                 audioDevice = audioDevice.p_next;
             }
-            libvlc.libvlc_audio_output_device_list_release(audioDevices.getPointer());
+            libvlc_audio_output_device_list_release(audioDevices.getPointer());
         }
         return result;
     }
@@ -123,7 +147,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return mute <code>true</code> if the volume is muted, <code>false</code> if the volume is not muted
      */
     public boolean mute() {
-        libvlc.libvlc_audio_toggle_mute(mediaPlayerInstance);
+        libvlc_audio_toggle_mute(mediaPlayerInstance);
         return isMute();
     }
 
@@ -133,7 +157,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @param mute <code>true</code> to mute the volume, <code>false</code> to un-mute it
      */
     public void setMute(boolean mute) {
-        libvlc.libvlc_audio_set_mute(mediaPlayerInstance, mute ? 1 : 0);
+        libvlc_audio_set_mute(mediaPlayerInstance, mute ? 1 : 0);
     }
 
     /**
@@ -142,7 +166,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return mute <code>true</code> if the volume is muted, <code>false</code> if the volume is not muted
      */
     public boolean isMute() {
-        return libvlc.libvlc_audio_get_mute(mediaPlayerInstance) != 0;
+        return libvlc_audio_get_mute(mediaPlayerInstance) != 0;
     }
 
     /**
@@ -151,7 +175,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return volume, a percentage of full volume in the range 0 to 200
      */
     public int volume() {
-        return libvlc.libvlc_audio_get_volume(mediaPlayerInstance);
+        return libvlc_audio_get_volume(mediaPlayerInstance);
     }
 
     /**
@@ -163,7 +187,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @param volume volume, a percentage of full volume in the range 0 to 200
      */
     public void setVolume(int volume) {
-        libvlc.libvlc_audio_set_volume(mediaPlayerInstance, volume);
+        libvlc_audio_set_volume(mediaPlayerInstance, volume);
     }
 
     /**
@@ -174,7 +198,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return audio channel
      */
     public AudioChannel channel() {
-        return AudioChannel.audioChannel(libvlc.libvlc_audio_get_channel(mediaPlayerInstance));
+        return AudioChannel.audioChannel(libvlc_audio_get_channel(mediaPlayerInstance));
     }
 
     /**
@@ -186,7 +210,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean setChannel(AudioChannel channel) {
-        return libvlc.libvlc_audio_set_channel(mediaPlayerInstance, channel.intValue()) == 0;
+        return libvlc_audio_set_channel(mediaPlayerInstance, channel.intValue()) == 0;
     }
 
     /**
@@ -195,7 +219,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return audio delay, in microseconds
      */
     public long delay() {
-        return libvlc.libvlc_audio_get_delay(mediaPlayerInstance);
+        return libvlc_audio_get_delay(mediaPlayerInstance);
     }
 
     /**
@@ -207,7 +231,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @param delay desired audio delay, in microseconds
      */
     public void setDelay(long delay) {
-        libvlc.libvlc_audio_set_delay(mediaPlayerInstance, delay);
+        libvlc_audio_set_delay(mediaPlayerInstance, delay);
     }
 
     /**
@@ -227,12 +251,12 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
     public void setEqualizer(Equalizer equalizer) {
         if (this.equalizer != null) {
             this.equalizer.removeEqualizerListener(this);
-            libvlc.libvlc_audio_equalizer_release(equalizerInstance);
+            libvlc_audio_equalizer_release(equalizerInstance);
             equalizerInstance = null;
         }
         this.equalizer = equalizer;
         if (this.equalizer != null) {
-            equalizerInstance = libvlc.libvlc_audio_equalizer_new();
+            equalizerInstance = libvlc_audio_equalizer_new();
             this.equalizer.addEqualizerListener(this);
         }
         applyEqualizer();
@@ -248,14 +272,14 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      */
     private void applyEqualizer() {
         if (equalizerInstance != null) {
-            libvlc.libvlc_audio_equalizer_set_preamp(equalizerInstance, equalizer.preamp());
-            for(int i = 0; i < libvlc.libvlc_audio_equalizer_get_band_count(); i ++ ) {
-                libvlc.libvlc_audio_equalizer_set_amp_at_index(equalizerInstance, equalizer.amp(i), i);
+            libvlc_audio_equalizer_set_preamp(equalizerInstance, equalizer.preamp());
+            for(int i = 0; i < libvlc_audio_equalizer_get_band_count(); i ++ ) {
+                libvlc_audio_equalizer_set_amp_at_index(equalizerInstance, equalizer.amp(i), i);
             }
-            libvlc.libvlc_media_player_set_equalizer(mediaPlayerInstance, equalizerInstance);
+            libvlc_media_player_set_equalizer(mediaPlayerInstance, equalizerInstance);
         }
         else {
-            libvlc.libvlc_media_player_set_equalizer(mediaPlayerInstance, null);
+            libvlc_media_player_set_equalizer(mediaPlayerInstance, null);
         }
     }
 
@@ -265,7 +289,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return track count
      */
     public int trackCount() {
-        return libvlc.libvlc_audio_get_track_count(mediaPlayerInstance);
+        return libvlc_audio_get_track_count(mediaPlayerInstance);
     }
 
     /**
@@ -274,7 +298,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return track identifier, see {@link #trackDescriptions()}
      */
     public int track() {
-        return libvlc.libvlc_audio_get_track(mediaPlayerInstance);
+        return libvlc_audio_get_track(mediaPlayerInstance);
     }
 
     /**
@@ -293,7 +317,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return current audio track identifier
      */
     public int setTrack(int track) {
-        libvlc.libvlc_audio_set_track(mediaPlayerInstance, track);
+        libvlc_audio_set_track(mediaPlayerInstance, track);
         return track();
     }
 
@@ -305,7 +329,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return list of descriptions, may be empty but will never be <code>null</code>
      */
     public List<TrackDescription> trackDescriptions() {
-        return Descriptions.audioTrackDescriptions(libvlc, mediaPlayerInstance);
+        return Descriptions.audioTrackDescriptions(mediaPlayerInstance);
     }
 
     /**

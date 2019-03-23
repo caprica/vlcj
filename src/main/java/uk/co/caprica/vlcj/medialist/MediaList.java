@@ -19,19 +19,16 @@
 
 package uk.co.caprica.vlcj.medialist;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_retain;
 
 /**
  * A media list.
  */
 public final class MediaList {
-
-    /**
-     * Native library.
-     */
-    protected final LibVlc libvlc;
 
     /**
      * Native library instance.
@@ -49,11 +46,9 @@ public final class MediaList {
     /**
      * Create a new media list.
      *
-     * @param libvlc
      * @param mediaListInstance native media list, the caller must not release this opaque handle, it will be released by this component when it is no longer needed
      */
-    public MediaList(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_list_t mediaListInstance) {
-        this.libvlc            = libvlc;
+    public MediaList(libvlc_instance_t libvlcInstance, libvlc_media_list_t mediaListInstance) {
         this.libvlcInstance    = libvlcInstance;
         this.mediaListInstance = mediaListInstance;
 
@@ -96,8 +91,8 @@ public final class MediaList {
      * @return media list reference
      */
     public MediaListRef newMediaListRef() {
-        libvlc.libvlc_media_list_retain(mediaListInstance);
-        return new MediaListRef(libvlc, libvlcInstance, mediaListInstance);
+        libvlc_media_list_retain(mediaListInstance);
+        return new MediaListRef(libvlcInstance, mediaListInstance);
     }
 
     /**
@@ -108,8 +103,8 @@ public final class MediaList {
      * @return media list
      */
     public MediaList newMediaList() {
-        libvlc.libvlc_media_list_retain(mediaListInstance);
-        return new MediaList(libvlc, libvlcInstance, mediaListInstance);
+        libvlc_media_list_retain(mediaListInstance);
+        return new MediaList(libvlcInstance, mediaListInstance);
     }
 
     /**
@@ -121,7 +116,7 @@ public final class MediaList {
         eventApi.release();
         itemApi .release();
 
-        libvlc.libvlc_media_list_release(mediaListInstance);
+        libvlc_media_list_release(mediaListInstance);
     }
 
 }

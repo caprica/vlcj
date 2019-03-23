@@ -19,20 +19,14 @@
 
 package uk.co.caprica.vlcj.player.renderer.events;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.support.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscoverer;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscovererEventListener;
+import uk.co.caprica.vlcj.support.eventmanager.EventNotification;
 
 /**
  * Specification for a renderer discoverer event.
  */
 abstract class RendererDiscovererEvent implements EventNotification<RendererDiscovererEventListener> {
-
-    /**
-     * Native library.
-     */
-    protected final LibVlc libvlc;
 
     /**
      * The renderer discoverer the event relates to.
@@ -42,11 +36,9 @@ abstract class RendererDiscovererEvent implements EventNotification<RendererDisc
     /**
      * Create a renderer discoverer event.
      *
-     * @param libvlc native library
      * @param rendererDiscoverer renderer discoverer that the event relates to
      */
-    protected RendererDiscovererEvent(LibVlc libvlc, RendererDiscoverer rendererDiscoverer) {
-        this.libvlc = libvlc;
+    protected RendererDiscovererEvent(RendererDiscoverer rendererDiscoverer) {
         this.rendererDiscoverer = rendererDiscoverer;
     }
 

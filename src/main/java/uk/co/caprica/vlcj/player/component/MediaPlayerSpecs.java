@@ -19,13 +19,13 @@
 
 package uk.co.caprica.vlcj.player.component;
 
-import uk.co.caprica.vlcj.player.component.callback.CallbackImagePainter;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
+import uk.co.caprica.vlcj.player.component.callback.CallbackImagePainter;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive.AdaptiveFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.unsupported.UnsupportedFullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
 
 import javax.swing.*;
 import java.awt.*;

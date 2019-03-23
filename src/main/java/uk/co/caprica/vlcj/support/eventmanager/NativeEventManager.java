@@ -22,7 +22,6 @@ package uk.co.caprica.vlcj.support.eventmanager;
 import com.sun.jna.CallbackThreadInitializer;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
@@ -31,6 +30,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_event_attach;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_event_detach;
 
 /**
  * Common implementation for a component that deals with a native LibVlc event manager.
@@ -41,11 +43,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @param <L> type of the event listener
  */
 abstract public class NativeEventManager<E,L> {
-
-    /**
-     * Native library.
-     */
-    private final LibVlc libvlc;
 
     /**
      * Native library instance.
@@ -96,15 +93,13 @@ abstract public class NativeEventManager<E,L> {
     /**
      * Create a new component to manage native events.
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance, this is allowed to be <code>null</code> for some implementations
      * @param eventObject component that generates events
      * @param firstEvent first event in the range of events to register
      * @param lastEvent last event in the range of events to register
      * @param callbackName name to use for the callback thread initialiser
      */
-    protected NativeEventManager(LibVlc libvlc, libvlc_instance_t libvlcInstance, E eventObject, libvlc_event_e firstEvent, libvlc_event_e lastEvent, String callbackName) {
-        this.libvlc = libvlc;
+    protected NativeEventManager(libvlc_instance_t libvlcInstance, E eventObject, libvlc_event_e firstEvent, libvlc_event_e lastEvent, String callbackName) {
         this.libvlcInstance = libvlcInstance;
         this.eventObject = eventObject;
         this.firstEvent = firstEvent;
@@ -143,10 +138,10 @@ abstract public class NativeEventManager<E,L> {
         if (!callbackRegistered && !eventListenerList.isEmpty()) {
             callbackRegistered = true;
             callback = new EventCallback();
-            libvlc_event_manager_t mediaEventManager = onGetEventManager(libvlc, eventObject);
+            libvlc_event_manager_t mediaEventManager = onGetEventManager(eventObject);
             for (libvlc_event_e event : libvlc_event_e.values()) {
                 if (event.intValue() >= firstEvent.intValue() && event.intValue() <= lastEvent.intValue()) {
-                    libvlc.libvlc_event_attach(mediaEventManager, event.intValue(), callback, null);
+                    libvlc_event_attach(mediaEventManager, event.intValue(), callback, null);
                 }
             }
         }
@@ -158,10 +153,10 @@ abstract public class NativeEventManager<E,L> {
     private void removeNativeEventListener() {
         if (callbackRegistered && eventListenerList.isEmpty()) {
             callbackRegistered = false;
-            libvlc_event_manager_t mediaEventManager = onGetEventManager(libvlc, eventObject);
+            libvlc_event_manager_t mediaEventManager = onGetEventManager(eventObject);
             for (libvlc_event_e event : libvlc_event_e.values()) {
                 if (event.intValue() >= firstEvent.intValue() && event.intValue() <= lastEvent.intValue()) {
-                    libvlc.libvlc_event_detach(mediaEventManager, event.intValue(), callback, null);
+                    libvlc_event_detach(mediaEventManager, event.intValue(), callback, null);
                 }
             }
             callback = null;
@@ -208,7 +203,7 @@ abstract public class NativeEventManager<E,L> {
 
         @Override
         public void callback(libvlc_event_t event, Pointer userData) {
-            raiseEvent(onCreateEvent(libvlc, libvlcInstance, event, eventObject));
+            raiseEvent(onCreateEvent(libvlcInstance, event, eventObject));
         }
 
     }
@@ -216,21 +211,19 @@ abstract public class NativeEventManager<E,L> {
     /**
      * Get the native event manager.
      *
-     * @param libvlc native library
      * @param eventObject component for which to get the event manager (it must provide access to a native resource)
      * @return native event manager, never <code>null</code>
      */
-    protected abstract libvlc_event_manager_t onGetEventManager(LibVlc libvlc, E eventObject);
+    protected abstract libvlc_event_manager_t onGetEventManager(E eventObject);
 
     /**
      * Create an event.
      *
-     * @param libvlc native library
-     * @param libvlcInstance
+     * @param libvlcInstance native library instance
      * @param event native event
      * @param eventObject component that generated the event
      * @return an event, of a type that can intrinsically notify a listener
      */
-    protected abstract EventNotification<L> onCreateEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_event_t event, E eventObject);
+    protected abstract EventNotification<L> onCreateEvent(libvlc_instance_t libvlcInstance, libvlc_event_t event, E eventObject);
 
 }

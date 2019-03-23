@@ -20,10 +20,16 @@
 package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.NativeString;
-import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
+import uk.co.caprica.vlcj.player.base.State;
 
 import java.util.List;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_duration;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_mrl;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_state;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_stats;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_type;
 
 /**
  * Behaviour pertaining to media information, providing things like the media resource locator, type, state and duration
@@ -43,7 +49,7 @@ public final class InfoApi extends BaseApi {
      * @return media resource locator
      */
     public String mrl() {
-        return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_media_get_mrl(mediaInstance));
+        return NativeString.copyAndFreeNativeString(libvlc_media_get_mrl(mediaInstance));
     }
 
     /**
@@ -52,7 +58,7 @@ public final class InfoApi extends BaseApi {
      * @return media type
      */
     public MediaType type() {
-        return MediaType.mediaType(libvlc.libvlc_media_get_type(mediaInstance));
+        return MediaType.mediaType(libvlc_media_get_type(mediaInstance));
     }
 
     /**
@@ -61,7 +67,7 @@ public final class InfoApi extends BaseApi {
      * @return state
      */
     public State state() {
-        return State.state(libvlc.libvlc_media_get_state(mediaInstance));
+        return State.state(libvlc_media_get_state(mediaInstance));
     }
 
     /**
@@ -70,7 +76,7 @@ public final class InfoApi extends BaseApi {
      * @return duration, milliseconds
      */
     public long duration() {
-        return libvlc.libvlc_media_get_duration(mediaInstance);
+        return libvlc_media_get_duration(mediaInstance);
     }
 
     /**
@@ -80,7 +86,7 @@ public final class InfoApi extends BaseApi {
      * @return track information, empty list if no tracks
      */
     public List<? extends TrackInfo> tracks(TrackType... types) {
-        return TrackInformation.getTrackInfo(libvlc, mediaInstance, types);
+        return TrackInformation.getTrackInfo(mediaInstance, types);
     }
 
     /**
@@ -120,7 +126,7 @@ public final class InfoApi extends BaseApi {
      * @return <code>true</code> if the statistics were updated; <code>false</code> on error
      */
     public boolean statistics(MediaStatistics mediaStatistics) {
-        if (libvlc.libvlc_media_get_stats(mediaInstance, statsInstance) != 0) {
+        if (libvlc_media_get_stats(mediaInstance, statsInstance) != 0) {
             mediaStatistics.apply(statsInstance);
             return true;
         } else {
@@ -134,7 +140,7 @@ public final class InfoApi extends BaseApi {
      * @return media statistics, or <code>null</code> on error
      */
     public MediaStatistics statistics() {
-        if (libvlc.libvlc_media_get_stats(mediaInstance, statsInstance) != 0) {
+        if (libvlc_media_get_stats(mediaInstance, statsInstance) != 0) {
             MediaStatistics mediaStatistics = new MediaStatistics();
             mediaStatistics.apply(statsInstance);
             return mediaStatistics;

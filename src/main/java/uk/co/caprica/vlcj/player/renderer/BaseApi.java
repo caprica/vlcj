@@ -19,17 +19,12 @@
 
 package uk.co.caprica.vlcj.player.renderer;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
-
 abstract class BaseApi {
 
     protected final RendererDiscoverer rendererDiscoverer;
 
-    protected final LibVlc libvlc;
-
     BaseApi(RendererDiscoverer rendererDiscoverer) {
         this.rendererDiscoverer = rendererDiscoverer;
-        this.libvlc = rendererDiscoverer.libvlc;
     }
 
     protected void release() {

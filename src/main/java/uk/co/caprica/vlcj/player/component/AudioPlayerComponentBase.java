@@ -19,16 +19,16 @@
 
 package uk.co.caprica.vlcj.player.component;
 
-import uk.co.caprica.vlcj.media.MediaParsedStatus;
-import uk.co.caprica.vlcj.media.Meta;
-import uk.co.caprica.vlcj.media.TrackType;
-import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
+import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.media.Picture;
-import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.player.base.State;
 
 /**
  * Base implementation of an audio player.

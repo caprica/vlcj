@@ -20,11 +20,22 @@
 package uk.co.caprica.vlcj.factory;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
-import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.log.NativeLog;
+import uk.co.caprica.vlcj.media.TrackType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_filter_list_get;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_clock;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_changeset;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_compiler;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_version;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_codec_description;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_module_description_list_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_set_app_id;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_set_user_agent;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_filter_list_get;
 
 /**
  * Behaviour pertaining to the application itself.
@@ -44,7 +55,7 @@ public final class ApplicationApi extends BaseApi {
      * @return native library version
      */
     public String version() {
-        return libvlc.libvlc_get_version();
+        return libvlc_get_version();
     }
 
     /**
@@ -53,7 +64,7 @@ public final class ApplicationApi extends BaseApi {
      * @return compiler
      */
     public String compiler() {
-        return libvlc.libvlc_get_compiler();
+        return libvlc_get_compiler();
     }
 
     /**
@@ -62,7 +73,7 @@ public final class ApplicationApi extends BaseApi {
      * @return change-set
      */
     public String changeset() {
-        return libvlc.libvlc_get_changeset();
+        return libvlc_get_changeset();
     }
 
     /**
@@ -81,7 +92,7 @@ public final class ApplicationApi extends BaseApi {
      * @param httpUserAgent application name for HTTP
      */
     public void setUserAgent(String userAgent, String httpUserAgent) {
-        libvlc.libvlc_set_user_agent(libvlcInstance, userAgent, httpUserAgent);
+        libvlc_set_user_agent(libvlcInstance, userAgent, httpUserAgent);
     }
 
     /**
@@ -92,7 +103,7 @@ public final class ApplicationApi extends BaseApi {
      * @param icon path to application icon
      */
     public void setApplicationId(String id, String version, String icon) {
-        libvlc.libvlc_set_app_id(libvlcInstance, id, version, icon);
+        libvlc_set_app_id(libvlcInstance, id, version, icon);
     }
 
     /**
@@ -101,7 +112,7 @@ public final class ApplicationApi extends BaseApi {
      * @return native log component, or <code>null</code> if the native log is not available
      */
     public NativeLog newLog() {
-        return new NativeLog(libvlc, libvlcInstance);
+        return new NativeLog(libvlcInstance);
     }
 
     /**
@@ -113,7 +124,7 @@ public final class ApplicationApi extends BaseApi {
      * @return current clock time value, in microseconds
      */
     public long clock() {
-        return libvlc.libvlc_clock();
+        return libvlc_clock();
     }
 
     /**
@@ -124,7 +135,7 @@ public final class ApplicationApi extends BaseApi {
      * @return codec description
      */
     public String codecDescription(TrackType type, int codec) {
-        return libvlc.libvlc_media_get_codec_description(type.intValue(), codec);
+        return libvlc_media_get_codec_description(type.intValue(), codec);
     }
 
     /**
@@ -133,9 +144,9 @@ public final class ApplicationApi extends BaseApi {
      * @return collection of audio filter descriptions
      */
     public List<ModuleDescription> audioFilters() {
-        libvlc_module_description_t moduleDescriptions = libvlc.libvlc_audio_filter_list_get(libvlcInstance);
+        libvlc_module_description_t moduleDescriptions = libvlc_audio_filter_list_get(libvlcInstance);
         List<ModuleDescription> result = getModuleDescriptions(moduleDescriptions);
-        libvlc.libvlc_module_description_list_release(moduleDescriptions.getPointer());
+        libvlc_module_description_list_release(moduleDescriptions.getPointer());
         return result;
     }
 
@@ -145,9 +156,9 @@ public final class ApplicationApi extends BaseApi {
      * @return collection of video filter descriptions
      */
     public List<ModuleDescription> videoFilters() {
-        libvlc_module_description_t moduleDescriptions = libvlc.libvlc_video_filter_list_get(libvlcInstance);
+        libvlc_module_description_t moduleDescriptions = libvlc_video_filter_list_get(libvlcInstance);
         List<ModuleDescription> result = getModuleDescriptions(moduleDescriptions);
-        libvlc.libvlc_module_description_list_release(moduleDescriptions.getPointer());
+        libvlc_module_description_list_release(moduleDescriptions.getPointer());
         return result;
     }
 

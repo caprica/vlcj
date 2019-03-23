@@ -19,15 +19,26 @@
 
 package uk.co.caprica.vlcj.medialist;
 
-import uk.co.caprica.vlcj.binding.internal.*;
-import uk.co.caprica.vlcj.media.callback.CallbackMedia;
-import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaFactory;
 import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_mrl;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_add_media;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_count;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_insert_media;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_is_readonly;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_item_at_index;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_lock;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_remove_index;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_unlock;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_release;
 
 /**
  * Behaviour pertaining to the media items in the list.
@@ -48,7 +59,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean add(String mrl, String... options) {
-        return add(MediaFactory.newMediaRef(libvlc, libvlcInstance, mrl, options));
+        return add(MediaFactory.newMediaRef(libvlcInstance, mrl, options));
     }
 
     /**
@@ -61,7 +72,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean add(CallbackMedia callbackMedia, String... options) {
-        return add(MediaFactory.newMediaRef(libvlc, libvlcInstance, callbackMedia, options));
+        return add(MediaFactory.newMediaRef(libvlcInstance, callbackMedia, options));
     }
 
     /**
@@ -74,14 +85,14 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean add(MediaRef mediaRef, String... options) {
-        return add(MediaFactory.newMediaRef(libvlc, libvlcInstance, mediaRef, options));
+        return add(MediaFactory.newMediaRef(libvlcInstance, mediaRef, options));
     }
 
     private boolean add(MediaRef mediaRef) {
         if (mediaRef != null && !isReadOnly()) {
             lock();
             try {
-                return libvlc.libvlc_media_list_add_media(mediaListInstance, mediaRef.mediaInstance()) == 0;
+                return libvlc_media_list_add_media(mediaListInstance, mediaRef.mediaInstance()) == 0;
             }
             finally {
                 unlock();
@@ -103,7 +114,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean insert(int index, String mrl, String... options) {
-        return insert(index, MediaFactory.newMediaRef(libvlc, libvlcInstance, mrl, options));
+        return insert(index, MediaFactory.newMediaRef(libvlcInstance, mrl, options));
     }
 
     /**
@@ -117,7 +128,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean insert(int index, CallbackMedia callbackMedia, String... options) {
-        return insert(index, MediaFactory.newMediaRef(libvlc, libvlcInstance, callbackMedia, options));
+        return insert(index, MediaFactory.newMediaRef(libvlcInstance, callbackMedia, options));
     }
 
     /**
@@ -131,14 +142,14 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean insert(int index, MediaRef mediaRef, String... options) {
-        return insert(index, MediaFactory.newMediaRef(libvlc, libvlcInstance, mediaRef, options));
+        return insert(index, MediaFactory.newMediaRef(libvlcInstance, mediaRef, options));
     }
 
     private boolean insert(int index, MediaRef mediaRef) {
         if (mediaRef != null && !isReadOnly()) {
             lock();
             try {
-                return libvlc.libvlc_media_list_insert_media(mediaListInstance, mediaRef.mediaInstance(), index) == 0;
+                return libvlc_media_list_insert_media(mediaListInstance, mediaRef.mediaInstance(), index) == 0;
             }
             finally {
                 unlock();
@@ -159,7 +170,7 @@ public final class MediaApi extends BaseApi {
         if (!isReadOnly()) {
             lock();
             try {
-                return libvlc.libvlc_media_list_remove_index(mediaListInstance, index) == 0;
+                return libvlc_media_list_remove_index(mediaListInstance, index) == 0;
             }
             finally {
                 unlock();
@@ -180,7 +191,7 @@ public final class MediaApi extends BaseApi {
             try {
                 int result;
                 do {
-                    result = libvlc.libvlc_media_list_remove_index(mediaListInstance, 0);
+                    result = libvlc_media_list_remove_index(mediaListInstance, 0);
                 } while (result == 0);
                 return true;
             }
@@ -200,7 +211,7 @@ public final class MediaApi extends BaseApi {
     public int count() {
         lock();
         try {
-            return libvlc.libvlc_media_list_count(mediaListInstance);
+            return libvlc_media_list_count(mediaListInstance);
         }
         finally {
             unlock();
@@ -215,12 +226,12 @@ public final class MediaApi extends BaseApi {
     public List<String> mrls() {
         lock();
         try {
-            int count = libvlc.libvlc_media_list_count(mediaListInstance);
+            int count = libvlc_media_list_count(mediaListInstance);
             List<String> result = new ArrayList<String>(count);
             for (int i = 0; i < count; i++) {
-                libvlc_media_t item = libvlc.libvlc_media_list_item_at_index(mediaListInstance, i);
-                result.add(NativeString.copyNativeString(libvlc.libvlc_media_get_mrl(item)));
-                libvlc.libvlc_media_release(item);
+                libvlc_media_t item = libvlc_media_list_item_at_index(mediaListInstance, i);
+                result.add(NativeString.copyNativeString(libvlc_media_get_mrl(item)));
+                libvlc_media_release(item);
             }
             return result;
         }
@@ -238,13 +249,13 @@ public final class MediaApi extends BaseApi {
     public String mrl(int index) {
         lock();
         try {
-            libvlc_media_t media = libvlc.libvlc_media_list_item_at_index(mediaListInstance, index);
+            libvlc_media_t media = libvlc_media_list_item_at_index(mediaListInstance, index);
             if (media != null) {
                 try {
-                    return NativeString.copyNativeString(libvlc.libvlc_media_get_mrl(media));
+                    return NativeString.copyNativeString(libvlc_media_get_mrl(media));
                 }
                 finally {
-                    libvlc.libvlc_media_release(media);
+                    libvlc_media_release(media);
                 }
             } else {
                 return null;
@@ -267,9 +278,9 @@ public final class MediaApi extends BaseApi {
     public MediaRef newMediaRef(int index) {
         lock();
         try {
-            libvlc_media_t media = libvlc.libvlc_media_list_item_at_index(mediaListInstance, index);
+            libvlc_media_t media = libvlc_media_list_item_at_index(mediaListInstance, index);
             if (media != null) {
-                return new MediaRef(libvlc, libvlcInstance, media);
+                return new MediaRef(libvlcInstance, media);
             } else {
                 return null;
             }
@@ -290,9 +301,9 @@ public final class MediaApi extends BaseApi {
     public Media newMedia(int index) {
         lock();
         try {
-            libvlc_media_t media = libvlc.libvlc_media_list_item_at_index(mediaListInstance, index);
+            libvlc_media_t media = libvlc_media_list_item_at_index(mediaListInstance, index);
             if (media != null) {
-                return new Media(libvlc, libvlcInstance, media);
+                return new Media(libvlcInstance, media);
             } else {
                 return null;
             }
@@ -308,7 +319,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if the list is read-only; <code>false</code> if it is not
      */
     public boolean isReadOnly() {
-        return libvlc.libvlc_media_list_is_readonly(mediaListInstance) != 0;
+        return libvlc_media_list_is_readonly(mediaListInstance) != 0;
     }
 
     /**
@@ -319,7 +330,7 @@ public final class MediaApi extends BaseApi {
      * @return media list
      */
     public MediaList newMediaList() {
-        return new MediaList(libvlc, libvlcInstance, mediaListInstance);
+        return new MediaList(libvlcInstance, mediaListInstance);
     }
 
     /**
@@ -330,15 +341,15 @@ public final class MediaApi extends BaseApi {
      * @return media list reference
      */
     public MediaListRef newMediaListRef() {
-        return new MediaListRef(libvlc, libvlcInstance, mediaListInstance);
+        return new MediaListRef(libvlcInstance, mediaListInstance);
     }
 
     private void lock() {
-        libvlc.libvlc_media_list_lock(mediaListInstance);
+        libvlc_media_list_lock(mediaListInstance);
     }
 
     private void unlock() {
-        libvlc.libvlc_media_list_unlock(mediaListInstance);
+        libvlc_media_list_unlock(mediaListInstance);
     }
 
 }

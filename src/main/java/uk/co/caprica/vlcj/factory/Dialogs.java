@@ -20,7 +20,14 @@
 package uk.co.caprica.vlcj.factory;
 
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.binding.internal.*;
+import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_cancel_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_cbs;
+import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_display_error_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_display_login_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_display_progress_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_display_question_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_id;
+import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_update_progress_cb;
 
 import java.util.Collections;
 import java.util.HashSet;

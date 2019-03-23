@@ -19,12 +19,16 @@
 
 package uk.co.caprica.vlcj.test.bare;
 
-import com.sun.jna.Native;
-import uk.co.caprica.vlcj.binding.LibVlc;
+import com.sun.jna.StringArray;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_new_path;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_parse_with_options;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_new;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_release;
 
 /**
  * The most minimal test that uses the raw bindings rather than any higher level
@@ -41,20 +45,19 @@ import uk.co.caprica.vlcj.test.VlcjTest;
 public class BareBonesParseTest extends VlcjTest {
 
     public static void main(String[] args) throws Exception {
-        LibVlc libvlc = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+        libvlc_instance_t instance = libvlc_new(0, new StringArray(new String[0]));
 
-        libvlc_instance_t instance = libvlc.libvlc_new(0, new String[] {});
+        libvlc_media_t media = libvlc_media_new_path(instance, args[0]);
 
-        libvlc_media_t media = libvlc.libvlc_media_new_path(instance, args[0]);
-
-        libvlc.libvlc_media_parse_with_options(media, 0, 0); // <--- FATAL VM CRASH IF RUNNING on 32-bit Ubuntu and Java7
+        libvlc_media_parse_with_options(media, 0, 0); // <--- FATAL VM CRASH IF RUNNING on 32-bit Ubuntu and Java7
 
         Thread.sleep(1000);
 
-        libvlc.libvlc_media_release(media);
+        libvlc_media_release(media);
 
-        libvlc.libvlc_release(instance);
+        libvlc_release(instance);
 
         System.exit(0);
     }
+
 }

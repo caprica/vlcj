@@ -20,8 +20,9 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_free;
 
 /**
  * Viewpoint for 360 degree video.
@@ -30,18 +31,14 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
  */
 public final class Viewpoint {
 
-    private final LibVlc libvlc;
-
     private final libvlc_video_viewpoint_t viewpoint;
 
     /**
      * Create a viewpoint.
      *
-     * @param libvlc native library
      * @param viewpoint native viewpoint instance
      */
-    public Viewpoint(LibVlc libvlc, libvlc_video_viewpoint_t viewpoint) {
-        this.libvlc = libvlc;
+    public Viewpoint(libvlc_video_viewpoint_t viewpoint) {
         this.viewpoint = viewpoint;
     }
 
@@ -133,7 +130,7 @@ public final class Viewpoint {
      * The component must no longer be used.
      */
     public void release() {
-        libvlc.libvlc_free(viewpoint.getPointer());
+        libvlc_free(viewpoint.getPointer());
     }
 
 }

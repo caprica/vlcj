@@ -19,12 +19,11 @@
 
 package uk.co.caprica.vlcj.player.renderer.events;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.renderer_discoverer_item_deleted;
+import uk.co.caprica.vlcj.player.renderer.RendererDiscoverer;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscovererEventListener;
 import uk.co.caprica.vlcj.player.renderer.RendererItem;
-import uk.co.caprica.vlcj.player.renderer.RendererDiscoverer;
 
 /**
  * Native event used when an item was deleted from the renderer discoverer.
@@ -33,9 +32,9 @@ final class RendererDiscovererItemDeletedEvent extends RendererDiscovererEvent {
 
     private final RendererItem item;
 
-    RendererDiscovererItemDeletedEvent(LibVlc libvlc, RendererDiscoverer rendererDiscoverer, libvlc_event_t event) {
-        super(libvlc, rendererDiscoverer);
-        this.item = new RendererItem(libvlc, ((renderer_discoverer_item_deleted) event.u.getTypedValue(renderer_discoverer_item_deleted.class)).item);
+    RendererDiscovererItemDeletedEvent(RendererDiscoverer rendererDiscoverer, libvlc_event_t event) {
+        super(rendererDiscoverer);
+        this.item = new RendererItem(((renderer_discoverer_item_deleted) event.u.getTypedValue(renderer_discoverer_item_deleted.class)).item);
     }
 
     @Override

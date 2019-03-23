@@ -19,15 +19,15 @@
 
 package uk.co.caprica.vlcj.test.log;
 
-import java.util.concurrent.CountDownLatch;
-
-import uk.co.caprica.vlcj.log.LogLevel;
-import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
 import uk.co.caprica.vlcj.log.LogEventListener;
+import uk.co.caprica.vlcj.log.LogLevel;
 import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Simple test for the native log component.

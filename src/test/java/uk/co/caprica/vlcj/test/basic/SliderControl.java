@@ -19,17 +19,11 @@
 
 package uk.co.caprica.vlcj.test.basic;
 
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 
 /**
  * Composite slider control, used only for this test example.

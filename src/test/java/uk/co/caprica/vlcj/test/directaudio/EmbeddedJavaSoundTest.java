@@ -1,23 +1,20 @@
 package uk.co.caprica.vlcj.test.directaudio;
 
-import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.concurrent.CountDownLatch;
+import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.callback.AudioCallbackAdapter;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.test.VlcjTest;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine.Info;
 import javax.sound.sampled.SourceDataLine;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.base.callback.AudioCallbackAdapter;
-import uk.co.caprica.vlcj.test.VlcjTest;
-
-import com.sun.jna.Pointer;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.concurrent.CountDownLatch;
 
 public class EmbeddedJavaSoundTest extends VlcjTest {
 

@@ -19,22 +19,16 @@
 
 package uk.co.caprica.vlcj.test.basic;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import uk.co.caprica.vlcj.player.base.LibVlcConst;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import uk.co.caprica.vlcj.player.base.LibVlcConst;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
 public class PlayerVideoAdjustPanel extends JPanel {

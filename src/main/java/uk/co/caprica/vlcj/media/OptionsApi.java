@@ -38,7 +38,7 @@ public final class OptionsApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean add(String... options) {
-        return MediaOptions.addMediaOptions(libvlc, mediaInstance, options);
+        return MediaOptions.addMediaOptions(mediaInstance, options);
     }
 
     /**
@@ -49,7 +49,7 @@ public final class OptionsApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean add(String[] options, OptionFlag... flags) {
-        return MediaOptions.addMediaOptions(libvlc, mediaInstance, options, flags);
+        return MediaOptions.addMediaOptions(mediaInstance, options, flags);
     }
 
     /**
@@ -60,7 +60,7 @@ public final class OptionsApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean add(String option, OptionFlag... flags) {
-        return MediaOptions.addMediaOption(libvlc, mediaInstance, option, flags);
+        return MediaOptions.addMediaOption(mediaInstance, option, flags);
     }
 
 }

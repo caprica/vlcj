@@ -20,10 +20,9 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Native;
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.OsxComponentId;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import java.awt.*;
 
@@ -58,10 +57,10 @@ public class ComponentVideoSurface extends VideoSurface {
     }
 
     @Override
-    public void attach(LibVlc libvlc, MediaPlayer mediaPlayer) {
+    public void attach(MediaPlayer mediaPlayer) {
         if(component.isDisplayable()) {
             long componentId = getComponentId(component);
-            videoSurfaceAdapter.attach(libvlc, mediaPlayer, componentId);
+            videoSurfaceAdapter.attach(mediaPlayer, componentId);
         }
         else {
             throw new IllegalStateException("The video surface component must be displayable");

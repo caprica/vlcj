@@ -19,13 +19,12 @@
 
 package uk.co.caprica.vlcj.media.events;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.media_meta_changed;
-import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaEventListener;
+import uk.co.caprica.vlcj.media.Meta;
 
 /**
  * Encapsulation of a media meta changed event.
@@ -37,13 +36,12 @@ final class MediaMetaChangedEvent extends MediaEvent {
     /**
      * Create a media event.
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @param media component the event relates to
      * @param event native event
      */
-    MediaMetaChangedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
-        super(libvlc, libvlcInstance, media);
+    MediaMetaChangedEvent(libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
+        super(libvlcInstance, media);
         this.metaType = ((media_meta_changed) event.u.getTypedValue(media_meta_changed.class)).meta_type;
     }
 

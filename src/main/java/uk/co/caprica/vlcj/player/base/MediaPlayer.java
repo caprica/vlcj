@@ -21,12 +21,15 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.player.renderer.RendererItem;
 import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_new;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_renderer;
 
 /**
  * Base media player implementation.
@@ -35,11 +38,6 @@ import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
  * example audio-only players, or less likely media players that will use a native window created by LibVLC.
  */
 public class MediaPlayer {
-
-    /**
-     * Native library interface.
-     */
-    protected final LibVlc libvlc;
 
     /**
      * Libvlc instance.
@@ -88,11 +86,9 @@ public class MediaPlayer {
     /**
      * Create a new media player.
      *
-     * @param libvlc native library interface
      * @param instance libvlc instance
      */
-    public MediaPlayer(LibVlc libvlc, libvlc_instance_t instance) {
-        this.libvlc         = libvlc;
+    public MediaPlayer(libvlc_instance_t instance) {
         this.libvlcInstance = instance;
 
         this.mediaPlayerInstance = newNativeMediaPlayer();
@@ -116,7 +112,7 @@ public class MediaPlayer {
     }
 
     private libvlc_media_player_t newNativeMediaPlayer() {
-        libvlc_media_player_t result = libvlc.libvlc_media_player_new(libvlcInstance);
+        libvlc_media_player_t result = libvlc_media_player_new(libvlcInstance);
         if (result != null) {
             return result;
         } else {
@@ -210,7 +206,7 @@ public class MediaPlayer {
             }
         }
         libvlc_renderer_item_t rendererItemInstance = rendererItem != null ? rendererItem.rendererItemInstance() : null;
-        boolean result = libvlc.libvlc_media_player_set_renderer(mediaPlayerInstance, rendererItemInstance) == 0;
+        boolean result = libvlc_media_player_set_renderer(mediaPlayerInstance, rendererItemInstance) == 0;
         if (result) {
             if (this.renderer != null) {
                 this.renderer.release();
@@ -282,7 +278,7 @@ public class MediaPlayer {
         titleApi     .release();
         videoApi     .release();
 
-        libvlc.libvlc_media_player_release(mediaPlayerInstance);
+        libvlc_media_player_release(mediaPlayerInstance);
 
         onAfterRelease();
     }

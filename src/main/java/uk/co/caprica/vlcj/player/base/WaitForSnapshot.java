@@ -19,9 +19,9 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import java.io.File;
-
 import uk.co.caprica.vlcj.waiter.mediaplayer.SnapshotTakenWaiter;
+
+import java.io.File;
 
 /**
  * Private helper to take a snapshot and wait until the corresponding snapshot taken event is received (or an error

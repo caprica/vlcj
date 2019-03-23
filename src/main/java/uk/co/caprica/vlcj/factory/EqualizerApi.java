@@ -22,7 +22,20 @@ package uk.co.caprica.vlcj.factory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.player.base.Equalizer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_amp_at_index;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_band_count;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_band_frequency;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_preamp;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_preset_count;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_preset_name;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_new_from_preset;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_release;
 
 /**
  * Behaviour pertaining to the audio equalizer.
@@ -63,7 +76,7 @@ public final class EqualizerApi extends BaseApi {
      * @return equalizer
      */
     public final Equalizer newEqualizer() {
-        return new Equalizer(libvlc.libvlc_audio_equalizer_get_band_count());
+        return new Equalizer(libvlc_audio_equalizer_get_band_count());
     }
 
     /**
@@ -75,14 +88,14 @@ public final class EqualizerApi extends BaseApi {
     public final Equalizer newEqualizer(String presetName) {
         int index = presets.indexOf(presetName);
         if (index != -1) {
-            libvlc_equalizer_t presetEqualizer = libvlc.libvlc_audio_equalizer_new_from_preset(index);
+            libvlc_equalizer_t presetEqualizer = libvlc_audio_equalizer_new_from_preset(index);
             if(presetEqualizer != null) {
-                Equalizer equalizer = new Equalizer(libvlc.libvlc_audio_equalizer_get_band_count());
-                equalizer.setPreamp(libvlc.libvlc_audio_equalizer_get_preamp(presetEqualizer));
-                for(int i = 0; i < libvlc.libvlc_audio_equalizer_get_band_count(); i++) {
-                    equalizer.setAmp(i, libvlc.libvlc_audio_equalizer_get_amp_at_index(presetEqualizer, i));
+                Equalizer equalizer = new Equalizer(libvlc_audio_equalizer_get_band_count());
+                equalizer.setPreamp(libvlc_audio_equalizer_get_preamp(presetEqualizer));
+                for(int i = 0; i < libvlc_audio_equalizer_get_band_count(); i++) {
+                    equalizer.setAmp(i, libvlc_audio_equalizer_get_amp_at_index(presetEqualizer, i));
                 }
-                libvlc.libvlc_audio_equalizer_release(presetEqualizer);
+                libvlc_audio_equalizer_release(presetEqualizer);
                 return equalizer;
             }
             else {
@@ -111,19 +124,19 @@ public final class EqualizerApi extends BaseApi {
     }
 
     private List<Float> cacheBands() {
-        int numBands = libvlc.libvlc_audio_equalizer_get_band_count();
+        int numBands = libvlc_audio_equalizer_get_band_count();
         List<Float> result = new ArrayList<Float>(numBands);
         for (int i = 0; i < numBands; i++) {
-            result.add(libvlc.libvlc_audio_equalizer_get_band_frequency(i));
+            result.add(libvlc_audio_equalizer_get_band_frequency(i));
         }
         return Collections.unmodifiableList(result);
     }
 
     private List<String> cachePresets() {
-        int numPresets = libvlc.libvlc_audio_equalizer_get_preset_count();
+        int numPresets = libvlc_audio_equalizer_get_preset_count();
         List<String> result = new ArrayList<String>(numPresets);
         for (int i = 0; i < numPresets; i++) {
-            result.add(libvlc.libvlc_audio_equalizer_get_preset_name(i));
+            result.add(libvlc_audio_equalizer_get_preset_name(i));
         }
         return Collections.unmodifiableList(result);
     }

@@ -21,6 +21,10 @@ package uk.co.caprica.vlcj.player.base;
 
 import java.util.List;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_title;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_title_count;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_title;
+
 /**
  * Behaviour pertaining to media titles (e.g. DVD and Bluray titles).
  */
@@ -36,7 +40,7 @@ public final class TitleApi extends BaseApi {
      * @return number of titles, or -1 if none
      */
     public int titleCount() {
-        return libvlc.libvlc_media_player_get_title_count(mediaPlayerInstance);
+        return libvlc_media_player_get_title_count(mediaPlayerInstance);
     }
 
     /**
@@ -45,7 +49,7 @@ public final class TitleApi extends BaseApi {
      * @return title number
      */
     public int title() {
-        return libvlc.libvlc_media_player_get_title(mediaPlayerInstance);
+        return libvlc_media_player_get_title(mediaPlayerInstance);
     }
 
     /**
@@ -54,7 +58,7 @@ public final class TitleApi extends BaseApi {
      * @param title title number
      */
     public void setTitle(int title) {
-        libvlc.libvlc_media_player_set_title(mediaPlayerInstance, title);
+        libvlc_media_player_set_title(mediaPlayerInstance, title);
     }
 
     /**
@@ -65,7 +69,7 @@ public final class TitleApi extends BaseApi {
      * @return list of descriptions, may be empty but will never be <code>null</code>
      */
     public List<TitleDescription> titleDescriptions() {
-        return Descriptions.titleDescriptions(libvlc, mediaPlayerInstance);
+        return Descriptions.titleDescriptions(mediaPlayerInstance);
     }
 
 }

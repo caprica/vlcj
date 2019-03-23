@@ -19,6 +19,15 @@
 
 package uk.co.caprica.vlcj.player.list;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_next;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_pause;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_play;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_play_item_at_index;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_previous;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_set_pause;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_set_playback_mode;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_stop;
+
 /**
  * Behaviour pertaining to media list player controls, like play, pause, stop of the list as a whole, play a specific
  * item, play next item, play previous item.
@@ -37,14 +46,14 @@ public final class ControlsApi extends BaseApi {
      */
     public void play() {
         attachVideoSurface();
-        libvlc.libvlc_media_list_player_play(mediaListPlayerInstance);
+        libvlc_media_list_player_play(mediaListPlayerInstance);
     }
 
     /**
      * Toggle-pause the media list.
      */
     public void pause() {
-        libvlc.libvlc_media_list_player_pause(mediaListPlayerInstance);
+        libvlc_media_list_player_pause(mediaListPlayerInstance);
     }
 
     /**
@@ -53,14 +62,14 @@ public final class ControlsApi extends BaseApi {
      * @param pause <code>true</code> to pause; <code>false</code> to un-pause
      */
     public void setPause(boolean pause) {
-        libvlc.libvlc_media_list_player_set_pause(mediaListPlayerInstance, pause ? 1 : 0);
+        libvlc_media_list_player_set_pause(mediaListPlayerInstance, pause ? 1 : 0);
     }
 
     /**
      * Stop the media list.
      */
     public void stop() {
-        libvlc.libvlc_media_list_player_stop(mediaListPlayerInstance);
+        libvlc_media_list_player_stop(mediaListPlayerInstance);
     }
 
     /**
@@ -74,7 +83,7 @@ public final class ControlsApi extends BaseApi {
      */
     public boolean play(int itemIndex) {
         attachVideoSurface();
-        return libvlc.libvlc_media_list_player_play_item_at_index(mediaListPlayerInstance, itemIndex) == 0;
+        return libvlc_media_list_player_play_item_at_index(mediaListPlayerInstance, itemIndex) == 0;
     }
 
     /**
@@ -87,7 +96,7 @@ public final class ControlsApi extends BaseApi {
      */
     public boolean playNext() {
         attachVideoSurface();
-        return libvlc.libvlc_media_list_player_next(mediaListPlayerInstance) == 0;
+        return libvlc_media_list_player_next(mediaListPlayerInstance) == 0;
     }
 
     /**
@@ -100,7 +109,7 @@ public final class ControlsApi extends BaseApi {
      */
     public boolean playPrevious() {
         attachVideoSurface();
-        return libvlc.libvlc_media_list_player_previous(mediaListPlayerInstance) == 0;
+        return libvlc_media_list_player_previous(mediaListPlayerInstance) == 0;
     }
 
     /**
@@ -114,7 +123,7 @@ public final class ControlsApi extends BaseApi {
      */
     public boolean setMode(PlaybackMode mode) {
         if (mode != null) {
-            libvlc.libvlc_media_list_player_set_playback_mode(mediaListPlayerInstance, mode.intValue());
+            libvlc_media_list_player_set_playback_mode(mediaListPlayerInstance, mode.intValue());
             return true;
         } else {
             return false;

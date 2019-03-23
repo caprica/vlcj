@@ -19,19 +19,21 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_add_option;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_add_option_flag;
 
 final class MediaOptions {
 
     private MediaOptions() {
     }
 
-    static boolean addMediaOptions(LibVlc libvlc, libvlc_media_t media, String... mediaOptions) {
+    static boolean addMediaOptions(libvlc_media_t media, String... mediaOptions) {
         if (media != null) {
             if (mediaOptions != null) {
                 for (String mediaOption : mediaOptions) {
-                    libvlc.libvlc_media_add_option(media, mediaOption);
+                    libvlc_media_add_option(media, mediaOption);
                 }
             }
             return true;
@@ -40,11 +42,11 @@ final class MediaOptions {
         }
     }
 
-    public static boolean addMediaOptions(LibVlc libvlc, libvlc_media_t media, String[] mediaOptions, OptionFlag... flags) {
+    public static boolean addMediaOptions(libvlc_media_t media, String[] mediaOptions, OptionFlag... flags) {
         if (media != null) {
             int flagsValue = flagsToInt(flags);
             for (String mediaOption : mediaOptions) {
-                libvlc.libvlc_media_add_option_flag(media, mediaOption, flagsValue);
+                libvlc_media_add_option_flag(media, mediaOption, flagsValue);
             }
             return true;
         } else {
@@ -52,9 +54,9 @@ final class MediaOptions {
         }
     }
 
-    public static boolean addMediaOption(LibVlc libvlc, libvlc_media_t media, String mediaOption, OptionFlag... flags) {
+    public static boolean addMediaOption(libvlc_media_t media, String mediaOption, OptionFlag... flags) {
         if (media != null) {
-            libvlc.libvlc_media_add_option_flag(media, mediaOption, flagsToInt(flags));
+            libvlc_media_add_option_flag(media, mediaOption, flagsToInt(flags));
             return true;
         } else {
             return false;

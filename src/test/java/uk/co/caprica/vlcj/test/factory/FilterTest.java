@@ -19,11 +19,11 @@
 
 package uk.co.caprica.vlcj.test.factory;
 
-import java.util.List;
-
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.factory.ModuleDescription;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import java.util.List;
 
 /**
  * Simple test to dump out audio/video filters.

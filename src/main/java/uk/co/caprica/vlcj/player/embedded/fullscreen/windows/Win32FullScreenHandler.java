@@ -19,6 +19,18 @@
 
 package uk.co.caprica.vlcj.player.embedded.fullscreen.windows;
 
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.WinDef.HWND;
+import com.sun.jna.platform.win32.WinDef.LPARAM;
+import com.sun.jna.platform.win32.WinDef.RECT;
+import com.sun.jna.platform.win32.WinDef.WPARAM;
+import com.sun.jna.platform.win32.WinUser;
+import com.sun.jna.platform.win32.WinUser.MONITORINFO;
+
+import java.awt.*;
+
 import static com.sun.jna.platform.win32.WinUser.GWL_EXSTYLE;
 import static com.sun.jna.platform.win32.WinUser.GWL_STYLE;
 import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.SWP_FRAMECHANGED;
@@ -30,18 +42,6 @@ import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser
 import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.WS_EX_STATICEDGE;
 import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.WS_EX_WINDOWEDGE;
 import static uk.co.caprica.vlcj.player.embedded.fullscreen.windows.ExtendedUser32.WS_THICKFRAME;
-
-import java.awt.Window;
-
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.WinDef.HWND;
-import com.sun.jna.platform.win32.WinDef.LPARAM;
-import com.sun.jna.platform.win32.WinDef.RECT;
-import com.sun.jna.platform.win32.WinDef.WPARAM;
-import com.sun.jna.platform.win32.WinUser;
-import com.sun.jna.platform.win32.WinUser.MONITORINFO;
 
 /**
  * Native full-screen implementation.
@@ -116,8 +116,8 @@ final class Win32FullScreenHandler {
         if (windowState.getMaximized()) {
             ExtendedUser32.INSTANCE.SendMessage(hWnd, User32.WM_SYSCOMMAND, new WPARAM(ExtendedUser32.SC_RESTORE), new LPARAM(0));
         }
-        windowState.setStyle(ExtendedUser32.INSTANCE.GetWindowLong(hWnd, ExtendedUser32.GWL_STYLE));
-        windowState.setExStyle(ExtendedUser32.INSTANCE.GetWindowLong(hWnd, ExtendedUser32.GWL_EXSTYLE));
+        windowState.setStyle(ExtendedUser32.INSTANCE.GetWindowLong(hWnd, GWL_STYLE));
+        windowState.setExStyle(ExtendedUser32.INSTANCE.GetWindowLong(hWnd, GWL_EXSTYLE));
         RECT rect = new RECT();
         boolean gotWindowRect = ExtendedUser32.INSTANCE.GetWindowRect(hWnd, rect);
         if (gotWindowRect) {

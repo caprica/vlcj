@@ -21,8 +21,8 @@ package uk.co.caprica.vlcj.test.event;
 
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.TrackType;
-import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
  * Implementation of a {@link MediaPlayerEventListener} that logs all invocations.

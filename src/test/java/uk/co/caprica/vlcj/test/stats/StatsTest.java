@@ -19,20 +19,15 @@
 
 package uk.co.caprica.vlcj.test.stats;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import uk.co.caprica.vlcj.media.MediaStatistics;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.test.VlcjTest;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
-
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.media.MediaStatistics;
-import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * Test to demonstrate media statistics.

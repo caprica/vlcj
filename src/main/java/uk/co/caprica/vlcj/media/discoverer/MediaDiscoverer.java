@@ -19,20 +19,21 @@
 
 package uk.co.caprica.vlcj.media.discoverer;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.internal.*;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_is_running;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_media_list;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_start;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_stop;
 
 /**
  * Media discoverer component.
  */
 public final class MediaDiscoverer {
-
-    /**
-     * Native library.
-     */
-    private final LibVlc libvlc;
 
     /**
      * Native discoverer instance.
@@ -47,15 +48,13 @@ public final class MediaDiscoverer {
     /**
      * Create a media discoverer
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @param discovererInstance native media discoverer instance
      * @return media discoverer
      */
-    MediaDiscoverer(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_discoverer_t discovererInstance) {
-        this.libvlc = libvlc;
+    MediaDiscoverer(libvlc_instance_t libvlcInstance, libvlc_media_discoverer_t discovererInstance) {
         this.discoverer = discovererInstance;
-        this.mediaList = new MediaList(libvlc, libvlcInstance, libvlc.libvlc_media_discoverer_media_list(discovererInstance));
+        this.mediaList = new MediaList(libvlcInstance, libvlc_media_discoverer_media_list(discovererInstance));
     }
 
     /**
@@ -64,14 +63,14 @@ public final class MediaDiscoverer {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean start() {
-        return libvlc.libvlc_media_discoverer_start(discoverer) == 0;
+        return libvlc_media_discoverer_start(discoverer) == 0;
     }
 
     /**
      * Stop media discovery.
      */
     public void stop() {
-        libvlc.libvlc_media_discoverer_stop(discoverer);
+        libvlc_media_discoverer_stop(discoverer);
     }
 
     /**
@@ -80,7 +79,7 @@ public final class MediaDiscoverer {
      * @return <code>true</code> if discovery is running; <code>false</code> if it is not
      */
     public boolean isRunning() {
-        return libvlc.libvlc_media_discoverer_is_running(discoverer) != 0;
+        return libvlc_media_discoverer_is_running(discoverer) != 0;
     }
 
     /**
@@ -110,7 +109,7 @@ public final class MediaDiscoverer {
      */
     public void release() {
         mediaList.release();
-        libvlc.libvlc_media_discoverer_release(discoverer);
+        libvlc_media_discoverer_release(discoverer);
     }
 
 }

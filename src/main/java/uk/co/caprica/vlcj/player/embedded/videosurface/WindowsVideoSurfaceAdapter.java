@@ -20,8 +20,9 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_hwnd;
 
 /**
  * Implementation of a video surface adapter for Windows.
@@ -30,8 +31,8 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 final public class WindowsVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
     @Override
-    public void attach(LibVlc libvlc, MediaPlayer mediaPlayer, long componentId) {
-        libvlc.libvlc_media_player_set_hwnd(mediaPlayer.mediaPlayerInstance(), Pointer.createConstant(componentId));
+    public void attach(MediaPlayer mediaPlayer, long componentId) {
+        libvlc_media_player_set_hwnd(mediaPlayer.mediaPlayerInstance(), Pointer.createConstant(componentId));
     }
 
 }

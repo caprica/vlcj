@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.player.list.events;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
@@ -33,17 +32,16 @@ public final class MediaListPlayerEventFactory {
     /**
      * Create a new media list player event for a given native event.
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @param mediaListPlayer component the event relates to
      * @param event native event
      * @return media list player event, or <code>null</code> if not a known event
      */
-    public static MediaListPlayerEvent createEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaListPlayer mediaListPlayer, libvlc_event_t event) {
+    public static MediaListPlayerEvent createEvent(libvlc_instance_t libvlcInstance, MediaListPlayer mediaListPlayer, libvlc_event_t event) {
         switch (libvlc_event_e.event(event.type)) {
-            case libvlc_MediaListPlayerPlayed     : return new MediaListPlayerPlayedEvent        (libvlc, libvlcInstance, mediaListPlayer       );
-            case libvlc_MediaListPlayerNextItemSet: return new MediaListPlayerNextItemSetEvent   (libvlc, libvlcInstance, mediaListPlayer, event);
-            case libvlc_MediaListPlayerStopped    : return new MediaListPlayerStoppedEvent       (libvlc, libvlcInstance, mediaListPlayer       );
+            case libvlc_MediaListPlayerPlayed     : return new MediaListPlayerPlayedEvent     (libvlcInstance, mediaListPlayer       );
+            case libvlc_MediaListPlayerNextItemSet: return new MediaListPlayerNextItemSetEvent(libvlcInstance, mediaListPlayer, event);
+            case libvlc_MediaListPlayerStopped    : return new MediaListPlayerStoppedEvent    (libvlcInstance, mediaListPlayer       );
 
             default                               : return null;
         }

@@ -22,6 +22,9 @@ package uk.co.caprica.vlcj.media;
 import java.io.File;
 import java.util.List;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_slaves_add;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_slaves_clear;
+
 /**
  * Behaviour pertaining to media slaves, enabling subtitle and audio tracks to be added to the media.
  */
@@ -56,14 +59,14 @@ public final class SlaveApi extends BaseApi {
      * @return <code>true</code> on success; <code>false</code> otherwise
      */
     public boolean add(MediaSlaveType type, MediaSlavePriority priority, String uri) {
-        return libvlc.libvlc_media_slaves_add(mediaInstance, type.intValue(), priority.intValue(), uri) == 0;
+        return libvlc_media_slaves_add(mediaInstance, type.intValue(), priority.intValue(), uri) == 0;
     }
 
     /**
      * Remove all media slaves from the current media.
      */
     public void clear() {
-        libvlc.libvlc_media_slaves_clear(mediaInstance);
+        libvlc_media_slaves_clear(mediaInstance);
     }
 
     /**
@@ -72,7 +75,7 @@ public final class SlaveApi extends BaseApi {
      * @return media slaves
      */
     public List<MediaSlave> get() {
-        return MediaSlaves.getMediaSlaves(libvlc, mediaInstance);
+        return MediaSlaves.getMediaSlaves(mediaInstance);
     }
 
 }

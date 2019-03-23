@@ -19,21 +19,18 @@
 
 package uk.co.caprica.vlcj.test.volume;
 
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Frame;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.test.VlcjTest;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.ImageIcon;
-
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * A minimal volume (not audio volume!) test player.

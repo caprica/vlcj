@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  * Builder for a Marquee.

@@ -19,13 +19,12 @@
 
 package uk.co.caprica.vlcj.media.events;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.media_state_changed;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaEventListener;
+import uk.co.caprica.vlcj.player.base.State;
 
 /**
  * Encapsulation of a media state changed event.
@@ -37,13 +36,12 @@ final class MediaStateChangedEvent extends MediaEvent {
     /**
      * Create a media event.
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @param media component the event relates to
      * @param event native event
      */
-    MediaStateChangedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
-        super(libvlc, libvlcInstance, media);
+    MediaStateChangedEvent(libvlc_instance_t libvlcInstance, Media media, libvlc_event_t event) {
+        super(libvlcInstance, media);
         this.newState = ((media_state_changed) event.u.getTypedValue(media_state_changed.class)).new_state;
     }
 

@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.media.discoverer;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 
@@ -33,13 +32,12 @@ public final class MediaDiscovererFactory {
     /**
      * Create a media discoverer
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @param discovererInstance native media discoverer instance
      * @return media discoverer
      */
-    public static MediaDiscoverer newMediaDiscoverer(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_discoverer_t discovererInstance) {
-        return new MediaDiscoverer(libvlc, libvlcInstance, discovererInstance);
+    public static MediaDiscoverer newMediaDiscoverer(libvlc_instance_t libvlcInstance, libvlc_media_discoverer_t discovererInstance) {
+        return new MediaDiscoverer(libvlcInstance, discovererInstance);
     }
 
 }

@@ -21,6 +21,9 @@ package uk.co.caprica.vlcj.player.list;
 
 import uk.co.caprica.vlcj.player.base.State;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_get_state;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_is_playing;
+
 /**
  * Behaviour pertaining to media list player status.
  */
@@ -36,7 +39,7 @@ public final class StatusApi extends BaseApi {
      * @return <code>true</code> if playing; <code>false</code> if not
      */
     public boolean isPlaying() {
-        return libvlc.libvlc_media_list_player_is_playing(mediaListPlayerInstance) != 0;
+        return libvlc_media_list_player_is_playing(mediaListPlayerInstance) != 0;
     }
 
     /**
@@ -45,7 +48,7 @@ public final class StatusApi extends BaseApi {
      * @return state
      */
     public State getMediaListPlayerState() {
-        return State.state(libvlc.libvlc_media_list_player_get_state(mediaListPlayerInstance));
+        return State.state(libvlc_media_list_player_get_state(mediaListPlayerInstance));
     }
 
 }

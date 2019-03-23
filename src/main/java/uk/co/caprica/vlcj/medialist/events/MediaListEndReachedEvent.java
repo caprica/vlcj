@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.medialist.events;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListEventListener;
@@ -32,12 +31,11 @@ final class MediaListEndReachedEvent extends MediaListEvent {
     /**
      * Create a media list event.
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @param mediaList media list the event relates to
      */
-    MediaListEndReachedEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaList mediaList) {
-        super(libvlc, libvlcInstance, mediaList);
+    MediaListEndReachedEvent(libvlc_instance_t libvlcInstance, MediaList mediaList) {
+        super(libvlcInstance, mediaList);
     }
 
     @Override

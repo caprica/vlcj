@@ -29,7 +29,7 @@ public final class EventApi extends BaseApi {
     EventApi(MediaListPlayer mediaListPlayer) {
         super(mediaListPlayer);
 
-        this.eventManager = new MediaListPlayerNativeEventManager(libvlc, libvlcInstance, mediaListPlayer);
+        this.eventManager = new MediaListPlayerNativeEventManager(libvlcInstance, mediaListPlayer);
     }
 
     /**

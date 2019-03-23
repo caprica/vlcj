@@ -77,7 +77,7 @@ public final class VideoSurfaceApi extends BaseApi {
      */
     public void attachVideoSurface() {
         if (videoSurface != null) {
-            videoSurface.attach(libvlc, mediaPlayer);
+            videoSurface.attach(mediaPlayer);
         }
         else {
             // This is not necessarily an error

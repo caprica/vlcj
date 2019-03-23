@@ -22,10 +22,12 @@ package uk.co.caprica.vlcj.player.base;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 import uk.co.caprica.vlcj.player.list.ControlsApi;
-import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.EventApi;
 import uk.co.caprica.vlcj.player.list.ListApi;
+import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.StatusApi;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_subitems;
 
 /**
  * Behaviour pertaining to media subitems.
@@ -46,7 +48,7 @@ public final class SubitemApi extends BaseApi {
     SubitemApi(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
 
-        this.mediaListPlayer = new MediaListPlayer(libvlc, libvlcInstance);
+        this.mediaListPlayer = new MediaListPlayer(libvlcInstance);
 
         mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer);
     }
@@ -103,7 +105,7 @@ public final class SubitemApi extends BaseApi {
         // playing correctly
         mediaListPlayer.controls().stop();
 
-        MediaListRef mediaListRef = new MediaListRef(libvlc, libvlcInstance, libvlc.libvlc_media_subitems(media));
+        MediaListRef mediaListRef = new MediaListRef(libvlcInstance, libvlc_media_subitems(media));
         try {
             mediaListPlayer.list().setMediaList(mediaListRef);
         }

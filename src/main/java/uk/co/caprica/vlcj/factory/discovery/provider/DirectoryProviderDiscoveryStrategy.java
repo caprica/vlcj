@@ -22,7 +22,12 @@ package uk.co.caprica.vlcj.factory.discovery.provider;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.factory.discovery.strategy.BaseNativeDiscoveryStrategy;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.ServiceLoader;
 
 /**
  * Implementation of a native discovery strategy that searches a list of well-known directories.

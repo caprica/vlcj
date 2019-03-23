@@ -27,6 +27,12 @@ import uk.co.caprica.vlcj.media.SlaveApi;
 import java.io.File;
 import java.util.List;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_spu;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_spu_count;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_spu_delay;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_spu;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_spu_delay;
+
 /**
  * Behaviour pertaining to subpictures (sub-titles).
  */
@@ -42,7 +48,7 @@ public final class SubpictureApi extends BaseApi {
      * @return number of sub-title tracks
      */
     public int trackCount() {
-        return libvlc.libvlc_video_get_spu_count(mediaPlayerInstance);
+        return libvlc_video_get_spu_count(mediaPlayerInstance);
     }
 
     /**
@@ -51,7 +57,7 @@ public final class SubpictureApi extends BaseApi {
      * @return sub-title number, or -1 if none
      */
     public int track() {
-        return libvlc.libvlc_video_get_spu(mediaPlayerInstance);
+        return libvlc_video_get_spu(mediaPlayerInstance);
     }
 
     /**
@@ -74,7 +80,7 @@ public final class SubpictureApi extends BaseApi {
      * @return current sub-title identifier
      */
     public int setTrack(int spu) {
-        libvlc.libvlc_video_set_spu(mediaPlayerInstance, spu);
+        libvlc_video_set_spu(mediaPlayerInstance, spu);
         return track();
     }
 
@@ -84,7 +90,7 @@ public final class SubpictureApi extends BaseApi {
      * @return sub-title delay, in microseconds
      */
     public long delay() {
-        return libvlc.libvlc_video_get_spu_delay(mediaPlayerInstance);
+        return libvlc_video_get_spu_delay(mediaPlayerInstance);
     }
 
     /**
@@ -96,7 +102,7 @@ public final class SubpictureApi extends BaseApi {
      * @param delay desired sub-title delay, in microseconds
      */
     public void setDelay(long delay) {
-        libvlc.libvlc_video_set_spu_delay(mediaPlayerInstance, delay);
+        libvlc_video_set_spu_delay(mediaPlayerInstance, delay);
     }
 
     /**
@@ -152,7 +158,7 @@ public final class SubpictureApi extends BaseApi {
      * @return list of descriptions, may be empty but will never be <code>null</code>
      */
     public List<TrackDescription> trackDescriptions() {
-        return Descriptions.spuTrackDescriptions(libvlc, mediaPlayerInstance);
+        return Descriptions.spuTrackDescriptions(mediaPlayerInstance);
     }
 
 }

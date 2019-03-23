@@ -20,9 +20,17 @@
 package uk.co.caprica.vlcj.player.base;
 
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.internal.*;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_drain_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_flush_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_pause_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_play_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_resume_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_set_volume_cb;
 import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_callbacks;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_format;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_volume_callback;
 
 /**
  * Encapsulation of native audio callbacks.
@@ -41,14 +49,11 @@ final class AudioCallbacks {
     private final libvlc_audio_drain_cb drainCallback = new DrainCallback();
     private final libvlc_audio_set_volume_cb setVolumeCallback = new SetVolumeCallback();
 
-    private final LibVlc libvlc;
-
     private final MediaPlayer mediaPlayer;
 
     private AudioCallback audioCallback;
 
-    AudioCallbacks(LibVlc libvlc, MediaPlayer mediaPlayer) {
-        this.libvlc = libvlc;
+    AudioCallbacks(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
     }
 
@@ -58,10 +63,10 @@ final class AudioCallbacks {
     }
 
     private void enableCallbacks(String format, int rate, int channels, boolean manageVolume) {
-        libvlc.libvlc_audio_set_format(mediaPlayer.mediaPlayerInstance(), format, rate, channels);
-        libvlc.libvlc_audio_set_callbacks(mediaPlayer.mediaPlayerInstance(), playCallback, pauseCallback, resumeCallback, flushCallback, drainCallback, null);
+        libvlc_audio_set_format(mediaPlayer.mediaPlayerInstance(), format, rate, channels);
+        libvlc_audio_set_callbacks(mediaPlayer.mediaPlayerInstance(), playCallback, pauseCallback, resumeCallback, flushCallback, drainCallback, null);
         if (manageVolume) {
-            libvlc.libvlc_audio_set_volume_callback(mediaPlayer.mediaPlayerInstance(), setVolumeCallback);
+            libvlc_audio_set_volume_callback(mediaPlayer.mediaPlayerInstance(), setVolumeCallback);
         }
     }
 

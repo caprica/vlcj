@@ -20,12 +20,31 @@
 package uk.co.caprica.vlcj.player.base;
 
 import com.sun.jna.ptr.IntByReference;
+import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
-import uk.co.caprica.vlcj.binding.NativeString;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.List;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_video_title_display;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_adjust_float;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_adjust_int;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_aspect_ratio;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_crop_geometry;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_scale;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_size;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_track;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_track_count;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_new_viewpoint;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_adjust_float;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_adjust_int;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_aspect_ratio;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_crop_geometry;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_deinterlace;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_scale;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_track;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_update_viewpoint;
 
 /**
  * Behaviour pertaining to media player video.
@@ -42,7 +61,7 @@ public final class VideoApi extends BaseApi {
      * @param deinterlaceMode mode, or null to disable the de-interlace filter
      */
     public void setDeinterlace(DeinterlaceMode deinterlaceMode) {
-        libvlc.libvlc_video_set_deinterlace(mediaPlayerInstance, deinterlaceMode != null ? deinterlaceMode.stringValue() : null);
+        libvlc_video_set_deinterlace(mediaPlayerInstance, deinterlaceMode != null ? deinterlaceMode.stringValue() : null);
     }
 
     /**
@@ -53,7 +72,7 @@ public final class VideoApi extends BaseApi {
      * @param adjustVideo true if the video adjustments are enabled, otherwise false
      */
     public void setAdjustVideo(boolean adjustVideo) {
-        libvlc.libvlc_video_set_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Enable.intValue(), adjustVideo ? 1 : 0);
+        libvlc_video_set_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Enable.intValue(), adjustVideo ? 1 : 0);
     }
 
     /**
@@ -62,7 +81,7 @@ public final class VideoApi extends BaseApi {
      * @return true if the video adjustments are enabled, otherwise false
      */
     public boolean isAdjustVideo() {
-        return libvlc.libvlc_video_get_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Enable.intValue()) == 1;
+        return libvlc_video_get_adjust_int(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Enable.intValue()) == 1;
     }
 
     /**
@@ -71,7 +90,7 @@ public final class VideoApi extends BaseApi {
      * @return contrast, in the range from 0.0 to 2.0
      */
     public float contrast() {
-        return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Contrast.intValue());
+        return libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Contrast.intValue());
     }
 
     /**
@@ -82,7 +101,7 @@ public final class VideoApi extends BaseApi {
      * @param contrast contrast value, in the range from 0.0 to 2.0
      */
     public void setContrast(float contrast) {
-        libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Contrast.intValue(), contrast);
+        libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Contrast.intValue(), contrast);
     }
 
     /**
@@ -91,7 +110,7 @@ public final class VideoApi extends BaseApi {
      * @return brightness, in the range from 0.0 to 2.0
      */
     public float brightness() {
-        return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Brightness.intValue());
+        return libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Brightness.intValue());
     }
 
     /**
@@ -103,7 +122,7 @@ public final class VideoApi extends BaseApi {
      * @param brightness brightness value, in the range from 0.0 to 2.0
      */
     public void setBrightness(float brightness) {
-        libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Brightness.intValue(), brightness);
+        libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Brightness.intValue(), brightness);
     }
 
     /**
@@ -112,7 +131,7 @@ public final class VideoApi extends BaseApi {
      * @return hue, in the range from -180.0 to 180.0
      */
     public float hue() {
-        return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue());
+        return libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue());
     }
 
     /**
@@ -123,7 +142,7 @@ public final class VideoApi extends BaseApi {
      * @param hue hue value, in the range from -180.0 to 180.0
      */
     public void setHue(float hue) {
-        libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue(), hue);
+        libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Hue.intValue(), hue);
     }
 
     /**
@@ -132,7 +151,7 @@ public final class VideoApi extends BaseApi {
      * @return saturation, in the range from 0.0 to 3.0
      */
     public float saturation() {
-        return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Saturation.intValue());
+        return libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Saturation.intValue());
     }
 
     /**
@@ -143,7 +162,7 @@ public final class VideoApi extends BaseApi {
      * @param saturation saturation value, in the range from 0.0 to 3.0
      */
     public void setSaturation(float saturation) {
-        libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Saturation.intValue(), saturation);
+        libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Saturation.intValue(), saturation);
     }
 
     /**
@@ -152,7 +171,7 @@ public final class VideoApi extends BaseApi {
      * @return gamma value, in the range from 0.01 to 10.0
      */
     public float gamma() {
-        return libvlc.libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue());
+        return libvlc_video_get_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue());
     }
 
     /**
@@ -165,7 +184,7 @@ public final class VideoApi extends BaseApi {
      * @param gamma gamma, in the range from 0.01 to 10.0
      */
     public void setGamma(float gamma) {
-        libvlc.libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue(), gamma);
+        libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue(), gamma);
     }
 
     /**
@@ -175,7 +194,7 @@ public final class VideoApi extends BaseApi {
      * @param timeout time to display the title in milliseconds (ignored when the title is disabled)
      */
     public void setVideoTitleDisplay(Position position, int timeout) {
-        libvlc.libvlc_media_player_set_video_title_display(mediaPlayerInstance, position.intValue(), timeout);
+        libvlc_media_player_set_video_title_display(mediaPlayerInstance, position.intValue(), timeout);
     }
 
     /**
@@ -184,7 +203,7 @@ public final class VideoApi extends BaseApi {
      * @return aspect ratio
      */
     public String aspectRatio() {
-        return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_video_get_aspect_ratio(mediaPlayerInstance));
+        return NativeString.copyAndFreeNativeString(libvlc_video_get_aspect_ratio(mediaPlayerInstance));
     }
 
     /**
@@ -193,7 +212,7 @@ public final class VideoApi extends BaseApi {
      * @param aspectRatio aspect ratio, e.g. "16:9", "4:3", "185:100" for 1:85.1 and so on
      */
     public void setAspectRatio(String aspectRatio) {
-        libvlc.libvlc_video_set_aspect_ratio(mediaPlayerInstance, aspectRatio);
+        libvlc_video_set_aspect_ratio(mediaPlayerInstance, aspectRatio);
     }
 
     /**
@@ -202,7 +221,7 @@ public final class VideoApi extends BaseApi {
      * @return scale
      */
     public float scale() {
-        return libvlc.libvlc_video_get_scale(mediaPlayerInstance);
+        return libvlc_video_get_scale(mediaPlayerInstance);
     }
 
     /**
@@ -211,7 +230,7 @@ public final class VideoApi extends BaseApi {
      * @param factor scaling factor, or zero to scale the video the size of the container
      */
     public void setScale(float factor) {
-        libvlc.libvlc_video_set_scale(mediaPlayerInstance, factor);
+        libvlc_video_set_scale(mediaPlayerInstance, factor);
     }
 
     /**
@@ -220,7 +239,7 @@ public final class VideoApi extends BaseApi {
      * @return crop geometry
      */
     public String cropGeometry() {
-        return NativeString.copyAndFreeNativeString(libvlc, libvlc.libvlc_video_get_crop_geometry(mediaPlayerInstance));
+        return NativeString.copyAndFreeNativeString(libvlc_video_get_crop_geometry(mediaPlayerInstance));
     }
 
     /**
@@ -242,7 +261,7 @@ public final class VideoApi extends BaseApi {
      * @param cropGeometry formatted string describing the desired crop geometry
      */
     public void setCropGeometry(String cropGeometry) {
-        libvlc.libvlc_video_set_crop_geometry(mediaPlayerInstance, cropGeometry);
+        libvlc_video_set_crop_geometry(mediaPlayerInstance, cropGeometry);
     }
 
     /**
@@ -256,7 +275,7 @@ public final class VideoApi extends BaseApi {
     public Dimension videoDimension() {
         IntByReference px = new IntByReference();
         IntByReference py = new IntByReference();
-        int result = libvlc.libvlc_video_get_size(mediaPlayerInstance, 0, px, py);
+        int result = libvlc_video_get_size(mediaPlayerInstance, 0, px, py);
         if(result == 0) {
             return new Dimension(px.getValue(), py.getValue());
         }
@@ -271,7 +290,7 @@ public final class VideoApi extends BaseApi {
      * @return number of tracks
      */
     public int trackCount() {
-        return libvlc.libvlc_video_get_track_count(mediaPlayerInstance);
+        return libvlc_video_get_track_count(mediaPlayerInstance);
     }
 
     /**
@@ -280,7 +299,7 @@ public final class VideoApi extends BaseApi {
      * @return track identifier, see {@link #trackDescriptions()}
      */
     public int track() {
-        return libvlc.libvlc_video_get_track(mediaPlayerInstance);
+        return libvlc_video_get_track(mediaPlayerInstance);
     }
 
     /**
@@ -299,7 +318,7 @@ public final class VideoApi extends BaseApi {
      * @return current video track identifier
      */
     public int setTrack(int track) {
-        libvlc.libvlc_video_set_track(mediaPlayerInstance, track);
+        libvlc_video_set_track(mediaPlayerInstance, track);
         return track();
     }
 
@@ -311,9 +330,9 @@ public final class VideoApi extends BaseApi {
      * @return viewpoint, or <code>null</code> on error
      */
     public Viewpoint newViewpoint() {
-        libvlc_video_viewpoint_t viewpoint = libvlc.libvlc_video_new_viewpoint();
+        libvlc_video_viewpoint_t viewpoint = libvlc_video_new_viewpoint();
         if (viewpoint != null) {
-            return new Viewpoint(libvlc, viewpoint);
+            return new Viewpoint(viewpoint);
         } else {
             return null;
         }
@@ -327,7 +346,7 @@ public final class VideoApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean updateViewpoint(Viewpoint viewpoint, boolean absolute) {
-        return libvlc.libvlc_video_update_viewpoint(mediaPlayerInstance, viewpoint.viewpoint(), absolute ? 1 : 0) == 0;
+        return libvlc_video_update_viewpoint(mediaPlayerInstance, viewpoint.viewpoint(), absolute ? 1 : 0) == 0;
     }
 
     /**
@@ -338,7 +357,7 @@ public final class VideoApi extends BaseApi {
      * @return list of descriptions, may be empty but will never be <code>null</code>
      */
     public List<TrackDescription> trackDescriptions() {
-        return Descriptions.videoTrackDescriptions(libvlc, mediaPlayerInstance);
+        return Descriptions.videoTrackDescriptions(mediaPlayerInstance);
     }
 
 }

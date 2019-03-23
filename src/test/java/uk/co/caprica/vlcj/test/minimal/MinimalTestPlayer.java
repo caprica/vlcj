@@ -19,14 +19,12 @@
 
 package uk.co.caprica.vlcj.test.minimal;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * An absolute minimum test player.

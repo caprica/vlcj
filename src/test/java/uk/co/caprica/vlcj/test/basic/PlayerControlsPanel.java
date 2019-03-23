@@ -19,11 +19,10 @@
 
 package uk.co.caprica.vlcj.test.basic;
 
-import uk.co.caprica.vlcj.player.base.LibVlcConst;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-//import uk.co.caprica.vlcj.filefilters.swing.SwingFileFilterFactory;
-import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.LibVlcConst;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 import javax.swing.*;
@@ -38,6 +37,8 @@ import java.awt.event.MouseEvent;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+//import uk.co.caprica.vlcj.filefilters.swing.SwingFileFilterFactory;
 
 @SuppressWarnings("serial")
 public class PlayerControlsPanel extends JPanel {

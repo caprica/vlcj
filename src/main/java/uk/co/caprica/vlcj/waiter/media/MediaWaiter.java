@@ -19,14 +19,14 @@
 
 package uk.co.caprica.vlcj.waiter.media;
 
-import uk.co.caprica.vlcj.media.MediaParsedStatus;
-import uk.co.caprica.vlcj.media.Meta;
-import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MediaEventAdapter;
 import uk.co.caprica.vlcj.media.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
+import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.media.Picture;
+import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.waiter.Waiter;
 
 /**

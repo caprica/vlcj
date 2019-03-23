@@ -19,8 +19,8 @@
 
 package uk.co.caprica.vlcj.test.component;
 
-import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import javax.swing.*;

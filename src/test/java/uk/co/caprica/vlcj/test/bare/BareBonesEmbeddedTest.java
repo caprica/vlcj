@@ -19,24 +19,32 @@
 
 package uk.co.caprica.vlcj.test.bare;
 
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
-import uk.co.caprica.vlcj.binding.LibVlc;
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
+import com.sun.jna.StringArray;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_new_path;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_new;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_play;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_hwnd;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_media;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_nsobject;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_xwindow;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_stop;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_new;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_release;
 
 /**
  * A minimal test with video output embedded in a Java frame. This test uses the
@@ -48,7 +56,6 @@ import com.sun.jna.Pointer;
  */
 public class BareBonesEmbeddedTest extends VlcjTest {
 
-    private final LibVlc libvlc;
     private final libvlc_instance_t instance;
     private final libvlc_media_player_t mediaPlayer;
 
@@ -65,16 +72,14 @@ public class BareBonesEmbeddedTest extends VlcjTest {
     }
 
     public BareBonesEmbeddedTest() {
-        libvlc = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-
         if(!RuntimeUtil.isMac()) {
-            instance = libvlc.libvlc_new(0, new String[] {});
+            instance = libvlc_new(0, new StringArray(new String[0]));
         }
         else {
-            instance = libvlc.libvlc_new(1, new String[] {"--vout=macosx"});
+            instance = libvlc_new(1, new StringArray(new String[] {"--vout=macosx"}));
         }
 
-        mediaPlayer = libvlc.libvlc_media_player_new(instance);
+        mediaPlayer = libvlc_media_player_new(instance);
 
         Canvas canvas = new Canvas();
         canvas.setBackground(Color.black);
@@ -85,9 +90,9 @@ public class BareBonesEmbeddedTest extends VlcjTest {
         f.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                libvlc.libvlc_media_player_stop(mediaPlayer);
-                libvlc.libvlc_media_player_release(mediaPlayer);
-                libvlc.libvlc_release(instance);
+                libvlc_media_player_stop(mediaPlayer);
+                libvlc_media_player_release(mediaPlayer);
+                libvlc_release(instance);
                 System.exit(0);
             }
         });
@@ -97,13 +102,13 @@ public class BareBonesEmbeddedTest extends VlcjTest {
         int videoSurfaceComponentId = (int)Native.getComponentID(canvas);
 
         if(RuntimeUtil.isNix()) {
-            libvlc.libvlc_media_player_set_xwindow(mediaPlayer, videoSurfaceComponentId);
+            libvlc_media_player_set_xwindow(mediaPlayer, videoSurfaceComponentId);
         }
         else if(RuntimeUtil.isMac()) {
-            libvlc.libvlc_media_player_set_nsobject(mediaPlayer, videoSurfaceComponentId);
+            libvlc_media_player_set_nsobject(mediaPlayer, videoSurfaceComponentId);
         }
         else if(RuntimeUtil.isWindows()) {
-            libvlc.libvlc_media_player_set_hwnd(mediaPlayer, Pointer.createConstant(videoSurfaceComponentId));
+            libvlc_media_player_set_hwnd(mediaPlayer, Pointer.createConstant(videoSurfaceComponentId));
         }
     }
 
@@ -116,9 +121,9 @@ public class BareBonesEmbeddedTest extends VlcjTest {
         catch(InterruptedException e) {
         }
 
-        libvlc_media_t media = libvlc.libvlc_media_new_path(instance, mrl);
-        libvlc.libvlc_media_player_set_media(mediaPlayer, media);
-        libvlc.libvlc_media_release(media);
-        libvlc.libvlc_media_player_play(mediaPlayer);
+        libvlc_media_t media = libvlc_media_new_path(instance, mrl);
+        libvlc_media_player_set_media(mediaPlayer, media);
+        libvlc_media_release(media);
+        libvlc_media_player_play(mediaPlayer);
     }
 }

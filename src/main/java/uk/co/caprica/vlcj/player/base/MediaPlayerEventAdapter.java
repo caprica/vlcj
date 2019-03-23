@@ -19,10 +19,10 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import javax.swing.SwingUtilities;
-
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.TrackType;
+
+import javax.swing.*;
 
 /**
  * Default implementation of the media player event listener.

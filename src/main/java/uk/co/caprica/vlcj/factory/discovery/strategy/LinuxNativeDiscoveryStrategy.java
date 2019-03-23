@@ -20,8 +20,8 @@
 package uk.co.caprica.vlcj.factory.discovery.strategy;
 
 import uk.co.caprica.vlcj.binding.LibC;
-import uk.co.caprica.vlcj.factory.discovery.provider.DirectoryProviderDiscoveryStrategy;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.factory.discovery.provider.DirectoryProviderDiscoveryStrategy;
 
 /**
  * Default implementation of a native discovery strategy that searches directories on the Linux operating system.

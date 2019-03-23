@@ -19,29 +19,30 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_manager_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.player.base.events.MediaPlayerEventFactory;
 import uk.co.caprica.vlcj.support.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.support.eventmanager.NativeEventManager;
-import uk.co.caprica.vlcj.player.base.events.MediaPlayerEventFactory;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_event_manager;
 
 final class MediaPlayerNativeEventManager extends NativeEventManager<MediaPlayer, MediaPlayerEventListener> {
 
-    MediaPlayerNativeEventManager(LibVlc libvlc, libvlc_instance_t libvlcInstance, MediaPlayer eventObject) {
-        super(libvlc, libvlcInstance, eventObject, libvlc_event_e.libvlc_MediaPlayerMediaChanged, libvlc_event_e.libvlc_MediaPlayerChapterChanged, "media-player-events");
+    MediaPlayerNativeEventManager(libvlc_instance_t libvlcInstance, MediaPlayer eventObject) {
+        super(libvlcInstance, eventObject, libvlc_event_e.libvlc_MediaPlayerMediaChanged, libvlc_event_e.libvlc_MediaPlayerChapterChanged, "media-player-events");
     }
 
     @Override
-    protected libvlc_event_manager_t onGetEventManager(LibVlc libvlc, MediaPlayer eventObject) {
-        return libvlc.libvlc_media_player_event_manager(eventObject.mediaPlayerInstance());
+    protected libvlc_event_manager_t onGetEventManager(MediaPlayer eventObject) {
+        return libvlc_media_player_event_manager(eventObject.mediaPlayerInstance());
     }
 
     @Override
-    protected EventNotification<MediaPlayerEventListener> onCreateEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_event_t event, MediaPlayer eventObject) {
-        return MediaPlayerEventFactory.createEvent(libvlc, libvlcInstance, eventObject, event);
+    protected EventNotification<MediaPlayerEventListener> onCreateEvent(libvlc_instance_t libvlcInstance, libvlc_event_t event, MediaPlayer eventObject) {
+        return MediaPlayerEventFactory.createEvent(libvlcInstance, eventObject, event);
     }
 
 }

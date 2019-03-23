@@ -21,6 +21,10 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_parsed_status;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_parse_stop;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_parse_with_options;
+
 /**
  * Behaviour pertaining to parsing of media.
  * <p>
@@ -94,14 +98,14 @@ public final class ParseApi extends BaseApi {
      * @return <code>true</code> if the parse request was successful; <code>false</code> on error
      */
     public boolean parse(int timeout, ParseFlag... flags) {
-        return libvlc.libvlc_media_parse_with_options(mediaInstance, flagsToInt(flags), timeout) == 0;
+        return libvlc_media_parse_with_options(mediaInstance, flagsToInt(flags), timeout) == 0;
     }
 
     /**
      * Stop the asynchronous parsing.
      */
     public void stop() {
-        libvlc.libvlc_media_parse_stop(mediaInstance);
+        libvlc_media_parse_stop(mediaInstance);
     }
 
     /**
@@ -112,7 +116,7 @@ public final class ParseApi extends BaseApi {
      * @return parsed status
      */
     public MediaParsedStatus status() {
-        return MediaParsedStatus.mediaParsedStatus(libvlc.libvlc_media_get_parsed_status(mediaInstance));
+        return MediaParsedStatus.mediaParsedStatus(libvlc_media_get_parsed_status(mediaInstance));
     }
 
     private int flagsToInt(ParseFlag... flags) {

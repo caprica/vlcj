@@ -21,7 +21,6 @@ package uk.co.caprica.vlcj.player.component.callback;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 /**

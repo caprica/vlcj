@@ -26,6 +26,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_take_snapshot;
+
 /**
  * Behaviour pertaining to video snapshots.
  */
@@ -152,7 +154,7 @@ public final class SnapshotApi extends BaseApi {
             snapshotDirectory.mkdirs();
         }
         if (snapshotDirectory.exists()) {
-            return libvlc.libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), width, height) == 0;
+            return libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), width, height) == 0;
         } else {
             throw new RuntimeException("Directory does not exist and could not be created for '" + file.getAbsolutePath() + "'");
         }

@@ -1,16 +1,18 @@
 package uk.co.caprica.vlcj.factory.discovery;
 
-import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import com.sun.jna.StringArray;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.factory.discovery.strategy.LinuxNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.factory.discovery.strategy.OsxNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.factory.discovery.strategy.WindowsNativeDiscoveryStrategy;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.support.version.LibVlcVersion;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_new;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_release;
 
 /**
  * Native library discovery component.
@@ -148,17 +150,19 @@ public class NativeDiscovery {
      */
     private boolean tryLoadingLibrary() {
         try {
-            LibVlc libvlc = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-            libvlc_instance_t instance = libvlc.libvlc_new(0, new String[0]);
+            libvlc_instance_t instance = libvlc_new(0, new StringArray(new String[0]));
             if (instance != null) {
-                libvlc.libvlc_release(instance);
-                LibVlcVersion version = new LibVlcVersion(libvlc);
+                libvlc_release(instance);
+                LibVlcVersion version = new LibVlcVersion();
                 if (version.isSupported()) {
                     return true;
                 }
             }
         }
         catch (UnsatisfiedLinkError e) {
+            // The library could not be loaded, this includes NoClassDefFoundError which would be thrown e.g. if there
+            // was a direct-mapped method in the LibVlc class that was missing from the loaded native library - we don't
+            // report the error here (since this discovery is optional), it will be reported by the factory subsequently
         }
         return false;
     }

@@ -26,6 +26,9 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_logo_int;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_logo_string;
+
 /**
  * Behaviour pertaining to the logo.
  */
@@ -43,7 +46,7 @@ public final class LogoApi extends BaseApi {
      * @param enable <code>true</code> to show the logo, <code>false</code> to hide it
      */
     public void enable(boolean enable) {
-        libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_enable.intValue(), enable ? 1 : 0);
+        libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_enable.intValue(), enable ? 1 : 0);
     }
 
     /**
@@ -54,7 +57,7 @@ public final class LogoApi extends BaseApi {
      * @param duration duration, milliseconds
      */
     public void setDuration(int duration) {
-        libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_delay.intValue(), duration);
+        libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_delay.intValue(), duration);
     }
 
     /**
@@ -63,7 +66,7 @@ public final class LogoApi extends BaseApi {
      * @param opacity opacity in the range 0 to 255 where 255 is fully opaque
      */
     public void setOpacity(int opacity) {
-        libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_opacity.intValue(), opacity);
+        libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_opacity.intValue(), opacity);
     }
 
     /**
@@ -73,7 +76,7 @@ public final class LogoApi extends BaseApi {
      */
     public void setOpacity(float opacity) {
         int opacityValue = Math.round(opacity * 255.0f);
-        libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_opacity.intValue(), opacityValue);
+        libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_opacity.intValue(), opacityValue);
     }
 
     /**
@@ -83,8 +86,8 @@ public final class LogoApi extends BaseApi {
      * @param y y co-ordinate for the top left of the logo
      */
     public void setLocation(int x, int y) {
-        libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_x.intValue(), x);
-        libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_y.intValue(), y);
+        libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_x.intValue(), x);
+        libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_y.intValue(), y);
     }
 
     /**
@@ -93,7 +96,7 @@ public final class LogoApi extends BaseApi {
      * @param position position
      */
     public void setPosition(LogoPosition position) {
-        libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_position.intValue(), position.intValue());
+        libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_position.intValue(), position.intValue());
     }
 
     /**
@@ -105,7 +108,7 @@ public final class LogoApi extends BaseApi {
      * @param repeat number of times to repeat the logos, or -1 for indefinite, or 0 to disable looping
      */
     public void setRepeat(int repeat) {
-        libvlc.libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_repeat.intValue(), repeat);
+        libvlc_video_set_logo_int(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_repeat.intValue(), repeat);
     }
 
     /**
@@ -128,7 +131,7 @@ public final class LogoApi extends BaseApi {
      * @param logoFile logo file name
      */
     public void setFile(String logoFile) {
-        libvlc.libvlc_video_set_logo_string(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_file.intValue(), logoFile);
+        libvlc_video_set_logo_string(mediaPlayerInstance, libvlc_video_logo_option_t.libvlc_logo_file.intValue(), logoFile);
     }
 
     /**

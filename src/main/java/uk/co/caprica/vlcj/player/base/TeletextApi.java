@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_teletext;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_teletext;
+
 /**
  * Behaviour pertaining to teletext.
  */
@@ -34,7 +37,7 @@ public final class TeletextApi extends BaseApi {
      * @return page number
      */
     public int page() {
-        return libvlc.libvlc_video_get_teletext(mediaPlayerInstance);
+        return libvlc_video_get_teletext(mediaPlayerInstance);
     }
 
     /**
@@ -43,7 +46,7 @@ public final class TeletextApi extends BaseApi {
      * @param pageNumber page number
      */
     public void setPage(int pageNumber) {
-        libvlc.libvlc_video_set_teletext(mediaPlayerInstance, pageNumber);
+        libvlc_video_set_teletext(mediaPlayerInstance, pageNumber);
     }
 
     /**
@@ -52,7 +55,7 @@ public final class TeletextApi extends BaseApi {
      * @param key teletext key
      */
     public void setKey(TeletextKey key) {
-        libvlc.libvlc_video_set_teletext(mediaPlayerInstance, key.intValue());
+        libvlc_video_set_teletext(mediaPlayerInstance, key.intValue());
     }
 
 }

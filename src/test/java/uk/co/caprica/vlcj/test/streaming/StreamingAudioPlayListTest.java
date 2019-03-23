@@ -19,21 +19,21 @@
 
 package uk.co.caprica.vlcj.test.streaming;
 
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.medialist.MediaListRef;
+import uk.co.caprica.vlcj.player.list.MediaListPlayer;
+import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.list.PlaybackMode;
+import uk.co.caprica.vlcj.test.VlcjTest;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import uk.co.caprica.vlcj.player.list.PlaybackMode;
-import uk.co.caprica.vlcj.media.MediaRef;
-import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.medialist.MediaListRef;
-import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
-import uk.co.caprica.vlcj.test.VlcjTest;
 
 /**
  * A simple example combining a media list player along with network streaming.

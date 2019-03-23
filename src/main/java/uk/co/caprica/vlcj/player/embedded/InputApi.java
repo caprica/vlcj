@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.player.embedded;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_key_input;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_mouse_input;
+
 /**
  * Behaviour pertaining to keyboard/mouse input-events.
  */
@@ -41,7 +44,7 @@ public final class InputApi extends BaseApi {
      * @param enable <code>true</code> to enable, <code>false</code> to disable
      */
     public void enableMouseInputHandling(boolean enable) {
-        libvlc.libvlc_video_set_mouse_input(mediaPlayerInstance, enable ? 1 : 0);
+        libvlc_video_set_mouse_input(mediaPlayerInstance, enable ? 1 : 0);
     }
 
     /**
@@ -53,7 +56,7 @@ public final class InputApi extends BaseApi {
      * @param enable <code>true</code> to enable, <code>false</code> to disable
      */
     public void enableKeyInputHandling(boolean enable) {
-        libvlc.libvlc_video_set_key_input(mediaPlayerInstance, enable ? 1 : 0);
+        libvlc_video_set_key_input(mediaPlayerInstance, enable ? 1 : 0);
     }
 
 }

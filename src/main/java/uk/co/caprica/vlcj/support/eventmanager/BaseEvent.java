@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.support.eventmanager;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.media.MediaRef;
@@ -31,11 +30,6 @@ import uk.co.caprica.vlcj.media.MediaRef;
  * @param <L> type of event notification listener
  */
 abstract public class BaseEvent<C, L> implements EventNotification<L> {
-
-    /**
-     * Native library.
-     */
-    protected final LibVlc libvlc;
 
     /**
      * Native library instance.
@@ -50,12 +44,10 @@ abstract public class BaseEvent<C, L> implements EventNotification<L> {
     /**
      * Create an event.
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @param component component the event relates to
      */
-    protected BaseEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, C component) {
-        this.libvlc = libvlc;
+    protected BaseEvent(libvlc_instance_t libvlcInstance, C component) {
         this.libvlcInstance = libvlcInstance;
         this.component = component;
     }
@@ -76,7 +68,7 @@ abstract public class BaseEvent<C, L> implements EventNotification<L> {
      * @return temporary media reference, which must <em>not</em> be released
      */
     protected final MediaRef temporaryMediaRef(libvlc_media_t mediaInstance) {
-        return new MediaRef(libvlc, libvlcInstance, mediaInstance);
+        return new MediaRef(libvlcInstance, mediaInstance);
     }
 
 }

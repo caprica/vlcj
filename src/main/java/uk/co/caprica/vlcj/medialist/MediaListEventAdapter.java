@@ -19,10 +19,10 @@
 
 package uk.co.caprica.vlcj.medialist;
 
-import javax.swing.SwingUtilities;
-
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.MediaRef;
+
+import javax.swing.*;
 
 /**
  * Default implementation of the media list event listener.

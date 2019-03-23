@@ -23,6 +23,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_subitems;
+
 public final class SubitemApi extends BaseApi {
 
     SubitemApi(Media media) {
@@ -37,9 +39,9 @@ public final class SubitemApi extends BaseApi {
      * @return subitems list
      */
     public MediaList newMediaList() {
-        libvlc_media_list_t list = libvlc.libvlc_media_subitems(mediaInstance);
+        libvlc_media_list_t list = libvlc_media_subitems(mediaInstance);
         if (list != null) {
-            return new MediaList(libvlc, libvlcInstance, list);
+            return new MediaList(libvlcInstance, list);
         } else {
             return null;
         }
@@ -53,9 +55,9 @@ public final class SubitemApi extends BaseApi {
      * @return subitems list reference
      */
     public MediaListRef newMediaListRef() {
-        libvlc_media_list_t list = libvlc.libvlc_media_subitems(mediaInstance);
+        libvlc_media_list_t list = libvlc_media_subitems(mediaInstance);
         if (list != null) {
-            return new MediaListRef(libvlc, libvlcInstance, list);
+            return new MediaListRef(libvlcInstance, list);
         } else {
             return null;
         }

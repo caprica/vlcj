@@ -19,16 +19,13 @@
 
 package uk.co.caprica.vlcj.test.streaming;
 
-import java.awt.Canvas;
-import java.awt.Color;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * An example of how to stream a media file using RTP and use the "duplicate" output to also display

@@ -19,13 +19,13 @@
 
 package uk.co.caprica.vlcj.test.meta;
 
-import uk.co.caprica.vlcj.media.MediaParsedStatus;
-import uk.co.caprica.vlcj.media.ParseFlag;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.MetaData;
 import uk.co.caprica.vlcj.media.MediaEventAdapter;
 import uk.co.caprica.vlcj.media.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
+import uk.co.caprica.vlcj.media.MetaData;
+import uk.co.caprica.vlcj.media.ParseFlag;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import java.io.File;

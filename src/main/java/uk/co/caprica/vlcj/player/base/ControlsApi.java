@@ -19,6 +19,15 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_next_frame;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_pause;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_play;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_pause;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_position;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_rate;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_time;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_stop;
+
 /**
  * Behaviour pertaining to media player controls.
  */
@@ -40,7 +49,7 @@ public final class ControlsApi extends BaseApi {
      */
     public void play() {
         mediaPlayer.onBeforePlay();
-        libvlc.libvlc_media_player_play(mediaPlayerInstance);
+        libvlc_media_player_play(mediaPlayerInstance);
     }
 
     /**
@@ -62,7 +71,7 @@ public final class ControlsApi extends BaseApi {
      * A subsequent play will play-back from the start.
      */
     public void stop() {
-        libvlc.libvlc_media_player_stop(mediaPlayerInstance);
+        libvlc_media_player_stop(mediaPlayerInstance);
     }
 
     /**
@@ -71,7 +80,7 @@ public final class ControlsApi extends BaseApi {
      * @param pause true to pause, false to play/resume
      */
     public void setPause(boolean pause) {
-        libvlc.libvlc_media_player_set_pause(mediaPlayerInstance, pause ? 1 : 0);
+        libvlc_media_player_set_pause(mediaPlayerInstance, pause ? 1 : 0);
     }
 
     /**
@@ -80,14 +89,14 @@ public final class ControlsApi extends BaseApi {
      * If the play-back is currently paused it will begin playing.
      */
     public void pause() {
-        libvlc.libvlc_media_player_pause(mediaPlayerInstance);
+        libvlc_media_player_pause(mediaPlayerInstance);
     }
 
     /**
      * Advance one frame.
      */
     public void nextFrame() {
-        libvlc.libvlc_media_player_next_frame(mediaPlayerInstance);
+        libvlc_media_player_next_frame(mediaPlayerInstance);
     }
 
     /**
@@ -126,7 +135,7 @@ public final class ControlsApi extends BaseApi {
      * @param time time since the beginning, in milliseconds
      */
     public void setTime(long time) {
-        libvlc.libvlc_media_player_set_time(mediaPlayerInstance, Math.max(time, 0));
+        libvlc_media_player_set_time(mediaPlayerInstance, Math.max(time, 0));
     }
 
     /**
@@ -137,7 +146,7 @@ public final class ControlsApi extends BaseApi {
      * @param position position value, a percentage (e.g. 0.15 is 15%)
      */
     public void setPosition(float position) {
-        libvlc.libvlc_media_player_set_position(mediaPlayerInstance, Math.max(position, 0));
+        libvlc_media_player_set_position(mediaPlayerInstance, Math.max(position, 0));
     }
 
     /**
@@ -151,7 +160,7 @@ public final class ControlsApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> otherwise
      */
     public boolean setRate(float rate) {
-        return libvlc.libvlc_media_player_set_rate(mediaPlayerInstance, rate) != -1;
+        return libvlc_media_player_set_rate(mediaPlayerInstance, rate) != -1;
     }
 
     /**

@@ -19,10 +19,12 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.medialist.MediaList;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_duplicate;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_retain;
 
 /**
  * An opaque reference to media.
@@ -30,11 +32,6 @@ import uk.co.caprica.vlcj.medialist.MediaList;
  * This is used to pass around media references without requiring the full-blown {@link Media} component.
  */
 public final class MediaRef {
-
-    /**
-     * Native library.
-     */
-    private final LibVlc libvlc;
 
     /**
      * Native library instance.
@@ -49,12 +46,10 @@ public final class MediaRef {
     /**
      * Create a new media reference.
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @param mediaInstance native media instance
      */
-    public MediaRef(LibVlc libvlc, libvlc_instance_t libvlcInstance, libvlc_media_t mediaInstance) {
-        this.libvlc = libvlc;
+    public MediaRef(libvlc_instance_t libvlcInstance, libvlc_media_t mediaInstance) {
         this.libvlcInstance = libvlcInstance;
         this.mediaInstance = mediaInstance;
     }
@@ -69,8 +64,8 @@ public final class MediaRef {
      * @return media
      */
     public Media newMedia() {
-        libvlc.libvlc_media_retain(mediaInstance);
-        return new Media(libvlc, libvlcInstance, mediaInstance);
+        libvlc_media_retain(mediaInstance);
+        return new Media(libvlcInstance, mediaInstance);
     }
 
     /**
@@ -83,8 +78,8 @@ public final class MediaRef {
      * @return media reference
      */
     public MediaRef newMediaRef() {
-        libvlc.libvlc_media_retain(mediaInstance);
-        return new MediaRef(libvlc, libvlcInstance, mediaInstance);
+        libvlc_media_retain(mediaInstance);
+        return new MediaRef(libvlcInstance, mediaInstance);
     }
 
     /**
@@ -99,7 +94,7 @@ public final class MediaRef {
      * @return duplicated media
      */
     public Media duplicateMedia() {
-        return new Media(libvlc, libvlcInstance, libvlc.libvlc_media_duplicate(mediaInstance));
+        return new Media(libvlcInstance, libvlc_media_duplicate(mediaInstance));
     }
 
     /**
@@ -114,7 +109,7 @@ public final class MediaRef {
      * @return duplicated media reference
      */
     public MediaRef duplicateMediaRef() {
-        return new MediaRef(libvlc, libvlcInstance, libvlc.libvlc_media_duplicate(mediaInstance));
+        return new MediaRef(libvlcInstance, libvlc_media_duplicate(mediaInstance));
     }
 
     /**
@@ -123,7 +118,7 @@ public final class MediaRef {
      * The component must no longer be used.
      */
     public void release() {
-        libvlc.libvlc_media_release(mediaInstance);
+        libvlc_media_release(mediaInstance);
     }
 
     /**

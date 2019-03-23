@@ -19,13 +19,14 @@
 
 package uk.co.caprica.vlcj.test.discovery;
 
-import com.sun.jna.Native;
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import com.sun.jna.StringArray;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.support.version.LibVlcVersion;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_new;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_release;
 
 /**
  * A trivial test to demonstrate automatic discovery of the libvlc native shared libraries.
@@ -48,14 +49,12 @@ public class NativeDiscoveryTest {
         };
         boolean found = discovery.discover();
         System.out.println(found);
-        LibVlc nativeLibrary = Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-        System.out.println("Loaded library " + nativeLibrary);
-        libvlc_instance_t instance = nativeLibrary.libvlc_new(0, new String[0]);
+        libvlc_instance_t instance = libvlc_new(0, new StringArray(new String[0]));
         System.out.println("instance " + instance);
         if (instance != null) {
-            nativeLibrary.libvlc_release(instance);
+            libvlc_release(instance);
         }
-        System.out.println(new LibVlcVersion(nativeLibrary).getVersion());
+        System.out.println(new LibVlcVersion().getVersion());
     }
 
 }

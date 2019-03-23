@@ -19,18 +19,16 @@
 
 package uk.co.caprica.vlcj.player.renderer;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_discoverer_release;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_discoverer_start;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_discoverer_stop;
 
 /**
  * Encapsulation of a native renderer discoverer instance.
  */
 public final class RendererDiscoverer {
-
-    /**
-     * Native library.
-     */
-    protected final LibVlc libvlc;
 
     /**
      * Native renderer discoverer instance.
@@ -40,8 +38,7 @@ public final class RendererDiscoverer {
     private final EventApi eventApi;
     private final ListApi  listApi;
 
-    public RendererDiscoverer(LibVlc libvlc, libvlc_renderer_discoverer_t discoverer) {
-        this.libvlc             = libvlc;
+    public RendererDiscoverer(libvlc_renderer_discoverer_t discoverer) {
         this.discovererInstance = discoverer;
 
         this.eventApi = new EventApi(this);
@@ -72,14 +69,14 @@ public final class RendererDiscoverer {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean start() {
-        return libvlc.libvlc_renderer_discoverer_start(discovererInstance) == 0;
+        return libvlc_renderer_discoverer_start(discovererInstance) == 0;
     }
 
     /**
      * Stop discovery.
      */
     public void stop() {
-        libvlc.libvlc_renderer_discoverer_stop(discovererInstance);
+        libvlc_renderer_discoverer_stop(discovererInstance);
     }
 
     /**
@@ -91,7 +88,7 @@ public final class RendererDiscoverer {
         eventApi.release();
         listApi .release();
 
-        libvlc.libvlc_renderer_discoverer_release(discovererInstance);
+        libvlc_renderer_discoverer_release(discovererInstance);
     }
 
     /**

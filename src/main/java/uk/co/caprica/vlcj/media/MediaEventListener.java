@@ -19,8 +19,8 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.base.State;
 
 import javax.swing.*;
 

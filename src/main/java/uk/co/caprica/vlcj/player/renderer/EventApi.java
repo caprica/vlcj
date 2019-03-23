@@ -29,7 +29,7 @@ public final class EventApi extends BaseApi {
     EventApi(RendererDiscoverer rendererDiscoverer) {
         super(rendererDiscoverer);
 
-        this.eventManager = new RendererDiscovererNativeEventManager(libvlc, rendererDiscoverer);
+        this.eventManager = new RendererDiscovererNativeEventManager(rendererDiscoverer);
 
         // Add event handlers used for internal implementation
         addRendererDiscovererEventListener(new RendererItemListEventHandler());

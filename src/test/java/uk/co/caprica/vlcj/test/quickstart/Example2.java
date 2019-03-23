@@ -19,11 +19,10 @@
 
 package uk.co.caprica.vlcj.test.quickstart;
 
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+
+import javax.swing.*;
 
 /**
  * Minimal quick-start example with automatic discovery and configuration of

@@ -19,11 +19,10 @@
 
 package uk.co.caprica.vlcj.media.events;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.support.eventmanager.BaseEvent;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaEventListener;
+import uk.co.caprica.vlcj.support.eventmanager.BaseEvent;
 
 /**
  * Base implementation for media events.
@@ -35,12 +34,11 @@ abstract class MediaEvent extends BaseEvent<Media, MediaEventListener> {
     /**
      * Create a media list event.
      *
-     * @param libvlc native library
      * @param libvlcInstance native library instance
      * @param media media that the event relates to
      */
-    protected MediaEvent(LibVlc libvlc, libvlc_instance_t libvlcInstance, Media media) {
-        super(libvlc, libvlcInstance, media);
+    protected MediaEvent(libvlc_instance_t libvlcInstance, Media media) {
+        super(libvlcInstance, media);
     }
 
 }

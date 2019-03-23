@@ -23,6 +23,9 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_fullscreen;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_set_fullscreen;
+
 /**
  * Implementation of a {@link FullScreenStrategy} that uses the native LibVLC fullscreen API.
  * <p>
@@ -30,28 +33,25 @@ import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
  */
 public class LibVlcNativeFullScreenStrategy implements FullScreenStrategy {
 
-    private final LibVlc libvlc;
-
     private final libvlc_media_player_t mediaPlayerInstance;
 
-    public LibVlcNativeFullScreenStrategy(LibVlc libvlc, libvlc_media_player_t mediaPlayerInstance) {
-        this.libvlc              = libvlc;
+    public LibVlcNativeFullScreenStrategy(libvlc_media_player_t mediaPlayerInstance) {
         this.mediaPlayerInstance = mediaPlayerInstance;
     }
 
     @Override
     public void enterFullScreenMode() {
-        libvlc.libvlc_set_fullscreen(mediaPlayerInstance, 1);
+        libvlc_set_fullscreen(mediaPlayerInstance, 1);
     }
 
     @Override
     public void exitFullScreenMode() {
-        libvlc.libvlc_set_fullscreen(mediaPlayerInstance, 0);
+        libvlc_set_fullscreen(mediaPlayerInstance, 0);
     }
 
     @Override
     public boolean isFullScreenMode() {
-        return libvlc.libvlc_get_fullscreen(mediaPlayerInstance) != 0;
+        return libvlc_get_fullscreen(mediaPlayerInstance) != 0;
     }
 
 }

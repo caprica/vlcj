@@ -19,13 +19,13 @@
 
 package uk.co.caprica.vlcj.test.thumbs;
 
-import java.io.File;
-import java.util.concurrent.CountDownLatch;
-
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.test.VlcjTest;
+
+import java.io.File;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * A simple application to generate a single thumbnail image from a media file.

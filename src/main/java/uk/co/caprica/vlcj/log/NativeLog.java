@@ -25,7 +25,6 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
 import uk.co.caprica.vlcj.binding.LibC;
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_cb;
@@ -34,6 +33,11 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_log_get_context;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_log_get_object;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_log_set;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_log_unset;
 
 /**
  * Encapsulation of the vlc native log.
@@ -62,11 +66,6 @@ public final class NativeLog {
     private final List<LogEventListener> eventListenerList = new CopyOnWriteArrayList<LogEventListener>();
 
     /**
-     * Native library instance.
-     */
-    private final LibVlc libvlc;
-
-    /**
      * LibVlc instance.
      */
     private final libvlc_instance_t instance;
@@ -86,14 +85,12 @@ public final class NativeLog {
     /**
      * Create a new native log component.
      *
-     * @param libvlc native library instance
      * @param instance libvlc instance
      */
-    public NativeLog(LibVlc libvlc, libvlc_instance_t instance) {
-        this.libvlc   = libvlc;
+    public NativeLog(libvlc_instance_t instance) {
         this.instance = instance;
 
-        libvlc.libvlc_log_set(instance, callback, null);
+        libvlc_log_set(instance, callback, null);
     }
 
     /**
@@ -140,7 +137,7 @@ public final class NativeLog {
      */
     public final void release() {
         eventListenerList.clear();
-        libvlc.libvlc_log_unset(instance);
+        libvlc_log_unset(instance);
     }
 
     /**
@@ -176,11 +173,11 @@ public final class NativeLog {
                         PointerByReference modulePointer = new PointerByReference();
                         PointerByReference filePointer = new PointerByReference();
                         IntByReference linePointer = new IntByReference();
-                        libvlc.libvlc_log_get_context(ctx, modulePointer, filePointer, linePointer);
+                        libvlc_log_get_context(ctx, modulePointer, filePointer, linePointer);
                         PointerByReference namePointer = new PointerByReference();
                         PointerByReference headerPointer = new PointerByReference();
                         IntByReference idPointer = new IntByReference();
-                        libvlc.libvlc_log_get_object(ctx, namePointer, headerPointer, idPointer);
+                        libvlc_log_get_object(ctx, namePointer, headerPointer, idPointer);
                         String module = getString(modulePointer);
                         String file = getString(filePointer);
                         Integer line = linePointer.getValue();

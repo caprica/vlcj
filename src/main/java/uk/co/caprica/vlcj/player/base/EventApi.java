@@ -32,7 +32,7 @@ public final class EventApi extends BaseApi {
     EventApi(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
 
-        eventManager = new MediaPlayerNativeEventManager(libvlc, libvlcInstance, mediaPlayer);
+        eventManager = new MediaPlayerNativeEventManager(libvlcInstance, mediaPlayer);
 
         // Add event handlers used for internal implementation (ordering here is important)
         addMediaPlayerEventListener(new ResetMediaEventHandler      ());

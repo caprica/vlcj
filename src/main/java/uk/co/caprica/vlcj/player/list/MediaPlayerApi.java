@@ -22,6 +22,8 @@ package uk.co.caprica.vlcj.player.list;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_set_media_player;
+
 /**
  * Behaviour pertaining to the associated media player.
  */
@@ -45,7 +47,7 @@ public final class MediaPlayerApi extends BaseApi {
      */
     public void setMediaPlayer(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
-        libvlc.libvlc_media_list_player_set_media_player(mediaListPlayerInstance, mediaPlayer.mediaPlayerInstance());
+        libvlc_media_list_player_set_media_player(mediaListPlayerInstance, mediaPlayer.mediaPlayerInstance());
     }
 
     /**
