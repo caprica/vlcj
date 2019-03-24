@@ -29,6 +29,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 24th March, 2019 - vlcj 4.0.7 released, minor change to allow to change the callback video surface image painter after creation
 - 18th March, 2019 - published a Yeoman generator for vlcj starter projects, see [generator-vlcj](https://github.com/caprica/generator-vlcj)
 - 5th March, 2019 - vlcj 4.0.6 released, fixes issues with image painters when using CallbackMediaPlayerComponent
 - 4th March, 2019 - vlcj 4.0.5 released, fixes a problem using ByteBuffer on Java8
@@ -93,6 +94,7 @@ For a full list of changes in this release, check the release milestones:
 - [vlcj 4.0.4 release milestone](https://github.com/caprica/vlcj/milestone/35?closed=1)
 - [vlcj 4.0.5 release milestone](https://github.com/caprica/vlcj/milestone/36?closed=1)
 - [vlcj 4.0.6 release milestone](https://github.com/caprica/vlcj/milestone/37?closed=1)
+- [vlcj 4.0.7 release milestone](https://github.com/caprica/vlcj/milestone/38?closed=1)
 
 Despite all of these changes, running on JDK 1.6 is still supported!
 
@@ -182,7 +184,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.0.6</version>
+    <version>4.0.7</version>
 </dependency>
 ```
 
@@ -354,7 +356,8 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available here:
 
-* [4.0.6 (current)](http://caprica.github.com/vlcj/javadoc/4.0.6/index.html "4.0.6 Javadoc")
+* [4.0.7 (current)](http://caprica.github.com/vlcj/javadoc/4.0.7/index.html "4.0.7 Javadoc")
+* [4.0.6](http://caprica.github.com/vlcj/javadoc/4.0.6/index.html "4.0.6 Javadoc")
 * [4.0.5](http://caprica.github.com/vlcj/javadoc/4.0.5/index.html "4.0.5 Javadoc")
 * [4.0.4](http://caprica.github.com/vlcj/javadoc/4.0.4/index.html "4.0.4 Javadoc")
 * [4.0.3](http://caprica.github.com/vlcj/javadoc/4.0.3/index.html "4.0.3 Javadoc")
