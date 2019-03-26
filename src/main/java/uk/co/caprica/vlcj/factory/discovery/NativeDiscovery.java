@@ -60,6 +60,16 @@ public class NativeDiscovery {
      */
     private boolean alreadyFound;
 
+    /**
+     * The native discovery strategy instance that discovered the native library path.
+     */
+    private NativeDiscoveryStrategy successfulStrategy;
+
+    /**
+     * The native library path that was discovered.
+     */
+    private String discoveredPath;
+
     private static final NativeDiscoveryStrategy[] DEFAULT_STRATEGIES = new NativeDiscoveryStrategy[] {
         new LinuxNativeDiscoveryStrategy(),
         new OsxNativeDiscoveryStrategy(),
@@ -106,6 +116,8 @@ public class NativeDiscovery {
                         }
                         tryPluginPath(path, discoveryStrategy);
                         if (tryLoadingLibrary()) {
+                            successfulStrategy = discoveryStrategy;
+                            discoveredPath = path;
                             onFound(path, discoveryStrategy);
                             alreadyFound = true;
                             return true;
@@ -122,6 +134,28 @@ public class NativeDiscovery {
             onNotFound();
             return false;
         }
+    }
+
+    /**
+     * Get the native discovery strategy instance that discovered the native library.
+     * <p>
+     * Used only for diagnostic purposes.
+     *
+     * @return strategy instance
+     */
+    public final NativeDiscoveryStrategy successfulStrategy() {
+        return successfulStrategy;
+    }
+
+    /**
+     * Get the discovered native library path.
+     * <p>
+     * Used only for diagnostic purposes.
+     *
+     * @return native library path
+     */
+    public final String discoveredPath() {
+        return discoveredPath;
     }
 
     /**

@@ -25,6 +25,7 @@ import uk.co.caprica.vlcj.binding.LinuxNativeInit;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
 import uk.co.caprica.vlcj.support.version.LibVlcVersion;
 
@@ -92,6 +93,20 @@ public class MediaPlayerFactory {
     private final MediaApi           mediaApi;
     private final RendererApi        rendererApi;
     private final VideoSurfaceApi    videoSurfaceApi;
+
+    /**
+     * The discovery strategy instance that discovered the native library.
+     * <p>
+     * May be <code>null</code>.
+     */
+    private NativeDiscoveryStrategy nativeDiscoveryStrategy;
+
+    /**
+     * The path to the native library that was discovered.
+     * <p>
+     * May be <code>null</code>.
+     */
+    private String nativeLibraryPath;
 
     /**
      * Create a new media player factory.
@@ -170,6 +185,8 @@ public class MediaPlayerFactory {
             // The discover method return value is not currently used, since we try and load the native library whether
             // discovery worked or not
             discovery.discover();
+            this.nativeDiscoveryStrategy = discovery.successfulStrategy();
+            this.nativeLibraryPath = discovery.discoveredPath();
         }
         try {
             checkVersion();
@@ -283,6 +300,28 @@ public class MediaPlayerFactory {
         libvlc_release(this.libvlcInstance);
 
         onAfterRelease();
+    }
+
+    /**
+     * Get the native discovery strategy instance that discovered the native library.
+     * <p>
+     * Used only for diagnostic purposes.
+     *
+     * @return strategy instance
+     */
+    public final NativeDiscoveryStrategy nativeDiscoveryStrategy() {
+        return nativeDiscoveryStrategy;
+    }
+
+    /**
+     * Get the discovered native library path.
+     * <p>
+     * Used only for diagnostic purposes.
+     *
+     * @return native library path
+     */
+    public final String nativeLibraryPath() {
+        return nativeLibraryPath;
     }
 
     /**
