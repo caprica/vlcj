@@ -41,13 +41,14 @@ public final class Media {
      */
     protected final libvlc_media_t mediaInstance;
 
-    private final EventApi   eventApi;
-    private final InfoApi    infoApi;
-    private final MetaApi    metaApi;
-    private final OptionsApi optionsApi;
-    private final ParseApi   parseApi;
-    private final SlaveApi   slaveApi;
-    private final SubitemApi subitemApi;
+    private final EventApi     eventApi;
+    private final InfoApi      infoApi;
+    private final MetaApi      metaApi;
+    private final OptionsApi   optionsApi;
+    private final ParseApi     parseApi;
+    private final SlaveApi     slaveApi;
+    private final SubitemApi   subitemApi;
+    private final ThumbnailApi thumbnailApi;
 
     /**
      * Create a new media item.
@@ -64,13 +65,14 @@ public final class Media {
         this.libvlcInstance = libvlcInstance;
         this.mediaInstance  = media;
 
-        this.eventApi    = new EventApi  (this);
-        this.infoApi     = new InfoApi   (this);
-        this.metaApi     = new MetaApi   (this);
-        this.optionsApi  = new OptionsApi(this);
-        this.parseApi    = new ParseApi  (this);
-        this.slaveApi    = new SlaveApi  (this);
-        this.subitemApi  = new SubitemApi(this);
+        this.eventApi     = new EventApi    (this);
+        this.infoApi      = new InfoApi     (this);
+        this.metaApi      = new MetaApi     (this);
+        this.optionsApi   = new OptionsApi  (this);
+        this.parseApi     = new ParseApi    (this);
+        this.slaveApi     = new SlaveApi    (this);
+        this.subitemApi   = new SubitemApi  (this);
+        this.thumbnailApi = new ThumbnailApi(this);
     }
 
     /**
@@ -137,6 +139,15 @@ public final class Media {
     }
 
     /**
+     * Behaviour pertaining to thumbnails.
+     *
+     * @return thumbnail behaviour
+     */
+    public ThumbnailApi thumbnails() {
+        return thumbnailApi;
+    }
+
+    /**
      * Create a new {@link MediaRef} from this media.
      * <p>
      * The caller <em>must</em> release the returned {@link MediaRef} when it has no further use for it.
@@ -197,13 +208,14 @@ public final class Media {
      * The component must no longer be used.
      */
     public void release() {
-        eventApi  .release();
-        infoApi   .release();
-        optionsApi.release();
-        parseApi  .release();
-        metaApi   .release();
-        slaveApi  .release();
-        subitemApi.release();
+        eventApi    .release();
+        infoApi     .release();
+        optionsApi  .release();
+        parseApi    .release();
+        metaApi     .release();
+        slaveApi    .release();
+        subitemApi  .release();
+        thumbnailApi.release();
 
         libvlc_media_release(mediaInstance);
     }
