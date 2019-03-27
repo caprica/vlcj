@@ -103,13 +103,55 @@ public final class ControlsApi extends BaseApi {
      * Skip forward or backward by a period of time.
      * <p>
      * To skip backwards specify a negative delta.
+     * <p>
+     * Precise seeking is used.
      *
      * @param delta time period, in milliseconds
+     * @return <code>true</code> if successful; <code>false</code> otherwise
      */
-    public void skipTime(long delta) {
+    public boolean skipTime(long delta) {
         long current = mediaPlayer.status().time();
         if (current != -1) {
-            setTime(current + delta);
+            return setTime(current + delta, false);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Skip forward or backward by a change in position.
+     * <p>
+     * To skip backwards specify a negative delta.
+     * <p>
+     * Precise seeking is used.
+     *
+     * @param delta amount to skip
+     * @return <code>true</code> if successful; <code>false</code> otherwise
+     */
+    public boolean skipPosition(float delta) {
+        float current = mediaPlayer.status().position();
+        if (current != -1) {
+            return setPosition(current + delta, false);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Skip forward or backward by a period of time.
+     * <p>
+     * To skip backwards specify a negative delta.
+     *
+     * @param delta time period, in milliseconds
+     * @param fast <code>true</code> for fast seeking; <code>false</code> for precise seeking
+     * @return <code>true</code> if successful; <code>false</code> otherwise
+     */
+    public boolean skipTime(long delta, boolean fast) {
+        long current = mediaPlayer.status().time();
+        if (current != -1) {
+            return setTime(current + delta, fast);
+        } else {
+            return false;
         }
     }
 
@@ -119,12 +161,44 @@ public final class ControlsApi extends BaseApi {
      * To skip backwards specify a negative delta.
      *
      * @param delta amount to skip
+     * @param fast <code>true</code> for fast seeking; <code>false</code> for precise seeking
+     * @return <code>true</code> if successful; <code>false</code> otherwise
      */
-    public void skipPosition(float delta) {
+    public boolean skipPosition(float delta, boolean fast) {
         float current = mediaPlayer.status().position();
         if (current != -1) {
-            setPosition(current + delta);
+            return setPosition(current + delta, fast);
+        } else {
+            return false;
         }
+    }
+
+    /**
+     * Jump to a specific moment.
+     * <p>
+     * If the requested time is less than zero, it is normalised to zero.
+     * <p>
+     * Precise seeking is used.
+     *
+     * @param time time since the beginning, in milliseconds
+     * @return <code>true</code> if successful; <code>false</code> otherwise
+     */
+    public boolean setTime(long time) {
+        return setTime(time, false);
+    }
+
+    /**
+     * Jump to a specific position.
+     * <p>
+     * If the requested position is less than zero, it is normalised to zero.
+     * <p>
+     * Precise seeking is used.
+     *
+     * @param position position value, a percentage (e.g. 0.15 is 15%)
+     * @return <code>true</code> if successful; <code>false</code> otherwise
+     */
+    public boolean setPosition(float position) {
+        return setPosition(position, false);
     }
 
     /**
@@ -133,9 +207,11 @@ public final class ControlsApi extends BaseApi {
      * If the requested time is less than zero, it is normalised to zero.
      *
      * @param time time since the beginning, in milliseconds
+     * @param fast <code>true</code> for fast seeking; <code>false</code> for precise seeking
+     * @return <code>true</code> if successful; <code>false</code> otherwise
      */
-    public void setTime(long time) {
-        libvlc_media_player_set_time(mediaPlayerInstance, Math.max(time, 0));
+    public boolean setTime(long time, boolean fast) {
+        return libvlc_media_player_set_time(mediaPlayerInstance, Math.max(time, 0), fast ? 1 : 0) == 0;
     }
 
     /**
@@ -144,9 +220,11 @@ public final class ControlsApi extends BaseApi {
      * If the requested position is less than zero, it is normalised to zero.
      *
      * @param position position value, a percentage (e.g. 0.15 is 15%)
+     * @param fast <code>true</code> for fast seeking; <code>false</code> for precise seeking
+     * @return <code>true</code> if successful; <code>false</code> otherwise
      */
-    public void setPosition(float position) {
-        libvlc_media_player_set_position(mediaPlayerInstance, Math.max(position, 0));
+    public boolean setPosition(float position, boolean fast) {
+        return libvlc_media_player_set_position(mediaPlayerInstance, Math.max(position, 0), fast ? 1 : 0) == 0;
     }
 
     /**
