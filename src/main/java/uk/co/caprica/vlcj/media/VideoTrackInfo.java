@@ -242,8 +242,6 @@ public final class VideoTrackInfo extends TrackInfo {
 
     /**
      * Get the video multiview type.
-     * <p>
-     * <strong>This is currently unused and is a placeholder for future implementation.</strong>
      *
      * @return multiview type
      */

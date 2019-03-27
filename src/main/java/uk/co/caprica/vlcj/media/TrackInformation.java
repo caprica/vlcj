@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.media;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.PointerByReference;
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -148,7 +149,7 @@ final class TrackInformation {
             track.u.video.pose.f_pitch,
             track.u.video.pose.f_roll,
             track.u.video.pose.f_field_of_view,
-            null,
+            Multiview.multiview(track.u.video.i_multiview),
             codecDescription(TrackType.VIDEO, track.i_codec)
         );
     }
