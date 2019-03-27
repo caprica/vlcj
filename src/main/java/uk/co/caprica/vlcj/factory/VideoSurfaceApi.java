@@ -19,12 +19,15 @@
 
 package uk.co.caprica.vlcj.factory;
 
+import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngine;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CallbackVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.ComponentIdVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.ComponentVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapters;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.*;
 
 import java.awt.*;
 
@@ -71,6 +74,17 @@ public final class VideoSurfaceApi extends BaseApi {
      */
     public CallbackVideoSurface newVideoSurface(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers) {
         return new CallbackVideoSurface(bufferFormatCallback, renderCallback, lockBuffers, VideoSurfaceAdapters.getVideoSurfaceAdapter());
+    }
+
+    /**
+     * Create a new video surface for rendering via video engine callbacks.
+     *
+     * @param videoEngine video engine
+     * @param callback rendering callback
+     * @return video surface
+     */
+    public VideoEngineVideoSurface newVideoSurface(VideoEngine videoEngine, VideoEngineCallback callback) {
+        return new VideoEngineVideoSurface(videoEngine, callback, VideoSurfaceAdapters.getVideoSurfaceAdapter());
     }
 
 }
