@@ -353,7 +353,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * @param height height of the video
      */
     private void newVideoBuffer(int width, int height) {
-        image = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(width, height);
+        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         defaultRenderCallback.setImageBuffer(image);
         videoSurfaceComponent.setPreferredSize(new Dimension(width, height));
     }
