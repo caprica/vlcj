@@ -75,7 +75,7 @@
     </scm>
 
     <properties>
-        <vlcjNatives.version>4.1.0-SNAPSHOT</vlcjNatives.version>
+        <vlcjNatives.version>4.1.0</vlcjNatives.version>
         <vlcjOsxStubs.version>1.0.0</vlcjOsxStubs.version>
     </properties>
 
