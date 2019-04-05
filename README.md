@@ -29,6 +29,8 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 5th April, 2019 - vlcj 4.1.0 release, this release brings JNA "direct mapping" which should give a modest performance boost
+- 1st April, 2019 - vlcj 4.0.8 released, fixes an issue with the BufferedImage in the CallbackMediaPlayerComponent
 - 24th March, 2019 - vlcj 4.0.7 released, minor change to allow to change the callback video surface image painter after creation
 - 18th March, 2019 - published a Yeoman generator for vlcj starter projects, see [generator-vlcj](https://github.com/caprica/generator-vlcj)
 - 5th March, 2019 - vlcj 4.0.6 released, fixes issues with image painters when using CallbackMediaPlayerComponent
@@ -53,6 +55,16 @@ The vlcj-4 API is now pretty much stable, although some changes may be made depe
 first release of 4.0.0 is let loose into the wild - but no further *major* API changes are planned or expected.
 
 If you are interested in using vlcj-4, now is a good time to start.
+
+vlcj-4.1
+========
+
+vlcj-4.1 brings JNA "direct mapping" which should give a modest performance boost at the expense of less helpful error
+messages if things go wrong when loading the native LibVLC library.
+
+If you wish to stay with "traditional" JNA bindings, then stick with the latest vlcj-4.0.x.
+
+This direct mapping approach will be used in all future versions of vlcj, meaning vlcj-4.1.x, vlcj-5.x and later.
 
 Major New Features
 ------------------
@@ -95,6 +107,11 @@ For a full list of changes in this release, check the release milestones:
 - [vlcj 4.0.5 release milestone](https://github.com/caprica/vlcj/milestone/36?closed=1)
 - [vlcj 4.0.6 release milestone](https://github.com/caprica/vlcj/milestone/37?closed=1)
 - [vlcj 4.0.7 release milestone](https://github.com/caprica/vlcj/milestone/38?closed=1)
+- [vlcj 4.0.8 release milestone](https://github.com/caprica/vlcj/milestone/40?closed=1)
+
+vlcj 4.1.0+ uses JNA direct-mapping:
+
+- [vlcj 4.1.0 release milestone](https://github.com/caprica/vlcj/milestone/39?closed=1)
 
 Despite all of these changes, running on JDK 1.6 is still supported!
 
@@ -184,7 +201,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.0.7</version>
+    <version>4.1.0</version>
 </dependency>
 ```
 
@@ -356,7 +373,14 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available here:
 
-* [4.0.7 (current)](http://caprica.github.com/vlcj/javadoc/4.0.7/index.html "4.0.7 Javadoc")
+JNA direct-mapping:
+
+* [4.1.0 (current)](http://caprica.github.com/vlcj/javadoc/4.1.0/index.html "4.1.0 Javadoc")
+
+JNA traditional mapping:
+
+* [4.0.8 (current)](http://caprica.github.com/vlcj/javadoc/4.0.8/index.html "4.0.8 Javadoc")
+* [4.0.7](http://caprica.github.com/vlcj/javadoc/4.0.7/index.html "4.0.7 Javadoc")
 * [4.0.6](http://caprica.github.com/vlcj/javadoc/4.0.6/index.html "4.0.6 Javadoc")
 * [4.0.5](http://caprica.github.com/vlcj/javadoc/4.0.5/index.html "4.0.5 Javadoc")
 * [4.0.4](http://caprica.github.com/vlcj/javadoc/4.0.4/index.html "4.0.4 Javadoc")
