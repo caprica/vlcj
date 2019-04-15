@@ -28,6 +28,7 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.Random;
 
 /**
  * Minimal test for the media callbacks.
@@ -55,7 +56,9 @@ public class MinimalMediaCallbackTest extends VlcjTest {
         f.setContentPane(mediaPlayerComponent);
         f.setVisible(true);
 
-        mediaPlayerComponent.mediaPlayer().media().play(new RandomAccessFileMedia(new File(args[0])));
+        RandomAccessFileMedia raf = new RandomAccessFileMedia(new File(args[0]));
+
+        mediaPlayerComponent.mediaPlayer().media().play(raf);
         mediaPlayerComponent.mediaPlayer().controls().play();
 
         Thread.currentThread().join();
