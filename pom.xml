@@ -199,6 +199,7 @@
                     <quiet>true</quiet>
                     <failOnError>true</failOnError>
                     <additionalOptions>-html5</additionalOptions>
+                    <source>6</source>
                 </configuration>
                 <executions>
                     <execution>
