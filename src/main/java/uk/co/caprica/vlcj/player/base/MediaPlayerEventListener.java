@@ -81,6 +81,10 @@ public interface MediaPlayerEventListener {
 
     /**
      * Media stopped.
+     * <p>
+     * A stopped event may be raised under certain circumstances even if the media player is not playing (e.g. as part
+     * of the associated media list player sub-item handling). Client applications must therefore be prepared to handle
+     * such a situation.
      *
      * @param mediaPlayer media player that raised the event
      */
