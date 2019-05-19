@@ -71,11 +71,6 @@ public class AudioMediaPlayerComponentTest extends VlcjTest {
         audioMediaPlayerComponent = new AudioPlayerComponent();
         audioMediaPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
-            public void stopped(MediaPlayer mediaPlayer) {
-                System.exit(0);
-            }
-
-            @Override
             public void finished(MediaPlayer mediaPlayer) {
                 System.exit(0);
             }
