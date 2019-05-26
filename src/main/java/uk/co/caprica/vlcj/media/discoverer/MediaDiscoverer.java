@@ -89,7 +89,7 @@ public final class MediaDiscoverer {
      *
      * @return media list
      */
-    public MediaList newNediaList() {
+    public MediaList newMediaList() {
         return mediaList.newMediaList();
     }
 

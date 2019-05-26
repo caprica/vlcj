@@ -68,7 +68,7 @@ public class MediaDiscovererTest {
             System.out.println("discoverer=" + discoverer);
 
             // The returned list would ordinarily be freed when it is no longer needed, not so for this test
-            MediaList list = discoverer.newNediaList();
+            MediaList list = discoverer.newMediaList();
             allLists.add(list);
             System.out.println("read only = " + list.media().isReadOnly());
 
