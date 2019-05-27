@@ -36,6 +36,11 @@ public final class ThumbnailApi extends BaseApi {
 
     /**
      * Request a thumbnail be created for a particular time within the media.
+     * <p>
+     * The returned {@link ThumbnailRequest} must be released via {@link ThumbnailRequest#release()} when it is no
+     * longer needed.
+     * <p>
+     * Releasing the request also has the effect of cancelling it if it is not yet complete.
      *
      * @param time time from media start, milliseconds
      * @param speed seek speed (fast, or precise)
@@ -43,7 +48,7 @@ public final class ThumbnailApi extends BaseApi {
      * @param height height for the thumbnail
      * @param pictureType picture format for the thumbnail
      * @param timeout timeout for thumbnail generation
-     * @return thunbnail request
+     * @return thumbnail request
      */
     public ThumbnailRequest requestByTime(long time, ThumbnailerSeekSpeed speed, int width, int height, PictureType pictureType, long timeout) {
         libvlc_media_thumbnail_request_t request = libvlc_media_thumbnail_request_by_time(mediaInstance, time, speed.intValue(), width, height, pictureType.intValue(), timeout);
@@ -56,6 +61,11 @@ public final class ThumbnailApi extends BaseApi {
 
     /**
      * Request a thumbnail be created for a particular position within the media.
+     * <p>
+     * The returned {@link ThumbnailRequest} must be released via {@link ThumbnailRequest#release()} when it is no
+     * longer needed.
+     * <p>
+     * Releasing the request also has the effect of cancelling it if it is not yet complete.
      *
      * @param position position within the media, a percentage (for example, 0.2f is 20%)
      * @param speed seek speed (fast, or precise)
@@ -63,7 +73,7 @@ public final class ThumbnailApi extends BaseApi {
      * @param height height for the thumbnail
      * @param pictureType picture format for the thumbnail
      * @param timeout timeout for thumbnail generation
-     * @return thunbnail request
+     * @return thumbnail request
      */
     public ThumbnailRequest requestByPosition(float position, ThumbnailerSeekSpeed speed, int width, int height, PictureType pictureType, long timeout) {
         libvlc_media_thumbnail_request_t request = libvlc_media_thumbnail_request_by_pos(mediaInstance, position, speed.intValue(), width, height, pictureType.intValue(), timeout);
@@ -72,15 +82,6 @@ public final class ThumbnailApi extends BaseApi {
         } else {
             return null;
         }
-    }
-
-    /**
-     * Cancel a thumbnail request.
-     *
-     * @param request request to cancel
-     */
-    public void cancel(ThumbnailRequest request) {
-        libvlc_media_thumbnail_cancel(request.instance());
     }
 
 }
