@@ -366,9 +366,6 @@ In any case, you need to be aware of this issue and inform users of your applica
 Documentation
 -------------
 
-Tutorials will be made available, not yet, at the
-[official project page](http://capricasoftware.co.uk/projects/vlcj/tutorials).
-
 The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at github").
 
 Online Javadoc is available here:
