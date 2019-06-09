@@ -29,6 +29,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 9th June, 2019 - new project [vlcj-subs](https://github.com/caprica/vlcj-subs) to help integrate subtitles into Java applications
 - 5th April, 2019 - vlcj 4.1.0 release, this release brings JNA "direct mapping" which should give a modest performance boost
 - 1st April, 2019 - vlcj 4.0.8 released, fixes an issue with the BufferedImage in the CallbackMediaPlayerComponent
 - 24th March, 2019 - vlcj 4.0.7 released, minor change to allow to change the callback video surface image painter after creation
