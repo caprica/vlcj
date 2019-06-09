@@ -398,6 +398,7 @@ Related Projects
 ----------------
 
  * [vlcj-natives](https://github.com/caprica/vlcj-natives)
+ * [vlcj-subs](https://github.com/caprica/vlcj-subs)
  * [vlcj-player](https://github.com/caprica/vlcj-player)
  * [vlcj-javafx](https://github.com/caprica/vlcj-javafx)
  * [vlcj-mrls](https://github.com/caprica/vlcj-mrls)
