@@ -90,7 +90,9 @@ public class CallbackVideoSurface extends VideoSurface {
         public int format(PointerByReference opaque, PointerByReference chroma, IntByReference width, IntByReference height, PointerByReference pitches, PointerByReference lines) {
             bufferFormat = bufferFormatCallback.getBufferFormat(width.getValue(), height.getValue());
             applyBufferFormat(bufferFormat, chroma, width, height, pitches, lines);
-            return nativeBuffers.allocate(bufferFormat);
+            int result = nativeBuffers.allocate(bufferFormat);
+            bufferFormatCallback.allocatedBuffers(nativeBuffers.buffers());
+            return result;
         }
 
         /**

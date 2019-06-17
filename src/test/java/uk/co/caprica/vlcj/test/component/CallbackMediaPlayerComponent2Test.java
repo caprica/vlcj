@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallbackAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallbackAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.format.RV32BufferFormat;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -61,7 +62,7 @@ public class CallbackMediaPlayerComponent2Test extends VlcjTest {
      * Default implementation of a buffer format callback that returns a buffer format suitable for rendering into a
      * {@link BufferedImage}.
      */
-    private class DefaultBufferFormatCallback implements BufferFormatCallback {
+    private class DefaultBufferFormatCallback extends BufferFormatCallbackAdapter {
 
         @Override
         public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {

@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.player.embedded.videosurface.callback;
 
 import uk.co.caprica.vlcj.player.embedded.videosurface.CallbackVideoSurface;
 
+import java.nio.ByteBuffer;
+
 /**
  * Callback invoked by the {@link CallbackVideoSurface} when the format of the video changes.
  */
@@ -41,4 +43,10 @@ public interface BufferFormatCallback {
      */
     BufferFormat getBufferFormat(int sourceWidth, int sourceHeight);
 
+    /**
+     * Invoked when new video buffers have been allocated.
+     *
+     * @param buffers buffers that were allocated
+     */
+    void allocatedBuffers(ByteBuffer[] buffers);
 }

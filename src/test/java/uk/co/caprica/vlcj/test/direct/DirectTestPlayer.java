@@ -24,6 +24,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallbackAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.format.RV32BufferFormat;
 import uk.co.caprica.vlcj.test.VlcjTest;
@@ -175,7 +176,7 @@ public class DirectTestPlayer extends VlcjTest {
         }
     }
 
-    private final class TestBufferFormatCallback implements BufferFormatCallback {
+    private final class TestBufferFormatCallback extends BufferFormatCallbackAdapter {
 
         @Override
         public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {

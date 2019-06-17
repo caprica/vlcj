@@ -28,6 +28,7 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallbackAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallbackAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.format.RV32BufferFormat;
@@ -330,7 +331,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * Default implementation of a buffer format callback that returns a buffer format suitable for rendering into a
      * {@link BufferedImage}.
      */
-    private class DefaultBufferFormatCallback implements BufferFormatCallback {
+    private class DefaultBufferFormatCallback extends BufferFormatCallbackAdapter {
 
         @Override
         public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
