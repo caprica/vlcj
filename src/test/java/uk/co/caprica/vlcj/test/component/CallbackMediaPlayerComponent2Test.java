@@ -121,7 +121,7 @@ public class CallbackMediaPlayerComponent2Test extends VlcjTest {
 
         // You don't have to use a CallbackMediaPlayerComponent, you could just use a CallbackVideoSurface, but this
         // gives us a head-start on a reasonable default implementation
-        mediaPlayerComponent = new CallbackMediaPlayerComponent(null, null, null, true, null, defaultRenderCallback, defaultBufferFormatCallback, new JPanel());
+        mediaPlayerComponent = new CallbackMediaPlayerComponent(null, null, null, true, null, defaultRenderCallback, defaultBufferFormatCallback, null);
 
         videoSurface1 = new VideoPane() {
 

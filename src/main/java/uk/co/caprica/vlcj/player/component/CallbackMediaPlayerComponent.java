@@ -43,7 +43,8 @@ import java.awt.image.DataBufferInt;
  * <p>
  * This component renders video frames received via native callbacks.
  * <p>
- * The component may be added directly to a user interface layout.
+ * The component may be added directly to a user interface layout - this is optional, you can use this component without
+ * adding it directly to a user interface, in which case you would simply render the video however you like.
  * <p>
  * When the component is no longer needed, it should be released by invoking the {@link #release()} method.
  */
@@ -142,7 +143,9 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
         setBackground(Color.black);
         setLayout(new BorderLayout());
-        add(this.videoSurfaceComponent, BorderLayout.CENTER);
+        if (this.videoSurfaceComponent != null) {
+            add(this.videoSurfaceComponent, BorderLayout.CENTER);
+        }
 
         initInputEvents(inputEvents);
 
@@ -208,7 +211,6 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         } else {
             if (imagePainter          != null) throw new IllegalArgumentException("Do not specify imagePainter with a renderCallback");
             if (bufferFormatCallback  == null) throw new IllegalArgumentException("bufferFormatCallback is required with a renderCallback");
-            if (videoSurfaceComponent == null) throw new IllegalArgumentException("videoSurfaceComponent is required with a renderCallback");
         }
     }
 
@@ -231,10 +233,12 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
                 mediaPlayer.input().enableMouseInputHandling(false);
                 // Case fall-through is by design
             case DEFAULT:
-                videoSurfaceComponent.addMouseListener(this);
-                videoSurfaceComponent.addMouseMotionListener(this);
-                videoSurfaceComponent.addMouseWheelListener(this);
-                videoSurfaceComponent.addKeyListener(this);
+                if (videoSurfaceComponent != null) {
+                    videoSurfaceComponent.addMouseListener(this);
+                    videoSurfaceComponent.addMouseMotionListener(this);
+                    videoSurfaceComponent.addMouseWheelListener(this);
+                    videoSurfaceComponent.addKeyListener(this);
+                }
                 break;
         }
     }
@@ -283,10 +287,12 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
         // It is safe to remove listeners like this even if none were added (depends on configured InputEvents in the
         // constructor)
-        videoSurfaceComponent.removeMouseListener(this);
-        videoSurfaceComponent.removeMouseMotionListener(this);
-        videoSurfaceComponent.removeMouseWheelListener(this);
-        videoSurfaceComponent.removeKeyListener(this);
+        if (videoSurfaceComponent != null) {
+            videoSurfaceComponent.removeMouseListener(this);
+            videoSurfaceComponent.removeMouseMotionListener(this);
+            videoSurfaceComponent.removeMouseWheelListener(this);
+            videoSurfaceComponent.removeKeyListener(this);
+        }
 
         mediaPlayer.release();
 
@@ -356,7 +362,9 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     private void newVideoBuffer(int width, int height) {
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         defaultRenderCallback.setImageBuffer(image);
-        videoSurfaceComponent.setPreferredSize(new Dimension(width, height));
+        if (videoSurfaceComponent != null) {
+            videoSurfaceComponent.setPreferredSize(new Dimension(width, height));
+        }
     }
 
     /**
