@@ -66,8 +66,8 @@
         <connection>scm:git:git@github.com:caprica/vlcj.git</connection>
         <developerConnection>scm:git:git@github.com:caprica/vlcj.git</developerConnection>
         <url>git@github.com:caprica/vlcj.git</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
