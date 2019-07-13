@@ -29,6 +29,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 13th July, 2019 - minor updates, check the release milestone for details 
 - 9th June, 2019 - new project [vlcj-subs](https://github.com/caprica/vlcj-subs) to help integrate subtitles into Java applications
 - 5th April, 2019 - vlcj 4.1.0 release, this release brings JNA "direct mapping" which should give a modest performance boost
 - 1st April, 2019 - vlcj 4.0.8 released, fixes an issue with the BufferedImage in the CallbackMediaPlayerComponent
@@ -57,8 +58,8 @@ first release of 4.0.0 is let loose into the wild - but no further *major* API c
 
 If you are interested in using vlcj-4, now is a good time to start.
 
-vlcj-4.1
-========
+vlcj-4.1+
+=========
 
 vlcj-4.1 brings JNA "direct mapping" which should give a modest performance boost at the expense of less helpful error
 messages if things go wrong when loading the native LibVLC library.
@@ -113,6 +114,7 @@ For a full list of changes in this release, check the release milestones:
 vlcj 4.1.0+ uses JNA direct-mapping:
 
 - [vlcj 4.1.0 release milestone](https://github.com/caprica/vlcj/milestone/39?closed=1)
+- [vlcj 4.2.0 release milestone](https://github.com/caprica/vlcj/milestone/42?closed=1)
 
 Despite all of these changes, running on JDK 1.6 is still supported!
 
@@ -202,7 +204,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.1.0</version>
+    <version>4.2.0</version>
 </dependency>
 ```
 
@@ -373,7 +375,8 @@ Online Javadoc is available here:
 
 JNA direct-mapping:
 
-* [4.1.0 (current)](http://caprica.github.com/vlcj/javadoc/4.1.0/index.html "4.1.0 Javadoc")
+* [4.2.0 (current)](http://caprica.github.com/vlcj/javadoc/4.2.0/index.html "4.2.0 Javadoc")
+* [4.1.0](http://caprica.github.com/vlcj/javadoc/4.1.0/index.html "4.1.0 Javadoc")
 
 JNA traditional mapping:
 
