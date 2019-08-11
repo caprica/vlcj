@@ -46,12 +46,13 @@ public final class ThumbnailApi extends BaseApi {
      * @param speed seek speed (fast, or precise)
      * @param width width for the thumbnail
      * @param height height for the thumbnail
+     * @param crop <code>true</code> if the thumbnail should be cropped; <code>false</code> if not
      * @param pictureType picture format for the thumbnail
      * @param timeout timeout for thumbnail generation
      * @return thumbnail request
      */
-    public ThumbnailRequest requestByTime(long time, ThumbnailerSeekSpeed speed, int width, int height, PictureType pictureType, long timeout) {
-        libvlc_media_thumbnail_request_t request = libvlc_media_thumbnail_request_by_time(mediaInstance, time, speed.intValue(), width, height, pictureType.intValue(), timeout);
+    public ThumbnailRequest requestByTime(long time, ThumbnailerSeekSpeed speed, int width, int height, boolean crop, PictureType pictureType, long timeout) {
+        libvlc_media_thumbnail_request_t request = libvlc_media_thumbnail_request_by_time(mediaInstance, time, speed.intValue(), width, height, crop ? 1 : 0, pictureType.intValue(), timeout);
         if (request != null) {
             return new ThumbnailRequest(request);
         } else {
@@ -71,12 +72,13 @@ public final class ThumbnailApi extends BaseApi {
      * @param speed seek speed (fast, or precise)
      * @param width width for the thumbnail
      * @param height height for the thumbnail
+     * @param crop <code>true</code> if the thumbnail should be cropped; <code>false</code> if not
      * @param pictureType picture format for the thumbnail
      * @param timeout timeout for thumbnail generation
      * @return thumbnail request
      */
-    public ThumbnailRequest requestByPosition(float position, ThumbnailerSeekSpeed speed, int width, int height, PictureType pictureType, long timeout) {
-        libvlc_media_thumbnail_request_t request = libvlc_media_thumbnail_request_by_pos(mediaInstance, position, speed.intValue(), width, height, pictureType.intValue(), timeout);
+    public ThumbnailRequest requestByPosition(float position, ThumbnailerSeekSpeed speed, int width, int height, boolean crop, PictureType pictureType, long timeout) {
+        libvlc_media_thumbnail_request_t request = libvlc_media_thumbnail_request_by_pos(mediaInstance, position, speed.intValue(), width, height, crop ? 1 : 0, pictureType.intValue(), timeout);
         if (request != null) {
             return new ThumbnailRequest(request);
         } else {
