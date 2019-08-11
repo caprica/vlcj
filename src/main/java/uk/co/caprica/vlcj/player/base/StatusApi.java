@@ -29,7 +29,6 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_has_vout;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_is_playing;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_is_seekable;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_program_scrambled;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_will_play;
 
 /**
  * Behaviour pertaining to the status of the media player.
@@ -40,15 +39,6 @@ public final class StatusApi extends BaseApi {
 
     StatusApi(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
-    }
-
-    /**
-     * Is the current media playable?
-     *
-     * @return <code>true</code> if the current media is playable, otherwise <code>false</code>
-     */
-    public boolean isPlayable() {
-        return libvlc_media_player_will_play(mediaPlayerInstance) == 1;
     }
 
     /**
