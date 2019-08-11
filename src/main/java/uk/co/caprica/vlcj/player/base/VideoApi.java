@@ -31,7 +31,6 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_video_ti
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_adjust_float;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_adjust_int;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_aspect_ratio;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_crop_geometry;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_scale;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_size;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_track;
@@ -40,7 +39,9 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_new_viewpoint;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_adjust_float;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_adjust_int;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_aspect_ratio;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_crop_geometry;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_crop_border;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_crop_ratio;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_crop_window;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_deinterlace;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_scale;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_track;
@@ -234,34 +235,59 @@ public final class VideoApi extends BaseApi {
     }
 
     /**
-     * Get the current video crop geometry.
+     * Set the video crop ratio.
+     * <p>
+     * For example:
+     * <pre>
+     * mediaPlayer.setCropGeometry(16, 9);
+     * </pre>
+     * To disable the crop, set the denominator to zero.
      *
-     * @return crop geometry
+     * @param num numerator for the crop ratio
+     * @param den denominator for the crop ratio
      */
-    public String cropGeometry() {
-        return NativeString.copyAndFreeNativeString(libvlc_video_get_crop_geometry(mediaPlayerInstance));
+    public void setCropRatio(int num, int den) {
+        libvlc_video_set_crop_ratio(mediaPlayerInstance, num, den);
     }
 
     /**
-     * Set the crop geometry.
+     * Set the video crop window.
      * <p>
-     * The format for the crop geometry is one of:
-     * <ul>
-     * <li>numerator:denominator</li>
-     * <li>widthxheight+x+y</li>
-     * <li>left:top:right:bottom</li>
-     * </ul>
+     * Pixels outside the crop window will not be shown.
+     * <p>
      * For example:
      * <pre>
-     * mediaPlayer.setCropGeometry(&quot;4:3&quot;);         // W:H
-     * mediaPlayer.setCropGeometry(&quot;719x575+0+0&quot;); // WxH+L+T
-     * mediaPlayer.setCropGeometry(&quot;6+10+6+10&quot;);   // L+T+R+B
+     * mediaPlayer.setCropWindow(100, 100, 600, 400);
      * </pre>
+     * To disable the crop window, use {@link #setCropRatio(int, int)} or {@link #setCropBorder(int, int, int, int)}.
      *
-     * @param cropGeometry formatted string describing the desired crop geometry
+     * @param x window x
+     * @param y window y
+     * @param width window width
+     * @param height window height
      */
-    public void setCropGeometry(String cropGeometry) {
-        libvlc_video_set_crop_geometry(mediaPlayerInstance, cropGeometry);
+    public void setCropWindow(int x, int y, int width, int height) {
+        libvlc_video_set_crop_window(mediaPlayerInstance, x, y, width, height);
+    }
+
+    /**
+     * Set the video crop border.
+     * <p>
+     * Pixels outside the crop window will not be shown.
+     * <p>
+     * For example:
+     * <pre>
+     * mediaPlayer.setCropWindow(100, 100, 600, 400);
+     * </pre>
+     * To unset the border, set all values to zero.
+     *
+     * @param left number of columns to crop on the left
+     * @param right number of columns to crop on the right
+     * @param top number of rows to crop on the top
+     * @param bottom number ofrows to corp on the bottom
+     */
+    public void setCropBorder(int left, int top, int right, int bottom) {
+        libvlc_video_set_crop_border(mediaPlayerInstance, left, right, top, bottom);
     }
 
     /**

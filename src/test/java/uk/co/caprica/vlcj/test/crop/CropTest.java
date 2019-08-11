@@ -178,24 +178,25 @@ public class CropTest extends VlcjTest {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
 
-        standardCropComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Object selectedItem = standardCropComboBox.getSelectedItem();
-                if(selectedItem != null) {
-                    String[] value = (String[])selectedItem;
-                    mediaPlayer.video().setCropGeometry(value[1]);
-                }
-            }
-        });
-
-        customCropTextField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String value = customCropTextField.getText();
-                mediaPlayer.video().setCropGeometry(value);
-            }
-        });
+        // FIXME crop geometry is different in LibVLC 4.x and vlcj 5.x
+//        standardCropComboBox.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                Object selectedItem = standardCropComboBox.getSelectedItem();
+//                if(selectedItem != null) {
+//                    String[] value = (String[])selectedItem;
+//                    mediaPlayer.video().setCropGeometry(value[1]);
+//                }
+//            }
+//        });
+//
+//        customCropTextField.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String value = customCropTextField.getText();
+//                mediaPlayer.video().setCropGeometry(value);
+//            }
+//        });
 
         pauseButton.addActionListener(new ActionListener() {
             @Override
