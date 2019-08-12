@@ -197,6 +197,10 @@ public class NativeDiscovery {
             // The library could not be loaded, this includes NoClassDefFoundError which would be thrown e.g. if there
             // was a direct-mapped method in the LibVlc class that was missing from the loaded native library - we don't
             // report the error here (since this discovery is optional), it will be reported by the factory subsequently
+
+            // This message should display the reason the native library could not be bound, specifically if the library
+            // binding failed due to an undefined symbol it should be displayed here
+            System.err.println(e.getMessage());
         }
         return false;
     }
