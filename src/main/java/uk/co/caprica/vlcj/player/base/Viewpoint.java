@@ -102,7 +102,7 @@ public final class Viewpoint {
      *
      * @return field of view, degrees
      */
-    public float fov() {
+    public float getFieldOfView() {
         return viewpoint.f_field_of_view;
     }
 
