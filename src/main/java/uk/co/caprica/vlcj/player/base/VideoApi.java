@@ -199,15 +199,6 @@ public final class VideoApi extends BaseApi {
     }
 
     /**
-     * Get the video aspect ratio.
-     *
-     * @return aspect ratio
-     */
-    public String aspectRatio() {
-        return NativeString.copyAndFreeNativeString(libvlc_video_get_aspect_ratio(mediaPlayerInstance));
-    }
-
-    /**
      * Set the video aspect ratio
      *
      * @param aspectRatio aspect ratio, e.g. "16:9", "4:3", "185:100" for 1:85.1 and so on
