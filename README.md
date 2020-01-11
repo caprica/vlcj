@@ -29,6 +29,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 11th January, 2020 - vlcj 4.3.0 released, add an automatic module name for Java 9 modules
 - 13th July, 2019 - vlcj 4.2.0 released, minor updates, check the release milestone for details
 - 9th June, 2019 - new project [vlcj-subs](https://github.com/caprica/vlcj-subs) to help integrate subtitles into Java applications
 - 5th April, 2019 - vlcj 4.1.0 release, this release brings JNA "direct mapping" which should give a modest performance boost
