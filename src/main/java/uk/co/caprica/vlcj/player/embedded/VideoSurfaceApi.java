@@ -88,4 +88,8 @@ public final class VideoSurfaceApi extends BaseApi {
         return videoSurface;
     }
 
+    @Override
+    protected void release() {
+        this.videoSurface = null;
+    }
 }
