@@ -185,9 +185,10 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * 100 may cause audible distortion.
      *
      * @param volume volume, a percentage of full volume in the range 0 to 200
+     * @return <code>true</code> if successful; <code>false</code> on error
      */
-    public void setVolume(int volume) {
-        libvlc_audio_set_volume(mediaPlayerInstance, volume);
+    public boolean setVolume(int volume) {
+        return libvlc_audio_set_volume(mediaPlayerInstance, volume) == 0;
     }
 
     /**
