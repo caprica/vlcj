@@ -379,7 +379,9 @@ Online Javadoc is available here:
 
 JNA direct-mapping:
 
-* [4.2.0 (current)](http://caprica.github.com/vlcj/javadoc/4.2.0/index.html "4.2.0 Javadoc")
+* [4.4.0 (current)](http://caprica.github.com/vlcj/javadoc/4.4.0/index.html "4.4.0 Javadoc")
+* [4.3.0](http://caprica.github.com/vlcj/javadoc/4.3.0/index.html "4.3.0 Javadoc")
+* [4.2.0](http://caprica.github.com/vlcj/javadoc/4.2.0/index.html "4.2.0 Javadoc")
 * [4.1.0](http://caprica.github.com/vlcj/javadoc/4.1.0/index.html "4.1.0 Javadoc")
 
 JNA traditional mapping:
