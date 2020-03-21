@@ -29,6 +29,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 2nd March, 2020 - vlcj 4.4.0 release, minor changes, see release for details
 - 11th January, 2020 - vlcj 4.3.0 released, add an automatic module name for Java 9 modules
 - 13th July, 2019 - vlcj 4.2.0 released, minor updates, check the release milestone for details
 - 9th June, 2019 - new project [vlcj-subs](https://github.com/caprica/vlcj-subs) to help integrate subtitles into Java applications
@@ -116,6 +117,8 @@ vlcj 4.1.0+ uses JNA direct-mapping:
 
 - [vlcj 4.1.0 release milestone](https://github.com/caprica/vlcj/milestone/39?closed=1)
 - [vlcj 4.2.0 release milestone](https://github.com/caprica/vlcj/milestone/42?closed=1)
+- [vlcj 4.3.0 release milestone] not available (only a change for the Java Module System)
+- [vlcj 4.4.0 release milestone](https://github.com/caprica/vlcj/milestone/44?closed=1)
 
 Despite all of these changes, running on JDK 1.6 is still supported!
 
@@ -205,7 +208,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.2.0</version>
+    <version>4.4.0</version>
 </dependency>
 ```
 
