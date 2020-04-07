@@ -23,10 +23,12 @@ import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveModeFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.osx.OsxFullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.osx.OsxFullScreenStrategy2;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.windows.Win32FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.x.XFullScreenStrategy;
 
 import java.awt.*;
+import java.lang.reflect.Constructor;
 
 /**
  * Implementation of an full-screen strategy based on the current run-time operating system.
@@ -91,10 +93,31 @@ public class AdaptiveFullScreenStrategy implements FullScreenStrategy {
         } else if (RuntimeUtil.isWindows()) {
             return new Win32FullScreenStrategy(window);
         } else if (RuntimeUtil.isMac()) {
-            return new OsxFullScreenStrategy(window);
+            return newOsxFullScreenStrategy(window);
         } else {
             return new ExclusiveModeFullScreenStrategy(window);
         }
     }
 
+    private static FullScreenStrategy newOsxFullScreenStrategy(Window window) {
+        try {
+            String className = legacyFullScreen() ? "OsxFullScreenStrategy" : "OsxFullScreenStrategy2";
+            String qualifiedName = OsxFullScreenStrategy2.class.getPackage().getName() + "." + className;
+            Class<?> clazz = Class.forName(qualifiedName);
+            Constructor<?> ctor = clazz.getConstructor(Window.class);
+            return (FullScreenStrategy) ctor.newInstance(window);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static boolean legacyFullScreen() {
+        float javaVersion = Float.parseFloat(System.getProperty("java.specification.version"));
+        System.out.println(javaVersion);
+        return javaVersion < 9.f;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(legacyFullScreen());
+    }
 }
