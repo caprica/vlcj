@@ -257,7 +257,11 @@ public final class VideoApi extends BaseApi {
      * @param height window height
      */
     public void setCropWindow(int x, int y, int width, int height) {
-        libvlc_video_set_crop_window(mediaPlayerInstance, x, y, width, height);
+        if (width != 0 && height != 0) {
+            libvlc_video_set_crop_window(mediaPlayerInstance, x, y, width, height);
+        } else {
+            throw new IllegalArgumentException("Width and height must be non-zero");
+        }
     }
 
     /**
@@ -272,8 +276,8 @@ public final class VideoApi extends BaseApi {
      * To unset the border, set all values to zero.
      *
      * @param left number of columns to crop on the left
-     * @param right number of columns to crop on the right
      * @param top number of rows to crop on the top
+     * @param right number of columns to crop on the right
      * @param bottom number ofrows to corp on the bottom
      */
     public void setCropBorder(int left, int top, int right, int bottom) {
