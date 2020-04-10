@@ -21,7 +21,6 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_thumbnail_request_t;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_thumbnail_cancel;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_thumbnail_request_by_pos;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_thumbnail_request_by_time;
 
@@ -39,8 +38,6 @@ public final class ThumbnailApi extends BaseApi {
      * <p>
      * The returned {@link ThumbnailRequest} must be released via {@link ThumbnailRequest#release()} when it is no
      * longer needed.
-     * <p>
-     * Releasing the request also has the effect of cancelling it if it is not yet complete.
      *
      * @param time time from media start, milliseconds
      * @param speed seek speed (fast, or precise)
@@ -65,8 +62,6 @@ public final class ThumbnailApi extends BaseApi {
      * <p>
      * The returned {@link ThumbnailRequest} must be released via {@link ThumbnailRequest#release()} when it is no
      * longer needed.
-     * <p>
-     * Releasing the request also has the effect of cancelling it if it is not yet complete.
      *
      * @param position position within the media, a percentage (for example, 0.2f is 20%)
      * @param speed seek speed (fast, or precise)

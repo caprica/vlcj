@@ -39,9 +39,9 @@ public final class Picture {
 
     private final int height;
 
-    private final int stride;
-
     private final PictureType type;
+
+    private final int stride;
 
     private final long time;
 
@@ -57,8 +57,8 @@ public final class Picture {
     public Picture(libvlc_picture_t picture) {
         this.width  = libvlc_picture_get_width(picture);
         this.height = libvlc_picture_get_height(picture);
-        this.stride = libvlc_picture_get_stride(picture);
         this.type   = PictureType.pictureType(libvlc_picture_type(picture));
+        this.stride = type == PictureType.ARGB ? libvlc_picture_get_stride(picture) : 0;
         this.time   = libvlc_picture_get_time(picture);
         this.buffer = initBuffer(picture);
         this.size   = this.buffer.length;
@@ -89,21 +89,23 @@ public final class Picture {
     }
 
     /**
-     * Get the picture stride (depth).
-     *
-     * @return stride
-     */
-    public int stride() {
-        return stride;
-    }
-
-    /**
      * Get the picture type.
      *
      * @return type
      */
     public PictureType type() {
         return type;
+    }
+
+    /**
+     * Get the picture stride (depth).
+     * <p>
+     * Stride is only available for {@link PictureType#ARGB}.
+     *
+     * @return stride
+     */
+    public int stride() {
+        return stride;
     }
 
     /**
@@ -139,8 +141,8 @@ public final class Picture {
         sb.append(getClass().getSimpleName()).append('[');
         sb.append("width=").append(width).append(',');
         sb.append("height=").append(height).append(',');
-        sb.append("stride=").append(stride).append(',');
         sb.append("type=").append(type).append(',');
+        sb.append("stride=").append(stride).append(',');
         sb.append("time=").append(time).append(',');
         sb.append("size=").append(time).append(']');
         return sb.toString();

@@ -19,7 +19,8 @@
 
 package uk.co.caprica.vlcj.media;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_thumbnail_cancel;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_thumbnail_request_cancel;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_thumbnail_request_destroy;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_thumbnail_request_t;
 
@@ -37,14 +38,19 @@ public final class ThumbnailRequest {
     }
 
     /**
-     * Release, or cancel, this thumbnail request.
+     * Cancel this thumbnail request.
+     */
+    public void cancel() {
+        libvlc_media_thumbnail_request_cancel(request);
+    }
+
+    /**
+     * Release this thumbnail request.
      * <p>
      * The thumbnail request must be released when it is no longer needed.
-     * <p>
-     * Release will also cancel the request if it has not yet completed.
      */
     public void release() {
-        libvlc_media_thumbnail_cancel(request);
+        libvlc_media_thumbnail_request_destroy(request);
     }
 
 }
