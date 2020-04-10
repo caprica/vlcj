@@ -37,7 +37,7 @@ public final class ListApi extends BaseApi {
     /**
      * Get the current list of renderer items.
      *
-     * @return
+     * @return list of renderer items
      */
     public List<RendererItem> rendererItems() {
         return new ArrayList<RendererItem>(rendererItems);
@@ -48,8 +48,8 @@ public final class ListApi extends BaseApi {
      * <p>
      * Renderer items can come and go as they are discovered or disconnected (or otherwise become unavailable)
      *
-     * @param containsItem
-     * @return
+     * @param containsItem item to check
+     * @return <code>true</code> if the list of discovered renderers contains the given item; <code>false</code> it it does not
      */
     public boolean contains(RendererItem containsItem) {
         for (RendererItem rendererItem : rendererItems) {

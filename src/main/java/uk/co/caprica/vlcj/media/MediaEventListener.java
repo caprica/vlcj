@@ -74,7 +74,7 @@ public interface MediaEventListener {
      * The current media was freed.
      *
      * @param media media that raised the event
-     * @param mediaFreed
+     * @param mediaFreed reference of the media that was freed
      */
     void mediaFreed(Media media, MediaRef mediaFreed);
 
@@ -95,9 +95,10 @@ public interface MediaEventListener {
     void mediaSubItemTreeAdded(Media media, MediaRef item);
 
     /**
+     * A thumbnail was generated.
      *
-     * @param media
-     * @param picture
+     * @param media media that generated the thumbnail
+     * @param picture thumbnail that was generated
      */
     void mediaThumbnailGenerated(Media media, Picture picture);
 

@@ -55,6 +55,7 @@ public final class SlaveApi extends BaseApi {
      * return the latter from the two above.
      *
      * @param type type of slave to add
+     * @param priority priority of this slave
      * @param uri URI of the slave to add
      * @return <code>true</code> on success; <code>false</code> otherwise
      */

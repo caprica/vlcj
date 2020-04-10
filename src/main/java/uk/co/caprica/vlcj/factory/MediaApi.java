@@ -72,7 +72,7 @@ public final class MediaApi extends BaseApi {
      * <p>
      * Alternatively {@link Media#newMediaRef()} could be used.
      *
-     * @param media
+     * @param media media from which to create the new references
      * @param options options to add to the media
      * @return media reference, or <code>null</code> on error
      */
@@ -87,7 +87,7 @@ public final class MediaApi extends BaseApi {
      * <p>
      * Alternatively {@link MediaRef#newMediaRef()} could be used.
      *
-     * @param mediaRef
+     * @param mediaRef media reference from which to create the new reference
      * @param options options to add to the media
      * @return media reference, or <code>null</code> on error
      */

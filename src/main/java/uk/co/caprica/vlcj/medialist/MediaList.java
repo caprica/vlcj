@@ -46,6 +46,7 @@ public final class MediaList {
     /**
      * Create a new media list.
      *
+     * @param libvlcInstance native library instance
      * @param mediaListInstance native media list, the caller must not release this opaque handle, it will be released by this component when it is no longer needed
      */
     public MediaList(libvlc_instance_t libvlcInstance, libvlc_media_list_t mediaListInstance) {

@@ -61,7 +61,6 @@ public final class Viewpoint {
     /**
      * Get the pitch.
      *
-     * @return pitch
      * @return pitch, degrees
      */
     public float pitch() {

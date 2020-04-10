@@ -101,7 +101,7 @@ public class NativeDiscovery {
      * <p>
      * If this component has already discovered the native libraries, calling this method again will have no effect.
      *
-     * @return
+     * @return <code>true</code> if the native library was already discovered; <code>false</code> if not
      */
     public final boolean discover() {
         if (alreadyFound) {
