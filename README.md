@@ -1,7 +1,7 @@
 ![vlcj](https://github.com/caprica/vlcj/raw/master/etc/vlcj-logo.png "vlcj")
 
-*You are currently looking at the development branch for vlcj-4.0.0, if you are looking for the previous version of vlcj
-you should switch to the [vlcj-3.x branch](https://github.com/caprica/vlcj/tree/vlcj-3.x).* 
+*You are currently looking at the development branch for vlcj-5.0.0, if you are looking for the previous version of vlcj
+you should switch to the [vlcj-4.x branch](https://github.com/caprica/vlcj/tree/vlcj-4.x).*
 
 vlcj
 ====
@@ -29,21 +29,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
-- 2nd March, 2020 - vlcj 4.4.0 release, minor changes, see release for details
-- 11th January, 2020 - vlcj 4.3.0 released, add an automatic module name for Java 9 modules
-- 13th July, 2019 - vlcj 4.2.0 released, minor updates, check the release milestone for details
-- 9th June, 2019 - new project [vlcj-subs](https://github.com/caprica/vlcj-subs) to help integrate subtitles into Java applications
-- 5th April, 2019 - vlcj 4.1.0 release, this release brings JNA "direct mapping" which should give a modest performance boost
-- 1st April, 2019 - vlcj 4.0.8 released, fixes an issue with the BufferedImage in the CallbackMediaPlayerComponent
-- 24th March, 2019 - vlcj 4.0.7 released, minor change to allow to change the callback video surface image painter after creation
-- 18th March, 2019 - published a Yeoman generator for vlcj starter projects, see [generator-vlcj](https://github.com/caprica/generator-vlcj)
-- 5th March, 2019 - vlcj 4.0.6 released, fixes issues with image painters when using CallbackMediaPlayerComponent
-- 4th March, 2019 - vlcj 4.0.5 released, fixes a problem using ByteBuffer on Java8
-- 4th March, 2019 - vlcj 4.0.4 released, audio callbacks can now optionally manage audio volume, some minor API changes
-- 1st March, 2019 - vlcj 4.0.3 released, fixes a problem with native discovery directory providers and minor API changes
-- 28th February, 2019 - vlcj 4.0.2 released, resolves a potential deadlock (upgrade to this version strongly recommended)
-- 27th February, 2019 - vlcj 4.0.1 released, primarily fixes a small number of minor public API issues
-- 20th February, 2019 - vlcj 4.0.0 released
+- Future, 2020 - vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 11 LTS.
 
 All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
@@ -59,6 +45,8 @@ Major New Features
 
 Headline changes:
 
+ - requires LibVLC 4.0.0+
+ - requires Java 11+
  - full support for LibVLC "video engine" rendering, specifically via OpenGL
    * example using LWJGL at [vlcj-lwjgl-demo](https://github.com/caprica/vlcj-lwjgl-demo)
  - fast vs precise seeking when setting media position/time
@@ -67,79 +55,6 @@ Headline changes:
 For a full list of changes in this release, check the release milestones:
 
 - [vlcj 5.0.0 release milestone](https://github.com/caprica/vlcj/milestone/31?closed=1)
-
-vlcj-4
-======
-
-vlcj-4 has a new API, but there is still a lot of similarity with vlcj-3 and under the covers there is still mostly the
-same mature and stable implementation.
-
-The vlcj-4 API is now pretty much stable, although some changes may be made depending on feedback and usage after the
-first release of 4.0.0 is let loose into the wild - but no further *major* API changes are planned or expected.
-
-If you are interested in using vlcj-4, now is a good time to start.
-
-vlcj-4.1+
-=========
-
-vlcj-4.1 brings JNA "direct mapping" which should give a modest performance boost at the expense of less helpful error
-messages if things go wrong when loading the native LibVLC library.
-
-If you wish to stay with "traditional" JNA bindings, then stick with the latest vlcj-4.0.x.
-
-This direct mapping approach will be used in all future versions of vlcj, meaning vlcj-4.1.x, vlcj-5.x and later.
-
-Major New Features
-------------------
-
-Headline changes:
-
- - full support for 360 degree video, changing pitch, yaw, roll, field-of-view
- - full support for discovery and usage of alternate media renderers, e.g. Chromecast
- - full support for media-slave API to set subtitle tracks and additional/alternate audio tracks
- - full support for integrated native dialogs, e.g. you can now be prompted for credentials when accessing a protected
-   stream
- - use any AWT Component as a video surface, not just a Canvas (Window will work on OSX, with limitations)
- - easy to add support for alternate video surfaces, e.g. an SWT Composite
- - major changes and improvements to the so-called "direct-rendering" media players, the direct audio and video media
-   players are no longer separate components and are now instead intrinsic to the standard media player. For video, a
-   new "Callback" video surface brings a vastly improved implementation, an optional related component provides a good
-   default implementation for direct-rendering and an easy way to deal with re-sizing of the video, with easy extension
-   points for custom video "painters"
- - improvements to full-screen support with sensible default implementations provided for Linux, Windows and OSX, all
-   using a native solution to provide the best result
- - automatic handling of subitems (e.g. when playing a YouTube video or a streaming playlist) is now intrinsic to the
-   media player and requires no involvement of the client application
- - simplified native library discovery, now intrinsic to the media player factory and it should just work out-of-the-box
-   in the vast majority of cases
- - API support for multiple logos (in series, not concurrent)
- - logo and marquee now work without having to explicitly enable the respective native modules
- - there is now better support for media generally (e.g. using media without a media player, for parsing meta data etc),
-   and also better support for media-lists (e.g. it should now be easier to manage your own play-lists)
-
-There have also been a lot of more general improvements to freshen up the codebase, make it more maintainable for the
-future, and to clear some legacy issues that have dogged the project for quite some time.
-
-For a full list of changes in this release, check the release milestones:
-
-- [vlcj 4.0.0 release milestone](https://github.com/caprica/vlcj/milestone/14?closed=1)
-- [vlcj 4.0.1 release milestone](https://github.com/caprica/vlcj/milestone/32?closed=1)
-- [vlcj 4.0.2 release milestone](https://github.com/caprica/vlcj/milestone/33?closed=1)
-- [vlcj 4.0.3 release milestone](https://github.com/caprica/vlcj/milestone/34?closed=1)
-- [vlcj 4.0.4 release milestone](https://github.com/caprica/vlcj/milestone/35?closed=1)
-- [vlcj 4.0.5 release milestone](https://github.com/caprica/vlcj/milestone/36?closed=1)
-- [vlcj 4.0.6 release milestone](https://github.com/caprica/vlcj/milestone/37?closed=1)
-- [vlcj 4.0.7 release milestone](https://github.com/caprica/vlcj/milestone/38?closed=1)
-- [vlcj 4.0.8 release milestone](https://github.com/caprica/vlcj/milestone/40?closed=1)
-
-vlcj 4.1.0+ uses JNA direct-mapping:
-
-- [vlcj 4.1.0 release milestone](https://github.com/caprica/vlcj/milestone/39?closed=1)
-- [vlcj 4.2.0 release milestone](https://github.com/caprica/vlcj/milestone/42?closed=1)
-- [vlcj 4.3.0 release milestone] not available (only a change for the Java Module System)
-- [vlcj 4.4.0 release milestone](https://github.com/caprica/vlcj/milestone/44?closed=1)
-
-Despite all of these changes, running on JDK 1.6 is still supported!
 
 Known Issues
 ------------
@@ -156,31 +71,6 @@ Known Issues
    to something like Chromecast you may experience problems - even if you stop the current media first. The cause of
    this is currently unknown, but it may be a native issue.
 
-API Breakage (vlcj-3)
----------------------
-
-This is the *tenth year* of the project, the API has been pretty much static for that entire time. The codebase has
-evolved gradually and incrementally in that time and resulted sometimes in sub-optimal implementations and choices, as
-well as some generally unwieldy individual classes containing literally thousands of lines of code. Keeping the API
-fixed for those almost ten years also locked in some long-standing architectural issues that simply could not be
-resolved.
-
-The decision to break backwards compatibility with the vlcj-3 API was not taken lightly, but the results have been worth
-it. All legacy architectural issues have been resolved, the giant god-classes have been factored to more manageable
-chunks, and ongoing maintenance will be much easier.
-
-The price for these improvements is some API breakage, sorry.
-
-The short version of the situation is that vlcj-4 can *not* be considered a drop-in upgrade for any vlcj-3 applications.
-If you want to move to vlcj-4 with your existing applications, you *will* be impacted, at best you will need to use new
-names for existing methods, at worst although very unlikely you may have to make some *deep* changes in your own
-codebase. 
-
-There is no automatic migration tool.
-
-The longer version of the situation is documented more fully in
-[this ticket](https://github.com/caprica/vlcj/issues/681). 
-
 Tutorials
 ---------
 
@@ -193,28 +83,10 @@ provided in the
 There is also a major demo application available at the [vlcj-player](https://github.com/caprica/vlcj-player) project
 page.
 
+These tutorials are still valid for vlcj-5.
+
 Building vlcj - sun.misc.Unsafe
 -------------------------------
-
-Currently the target supported JDK is still 1.6, since there are no new language or platform features used in vlcj
-that need anything past 1.6. There is no particularly strong reason to keep supporting 1.6, but there is no particular
-reason to abandon it either.
-
-On the other hand, the project is at the moment built with OpenJDK 11 on Linux and cross-compiled to 1.6. This will
-work just fine when using Maven to build the project from the command-line, or when working with Eclipse.
-
-However, if you use IntelliJ IDEA you may encounter some compilation problems...
-
-When compiling, IDEA will complain that package sun.misc does not exist - the `Unsafe` class from this package is
-required for the "direct" media players.
-
-This can be worked around in a number of ways:
-
- - use source and target JDK 1.10 in the pom.xml, which IDEA will then incorporate into the project
- - use JDK 1.9 and convert the project to use the Java Module System and add jdk.unsupported as a required module
- - change the IDEA compiler settings to *uncheck* the "Use '--release' option for cross-compilation (Java 9 and later)"
-
-The latter option is probably the simplest to deal with.
 
 When compiling with Maven it is simply not possible to suppress the warnings about using sun.misc.Unsafe.
 
@@ -227,7 +99,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.4.0</version>
+    <version>5.0.0</version>
 </dependency>
 ```
 
@@ -396,24 +268,7 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available here:
 
-JNA direct-mapping:
-
-* [4.4.0 (current)](http://caprica.github.com/vlcj/javadoc/4.4.0/index.html "4.4.0 Javadoc")
-* [4.3.0](http://caprica.github.com/vlcj/javadoc/4.3.0/index.html "4.3.0 Javadoc")
-* [4.2.0](http://caprica.github.com/vlcj/javadoc/4.2.0/index.html "4.2.0 Javadoc")
-* [4.1.0](http://caprica.github.com/vlcj/javadoc/4.1.0/index.html "4.1.0 Javadoc")
-
-JNA traditional mapping:
-
-* [4.0.8 (current)](http://caprica.github.com/vlcj/javadoc/4.0.8/index.html "4.0.8 Javadoc")
-* [4.0.7](http://caprica.github.com/vlcj/javadoc/4.0.7/index.html "4.0.7 Javadoc")
-* [4.0.6](http://caprica.github.com/vlcj/javadoc/4.0.6/index.html "4.0.6 Javadoc")
-* [4.0.5](http://caprica.github.com/vlcj/javadoc/4.0.5/index.html "4.0.5 Javadoc")
-* [4.0.4](http://caprica.github.com/vlcj/javadoc/4.0.4/index.html "4.0.4 Javadoc")
-* [4.0.3](http://caprica.github.com/vlcj/javadoc/4.0.3/index.html "4.0.3 Javadoc")
-* [4.0.2](http://caprica.github.com/vlcj/javadoc/4.0.2/index.html "4.0.2 Javadoc")
-* [4.0.1](http://caprica.github.com/vlcj/javadoc/4.0.1/index.html "4.0.1 Javadoc")
-* [4.0.0](http://caprica.github.com/vlcj/javadoc/4.0.0/index.html "4.0.0 Javadoc")
+* [5.0.0 (current)](http://caprica.github.com/vlcj/javadoc/5.0.0/index.html "5.0.0 Javadoc")
 
 Examples
 --------
