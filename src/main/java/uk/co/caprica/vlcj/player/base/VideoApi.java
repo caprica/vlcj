@@ -30,7 +30,6 @@ import java.util.List;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_video_title_display;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_adjust_float;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_adjust_int;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_aspect_ratio;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_scale;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_size;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_track;
