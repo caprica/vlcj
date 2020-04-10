@@ -46,31 +46,6 @@ import java.awt.event.ActionListener;
  */
 public class CropTest extends VlcjTest {
 
-    /**
-     * The standard crop geometries.
-     */
-    private static final String[][] CROP_GEOMETRIES = {
-        {"<choose...>",     null },
-        {      "16:10",  "16:10" },
-        {      "16:9" ,  "16:9"  },
-        {    "1.85:1" , "185:100"},
-        {    "2.21:1" , "221:100"},
-        {    "2.35:1" , "235:100"},
-        {    "2.39:1" , "239:100"},
-        {       "5:3" ,   "5:3"  },
-        {       "4:3" ,   "4:3"  },
-        {       "5:4" ,   "5:4"  },
-        {       "1:1" ,   "1:1"  }
-    };
-
-    private static final String HELP_TEXT =
-        "<html>Select a standard crop geometry from the list box, or enter a custom geometry and press enter/return.<br/><br/>" +
-      	"For the custom geometry, use:<ul>" +
-      	"<li>W:H, e.g. 16:9 and the values must be integers</li>" +
-      	"<li>WxH+L+T, e.g. 720x511+0+73</li>" +
-      	"<li>L+T+R+B, e.g. 10+20+10+20</li>" +
-      	"</ul></html>";
-
     private MediaPlayerFactory factory;
     private EmbeddedMediaPlayer mediaPlayer;
     private VideoSurface videoSurface;
@@ -79,13 +54,33 @@ public class CropTest extends VlcjTest {
     private JPanel contentPane;
     private JPanel videoPane;
     private Canvas videoCanvas;
-    private JPanel controlsPane;
-    private JLabel standardCropLabel;
-    private JComboBox standardCropComboBox;
-    private JLabel customCropLabel;
-    private JTextField customCropTextField;
+    private JPanel controlsPane1;
+    private JLabel aspectNumeratorLabel;
+    private JTextField ratioNumeratorTextField;
+    private JLabel aspectDenominatorLabel;
+    private JTextField ratioDenominatorTextField;
+    private JButton setRatioButton;
     private JButton pauseButton;
-    private JLabel helpText;
+    private JPanel controlsPane2;
+    private JLabel xLabel;
+    private JTextField xTextField;
+    private JLabel yLabel;
+    private JTextField yTextField;
+    private JLabel wLabel;
+    private JTextField wTextField;
+    private JLabel hLabel;
+    private JTextField hTextField;
+    private JButton setWindowButton;
+    private JPanel controlsPane3;
+    private JLabel lLabel;
+    private JTextField lTextField;
+    private JLabel rLabel;
+    private JTextField rTextField;
+    private JLabel tLabel;
+    private JTextField tTextField;
+    private JLabel bLabel;
+    private JTextField bTextField;
+    private JButton setBorderButton;
 
     public static void main(String[] args) throws Exception {
         if(args.length != 1) {
@@ -125,50 +120,137 @@ public class CropTest extends VlcjTest {
 
         mediaPlayer.videoSurface().set(videoSurface);
 
-        standardCropLabel = new JLabel("Standard Crop:");
-        standardCropLabel.setDisplayedMnemonic('s');
+        aspectNumeratorLabel = new JLabel("Ratio Numerator:");
+        aspectNumeratorLabel.setDisplayedMnemonic('n');
 
-        standardCropComboBox = new JComboBox(CROP_GEOMETRIES);
-        standardCropComboBox.setEditable(false);
-        standardCropComboBox.setRenderer(new DefaultListCellRenderer() {
-            @Override
-            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                JLabel l = (JLabel)super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                String[] val = (String[])value;
-                l.setText(val[0]);
-                return l;
-            }
-        });
+        ratioNumeratorTextField = new JTextField(3);
+        ratioNumeratorTextField.setFocusAccelerator('n');
 
-        standardCropLabel.setLabelFor(standardCropComboBox);
+        aspectDenominatorLabel = new JLabel("Denominator:");
+        aspectDenominatorLabel.setDisplayedMnemonic('d');
 
-        customCropLabel = new JLabel("Custom Crop:");
-        customCropLabel.setDisplayedMnemonic('c');
+        ratioDenominatorTextField = new JTextField(3);
+        ratioDenominatorTextField.setFocusAccelerator('d');
 
-        customCropTextField = new JTextField(10);
-        customCropTextField.setFocusAccelerator('c');
+        setRatioButton = new JButton("Set Ratio");
+        setRatioButton.setMnemonic('a');
+
+        xLabel = new JLabel("Window X");
+        xLabel.setDisplayedMnemonic('x');
+
+        xTextField = new JTextField(4);
+        xTextField.setFocusAccelerator('x');
+
+        yLabel = new JLabel("Y");
+        yLabel.setDisplayedMnemonic('y');
+
+        yTextField = new JTextField(4);
+        yTextField.setFocusAccelerator('y');
+
+        wLabel = new JLabel("W");
+        wLabel.setDisplayedMnemonic('w');
+
+        wTextField = new JTextField(4);
+        wTextField.setFocusAccelerator('w');
+
+        hLabel = new JLabel("H");
+        hLabel.setDisplayedMnemonic('h');
+
+        hTextField = new JTextField(4);
+        hTextField.setFocusAccelerator('h');
+
+        setWindowButton = new JButton("Set Window");
+        setWindowButton.setMnemonic('w');
+
+        lLabel = new JLabel("Border L");
+        lLabel.setDisplayedMnemonic('l');
+
+        lTextField = new JTextField(4);
+        lTextField.setFocusAccelerator('l');
+
+        rLabel = new JLabel("R");
+        rLabel.setDisplayedMnemonic('r');
+
+        rTextField = new JTextField(4);
+        rTextField.setFocusAccelerator('r');
+
+        tLabel = new JLabel("T");
+        tLabel.setDisplayedMnemonic('t');
+
+        tTextField = new JTextField(4);
+        tTextField.setFocusAccelerator('t');
+
+        bLabel = new JLabel("B");
+        bLabel.setDisplayedMnemonic('b');
+
+        bTextField = new JTextField(4);
+        bTextField.setFocusAccelerator('b');
+
+        setBorderButton = new JButton("Set Border");
+        setBorderButton.setMnemonic('o');
 
         pauseButton = new JButton("Pause");
         pauseButton.setMnemonic('p');
 
-        controlsPane = new JPanel();
-        controlsPane.setLayout(new BoxLayout(controlsPane, BoxLayout.X_AXIS));
-        controlsPane.add(standardCropLabel);
-        controlsPane.add(Box.createHorizontalStrut(4));
-        controlsPane.add(standardCropComboBox);
-        controlsPane.add(Box.createHorizontalStrut(12));
-        controlsPane.add(customCropLabel);
-        controlsPane.add(Box.createHorizontalStrut(4));
-        controlsPane.add(customCropTextField);
-        controlsPane.add(Box.createHorizontalStrut(4));
-        controlsPane.add(pauseButton);
+        controlsPane1 = new JPanel();
+        controlsPane1.setLayout(new FlowLayout(FlowLayout.LEFT));
+        controlsPane1.add(aspectNumeratorLabel);
+        controlsPane1.add(Box.createHorizontalStrut(4));
+        controlsPane1.add(ratioNumeratorTextField);
+        controlsPane1.add(Box.createHorizontalStrut(12));
+        controlsPane1.add(aspectDenominatorLabel);
+        controlsPane1.add(Box.createHorizontalStrut(4));
+        controlsPane1.add(ratioDenominatorTextField);
+        controlsPane1.add(setRatioButton);
+        controlsPane1.add(pauseButton);
 
-        helpText = new JLabel(HELP_TEXT);
+        controlsPane2 = new JPanel();
+        controlsPane2.setLayout(new FlowLayout(FlowLayout.LEFT));
+        controlsPane2.add(xLabel);
+        controlsPane2.add(Box.createHorizontalStrut(4));
+        controlsPane2.add(xTextField);
+        controlsPane2.add(Box.createHorizontalStrut(12));
+        controlsPane2.add(yLabel);
+        controlsPane2.add(Box.createHorizontalStrut(4));
+        controlsPane2.add(yTextField);
+        controlsPane2.add(Box.createHorizontalStrut(12));
+        controlsPane2.add(wLabel);
+        controlsPane2.add(Box.createHorizontalStrut(4));
+        controlsPane2.add(wTextField);
+        controlsPane2.add(Box.createHorizontalStrut(12));
+        controlsPane2.add(hLabel);
+        controlsPane2.add(Box.createHorizontalStrut(4));
+        controlsPane2.add(hTextField);
+        controlsPane2.add(setWindowButton);
+
+        controlsPane3 = new JPanel();
+        controlsPane3.setLayout(new FlowLayout(FlowLayout.LEFT));
+        controlsPane3.add(lLabel);
+        controlsPane3.add(Box.createHorizontalStrut(4));
+        controlsPane3.add(lTextField);
+        controlsPane3.add(Box.createHorizontalStrut(12));
+        controlsPane3.add(rLabel);
+        controlsPane3.add(Box.createHorizontalStrut(4));
+        controlsPane3.add(rTextField);
+        controlsPane3.add(Box.createHorizontalStrut(12));
+        controlsPane3.add(tLabel);
+        controlsPane3.add(Box.createHorizontalStrut(4));
+        controlsPane3.add(tTextField);
+        controlsPane3.add(Box.createHorizontalStrut(12));
+        controlsPane3.add(bLabel);
+        controlsPane3.add(Box.createHorizontalStrut(4));
+        controlsPane3.add(bTextField);
+        controlsPane3.add(setBorderButton);
+
+        JPanel controlsPane = new JPanel();
+        controlsPane.setLayout(new BoxLayout(controlsPane, BoxLayout.Y_AXIS));
+        controlsPane.add(controlsPane1);
+        controlsPane.add(controlsPane2);
+        controlsPane.add(controlsPane3);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(16, 16, 16, 16));
         contentPane.setLayout(new BorderLayout(16, 16));
-        contentPane.add(helpText, BorderLayout.NORTH);
         contentPane.add(videoPane, BorderLayout.CENTER);
         contentPane.add(controlsPane, BorderLayout.SOUTH);
 
@@ -178,25 +260,39 @@ public class CropTest extends VlcjTest {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
 
-        // FIXME crop geometry is different in LibVLC 4.x and vlcj 5.x
-//        standardCropComboBox.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                Object selectedItem = standardCropComboBox.getSelectedItem();
-//                if(selectedItem != null) {
-//                    String[] value = (String[])selectedItem;
-//                    mediaPlayer.video().setCropGeometry(value[1]);
-//                }
-//            }
-//        });
-//
-//        customCropTextField.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String value = customCropTextField.getText();
-//                mediaPlayer.video().setCropGeometry(value);
-//            }
-//        });
+        setRatioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mediaPlayer.video().setCropRatio(
+                    Integer.parseInt(ratioNumeratorTextField.getText()),
+                    Integer.parseInt(ratioDenominatorTextField.getText())
+                );
+            }
+        });
+
+        setWindowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mediaPlayer.video().setCropWindow(
+                    Integer.parseInt(xTextField.getText()),
+                    Integer.parseInt(yTextField.getText()),
+                    Integer.parseInt(wTextField.getText()),
+                    Integer.parseInt(hTextField.getText())
+                );
+            }
+        });
+
+        setBorderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mediaPlayer.video().setCropBorder(
+                    Integer.parseInt(lTextField.getText()),
+                    Integer.parseInt(tTextField.getText()),
+                    Integer.parseInt(rTextField.getText()),
+                    Integer.parseInt(bTextField.getText())
+                );
+            }
+        });
 
         pauseButton.addActionListener(new ActionListener() {
             @Override
@@ -209,5 +305,6 @@ public class CropTest extends VlcjTest {
     private void start(String mrl) {
         frame.setVisible(true);
         mediaPlayer.media().play(mrl);
+        mediaPlayer.controls().setPosition(0.1f);
     }
 }
