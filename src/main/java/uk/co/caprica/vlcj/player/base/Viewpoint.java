@@ -99,17 +99,17 @@ public final class Viewpoint {
      *
      * @return field of view, degrees
      */
-    public float fov() {
+    public float fieldOfView() {
         return viewpoint.f_field_of_view;
     }
 
     /**
      * Set the field of view.
      *
-     * @param fov field of view, degrees
+     * @param fieldOfView field of view, degrees
      */
-    public void setFov(float fov) {
-        viewpoint.f_field_of_view = fov;
+    public void setFieldOfView(float fieldOfView) {
+        viewpoint.f_field_of_view = fieldOfView;
     }
 
     /**

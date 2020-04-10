@@ -130,7 +130,7 @@ public class ViewpointTest {
                 viewpoint.setPitch(0);
                 viewpoint.setYaw(0);
                 viewpoint.setRoll(0);
-                viewpoint.setFov(resetFov);
+                viewpoint.setFieldOfView(resetFov);
                 mediaPlayer.mediaPlayer().video().updateViewpoint(viewpoint, true);
             }
         });
@@ -143,7 +143,7 @@ public class ViewpointTest {
                 viewpoint.setPitch(0);
                 viewpoint.setYaw(180.0f);
                 viewpoint.setRoll(0);
-                viewpoint.setFov(resetFov);
+                viewpoint.setFieldOfView(resetFov);
                 mediaPlayer.mediaPlayer().video().updateViewpoint(viewpoint, true);
             }
         });
@@ -176,7 +176,7 @@ public class ViewpointTest {
                 int dx = newPoint.x - lastPoint.x;
                 int dy = newPoint.y - lastPoint.y;
 
-                viewpoint.setFov(0);
+                viewpoint.setFieldOfView(0);
 
                 boolean leftButton = SwingUtilities.isLeftMouseButton(e);
                 boolean rightButton = SwingUtilities.isRightMouseButton(e);
@@ -208,11 +208,11 @@ public class ViewpointTest {
                             viewpoint.setPitch(dy < 0 ? -1 : 1);
                         }
                     } else if (rightButton) {
-                        viewpoint.setFov(dy < 0 ? -1 : 1);
+                        viewpoint.setFieldOfView(dy < 0 ? -1 : 1);
                     }
                 } else {
                     viewpoint.setPitch(0);
-                    viewpoint.setFov(0);
+                    viewpoint.setFieldOfView(0);
                 }
 
                 mediaPlayer.mediaPlayer().video().updateViewpoint(viewpoint, false);
@@ -229,7 +229,7 @@ public class ViewpointTest {
             viewpoint.setRoll(0);
             viewpoint.setPitch(0);
 
-            viewpoint.setFov(rotation > 0 ? fovWheelDelta : -fovWheelDelta);
+            viewpoint.setFieldOfView(rotation > 0 ? fovWheelDelta : -fovWheelDelta);
             mediaPlayer.mediaPlayer().video().updateViewpoint(viewpoint, false);
         }
     }
