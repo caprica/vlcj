@@ -17,9 +17,9 @@
  * Copyright 2009-2019 Caprica Software Limited.
  */
 
-
 package uk.co.caprica.vlcj.player.base;
 
+import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 
 /**
@@ -128,8 +128,7 @@ public final class Viewpoint {
      * The component must no longer be used.
      */
     public void release() {
-        // FIXME what am i supposed to do here
-        // libvlc_free(viewpoint.getPointer());
+        LibC.INSTANCE.free(viewpoint.getPointer());
     }
 
 }
