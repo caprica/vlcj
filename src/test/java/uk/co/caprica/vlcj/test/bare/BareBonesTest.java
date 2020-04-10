@@ -30,7 +30,7 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_new;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_play;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_release;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_media;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_stop;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_stop_async;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_release;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_new;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_release;
@@ -55,7 +55,8 @@ public class BareBonesTest extends VlcjTest {
 
         Thread.sleep(10000);
 
-        libvlc_media_player_stop(mediaPlayer);
+        // CHECKME stop is asynchronous now, does it matter during cleanup?
+        libvlc_media_player_stop_async(mediaPlayer);
         libvlc_media_release(media);
         libvlc_media_player_release(mediaPlayer);
 

@@ -41,7 +41,7 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_hwnd;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_media;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_nsobject;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_xwindow;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_stop;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_stop_async;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_release;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_new;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_release;
@@ -90,7 +90,8 @@ public class BareBonesEmbeddedTest extends VlcjTest {
         f.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                libvlc_media_player_stop(mediaPlayer);
+                // CHECKME stop is async now, does it matter during cleanup?
+                libvlc_media_player_stop_async(mediaPlayer);
                 libvlc_media_player_release(mediaPlayer);
                 libvlc_release(instance);
                 System.exit(0);

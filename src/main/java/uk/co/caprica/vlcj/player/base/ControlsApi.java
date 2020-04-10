@@ -26,7 +26,7 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_pause;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_position;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_rate;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_time;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_stop;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_stop_async;
 
 /**
  * Behaviour pertaining to media player controls.
@@ -69,9 +69,11 @@ public final class ControlsApi extends BaseApi {
      * Stop play-back.
      * <p>
      * A subsequent play will play-back from the start.
+     * <p>
+     * Stopping is now an asynchronous operation.
      */
     public void stop() {
-        libvlc_media_player_stop(mediaPlayerInstance);
+        libvlc_media_player_stop_async(mediaPlayerInstance);
     }
 
     /**
