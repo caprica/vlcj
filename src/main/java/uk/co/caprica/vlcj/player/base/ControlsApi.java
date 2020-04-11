@@ -70,10 +70,12 @@ public final class ControlsApi extends BaseApi {
      * <p>
      * A subsequent play will play-back from the start.
      * <p>
-     * Stopping is now an asynchronous operation.
+     * <strong>Stopping is now an asynchronous operation.</strong>
+     *
+     * @return <code>true</code> if the media player is being stopped; false if not
      */
-    public void stop() {
-        libvlc_media_player_stop_async(mediaPlayerInstance);
+    public boolean stop() {
+        return libvlc_media_player_stop_async(mediaPlayerInstance) == 0;
     }
 
     /**
