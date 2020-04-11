@@ -73,6 +73,8 @@ public final class MediaApi extends BaseApi {
 
     /**
      * Prepare new media (set it, do not play it).
+     * <p>
+     * <strong>Setting media is now an asynchronous operation.</strong>
      *
      * @param mrl media resource locator
      * @param options zero or more options to attach to the new media
@@ -84,6 +86,8 @@ public final class MediaApi extends BaseApi {
 
     /**
      * Set new media and play it.
+     * <p>
+     * <strong>Setting media is now an asynchronous operation.</strong>
      *
      * @param mrl media resource locator
      * @param options zero or more options to attach to the new media
@@ -99,6 +103,8 @@ public final class MediaApi extends BaseApi {
 
     /**
      * Set new media, play it, and wait for it to start playing (or error).
+     * <p>
+     * <strong>Setting media is now an asynchronous operation.</strong>
      *
      * @param mrl media resource locator
      * @param options zero or more options to attach to the new media
@@ -114,6 +120,8 @@ public final class MediaApi extends BaseApi {
 
     /**
      * Prepare new media (set it, do not play it).
+     * <p>
+     * <strong>Setting media is now an asynchronous operation.</strong>
      *
      * @param callbackMedia callback media
      * @param options zero or more options to attach to the new media
@@ -125,6 +133,8 @@ public final class MediaApi extends BaseApi {
 
     /**
      * Set new media and play it.
+     * <p>
+     * <strong>Setting media is now an asynchronous operation.</strong>
      *
      * @param callbackMedia callback media
      * @param options zero or more options to attach to the new media
@@ -140,6 +150,8 @@ public final class MediaApi extends BaseApi {
 
     /**
      * Set new media, play it, and wait for it to start playing (or error).
+     * <p>
+     * <strong>Setting media is now an asynchronous operation.</strong>
      *
      * @param callbackMedia callback media
      * @param options zero or more options to attach to the new media
@@ -158,6 +170,8 @@ public final class MediaApi extends BaseApi {
      * <p>
      * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
      * caller no longer has any use for it.
+     * <p>
+     * <strong>Setting media is now an asynchronous operation.</strong>
      *
      * @param mediaRef media reference
      * @param options zero or more options to attach to the new media
@@ -172,6 +186,8 @@ public final class MediaApi extends BaseApi {
      * <p>
      * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
      * caller no longer has any use for it.
+     * <p>
+     * <strong>Setting media is now an asynchronous operation.</strong>
      *
      * @param mediaRef media reference
      * @param options zero or more options to attach to the new media
@@ -190,6 +206,8 @@ public final class MediaApi extends BaseApi {
      * <p>
      * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
      * caller no longer has any use for it.
+     * <p>
+     * <strong>Setting media is now an asynchronous operation.</strong>
      *
      * @param mediaRef media reference
      * @param options zero or more options to attach to the new media
@@ -346,6 +364,7 @@ public final class MediaApi extends BaseApi {
 
     private void applyMedia() {
         libvlc_media_t mediaInstance = media.mediaInstance();
+        // Setting media is asynchronous
         libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
         mediaPlayer.subitems().changeMedia(mediaInstance);
     }
