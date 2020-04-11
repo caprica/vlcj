@@ -77,9 +77,8 @@
     </distributionManagement>
 
     <properties>
-        <module.name>uk.co.caprica.vlcj</module.name>
         <vlcjNatives.version>5.0.0-SNAPSHOT</vlcjNatives.version>
-        <vlcjOsxStubs.version>1.0.0</vlcjOsxStubs.version>
+        <vlcjOsxStubs.version>2.0.0-SNAPSHOT</vlcjOsxStubs.version>
     </properties>
 
     <dependencies>
@@ -116,7 +115,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore />
+                                        <ignore/>
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
@@ -151,9 +150,6 @@
                 <version>3.2.0</version>
                 <configuration>
                     <archive>
-                        <manifestEntries>
-                            <Automatic-Module-Name>${module.name}</Automatic-Module-Name>
-                        </manifestEntries>
                         <manifest>
                             <addClasspath>true</addClasspath>
                         </manifest>
