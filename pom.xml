@@ -78,7 +78,7 @@
 
     <properties>
         <vlcjNatives.version>5.0.0-SNAPSHOT</vlcjNatives.version>
-        <vlcjOsxStubs.version>2.0.0-SNAPSHOT</vlcjOsxStubs.version>
+        <vlcjOsxStubs.version>2.0.0</vlcjOsxStubs.version>
     </properties>
 
     <dependencies>
