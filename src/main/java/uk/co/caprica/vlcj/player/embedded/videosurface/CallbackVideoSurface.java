@@ -25,7 +25,7 @@ import com.sun.jna.ptr.PointerByReference;
 import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_format_cb;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
@@ -41,7 +41,7 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_format_callback
 public class CallbackVideoSurface extends VideoSurface {
 
     private final libvlc_video_format_cb setup = new SetupCallback();
-    private final libvlc_video_cleanup_cb cleanup = new CleanupCallback();
+    private final libvlc_video_output_cleanup_cb cleanup = new CleanupCallback();
     private final libvlc_lock_callback_t lock = new LockCallback();
     private final libvlc_unlock_callback_t unlock = new UnlockCallback();
     private final libvlc_display_callback_t display = new DisplayCallback();
@@ -126,7 +126,7 @@ public class CallbackVideoSurface extends VideoSurface {
      *
      * This callback is invoked when the video buffer is no longer needed.
      */
-    private final class CleanupCallback implements libvlc_video_cleanup_cb {
+    private final class CleanupCallback implements libvlc_video_output_cleanup_cb {
 
         @Override
         public void cleanup(Pointer opaque) {

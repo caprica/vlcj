@@ -20,11 +20,19 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.binding.internal.libvlc_video_cleanup_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_color_primaries_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_color_space_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_cfg_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_cleanup_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_set_resize_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_render_cfg_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_device_cfg_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_device_info_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_transfer_func_e;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngine;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_getProcAddress_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_makeCurrent_cb;
-import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_setup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_swap_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_update_output_cb;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
@@ -38,6 +46,8 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_output_callback
  */
 public final class VideoEngineVideoSurface extends VideoSurface {
 
+    private static final int GL_RGBA = 6408;
+
     /**
      * Video engine.
      */
@@ -48,8 +58,9 @@ public final class VideoEngineVideoSurface extends VideoSurface {
      */
     private final VideoEngineCallback callback;
 
-    private final libvlc_video_setup_cb setup = new SetupCallback();
-    private final libvlc_video_cleanup_cb cleanup = new CleanupCallback();
+    private final libvlc_video_output_setup_cb setup = new SetupCallback();
+    private final libvlc_video_output_cleanup_cb cleanup = new CleanupCallback();
+    private final libvlc_video_output_set_resize_cb setResize = new SetResizeCallback();
     private final libvlc_video_update_output_cb updateOutput = new UpdateOutputCallback();
     private final libvlc_video_swap_cb swap = new SwapCallback();
     private final libvlc_video_makeCurrent_cb makeCurrent = new MakeCurrentCallback();
@@ -71,27 +82,53 @@ public final class VideoEngineVideoSurface extends VideoSurface {
 
     @Override
     public void attach(MediaPlayer mediaPlayer) {
-        libvlc_video_set_output_callbacks(mediaPlayer.mediaPlayerInstance(), engine.intValue(), setup, cleanup, updateOutput, swap, makeCurrent, getProcAddress, null);
+        libvlc_video_set_output_callbacks(
+            mediaPlayer.mediaPlayerInstance(),
+            engine.intValue(),
+            setup,
+            cleanup,
+            setResize,
+            updateOutput,
+            swap,
+            makeCurrent,
+            getProcAddress,
+            null,
+            null,
+            null);
     }
 
-    private final class SetupCallback implements libvlc_video_setup_cb {
+    private final class SetupCallback implements libvlc_video_output_setup_cb {
         @Override
-        public int setup(Pointer opaque) {
-            return callback.onSetup(opaque) ? 1 : 0;
+        public int setup(Pointer opaque, libvlc_video_setup_device_cfg_t cfg, libvlc_video_setup_device_info_t out) {
+            return callback.onSetup(opaque, cfg, out) ? 1 : 0;
         }
     }
 
-    private final class CleanupCallback implements libvlc_video_cleanup_cb {
+    private final class CleanupCallback implements libvlc_video_output_cleanup_cb {
         @Override
         public void cleanup(Pointer opaque) {
             callback.onCleanup(opaque);
         }
     }
 
+    private final class SetResizeCallback implements libvlc_video_output_set_resize_cb {
+        @Override
+        public Pointer setResizeCallback(Pointer opaque, Pointer report_size_change, Pointer report_opaque) {
+            // FIXME is this callback useful?
+            return callback.onSetResizeCallback(opaque, report_size_change, report_opaque);
+        }
+    }
+
     private class UpdateOutputCallback implements libvlc_video_update_output_cb {
         @Override
-        public void updateOutput(Pointer opaque, int width, int height) {
-            callback.onUpdateOutput(opaque, width, height);
+        public int updateOutput(Pointer opaque, libvlc_video_render_cfg_t cfg, libvlc_video_output_cfg_t output) {
+            output.u.writeField("opengl_format", GL_RGBA);
+            output.full_range = 1;
+            output.colorspace = libvlc_video_color_space_e.libvlc_video_colorspace_BT709.intValue();
+            output.primaries = libvlc_video_color_primaries_e.libvlc_video_primaries_BT709.intValue();
+            output.transfer = libvlc_video_transfer_func_e.libvlc_video_transfer_func_SRGB.intValue();
+            // The return value is not used by the native code
+            return callback.onUpdateOutput(opaque, cfg.width, cfg.height) ? 1: 0;
         }
     }
 
@@ -115,5 +152,4 @@ public final class VideoEngineVideoSurface extends VideoSurface {
             return Pointer.createConstant(callback.onGetProcAddress(opaque, fct_name));
         }
     }
-
 }

@@ -20,6 +20,8 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
 
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_device_cfg_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_device_info_t;
 
 /**
  * Specification for a component that provides a bridge from the native video engine to a rendering surface.
@@ -30,9 +32,11 @@ public interface VideoEngineCallback {
      * Client setup.
      *
      * @param opaque opaque data pointer
+     * @param deviceConfiguration device configuration
+     * @param deviceInformation output device information
      * @return <code>true</code> on success; <code>false</code> on error
      */
-    boolean onSetup(Pointer opaque);
+    boolean onSetup(Pointer opaque, libvlc_video_setup_device_cfg_t deviceConfiguration, libvlc_video_setup_device_info_t deviceInformation);
 
     /**
      * Client clean-up.
@@ -42,13 +46,24 @@ public interface VideoEngineCallback {
     void onCleanup(Pointer opaque);
 
     /**
+     * Set the resize callback.
+     *
+     * @param opaque opaque data pointer
+     * @param report_size_change  callback
+     * @param report_opaque opaque data pointer for the callback
+     * @return callback, or <code>null</code>
+     */
+    Pointer onSetResizeCallback(Pointer opaque, Pointer report_size_change, Pointer report_opaque);
+
+    /**
      * Update the video output with new dimensions.
      *
      * @param opaque opaque data pointer
      * @param width new video width
      * @param height new video height
+     * @return <code>true</code> on success; <code>false</code> on error
      */
-    void onUpdateOutput(Pointer opaque, int width, int height);
+    boolean onUpdateOutput(Pointer opaque, int width, int height);
 
     /**
      * A batch of native rendering calls finished.
@@ -74,5 +89,4 @@ public interface VideoEngineCallback {
      * @return native procedure address
      */
     long onGetProcAddress(Pointer opaque, String functionName);
-
 }
