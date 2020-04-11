@@ -80,6 +80,8 @@ public final class ControlsApi extends BaseApi {
 
     /**
      * Pause/resume.
+     * <p>
+     * <strong>Pausing is now an asynchronous operation.</strong>
      *
      * @param pause true to pause, false to play/resume
      */
@@ -91,6 +93,8 @@ public final class ControlsApi extends BaseApi {
      * Pause play-back.
      * <p>
      * If the play-back is currently paused it will begin playing.
+     * <p>
+     * <strong>Pausing is now an asynchronous operation.</strong>
      */
     public void pause() {
         libvlc_media_player_pause(mediaPlayerInstance);
