@@ -5,7 +5,6 @@ module uk.co.caprica.vlcj {
     requires jdk.unsupported;
     requires com.sun.jna;
     requires com.sun.jna.platform;
-    exports uk.co.caprica.vlcj;
     exports uk.co.caprica.vlcj.factory;
     exports uk.co.caprica.vlcj.factory.discovery;
     exports uk.co.caprica.vlcj.factory.discovery.provider;
