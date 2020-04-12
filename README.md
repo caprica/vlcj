@@ -3,6 +3,9 @@
 *You are currently looking at the development branch for vlcj-4.0.0, if you are looking for the previous version of vlcj
 you should switch to the [vlcj-3.x branch](https://github.com/caprica/vlcj/tree/vlcj-3.x).* 
 
+*vlcj-5.0.0 is currently in development, it will track the upcoming VLC 4.0 which is also still in development. If you
+can build VLC yourself you can try the [vlcj-5.x branch](https://github.com/caprica/vlcj/tree/vlcj-5.x).*
+
 vlcj
 ====
 
