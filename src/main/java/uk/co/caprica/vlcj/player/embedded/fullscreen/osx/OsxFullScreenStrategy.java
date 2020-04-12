@@ -19,53 +19,35 @@
 
 package uk.co.caprica.vlcj.player.embedded.fullscreen.osx;
 
-import com.apple.eawt.AppEvent.FullScreenEvent;
-import com.apple.eawt.Application;
-import com.apple.eawt.FullScreenAdapter;
-import com.apple.eawt.FullScreenUtilities;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
-import java.awt.*;
+import java.awt.Window;
 
 /**
- * Implementation of a full-screen strategy that uses the Apple EAWT classes to implement native full-screen.
+ * Implementation of a full-screen strategy that does nothing on macOS.
+ * <p>
+ * The EAWT classes are not exported for use on contemporary JDKs and there is no satisfactory replacement, so
+ * full-screen on macOS is not supported (at least not by vlcj-core).
  */
 public class OsxFullScreenStrategy implements FullScreenStrategy {
 
-    /**
-     * The component that will be made full-screen.
-     */
-    private final Window window;
-
-    /**
-     * Is the window currently in full-screen mode?
-     */
-    private boolean isFullScreenMode;
-
     public OsxFullScreenStrategy(Window window) {
-        if (window != null) {
-            this.window = window;
-            FullScreenUtilities.addFullScreenListenerTo(window, new FullScreenHandler());
-            FullScreenUtilities.setWindowCanFullScreen(window, true);
-        }
-        else {
-            throw new IllegalArgumentException("Window must not be null");
-        }
     }
 
     @Override
     public void enterFullScreenMode() {
-        Application.getApplication().requestToggleFullScreen(window);
+        System.err.println("Full-screen not supported on macOS");
     }
 
     @Override
     public void exitFullScreenMode() {
-        Application.getApplication().requestToggleFullScreen(window);
+        System.err.println("Full-screen not supported on macOS");
     }
 
     @Override
     public boolean isFullScreenMode() {
-        return isFullScreenMode;
+        System.err.println("Full-screen not supported on macOS");
+        return false;
     }
 
     /**
@@ -85,29 +67,4 @@ public class OsxFullScreenStrategy implements FullScreenStrategy {
      */
     protected void onAfterExitFullScreenMode() {
     }
-
-    private class FullScreenHandler extends FullScreenAdapter {
-
-        @Override
-        public void windowEnteringFullScreen(FullScreenEvent event) {
-            OsxFullScreenStrategy.this.isFullScreenMode = true;
-            onBeforeEnterFullScreenMode();
-        }
-
-        @Override
-        public void windowEnteredFullScreen(FullScreenEvent event) {
-        }
-
-        @Override
-        public void windowExitingFullScreen(FullScreenEvent event) {
-            OsxFullScreenStrategy.this.isFullScreenMode = false;
-        }
-
-        @Override
-        public void windowExitedFullScreen(FullScreenEvent event) {
-            onAfterExitFullScreenMode();
-        }
-
-    }
-
 }

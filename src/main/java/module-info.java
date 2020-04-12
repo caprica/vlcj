@@ -5,8 +5,6 @@ module uk.co.caprica.vlcj {
     requires com.sun.jna;
     requires com.sun.jna.platform;
 
-    requires static uk.co.caprica.vlcj.osx.stubs;
-
     exports uk.co.caprica.vlcj.factory;
     exports uk.co.caprica.vlcj.factory.discovery;
     exports uk.co.caprica.vlcj.factory.discovery.provider;

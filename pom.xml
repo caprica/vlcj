@@ -78,7 +78,6 @@
 
     <properties>
         <vlcjNatives.version>5.0.0-SNAPSHOT</vlcjNatives.version>
-        <vlcjOsxStubs.version>2.0.0</vlcjOsxStubs.version>
     </properties>
 
     <dependencies>
@@ -86,12 +85,6 @@
             <groupId>uk.co.caprica</groupId>
             <artifactId>vlcj-natives</artifactId>
             <version>${vlcjNatives.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>uk.co.caprica</groupId>
-            <artifactId>vlcj-osx-stubs</artifactId>
-            <version>${vlcjOsxStubs.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
