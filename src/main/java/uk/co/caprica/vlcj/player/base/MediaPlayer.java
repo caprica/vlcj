@@ -17,8 +17,6 @@
  * Copyright 2009-2020 Caprica Software Limited.
  */
 
-// Was 2500 lines
-
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
