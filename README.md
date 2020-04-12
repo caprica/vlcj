@@ -7,7 +7,7 @@ vlcj-5 requires VLC 4.0 as a minimum baseline - VLC 4.0 is currently in developm
 it is released.
 
 If you are looking for a stable combination of vlcj and VLC then switch to the
-[vlcj-4.x branch](https://github.com/caprica/vlcj/tree/vlcj-4.x) branch.
+[vlcj-4.x branch](https://github.com/caprica/vlcj/tree/vlcj-4.x) instead.
 
 vlcj
 ====
