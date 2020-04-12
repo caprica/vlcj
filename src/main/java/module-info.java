@@ -48,4 +48,12 @@ module uk.co.caprica.vlcj {
     exports uk.co.caprica.vlcj.waiter.mediaplayer;
 
     uses uk.co.caprica.vlcj.factory.discovery.provider.DiscoveryDirectoryProvider;
+
+    provides uk.co.caprica.vlcj.factory.discovery.provider.DiscoveryDirectoryProvider with
+        uk.co.caprica.vlcj.factory.discovery.provider.JnaLibraryPathDirectoryProvider,
+        uk.co.caprica.vlcj.factory.discovery.provider.LinuxWellKnownDirectoryProvider,
+        uk.co.caprica.vlcj.factory.discovery.provider.OsxWellKnownDirectoryProvider,
+        uk.co.caprica.vlcj.factory.discovery.provider.SystemPathDirectoryProvider,
+        uk.co.caprica.vlcj.factory.discovery.provider.UserDirDirectoryProvider,
+        uk.co.caprica.vlcj.factory.discovery.provider.WindowsInstallDirectoryProvider;
 }
