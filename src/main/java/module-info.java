@@ -1,10 +1,11 @@
 module uk.co.caprica.vlcj {
     requires uk.co.caprica.vlcj.natives;
-    requires uk.co.caprica.vlcj.osx.stubs;
     requires java.desktop;
     requires jdk.unsupported;
     requires com.sun.jna;
     requires com.sun.jna.platform;
+
+    requires static uk.co.caprica.vlcj.osx.stubs;
 
     exports uk.co.caprica.vlcj.factory;
     exports uk.co.caprica.vlcj.factory.discovery;
