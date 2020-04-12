@@ -21,7 +21,9 @@ OSX, although there may be some limitations on OSX.
 Additionally, whilst not supported as one of the main platforms, this version of vlcj has been tested and shown to be
 working on contemporary Raspberry Pi builds.
 
-At least JDK 1.6 is required.
+At least JDK 11 is required for version 4.5.0 onwards.
+
+If JDK 1.6 is required, use version 4.4.0.
 
 *This version of vlcj requires VLC 3.0.0 as a minimum, no earlier version is supported.*
 
@@ -32,6 +34,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 12th April, 2020 - vlcj 4.5.0 release, codename Corona Holiday, moves to Java 11 and supports the Java Module System
 - 2nd March, 2020 - vlcj 4.4.0 release, minor changes, see release for details
 - 11th January, 2020 - vlcj 4.3.0 released, add an automatic module name for Java 9 modules
 - 13th July, 2019 - vlcj 4.2.0 released, minor updates, check the release milestone for details
@@ -122,8 +125,11 @@ vlcj 4.1.0+ uses JNA direct-mapping:
 - [vlcj 4.2.0 release milestone](https://github.com/caprica/vlcj/milestone/42?closed=1)
 - [vlcj 4.3.0 release milestone] not available (only a change for the Java Module System)
 - [vlcj 4.4.0 release milestone](https://github.com/caprica/vlcj/milestone/44?closed=1)
+- [vlcj 4.5.0 release milestone](https://github.com/caprica/vlcj/milestone/45?closed=1)
 
-Despite all of these changes, running on JDK 1.6 is still supported!
+4.4.0 is the last version to support Java 1.6.
+
+4.5.0 onwards requires Java 11.
 
 Known Issues
 ------------
@@ -205,7 +211,17 @@ When compiling with Maven it is simply not possible to suppress the warnings abo
 Maven Dependency
 ----------------
 
-Add the following Maven dependency to your own project pom.xml:
+If you can use Java 11, add the following Maven dependency to your own project pom.xml:
+
+```
+<dependency>
+    <groupId>uk.co.caprica</groupId>
+    <artifactId>vlcj</artifactId>
+    <version>4.5.0</version>
+</dependency>
+```
+
+If you cannot use Java 11, add the following Maven dependency to your own project pom.xml:
 
 ```
 <dependency>
@@ -214,6 +230,8 @@ Add the following Maven dependency to your own project pom.xml:
     <version>4.4.0</version>
 </dependency>
 ```
+
+The API is otherwise identical in 4.4.0 and 4.5.0.
 
 The core vlcj project now no longer contains the required JNA bindings to LibVLC, these are provided instead by the
 separate [vlcj-natives](https://github.com/caprica/vlcj-natives) project. The vlcj core project therefore has a new
@@ -382,7 +400,8 @@ Online Javadoc is available here:
 
 JNA direct-mapping:
 
-* [4.4.0 (current)](http://caprica.github.com/vlcj/javadoc/4.4.0/index.html "4.4.0 Javadoc")
+* [4.5.0 (current)](http://caprica.github.com/vlcj/javadoc/4.5.0/index.html "4.5.0 Javadoc")
+* [4.4.0](http://caprica.github.com/vlcj/javadoc/4.4.0/index.html "4.4.0 Javadoc")
 * [4.3.0](http://caprica.github.com/vlcj/javadoc/4.3.0/index.html "4.3.0 Javadoc")
 * [4.2.0](http://caprica.github.com/vlcj/javadoc/4.2.0/index.html "4.2.0 Javadoc")
 * [4.1.0](http://caprica.github.com/vlcj/javadoc/4.1.0/index.html "4.1.0 Javadoc")
@@ -414,6 +433,7 @@ Related Projects
  * [vlcj-subs](https://github.com/caprica/vlcj-subs)
  * [vlcj-player](https://github.com/caprica/vlcj-player)
  * [vlcj-javafx](https://github.com/caprica/vlcj-javafx)
+ * [vlcj-javafx-demo](https://github.com/caprica/vlcj-javafx-demo)
  * [vlcj-mrls](https://github.com/caprica/vlcj-mrls)
  * [vlcj-file-filters](https://github.com/caprica/vlcj-file-filters)
  * [vlcj-swt](https://github.com/caprica/vlcj-swt)
