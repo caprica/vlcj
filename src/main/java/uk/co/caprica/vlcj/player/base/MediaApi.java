@@ -354,8 +354,7 @@ public final class MediaApi extends BaseApi {
     }
 
     private boolean play() {
-        mediaPlayer.controls().play();
-        return true;
+        return mediaPlayer.controls().play();
     }
 
     private boolean start() {
