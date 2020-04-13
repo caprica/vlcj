@@ -46,10 +46,12 @@ public final class ControlsApi extends BaseApi {
      * Begin play-back.
      * <p>
      * If called when the play-back is paused, the play-back will resume from the current position.
+     *
+     * @return <code>true</code> if the media was played; <code>false</code> if not
      */
-    public void play() {
+    public boolean play() {
         mediaPlayer.onBeforePlay();
-        libvlc_media_player_play(mediaPlayerInstance);
+        return libvlc_media_player_play(mediaPlayerInstance) == 0;
     }
 
     /**
