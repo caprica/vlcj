@@ -26,6 +26,7 @@ import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
 import javax.swing.*;
@@ -53,25 +54,25 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_release;
  * This is only used for testing.
  * <p>
  * Specify a media file as the only command-line argument.
+ * <p>
+ * Developer note: this example used to be run by Maven, and when so it would fail to load libjawt - but only when
+ * running from maven.
  */
-public class BareBonesEmbeddedTest extends VlcjTest {
+public class BareBonesEmbeddedExample extends VlcjTest {
 
-    private final libvlc_instance_t instance;
-    private final libvlc_media_player_t mediaPlayer;
+    private  libvlc_instance_t instance;
+    private  libvlc_media_player_t mediaPlayer;
 
-    private final JFrame f;
+    private  JFrame f;
 
     public static void main(String[] args) throws Exception {
-        final String mrl = args[0];
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new BareBonesEmbeddedTest().run(mrl);
-            }
-        });
+        args = new String[] {"/home/mark/sekiro.mp4"};
+        new BareBonesEmbeddedExample().run(args[0]);
     }
 
-    public BareBonesEmbeddedTest() {
+    public BareBonesEmbeddedExample() {
+        new NativeDiscovery().discover();
+
         if(!RuntimeUtil.isMac()) {
             instance = libvlc_new(0, new StringArray(new String[0]));
         }
