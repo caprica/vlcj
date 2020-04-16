@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_list_get;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_list_release;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_new;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_discoverer_list_release;
 
@@ -69,7 +70,7 @@ public final class MediaDiscovererApi extends BaseApi {
             return result;
         }
         finally {
-            libvlc_renderer_discoverer_list_release(ref.getValue(), size);
+            libvlc_media_discoverer_list_release(ref.getValue(), size);
         }
     }
 
