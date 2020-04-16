@@ -155,7 +155,7 @@ public final class Picture {
         sb.append("type=").append(type).append(',');
         sb.append("stride=").append(stride).append(',');
         sb.append("time=").append(time).append(',');
-        sb.append("size=").append(time).append(']');
+        sb.append("size=").append(size).append(']');
         return sb.toString();
     }
 
