@@ -64,6 +64,17 @@ public final class Picture {
         this.size   = this.buffer.length;
     }
 
+    // Required by vlcj-pro
+    public Picture(int width, int height, PictureType type, int stride, long time, byte[] buffer, int size) {
+        this.width = width;
+        this.height = height;
+        this.type = type;
+        this.stride = stride;
+        this.time = time;
+        this.buffer = buffer;
+        this.size = size;
+    }
+
     private byte[] initBuffer(libvlc_picture_t picture) {
         size_tByReference size = new size_tByReference();
         Pointer pointer = libvlc_picture_get_buffer(picture, size);
