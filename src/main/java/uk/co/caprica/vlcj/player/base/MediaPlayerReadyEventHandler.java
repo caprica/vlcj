@@ -45,12 +45,8 @@ final class MediaPlayerReadyEventHandler extends MediaPlayerEventAdapter {
 
     @Override
     public void stopped(MediaPlayer mediaPlayer) {
+        // Stopped is always fired - whether the media stops naturally or is explicitly stopped, first finished is fired
+        // then stopped is fired
         fired = false;
     }
-
-    @Override
-    public void finished(MediaPlayer mediaPlayer) {
-        fired = false;
-    }
-
 }
