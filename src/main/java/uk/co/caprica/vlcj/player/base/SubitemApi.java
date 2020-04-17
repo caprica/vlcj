@@ -101,10 +101,6 @@ public final class SubitemApi extends BaseApi {
      * @param media new media instance
      */
     void changeMedia(libvlc_media_t media) {
-        // Stop the media list player before setting a new list - without this, the new subitem list will not start
-        // playing correctly
-        mediaListPlayer.controls().stop();
-
         MediaListRef mediaListRef = new MediaListRef(libvlcInstance, libvlc_media_subitems(media));
         try {
             mediaListPlayer.list().setMediaList(mediaListRef);
