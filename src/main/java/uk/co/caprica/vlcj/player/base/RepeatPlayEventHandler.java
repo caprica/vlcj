@@ -21,15 +21,11 @@ package uk.co.caprica.vlcj.player.base;
 
 /**
  * Event listener implementation that handles auto-repeat.
- * <p>
- * This internal handler must be added after {@link ResetMediaEventHandler}.
- * <p>
- * Since we depend on that reset media event handler, the only requirement here is to invoke play().
  */
 final class RepeatPlayEventHandler extends MediaPlayerEventAdapter {
 
     @Override
-    public void finished(MediaPlayer mediaPlayer) {
+    public void stopped(MediaPlayer mediaPlayer) {
         if (mediaPlayer.controls().getRepeat()) {
             // It is not allowed to call back into LibVLC from this native thread, so offload to a task to repeat play
             mediaPlayer.submit(new ReplayMediaTask(mediaPlayer));
