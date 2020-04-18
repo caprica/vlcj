@@ -64,6 +64,11 @@ For a full list of changes in this release, check the release milestones:
 
 - [vlcj 5.0.0 release milestone](https://github.com/caprica/vlcj/milestone/31?closed=1)
 
+Examples
+--------
+
+All of the examples have been moved to the [vlcj-examples](https://github.com/caprica/vlcj-examples) project.
+
 Known Issues
 ------------
 
