@@ -21,10 +21,12 @@ package uk.co.caprica.vlcj.test.meta;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaEventAdapter;
+import uk.co.caprica.vlcj.media.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.media.MetaData;
 import uk.co.caprica.vlcj.test.VlcjTest;
-import uk.co.caprica.vlcj.waiter.media.ParsedWaiter;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -33,6 +35,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Simple test to show local file meta data.
@@ -57,16 +60,7 @@ public class MetaTest extends VlcjTest {
         MediaPlayerFactory factory = new MediaPlayerFactory();
 
         // Create media
-        final Media media = factory.media().newMedia(args[0]);
-
-        // Parsing is asynchronous, we use a conditional waiter to parse the media and wait for it to finish parsing
-        ParsedWaiter parsed = new ParsedWaiter(media) {
-            @Override
-            protected boolean onBefore(Media component) {
-                return media.parsing().parse();
-            }
-        };
-        parsed.await();
+        final Media media = getParsedMedia(factory, args[0]);
 
         // Get the meta data and dump it out
         MetaData metaData = media.meta().asMetaData();
@@ -111,4 +105,28 @@ public class MetaTest extends VlcjTest {
         }
     }
 
+    private static Media getParsedMedia(MediaPlayerFactory factory, String mrl) throws Exception {
+        final Media media = factory.media().newMedia(mrl);
+
+        final CountDownLatch latch = new CountDownLatch(1);
+
+        MediaEventListener listener = new MediaEventAdapter() {
+            @Override
+            public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
+                latch.countDown();
+            }
+        };
+
+        try {
+            media.events().addMediaEventListener(listener);
+            if (media.parsing().parse()) {
+                latch.await();
+                return media;
+            } else {
+                return null;
+            }
+        } finally {
+            media.events().removeMediaEventListener(listener);
+        }
+    }
 }

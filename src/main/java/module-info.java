@@ -41,9 +41,6 @@ module uk.co.caprica.vlcj {
     exports uk.co.caprica.vlcj.player.renderer.events;
     exports uk.co.caprica.vlcj.support;
     exports uk.co.caprica.vlcj.support.version;
-    exports uk.co.caprica.vlcj.waiter;
-    exports uk.co.caprica.vlcj.waiter.media;
-    exports uk.co.caprica.vlcj.waiter.mediaplayer;
 
     uses uk.co.caprica.vlcj.factory.discovery.provider.DiscoveryDirectoryProvider;
 

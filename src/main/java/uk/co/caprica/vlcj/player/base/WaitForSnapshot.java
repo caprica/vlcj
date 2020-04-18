@@ -19,15 +19,19 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.waiter.mediaplayer.SnapshotTakenWaiter;
-
 import java.io.File;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Private helper to take a snapshot and wait until the corresponding snapshot taken event is received (or an error
  * occurs).
  */
-final class WaitForSnapshot extends SnapshotTakenWaiter {
+final class WaitForSnapshot extends MediaPlayerEventAdapter {
+
+    /**
+     * Media player that generates the snapshot.
+     */
+    private final MediaPlayer mediaPlayer;
 
     /**
      * File to save the snapshot into.
@@ -45,23 +49,60 @@ final class WaitForSnapshot extends SnapshotTakenWaiter {
     private final int height;
 
     /**
+     * Synchronisation latch.
+     */
+    private final CountDownLatch snapshotTakenLatch = new CountDownLatch(1);
+
+    /**
+     * Snapshot result, a filename, or <code>null</code>.
+     */
+    private volatile String snapshotResult;
+
+    /**
      * Create a snapshot taken waiter.
      *
-     * @param mediaPlayer media player
+     * @param mediaPlayer media player that generates the snapshot
      * @param file file to save the snapshot into
      * @param width width, or zero for default
      * @param height height, or zero for default
      */
     WaitForSnapshot(MediaPlayer mediaPlayer, File file, int width, int height) {
-        super(mediaPlayer);
+        this.mediaPlayer = mediaPlayer;
         this.file = file;
         this.width = width;
         this.height = height;
     }
 
-    @Override
-    protected boolean onBefore(MediaPlayer mediaPlayer) {
-        return mediaPlayer.snapshots().save(file, width, height);
+    /**
+     * Wait for a snapshot to be generated.
+     *
+     * @return filename where the snapshot was saved; or <code>null</code> if an error occurred
+     */
+    public String getSnapshot() {
+        try {
+            mediaPlayer.events().addMediaPlayerEventListener(this);
+            if (mediaPlayer.snapshots().save(file, width, height)) {
+                snapshotTakenLatch.await();
+                return snapshotResult;
+            } else {
+                return null;
+            }
+        } catch (InterruptedException e ) {
+            throw new RuntimeException(e);
+        } finally {
+            mediaPlayer.events().removeMediaPlayerEventListener(this);
+        }
     }
 
+    @Override
+    public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
+        snapshotResult = filename;
+        snapshotTakenLatch.countDown();
+    }
+
+    @Override
+    public void stopped(MediaPlayer mediaPlayer) {
+        snapshotResult = null;
+        snapshotTakenLatch.countDown();
+    }
 }

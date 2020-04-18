@@ -21,9 +21,13 @@ package uk.co.caprica.vlcj.test.meta;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaEventAdapter;
+import uk.co.caprica.vlcj.media.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.test.VlcjTest;
-import uk.co.caprica.vlcj.waiter.media.ParsedWaiter;
+
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Simple test to update local file meta data.
@@ -68,16 +72,26 @@ public class UpdateMetaTest extends VlcjTest {
     private static Media getParsedMedia(MediaPlayerFactory factory, String mrl) throws Exception {
         final Media media = factory.media().newMedia(mrl);
 
-        // Parsing is asynchronous, we use a conditional waiter to parse the media and wait for it to finish parsing
-        ParsedWaiter parsed = new ParsedWaiter(media) {
+        final CountDownLatch latch = new CountDownLatch(1);
+
+        MediaEventListener listener = new MediaEventAdapter() {
             @Override
-            protected boolean onBefore(Media component) {
-                return media.parsing().parse();
+            public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
+                latch.countDown();
             }
         };
-        parsed.await();
 
-        return media;
+        try {
+            media.events().addMediaEventListener(listener);
+            if (media.parsing().parse()) {
+                latch.await();
+                return media;
+            } else {
+                return null;
+            }
+        } finally {
+            media.events().removeMediaEventListener(listener);
+        }
     }
 
 }

@@ -19,12 +19,9 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.waiter.BeforeWaiterAbortedException;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_take_snapshot;
 
@@ -195,6 +192,8 @@ public final class SnapshotApi extends BaseApi {
      * Taking a snapshot is an asynchronous function, the snapshot is not available until
      * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
      * is received.
+     * <p>
+     * This function will block until the snapshot taken event is received.
      *
      * @param width desired image width
      * @param height desired image height
@@ -204,16 +203,10 @@ public final class SnapshotApi extends BaseApi {
         File file = null;
         try {
             file = File.createTempFile("vlcj-snapshot-", ".png");
-            return ImageIO.read(new File(new WaitForSnapshot(mediaPlayer, file, width, height).await()));
+            return ImageIO.read(new File(new WaitForSnapshot(mediaPlayer, file, width, height).getSnapshot()));
         }
-        catch (IOException e) {
+        catch (Exception e) {
             throw new RuntimeException("Failed to get snapshot image", e);
-        }
-        catch (InterruptedException e) {
-            throw new RuntimeException("Failed to get snapshot image", e);
-        }
-        catch (BeforeWaiterAbortedException e) {
-            return null;
         }
         finally {
             if (file != null) {
