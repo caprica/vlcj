@@ -217,7 +217,7 @@ If you can use Java 11, add the following Maven dependency to your own project p
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.5.0</version>
+    <version>4.5.1.1</version>
 </dependency>
 ```
 
@@ -227,11 +227,11 @@ If you cannot use Java 11, add the following Maven dependency to your own projec
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.4.0</version>
+    <version>4.4.1</version>
 </dependency>
 ```
 
-The API is otherwise identical in 4.4.0 and 4.5.0.
+The API is otherwise identical in 4.4.x and 4.5.x.
 
 The core vlcj project now no longer contains the required JNA bindings to LibVLC, these are provided instead by the
 separate [vlcj-natives](https://github.com/caprica/vlcj-natives) project. The vlcj core project therefore has a new
