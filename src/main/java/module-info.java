@@ -16,6 +16,7 @@ module uk.co.caprica.vlcj {
     exports uk.co.caprica.vlcj.media.callback.seekable;
     exports uk.co.caprica.vlcj.media.discoverer;
     exports uk.co.caprica.vlcj.media.events;
+    exports uk.co.caprica.vlcj.medialist;
     exports uk.co.caprica.vlcj.player.base;
     exports uk.co.caprica.vlcj.player.base.callback;
     exports uk.co.caprica.vlcj.player.base.events;
