@@ -29,6 +29,9 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 25th April, 2020 - vlcj 4.4.2 released, initialisation changes on Linux - removed the VLCJ_INITX system property (see #929)  
+- 16th April, 2020 - vlcj 4.4.1 released, only minor changes
+- 2nd March, 2020 - vlcj 4.4.0 released, only minor changes
 - 11th January, 2020 - vlcj 4.3.0 released, add an automatic module name for Java 9 modules
 - 13th July, 2019 - vlcj 4.2.0 released, minor updates, check the release milestone for details
 - 9th June, 2019 - new project [vlcj-subs](https://github.com/caprica/vlcj-subs) to help integrate subtitles into Java applications
@@ -205,7 +208,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.2.0</version>
+    <version>4.4.2</version>
 </dependency>
 ```
 
@@ -376,7 +379,9 @@ Online Javadoc is available here:
 
 JNA direct-mapping:
 
-* [4.2.0 (current)](http://caprica.github.com/vlcj/javadoc/4.2.0/index.html "4.2.0 Javadoc")
+* [4.4.0 (current)](http://caprica.github.com/vlcj/javadoc/4.4.0/index.html "4.2.0 Javadoc")
+* [4.3.0](http://caprica.github.com/vlcj/javadoc/4.3.0/index.html "4.3.0 Javadoc")
+* [4.2.0](http://caprica.github.com/vlcj/javadoc/4.2.0/index.html "4.2.0 Javadoc")
 * [4.1.0](http://caprica.github.com/vlcj/javadoc/4.1.0/index.html "4.1.0 Javadoc")
 
 JNA traditional mapping:
@@ -406,6 +411,7 @@ Related Projects
  * [vlcj-subs](https://github.com/caprica/vlcj-subs)
  * [vlcj-player](https://github.com/caprica/vlcj-player)
  * [vlcj-javafx](https://github.com/caprica/vlcj-javafx)
+ * [vlcj-javafx-demo](https://github.com/caprica/vlcj-javafx-demo)
  * [vlcj-mrls](https://github.com/caprica/vlcj-mrls)
  * [vlcj-file-filters](https://github.com/caprica/vlcj-file-filters)
  * [vlcj-swt](https://github.com/caprica/vlcj-swt)
