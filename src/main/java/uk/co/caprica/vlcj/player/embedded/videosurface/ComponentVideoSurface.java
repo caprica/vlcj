@@ -20,7 +20,6 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Native;
-import uk.co.caprica.vlcj.binding.OsxComponentId;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
@@ -28,6 +27,8 @@ import java.awt.*;
 
 /**
  * Encapsulation of a video surface that uses an AWT Component (optimally a Canvas, or maybe a Window).
+ * <p>
+ * This video surface should not be used on macOS (at least not on Java 1.7 onwards).
  */
 public class ComponentVideoSurface extends AWTVideoSurface {
 
@@ -68,11 +69,7 @@ public class ComponentVideoSurface extends AWTVideoSurface {
     }
 
     private long getComponentId(Component component) {
-        if (!RuntimeUtil.isMac()) {
-            return Native.getComponentID(component);
-        } else {
-            return OsxComponentId.getOsxComponentId(component);
-        }
+        return Native.getComponentID(component);
     }
 
 }
