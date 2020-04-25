@@ -32,7 +32,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
  * <p>
  * It is also not possible to get a native component ID if the component is not displayable.
  */
-public class ComponentIdVideoSurface extends VideoSurface {
+public class ComponentIdVideoSurface extends AWTVideoSurface {
 
     /**
      * Native component identifier for the video surface.
