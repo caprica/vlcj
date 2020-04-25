@@ -29,7 +29,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
-- 25th April, 2020 - vlcj 4.4.2 released, initialisation changes on Linux - removed the VLCJ_INITX system property (see #929)  
+- 25th April, 2020 - vlcj 4.4.2 released, initialisation changes on Linux - removed the VLCJ_INITX system property (see #929)
 - 16th April, 2020 - vlcj 4.4.1 released, only minor changes
 - 2nd March, 2020 - vlcj 4.4.0 released, only minor changes
 - 11th January, 2020 - vlcj 4.3.0 released, add an automatic module name for Java 9 modules
