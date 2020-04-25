@@ -21,8 +21,6 @@ package uk.co.caprica.vlcj.factory;
 
 import com.sun.jna.StringArray;
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.LinuxNativeInit;
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
@@ -62,15 +60,6 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_release;
  * and destroying them.
  */
 public class MediaPlayerFactory {
-
-    /**
-     * Custom one-time initialisation required for Linux.
-     */
-    static {
-        if (RuntimeUtil.isNix()) {
-            LinuxNativeInit.init();
-        }
-    }
 
     /**
      * Native library instance.

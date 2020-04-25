@@ -29,7 +29,7 @@ import java.awt.*;
 /**
  * Encapsulation of a video surface that uses an AWT Component (optimally a Canvas, or maybe a Window).
  */
-public class ComponentVideoSurface extends VideoSurface {
+public class ComponentVideoSurface extends AWTVideoSurface {
 
     /**
      * Video surface component.
