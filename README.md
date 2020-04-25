@@ -34,6 +34,8 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 25th April, 2020 - vlcj 4.5.2 released, initialisation changes on Linux - removed the VLCJ_INITX system property (see #929)
+- 16th April, 2020 - vlcj 4.5.1 released, only minor changes
 - 12th April, 2020 - vlcj 4.5.0 release, codename Corona Holiday, moves to Java 11 and supports the Java Module System
 - 2nd March, 2020 - vlcj 4.4.0 release, minor changes, see release for details
 - 11th January, 2020 - vlcj 4.3.0 released, add an automatic module name for Java 9 modules
@@ -217,7 +219,7 @@ If you can use Java 11, add the following Maven dependency to your own project p
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.5.1.1</version>
+    <version>4.5.2</version>
 </dependency>
 ```
 
@@ -227,7 +229,7 @@ If you cannot use Java 11, add the following Maven dependency to your own projec
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.4.1</version>
+    <version>4.4.2</version>
 </dependency>
 ```
 
