@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.player.base.events.MediaPlayerEventFactory;
 
 /**
@@ -34,6 +35,11 @@ final class MediaPlayerReadyEventHandler extends MediaPlayerEventAdapter {
      * Flag if the event has fired since the media was last started or not.
      */
     private boolean fired;
+
+    @Override
+    public void mediaChanged(MediaPlayer mediaPlayer, MediaRef media) {
+        fired = false;
+    }
 
     @Override
     public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
