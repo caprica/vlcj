@@ -208,7 +208,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.4.2</version>
+    <version>4.4.3</version>
 </dependency>
 ```
 
