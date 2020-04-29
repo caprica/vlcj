@@ -1,13 +1,10 @@
 ![vlcj](https://github.com/caprica/vlcj/raw/master/etc/vlcj-logo.png "vlcj")
 
-*You are currently looking at the development branch for vlcj-5.0.0, if you are looking for the previous version of vlcj
-you should switch to the [vlcj-4.x branch](https://github.com/caprica/vlcj/tree/vlcj-4.x).*
-
 vlcj-5 requires VLC 4.0 as a minimum baseline - VLC 4.0 is currently in development and it may be some time before
 it is released.
 
 If you are looking for a stable combination of vlcj and VLC then switch to the
-[vlcj-4.x branch](https://github.com/caprica/vlcj/tree/vlcj-4.x) instead.
+[vlcj-4.4.x branch](https://github.com/caprica/vlcj/tree/vlcj-4.4.x) instead.
 
 vlcj
 ====
@@ -24,9 +21,9 @@ OSX, although there may be some limitations on OSX.
 Additionally, whilst not supported as one of the main platforms, this version of vlcj has been tested and shown to be
 working on contemporary Raspberry Pi builds.
 
-At least JDK 11 is required.
+At least JDK 8 is required.
 
-vlc-4.4.0, which is still current, is the last version of vlcj that was built against JDK 1.6.
+vlc-4.4.x, which is still current, is the last version of vlcj that was built against JDK 1.6.
 
 *This version of vlcj requires VLC 4.0.0 as a minimum, no earlier version is supported.*
 
@@ -37,7 +34,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
-- Future, 2020 - vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 11 LTS.
+- Future, 2020 - vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 8 LTS.
 
 All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
@@ -54,7 +51,7 @@ Major New Features
 Headline changes:
 
  - requires LibVLC 4.0.0+
- - requires Java 11+
+ - requires Java 8+
  - full support for LibVLC "video engine" rendering, specifically via OpenGL
    * example using LWJGL at [vlcj-lwjgl-demo](https://github.com/caprica/vlcj-lwjgl-demo)
  - fast vs precise seeking when setting media position/time
