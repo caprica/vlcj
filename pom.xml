@@ -77,6 +77,8 @@
     </distributionManagement>
 
     <properties>
+        <java.version>1.8</java.version>
+        <module.name>uk.co.caprica.vlcj</module.name>
         <vlcjNatives.version>5.0.0-SNAPSHOT</vlcjNatives.version>
     </properties>
 
@@ -131,8 +133,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
                     <compilerArgument>-Xlint:serial</compilerArgument>
                 </configuration>
@@ -143,6 +145,9 @@
                 <version>3.2.0</version>
                 <configuration>
                     <archive>
+                        <manifestEntries>
+                            <Automatic-Module-Name>${module.name}</Automatic-Module-Name>
+                        </manifestEntries>
                         <manifest>
                             <addClasspath>true</addClasspath>
                         </manifest>
@@ -177,7 +182,7 @@
                     <quiet>true</quiet>
                     <failOnError>true</failOnError>
                     <additionalOptions>-html5</additionalOptions>
-                    <source>11</source>
+                    <source>${java.version}</source>
                 </configuration>
                 <executions>
                     <execution>
