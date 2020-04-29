@@ -84,7 +84,7 @@ abstract public class DirectoryProviderDiscoveryStrategy extends BaseNativeDisco
         Collections.sort(providers, new Comparator<DiscoveryDirectoryProvider>() {
             @Override
             public int compare(DiscoveryDirectoryProvider p1, DiscoveryDirectoryProvider p2) {
-                return p1.priority() - p2.priority();
+                return p2.priority() - p1.priority();
             }
         });
         return providers;
