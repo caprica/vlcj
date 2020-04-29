@@ -58,7 +58,7 @@ public class NativeDiscovery {
      * If the discovery failed before, then running it again may work e.g. if the client application took some remedial
      * steps to make the native libraries available.
      */
-    private boolean alreadyFound;
+    private static boolean alreadyFound;
 
     /**
      * The native discovery strategy instance that discovered the native library path.
