@@ -24,6 +24,8 @@ package uk.co.caprica.vlcj.factory.discovery.provider;
  */
 public interface DiscoveryProviderPriority {
 
+    int CONFIG_FILE = 1;
+
     int JNA_LIBRARY_PATH = -1;
 
     int USER_DIR = -2;

@@ -1,3 +1,4 @@
+uk.co.caprica.vlcj.factory.discovery.provider.ConfigurationFileDiscoveryDirectoryProvider
 uk.co.caprica.vlcj.factory.discovery.provider.JnaLibraryPathDirectoryProvider
 uk.co.caprica.vlcj.factory.discovery.provider.LinuxWellKnownDirectoryProvider
 uk.co.caprica.vlcj.factory.discovery.provider.OsxWellKnownDirectoryProvider
