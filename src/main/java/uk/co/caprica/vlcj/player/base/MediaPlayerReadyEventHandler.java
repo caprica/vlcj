@@ -28,6 +28,17 @@ import uk.co.caprica.vlcj.player.base.events.MediaPlayerEventFactory;
  * <p>
  * Some media player operations require that the media be definitively playing before they are effective and the
  * "playing" event itself does not guarantee this.
+ * <p>
+ * Behaviour it this:
+ * <ul>
+ *     <li>each time new media is set, a "media changed" event is fired;</li>
+ *     <li>if media reaches the end normally, a "finished" event is fired, followed by a "stopped" event;</li>
+ *     <li>if media is stopped, a "finished" event is fired, followed by a "stopped" event;</li>
+ *     <li>if new media is set before the current media expires, a "media changed" event is fired but neither "finished"
+ *     nor "stopped" is fired.</li>
+ * </ul>
+ * The net result of the above is that the "ready" event state needs to be reset on a "stopped" event, and on a "media
+ * changed" event.
  */
 final class MediaPlayerReadyEventHandler extends MediaPlayerEventAdapter {
 
@@ -51,8 +62,6 @@ final class MediaPlayerReadyEventHandler extends MediaPlayerEventAdapter {
 
     @Override
     public void stopped(MediaPlayer mediaPlayer) {
-        // Stopped is always fired - whether the media stops naturally or is explicitly stopped, first finished is fired
-        // then stopped is fired
         fired = false;
     }
 }
