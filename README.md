@@ -52,7 +52,7 @@ All releases are at available at [Maven Central](https://search.maven.org/search
 
 Regarding the brief existence of vlcj 4.5.x, this release stream going forward was intended to fully embrace the Java
 Modules System (Jigsaw) and move to Java 11. That turned out to be way too much of a burden for way too little benefit
-so that idea has been scrapped and that release stream has been *abandoned*. For VLC 3.x, vlcj 4.4.2 is the current
+so that idea has been scrapped and that release stream has been *abandoned*. For VLC 3.x, vlcj 4.4.3 is the current
 latest supported release.
 
 You can follow @capricasoftware on Twitter for more vlcj news.
@@ -385,7 +385,8 @@ Online Javadoc is available here:
 
 JNA direct-mapping:
 
-* [4.4.0 (current)](http://caprica.github.com/vlcj/javadoc/4.4.0/index.html "4.2.0 Javadoc")
+* [4.4.3 (current)](http://caprica.github.com/vlcj/javadoc/4.4.3/index.html "4.4.3 Javadoc")
+* [4.4.0](http://caprica.github.com/vlcj/javadoc/4.4.0/index.html "4.4.0 Javadoc")
 * [4.3.0](http://caprica.github.com/vlcj/javadoc/4.3.0/index.html "4.3.0 Javadoc")
 * [4.2.0](http://caprica.github.com/vlcj/javadoc/4.2.0/index.html "4.2.0 Javadoc")
 * [4.1.0](http://caprica.github.com/vlcj/javadoc/4.1.0/index.html "4.1.0 Javadoc")
