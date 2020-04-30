@@ -334,10 +334,10 @@ Related Projects
 Support
 -------
 
-Development of vlcj is carried out by [Caprica Software](http://www.capricasoftware.co.uk).
-
 Free support for Open Source and non-commercial projects is generally provided - you can
 use [github issues](https://github.com/caprica/vlcj/issues "vlcj github issues") for this purpose.
+
+Commercial services for vlcj are provided by [Caprica Software](http://www.capricasoftware.co.uk).
 
 Support for commercial projects is provided exclusively on commercial terms - send an email to the following address for
 more information:
