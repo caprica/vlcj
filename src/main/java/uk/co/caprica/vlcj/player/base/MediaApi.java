@@ -36,6 +36,7 @@ import uk.co.caprica.vlcj.media.SubitemApi;
 import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_add_slave;
@@ -45,6 +46,8 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_media;
  * Behaviour pertaining to the current media.
  */
 public final class MediaApi extends BaseApi {
+
+    private static final String START_PAUSED_OPTION = "start-paused";
 
     private final List<MediaEventListener> persistentMediaEventListeners = new ArrayList<MediaEventListener>();
 
@@ -204,6 +207,72 @@ public final class MediaApi extends BaseApi {
     }
 
     /**
+     * Set new media, play it, and wait for it to start playing (or error), pausing immediately on the first frame.
+     * <p>
+     * <strong>Setting media is now an asynchronous operation.</strong>
+     *
+     * @param mrl media resource locator
+     * @param options zero or more options to attach to the new media
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
+    public boolean startPaused(String mrl, String... options) {
+        // See MediaPlayerLatch for why stop is needed
+        mediaPlayer.controls().stop();
+        // Starting with start-paused will generate a "playing" event, which this start call waits for
+        boolean started = start(mrl, startPausedOptions(options));
+        if (started) {
+            // First frame does not always paint unless the position is reset
+            mediaPlayer.controls().setPosition(0);
+        }
+        return started;
+    }
+
+    /**
+     * Set new media, play it, and wait for it to start playing (or error), pausing immediately on the first frame.
+     * <p>
+     * <strong>Setting media is now an asynchronous operation.</strong>
+     *
+     * @param callbackMedia callback media
+     * @param options zero or more options to attach to the new media
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
+    public boolean startPaused(CallbackMedia callbackMedia, String... options) {
+        // See MediaPlayerLatch for why stop is needed
+        mediaPlayer.controls().stop();
+        // Starting with start-paused will generate a "playing" event, which this start call waits for
+        boolean started = start(callbackMedia, startPausedOptions(options));
+        if (started) {
+            // First frame does not always paint unless the position is reset
+            mediaPlayer.controls().setPosition(0);
+        }
+        return started;
+    }
+
+    /**
+     * Set new media, play it, and wait for it to start playing (or error), pausing immediately on the first frame.
+     * <p>
+     * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
+     * caller no longer has any use for it.
+     * <p>
+     * <strong>Setting media is now an asynchronous operation.</strong>
+     *
+     * @param mediaRef media reference
+     * @param options zero or more options to attach to the new media
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
+    public boolean startPaused(MediaRef mediaRef, String... options) {
+        // See MediaPlayerLatch for why stop is needed
+        mediaPlayer.controls().stop();
+        // Starting with start-paused will generate a "playing" event, which this start call waits for
+        boolean started = start(mediaRef, startPausedOptions(options));
+        if (started) {
+            // First frame does not always paint unless the position is reset
+            mediaPlayer.controls().setPosition(0);
+        }
+        return started;
+    }
+
+    /**
      * Add an input slave to the current media.
      * <p>
      * See {@link SlaveApi#add(MediaSlaveType, MediaSlavePriority, String)}  for further
@@ -348,6 +417,15 @@ public final class MediaApi extends BaseApi {
         libvlc_media_t mediaInstance = media.mediaInstance();
         libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
         mediaPlayer.subitems().changeMedia(mediaInstance);
+    }
+
+    private String[] startPausedOptions(String... options) {
+        List<String> list = new ArrayList<String>(options != null ? options.length + 1 : 1);
+        list.add(START_PAUSED_OPTION);
+        if (options != null) {
+            list.addAll(Arrays.asList(options));
+        }
+        return list.toArray(new String[0]);
     }
 
     void addPersistentMediaEventListener(MediaEventListener listener) {
