@@ -107,6 +107,8 @@ public final class MediaApi extends BaseApi {
     /**
      * Set new media, play it, and wait for it to start playing (or error).
      * <p>
+     * This method should be used only when the media player is in a stopped state, otherwise behaviour is undefined.
+     * <p>
      * <strong>Setting media is now an asynchronous operation.</strong>
      *
      * @param mrl media resource locator
@@ -153,6 +155,8 @@ public final class MediaApi extends BaseApi {
 
     /**
      * Set new media, play it, and wait for it to start playing (or error).
+     * <p>
+     * This method should be used only when the media player is in a stopped state, otherwise behaviour is undefined.
      * <p>
      * <strong>Setting media is now an asynchronous operation.</strong>
      *
@@ -207,6 +211,8 @@ public final class MediaApi extends BaseApi {
     /**
      * Set new media, play it, and wait for it to start playing (or error).
      * <p>
+     * This method should be used only when the media player is in a stopped state, otherwise behaviour is undefined.
+     * <p>
      * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
      * caller no longer has any use for it.
      * <p>
@@ -227,6 +233,8 @@ public final class MediaApi extends BaseApi {
     /**
      * Set new media, play it, and wait for it to start playing (or error), pausing immediately on the first frame.
      * <p>
+     * This method should be used only when the media player is in a stopped state, otherwise behaviour is undefined.
+     * <p>
      * <strong>Setting media is now an asynchronous operation.</strong>
      *
      * @param mrl media resource locator
@@ -234,8 +242,6 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean startPaused(String mrl, String... options) {
-        // See MediaPlayerLatch for why stop is needed
-        mediaPlayer.controls().stop();
         // Starting with start-paused will generate a "playing" event, which this start call waits for
         boolean started = start(mrl, startPausedOptions(options));
         if (started) {
@@ -248,6 +254,8 @@ public final class MediaApi extends BaseApi {
     /**
      * Set new media, play it, and wait for it to start playing (or error), pausing immediately on the first frame.
      * <p>
+     * This method should be used only when the media player is in a stopped state, otherwise behaviour is undefined.
+     * <p>
      * <strong>Setting media is now an asynchronous operation.</strong>
      *
      * @param callbackMedia callback media
@@ -255,8 +263,6 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean startPaused(CallbackMedia callbackMedia, String... options) {
-        // See MediaPlayerLatch for why stop is needed
-        mediaPlayer.controls().stop();
         // Starting with start-paused will generate a "playing" event, which this start call waits for
         boolean started = start(callbackMedia, startPausedOptions(options));
         if (started) {
@@ -269,6 +275,8 @@ public final class MediaApi extends BaseApi {
     /**
      * Set new media, play it, and wait for it to start playing (or error), pausing immediately on the first frame.
      * <p>
+     * This method should be used only when the media player is in a stopped state, otherwise behaviour is undefined.
+     * <p>
      * The supplied {@link MediaRef} is not kept by this component and <em>must</em> be released by the caller when the
      * caller no longer has any use for it.
      * <p>
@@ -279,8 +287,6 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean startPaused(MediaRef mediaRef, String... options) {
-        // See MediaPlayerLatch for why stop is needed
-        mediaPlayer.controls().stop();
         // Starting with start-paused will generate a "playing" event, which this start call waits for
         boolean started = start(mediaRef, startPausedOptions(options));
         if (started) {
