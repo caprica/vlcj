@@ -40,6 +40,31 @@ All releases are at available at [Maven Central](https://search.maven.org/search
 
 You can follow @capricasoftware on Twitter for more vlcj news.
 
+Swing/AWT, JavaFX, OpenGL
+=========================
+
+Core vlcj embeds native media players in Swing/AWT applications. This has been the foundation of vlcj since the earliest
+versions. This is still fully supported and still works well, in fact it is still likely the most performant solution.
+
+However, recent versions of JavaFX introduced the `PixelBuffer` component, providing direct access to a shared native
+memory buffer that can be by vlcj/LibVLC as a "callback" video buffer. This performs really well. even when using
+multiple concurrent video players.
+
+Another factor to consider here is that contemporary macOS does not support AWT at all, so JavaFX is a very good option
+on that platform. 
+
+For more information see the [vlcj-javafx](https://github.com/caprica/vlcj-javafx) and 
+[vlcj-javafx-demo](https://github.com/caprica/vlcj-javafx-demo) projects.
+
+A further possibility with this "callback" approach to video rendering is that with vlcj-5.x and VLC 4.x it becomes very
+easy to embed a media player in an OpenGL application. This should give very good playback performance, possibly right
+on a par with the embedded approach, but it would mean foremost developing an OpenGL application.
+
+For more information see the [vlcj-lwjgl-demo](https://github.com/caprica/vlcj-lwjgl-demo) project.
+
+The beauty of vlcj's design and architecture means adopting any of these approaches is near identical in usage, only a
+single video surface abstraction is the difference.
+
 vlcj-5
 ======
 
