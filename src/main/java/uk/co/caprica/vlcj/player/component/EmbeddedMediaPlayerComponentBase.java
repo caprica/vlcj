@@ -29,6 +29,7 @@ import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.State;
+import uk.co.caprica.vlcj.player.base.TitleDescription;
 
 import javax.swing.*;
 import java.awt.*;
@@ -161,7 +162,11 @@ abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaP
     }
 
     @Override
-    public void titleChanged(MediaPlayer mediaPlayer, int newTitle) {
+    public void titleListChanged(MediaPlayer mediaPlayer) {
+    }
+
+    @Override
+    public void titleSelectionChanged(MediaPlayer mediaPlayer, TitleDescription title, int index) {
     }
 
     @Override

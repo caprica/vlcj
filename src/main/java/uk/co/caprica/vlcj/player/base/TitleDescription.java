@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_title_flags_e;
+
 /**
  * Title description.
  */
@@ -35,21 +37,21 @@ public class TitleDescription {
     private final String name;
 
     /**
-     * Does the title represent a menu.
+     * Does the title represent a menu, interactive or plain content.
      */
-    private final boolean menu;
+    private final int flags;
 
     /**
      * Create a new title description.
      *
      * @param duration chapter duration (milliseconds)
-     * @param name chapter name
-     * @param menu <code>true</code> if the title represents a menu; <code>false</code> otherwise
+     * @param name title name
+     * @param flags title flags
      */
-    public TitleDescription(long duration, String name, boolean menu) {
+    public TitleDescription(long duration, String name, int flags) {
         this.duration = duration;
         this.name = name;
-        this.menu = menu;
+        this.flags = flags;
     }
 
     /**
@@ -71,12 +73,30 @@ public class TitleDescription {
     }
 
     /**
-     * Does the title represent a menu.
+     * Get the title flags (menu, interactive, plain content).
      *
-     * @return <code>true</code> if the title represents a menu; <code>false</code> otherwise
+     * @return title flags
      */
-    public boolean isMenu() {
-        return menu;
+    public int flags() {
+        return flags;
+    }
+
+    /**
+     * Is this title a menu?
+     *
+     * @return <code>true</code> if this title is a menu; <code>false</code> if it is not
+     */
+    public boolean menu() {
+        return (flags & libvlc_title_flags_e.libvlc_title_menu) != 0;
+    }
+
+    /**
+     * Is this title interactive?
+     *
+     * @return <code>true</code> if this title is interactive; <code>false</code> if it is not
+     */
+    public boolean interactive() {
+        return (flags & libvlc_title_flags_e.libvlc_title_interactive) != 0;
     }
 
     @Override
@@ -85,7 +105,9 @@ public class TitleDescription {
         sb.append(getClass().getSimpleName()).append('[');
         sb.append("duration=").append(duration).append(',');
         sb.append("name=").append(name).append(',');
-        sb.append("menu=").append(menu).append(']');
+        sb.append("flags=").append(flags).append(',');
+        sb.append("menu=").append(menu()).append(',');
+        sb.append("interactive=").append(interactive()).append(']');
         return sb.toString();
     }
 }

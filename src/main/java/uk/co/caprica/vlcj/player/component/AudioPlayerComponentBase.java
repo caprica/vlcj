@@ -29,6 +29,7 @@ import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.State;
+import uk.co.caprica.vlcj.player.base.TitleDescription;
 
 /**
  * Base implementation of an audio player.
@@ -98,7 +99,11 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void titleChanged(MediaPlayer mediaPlayer, int newTitle) {
+    public void titleListChanged(MediaPlayer mediaPlayer) {
+    }
+
+    @Override
+    public void titleSelectionChanged(MediaPlayer mediaPlayer, TitleDescription title, int index) {
     }
 
     @Override

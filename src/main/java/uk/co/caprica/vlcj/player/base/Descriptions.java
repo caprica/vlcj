@@ -52,7 +52,7 @@ final class Descriptions {
             for (Pointer pointer : pointers) {
                 libvlc_title_description_t titleDescription = Structure.newInstance(libvlc_title_description_t.class, pointer);
                 titleDescription.read();
-                result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(titleDescription.psz_name), titleDescription.b_menu != 0));
+                result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(titleDescription.psz_name), titleDescription.i_flags));
             }
             libvlc_title_descriptions_release(titles.getValue(), titleCount);
         } else {

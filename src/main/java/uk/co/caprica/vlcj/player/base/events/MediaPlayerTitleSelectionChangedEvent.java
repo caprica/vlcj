@@ -19,26 +19,32 @@
 
 package uk.co.caprica.vlcj.player.base.events;
 
+import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.media_player_title_changed;
+import uk.co.caprica.vlcj.binding.internal.media_player_title_selection_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.player.base.TitleDescription;
 
 /**
  * Encapsulation of a media player title changed event.
  */
-final class MediaPlayerTitleChangedEvent extends MediaPlayerEvent {
+final class MediaPlayerTitleSelectionChangedEvent extends MediaPlayerEvent {
 
-    private final int newTitle;
+    private final TitleDescription title;
 
-    MediaPlayerTitleChangedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
+    private final int index;
+
+    MediaPlayerTitleSelectionChangedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
         super(mediaPlayer);
-        this.newTitle = ((media_player_title_changed) event.u.getTypedValue(media_player_title_changed.class)).new_title;
+        media_player_title_selection_changed data = (media_player_title_selection_changed) event.u.getTypedValue(media_player_title_selection_changed.class);
+        this.title = new TitleDescription(data.title.i_duration, NativeString.copyNativeString(data.title.psz_name), data.title.i_flags);
+        this.index = data.index;
     }
 
     @Override
     public void notify(MediaPlayerEventListener listener) {
-        listener.titleChanged(mediaPlayer, newTitle);
+        listener.titleSelectionChanged(mediaPlayer, title, index);
     }
 
 }

@@ -144,12 +144,20 @@ public interface MediaPlayerEventListener {
     void pausableChanged(MediaPlayer mediaPlayer, int newPausable);
 
     /**
-     * Media title changed.
+     * Media title list changed.
      *
      * @param mediaPlayer media player that raised the event
-     * @param newTitle new title
      */
-    void titleChanged(MediaPlayer mediaPlayer, int newTitle);
+    void titleListChanged(MediaPlayer mediaPlayer);
+
+    /**
+     * Media title selection changed.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param title new title
+     * @param index new title index
+     */
+    void titleSelectionChanged(MediaPlayer mediaPlayer, TitleDescription title, int index);
 
     /**
      * A snapshot was taken.
