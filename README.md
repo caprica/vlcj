@@ -308,7 +308,8 @@ Online Javadoc is available here:
 Examples
 --------
 
-There are many examples in the vlcj test sources showing how to use vlcj.
+There are many examples in the [vlcj-examples](https://github.com/caprica/vlcj-examples) project showing how to use
+vlcj.
 
 For a more complete example of a feature-rich media player built with vlcj,
 see [vlcj-player](https://github.com/caprica/vlcj-player).
@@ -317,6 +318,7 @@ Related Projects
 ----------------
 
  * [vlcj-natives](https://github.com/caprica/vlcj-natives)
+ * [vlcj-examples](https://github.com/caprica/vlcj-examples)
  * [vlcj-subs](https://github.com/caprica/vlcj-subs)
  * [vlcj-player](https://github.com/caprica/vlcj-player)
  * [vlcj-javafx](https://github.com/caprica/vlcj-javafx)
