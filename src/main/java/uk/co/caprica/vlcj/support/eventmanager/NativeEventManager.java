@@ -153,10 +153,10 @@ abstract public class NativeEventManager<E,L> {
     private void removeNativeEventListener() {
         if (callbackRegistered && eventListenerList.isEmpty()) {
             callbackRegistered = false;
-            libvlc_event_manager_t mediaEventManager = onGetEventManager(eventObject);
+            libvlc_event_manager_t eventManager = onGetEventManager(eventObject);
             for (libvlc_event_e event : libvlc_event_e.values()) {
                 if (event.intValue() >= firstEvent.intValue() && event.intValue() <= lastEvent.intValue()) {
-                    libvlc_event_detach(mediaEventManager, event.intValue(), callback, null);
+                    libvlc_event_detach(eventManager, event.intValue(), callback, null);
                 }
             }
             callback = null;
