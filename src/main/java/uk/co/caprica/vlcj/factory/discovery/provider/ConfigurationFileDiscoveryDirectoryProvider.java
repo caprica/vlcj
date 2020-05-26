@@ -31,7 +31,7 @@ import java.util.Properties;
  * native discovery directory.
  * <p>
  * If a file named "~/.config/vlcj/vlcj.config" exists (under the user home directory) it will be loaded and if it
- * contains a "nativeDirectory" property, the value of that propertly will be used for the native discovery directory.
+ * contains a "nativeDirectory" property, the value of that property will be used for the native discovery directory.
  */
 public class ConfigurationFileDiscoveryDirectoryProvider implements DiscoveryDirectoryProvider {
 
