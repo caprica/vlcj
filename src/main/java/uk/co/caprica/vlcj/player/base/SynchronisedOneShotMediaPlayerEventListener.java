@@ -43,7 +43,7 @@ public abstract class SynchronisedOneShotMediaPlayerEventListener extends OneSho
     }
 
     @Override
-    protected void onDone(MediaPlayer mediaPlayer) {
+    protected final void onDone(MediaPlayer mediaPlayer) {
         latch.countDown();
     }
 }
