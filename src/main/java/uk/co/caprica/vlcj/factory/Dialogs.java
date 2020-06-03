@@ -76,7 +76,7 @@ public final class Dialogs {
         libvlc_dialog_cbs callbacks = new libvlc_dialog_cbs();
 
         Set<DialogType> enableTypes = new HashSet<DialogType>();
-        Collections.addAll(enableTypes, dialogTypes != null ? dialogTypes : DialogType.values());
+        Collections.addAll(enableTypes, dialogTypes != null && dialogTypes.length > 0 ? dialogTypes : DialogType.values());
 
         callbacks.pf_display_error    = enableTypes.contains(DialogType.ERROR   ) ? new DisplayError()    : null;
         callbacks.pf_display_login    = enableTypes.contains(DialogType.LOGIN   ) ? new DisplayLogin()    : null;
