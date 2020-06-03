@@ -65,19 +65,19 @@ public final class DialogsApi extends BaseApi {
      * Enable native dialog callbacks, with user data.
      *
      * @param dialogs dialogs callback component
-     * @param userData opaque user data associated with each dialog
+     * @param userData user data associated with the dialog
      */
-    public void enable(Dialogs dialogs, Pointer userData) {
-        libvlc_dialog_set_callbacks(libvlcInstance, dialogs.callbacks(), userData);
+    public void enable(Dialogs dialogs, Long userData) {
+        libvlc_dialog_set_callbacks(libvlcInstance, dialogs.callbacks(), pointer(userData));
     }
 
     /**
      * Disable native dialog callbacks, with user data.
      *
-     * @param userData opaque user data associated with each dialog
+     * @param userData user data associated with the dialog
      */
-    public void disable(Pointer userData) {
-        libvlc_dialog_set_callbacks(libvlcInstance, null, userData);
+    public void disable(Long userData) {
+        libvlc_dialog_set_callbacks(libvlcInstance, null, pointer(userData));
     }
 
     /**
@@ -114,4 +114,7 @@ public final class DialogsApi extends BaseApi {
         return libvlc_dialog_dismiss(id.id()) == 0;
     }
 
+    private static Pointer pointer(Long userData) {
+        return userData != null ? Pointer.createConstant(userData) : null;
+    }
 }
