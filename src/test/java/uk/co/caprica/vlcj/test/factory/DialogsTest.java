@@ -70,12 +70,12 @@ public class DialogsTest extends VlcjTest {
 
         dialogs.addDialogHandler(new DialogHandler() {
             @Override
-            public void displayError(Pointer userData, String title, String text) {
+            public void displayError(Long userData, String title, String text) {
                 System.out.printf("display error: %s - %s - %s%n", userData, title, text);
             }
 
             @Override
-            public void displayLogin(Pointer userData, DialogId id, String title, String text, String defaultUsername, boolean askStore) {
+            public void displayLogin(Long userData, DialogId id, String title, String text, String defaultUsername, boolean askStore) {
                 System.out.printf("display login: %s - %s - %s - %s - %s - %s%n", userData, id, title, text, defaultUsername, askStore);
                 // Obviously we'd prompt for username and password instead of this...
                 if (loginCount < 3) {
@@ -87,19 +87,19 @@ public class DialogsTest extends VlcjTest {
             }
 
             @Override
-            public void displayQuestion(Pointer userData, DialogId id, String title, String text, DialogQuestionType type, String cancel, String action1, String action2) {
+            public void displayQuestion(Long userData, DialogId id, String title, String text, DialogQuestionType type, String cancel, String action1, String action2) {
             }
 
             @Override
-            public void displayProgress(Pointer userData, DialogId id, String title, String text, int indeterminate, float position, String cancel) {
+            public void displayProgress(Long userData, DialogId id, String title, String text, int indeterminate, float position, String cancel) {
             }
 
             @Override
-            public void cancel(Pointer userData, DialogId id) {
+            public void cancel(Long userData, DialogId id) {
             }
 
             @Override
-            public void updateProgress(Pointer userData, DialogId id, float position, String text) {
+            public void updateProgress(Long userData, DialogId id, float position, String text) {
             }
         });
 
