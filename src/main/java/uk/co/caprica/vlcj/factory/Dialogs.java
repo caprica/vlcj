@@ -91,80 +91,84 @@ public final class Dialogs {
     private class DisplayError implements libvlc_dialog_display_error_cb {
         @Override
         public void callback(Pointer p_data, String psz_title, String psz_text) {
-            onDisplayError(p_data, psz_title, psz_text);
+            onDisplayError(userData(p_data), psz_title, psz_text);
         }
     }
 
     private class DisplayLogin implements libvlc_dialog_display_login_cb {
         @Override
         public void callback(Pointer p_data, libvlc_dialog_id p_id, String psz_title, String psz_text, String psz_default_username, int b_ask_store) {
-            onDisplayLogin(p_data, dialogId(p_id), psz_title, psz_text, psz_default_username, b_ask_store != 0);
+            onDisplayLogin(userData(p_data), dialogId(p_id), psz_title, psz_text, psz_default_username, b_ask_store != 0);
         }
     }
 
     private class DisplayQuestion implements libvlc_dialog_display_question_cb {
         @Override
         public void callback(Pointer p_data, libvlc_dialog_id p_id, String psz_title, String psz_text, int i_type, String psz_cancel, String psz_action1, String psz_action2) {
-            onDisplayQuestion(p_data, dialogId(p_id), psz_title, psz_text, i_type, psz_cancel, psz_action1, psz_action2);
+            onDisplayQuestion(userData(p_data), dialogId(p_id), psz_title, psz_text, i_type, psz_cancel, psz_action1, psz_action2);
         }
     }
 
     private class DisplayProgress implements libvlc_dialog_display_progress_cb {
         @Override
         public void callback(Pointer p_data, libvlc_dialog_id p_id, String psz_title, String psz_text, int b_indeterminate, float f_position, String psz_cancel) {
-            onDisplayProgress(p_data, dialogId(p_id), psz_title, psz_text, b_indeterminate, f_position, psz_cancel);
+            onDisplayProgress(userData(p_data), dialogId(p_id), psz_title, psz_text, b_indeterminate, f_position, psz_cancel);
         }
     }
 
     private class Cancel implements libvlc_dialog_cancel_cb {
         @Override
         public void callback(Pointer p_data, libvlc_dialog_id p_id) {
-            onCancel(p_data, dialogId(p_id));
+            onCancel(userData(p_data), dialogId(p_id));
         }
     }
 
     private class UpdateProgress implements libvlc_dialog_update_progress_cb {
         @Override
         public void callback(Pointer p_data, libvlc_dialog_id p_id, float f_position, String psz_text) {
-            onUpdateProgress(p_data, dialogId(p_id), f_position, psz_text);
+            onUpdateProgress(userData(p_data), dialogId(p_id), f_position, psz_text);
         }
+    }
+
+    private Long userData(Pointer pointer) {
+        return pointer != null ? Pointer.nativeValue(pointer) : null;
     }
 
     private DialogId dialogId(libvlc_dialog_id id) {
         return new DialogId(id);
     }
 
-    private void onDisplayError(Pointer userData, String title, String text) {
+    private void onDisplayError(Long userData, String title, String text) {
         for (DialogHandler handler : handlerList) {
             handler.displayError(userData, title, text);
         }
     }
 
-    private void onDisplayLogin(Pointer userData, DialogId id, String title, String text, String defaultUsername, boolean askStore) {
+    private void onDisplayLogin(Long userData, DialogId id, String title, String text, String defaultUsername, boolean askStore) {
         for (DialogHandler handler : handlerList) {
             handler.displayLogin(userData, id, title, text, defaultUsername, askStore);
         }
     }
 
-    private void onDisplayQuestion(Pointer userData, DialogId id, String title, String text, int type, String cancel, String action1, String action2) {
+    private void onDisplayQuestion(Long userData, DialogId id, String title, String text, int type, String cancel, String action1, String action2) {
         for (DialogHandler handler : handlerList) {
             handler.displayQuestion(userData, id, title, text, DialogQuestionType.questionType(type), cancel, action1, action2);
         }
     }
 
-    private void onDisplayProgress(Pointer userData, DialogId id, String title, String text, int indeterminate, float position, String cancel) {
+    private void onDisplayProgress(Long userData, DialogId id, String title, String text, int indeterminate, float position, String cancel) {
         for (DialogHandler handler : handlerList) {
             handler.displayProgress(userData, id, title, text, indeterminate, position, cancel);
         }
     }
 
-    private void onCancel(Pointer userData, DialogId id) {
+    private void onCancel(Long userData, DialogId id) {
         for (DialogHandler handler : handlerList) {
             handler.cancel(userData, id);
         }
     }
 
-    private void onUpdateProgress(Pointer userData, DialogId id, float position, String text) {
+    private void onUpdateProgress(Long userData, DialogId id, float position, String text) {
         for (DialogHandler handler : handlerList) {
             handler.updateProgress(userData, id, position, text);
         }
