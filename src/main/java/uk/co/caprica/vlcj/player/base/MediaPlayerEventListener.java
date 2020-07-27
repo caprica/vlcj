@@ -197,8 +197,9 @@ public interface MediaPlayerEventListener {
      * @param mediaPlayer media player that raised the event
      * @param type type of stream
      * @param id identifier of stream
+     * @param streamId textual identifier of stream
      */
-    void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id);
+    void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id, String streamId);
 
     /**
      * An elementary stream was deleted.
@@ -206,8 +207,9 @@ public interface MediaPlayerEventListener {
      * @param mediaPlayer media player that raised the event
      * @param type type of stream
      * @param id identifier of stream
+     * @param streamId textual identifier of stream
      */
-    void elementaryStreamDeleted(MediaPlayer mediaPlayer, TrackType type, int id);
+    void elementaryStreamDeleted(MediaPlayer mediaPlayer, TrackType type, int id, String streamId);
 
     /**
      * An elementary stream was selected.
@@ -215,8 +217,9 @@ public interface MediaPlayerEventListener {
      * @param mediaPlayer media player that raised the event
      * @param type type of stream
      * @param id identifier of stream
+     * @param streamId textual identifier of stream
      */
-    void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id);
+    void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id, String streamId);
 
     /**
      * The media player was corked/un-corked.

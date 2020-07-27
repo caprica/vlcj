@@ -123,15 +123,15 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id) {
+    public void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
     }
 
     @Override
-    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, TrackType type, int id) {
+    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
     }
 
     @Override
-    public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id) {
+    public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
     }
 
     @Override

@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base.events;
 
+import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.media_player_es_changed;
 import uk.co.caprica.vlcj.media.TrackType;
@@ -34,16 +35,19 @@ final class MediaPlayerESSelectedEvent extends MediaPlayerEvent {
 
     private final int id;
 
+    private final String streamId;
+
     MediaPlayerESSelectedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
         super(mediaPlayer);
 
-        this.type = ((media_player_es_changed) event.u.getTypedValue(media_player_es_changed.class)).i_type;
-        this.id = ((media_player_es_changed) event.u.getTypedValue(media_player_es_changed.class)).i_id;
+        this.type     = ((media_player_es_changed) event.u.getTypedValue(media_player_es_changed.class)).i_type;
+        this.id       = ((media_player_es_changed) event.u.getTypedValue(media_player_es_changed.class)).i_id;
+        this.streamId = NativeString.copyNativeString(((media_player_es_changed) event.u.getTypedValue(media_player_es_changed.class)).psz_id);
     }
 
     @Override
     public void notify(MediaPlayerEventListener listener) {
-        listener.elementaryStreamSelected(mediaPlayer, TrackType.trackType(type), id);
+        listener.elementaryStreamSelected(mediaPlayer, TrackType.trackType(type), id, streamId);
     }
 
 }
