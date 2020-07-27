@@ -74,6 +74,14 @@ public abstract class TrackInfo {
      */
     private final String description;
 
+    private final String trackId;
+
+    private final boolean stable;
+
+    private final String name;
+
+    private final boolean selected;
+
     /**
      * Codec description.
      */
@@ -89,9 +97,13 @@ public abstract class TrackInfo {
      * @param bitRate bit-rate
      * @param language language
      * @param description description
+     * @param trackId textual track identifier
+     * @param idStable flag whether the textual track identifier is "stable" or not
+     * @param name track name
+     * @param selected <code>true</code> if this track is currently selected; <code>false</code> if not
      * @param codecDescription codec description
      */
-    protected TrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String codecDescription) {
+    protected TrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String trackId, boolean idStable, String name, boolean selected, String codecDescription) {
         this.codec = codec;
         this.codecName = codecName(codec);
         this.originalCodec = originalCodec;
@@ -102,6 +114,10 @@ public abstract class TrackInfo {
         this.bitRate = bitRate;
         this.language = language;
         this.description = description;
+        this.trackId = trackId;
+        this.stable = idStable;
+        this.name = name;
+        this.selected = selected;
         this.codecDescription = codecDescription;
     }
 
@@ -195,6 +211,22 @@ public abstract class TrackInfo {
         return description;
     }
 
+    public final String trackId() {
+        return trackId;
+    }
+
+    public final boolean stable() {
+        return stable;
+    }
+
+    public final String name() {
+        return name;
+    }
+
+    public final boolean selected() {
+        return selected;
+    }
+
     /**
      * Get the codec description.
      * <p>
@@ -220,6 +252,10 @@ public abstract class TrackInfo {
         sb.append("bitRate=").append(bitRate).append(',');
         sb.append("language=").append(language).append(',');
         sb.append("description=").append(description).append(',');
+        sb.append("trackId=").append(trackId).append(',');
+        sb.append("stable=").append(stable).append(',');
+        sb.append("name=").append(name).append(',');
+        sb.append("selected=").append(selected).append(',');
         sb.append("codecDescription=").append(codecDescription).append(']');
         return sb.toString();
     }

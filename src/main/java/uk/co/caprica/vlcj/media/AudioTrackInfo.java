@@ -45,12 +45,16 @@ public final class AudioTrackInfo extends TrackInfo {
      * @param bitRate bit-rate
      * @param language language
      * @param description description
+     * @param trackId textual track identifier
+     * @param idStable flag whether the textual track identifier is "stable" or not
+     * @param name track name
+     * @param selected <code>true</code> if this track is currently selected; <code>false</code> if not
      * @param channels number of channels
      * @param rate rate
      * @param codecDescription codec description
      */
-    public AudioTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int channels, int rate, String codecDescription) {
-        super(codec, originalCodec, id, profile, level, bitRate, language, description, codecDescription);
+    public AudioTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String trackId, boolean idStable, String name, boolean selected, int channels, int rate, String codecDescription) {
+        super(codec, originalCodec, id, profile, level, bitRate, language, description, trackId, idStable, name, selected, codecDescription);
         this.channels = channels;
         this.rate = rate;
     }

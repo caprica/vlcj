@@ -121,6 +121,10 @@ final class TrackInformation {
             track.i_bitrate,
             NativeString.copyNativeString(track.psz_language),
             NativeString.copyNativeString(track.psz_description),
+            NativeString.copyNativeString(track.psz_id),
+            track.id_stable != 0,
+            NativeString.copyNativeString(track.psz_name),
+            track.selected != 0,
             codecDescription(TrackType.UNKNOWN, track.i_codec)
         );
     }
@@ -137,6 +141,10 @@ final class TrackInformation {
             track.i_bitrate,
             NativeString.copyNativeString(track.psz_language),
             NativeString.copyNativeString(track.psz_description),
+            NativeString.copyNativeString(track.psz_id),
+            track.id_stable != 0,
+            NativeString.copyNativeString(track.psz_name),
+            track.selected != 0,
             track.u.video.i_width,
             track.u.video.i_height,
             track.u.video.i_sar_num,
@@ -166,6 +174,10 @@ final class TrackInformation {
             track.i_bitrate,
             NativeString.copyNativeString(track.psz_language),
             NativeString.copyNativeString(track.psz_description),
+            NativeString.copyNativeString(track.psz_id),
+            track.id_stable != 0,
+            NativeString.copyNativeString(track.psz_name),
+            track.selected != 0,
             track.u.audio.i_channels,
             track.u.audio.i_rate,
             codecDescription(TrackType.AUDIO, track.i_codec)
@@ -184,6 +196,10 @@ final class TrackInformation {
             track.i_bitrate,
             NativeString.copyNativeString(track.psz_language),
             NativeString.copyNativeString(track.psz_description),
+            NativeString.copyNativeString(track.psz_id),
+            track.id_stable != 0,
+            NativeString.copyNativeString(track.psz_name),
+            track.selected != 0,
             NativeString.copyNativeString(track.u.subtitle.psz_encoding),
             codecDescription(TrackType.TEXT, track.i_codec)
         );

@@ -100,6 +100,10 @@ public final class VideoTrackInfo extends TrackInfo {
      * @param bitRate bit-rate
      * @param language language
      * @param description description
+     * @param trackId textual track identifier
+     * @param idStable flag whether the textual track identifier is "stable" or not
+     * @param name track name
+     * @param selected <code>true</code> if this track is currently selected; <code>false</code> if not
      * @param width width
      * @param height height
      * @param sampleAspectRatio sample aspect ratio
@@ -115,8 +119,8 @@ public final class VideoTrackInfo extends TrackInfo {
      * @param multiview multiview video type
      * @param codecDescription codec description
      */
-    public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, VideoOrientation orientation, VideoProjection projection, float yaw, float pitch, float roll, float fov, Multiview multiview, String codecDescription) {
-        super(codec, originalCodec, id, profile, level, bitRate, language, description, codecDescription);
+    public VideoTrackInfo(int codec, int originalCodec, int id, int profile, int level, int bitRate, String language, String description, String trackId, boolean idStable, String name, boolean selected, int width, int height, int sampleAspectRatio, int sampleAspectRatioBase, int frameRate, int frameRateBase, VideoOrientation orientation, VideoProjection projection, float yaw, float pitch, float roll, float fov, Multiview multiview, String codecDescription) {
+        super(codec, originalCodec, id, profile, level, bitRate, language, description, trackId, idStable, name, selected, codecDescription);
         this.width = width;
         this.height = height;
         this.sampleAspectRatio = sampleAspectRatio;
