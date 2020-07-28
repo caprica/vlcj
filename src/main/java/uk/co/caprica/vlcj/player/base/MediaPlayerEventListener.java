@@ -212,14 +212,24 @@ public interface MediaPlayerEventListener {
     void elementaryStreamDeleted(MediaPlayer mediaPlayer, TrackType type, int id, String streamId);
 
     /**
-     * An elementary stream was selected.
+     * An elementary stream was updated.
      *
      * @param mediaPlayer media player that raised the event
      * @param type type of stream
      * @param id identifier of stream
      * @param streamId textual identifier of stream
      */
-    void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id, String streamId);
+    void elementaryStreamUpdated(MediaPlayer mediaPlayer, TrackType type, int id, String streamId);
+
+    /**
+     * An elementary stream was selected.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param type type of stream
+     * @param unselectedStreamId identifier of unselected stream
+     * @param selectedStreamId identifier of selected stream
+     */
+    void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, String unselectedStreamId, String selectedStreamId);
 
     /**
      * The media player was corked/un-corked.

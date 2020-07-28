@@ -22,32 +22,33 @@ package uk.co.caprica.vlcj.player.base.events;
 import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.binding.internal.media_player_es_changed;
+import uk.co.caprica.vlcj.binding.internal.media_player_es_selection_changed;
 import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
- * Encapsulation of a media player elementary stream selected event.
+ * Encapsulation of a media player elementary stream updated event.
  */
-final class MediaPlayerESSelectedEvent extends MediaPlayerEvent {
+final class MediaPlayerESSelectionChangedEvent extends MediaPlayerEvent {
 
     private final int type;
 
-    private final int id;
+    private final String unselectedStreamId;
 
-    private final String streamId;
+    private final String selectedStreamId;
 
-    MediaPlayerESSelectedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
+    MediaPlayerESSelectionChangedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
         super(mediaPlayer);
 
-        this.type     = ((media_player_es_changed) event.u.getTypedValue(media_player_es_changed.class)).i_type;
-        this.id       = ((media_player_es_changed) event.u.getTypedValue(media_player_es_changed.class)).i_id;
-        this.streamId = NativeString.copyNativeString(((media_player_es_changed) event.u.getTypedValue(media_player_es_changed.class)).psz_id);
+        this.type               = ((media_player_es_selection_changed) event.u.getTypedValue(media_player_es_selection_changed.class)).i_type;
+        this.unselectedStreamId = NativeString.copyNativeString(((media_player_es_selection_changed) event.u.getTypedValue(media_player_es_selection_changed.class)).psz_unselected_id);
+        this.selectedStreamId   = NativeString.copyNativeString(((media_player_es_selection_changed) event.u.getTypedValue(media_player_es_selection_changed.class)).psz_selected_id);
     }
 
     @Override
     public void notify(MediaPlayerEventListener listener) {
-        listener.elementaryStreamSelected(mediaPlayer, TrackType.trackType(type), id, streamId);
+        listener.elementaryStreamSelected(mediaPlayer, TrackType.trackType(type), unselectedStreamId, selectedStreamId);
     }
 
 }

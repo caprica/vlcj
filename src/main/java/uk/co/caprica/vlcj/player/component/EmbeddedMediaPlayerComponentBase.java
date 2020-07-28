@@ -194,7 +194,11 @@ abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaP
     }
 
     @Override
-    public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
+    public void elementaryStreamUpdated(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
+    }
+
+    @Override
+    public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, String unselectedStreamId, String selectedStreamId) {
     }
 
     @Override

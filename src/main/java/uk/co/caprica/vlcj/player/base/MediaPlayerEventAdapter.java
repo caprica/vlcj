@@ -125,7 +125,11 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
-    public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
+    public void elementaryStreamUpdated(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
+    }
+
+    @Override
+    public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, String unselectedStreamId, String selectedStreamId) {
     }
 
     @Override

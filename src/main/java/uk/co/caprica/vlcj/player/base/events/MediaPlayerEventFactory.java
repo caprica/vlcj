@@ -64,13 +64,14 @@ public final class MediaPlayerEventFactory {
             case libvlc_MediaPlayerScrambledChanged     : return new MediaPlayerScrambledChangedEvent     (                mediaPlayer, event);
             case libvlc_MediaPlayerESAdded              : return new MediaPlayerESAddedEvent              (                mediaPlayer, event);
             case libvlc_MediaPlayerESDeleted            : return new MediaPlayerESDeletedEvent            (                mediaPlayer, event);
-            case libvlc_MediaPlayerESSelected           : return new MediaPlayerESSelectedEvent           (                mediaPlayer, event);
+            case libvlc_MediaPlayerESUpdated            : return new MediaPlayerESUpdatedEvent            (                mediaPlayer, event);
             case libvlc_MediaPlayerCorked               : return new MediaPlayerCorkedEvent               (                mediaPlayer       );
             case libvlc_MediaPlayerUncorked             : return new MediaPlayerUncorkedEvent             (                mediaPlayer       );
             case libvlc_MediaPlayerMuted                : return new MediaPlayerMutedEvent                (                mediaPlayer       );
             case libvlc_MediaPlayerUnmuted              : return new MediaPlayerUnmutedEvent              (                mediaPlayer       );
             case libvlc_MediaPlayerAudioVolume          : return new MediaPlayerAudioVolumeEvent          (                mediaPlayer, event);
             case libvlc_MediaPlayerAudioDevice          : return new MediaPlayerAudioDeviceEvent          (                mediaPlayer, event);
+            case libvlc_MediaPlayerESSelected           : return new MediaPlayerESSelectionChangedEvent   (                mediaPlayer, event);
             case libvlc_MediaPlayerTitleListChanged     : return new MediaPlayerTitleListChangedEvent     (                mediaPlayer       );
             case libvlc_MediaPlayerTitleSelectionChanged: return new MediaPlayerTitleSelectionChangedEvent(                mediaPlayer, event);
             case libvlc_MediaPlayerChapterChanged       : return new MediaPlayerChapterChangedEvent       (                mediaPlayer, event);
