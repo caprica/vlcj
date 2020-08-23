@@ -35,6 +35,7 @@ public class MediaStatistics {
     private int   decodedVideo;
     private int   decodedAudio;
     private int   picturesDisplayed;
+    private int   picturesLate;
     private int   picturesLost;
     private int   audioBuffersPlayed;
     private int   audioBuffersLost;
@@ -45,7 +46,7 @@ public class MediaStatistics {
     public MediaStatistics() {
     }
 
-    public MediaStatistics(int inputBytesRead, float inputBitrate, int demuxBytesRead, float demuxBitrate, int demuxCorrupted, int demuxDiscontinuity, int decodedVideo, int decodedAudio, int picturesDisplayed, int picturesLost, int audioBuffersPlayed, int audioBuffersLost, int sentPackets, int sentBytes, float sendBitrate) {
+    public MediaStatistics(int inputBytesRead, float inputBitrate, int demuxBytesRead, float demuxBitrate, int demuxCorrupted, int demuxDiscontinuity, int decodedVideo, int decodedAudio, int picturesDisplayed, int picturesLate, int picturesLost, int audioBuffersPlayed, int audioBuffersLost, int sentPackets, int sentBytes, float sendBitrate) {
         this.inputBytesRead     = inputBytesRead;
         this.inputBitrate       = inputBitrate;
         this.demuxBytesRead     = demuxBytesRead;
@@ -55,6 +56,7 @@ public class MediaStatistics {
         this.decodedVideo       = decodedVideo;
         this.decodedAudio       = decodedAudio;
         this.picturesDisplayed  = picturesDisplayed;
+        this.picturesLate       = picturesLate;
         this.picturesLost       = picturesLost;
         this.audioBuffersPlayed = audioBuffersPlayed;
         this.audioBuffersLost   = audioBuffersLost;
@@ -99,6 +101,10 @@ public class MediaStatistics {
         return picturesDisplayed;
     }
 
+    public int picturesLate() {
+        return picturesLate;
+    }
+
     public int picturesLost() {
         return picturesLost;
     }
@@ -133,6 +139,7 @@ public class MediaStatistics {
         this.decodedVideo       = stats.i_decoded_video;
         this.decodedAudio       = stats.i_decoded_audio;
         this.picturesDisplayed  = stats.i_displayed_pictures;
+        this.picturesLate       = stats.i_late_pictures;
         this.picturesLost       = stats.i_lost_pictures;
         this.audioBuffersPlayed = stats.i_played_abuffers;
         this.audioBuffersLost   = stats.i_lost_abuffers;
