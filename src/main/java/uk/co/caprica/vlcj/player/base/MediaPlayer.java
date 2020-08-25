@@ -79,6 +79,7 @@ public class MediaPlayer {
     private final SubpictureApi subpictureApi;
     private final TeletextApi   teletextApi;
     private final TitleApi      titleApi;
+    private final TrackApi      trackApi;
     private final VideoApi      videoApi;
 
     /**
@@ -106,6 +107,7 @@ public class MediaPlayer {
         subpictureApi = new SubpictureApi(this);
         teletextApi   = new TeletextApi  (this);
         titleApi      = new TitleApi     (this);
+        trackApi      = new TrackApi     (this);
         videoApi      = new VideoApi     (this);
     }
 
@@ -176,6 +178,10 @@ public class MediaPlayer {
 
     public final TitleApi titles() {
         return titleApi;
+    }
+
+    public final TrackApi tracks() {
+        return trackApi;
     }
 
     public final VideoApi video() {
@@ -274,6 +280,7 @@ public class MediaPlayer {
         subpictureApi.release();
         teletextApi  .release();
         titleApi     .release();
+        trackApi     .release();
         videoApi     .release();
 
         libvlc_media_player_release(mediaPlayerInstance);
