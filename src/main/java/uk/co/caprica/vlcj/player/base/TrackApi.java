@@ -21,12 +21,17 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_tracklist_t;
+import uk.co.caprica.vlcj.binding.support.size_t;
 import uk.co.caprica.vlcj.media.TrackType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_selected_track;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_track_from_id;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_tracklist;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_select_track;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_select_tracks;
 import static uk.co.caprica.vlcj.media.TrackType.trackType;
 
 /**
@@ -159,5 +164,55 @@ public final class TrackApi extends BaseApi {
      */
     public void selectTrack(Track track) {
         libvlc_media_player_select_track(mediaPlayerInstance, track.trackType().intValue(), track.instance());
+    }
+
+    /**
+     * Select multiple tracks.
+     *
+     * @param tracks tracks, of any type, to select
+     */
+    public void select(Track... tracks) {
+        if (tracks != null && tracks.length > 0) {
+            select(TrackType.AUDIO, tracks);
+            select(TrackType.VIDEO, tracks);
+            select(TrackType.TEXT, tracks);
+        }
+    }
+
+    /**
+     * Select multiple tracks.
+     *
+     * @param tracks tracks, of any type, to select
+     */
+    public void select(List<Track> tracks) {
+        select(tracks.toArray(new Track[0]));
+    }
+
+    /**
+     * Helper method to select multiple tracks of a specific type.
+     * <p>
+     * Developer note: this does not use collection streams so for the time being we can maintain Java 1.6 source-level
+     * compatibility.
+     *
+     * @param type type of track to select
+     * @param tracks tracks to select
+     */
+    private void select(TrackType type, Track[] tracks) {
+        List<libvlc_media_track_t> list = new ArrayList<libvlc_media_track_t>(tracks.length);
+        // Filter tracks of the request type
+        for (int i = 0; i < tracks.length; i++) {
+            Track track = tracks[i];
+            if (track.trackType() == type) {
+                list.add(track.instance());
+            }
+        }
+        if (!list.isEmpty()) {
+            // Create and pass the necessary native array
+            libvlc_media_track_t[] instances = (libvlc_media_track_t[]) new libvlc_media_track_t().toArray(tracks.length);
+            for (int i = 0; i < list.size(); i++) {
+                instances[i] = list.get(i);
+            }
+            libvlc_media_player_select_tracks(mediaPlayerInstance, type.intValue(), instances, new size_t(instances.length));
+        }
     }
 }
