@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import com.sun.jna.Memory;
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_tracklist_t;
 import uk.co.caprica.vlcj.binding.support.size_t;
@@ -191,6 +194,8 @@ public final class TrackApi extends BaseApi {
     /**
      * Helper method to select multiple tracks of a specific type.
      * <p>
+     * Not all track types allow for multiple selection, additional selections will be ignored.
+     * <p>
      * Developer note: this does not use collection streams so for the time being we can maintain Java 1.6 source-level
      * compatibility.
      *
@@ -207,12 +212,26 @@ public final class TrackApi extends BaseApi {
             }
         }
         if (!list.isEmpty()) {
-            // Create and pass the necessary native array
-            libvlc_media_track_t[] instances = (libvlc_media_track_t[]) new libvlc_media_track_t().toArray(tracks.length);
-            for (int i = 0; i < list.size(); i++) {
-                instances[i] = list.get(i);
-            }
-            libvlc_media_player_select_tracks(mediaPlayerInstance, type.intValue(), instances[0].getPointer(), new size_t(instances.length));
+            libvlc_media_player_select_tracks(mediaPlayerInstance, type.intValue(), getPointerArray(tracks), new size_t(list.size()));
         }
+    }
+
+    /**
+     * Get a contiguous block of memory containing an array of pointers.
+     * <p>
+     * Needed for native library direct mapping since there is no automatic mapping of arrays.
+     *
+     * @param tracks tracks
+     * @return block of memory containing pointers
+     */
+    private static Memory getPointerArray(Track[] tracks) {
+        int count = tracks.length;
+        Memory memory = new Memory(Native.POINTER_SIZE * count);
+        Pointer[] pointers = new Pointer[count];
+        for (int i = 0; i < count; i++) {
+            pointers[i] = tracks[i].instance().getPointer();
+        }
+        memory.write(0, pointers, 0, pointers.length);
+        return memory;
     }
 }
