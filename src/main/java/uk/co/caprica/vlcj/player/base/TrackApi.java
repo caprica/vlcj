@@ -212,7 +212,7 @@ public final class TrackApi extends BaseApi {
             for (int i = 0; i < list.size(); i++) {
                 instances[i] = list.get(i);
             }
-            libvlc_media_player_select_tracks(mediaPlayerInstance, type.intValue(), instances, new size_t(instances.length));
+            libvlc_media_player_select_tracks(mediaPlayerInstance, type.intValue(), instances[0].getPointer(), new size_t(instances.length));
         }
     }
 }
