@@ -35,6 +35,7 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_track_fr
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_tracklist;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_select_track;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_select_tracks;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_select_tracks_by_ids;
 import static uk.co.caprica.vlcj.media.TrackType.trackType;
 
 /**
@@ -60,7 +61,6 @@ public final class TrackApi extends BaseApi {
         }
         return null;
     }
-
 
     /**
      * Get the current audio track list for the given track type.
@@ -96,6 +96,9 @@ public final class TrackApi extends BaseApi {
      * Get the currently selected video track.
      * <p>
      * The returned track must be freed by {@link Track#release()} when it is no longer needed.
+     * <p>
+     * It is possible that more than one track of the specified type is selected, in such cases use {@link #videoTracks()}
+     * and iterate the track list to find all of those selected.
      *
      * @return track, or <code>null</code> if no such track is selected
      */
@@ -111,6 +114,9 @@ public final class TrackApi extends BaseApi {
      * Get the currently selected audio track.
      * <p>
      * The returned track must be freed by {@link Track#release()} when it is no longer needed.
+     * <p>
+     * It is possible that more than one track of the specified type is selected, in such cases use {@link #audioTracks()}
+     * and iterate the track list to find all of those selected.
      *
      * @return track, or <code>null</code> if no such track is selected
      */
@@ -126,6 +132,9 @@ public final class TrackApi extends BaseApi {
      * Get the currently selected text track.
      * <p>
      * The returned track must be freed by {@link Track#release()} when it is no longer needed.
+     * <p>
+     * It is possible that more than one track of the specified type is selected, in such cases use {@link #textTracks()}
+     * and iterate the track list to find all of those selected.
      *
      * @return track, or <code>null</code> if no such track is selected
      */
@@ -171,6 +180,8 @@ public final class TrackApi extends BaseApi {
 
     /**
      * Select multiple tracks.
+     * <p>
+     * Not all track types support multiple selection.
      *
      * @param tracks tracks, of any type, to select
      */
@@ -184,11 +195,43 @@ public final class TrackApi extends BaseApi {
 
     /**
      * Select multiple tracks.
+     * <p>
+     * Not all track types support multiple selection.
      *
      * @param tracks tracks, of any type, to select
      */
     public void select(List<Track> tracks) {
         select(tracks.toArray(new Track[0]));
+    }
+
+    /**
+     * Select tracks based on their id.
+     * <p>
+     * Not all track types support multiple selection.
+     * <p>
+     * Track identifiers are obtained from {@link Track#trackId()}.
+     *
+     * @param type type of track
+     * @param trackIds ids of tracks to select
+     */
+    public void select(TrackType type, String... trackIds) {
+        if (trackIds != null && trackIds.length > 0) {
+            libvlc_media_player_select_tracks_by_ids(mediaPlayerInstance, type.intValue(), String.join(",", trackIds));
+        }
+    }
+
+    /**
+     * Select tracks based on their id.
+     * <p>
+     * Not all track types support multiple selection.
+     * <p>
+     * Track identifiers are obtained from {@link Track#trackId()}.
+     *
+     * @param type type of track
+     * @param trackIds ids of tracks to select
+     */
+    public void select(TrackType type, List<String> trackIds) {
+        select(type, trackIds.toArray(new String[0]));
     }
 
     /**
@@ -204,7 +247,7 @@ public final class TrackApi extends BaseApi {
      */
     private void select(TrackType type, Track[] tracks) {
         List<libvlc_media_track_t> list = new ArrayList<libvlc_media_track_t>(tracks.length);
-        // Filter tracks of the request type
+        // Filter tracks of the requested type
         for (int i = 0; i < tracks.length; i++) {
             Track track = tracks[i];
             if (track.trackType() == type) {
