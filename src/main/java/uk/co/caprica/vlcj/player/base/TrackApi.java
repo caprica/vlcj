@@ -209,6 +209,9 @@ public final class TrackApi extends BaseApi {
      * <p>
      * Not all track types support multiple selection.
      * <p>
+     * This method can be used pre-select a list of tracks before starting the media player, or after the player has
+     * been started.
+     * <p>
      * Track identifiers are obtained from {@link Track#trackId()}.
      *
      * @param type type of track
