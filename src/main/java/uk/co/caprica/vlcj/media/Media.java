@@ -49,6 +49,7 @@ public final class Media {
     private final SlaveApi     slaveApi;
     private final SubitemApi   subitemApi;
     private final ThumbnailApi thumbnailApi;
+    private final TrackApi     trackApi;
 
     /**
      * Create a new media item.
@@ -73,6 +74,7 @@ public final class Media {
         this.slaveApi     = new SlaveApi    (this);
         this.subitemApi   = new SubitemApi  (this);
         this.thumbnailApi = new ThumbnailApi(this);
+        this.trackApi     = new TrackApi    (this);
     }
 
     /**
@@ -148,6 +150,15 @@ public final class Media {
     }
 
     /**
+     * Behaviour pertaining to tracks.
+     *
+     * @return track behaviour
+     */
+    public TrackApi tracks() {
+        return trackApi;
+    }
+
+    /**
      * Create a new {@link MediaRef} from this media.
      * <p>
      * The caller <em>must</em> release the returned {@link MediaRef} when it has no further use for it.
@@ -170,7 +181,6 @@ public final class Media {
         libvlc_media_retain(mediaInstance);
         return new Media(libvlcInstance, mediaInstance);
     }
-
 
     /**
      * Return a duplicate {@link MediaRef} for this {@link MediaRef}.
@@ -216,6 +226,7 @@ public final class Media {
         slaveApi    .release();
         subitemApi  .release();
         thumbnailApi.release();
+        trackApi    .release();
 
         libvlc_media_release(mediaInstance);
     }

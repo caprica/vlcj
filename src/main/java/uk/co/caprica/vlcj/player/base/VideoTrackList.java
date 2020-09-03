@@ -24,7 +24,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_tracklist_t;
 
 final public class VideoTrackList extends TrackList<VideoTrack> {
 
-    VideoTrackList(libvlc_media_tracklist_t instance) {
+    public VideoTrackList(libvlc_media_tracklist_t instance) {
         super(instance);
     }
 
