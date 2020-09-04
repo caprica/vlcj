@@ -346,6 +346,12 @@ more information:
 
 > mark [dot] lee [at] capricasoftware [dot] co [dot] uk
 
+LibVLC Discord
+-------
+[![Join the chat at https://discord.gg/3h3K3JF](https://img.shields.io/discord/716939396464508958?label=discord)](https://discord.gg/3h3K3JF)
+
+vlcj is part of the LibVLC Discord Community server. Feel free to come say hi!
+
 License
 -------
 
