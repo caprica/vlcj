@@ -23,7 +23,7 @@ working on contemporary Raspberry Pi builds.
 
 At least JDK 8 is required.
 
-vlcj-4.4.x, which is still current, is the last version of vlcj that was built against JDK 1.6.
+vlcj-4.6.x, which is still current, is the last version of vlcj that was built against JDK 1.6.
 
 *This version of vlcj requires VLC 4.0.0 as a minimum, no earlier version is supported.*
 
