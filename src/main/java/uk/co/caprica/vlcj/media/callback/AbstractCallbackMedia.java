@@ -160,8 +160,11 @@ public abstract class AbstractCallbackMedia implements CallbackMedia {
 
         @Override
         public int open(Pointer opaque, PointerByReference datap, LongByReference sizep) {
-            sizep.setValue(onGetSize());
-            return onOpen() ? SUCCESS : ERROR;
+            int result = onOpen() ? SUCCESS : ERROR;
+            if (result == SUCCESS) {
+                sizep.setValue(onGetSize());
+            }
+            return result;
         }
     }
 
