@@ -52,6 +52,8 @@ News
 
 All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
+[![Maven Central](https://img.shields.io/maven-central/v/uk.co.caprica/vlcj.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22uk.co.caprica%22%20AND%20a:%22vlcj%22)
+
 Regarding the brief existence of vlcj 4.5.x, this release stream going forward was intended to fully embrace the Java
 Modules System (Jigsaw) and move to Java 11. That turned out to be way too much of a burden for way too little benefit
 so that idea has been scrapped and that release stream has been *abandoned*. For VLC 3.x, vlcj 4.6.0 is the current
