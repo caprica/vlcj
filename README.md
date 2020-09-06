@@ -128,6 +128,8 @@ When compiling with Maven it is simply not possible to suppress the warnings abo
 Maven Dependency
 ----------------
 
+[![Maven Central](https://img.shields.io/maven-central/v/uk.co.caprica/vlcj.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22uk.co.caprica%22%20AND%20a:%22vlcj%22)
+
 Add the following Maven dependency to your own project pom.xml:
 
 ```
