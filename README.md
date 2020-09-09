@@ -31,14 +31,19 @@ This is the open source vlcj project page, see also the 'official'
 [home page](http://capricasoftware.co.uk/projects/vlcj "Official vlcj home page at Caprica Software") where you can find
 more information as well as some new simple tutorials.
 
+Build Status
+------------
+
+![Continuous Integration](https://github.com/caprica/vlcj/workflows/Java%20CI%20with%20Maven/badge.svg)
+
+[![Maven Central](https://img.shields.io/maven-central/v/uk.co.caprica/vlcj.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22uk.co.caprica%22%20AND%20a:%22vlcj%22)
+
 News
 ====
 
 - Future, 2020 - vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 8 LTS.
 
 All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
-
-[![Maven Central](https://img.shields.io/maven-central/v/uk.co.caprica/vlcj.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22uk.co.caprica%22%20AND%20a:%22vlcj%22)
 
 You can follow @capricasoftware on Twitter for more vlcj news.
 
