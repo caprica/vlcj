@@ -34,7 +34,7 @@ more information as well as some new simple tutorials.
 Build Status
 ------------
 
-![Continuous Integration](https://github.com/caprica/vlcj/workflows/Java%20CI%20with%20Maven/badge.svg)
+[![Continuous Integration](https://github.com/caprica/vlcj/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/caprica/vlcj/actions?query=workflow%3A%22Java+CI+with+Maven%22)
 
 The Continuous Integration build will remain in a failing state until the first release version of vlcj-natives-5.0.0
 has been made.
