@@ -194,7 +194,6 @@
                     <show>public</show>
                     <quiet>true</quiet>
                     <failOnError>true</failOnError>
-                    <additionalOptions>-html5</additionalOptions>
                     <source>${java.version}</source>
                 </configuration>
                 <executions>
