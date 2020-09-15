@@ -36,6 +36,7 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_tracklis
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_select_track;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_select_tracks;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_select_tracks_by_ids;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_unselect_track_type;
 import static uk.co.caprica.vlcj.media.TrackType.trackType;
 
 /**
@@ -235,6 +236,28 @@ public final class TrackApi extends BaseApi {
      */
     public void select(TrackType type, List<String> trackIds) {
         select(type, trackIds.toArray(new String[0]));
+    }
+
+    /**
+     * Deselect all tracks of the given types.
+     *
+     * @param types types of tracks to deselect
+     */
+    public void deselect(TrackType... types) {
+        if (types != null && types.length > 0) {
+            for (TrackType type : types) {
+                libvlc_media_player_unselect_track_type(mediaPlayerInstance, type.intValue());
+            }
+        }
+    }
+
+    /**
+     * Deselect all tracks of the given types.
+     *
+     * @param types types of tracks to deselect
+     */
+    public void deselect(List<TrackType> types) {
+        deselect(types.toArray(new TrackType[0]));
     }
 
     /**
