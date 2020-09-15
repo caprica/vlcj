@@ -25,12 +25,8 @@ import uk.co.caprica.vlcj.media.MediaSlaveType;
 import uk.co.caprica.vlcj.media.SlaveApi;
 
 import java.io.File;
-import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_spu;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_spu_count;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_spu_delay;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_spu;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_spu_delay;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_spu_text_scale;
 
@@ -41,48 +37,6 @@ public final class SubpictureApi extends BaseApi {
 
     SubpictureApi(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
-    }
-
-    /**
-     * Get the number of sub-pictures/sub-title tracks.
-     *
-     * @return number of sub-title tracks
-     */
-    public int trackCount() {
-        return libvlc_video_get_spu_count(mediaPlayerInstance);
-    }
-
-    /**
-     * Get the current sub-title track.
-     *
-     * @return sub-title number, or -1 if none
-     */
-    public int track() {
-        return libvlc_video_get_spu(mediaPlayerInstance);
-    }
-
-    /**
-     * Set the current sub-title track.
-     * <p>
-     * The track identifier must be one of those returned by {@link #trackDescriptions()}.
-     * <p>
-     * Subtitles can be disabled by passing here the identifier of the track with a description of
-     * "Disable".
-     * <p>
-     * There is no guarantee that the available subtitle identifiers go in sequence from zero up to
-     * {@link #trackCount()}-1. The {@link #trackDescriptions()} method should always
-     * be used to ascertain the available subtitle identifiers.
-     * <p>
-     * The implementation of the corresponding <em>native</em> method in libvlc is bugged before
-     * vlc 2.0.6, therefore vlc 2.0.6 or later is required for correct behaviour when using this
-     * method.
-     *
-     * @param spu sub-title identifier, or -1 for none
-     * @return current sub-title identifier
-     */
-    public int setTrack(int spu) {
-        libvlc_video_set_spu(mediaPlayerInstance, spu);
-        return track();
     }
 
     /**
@@ -159,16 +113,4 @@ public final class SubpictureApi extends BaseApi {
     public boolean setSubTitleUri(String uri) {
         return mediaPlayer.media().addSlave(MediaSlaveType.SUBTITLE, uri, true);
     }
-
-    /**
-     * Get the sub-title track descriptions.
-     * <p>
-     * The media must be playing before this information is available.
-     *
-     * @return list of descriptions, may be empty but will never be <code>null</code>
-     */
-    public List<TrackDescription> trackDescriptions() {
-        return Descriptions.spuTrackDescriptions(mediaPlayerInstance);
-    }
-
 }

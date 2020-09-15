@@ -35,8 +35,6 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_set_pream
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_channel;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_delay;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_mute;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_track;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_track_count;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_volume;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_enum;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_get;
@@ -46,7 +44,6 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_set;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_channel;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_delay;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_mute;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_track;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_volume;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_toggle_mute;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_equalizer;
@@ -285,55 +282,6 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
     }
 
     /**
-     * Get the number of available audio tracks.
-     *
-     * @return track count
-     */
-    public int trackCount() {
-        return libvlc_audio_get_track_count(mediaPlayerInstance);
-    }
-
-    /**
-     * Get the current audio track.
-     *
-     * @return track identifier, see {@link #trackDescriptions()}
-     */
-    public int track() {
-        return libvlc_audio_get_track(mediaPlayerInstance);
-    }
-
-    /**
-     * Set a new audio track to play.
-     * <p>
-     * The track identifier must be one of those returned by {@link #trackDescriptions()}.
-     * <p>
-     * Audio can be disabled by passing here the identifier of the track with a description of
-     * "Disable".
-     * <p>
-     * There is no guarantee that the available track identifiers go in sequence from zero up to
-     * {@link #trackCount()}-1. The {@link #trackDescriptions()} method should always
-     * be used to ascertain the available track identifiers.
-     *
-     * @param track track identifier
-     * @return current audio track identifier
-     */
-    public int setTrack(int track) {
-        libvlc_audio_set_track(mediaPlayerInstance, track);
-        return track();
-    }
-
-    /**
-     * Get the audio track descriptions.
-     * <p>
-     * The media must be playing before this information is available.
-     *
-     * @return list of descriptions, may be empty but will never be <code>null</code>
-     */
-    public List<TrackDescription> trackDescriptions() {
-        return Descriptions.audioTrackDescriptions(mediaPlayerInstance);
-    }
-
-    /**
      * Enable audio callbacks and set the component used to process the audio samples.
      * <p>
      * The callback will not manage audio volume.
@@ -366,5 +314,4 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
     protected void release() {
         setEqualizer(null);
     }
-
 }

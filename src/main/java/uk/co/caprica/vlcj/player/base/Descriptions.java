@@ -26,19 +26,14 @@ import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_chapter_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_title_description_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_track_description;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_chapter_descriptions_release;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_full_chapter_descriptions;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_full_title_descriptions;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_title_descriptions_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_track_description_list_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_spu_description;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_track_description;
 
 final class Descriptions {
 
@@ -81,35 +76,6 @@ final class Descriptions {
         return result;
     }
 
-    static List<TrackDescription> videoTrackDescriptions(libvlc_media_player_t mediaPlayerInstance) {
-        libvlc_track_description_t trackDescriptions = libvlc_video_get_track_description(mediaPlayerInstance);
-        return getTrackDescriptions(trackDescriptions);
-    }
-
-    static List<TrackDescription> audioTrackDescriptions(libvlc_media_player_t mediaPlayerInstance) {
-        libvlc_track_description_t trackDescriptions = libvlc_audio_get_track_description(mediaPlayerInstance);
-        return getTrackDescriptions(trackDescriptions);
-    }
-
-    static List<TrackDescription> spuTrackDescriptions(libvlc_media_player_t mediaPlayerInstance) {
-        libvlc_track_description_t trackDescriptions = libvlc_video_get_spu_description(mediaPlayerInstance);
-        return getTrackDescriptions(trackDescriptions);
-    }
-
-    private static List<TrackDescription> getTrackDescriptions(libvlc_track_description_t trackDescriptions) {
-        List<TrackDescription> trackDescriptionList = new ArrayList<TrackDescription>();
-        libvlc_track_description_t trackDescription = trackDescriptions;
-        while (trackDescription != null) {
-            trackDescriptionList.add(new TrackDescription(trackDescription.i_id, trackDescription.psz_name));
-            trackDescription = trackDescription.p_next;
-        }
-        if (trackDescriptions != null) {
-            libvlc_track_description_list_release(trackDescriptions.getPointer());
-        }
-        return trackDescriptionList;
-    }
-
     private Descriptions() {
     }
-
 }

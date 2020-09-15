@@ -23,8 +23,6 @@ import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.player.base.State;
 
-import java.util.List;
-
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_duration;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_mrl;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_state;
@@ -77,46 +75,6 @@ public final class InfoApi extends BaseApi {
      */
     public long duration() {
         return libvlc_media_get_duration(mediaInstance);
-    }
-
-    /**
-     * Get the list of all media tracks, or only those that match specified types.
-     *
-     * @param types zero or more track types, if none specified then all track types will be returned
-     * @return track information, empty list if no tracks
-     */
-    public List<? extends TrackInfo> tracks(TrackType... types) {
-        return TrackInformation.getTrackInfo(mediaInstance, types);
-    }
-
-    /**
-     * Get the list of audio tracks on the current media.
-     *
-     * @return audio tracks, empty list if none
-     */
-    @SuppressWarnings("unchecked")
-    public List<AudioTrackInfo> audioTracks() {
-        return (List<AudioTrackInfo>) tracks(TrackType.AUDIO);
-    }
-
-    /**
-     * Get the list of video tracks on the current media.
-     *
-     * @return video tracks, empty list if none
-     */
-    @SuppressWarnings("unchecked")
-    public List<VideoTrackInfo> videoTracks() {
-        return (List<VideoTrackInfo>) tracks(TrackType.VIDEO);
-    }
-
-    /**
-     * Get the list of text (subtitle) tracks on the current media.
-     *
-     * @return text tracks, empty list if none
-     */
-    @SuppressWarnings("unchecked")
-    public List<TextTrackInfo> textTracks() {
-        return (List<TextTrackInfo>) tracks(TrackType.TEXT);
     }
 
     /**

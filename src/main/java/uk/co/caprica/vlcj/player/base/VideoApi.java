@@ -23,16 +23,13 @@ import com.sun.jna.ptr.IntByReference;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 
-import java.awt.*;
-import java.util.List;
+import java.awt.Dimension;
 
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_video_title_display;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_adjust_float;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_adjust_int;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_scale;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_size;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_track;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_track_count;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_new_viewpoint;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_adjust_float;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_adjust_int;
@@ -42,7 +39,6 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_crop_ratio;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_crop_window;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_deinterlace;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_scale;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_track;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_update_viewpoint;
 
 /**
@@ -304,44 +300,6 @@ public final class VideoApi extends BaseApi {
     }
 
     /**
-     * Get the number of available video tracks.
-     *
-     * @return number of tracks
-     */
-    public int trackCount() {
-        return libvlc_video_get_track_count(mediaPlayerInstance);
-    }
-
-    /**
-     * Get the current video track.
-     *
-     * @return track identifier, see {@link #trackDescriptions()}
-     */
-    public int track() {
-        return libvlc_video_get_track(mediaPlayerInstance);
-    }
-
-    /**
-     * Set a new video track to play.
-     * <p>
-     * The track identifier must be one of those returned by {@link #trackDescriptions()}.
-     * <p>
-     * Video can be disabled by passing here the identifier of the track with a description of
-     * "Disable".
-     * <p>
-     * There is no guarantee that the available track identifiers go in sequence from zero up to
-     * {@link #trackCount()}-1. The {@link #trackDescriptions()} method should always
-     * be used to ascertain the available track identifiers.
-     *
-     * @param track track identifier
-     * @return current video track identifier
-     */
-    public int setTrack(int track) {
-        libvlc_video_set_track(mediaPlayerInstance, track);
-        return track();
-    }
-
-    /**
      * Create a new viewpoint instance for 360 degree video.
      * <p>
      * The caller <em>must</em> release the returned instance when it no longer has a use for it
@@ -367,16 +325,4 @@ public final class VideoApi extends BaseApi {
     public boolean updateViewpoint(Viewpoint viewpoint, boolean absolute) {
         return libvlc_video_update_viewpoint(mediaPlayerInstance, viewpoint.viewpoint(), absolute ? 1 : 0) == 0;
     }
-
-    /**
-     * Get the video (i.e. "title") track descriptions.
-     * <p>
-     * The media must be playing before this information is available.
-     *
-     * @return list of descriptions, may be empty but will never be <code>null</code>
-     */
-    public List<TrackDescription> trackDescriptions() {
-        return Descriptions.videoTrackDescriptions(mediaPlayerInstance);
-    }
-
 }
