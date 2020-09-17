@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 import uk.co.caprica.vlcj.player.list.ControlsApi;
 import uk.co.caprica.vlcj.player.list.EventApi;
@@ -27,6 +28,7 @@ import uk.co.caprica.vlcj.player.list.ListApi;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.StatusApi;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_new;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_subitems;
 
 /**
@@ -44,6 +46,11 @@ public final class SubitemApi extends BaseApi {
      * corresponding methods on the media list player instance.
      */
     private final MediaListPlayer mediaListPlayer;
+
+    /**
+     * Sub-item handling mode, by default the first sub-item will be played automatically.
+     */
+    private SubItemMode mode = SubItemMode.PLAY_FIRST_SUB_ITEM;
 
     SubitemApi(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
@@ -90,6 +97,26 @@ public final class SubitemApi extends BaseApi {
     }
 
     /**
+     * Set the sub-item handling mode for the media player.
+     * <p>
+     * The new mode will take effect the next time media is changed.
+     *
+     * @param mode new mode
+     */
+    public void mode(SubItemMode mode) {
+        this.mode = mode;
+        if (mode == SubItemMode.NO_ACTION) {
+            // Replace the current list with a blank one to make sure any sub-items from previous media are gone
+            MediaListRef emptyListRef = new MediaListRef(libvlcInstance, libvlc_media_list_new(libvlcInstance));
+            try {
+                mediaListPlayer.list().setMediaList(emptyListRef);
+            } finally {
+                emptyListRef.release();
+            }
+        }
+    }
+
+    /**
      * Invoked when the media has changed.
      * <p>
      * Set a new list for this media's sub-items.
@@ -97,10 +124,15 @@ public final class SubitemApi extends BaseApi {
      * If media was played, the sub-item list will start playing automatically. If you do <em>not</em> want this, then
      * instead of playing the media you should prepare it, then parse it, and wait for the parsed status changed media
      * event.
+     * <p>
+     * Alternatively, and more simply, you can set {@link SubItemMode#NO_ACTION} via {@link #mode(SubItemMode)}.
      *
      * @param media new media instance
      */
     void changeMedia(libvlc_media_t media) {
+        if (mode == SubItemMode.NO_ACTION) {
+            return;
+        }
         MediaListRef mediaListRef = new MediaListRef(libvlcInstance, libvlc_media_subitems(media));
         try {
             mediaListPlayer.list().setMediaList(mediaListRef);
