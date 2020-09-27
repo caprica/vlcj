@@ -63,7 +63,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     /**
      * Flag true if this component created the media player factory, or false if it was supplied by the caller.
      */
-    private boolean ownFactory;
+    private final boolean ownFactory;
 
     /**
      * Media player factory.
