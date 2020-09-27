@@ -84,10 +84,13 @@ Headline changes:
 
  - requires LibVLC 4.0.0+
  - requires Java 8+
- - full support for LibVLC "video engine" rendering, specifically via OpenGL
+ - full support for LibVLC native "video engine" rendering, specifically via OpenGL
    * example using LWJGL at [vlcj-lwjgl-demo](https://github.com/caprica/vlcj-lwjgl-demo)
- - fast vs precise seeking when setting media position/time
- - generation of in-memory thumbnail pictures
+ - fast vs precise native seeking when setting media position/time
+ - native generation of in-memory thumbnail pictures
+ - new native track selection API - this makes it possible to reliably make use of video Sample Aspect Ratio (SAR) when
+   rendering video using the "callback" video players and means e.g. DVD video now can render properly with callback
+   players
 
 For a full list of changes in this release, check the release milestones:
 
@@ -100,14 +103,6 @@ All of the examples have been moved to the [vlcj-examples](https://github.com/ca
 
 Known Issues
 ------------
-
- - `CallbackMediaPlayerComponent` does not properly render media that does not have a sample-aspect-ratio (SAR) 1:1,
-   this mostly affects DVD ISO, you can still provide your own implementation that handles other SAR's if you need to.
-   In any case, using the callback media player with DVD ISO is somewhat of a niche combination and for the vast
-   majority of media types this will not be an issue. This may be improved in a later release. The fundamental problem
-   right now is that there is simply no *reliable* way to know the SAR - SAR does appear eventually in track information
-   but there is no concrete link between that SAR track information and the currently playing video track. This is an
-   issue in the underlying native library.
 
  - When using the new alternate renderer API, if you attempt to play another media while a media is already being sent
    to something like Chromecast you may experience problems - even if you stop the current media first. The cause of
