@@ -19,35 +19,14 @@
 
 package uk.co.caprica.vlcj.player.component.callback;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import uk.co.caprica.vlcj.player.base.VideoTrack;
 
 /**
- * Implementation of a painter that centers and paints at a fixed size.
+ * Base for a {@link CallbackImagePainter} providing default empty implementations for the optional template methods.
  */
-public class FixedCallbackImagePainter extends BaseCallbackImagePainter {
+abstract public class BaseCallbackImagePainter implements CallbackImagePainter {
 
     @Override
-    public void prepare(Graphics2D g2, JComponent component) {
+    public void videoTrackChanged(VideoTrack videoTrack) {
     }
-
-    @Override
-    public void paint(Graphics2D g2, JComponent component, BufferedImage image) {
-        int width = component.getWidth();
-        int height = component.getHeight();
-
-        g2.setColor(component.getBackground());
-        g2.fillRect(0, 0, width, height);
-
-        if (image != null) {
-            g2.translate(
-                (width - image.getWidth()) / 2,
-                (height - image.getHeight()) / 2
-            );
-
-            g2.drawImage(image, null, 0, 0);
-        }
-    }
-
 }

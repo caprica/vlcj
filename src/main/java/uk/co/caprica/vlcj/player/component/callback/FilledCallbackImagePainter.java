@@ -30,7 +30,7 @@ import java.awt.image.BufferedImage;
  * <p>
  * Aspect ratio is <em>not</em> preserved, see {@link ScaledCallbackImagePainter} instead.
  */
-public class FilledCallbackImagePainter implements CallbackImagePainter {
+public class FilledCallbackImagePainter extends BaseCallbackImagePainter {
 
     @Override
     public void prepare(Graphics2D g2, JComponent component) {

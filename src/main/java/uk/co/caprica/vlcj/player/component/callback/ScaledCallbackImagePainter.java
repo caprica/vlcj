@@ -30,7 +30,7 @@ import java.awt.image.BufferedImage;
  * <p>
  * The aspect ratio of the original image is preserved when scaling is applied.
  */
-public class ScaledCallbackImagePainter implements CallbackImagePainter {
+public class ScaledCallbackImagePainter extends BaseCallbackImagePainter {
 
     @Override
     public void prepare(Graphics2D g2, JComponent component) {

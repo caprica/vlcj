@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component.callback;
 
+import uk.co.caprica.vlcj.player.base.VideoTrack;
 import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 
 import javax.swing.*;
@@ -29,6 +30,15 @@ import java.awt.image.BufferedImage;
  * Specification for a component that paints a video frame in the {@link CallbackMediaPlayerComponent}.
  */
 public interface CallbackImagePainter {
+
+    /**
+     * The currently selected video track changed.
+     * <p>
+     * The caller must not keep a reference to the videoTrack, it is only valid for the duration of the call.
+     *
+     * @param videoTrack track information for the new video track, may be <code>null</code>
+     */
+    void videoTrackChanged(VideoTrack videoTrack);
 
     /**
      * Prepare the drawing context.

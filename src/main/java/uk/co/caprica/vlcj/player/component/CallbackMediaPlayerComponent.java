@@ -21,7 +21,11 @@ package uk.co.caprica.vlcj.player.component;
 
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.Track;
+import uk.co.caprica.vlcj.player.base.VideoTrack;
 import uk.co.caprica.vlcj.player.component.callback.CallbackImagePainter;
 import uk.co.caprica.vlcj.player.component.callback.ScaledCallbackImagePainter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -96,6 +100,11 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     private BufferedImage image;
 
     /**
+     * Stable native identifier of the currently selected video track.
+     */
+    private String selectedVideoTrackId;
+
+    /**
      * Construct a callback media player component.
      * <p>
      * This component will provide a reasonable default implementation, but a client application is free to override
@@ -138,6 +147,8 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         this.mediaPlayer.fullScreen().strategy(fullScreenStrategy);
         this.mediaPlayer.events().addMediaPlayerEventListener(this);
         this.mediaPlayer.events().addMediaEventListener(this);
+
+        this.mediaPlayer.events().addMediaPlayerEventListener(new VideoTrackListener());
 
         this.mediaPlayer.videoSurface().set(this.mediaPlayerFactory.videoSurfaces().newVideoSurface(bufferFormatCallback, renderCallback, lockBuffers));
 
@@ -338,13 +349,11 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * {@link BufferedImage}.
      */
     private class DefaultBufferFormatCallback extends BufferFormatCallbackAdapter {
-
         @Override
         public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
             newVideoBuffer(sourceWidth, sourceHeight);
             return new RV32BufferFormat(sourceWidth, sourceHeight);
         }
-
     }
 
     /**
@@ -381,7 +390,37 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         protected void onDisplay(MediaPlayer mediaPlayer, int[] buffer) {
             videoSurfaceComponent.repaint();
         }
+    }
 
+    /**
+     * Event listener implementation that handles video track selection changes.
+     * <p>
+     * When the video track selection changes, notify the associated {@link CallbackImagePainter}.
+     * <p>
+     * This implementation assumes a "selected" event will always precede the "updated" event.
+     */
+    private class VideoTrackListener extends MediaPlayerEventAdapter {
+        @Override
+        public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, String unselectedStreamId, String selectedStreamId) {
+            if (TrackType.VIDEO == type) {
+                CallbackMediaPlayerComponent.this.selectedVideoTrackId = selectedStreamId;
+            }
+        }
+
+        @Override
+        public void elementaryStreamUpdated(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
+            if (imagePainter == null || !streamId.equals(CallbackMediaPlayerComponent.this.selectedVideoTrackId)) {
+                return;
+            }
+            VideoTrack track = (VideoTrack) mediaPlayer.tracks().track(streamId);
+            try {
+                imagePainter.videoTrackChanged(track);
+            } finally {
+                if (track != null) {
+                    track.release();
+                }
+            }
+        }
     }
 
     /**
@@ -395,5 +434,4 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      */
     protected void onPaintOverlay(Graphics2D g2) {
     }
-
 }
