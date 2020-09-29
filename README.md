@@ -115,7 +115,7 @@ New tutorials for vlcj-4 are available [here](http://capricasoftware.co.uk/proje
 
 There are simple tests or demo applications available for pretty much every aspect of vlcj functionality, these are
 provided in the
-[project test sources](https://github.com/caprica/vlcj/tree/master/src/test/java/uk/co/caprica/vlcj/test).
+[vlcj-examples](https://github.com/caprica/vlcj-examples/tree/master/src/main/java/uk/co/caprica/vlcj/test) project.
 
 There is also a major demo application available at the [vlcj-player](https://github.com/caprica/vlcj-player) project
 page.
