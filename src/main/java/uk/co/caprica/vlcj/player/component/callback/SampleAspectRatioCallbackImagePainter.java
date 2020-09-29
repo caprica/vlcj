@@ -45,22 +45,18 @@ import java.awt.image.BufferedImage;
 public class SampleAspectRatioCallbackImagePainter extends BaseCallbackImagePainter {
 
     /**
-     * Sample aspect ratio numerator value.
+     * Current sample aspect ratio (SAR).
+     * <p>
+     * May be <code>null</code>.
      */
-    private int sarNumerator;
-
-    /**
-     * Sample aspect ratio denominator value.
-     */
-    private int sarDenominator;
+    private volatile AspectRatio sar;
 
     @Override
     public void videoTrackChanged(VideoTrack videoTrack) {
         if (videoTrack != null) {
-            sarNumerator = videoTrack.sampleAspectRatio();
-            sarDenominator = videoTrack.sampleAspectRatioBase();
+            sar = new AspectRatio(videoTrack.sampleAspectRatio(), videoTrack.sampleAspectRatioBase());
         } else {
-            sarNumerator = sarDenominator = 0;
+            sar = null;
         }
     }
 
@@ -77,11 +73,11 @@ public class SampleAspectRatioCallbackImagePainter extends BaseCallbackImagePain
         g2.setColor(component.getBackground());
         g2.fillRect(0, 0, width, height);
 
-        if (image != null && sarDenominator != 0) {
+        if (image != null && sar != null) {
             int imageWidth = image.getWidth();
             int imageHeight = image.getHeight();
 
-            int adjustedImageWidth = imageWidth * sarNumerator / sarDenominator;
+            int adjustedImageWidth = imageWidth * sar.numerator / sar.denominator;
 
             float sx = (float) width / adjustedImageWidth;
             float sy = (float) height / imageHeight;
@@ -100,7 +96,7 @@ public class SampleAspectRatioCallbackImagePainter extends BaseCallbackImagePain
             AffineTransform savedTransform = g2.getTransform();
 
             // Set the scale to render the image, compensating for the SAR
-            g2.scale(sf * sarNumerator / sarDenominator, sf);
+            g2.scale(sf * sar.numerator / sar.denominator, sf);
 
             g2.drawImage(image, null, 0, 0);
 
@@ -108,6 +104,19 @@ public class SampleAspectRatioCallbackImagePainter extends BaseCallbackImagePain
             // overlay would appear stretched)
             g2.setTransform(savedTransform);
             g2.scale(sf, sf);
+        }
+    }
+
+    /**
+     * Immutable value object class for an aspect ratio.
+     */
+    private static class AspectRatio {
+        private final int numerator;
+        private final int denominator;
+
+        private AspectRatio(int numerator, int denominator) {
+            this.numerator = numerator;
+            this.denominator = denominator;
         }
     }
 }

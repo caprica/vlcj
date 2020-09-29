@@ -35,6 +35,8 @@ public interface CallbackImagePainter {
      * The currently selected video track changed.
      * <p>
      * The caller must not keep a reference to the videoTrack, it is only valid for the duration of the call.
+     * <p>
+     * This method will be called on a native event handling thread.
      *
      * @param videoTrack track information for the new video track, may be <code>null</code>
      */
