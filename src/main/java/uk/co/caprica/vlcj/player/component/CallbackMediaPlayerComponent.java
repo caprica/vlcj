@@ -402,9 +402,13 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     private class VideoTrackListener extends MediaPlayerEventAdapter {
         @Override
         public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, String unselectedStreamId, String selectedStreamId) {
-            if (TrackType.VIDEO == type) {
-                CallbackMediaPlayerComponent.this.selectedVideoTrackId = selectedStreamId;
+            if (imagePainter == null || TrackType.VIDEO != type) {
+                return;
             }
+            if (unselectedStreamId != null && unselectedStreamId.equals(selectedVideoTrackId)) {
+                imagePainter.videoTrackChanged(null);
+            }
+            selectedVideoTrackId = selectedStreamId;
         }
 
         @Override
