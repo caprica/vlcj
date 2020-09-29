@@ -113,14 +113,14 @@ Tutorials
 
 New tutorials for vlcj-4 are available [here](http://capricasoftware.co.uk/projects/vlcj-4/tutorials).
 
+These tutorials are still valid for vlcj-5.
+
 There are simple tests or demo applications available for pretty much every aspect of vlcj functionality, these are
 provided in the
 [vlcj-examples](https://github.com/caprica/vlcj-examples/tree/master/src/main/java/uk/co/caprica/vlcj/test) project.
 
 There is also a major demo application available at the [vlcj-player](https://github.com/caprica/vlcj-player) project
 page.
-
-These tutorials are still valid for vlcj-5.
 
 Building vlcj - sun.misc.Unsafe
 -------------------------------
