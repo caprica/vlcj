@@ -77,7 +77,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     private final DefaultRenderCallback defaultRenderCallback;
 
     /**
-     * Painter used to render the video, will be <code>null</code>. if the client application provides its own render
+     * Painter used to render the video, will be <code>null</code> if the client application provides its own render
      * callback.
      * <p>
      * Ordinarily set via constructor, but may be changed via {@link #setImagePainter(CallbackImagePainter)}.
