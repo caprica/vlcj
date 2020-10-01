@@ -54,7 +54,8 @@ public class SampleAspectRatioCallbackImagePainter extends BaseCallbackImagePain
     @Override
     public void videoTrackChanged(VideoTrack videoTrack) {
         if (videoTrack != null) {
-            sar = new AspectRatio(videoTrack.sampleAspectRatio(), videoTrack.sampleAspectRatioBase());
+            // Use 1:1 if a valid SAR is not available for some reason
+            sar = new AspectRatio(Math.max(1, videoTrack.sampleAspectRatio()), Math.max(videoTrack.sampleAspectRatioBase(), 1));
         } else {
             sar = null;
         }
