@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.base.VideoTrack;
 import uk.co.caprica.vlcj.player.component.callback.CallbackImagePainter;
-import uk.co.caprica.vlcj.player.component.callback.ScaledCallbackImagePainter;
+import uk.co.caprica.vlcj.player.component.callback.SampleAspectRatioCallbackImagePainter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
@@ -132,7 +132,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
         if (renderCallback == null) {
             this.defaultRenderCallback = new DefaultRenderCallback();
-            this.imagePainter          = imagePainter == null ? new ScaledCallbackImagePainter() : imagePainter;
+            this.imagePainter          = imagePainter == null ? new SampleAspectRatioCallbackImagePainter() : imagePainter;
             this.videoSurfaceComponent = new DefaultVideoSurfaceComponent();
             bufferFormatCallback       = new DefaultBufferFormatCallback();
             renderCallback             = this.defaultRenderCallback;
