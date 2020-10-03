@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Implementation of a {@link OneShotMediaPlayerEventListener} that decrements a {@link CountDownLatch} on completion.
@@ -31,15 +32,26 @@ public abstract class SynchronisedOneShotMediaPlayerEventListener extends OneSho
     /**
      * Completion synchronisation latch.
      */
-    private final CountDownLatch latch;
+    private final CountDownLatch latch = new CountDownLatch(1);
 
     /**
-     * Create an event listener.
+     * Wait for the event to occur, or to be interrupted.
      *
-     * @param latch completion synchronisation latch
+     * @throws InterruptedException if the thread was interrupted while waiting
      */
-    public SynchronisedOneShotMediaPlayerEventListener(CountDownLatch latch) {
-        this.latch = latch;
+    public final void waitForCompletion() throws InterruptedException {
+        latch.await();
+    }
+
+    /**
+     * Wait for the event to occur, or to timeout or be interrupted.
+     *
+     * @param timeout the maximum time to wait
+     * @param unit the time unit of the {@code timeout} argument
+     * @throws InterruptedException if the thread was interrupted while waiting
+     */
+    public final void waitForCompletion(long timeout, TimeUnit unit) throws InterruptedException {
+        latch.await(timeout, unit);
     }
 
     @Override
