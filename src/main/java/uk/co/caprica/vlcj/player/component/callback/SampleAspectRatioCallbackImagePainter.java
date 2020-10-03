@@ -36,7 +36,8 @@ import java.awt.image.BufferedImage;
  * would result in a horizontally squashed image.
  * <p>
  * Note that the SAR may not be available immediately when the media starts playing, and this implementation will not
- * paint frames until a valid SAR is notified so a small number of frames may be skipped.
+ * paint frames until a valid SAR is notified so a small number of frames may be skipped - in practice no actual video
+ * frames appear to be missed or rendered with the wrong/default SAR so this concern may be moot.
  * <p>
  * The default implementation uses bilinear interpolation when painting the scaled image.
  * <p>
