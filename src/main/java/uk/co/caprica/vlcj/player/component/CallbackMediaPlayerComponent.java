@@ -373,6 +373,9 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         if (videoSurfaceComponent != null) {
             videoSurfaceComponent.setPreferredSize(new Dimension(width, height));
         }
+        if (imagePainter != null) {
+            imagePainter.newVideoBuffer(width, height);
+        }
     }
 
     /**

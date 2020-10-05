@@ -32,6 +32,14 @@ import java.awt.image.BufferedImage;
 public interface CallbackImagePainter {
 
     /**
+     * A new video buffer was created.
+     *
+     * @param width new width
+     * @param height new height
+     */
+    void newVideoBuffer(int width, int height);
+
+    /**
      * The currently selected video track changed.
      * <p>
      * The caller must not keep a reference to the videoTrack, it is only valid for the duration of the call.
@@ -60,5 +68,4 @@ public interface CallbackImagePainter {
      * @param image image to paint
      */
     void paint(Graphics2D g2, JComponent component, BufferedImage image);
-
 }
