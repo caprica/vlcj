@@ -29,6 +29,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 10th October, 2020 - vlcj 4.7.0 released, enable media list player components to reuse the same streaming output
 - 5th September, 2020 - vlcj 4.6.0 released, minor maintenance release
 - 1st May, 2020 - vlcj 4.4.4 released, minor maintenance release
 - 30th April, 2020 - vlcj 4.4.3 released, minor maintenance release - new API for starting media paused on the first frame
@@ -218,7 +219,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.6.0</version>
+    <version>4.7.0</version>
 </dependency>
 ```
 
@@ -389,7 +390,8 @@ Online Javadoc is available here:
 
 JNA direct-mapping:
 
-* [4.6.0 (current)](http://caprica.github.com/vlcj/javadoc/4.6.0/index.html "4.6.0 Javadoc")
+* [4.7.0 (current)](http://caprica.github.com/vlcj/javadoc/4.7.0/index.html "4.7.0 Javadoc")
+* [4.6.0](http://caprica.github.com/vlcj/javadoc/4.6.0/index.html "4.6.0 Javadoc")
 * [4.4.4](http://caprica.github.com/vlcj/javadoc/4.4.4/index.html "4.4.4 Javadoc")
 * [4.4.0](http://caprica.github.com/vlcj/javadoc/4.4.0/index.html "4.4.0 Javadoc")
 * [4.3.0](http://caprica.github.com/vlcj/javadoc/4.3.0/index.html "4.3.0 Javadoc")
