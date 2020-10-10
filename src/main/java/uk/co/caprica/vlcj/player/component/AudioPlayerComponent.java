@@ -60,7 +60,7 @@ public class AudioPlayerComponent extends AudioPlayerComponentBase implements Me
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
 
-        this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newMediaPlayer();
+        this.mediaPlayer = onCreateMediaPlayer();
         this.mediaPlayer.events().addMediaPlayerEventListener(this);
         this.mediaPlayer.events().addMediaEventListener(this);
 
@@ -119,6 +119,18 @@ public class AudioPlayerComponent extends AudioPlayerComponentBase implements Me
     @Override
     public final MediaPlayerFactory mediaPlayerFactory() {
         return mediaPlayerFactory;
+    }
+
+    /**
+     * Template method invoked to create a media player instance.
+     * <p>
+     * Intended to be overridden only for sub-classes (like {@link AudioListPlayerComponent} that provide their own
+     * media player instance.
+     *
+     * @return media player
+     */
+    protected MediaPlayer onCreateMediaPlayer() {
+        return this.mediaPlayerFactory.mediaPlayers().newMediaPlayer();
     }
 
     /**

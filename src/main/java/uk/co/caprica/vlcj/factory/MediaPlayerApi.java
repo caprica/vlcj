@@ -23,6 +23,8 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_get_media_player;
+
 /**
  * Behaviour pertaining to the creation of various types of media players.
  */
@@ -48,12 +50,31 @@ public final class MediaPlayerApi extends BaseApi {
     }
 
     /**
+     * Create a new media player for {@link MediaListPlayer}.
+     *
+     * @param mediaListPlayer media list player
+     * @return media player
+     */
+    public MediaPlayer newMediaPlayer(MediaListPlayer mediaListPlayer) {
+        return new MediaPlayer(libvlcInstance, libvlc_media_list_player_get_media_player(mediaListPlayer.mediaListPlayerInstance()));
+    }
+
+    /**
      * Create a new embedded media player.
      *
      * @return media player instance
      */
     public EmbeddedMediaPlayer newEmbeddedMediaPlayer() {
         return new EmbeddedMediaPlayer(libvlcInstance);
+    }
+
+    /**
+     * Create a new embedded media player for a {@link MediaListPlayer}.
+     *
+     * @return media player instance
+     */
+    public EmbeddedMediaPlayer newEmbeddedMediaPlayer(MediaListPlayer mediaListPlayer) {
+        return new EmbeddedMediaPlayer(libvlcInstance, libvlc_media_list_player_get_media_player(mediaListPlayer.mediaListPlayerInstance()));
     }
 
     /**

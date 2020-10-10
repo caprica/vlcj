@@ -89,9 +89,20 @@ public class MediaPlayer {
      * @param instance libvlc instance
      */
     public MediaPlayer(libvlc_instance_t instance) {
-        this.libvlcInstance = instance;
+        this(instance, newNativeMediaPlayer(instance));
+    }
 
-        this.mediaPlayerInstance = newNativeMediaPlayer();
+    /**
+     * Create a new media player.
+     * <p>
+     * This constructor for internal use only.
+     *
+     * @param instance libvlc instance
+     * @param mediaPlayerInstance native media player instance
+     */
+    public MediaPlayer(libvlc_instance_t instance, libvlc_media_player_t mediaPlayerInstance) {
+        this.libvlcInstance = instance;
+        this.mediaPlayerInstance = mediaPlayerInstance;
 
         audioApi      = new AudioApi     (this);
         chapterApi    = new ChapterApi   (this);
@@ -111,8 +122,8 @@ public class MediaPlayer {
         videoApi      = new VideoApi     (this);
     }
 
-    private libvlc_media_player_t newNativeMediaPlayer() {
-        libvlc_media_player_t result = libvlc_media_player_new(libvlcInstance);
+    private static libvlc_media_player_t newNativeMediaPlayer(libvlc_instance_t instance) {
+        libvlc_media_player_t result = libvlc_media_player_new(instance);
         if (result != null) {
             return result;
         } else {
