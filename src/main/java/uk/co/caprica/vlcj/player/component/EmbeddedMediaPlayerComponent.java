@@ -78,7 +78,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
         this.videoSurfaceComponent = initVideoSurfaceComponent(videoSurfaceComponent);
 
-        this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
+        this.mediaPlayer = onCreateMediaPlayer();
 
         this.mediaPlayer.videoSurface().set(this.mediaPlayerFactory.videoSurfaces().newVideoSurface(this.videoSurfaceComponent));
         this.mediaPlayer.fullScreen().strategy(fullScreenStrategy);
@@ -195,4 +195,15 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         return mediaPlayerFactory;
     }
 
+    /**
+     * Template method invoked to create a media player instance.
+     * <p>
+     * Intended to be overridden only for sub-classes (like {@link EmbeddedMediaListPlayerComponent} that provide their
+     * own media player instance.
+     *
+     * @return media player
+     */
+    protected EmbeddedMediaPlayer onCreateMediaPlayer() {
+        return this.mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
+    }
 }

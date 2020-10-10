@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.list;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.SubitemApi;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_set_media_player;
@@ -42,6 +43,8 @@ public final class MediaPlayerApi extends BaseApi {
 
     /**
      * Associate an actual media player with the media list player.
+     * <p>
+     * This is only intended for use by the internal media list player in {@link SubitemApi}.
      *
      * @param mediaPlayer media player
      */

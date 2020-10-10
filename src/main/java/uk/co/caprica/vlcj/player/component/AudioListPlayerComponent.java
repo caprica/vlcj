@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.player.component;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 /**
@@ -34,12 +35,12 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
     /**
      * Media list player.
      */
-    private final MediaListPlayer mediaListPlayer;
+    private MediaListPlayer mediaListPlayer;
 
     /**
      * Media list.
      */
-    private final MediaList mediaList;
+    private MediaList mediaList;
 
     /**
      * Construct an audio list player component.
@@ -50,16 +51,7 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
      */
     public AudioListPlayerComponent(MediaPlayerFactory mediaPlayerFactory) {
         super(mediaPlayerFactory);
-
-        this.mediaListPlayer = mediaPlayerFactory().mediaPlayers().newMediaListPlayer();
-        this.mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer());
-        this.mediaListPlayer.events().addMediaListPlayerEventListener(this);
-
-        this.mediaList = mediaPlayerFactory().media().newMediaList();
-        this.mediaList.events().addMediaListEventListener(this);
-
         applyMediaList();
-
         onAfterConstruct();
     }
 
@@ -77,6 +69,18 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
      */
     public AudioListPlayerComponent() {
         this((MediaPlayerFactory) null);
+    }
+
+    @Override
+    final protected MediaPlayer onCreateMediaPlayer() {
+        this.mediaListPlayer = mediaPlayerFactory().mediaPlayers().newMediaListPlayer();
+        this.mediaListPlayer.events().addMediaListPlayerEventListener(this);
+
+        this.mediaList = mediaPlayerFactory().media().newMediaList();
+        this.mediaList.events().addMediaListEventListener(this);
+
+        // Use the native media player instance already associated with the media list player
+        return mediaPlayerFactory().mediaPlayers().newMediaPlayer(this.mediaListPlayer);
     }
 
     private void applyMediaList() {
