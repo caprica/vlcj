@@ -71,6 +71,7 @@ public final class MediaPlayerApi extends BaseApi {
     /**
      * Create a new embedded media player for a {@link MediaListPlayer}.
      *
+     * @param mediaListPlayer media list player
      * @return media player instance
      */
     public EmbeddedMediaPlayer newEmbeddedMediaPlayer(MediaListPlayer mediaListPlayer) {
