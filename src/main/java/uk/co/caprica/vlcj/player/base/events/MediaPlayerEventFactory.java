@@ -71,6 +71,10 @@ public final class MediaPlayerEventFactory {
             case libvlc_MediaPlayerAudioVolume          : return new MediaPlayerAudioVolumeEvent          (                mediaPlayer, event);
             case libvlc_MediaPlayerAudioDevice          : return new MediaPlayerAudioDeviceEvent          (                mediaPlayer, event);
             case libvlc_MediaPlayerESSelected           : return new MediaPlayerESSelectionChangedEvent   (                mediaPlayer, event);
+            case libvlc_MediaPlayerProgramAdded         : return new MediaPlayerProgramAddedEvent         (                mediaPlayer, event);
+            case libvlc_MediaPlayerProgramDeleted       : return new MediaPlayerProgramDeletedEvent       (                mediaPlayer, event);
+            case libvlc_MediaPlayerProgramSelected      : return new MediaPlayerProgramSelectedEvent      (                mediaPlayer, event);
+            case libvlc_MediaPlayerProgramUpdated       : return new MediaPlayerProgramUpdatedEvent       (                mediaPlayer, event);
             case libvlc_MediaPlayerTitleListChanged     : return new MediaPlayerTitleListChangedEvent     (                mediaPlayer       );
             case libvlc_MediaPlayerTitleSelectionChanged: return new MediaPlayerTitleSelectionChangedEvent(                mediaPlayer, event);
             case libvlc_MediaPlayerChapterChanged       : return new MediaPlayerChapterChangedEvent       (                mediaPlayer, event);

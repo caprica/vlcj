@@ -267,6 +267,39 @@ public interface MediaPlayerEventListener {
     void chapterChanged(MediaPlayer mediaPlayer, int newChapter);
 
     /**
+     * A program was added.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param id program identifier
+     */
+    void programAdded(MediaPlayer mediaPlayer, int id);
+
+    /**
+     * A program was deleted.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param id program identifier
+     */
+    void programDeleted(MediaPlayer mediaPlayer, int id);
+
+    /**
+     * A program was updated.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param id program identifier
+     */
+    void programUpdated(MediaPlayer mediaPlayer, int id);
+
+    /**
+     * A program was selected.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param unselectedId identifier of the program that was unselected
+     * @param selectedId identifier of the program that was selected
+     */
+    void programSelected(MediaPlayer mediaPlayer, int unselectedId, int selectedId);
+
+    /**
      * An error occurred.
      *
      * @param mediaPlayer media player that raised the event
@@ -292,5 +325,4 @@ public interface MediaPlayerEventListener {
      * @param mediaPlayer media player that raised the event
      */
     void mediaPlayerReady(MediaPlayer mediaPlayer);
-
 }

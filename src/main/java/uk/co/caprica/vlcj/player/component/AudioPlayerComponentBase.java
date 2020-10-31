@@ -155,6 +155,22 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
+    public void programAdded(MediaPlayer mediaPlayer, int id) {
+    }
+
+    @Override
+    public void programDeleted(MediaPlayer mediaPlayer, int id) {
+    }
+
+    @Override
+    public void programUpdated(MediaPlayer mediaPlayer, int id) {
+    }
+
+    @Override
+    public void programSelected(MediaPlayer mediaPlayer, int unselectedId, int selectedId) {
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
     }
 
