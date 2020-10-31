@@ -113,10 +113,6 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
-    public void scrambledChanged(MediaPlayer mediaPlayer, int newScrambled) {
-    }
-
-    @Override
     public void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
     }
 
