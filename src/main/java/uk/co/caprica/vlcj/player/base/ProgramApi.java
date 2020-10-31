@@ -60,7 +60,8 @@ public final class ProgramApi extends BaseApi {
             List<Program> result = new ArrayList<Program>(count);
             for (int i = 0; i < count; i++) {
                 libvlc_player_program_t programInstance = libvlc_player_programlist_at(programList, new size_t(i));
-                result.add(convertAndFree(programInstance));
+                // This native instance must NOT be freed here
+                result.add(new Program(programInstance));
             }
             libvlc_player_programlist_delete(programList);
             return result;
