@@ -66,7 +66,7 @@ public class Program {
     /**
      * Is the program selected?
      *
-     * @return <code>true/code> if selected; <code>false</code> otherwise
+     * @return <code>true</code> if selected; <code>false</code> otherwise
      */
     public boolean selected() {
         return selected;
@@ -75,7 +75,7 @@ public class Program {
     /**
      * Is the program scrambled?
      *
-     * @return <code>true/code> if scrambled; <code>false</code> otherwise
+     * @return <code>true</code> if scrambled; <code>false</code> otherwise
      */
     public boolean scrambled() {
         return scrambled;
