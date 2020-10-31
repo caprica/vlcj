@@ -20,7 +20,6 @@
 package uk.co.caprica.vlcj.player.base.events;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.media_player_es_selection_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_program_changed;
 import uk.co.caprica.vlcj.binding.internal.media_player_program_selection_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
@@ -38,8 +37,8 @@ final class MediaPlayerProgramSelectedEvent extends MediaPlayerEvent {
     MediaPlayerProgramSelectedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
         super(mediaPlayer);
 
-        this.unselectedId = ((media_player_program_selection_changed) event.u.getTypedValue(media_player_es_selection_changed.class)).i_unselected_id;
-        this.selectedId = ((media_player_program_selection_changed) event.u.getTypedValue(media_player_es_selection_changed.class)).i_selected_id;
+        this.unselectedId = ((media_player_program_selection_changed) event.u.getTypedValue(media_player_program_changed.class)).i_unselected_id;
+        this.selectedId = ((media_player_program_selection_changed) event.u.getTypedValue(media_player_program_changed.class)).i_selected_id;
     }
 
     @Override
