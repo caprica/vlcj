@@ -54,7 +54,7 @@ Core vlcj embeds native media players in Swing/AWT applications. This has been t
 versions. This is still fully supported and still works well, in fact it is still likely the most performant solution.
 
 However, recent versions of JavaFX introduced the `PixelBuffer` component, providing direct access to a shared native
-memory buffer that can be by vlcj/LibVLC as a "callback" video buffer. This performs really well. even when using
+memory buffer that can be used by vlcj/LibVLC as a "callback" video buffer. This performs really well. even when using
 multiple concurrent video players.
 
 Another factor to consider here is that contemporary macOS does not support AWT at all, so JavaFX is a very good option
