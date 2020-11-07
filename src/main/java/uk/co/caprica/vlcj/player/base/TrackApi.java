@@ -176,7 +176,7 @@ public final class TrackApi extends BaseApi {
      * @param track track to select
      */
     public void selectTrack(Track track) {
-        libvlc_media_player_select_track(mediaPlayerInstance, track.trackType().intValue(), track.instance());
+        libvlc_media_player_select_track(mediaPlayerInstance, track.instance());
     }
 
     /**
@@ -186,7 +186,7 @@ public final class TrackApi extends BaseApi {
      *
      * @param tracks tracks, of any type, to select
      */
-    public void select(Track... tracks) {
+    public <T extends Track> void select(T... tracks) {
         if (tracks != null && tracks.length > 0) {
             select(TrackType.AUDIO, tracks);
             select(TrackType.VIDEO, tracks);
@@ -201,7 +201,7 @@ public final class TrackApi extends BaseApi {
      *
      * @param tracks tracks, of any type, to select
      */
-    public void select(List<Track> tracks) {
+    public <T extends Track> void select(List<T> tracks) {
         select(tracks.toArray(new Track[0]));
     }
 
@@ -210,7 +210,7 @@ public final class TrackApi extends BaseApi {
      * <p>
      * Not all track types support multiple selection.
      * <p>
-     * This method can be used pre-select a list of tracks before starting the media player, or after the player has
+     * This method can be used to pre-select a list of tracks before starting the media player, or after the player has
      * been started.
      * <p>
      * Track identifiers are obtained from {@link Track#trackId()}.
