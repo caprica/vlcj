@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.State;
 
 import javax.swing.*;
+import java.util.List;
 
 /**
  * Default implementation of the media player event listener.
@@ -70,4 +71,7 @@ public class MediaEventAdapter implements MediaEventListener {
     public void mediaThumbnailGenerated(Media media, Picture picture) {
     }
 
+    @Override
+    public void mediaAttachedThumbnailsFound(Media media, List<Picture> pictures) {
+    }
 }

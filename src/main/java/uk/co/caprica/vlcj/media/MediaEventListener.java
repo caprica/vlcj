@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.State;
 
 import javax.swing.*;
+import java.util.List;
 
 /**
  * Specification for a component that is interested in receiving event notifications from the media.
@@ -102,4 +103,11 @@ public interface MediaEventListener {
      */
     void mediaThumbnailGenerated(Media media, Picture picture);
 
+    /**
+     * Thumbnail attachments were found during media pre-parsing.
+     *
+     * @param media media that contains the attachments
+     * @param pictures attachments that were found
+     */
+    void mediaAttachedThumbnailsFound(Media media, List<Picture> pictures);
 }

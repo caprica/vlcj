@@ -32,7 +32,7 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_event_manager;
 final class MediaNativeEventManager extends NativeEventManager<Media, MediaEventListener> {
 
     MediaNativeEventManager(libvlc_instance_t libvlcInstance, Media eventObject) {
-        super(libvlcInstance, eventObject, libvlc_event_e.libvlc_MediaMetaChanged, libvlc_event_e.libvlc_MediaThumbnailGenerated, "media-events");
+        super(libvlcInstance, eventObject, libvlc_event_e.libvlc_MediaMetaChanged, libvlc_event_e.libvlc_MediaAttachedThumbnailsFound, "media-events");
     }
 
     @Override

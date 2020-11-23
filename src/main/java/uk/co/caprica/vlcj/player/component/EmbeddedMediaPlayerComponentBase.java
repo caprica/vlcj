@@ -31,8 +31,11 @@ import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.player.base.TitleDescription;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -41,6 +44,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 /**
  * Base implementation of an embedded media player.
@@ -273,6 +277,10 @@ abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaP
 
     @Override
     public void mediaThumbnailGenerated(Media media, Picture picture) {
+    }
+
+    @Override
+    public void mediaAttachedThumbnailsFound(Media media, List<Picture> pictures) {
     }
 
     // === MouseListener ========================================================

@@ -31,6 +31,8 @@ import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.player.base.TitleDescription;
 
+import java.util.List;
+
 /**
  * Base implementation of an audio player.
  * <p>
@@ -212,4 +214,7 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     public void mediaThumbnailGenerated(Media media, Picture picture) {
     }
 
+    @Override
+    public void mediaAttachedThumbnailsFound(Media media, List<Picture> pictures) {
+    }
 }
