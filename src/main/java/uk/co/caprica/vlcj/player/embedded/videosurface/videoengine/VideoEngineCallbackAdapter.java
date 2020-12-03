@@ -20,6 +20,9 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
 
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.binding.internal.ReportSizeChanged;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_cfg_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_render_cfg_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_device_cfg_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_device_info_t;
 
@@ -40,7 +43,11 @@ public abstract class VideoEngineCallbackAdapter implements VideoEngineCallback 
     }
 
     @Override
-    public Pointer onSetResizeCallback(Pointer opaque, Pointer report_size_change, Pointer report_opaque) {
-        return null;
+    public void onSetResizeCallback(Pointer opaque, ReportSizeChanged report_size_change, Pointer report_opaque) {
+    }
+
+    @Override
+    public boolean onUpdateOutput(Pointer opaque, libvlc_video_render_cfg_t renderConfig, libvlc_video_output_cfg_t outputConfig) {
+        return true;
     }
 }

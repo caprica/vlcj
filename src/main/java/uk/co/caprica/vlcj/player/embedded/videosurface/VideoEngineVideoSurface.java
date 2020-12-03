@@ -20,22 +20,23 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.binding.internal.ReportSizeChanged;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_color_primaries_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_color_space_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_getProcAddress_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_makeCurrent_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_cfg_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_set_resize_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_setup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_render_cfg_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_device_cfg_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_device_info_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_video_transfer_func_e;
-import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngine;
-import uk.co.caprica.vlcj.binding.internal.libvlc_video_getProcAddress_cb;
-import uk.co.caprica.vlcj.binding.internal.libvlc_video_makeCurrent_cb;
-import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_setup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_swap_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_transfer_func_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_update_output_cb;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngine;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineCallback;
 
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_output_callbacks;
@@ -113,9 +114,8 @@ public final class VideoEngineVideoSurface extends VideoSurface {
 
     private final class SetResizeCallback implements libvlc_video_output_set_resize_cb {
         @Override
-        public Pointer setResizeCallback(Pointer opaque, Pointer report_size_change, Pointer report_opaque) {
-            // FIXME is this callback useful?
-            return callback.onSetResizeCallback(opaque, report_size_change, report_opaque);
+        public void setResizeCallback(Pointer opaque, ReportSizeChanged report_size_change, Pointer report_opaque) {
+            callback.onSetResizeCallback(opaque, report_size_change, report_opaque);
         }
     }
 
@@ -128,7 +128,7 @@ public final class VideoEngineVideoSurface extends VideoSurface {
             output.primaries = libvlc_video_color_primaries_e.libvlc_video_primaries_BT709.intValue();
             output.transfer = libvlc_video_transfer_func_e.libvlc_video_transfer_func_SRGB.intValue();
             // The return value is not used by the native code
-            return callback.onUpdateOutput(opaque, cfg.width, cfg.height) ? 1: 0;
+            return callback.onUpdateOutput(opaque, cfg, output) ? 1: 0;
         }
     }
 

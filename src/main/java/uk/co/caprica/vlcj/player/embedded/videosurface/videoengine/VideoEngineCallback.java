@@ -20,6 +20,9 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
 
 import com.sun.jna.Pointer;
+import uk.co.caprica.vlcj.binding.internal.ReportSizeChanged;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_cfg_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_render_cfg_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_device_cfg_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_device_info_t;
 
@@ -47,23 +50,28 @@ public interface VideoEngineCallback {
 
     /**
      * Set the resize callback.
+     * <p>
+     * The resize callback must be invoked by the application when the size of the video display surface changes (e.g.
+     * due to a window resize event).
      *
      * @param opaque opaque data pointer
      * @param report_size_change  callback
      * @param report_opaque opaque data pointer for the callback
-     * @return callback, or <code>null</code>
      */
-    Pointer onSetResizeCallback(Pointer opaque, Pointer report_size_change, Pointer report_opaque);
+    void onSetResizeCallback(Pointer opaque, ReportSizeChanged report_size_change, Pointer report_opaque);
 
     /**
      * Update the video output with new dimensions.
+     * <p>
+     * <em>Note that this currently exposes native structures via renderConfig and outputConfig, this may change in the
+     * future.</em>
      *
      * @param opaque opaque data pointer
-     * @param width new video width
-     * @param height new video height
+     * @param renderConfig render configuration
+     * @param outputConfig output configuration
      * @return <code>true</code> on success; <code>false</code> on error
      */
-    boolean onUpdateOutput(Pointer opaque, int width, int height);
+    boolean onUpdateOutput(Pointer opaque, libvlc_video_render_cfg_t renderConfig, libvlc_video_output_cfg_t outputConfig);
 
     /**
      * A batch of native rendering calls finished.
