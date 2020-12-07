@@ -23,7 +23,7 @@ working on contemporary Raspberry Pi builds.
 
 At least JDK 8 is required.
 
-vlcj-4.6.x, which is still current, is the last version of vlcj that was built against JDK 1.6.
+vlcj-4.7.x, which is still current, is the last version of vlcj that was built against JDK 1.6.
 
 *This version of vlcj requires VLC 4.0.0 as a minimum, no earlier version is supported.*
 
@@ -75,7 +75,7 @@ single video surface abstraction is the difference.
 vlcj-5
 ======
 
-vlcj-5 is primarily a incremental feature-release, preserving the vlcj-4 API as much as possible.
+vlcj-5 is primarily an incremental feature-release, preserving the vlcj-4 API as much as possible.
 
 Major New Features
 ------------------
@@ -155,8 +155,8 @@ Threading Model
 
 This section is very important.
 
-With vlcj-4, every native event coming from LibVLC is processed on the native callback thread. This should give some
-small performance gains when compared with vlcj-3.
+With vlcj-4 and later, every native event coming from LibVLC is processed on the native callback thread. This
+should give some small performance gains when compared with vlcj-3.
 
 The critical issue is that it is generally not permitted to call back into LibVLC from the event callback thread. Doing
 so may cause subtle failures or outright hard JVM crashes.
@@ -199,8 +199,8 @@ You should *not* use this mechanism for *all* of your event handlers, *only thos
 Other high-level vlcj components may also provide their own asynchronous task executor, it is not limited to the media
 player.
 
-An added caveat for vlcj-4 is that when you implement event handling you must be sure to execute quickly, and to not
-block the native thread with any long-running operation.
+An added caveat for vlcj-4 and later is that when you implement event handling you must be sure to execute quickly, and
+to not block the native thread with any long-running operation.
 
 Your event handler implementations must *not* throw an `Exception`, failure of your event handlers to catch and handle
 any thrown exception may prevent other listeners from being notified of the event.
