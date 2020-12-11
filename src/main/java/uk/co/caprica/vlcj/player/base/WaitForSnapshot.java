@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player.base;
 
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Private helper to take a snapshot and wait until the corresponding snapshot taken event is received (or an error
@@ -79,10 +80,28 @@ final class WaitForSnapshot extends MediaPlayerEventAdapter {
      * @return filename where the snapshot was saved; or <code>null</code> if an error occurred
      */
     String getSnapshot() {
+        return requestSnapshot(0);
+    }
+
+    /**
+     * Wait for a snapshot to be generated.
+     *
+     * @param timeout number of milliseconds to wait for the snapshot to be generated before timing out
+     * @return filename where the snapshot was saved; or <code>null</code> if an error occurred
+     */
+    String getSnapshot(long timeout) {
+        return requestSnapshot(timeout);
+    }
+
+    private String requestSnapshot(long timeout) {
         try {
             mediaPlayer.events().addMediaPlayerEventListener(this);
             if (mediaPlayer.snapshots().save(file, width, height)) {
-                snapshotTakenLatch.await();
+                if (timeout == 0) {
+                    snapshotTakenLatch.await();
+                } else {
+                    snapshotTakenLatch.await(timeout, TimeUnit.MILLISECONDS);
+                }
                 return snapshotResult;
             } else {
                 return null;

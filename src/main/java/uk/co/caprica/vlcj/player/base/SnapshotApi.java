@@ -176,7 +176,7 @@ public final class SnapshotApi extends BaseApi {
      * @return snapshot image, or <code>null</code> if a snapshot could not be taken
      */
     public BufferedImage get() {
-        return get(0, 0);
+        return get(0, 0, 0);
     }
 
     /**
@@ -202,10 +202,45 @@ public final class SnapshotApi extends BaseApi {
      * @return snapshot image, or <code>null</code> if a snapshot could not be taken
      */
     public BufferedImage get(int width, int height) {
+        return get(width, height, 0);
+    }
+
+    /**
+     * Get a snapshot of the currently playing video, with a maximum time to wait for the snapshot
+     * to be generated.
+     *
+     * @see #get()
+     *
+     * @param timeout maximum amount of time to wait (in milliseconds) for the snapshot to be generated
+     * @return snapshot image, or <code>null</code> if a snapshot could not be taken
+     */
+    public BufferedImage get(long timeout) {
+        return get(0, 0, timeout);
+    }
+
+    /**
+     * Get a snapshot of the currently playing video, with a maximum time to wait for the snapshot
+     * to be generated.
+     *
+     * @see #get(int, int)
+     *
+     * @param width desired image width
+     * @param height desired image height
+     * @param timeout maximum amount of time to wait (in milliseconds) for the snapshot to be generated
+     * @return snapshot image, or <code>null</code> if a snapshot could not be taken
+     */
+    public BufferedImage get(int width, int height, long timeout) {
         File file = null;
         try {
             file = File.createTempFile("vlcj-snapshot-", ".png");
-            return ImageIO.read(new File(new WaitForSnapshot(mediaPlayer, file, width, height).getSnapshot()));
+            WaitForSnapshot waiter = new WaitForSnapshot(mediaPlayer, file, width, height);
+            String snapshot;
+            if (timeout == 0) {
+                snapshot = waiter.getSnapshot();
+            } else {
+                snapshot = waiter.getSnapshot(timeout);
+            }
+            return ImageIO.read(new File(snapshot));
         }
         catch (Exception e) {
             throw new RuntimeException("Failed to get snapshot image", e);
@@ -216,5 +251,4 @@ public final class SnapshotApi extends BaseApi {
             }
         }
     }
-
 }
