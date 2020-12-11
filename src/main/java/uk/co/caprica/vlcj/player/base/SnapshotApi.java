@@ -170,6 +170,8 @@ public final class SnapshotApi extends BaseApi {
      * Taking a snapshot is an asynchronous function, the snapshot is not available until
      * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
      * is received.
+     * <p>
+     * This function will block until the snapshot taken event is received.
      *
      * @return snapshot image, or <code>null</code> if a snapshot could not be taken
      */
