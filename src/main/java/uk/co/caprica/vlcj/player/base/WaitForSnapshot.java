@@ -78,7 +78,7 @@ final class WaitForSnapshot extends MediaPlayerEventAdapter {
      *
      * @return filename where the snapshot was saved; or <code>null</code> if an error occurred
      */
-    public String getSnapshot() {
+    String getSnapshot() {
         try {
             mediaPlayer.events().addMediaPlayerEventListener(this);
             if (mediaPlayer.snapshots().save(file, width, height)) {
