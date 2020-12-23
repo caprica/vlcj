@@ -28,9 +28,9 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_version;
 public final class LibVlcVersion {
 
     /**
-     * LibVlc 3.0.0 API baseline.
+     * LibVlc 4.0.0 API baseline.
      */
-    public static final Version requiredVersion = new Version("3.0.0");
+    public static final Version requiredVersion = new Version("4.0.0");
 
     /**
      * Runtime version of VLC/LibVLC.
