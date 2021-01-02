@@ -41,7 +41,7 @@ Build Status
 News
 ====
 
-- Future, 2020 - vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 8 LTS.
+- Future, 2021 - vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 8 LTS.
 
 All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
