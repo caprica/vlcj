@@ -26,7 +26,7 @@ package uk.co.caprica.vlcj.player.base;
  * A sub-class should override methods to implement the desired event behaviour, and from one or other of those methods
  * it should invoke {@link #done(MediaPlayer)} to cause the listener to be removed.
  * <p>
- * If is the event method implementations that decide if/when the event listener should be removed, so it may not
+ * It is the event method implementations that decide if/when the event listener should be removed, so it may not
  * strictly be one received event only - for example if a listener were added to trigger when the playback time reached
  * five seconds, there would be multiple intermediate time changed events fired before the target time were reached.
  * <p>
