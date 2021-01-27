@@ -27,6 +27,7 @@ import uk.co.caprica.vlcj.media.SlaveApi;
 import java.io.File;
 
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_spu_delay;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_spu_text_scale;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_spu_delay;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_spu_text_scale;
 
@@ -58,6 +59,15 @@ public final class SubpictureApi extends BaseApi {
      */
     public void setDelay(long delay) {
         libvlc_video_set_spu_delay(mediaPlayerInstance, delay);
+    }
+
+    /**
+     * Get the sub-title text scale.
+     *
+     * @return text scale factor; 1.0 for normal size (100%), 0.5 for half size, 2.0 for double size etc
+     */
+    public float getTextScale() {
+        return libvlc_video_get_spu_text_scale(mediaPlayerInstance);
     }
 
     /**
