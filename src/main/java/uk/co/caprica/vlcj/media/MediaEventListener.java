@@ -72,14 +72,6 @@ public interface MediaEventListener {
     void mediaParsedChanged(Media media, MediaParsedStatus newStatus);
 
     /**
-     * The current media was freed.
-     *
-     * @param media media that raised the event
-     * @param mediaFreed reference of the media that was freed
-     */
-    void mediaFreed(Media media, MediaRef mediaFreed);
-
-    /**
      * The current media state changed.
      *
      * @param media media that raised the event

@@ -199,10 +199,6 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void mediaFreed(Media media, MediaRef mediaFreed) {
-    }
-
-    @Override
     public void mediaStateChanged(Media media, State newState) {
     }
 

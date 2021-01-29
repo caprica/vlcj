@@ -56,10 +56,6 @@ public class MediaEventAdapter implements MediaEventListener {
     }
 
     @Override
-    public void mediaFreed(Media media, MediaRef mediaFreed) {
-    }
-
-    @Override
     public void mediaStateChanged(Media media, State newState) {
     }
 

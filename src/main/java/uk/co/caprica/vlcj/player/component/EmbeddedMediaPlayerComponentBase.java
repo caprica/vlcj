@@ -264,10 +264,6 @@ abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaP
     }
 
     @Override
-    public void mediaFreed(Media media, MediaRef mediaFreed) {
-    }
-
-    @Override
     public void mediaStateChanged(Media media, State newState) {
     }
 

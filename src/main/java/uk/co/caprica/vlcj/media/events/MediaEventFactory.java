@@ -43,7 +43,6 @@ public final class MediaEventFactory {
             case libvlc_MediaSubItemAdded           : return new MediaSubItemAddedEvent           (libvlcInstance, media, event);
             case libvlc_MediaDurationChanged        : return new MediaDurationChangedEvent        (libvlcInstance, media, event);
             case libvlc_MediaParsedChanged          : return new MediaParsedChangedEvent          (libvlcInstance, media, event);
-            case libvlc_MediaFreed                  : return new MediaFreedEvent                  (libvlcInstance, media, event);
             case libvlc_MediaStateChanged           : return new MediaStateChangedEvent           (libvlcInstance, media, event);
             case libvlc_MediaSubItemTreeAdded       : return new MediaSubItemTreeAddedEvent       (libvlcInstance, media, event);
             case libvlc_MediaThumbnailGenerated     : return new MediaThumbnailGeneratedEvent     (libvlcInstance, media, event);
