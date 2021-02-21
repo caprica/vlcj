@@ -27,6 +27,7 @@ import uk.co.caprica.vlcj.binding.RuntimeUtil;
 public class OsxWellKnownDirectoryProvider extends WellKnownDirectoryProvider {
 
     private static final String[] DIRECTORIES = {
+        "/Applications/VLC.app/Contents/Frameworks",
         "/Applications/VLC.app/Contents/MacOS/lib"
     };
 
