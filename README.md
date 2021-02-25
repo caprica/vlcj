@@ -1,8 +1,3 @@
-![vlcj](https://github.com/caprica/vlcj/raw/master/etc/vlcj-logo.png "vlcj")
-
-*You are currently looking at the development branch for vlcj-4.0.0, if you are looking for the previous version of vlcj
-you should switch to the [vlcj-3.x branch](https://github.com/caprica/vlcj/tree/vlcj-3.x).* 
-
 vlcj
 ====
 
