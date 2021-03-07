@@ -41,6 +41,16 @@ Build Status
 News
 ====
 
+Project status update 7th March 2021:
+
+>vlcj-5.0.0-SNAPSHOT currently has feature parity with the in-development LibVLC 4.0.0 - we're basically waiting for VLC
+4.0 final to be released, or for any new native API to be added to be added to LibVLC.
+> 
+> If you have a stable pre-release build of VLC 4.0.0 you should be fine to use the current vlcj-5.0.0-SNAPSHOT version.
+> 
+> But as of right now, there's nothing much more to be done on vlcj until the next major version of VLC is released -
+and that is likely yet to be quite some time away.
+
 - Future, 2021 - vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 8 LTS.
 
 All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
