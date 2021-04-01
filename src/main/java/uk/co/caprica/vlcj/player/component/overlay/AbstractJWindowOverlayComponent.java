@@ -90,24 +90,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
      */
     protected void onSetWindowTransparency() {
         String javaSpecificationVersion = System.getProperty("java.specification.version");
-        // If Java7 or later...
-        if ("1.7".compareTo(javaSpecificationVersion) <= 0) {
-            // ...simply set the background colour to a fully transparent colour
-            setBackground(new Color(0, 0, 0, 0));
-        }
-        // Otherwise earlier than Java7...
-        else {
-            // ...try AWTUtilities if the class can be found...
-            try {
-                Class<?> awtUtilitiesClass = Class.forName("com.sun.awt.AWTUtilities");
-                Method setWindowOpaqueMethod = awtUtilitiesClass.getMethod("setWindowOpaque", Window.class, Boolean.class);
-                setWindowOpaqueMethod.invoke(null, this, false);
-            }
-            catch (Exception e) {
-                // Fall-back, this is the best that can be done
-                setBackground(new Color(0, 0, 0, 0));
-            }
-        }
+        setBackground(new Color(0, 0, 0, 0));
     }
 
     /**
