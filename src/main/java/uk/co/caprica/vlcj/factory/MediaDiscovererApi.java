@@ -36,7 +36,6 @@ import java.util.List;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_list_get;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_list_release;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_new;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_discoverer_list_release;
 
 /**
  * Behaviour pertaining to media discovery.
