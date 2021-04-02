@@ -230,7 +230,7 @@ public final class MediaApi extends BaseApi {
             List<String> result = new ArrayList<String>(count);
             for (int i = 0; i < count; i++) {
                 libvlc_media_t item = libvlc_media_list_item_at_index(mediaListInstance, i);
-                result.add(NativeString.copyNativeString(libvlc_media_get_mrl(item)));
+                result.add(NativeString.copyAndFreeNativeString(libvlc_media_get_mrl(item)));
                 libvlc_media_release(item);
             }
             return result;
@@ -252,7 +252,7 @@ public final class MediaApi extends BaseApi {
             libvlc_media_t media = libvlc_media_list_item_at_index(mediaListInstance, index);
             if (media != null) {
                 try {
-                    return NativeString.copyNativeString(libvlc_media_get_mrl(media));
+                    return NativeString.copyAndFreeNativeString(libvlc_media_get_mrl(media));
                 }
                 finally {
                     libvlc_media_release(media);
