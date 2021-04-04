@@ -204,7 +204,7 @@
                     <show>public</show>
                     <quiet>true</quiet>
                     <failOnError>true</failOnError>
-                    <additionalOptions>-html5</additionalOptions>
+                    <additionalOptions>-html5 -Xdoclint:none</additionalOptions>
                     <source>6</source>
                 </configuration>
                 <executions>
