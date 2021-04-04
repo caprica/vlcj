@@ -18,7 +18,7 @@
 
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.7.1-SNAPSHOT</version>
+    <version>4.7.1</version>
 
     <name>vlcj</name>
     <description>Java Framework for the vlc Media Player.</description>
@@ -66,7 +66,7 @@
         <connection>scm:git:git@github.com:caprica/vlcj.git</connection>
         <developerConnection>scm:git:git@github.com:caprica/vlcj.git</developerConnection>
         <url>git@github.com:caprica/vlcj.git</url>
-        <tag>vlcj-4.7.0</tag>
+        <tag>vlcj-4.7.1</tag>
     </scm>
 
     <distributionManagement>
