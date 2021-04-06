@@ -48,10 +48,11 @@ public abstract class SynchronisedOneShotMediaPlayerEventListener extends OneSho
      *
      * @param timeout the maximum time to wait
      * @param unit the time unit of the {@code timeout} argument
+     * @return <code>true</code> if the event occurred within the timeout; <code>false</code> if the timeout was exceeded
      * @throws InterruptedException if the thread was interrupted while waiting
      */
-    public final void waitForCompletion(long timeout, TimeUnit unit) throws InterruptedException {
-        latch.await(timeout, unit);
+    public final boolean waitForCompletion(long timeout, TimeUnit unit) throws InterruptedException {
+        return latch.await(timeout, unit);
     }
 
     @Override
