@@ -78,6 +78,13 @@ public final class MediaApi extends BaseApi {
      * Prepare new media (set it, do not play it).
      * <p>
      * <strong>Setting media is now an asynchronous operation.</strong>
+     * <p>
+     * Where the MRL refers to a file, then <em>native</em> file separators <em>must</em> be used, not the Java platform
+     * independent file separator.
+     * <p>
+     * This means that, for example, on Windows platforms something lke "C:\\Movies\\My Cool Movie.mp4" must be used
+     * instead of "C:/Movies/My Cool Movie.mp4". Additionally note that a backslash character must be escaped as would
+     * be expected for any other Java string.
      *
      * @param mrl media resource locator
      * @param options zero or more options to attach to the new media
@@ -91,6 +98,13 @@ public final class MediaApi extends BaseApi {
      * Set new media and play it.
      * <p>
      * <strong>Setting media is now an asynchronous operation.</strong>
+     * <p>
+     * Where the MRL refers to a file, then <em>native</em> file separators <em>must</em> be used, not the Java platform
+     * independent file separator.
+     * <p>
+     * This means that, for example, on Windows platforms something lke "C:\\Movies\\My Cool Movie.mp4" must be used
+     * instead of "C:/Movies/My Cool Movie.mp4". Additionally note that a backslash character must be escaped as would
+     * be expected for any other Java string.
      *
      * @param mrl media resource locator
      * @param options zero or more options to attach to the new media
@@ -110,6 +124,13 @@ public final class MediaApi extends BaseApi {
      * This method should be used only when the media player is in a stopped state, otherwise behaviour is undefined.
      * <p>
      * <strong>Setting media is now an asynchronous operation.</strong>
+     * <p>
+     * Where the MRL refers to a file, then <em>native</em> file separators <em>must</em> be used, not the Java platform
+     * independent file separator.
+     * <p>
+     * This means that, for example, on Windows platforms something lke "C:\\Movies\\My Cool Movie.mp4" must be used
+     * instead of "C:/Movies/My Cool Movie.mp4". Additionally note that a backslash character must be escaped as would
+     * be expected for any other Java string.
      *
      * @param mrl media resource locator
      * @param options zero or more options to attach to the new media
