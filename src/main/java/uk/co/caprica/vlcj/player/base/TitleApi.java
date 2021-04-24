@@ -79,10 +79,6 @@ public final class TitleApi extends BaseApi {
      * @return list of descriptions, may be empty but will never be <code>null</code>
      */
     public List<TitleDescription> titleDescriptions() {
-        return titleDescriptions(mediaPlayerInstance);
-    }
-
-    private static List<TitleDescription> titleDescriptions(libvlc_media_player_t mediaPlayerInstance) {
         List<TitleDescription> result;
         PointerByReference titles = new PointerByReference();
         int titleCount = libvlc_media_player_get_full_title_descriptions(mediaPlayerInstance, titles);
