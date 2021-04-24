@@ -30,7 +30,7 @@ import uk.co.caprica.vlcj.player.renderer.RendererItem;
  */
 final class RendererDiscovererItemAddedEvent extends RendererDiscovererEvent {
 
-    private RendererItem item;
+    private final RendererItem item;
 
     RendererDiscovererItemAddedEvent(RendererDiscoverer rendererDiscoverer, libvlc_event_t event) {
         super(rendererDiscoverer);
