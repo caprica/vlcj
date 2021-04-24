@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player.renderer;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.RendererApi;
 
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_flags;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_hold;
@@ -139,7 +140,7 @@ public final class RendererItem {
     /**
      * Hold this renderer item.
      * <p>
-     * The item <em>must</em> be held prior to setting it via a call to {@link MediaPlayer#setRenderer(RendererItem)}
+     * The item <em>must</em> be held prior to setting it via a call to {@link RendererApi#setRenderer(RendererItem)}
      * on {@link MediaPlayer}.
      * <p>
      * The item <em>must</em> be released when the caller no longer has any use for it.
