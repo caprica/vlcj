@@ -163,7 +163,7 @@ public class MediaPlayer {
         return programApi;
     }
 
-    public final RendererApi rendererApi() {
+    public final RendererApi renderer() {
         return rendererApi;
     }
 
