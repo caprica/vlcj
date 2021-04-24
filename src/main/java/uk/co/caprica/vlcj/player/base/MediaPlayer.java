@@ -21,13 +21,10 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
-import uk.co.caprica.vlcj.player.renderer.RendererItem;
 import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
 
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_new;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_renderer;
 
 /**
  * Base media player implementation.
@@ -55,11 +52,6 @@ public class MediaPlayer {
     private final TaskExecutor executor = new TaskExecutor();
 
     /**
-     * Optional alternate renderer.
-     */
-    private RendererItem renderer;
-
-    /**
      * Arbitrary object associated with this media list player.
      */
     private Object userData;
@@ -73,6 +65,7 @@ public class MediaPlayer {
     private final MediaApi      mediaApi;
     private final MenuApi       menuApi;
     private final ProgramApi    programApi;
+    private final RendererApi   rendererApi;
     private final RoleApi       roleApi;
     private final SnapshotApi   snapshotApi;
     private final StatusApi     statusApi;
@@ -113,6 +106,7 @@ public class MediaPlayer {
         mediaApi      = new MediaApi     (this);
         menuApi       = new MenuApi      (this);
         programApi    = new ProgramApi   (this);
+        rendererApi   = new RendererApi  (this);
         roleApi       = new RoleApi      (this);
         snapshotApi   = new SnapshotApi  (this);
         statusApi     = new StatusApi    (this);
@@ -169,6 +163,10 @@ public class MediaPlayer {
         return programApi;
     }
 
+    public final RendererApi rendererApi() {
+        return rendererApi;
+    }
+
     public final RoleApi role() {
         return roleApi;
     }
@@ -203,42 +201,6 @@ public class MediaPlayer {
 
     public final VideoApi video() {
         return videoApi;
-    }
-
-    /**
-     * Set an alternate media renderer.
-     * <p>
-     * If the supplied renderer item is not <code>null</code> this component will invoke {@link RendererItem#hold()}.
-     * <p>
-     * If a renderer was previously set, RendererItem{@link RendererItem#release()} will be invoked.
-     * <p>
-     * A client application therefore need not, although it may, concern itself with hold/release.
-     * <p>
-     * If the new renderer could not be set it will be properly released (i.e. the hold acquired in this method will not
-     * be kept).
-     *
-     * @param rendererItem media renderer, or <code>null</code> to render as normal
-     * @return <code>true</code> if successful; <code>false</code> on error
-     */
-    public final boolean setRenderer(RendererItem rendererItem) {
-        if (rendererItem != null) {
-            if (!rendererItem.hold()) {
-                return false;
-            }
-        }
-        libvlc_renderer_item_t rendererItemInstance = rendererItem != null ? rendererItem.rendererItemInstance() : null;
-        boolean result = libvlc_media_player_set_renderer(mediaPlayerInstance, rendererItemInstance) == 0;
-        if (result) {
-            if (this.renderer != null) {
-                this.renderer.release();
-            }
-            this.renderer = rendererItem;
-        } else {
-            if (rendererItem != null) {
-                rendererItem.release();
-            }
-        }
-        return result;
     }
 
     /**
@@ -291,6 +253,7 @@ public class MediaPlayer {
         mediaApi     .release();
         menuApi      .release();
         programApi   .release();
+        rendererApi  .release();
         roleApi      .release();
         snapshotApi  .release();
         statusApi    .release();
