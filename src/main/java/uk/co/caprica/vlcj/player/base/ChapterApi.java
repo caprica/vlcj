@@ -19,11 +19,20 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import com.sun.jna.Pointer;
+import com.sun.jna.Structure;
+import com.sun.jna.ptr.PointerByReference;
+import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.internal.libvlc_chapter_description_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_chapter_descriptions_release;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_chapter;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_chapter_count;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_full_chapter_descriptions;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_next_chapter;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_previous_chapter;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_chapter;
@@ -91,7 +100,7 @@ public final class ChapterApi extends BaseApi {
      * @return list of descriptions (which may be empty), or <code>null</code> if there is no such title
      */
     public List<ChapterDescription> descriptions(int title) {
-        return Descriptions.chapterDescriptions(mediaPlayerInstance, title);
+        return chapterDescriptions(mediaPlayerInstance, title);
     }
 
     /**
@@ -121,4 +130,22 @@ public final class ChapterApi extends BaseApi {
         return result;
     }
 
+    private static List<ChapterDescription> chapterDescriptions(libvlc_media_player_t mediaPlayerInstance, int title) {
+        List<ChapterDescription> result;
+        PointerByReference chapters = new PointerByReference();
+        int chapterCount = libvlc_media_player_get_full_chapter_descriptions(mediaPlayerInstance, title, chapters);
+        if (chapterCount != -1) {
+            result = new ArrayList<ChapterDescription>(chapterCount);
+            Pointer[] pointers = chapters.getValue().getPointerArray(0, chapterCount);
+            for (Pointer pointer : pointers) {
+                libvlc_chapter_description_t chapterDescription = Structure.newInstance(libvlc_chapter_description_t.class, pointer);
+                chapterDescription.read();
+                result.add(new ChapterDescription(chapterDescription.i_time_offset, chapterDescription.i_duration, NativeString.copyNativeString(chapterDescription.psz_name)));
+            }
+            libvlc_chapter_descriptions_release(chapters.getValue(), chapterCount);
+        } else {
+            result = new ArrayList<ChapterDescription>(0);
+        }
+        return result;
+    }
 }

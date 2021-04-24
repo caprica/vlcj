@@ -19,11 +19,21 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import com.sun.jna.Pointer;
+import com.sun.jna.Structure;
+import com.sun.jna.ptr.PointerByReference;
+import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_title_description_t;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_full_title_descriptions;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_title;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_title_count;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_title;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_title_descriptions_release;
 
 /**
  * Behaviour pertaining to media titles (e.g. DVD and Bluray titles).
@@ -69,7 +79,25 @@ public final class TitleApi extends BaseApi {
      * @return list of descriptions, may be empty but will never be <code>null</code>
      */
     public List<TitleDescription> titleDescriptions() {
-        return Descriptions.titleDescriptions(mediaPlayerInstance);
+        return titleDescriptions(mediaPlayerInstance);
     }
 
+    private static List<TitleDescription> titleDescriptions(libvlc_media_player_t mediaPlayerInstance) {
+        List<TitleDescription> result;
+        PointerByReference titles = new PointerByReference();
+        int titleCount = libvlc_media_player_get_full_title_descriptions(mediaPlayerInstance, titles);
+        if (titleCount != -1) {
+            result = new ArrayList<TitleDescription>(titleCount);
+            Pointer[] pointers = titles.getValue().getPointerArray(0, titleCount);
+            for (Pointer pointer : pointers) {
+                libvlc_title_description_t titleDescription = Structure.newInstance(libvlc_title_description_t.class, pointer);
+                titleDescription.read();
+                result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(titleDescription.psz_name), titleDescription.i_flags));
+            }
+            libvlc_title_descriptions_release(titles.getValue(), titleCount);
+        } else {
+            result = new ArrayList<TitleDescription>(0);
+        }
+        return result;
+    }
 }
