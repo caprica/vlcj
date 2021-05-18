@@ -32,7 +32,7 @@ public class TitleDescription {
     private final long duration;
 
     /**
-     * Chapter name.
+     * Title name.
      */
     private final String name;
 
