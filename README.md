@@ -386,25 +386,25 @@ Online Javadoc is available here:
 
 JNA direct-mapping:
 
-* [4.7.0 (current)](http://caprica.github.com/vlcj/javadoc/4.7.0/index.html "4.7.0 Javadoc")
-* [4.6.0](http://caprica.github.com/vlcj/javadoc/4.6.0/index.html "4.6.0 Javadoc")
-* [4.4.4](http://caprica.github.com/vlcj/javadoc/4.4.4/index.html "4.4.4 Javadoc")
-* [4.4.0](http://caprica.github.com/vlcj/javadoc/4.4.0/index.html "4.4.0 Javadoc")
-* [4.3.0](http://caprica.github.com/vlcj/javadoc/4.3.0/index.html "4.3.0 Javadoc")
-* [4.2.0](http://caprica.github.com/vlcj/javadoc/4.2.0/index.html "4.2.0 Javadoc")
-* [4.1.0](http://caprica.github.com/vlcj/javadoc/4.1.0/index.html "4.1.0 Javadoc")
+* [4.7.0 (current)](http://caprica.github.io/vlcj/javadoc/4.7.0/index.html "4.7.0 Javadoc")
+* [4.6.0](http://caprica.github.io/vlcj/javadoc/4.6.0/index.html "4.6.0 Javadoc")
+* [4.4.4](http://caprica.github.io/vlcj/javadoc/4.4.4/index.html "4.4.4 Javadoc")
+* [4.4.0](http://caprica.github.io/vlcj/javadoc/4.4.0/index.html "4.4.0 Javadoc")
+* [4.3.0](http://caprica.github.io/vlcj/javadoc/4.3.0/index.html "4.3.0 Javadoc")
+* [4.2.0](http://caprica.github.io/vlcj/javadoc/4.2.0/index.html "4.2.0 Javadoc")
+* [4.1.0](http://caprica.github.io/vlcj/javadoc/4.1.0/index.html "4.1.0 Javadoc")
 
 JNA traditional mapping:
 
-* [4.0.8 (current)](http://caprica.github.com/vlcj/javadoc/4.0.8/index.html "4.0.8 Javadoc")
-* [4.0.7](http://caprica.github.com/vlcj/javadoc/4.0.7/index.html "4.0.7 Javadoc")
-* [4.0.6](http://caprica.github.com/vlcj/javadoc/4.0.6/index.html "4.0.6 Javadoc")
-* [4.0.5](http://caprica.github.com/vlcj/javadoc/4.0.5/index.html "4.0.5 Javadoc")
-* [4.0.4](http://caprica.github.com/vlcj/javadoc/4.0.4/index.html "4.0.4 Javadoc")
-* [4.0.3](http://caprica.github.com/vlcj/javadoc/4.0.3/index.html "4.0.3 Javadoc")
-* [4.0.2](http://caprica.github.com/vlcj/javadoc/4.0.2/index.html "4.0.2 Javadoc")
-* [4.0.1](http://caprica.github.com/vlcj/javadoc/4.0.1/index.html "4.0.1 Javadoc")
-* [4.0.0](http://caprica.github.com/vlcj/javadoc/4.0.0/index.html "4.0.0 Javadoc")
+* [4.0.8 (current)](http://caprica.github.io/vlcj/javadoc/4.0.8/index.html "4.0.8 Javadoc")
+* [4.0.7](http://caprica.github.io/vlcj/javadoc/4.0.7/index.html "4.0.7 Javadoc")
+* [4.0.6](http://caprica.github.io/vlcj/javadoc/4.0.6/index.html "4.0.6 Javadoc")
+* [4.0.5](http://caprica.github.io/vlcj/javadoc/4.0.5/index.html "4.0.5 Javadoc")
+* [4.0.4](http://caprica.github.io/vlcj/javadoc/4.0.4/index.html "4.0.4 Javadoc")
+* [4.0.3](http://caprica.github.io/vlcj/javadoc/4.0.3/index.html "4.0.3 Javadoc")
+* [4.0.2](http://caprica.github.io/vlcj/javadoc/4.0.2/index.html "4.0.2 Javadoc")
+* [4.0.1](http://caprica.github.io/vlcj/javadoc/4.0.1/index.html "4.0.1 Javadoc")
+* [4.0.0](http://caprica.github.io/vlcj/javadoc/4.0.0/index.html "4.0.0 Javadoc")
 
 Examples
 --------
