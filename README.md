@@ -315,7 +315,7 @@ The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at git
 
 Online Javadoc is available here:
 
-* [5.0.0 (snapshot)](http://caprica.github.com/vlcj/javadoc/5.0.0/index.html "5.0.0 Javadoc")
+* [5.0.0 (snapshot)](http://caprica.github.io/vlcj/javadoc/5.0.0/index.html "5.0.0 Javadoc")
 
 Examples
 --------
