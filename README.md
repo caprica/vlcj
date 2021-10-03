@@ -244,7 +244,7 @@ Garbage Collection
 This section is also very important.
 
 Ordinarily when developing with Java you will be used to not thinking about the scope and life-cycle of the objects that
-you create, instead you will rely on the garbage collector in the Java Virtual Machine to just take of things for you.
+you create, instead you will rely on the garbage collector in the Java Virtual Machine to just take care of things for you.
 
 With vlcj's `MediaPlayerFactory`, `MediaPlayer`, and associated classes, you must take care to prevent those objects
 from being garbage collected - if you do not, at best your media player will simply unexpectedly stop working and at
