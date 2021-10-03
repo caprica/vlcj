@@ -211,6 +211,12 @@ public final class EventApi extends BaseApi {
         }
 
         @Override
+        public void finished(MediaPlayer mediaPlayer) {
+            referenceTime = 0;
+            playing = false;
+        }
+
+        @Override
         public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
             referenceTime = libvlc_clock() - (newTime * 1000);
         }
