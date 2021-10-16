@@ -27,24 +27,14 @@ import java.io.Reader;
 import java.util.Properties;
 
 /**
- * Implementation of a {@link DiscoveryDirectoryProvider} that looks for an optional configuration file containing the
- * native discovery directory.
- * <p>
- * If a file named "~/.config/vlcj/vlcj.config" exists (under the user home directory) it will be loaded and if it
- * contains a "nativeDirectory" property, the value of that property will be used for the native discovery directory.
+ * Base implementation of a {@link DiscoveryDirectoryProvider} that looks for an optional configuration file containing
+ * the native discovery directory.
  */
-public class ConfigurationFileDiscoveryDirectoryProvider implements DiscoveryDirectoryProvider {
-
-    private static final String CONFIG_DIR = System.getProperty("user.home") + "/.config/vlcj";
+public abstract class BaseConfigFileDiscoveryDirectoryProvider implements DiscoveryDirectoryProvider {
 
     private static final String CONFIG_FILE_NAME = "vlcj.config";
 
     private static final String PROPERTY_NAME = "nativeDirectory";
-
-    @Override
-    public int priority() {
-        return DiscoveryProviderPriority.CONFIG_FILE;
-    }
 
     @Override
     public String[] directories() {
@@ -79,7 +69,9 @@ public class ConfigurationFileDiscoveryDirectoryProvider implements DiscoveryDir
         return configurationFile.exists() && configurationFile.isFile() && configurationFile.canRead();
     }
 
-    private static final File getConfigurationFile() {
-        return new File(CONFIG_DIR, CONFIG_FILE_NAME);
+    private File getConfigurationFile() {
+        return new File(configurationDirectory(), CONFIG_FILE_NAME);
     }
+
+    protected abstract String configurationDirectory();
 }
