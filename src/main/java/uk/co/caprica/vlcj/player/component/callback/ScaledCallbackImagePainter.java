@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.component.callback;
 
+import uk.co.caprica.vlcj.player.base.VideoTrack;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -31,6 +33,24 @@ import java.awt.image.BufferedImage;
  * The aspect ratio of the original image is preserved when scaling is applied.
  */
 public class ScaledCallbackImagePainter extends BaseCallbackImagePainter {
+
+    /**
+     * Video dimension for the current track.
+     * <p>
+     * This is used to render the video, as it is possible for the allocated video buffer to have a larger size than the
+     * actual video (typically it will have extra lines to be aligned on a specific memory boundary). Without this
+     * correction, the scaling could be slightly off resulting in unnecessary black bars.
+     */
+    private volatile Dimension renderSize;
+
+    @Override
+    public void videoTrackChanged(VideoTrack videoTrack) {
+        if (videoTrack != null) {
+            renderSize = new Dimension(videoTrack.width(), videoTrack.height());
+        } else {
+            renderSize = null;
+        }
+    }
 
     @Override
     public void prepare(Graphics2D g2, JComponent component) {
@@ -46,8 +66,8 @@ public class ScaledCallbackImagePainter extends BaseCallbackImagePainter {
         g2.fillRect(0, 0, width, height);
 
         if (image != null) {
-            int imageWidth = image.getWidth();
-            int imageHeight = image.getHeight();
+            int imageWidth = renderSize != null ? renderSize.width : image.getWidth();
+            int imageHeight = renderSize != null ? renderSize.height : image.getHeight();
 
             float sx = (float) width / imageWidth;
             float sy = (float) height / imageHeight;
