@@ -40,7 +40,7 @@ public final class VideoSurfaceAdapters {
         } else if (RuntimeUtil.isWindows()) {
             return new WindowsVideoSurfaceAdapter();
         } else if (RuntimeUtil.isMac()) {
-            return new OsxVideoSurfaceAdapter();
+            return new MacOsVideoSurfaceAdapter();
         } else {
             throw new RuntimeException("Unable to create a video surface - failed to detect a supported operating system");
         }

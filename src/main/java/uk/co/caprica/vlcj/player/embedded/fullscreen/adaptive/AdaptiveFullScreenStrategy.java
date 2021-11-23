@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveModeFullScreenStrategy;
-import uk.co.caprica.vlcj.player.embedded.fullscreen.osx.OsxFullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.osx.MacOsFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.windows.Win32FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.x.XFullScreenStrategy;
 
@@ -91,7 +91,7 @@ public class AdaptiveFullScreenStrategy implements FullScreenStrategy {
         } else if (RuntimeUtil.isWindows()) {
             return new Win32FullScreenStrategy(window);
         } else if (RuntimeUtil.isMac()) {
-            return new OsxFullScreenStrategy(window);
+            return new MacOsFullScreenStrategy(window);
         } else {
             return new ExclusiveModeFullScreenStrategy(window);
         }

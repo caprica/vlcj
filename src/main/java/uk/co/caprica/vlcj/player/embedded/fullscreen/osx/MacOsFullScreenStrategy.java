@@ -29,9 +29,9 @@ import java.awt.Window;
  * The EAWT classes are not exported for use on contemporary JDKs and there is no satisfactory replacement, so
  * full-screen on macOS is not supported (at least not by vlcj-core).
  */
-public class OsxFullScreenStrategy implements FullScreenStrategy {
+public class MacOsFullScreenStrategy implements FullScreenStrategy {
 
-    public OsxFullScreenStrategy(Window window) {
+    public MacOsFullScreenStrategy(Window window) {
     }
 
     @Override
