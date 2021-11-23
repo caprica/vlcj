@@ -24,7 +24,7 @@ import uk.co.caprica.vlcj.binding.RuntimeUtil;
 /**
  * Implementation of a directory provider that returns a list of well-known directory locations to search on OSX.
  */
-public class OsxWellKnownDirectoryProvider extends WellKnownDirectoryProvider {
+public class MacOsWellKnownDirectoryProvider extends WellKnownDirectoryProvider {
 
     private static final String[] DIRECTORIES = {
         "/Applications/VLC.app/Contents/Frameworks",
