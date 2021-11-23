@@ -6,8 +6,8 @@ import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.factory.discovery.strategy.LinuxNativeDiscoveryStrategy;
+import uk.co.caprica.vlcj.factory.discovery.strategy.MacOsNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
-import uk.co.caprica.vlcj.factory.discovery.strategy.OsxNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.factory.discovery.strategy.WindowsNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.support.version.LibVlcVersion;
 
@@ -72,7 +72,7 @@ public class NativeDiscovery {
 
     private static final NativeDiscoveryStrategy[] DEFAULT_STRATEGIES = new NativeDiscoveryStrategy[] {
         new LinuxNativeDiscoveryStrategy(),
-        new OsxNativeDiscoveryStrategy(),
+        new MacOsNativeDiscoveryStrategy(),
         new WindowsNativeDiscoveryStrategy()
     };
 

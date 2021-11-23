@@ -25,9 +25,9 @@ import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.factory.discovery.provider.DirectoryProviderDiscoveryStrategy;
 
 /**
- * Default implementation of a native discovery strategy that searches directories on the OSX operating system.
+ * Default implementation of a native discovery strategy that searches directories on the macOS operating system.
  */
-public class OsxNativeDiscoveryStrategy extends DirectoryProviderDiscoveryStrategy {
+public class MacOsNativeDiscoveryStrategy extends DirectoryProviderDiscoveryStrategy {
 
     private static final String[] FILENAME_PATTERNS = new String[] {
         "libvlc\\.dylib",
@@ -41,7 +41,7 @@ public class OsxNativeDiscoveryStrategy extends DirectoryProviderDiscoveryStrate
         "%s/../plugins"
     };
 
-    public OsxNativeDiscoveryStrategy() {
+    public MacOsNativeDiscoveryStrategy() {
         super(FILENAME_PATTERNS, PLUGIN_PATH_FORMATS);
     }
 
