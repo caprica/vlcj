@@ -28,7 +28,7 @@ import java.util.Map;
 public enum MediaSlaveType {
 
     SUBTITLE(0),
-    AUDIO   (1);
+    GENERIC (1);
 
     private static final Map<Integer, MediaSlaveType> INT_MAP = new HashMap<Integer, MediaSlaveType>();
 
