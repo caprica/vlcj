@@ -108,8 +108,7 @@ public final class Equalizer {
      * @throws IllegalArgumentException if the amplification value is outside of the allowed range
      */
     public void setPreamp(float newPreamp) {
-        checkAmp(newPreamp);
-        this.preamp = newPreamp;
+        applyPreamp(newPreamp);
         fireEqualizerChanged();
     }
 
@@ -163,15 +162,20 @@ public final class Equalizer {
      * @throws IllegalArgumentException if the amplification values are <code>null</code>, the wrong length, or outside of the allowed range
      */
     public void setAmps(float[] newAmps) {
-        if (newAmps != null && newAmps.length == bandCount) {
-            for(float newAmp : newAmps) {
-                checkAmp(newAmp);
-            }
-            copy(newAmps, bandAmps);
-            fireEqualizerChanged();
-        } else {
-            throw new IllegalArgumentException();
-        }
+        applyAmps(newAmps);
+        fireEqualizerChanged();
+    }
+
+    /**
+     * Set new amplification values for preamp and all individual bands.
+     *
+     * @param newPreamp new preamp value
+     * @param newAmps new band amplification values
+     */
+    public void setAmps(float newPreamp, float[] newAmps) {
+        applyPreamp(newPreamp);
+        applyAmps(newAmps);
+        fireEqualizerChanged();
     }
 
     /**
@@ -198,6 +202,22 @@ public final class Equalizer {
             bandAmps[i] = 0f;
         }
         fireEqualizerChanged();
+    }
+
+    private void applyPreamp(float newPreamp) {
+        checkAmp(newPreamp);
+        this.preamp = newPreamp;
+    }
+
+    private void applyAmps(float[] newAmps) {
+        if (newAmps != null && newAmps.length == bandCount) {
+            for(float newAmp : newAmps) {
+                checkAmp(newAmp);
+            }
+            copy(newAmps, bandAmps);
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     /**
