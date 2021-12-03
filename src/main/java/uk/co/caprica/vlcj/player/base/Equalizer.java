@@ -69,7 +69,7 @@ public final class Equalizer {
      *
      * @param listener listener to add
      */
-    public final void addEqualizerListener(EqualizerListener listener) {
+    public void addEqualizerListener(EqualizerListener listener) {
         listeners.add(listener);
     }
 
@@ -79,7 +79,7 @@ public final class Equalizer {
      *
      * @param listener listener to remove
      */
-    public final void removeEqualizerListener(EqualizerListener listener) {
+    public void removeEqualizerListener(EqualizerListener listener) {
         listeners.remove(listener);
     }
 
@@ -88,7 +88,7 @@ public final class Equalizer {
      *
      * @return number of frequency bands
      */
-    public final int bandCount() {
+    public int bandCount() {
         return bandCount;
     }
 
@@ -97,7 +97,7 @@ public final class Equalizer {
      *
      * @return pre-amplification value (Hz)
      */
-    public final float preamp() {
+    public float preamp() {
         return preamp;
     }
 
@@ -107,7 +107,7 @@ public final class Equalizer {
      * @param newPreamp pre-amplification value (Hz)
      * @throws IllegalArgumentException if the amplification value is outside of the allowed range
      */
-    public final void setPreamp(float newPreamp) {
+    public void setPreamp(float newPreamp) {
         checkAmp(newPreamp);
         this.preamp = newPreamp;
         fireEqualizerChanged();
@@ -120,7 +120,7 @@ public final class Equalizer {
      * @return amplification value
      * @throws IllegalArgumentException if the index is outside of the allowed range
      */
-    public final float amp(int index) {
+    public float amp(int index) {
         if (index >= 0 && index < bandCount) {
             return bandAmps[index];
         } else {
@@ -135,7 +135,7 @@ public final class Equalizer {
      * @param newAmp amplification value
      * @throws IllegalArgumentException if the index or amplification value is outside of the allowed range
      */
-    public final void setAmp(int index, float newAmp) {
+    public void setAmp(int index, float newAmp) {
         checkAmp(newAmp);
         if (index >= 0 && index < bandCount) {
             bandAmps[index] = newAmp;
@@ -150,7 +150,7 @@ public final class Equalizer {
      *
      * @return current amplification values
      */
-    public final float[] amps() {
+    public float[] amps() {
        float[] result = new float[bandCount];
        copy(bandAmps, result);
        return result;
@@ -162,7 +162,7 @@ public final class Equalizer {
      * @param newAmps new amplification values
      * @throws IllegalArgumentException if the amplification values are <code>null</code>, the wrong length, or outside of the allowed range
      */
-    public final void setAmps(float[] newAmps) {
+    public void setAmps(float[] newAmps) {
         if (newAmps != null && newAmps.length == bandCount) {
             for(float newAmp : newAmps) {
                 checkAmp(newAmp);
@@ -179,7 +179,7 @@ public final class Equalizer {
      *
      * @param equalizer equalizer to obtain values from
      */
-    public final void setEqualizer(Equalizer equalizer) {
+    public void setEqualizer(Equalizer equalizer) {
         if (equalizer != null) {
             preamp = equalizer.preamp;
             copy(equalizer.bandAmps, bandAmps);
@@ -192,7 +192,7 @@ public final class Equalizer {
     /**
      * Reset all of the equalizer amplification values (including pre-amplification) to zero.
      */
-    public final void reset() {
+    public void reset() {
         preamp = 0f;
         for (int i = 0; i < bandCount; i++) {
             bandAmps[i] = 0f;
@@ -232,7 +232,7 @@ public final class Equalizer {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         StringBuilder sb = new StringBuilder(40);
         sb.append(getClass().getSimpleName()).append('[');
         sb.append("preamp=").append(preamp).append(',');
