@@ -32,6 +32,7 @@ import uk.co.caprica.vlcj.media.MetaApi;
 import uk.co.caprica.vlcj.media.OptionsApi;
 import uk.co.caprica.vlcj.media.ParseApi;
 import uk.co.caprica.vlcj.media.SlaveApi;
+import uk.co.caprica.vlcj.media.StatsApi;
 import uk.co.caprica.vlcj.media.SubitemApi;
 import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 
@@ -417,6 +418,15 @@ public final class MediaApi extends BaseApi {
      */
     public SlaveApi slaves() {
         return media != null ? media.slaves() : null;
+    }
+
+    /**
+     * Delegated behaviour pertaining to stat values for the associated media.
+     *
+     * @return media stat behaviour
+     */
+    public StatsApi stats() {
+        return media != null ? media.stats() : null;
     }
 
     /**

@@ -47,6 +47,7 @@ public final class Media {
     private final OptionsApi   optionsApi;
     private final ParseApi     parseApi;
     private final SlaveApi     slaveApi;
+    private final StatsApi     statsApi;
     private final SubitemApi   subitemApi;
     private final ThumbnailApi thumbnailApi;
     private final TrackApi     trackApi;
@@ -72,6 +73,7 @@ public final class Media {
         this.optionsApi   = new OptionsApi  (this);
         this.parseApi     = new ParseApi    (this);
         this.slaveApi     = new SlaveApi    (this);
+        this.statsApi     = new StatsApi    (this);
         this.subitemApi   = new SubitemApi  (this);
         this.thumbnailApi = new ThumbnailApi(this);
         this.trackApi     = new TrackApi    (this);
@@ -129,6 +131,18 @@ public final class Media {
      */
     public SlaveApi slaves() {
         return slaveApi;
+    }
+
+    /**
+     * Behaviour pertaining to media stat values.
+     * <p>
+     * <em>Note that media stat values are only available in the specific case of sub-items discovered when playing or
+     * parsing a directory.</em>
+     *
+     * @return media stats behaviour
+     */
+    public StatsApi stats() {
+        return statsApi;
     }
 
     /**
@@ -224,6 +238,7 @@ public final class Media {
         parseApi    .release();
         metaApi     .release();
         slaveApi    .release();
+        statsApi    .release();
         subitemApi  .release();
         thumbnailApi.release();
         trackApi    .release();
