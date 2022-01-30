@@ -20,11 +20,11 @@
 package uk.co.caprica.vlcj.media;
 
 import com.sun.jna.ptr.LongByReference;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_stat_type_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_filestat_e;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_stat;
-import static uk.co.caprica.vlcj.binding.internal.libvlc_media_stat_type_e.libvlc_media_stat_mtime;
-import static uk.co.caprica.vlcj.binding.internal.libvlc_media_stat_type_e.libvlc_media_stat_size;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_filestat;
+import static uk.co.caprica.vlcj.binding.internal.libvlc_media_filestat_e.libvlc_media_filestat_mtime;
+import static uk.co.caprica.vlcj.binding.internal.libvlc_media_filestat_e.libvlc_media_filestat_size;
 
 /**
  * Behaviour pertaining to media stat values.
@@ -41,7 +41,7 @@ public final class StatsApi extends BaseApi {
      * @return file modified time, or -1 on error
      */
     public long mtime() {
-        return stat(libvlc_media_stat_mtime);
+        return stat(libvlc_media_filestat_mtime);
     }
 
     /**
@@ -50,12 +50,12 @@ public final class StatsApi extends BaseApi {
      * @return file size, or -1 on error
      */
     public long size() {
-        return stat(libvlc_media_stat_size);
+        return stat(libvlc_media_filestat_size);
     }
 
-    private long stat(libvlc_media_stat_type_e type) {
+    private long stat(libvlc_media_filestat_e type) {
         LongByReference out = new LongByReference();
-        int result = libvlc_media_get_stat(mediaInstance, type.intValue(), out);
+        int result = libvlc_media_get_filestat(mediaInstance, type.intValue(), out);
         if (result == 1) {
             return out.getValue();
         } else {
