@@ -105,16 +105,13 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * <p>
      * The change will not be applied until the media player has been stopped and then played again.
      * <p>
-     * The output name comes from {@link uk.co.caprica.vlcj.factory.AudioApi#audioOutputs()}.
-     * <p>
      * The device id comes from the {@link AudioDevice#getDeviceId()} returned by
      * {@link uk.co.caprica.vlcj.factory.AudioApi#audioOutputs()}.
      *
-     * @param output name of the desired audio output
      * @param outputDeviceId id of the desired audio output device
      */
-    public void setOutputDevice(String output, String outputDeviceId) {
-        libvlc_audio_output_device_set(mediaPlayerInstance, output, outputDeviceId);
+    public void setOutputDevice(String outputDeviceId) {
+        libvlc_audio_output_device_set(mediaPlayerInstance, outputDeviceId);
     }
 
     /**
