@@ -23,6 +23,7 @@ import com.sun.jna.CallbackThreadInitializer;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.ptr.PointerByReference;
 import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.binding.NativeString;
@@ -176,14 +177,14 @@ public final class NativeLog {
                         libvlc_log_get_context(ctx, modulePointer, filePointer, linePointer);
                         PointerByReference namePointer = new PointerByReference();
                         PointerByReference headerPointer = new PointerByReference();
-                        IntByReference idPointer = new IntByReference();
+                        LongByReference idPointer = new LongByReference();
                         libvlc_log_get_object(ctx, namePointer, headerPointer, idPointer);
                         String module = getString(modulePointer);
                         String file = getString(filePointer);
                         Integer line = linePointer.getValue();
                         String name = getString(namePointer);
                         String header = getString(headerPointer);
-                        Integer id = idPointer.getValue();
+                        Long id = idPointer.getValue();
                         // ...send the event
                         raiseLogEvent(LogLevel.level(level), module, file, line, name, header, id, message);
                     }
@@ -220,7 +221,7 @@ public final class NativeLog {
      * @param id object identifier
      * @param message log message
      */
-    private void raiseLogEvent(LogLevel level, String module, String file, Integer line, String name, String header, Integer id, String message) {
+    private void raiseLogEvent(LogLevel level, String module, String file, Integer line, String name, String header, Long id, String message) {
         for (LogEventListener listener : eventListenerList) {
             try {
                 listener.log(level, module, file, line, name, header, id, message);
