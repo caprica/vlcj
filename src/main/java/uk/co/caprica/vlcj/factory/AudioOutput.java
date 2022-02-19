@@ -19,18 +19,13 @@
 
 package uk.co.caprica.vlcj.factory;
 
-import uk.co.caprica.vlcj.player.base.AudioDevice;
-
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * Description of an audio output.
  * <p>
  * An audio output has zero or more associated audio devices. Each device has a unique identifier than can be used to
  * select the required output device for a media player.
  */
-public class AudioOutput implements Iterable<AudioDevice> {
+public class AudioOutput {
 
     /**
      * Name.
@@ -43,21 +38,14 @@ public class AudioOutput implements Iterable<AudioDevice> {
     private final String description;
 
     /**
-     * Long name.
-     */
-    private final List<AudioDevice> devices;
-
-    /**
      * Create an audio output.
      *
      * @param name name
      * @param description description
-     * @param devices collection of audio devices for this output
      */
-    public AudioOutput(String name, String description, List<AudioDevice> devices) {
+    public AudioOutput(String name, String description) {
         this.name = name;
         this.description = description;
-        this.devices = devices;
     }
 
     /**
@@ -78,28 +66,12 @@ public class AudioOutput implements Iterable<AudioDevice> {
         return description;
     }
 
-    /**
-     * Get the collection of audio devices for this output.
-     *
-     * @return audio devices
-     */
-    public List<AudioDevice> getDevices() {
-        return devices;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(60);
         sb.append(getClass().getSimpleName()).append('[');
         sb.append("name=").append(name).append(',');
-        sb.append("description=").append(description).append(',');
-        sb.append("devices=").append(devices).append(']');
+        sb.append("description=").append(description).append(']');
         return sb.toString();
     }
-
-    @Override
-    public Iterator<AudioDevice> iterator() {
-        return devices.iterator();
-    }
-
 }
