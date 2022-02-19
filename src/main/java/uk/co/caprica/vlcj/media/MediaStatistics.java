@@ -39,14 +39,11 @@ public class MediaStatistics {
     private int   picturesLost;
     private int   audioBuffersPlayed;
     private int   audioBuffersLost;
-    private int   sentPackets;
-    private int   sentBytes;
-    private float sendBitrate;
 
     public MediaStatistics() {
     }
 
-    public MediaStatistics(int inputBytesRead, float inputBitrate, int demuxBytesRead, float demuxBitrate, int demuxCorrupted, int demuxDiscontinuity, int decodedVideo, int decodedAudio, int picturesDisplayed, int picturesLate, int picturesLost, int audioBuffersPlayed, int audioBuffersLost, int sentPackets, int sentBytes, float sendBitrate) {
+    public MediaStatistics(int inputBytesRead, float inputBitrate, int demuxBytesRead, float demuxBitrate, int demuxCorrupted, int demuxDiscontinuity, int decodedVideo, int decodedAudio, int picturesDisplayed, int picturesLate, int picturesLost, int audioBuffersPlayed, int audioBuffersLost) {
         this.inputBytesRead     = inputBytesRead;
         this.inputBitrate       = inputBitrate;
         this.demuxBytesRead     = demuxBytesRead;
@@ -60,9 +57,6 @@ public class MediaStatistics {
         this.picturesLost       = picturesLost;
         this.audioBuffersPlayed = audioBuffersPlayed;
         this.audioBuffersLost   = audioBuffersLost;
-        this.sentPackets        = sentPackets;
-        this.sentBytes          = sentBytes;
-        this.sendBitrate        = sendBitrate;
     }
 
     public int inputBytesRead() {
@@ -117,18 +111,6 @@ public class MediaStatistics {
         return audioBuffersLost;
     }
 
-    public int sentPackets() {
-        return sentPackets;
-    }
-
-    public int sentBytes() {
-        return sentBytes;
-    }
-
-    public float sendBitrate() {
-        return sendBitrate;
-    }
-
     public final void apply(libvlc_media_stats_t stats) {
         this.inputBytesRead     = stats.i_read_bytes;
         this.inputBitrate       = stats.f_input_bitrate;
@@ -143,9 +125,6 @@ public class MediaStatistics {
         this.picturesLost       = stats.i_lost_pictures;
         this.audioBuffersPlayed = stats.i_played_abuffers;
         this.audioBuffersLost   = stats.i_lost_abuffers;
-        this.sentPackets        = stats.i_sent_packets;
-        this.sentBytes          = stats.i_sent_bytes;
-        this.sendBitrate        = stats.f_send_bitrate;
     }
     
 }
