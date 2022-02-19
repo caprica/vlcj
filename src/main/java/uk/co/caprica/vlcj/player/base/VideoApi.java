@@ -53,10 +53,11 @@ public final class VideoApi extends BaseApi {
     /**
      * Set the de-interlace filter to use.
      *
+     * @param deinterlace deinterlace value: -1 for auto (default); 0 disabled; 1 enabled
      * @param deinterlaceMode mode, or null to disable the de-interlace filter
      */
-    public void setDeinterlace(DeinterlaceMode deinterlaceMode) {
-        libvlc_video_set_deinterlace(mediaPlayerInstance, deinterlaceMode != null ? deinterlaceMode.stringValue() : null);
+    public void setDeinterlace(int deinterlace, DeinterlaceMode deinterlaceMode) {
+        libvlc_video_set_deinterlace(mediaPlayerInstance, deinterlace, deinterlaceMode != null ? deinterlaceMode.stringValue() : null);
     }
 
     /**
