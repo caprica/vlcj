@@ -57,25 +57,23 @@ final class MediaPlayerPlayLatch {
      * @return true only if the media definitely started playing; <code>false</code> otherwise, it may yet have started
      */
     boolean play() {
-        // If the media player is already playing, then the latch will wait for an event that
-        // will never arrive and so will block incorrectly
-        if (!mediaPlayer.status().isPlaying()) {
-            CountDownLatch latch = new CountDownLatch(1);
-            LatchListener listener = new LatchListener(latch);
-            mediaPlayer.events().addMediaPlayerEventListener(listener);
-            mediaPlayer.controls().play();
-            try {
+        CountDownLatch latch = new CountDownLatch(1);
+        LatchListener listener = new LatchListener(latch);
+        mediaPlayer.events().addMediaPlayerEventListener(listener);
+        try {
+            boolean playing = mediaPlayer.controls().play();
+            if (playing) {
                 latch.await();
                 return listener.playing.get();
-            }
-            catch(InterruptedException e) {
+            } else {
                 return false;
             }
-            finally {
-                mediaPlayer.events().removeMediaPlayerEventListener(listener);
-            }
-        } else {
-            return true;
+        }
+        catch (InterruptedException e) {
+            return false;
+        }
+        finally {
+            mediaPlayer.events().removeMediaPlayerEventListener(listener);
         }
     }
 
