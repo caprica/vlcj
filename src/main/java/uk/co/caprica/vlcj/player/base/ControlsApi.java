@@ -64,7 +64,24 @@ public final class ControlsApi extends BaseApi {
      * @return <code>true</code> if the media started playing, <code>false</code> on error
      */
     public boolean start() {
-        return new MediaPlayerLatch(mediaPlayer).play();
+        return new MediaPlayerPlayLatch(mediaPlayer).play();
+    }
+
+    /**
+     * Stop play-back.
+     * <p>
+     * A subsequent play will play-back from the start.
+     * <p>
+     * <strong>Stopping is now an asynchronous operation.</strong>
+     * <p>
+     * This method waits for notification from the event manager that the media player finished stopping, i.e. it
+     * operates synchronously, blocking until stopped.
+     *
+     * @return <code>true</code> if the media player was stopped; false if not
+     * @see #stopAsync()
+     */
+    public boolean stop() {
+        return new MediaPlayerStopLatch(mediaPlayer).stop();
     }
 
     /**
@@ -75,8 +92,9 @@ public final class ControlsApi extends BaseApi {
      * <strong>Stopping is now an asynchronous operation.</strong>
      *
      * @return <code>true</code> if the media player is being stopped; false if not
+     * @see #stop()
      */
-    public boolean stop() {
+    public boolean stopAsync() {
         return libvlc_media_player_stop_async(mediaPlayerInstance) == 0;
     }
 

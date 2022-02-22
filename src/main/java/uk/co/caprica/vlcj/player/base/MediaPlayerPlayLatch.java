@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p>
  * The strategy is simply to block the play call until a media player "playing" or "error" event is received.
  */
-final class MediaPlayerLatch {
+final class MediaPlayerPlayLatch {
 
     /**
      * Media player instance.
@@ -47,7 +47,7 @@ final class MediaPlayerLatch {
      *
      * @param mediaPlayer media player instance
      */
-    MediaPlayerLatch(MediaPlayer mediaPlayer) {
+    MediaPlayerPlayLatch(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
     }
 
