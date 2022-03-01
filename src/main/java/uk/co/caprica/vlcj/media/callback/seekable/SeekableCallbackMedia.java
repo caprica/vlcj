@@ -37,10 +37,8 @@ public abstract class SeekableCallbackMedia extends DefaultCallbackMedia  {
      * Create a media instance.
      *
      * @param ioBufferSize IO buffer size
-     * @param mediaOptions zero or more media options
      */
-    public SeekableCallbackMedia(int ioBufferSize, String... mediaOptions) {
+    public SeekableCallbackMedia(int ioBufferSize) {
         super(true, ioBufferSize);
     }
-
 }
