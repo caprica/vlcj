@@ -25,6 +25,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_color_primaries_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_color_space_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_getProcAddress_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_makeCurrent_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_orient_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_cfg_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_cleanup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_set_resize_cb;
@@ -127,6 +128,7 @@ public final class VideoEngineVideoSurface extends VideoSurface {
             output.colorspace = libvlc_video_color_space_e.libvlc_video_colorspace_BT709.intValue();
             output.primaries = libvlc_video_color_primaries_e.libvlc_video_primaries_BT709.intValue();
             output.transfer = libvlc_video_transfer_func_e.libvlc_video_transfer_func_SRGB.intValue();
+            output.orientation = libvlc_video_orient_t.libvlc_video_orient_top_left.intValue();
             // The return value is not used by the native code
             return callback.onUpdateOutput(opaque, cfg, output) ? 1: 0;
         }
