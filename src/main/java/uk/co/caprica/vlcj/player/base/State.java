@@ -33,7 +33,7 @@ public enum State {
     PLAYING        (3),
     PAUSED         (4),
     STOPPED        (5),
-    ENDED          (6),
+    STOPPING       (6),
     ERROR          (7);
 
     private static final Map<Integer, State> INT_MAP = new HashMap<Integer, State>();
