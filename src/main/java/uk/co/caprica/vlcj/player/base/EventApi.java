@@ -211,7 +211,7 @@ public final class EventApi extends BaseApi {
         }
 
         @Override
-        public void finished(MediaPlayer mediaPlayer) {
+        public void stopping(MediaPlayer mediaPlayer) {
             referenceTime = 0;
             playing = false;
         }

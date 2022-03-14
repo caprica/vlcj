@@ -52,7 +52,7 @@ public final class MediaPlayerEventFactory {
             case libvlc_MediaPlayerStopped              : return new MediaPlayerStoppedEvent              (                mediaPlayer       );
             case libvlc_MediaPlayerForward              : return new MediaPlayerForwardEvent              (                mediaPlayer       );
             case libvlc_MediaPlayerBackward             : return new MediaPlayerBackwardEvent             (                mediaPlayer       );
-            case libvlc_MediaPlayerEndReached           : return new MediaPlayerEndReachedEvent           (                mediaPlayer       );
+            case libvlc_MediaPlayerStopping             : return new MediaPlayerStoppingEvent             (                mediaPlayer       );
             case libvlc_MediaPlayerEncounteredError     : return new MediaPlayerEncounteredErrorEvent     (                mediaPlayer       );
             case libvlc_MediaPlayerTimeChanged          : return new MediaPlayerTimeChangedEvent          (                mediaPlayer, event);
             case libvlc_MediaPlayerPositionChanged      : return new MediaPlayerPositionChangedEvent      (                mediaPlayer, event);

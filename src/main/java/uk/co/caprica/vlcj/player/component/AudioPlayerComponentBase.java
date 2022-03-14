@@ -81,7 +81,7 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void finished(MediaPlayer mediaPlayer) {
+    public void stopping(MediaPlayer mediaPlayer) {
     }
 
     @Override

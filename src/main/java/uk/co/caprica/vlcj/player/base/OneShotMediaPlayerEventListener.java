@@ -34,7 +34,6 @@ package uk.co.caprica.vlcj.player.base;
  * can be overriden by sub-classes:
  * <ul>
  *     <li>{@link #stopped(MediaPlayer)}</li>
- *     <li>{@link #finished(MediaPlayer)}</li>
  *     <li>{@link #error(MediaPlayer)}</li>
  * </ul>
  */
@@ -42,11 +41,6 @@ public abstract class OneShotMediaPlayerEventListener extends MediaPlayerEventAd
 
     @Override
     public void stopped(MediaPlayer mediaPlayer) {
-        done(mediaPlayer);
-    }
-
-    @Override
-    public void finished(MediaPlayer mediaPlayer) {
         done(mediaPlayer);
     }
 

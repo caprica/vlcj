@@ -105,11 +105,13 @@ public interface MediaPlayerEventListener {
     void backward(MediaPlayer mediaPlayer);
 
     /**
-     * Media finished playing (i.e. the end was reached without being stopped).
+     * Media is stopping (i.e. the end was reached and the media is stopping).
+     * <p>
+     * The media is not fully stopped until the {@link #stopped(MediaPlayer)} event is raised.
      *
      * @param mediaPlayer media player that raised the event
      */
-    void finished(MediaPlayer mediaPlayer);
+    void stopping(MediaPlayer mediaPlayer);
 
     /**
      * Media play-back time changed.

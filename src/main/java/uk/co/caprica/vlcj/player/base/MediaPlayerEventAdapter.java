@@ -73,7 +73,7 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
-    public void finished(MediaPlayer mediaPlayer) {
+    public void stopping(MediaPlayer mediaPlayer) {
     }
 
     @Override

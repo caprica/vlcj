@@ -23,17 +23,17 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
- * Encapsulation of a media player end reached event.
+ * Encapsulation of a media player stopping event.
  */
-final class MediaPlayerEndReachedEvent extends MediaPlayerEvent {
+final class MediaPlayerStoppingEvent extends MediaPlayerEvent {
 
-    MediaPlayerEndReachedEvent(MediaPlayer mediaPlayer) {
+    MediaPlayerStoppingEvent(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 
     @Override
     public void notify(MediaPlayerEventListener listener) {
-        listener.finished(mediaPlayer);
+        listener.stopping(mediaPlayer);
     }
 
 }
