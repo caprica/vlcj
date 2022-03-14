@@ -57,6 +57,16 @@ All releases are at available at [Maven Central](https://search.maven.org/search
 
 You can follow @capricasoftware on Twitter for more vlcj news.
 
+Backwards-Incompatible API changes
+==================================
+
+Changes that break backwards compatiblity with prior vlcj versions were avoided if at all possible. However, some such
+changes are needed in the case where the underlying native LibVLC API changed.
+
+ - [media player "finished" event changed to "stopping"](https://github.com/caprica/vlcj/issues/1123). A result of
+media stopping changing to being asynchronous in nature - most applications probably should use the "stopped" event
+instead of "stopping". 
+
 Swing/AWT, JavaFX, OpenGL
 =========================
 
