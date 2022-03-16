@@ -41,8 +41,12 @@ Build Status
 News
 ====
 
-Project status update 7th March 2021:
+Project status update 16th March 2022:
 
+>vlcj is still tracking the development process of VLC/LibVLC 4.0.0 - there are some small changes made recently to
+LibVLC, but nothing major, no new API. There is still no end in sight to the first VLC 4.x release. Aside from LibVLC
+there are still some small improvements being made to vlcj, check the project issues for details. 
+>
 >vlcj-5.0.0-SNAPSHOT currently has feature parity with the in-development LibVLC 4.0.0 - we're basically waiting for VLC
 4.0 final to be released, or for any new native API to be added to be added to LibVLC.
 > 
