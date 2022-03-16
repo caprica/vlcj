@@ -21,11 +21,9 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
-import uk.co.caprica.vlcj.player.base.State;
 
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_duration;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_mrl;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_state;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_stats;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_type;
 
@@ -57,15 +55,6 @@ public final class InfoApi extends BaseApi {
      */
     public MediaType type() {
         return MediaType.mediaType(libvlc_media_get_type(mediaInstance));
-    }
-
-    /**
-     * Get the media state
-     *
-     * @return state
-     */
-    public State state() {
-        return State.state(libvlc_media_get_state(mediaInstance));
     }
 
     /**

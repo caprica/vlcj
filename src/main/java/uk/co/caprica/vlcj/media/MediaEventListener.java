@@ -20,9 +20,8 @@
 package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.base.State;
 
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 import java.util.List;
 
 /**
@@ -70,14 +69,6 @@ public interface MediaEventListener {
      * @param newStatus new parsed status
      */
     void mediaParsedChanged(Media media, MediaParsedStatus newStatus);
-
-    /**
-     * The current media state changed.
-     *
-     * @param media media that raised the event
-     * @param newState new state
-     */
-    void mediaStateChanged(Media media, State newState);
 
     /**
      * A sub-item tree was added to the media.

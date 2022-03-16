@@ -56,10 +56,6 @@ public class MediaEventAdapter implements MediaEventListener {
     }
 
     @Override
-    public void mediaStateChanged(Media media, State newState) {
-    }
-
-    @Override
     public void mediaSubItemTreeAdded(Media media, MediaRef item) {
     }
 

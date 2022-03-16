@@ -28,7 +28,6 @@ import uk.co.caprica.vlcj.media.Picture;
 import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.base.State;
 import uk.co.caprica.vlcj.player.base.TitleDescription;
 
 import java.util.List;
@@ -196,10 +195,6 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
 
     @Override
     public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
-    }
-
-    @Override
-    public void mediaStateChanged(Media media, State newState) {
     }
 
     @Override
