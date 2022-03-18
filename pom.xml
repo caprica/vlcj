@@ -7,7 +7,7 @@
         <dependency>
             <groupId>uk.co.caprica</groupId>
             <artifactId>vlcj</artifactId>
-            <version>4.7.0</version>
+            <version>4.7.2</version>
         </dependency>
     </dependencies> 
 -->
@@ -204,7 +204,7 @@
                     <show>public</show>
                     <quiet>true</quiet>
                     <failOnError>true</failOnError>
-                    <additionalOptions>-html5 -Xdoclint:none</additionalOptions>
+                    <additionalOptions>-Xdoclint:none</additionalOptions>
                     <source>6</source>
                 </configuration>
                 <executions>

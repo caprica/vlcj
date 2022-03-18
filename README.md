@@ -24,6 +24,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 18th March, 2022 - vlcj 4.7.2 released, minor bugfix release relating to embedded media list player component
 - 4th April, 2021 - vlcj 4.7.1 released, some trivial low-impact changes
 - 10th October, 2020 - vlcj 4.7.0 released, enable media list player components to reuse the same streaming output
 - 5th September, 2020 - vlcj 4.6.0 released, minor maintenance release
