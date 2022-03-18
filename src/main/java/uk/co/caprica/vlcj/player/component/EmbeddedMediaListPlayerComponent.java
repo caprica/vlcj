@@ -61,6 +61,7 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerCom
      */
     public EmbeddedMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, Component videoSurfaceComponent, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, Window overlay) {
         super(mediaPlayerFactory, videoSurfaceComponent, fullScreenStrategy, inputEvents, overlay);
+        applyMediaPlayer();
         applyMediaList();
         onAfterConstruct();
     }
@@ -91,6 +92,11 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerCom
 
         // Use the native media player instance already associated with the media list player
         return mediaPlayerFactory().mediaPlayers().newEmbeddedMediaPlayer(this.mediaListPlayer);
+    }
+
+    private void applyMediaPlayer() {
+        // Use the EmbeddedMediaPlayer created by the case class as the media player for the media list player
+        mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer());
     }
 
     private void applyMediaList() {
