@@ -296,6 +296,13 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
 
     /**
      * Enable audio callbacks and set the component used to process the audio samples.
+     * <p>
+     * Supported audio buffer formats (as stated in VLC include-file libvlc_media_player.h) are:
+     * <ul>
+     *     <li>S16M - signed 16-bit PCM</li>
+     *     <li>S32M - signed 32-bit PCM</li>
+     *     <li>FL32 - single-precision IEEE 754</li>
+     * </ul>
      *
      * @param format audio buffer format
      * @param rate audio buffer bit-rate
