@@ -76,6 +76,15 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerCom
     }
 
     /**
+     * Construct an embedded media list player component with LibVLC initialisation arguments and reasonable defaults.
+     *
+     * @param libvlcArgs LibVLC initialisation arguments
+     */
+    public EmbeddedMediaListPlayerComponent(String... libvlcArgs) {
+        this(new MediaPlayerFactory(libvlcArgs), null, null, null, null);
+    }
+
+    /**
      * Construct an embedded media list player component with reasonable defaults.
      */
     public EmbeddedMediaListPlayerComponent() {

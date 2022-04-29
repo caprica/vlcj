@@ -126,6 +126,15 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
     }
 
     /**
+     * Construct a callback media list player component with LibVLC initialisation arguments and reasonable defaults.
+     *
+     * @param libvlcArgs LibVLC initialisation arguments
+     */
+    public CallbackMediaListPlayerComponent(String... libvlcArgs) {
+        this(new MediaPlayerFactory(libvlcArgs), null, null, true, null);
+    }
+
+    /**
      * Construct a callback media list player component with reasonable defaults.
      */
     public CallbackMediaListPlayerComponent() {
