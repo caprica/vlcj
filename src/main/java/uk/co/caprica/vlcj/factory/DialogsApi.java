@@ -25,6 +25,7 @@ import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_dismiss;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_post_action;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_post_login;
 import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_set_callbacks;
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_set_error_callback;
 
 /**
  * Behaviour pertaining to native dialogs.
@@ -68,6 +69,7 @@ public final class DialogsApi extends BaseApi {
      * @param userData user data associated with the dialog
      */
     public void enable(Dialogs dialogs, Long userData) {
+        libvlc_dialog_set_error_callback(libvlcInstance, dialogs.errorCallback(), pointer(userData));
         libvlc_dialog_set_callbacks(libvlcInstance, dialogs.callbacks(), pointer(userData));
     }
 

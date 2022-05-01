@@ -42,12 +42,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public final class Dialogs {
 
+    private final libvlc_dialog_display_error_cb errorCallback;
+
     private final libvlc_dialog_cbs callbacks;
 
     private final List<DialogHandler> handlerList = new CopyOnWriteArrayList<DialogHandler>();
 
     Dialogs(DialogType... dialogTypes) {
-        this.callbacks = createCallbacks(dialogTypes);
+        Set<DialogType> enableTypes = new HashSet<DialogType>();
+        Collections.addAll(enableTypes, dialogTypes != null && dialogTypes.length > 0 ? dialogTypes : DialogType.values());
+        this.errorCallback = createErrorCallback(enableTypes);
+        this.callbacks = createCallbacks(enableTypes);
     }
 
     /**
@@ -68,17 +73,17 @@ public final class Dialogs {
         handlerList.remove(handler);
     }
 
+    libvlc_dialog_display_error_cb errorCallback() {
+        return errorCallback;
+    }
+
     libvlc_dialog_cbs callbacks() {
         return callbacks;
     }
 
-    private libvlc_dialog_cbs createCallbacks(DialogType... dialogTypes) {
+    private libvlc_dialog_cbs createCallbacks(Set<DialogType> enableTypes) {
         libvlc_dialog_cbs callbacks = new libvlc_dialog_cbs();
 
-        Set<DialogType> enableTypes = new HashSet<DialogType>();
-        Collections.addAll(enableTypes, dialogTypes != null && dialogTypes.length > 0 ? dialogTypes : DialogType.values());
-
-        callbacks.pf_display_error    = enableTypes.contains(DialogType.ERROR   ) ? new DisplayError()    : null;
         callbacks.pf_display_login    = enableTypes.contains(DialogType.LOGIN   ) ? new DisplayLogin()    : null;
         callbacks.pf_display_question = enableTypes.contains(DialogType.QUESTION) ? new DisplayQuestion() : null;
         callbacks.pf_display_progress = enableTypes.contains(DialogType.PROGRESS) ? new DisplayProgress() : null;
@@ -86,6 +91,10 @@ public final class Dialogs {
         callbacks.pf_cancel           = new Cancel();
 
         return callbacks;
+    }
+
+    private libvlc_dialog_display_error_cb createErrorCallback(Set<DialogType> enableTypes) {
+        return enableTypes.contains(DialogType.ERROR) ? new DisplayError() : null;
     }
 
     private class DisplayError implements libvlc_dialog_display_error_cb {
