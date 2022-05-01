@@ -79,6 +79,7 @@ public final class DialogsApi extends BaseApi {
      * @param userData user data associated with the dialog
      */
     public void disable(Long userData) {
+        libvlc_dialog_set_error_callback(libvlcInstance, null, pointer(userData));
         libvlc_dialog_set_callbacks(libvlcInstance, null, pointer(userData));
     }
 
