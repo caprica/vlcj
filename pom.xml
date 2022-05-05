@@ -117,9 +117,7 @@
     </repositories>
 
     <properties>
-        <properties>
-            <gpg.skip>true</gpg.skip>
-        </properties>
+        <gpg.skip>true</gpg.skip>
         <java.version>1.8</java.version>
         <module.name>uk.co.caprica.vlcj</module.name>
         <vlcjNatives.version>5.0.0-SNAPSHOT</vlcjNatives.version>
