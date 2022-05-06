@@ -77,6 +77,10 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
+    public void finished(MediaPlayer mediaPlayer) {
+    }
+
+    @Override
     public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
     }
 

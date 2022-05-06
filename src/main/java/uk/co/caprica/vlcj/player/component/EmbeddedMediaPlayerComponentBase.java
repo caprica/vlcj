@@ -149,6 +149,10 @@ abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaP
     }
 
     @Override
+    public void finished(MediaPlayer mediaPlayer) {
+    }
+
+    @Override
     public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
     }
 

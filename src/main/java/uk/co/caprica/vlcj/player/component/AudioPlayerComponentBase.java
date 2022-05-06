@@ -84,6 +84,10 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
+    public void finished(MediaPlayer mediaPlayer) {
+    }
+
+    @Override
     public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
     }
 
