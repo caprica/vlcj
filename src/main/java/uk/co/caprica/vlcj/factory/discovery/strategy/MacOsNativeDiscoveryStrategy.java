@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.factory.discovery.strategy;
 
-import com.sun.jna.NativeLibrary;
 import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.factory.discovery.provider.DirectoryProviderDiscoveryStrategy;
@@ -48,23 +47,6 @@ public class MacOsNativeDiscoveryStrategy extends DirectoryProviderDiscoveryStra
     @Override
     public boolean supported() {
         return RuntimeUtil.isMac();
-    }
-
-    @Override
-    public boolean onFound(String path) {
-        forceLoadLibVlcCore(path);
-        return true;
-    }
-
-    /**
-     * On later versions of OSX, it is necessary to force-load libvlccore before libvlc, otherwise libvlc will fail to
-     * load.
-     *
-     * @param path
-     */
-    private void forceLoadLibVlcCore(String path) {
-        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcCoreLibraryName(), path);
-        NativeLibrary.getInstance(RuntimeUtil.getLibVlcCoreLibraryName());
     }
 
     @Override

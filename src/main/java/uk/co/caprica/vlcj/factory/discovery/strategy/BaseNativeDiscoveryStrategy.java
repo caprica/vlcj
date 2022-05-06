@@ -19,6 +19,9 @@
 
 package uk.co.caprica.vlcj.factory.discovery.strategy;
 
+import com.sun.jna.NativeLibrary;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
+
 import java.io.File;
 import java.util.HashSet;
 import java.util.List;
@@ -114,7 +117,9 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
     }
 
     @Override
-    public boolean onFound(String path) {
+    public final boolean onFound(String path) {
+        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcCoreLibraryName(), path);
+        NativeLibrary.getInstance(RuntimeUtil.getLibVlcCoreLibraryName());
         return true;
     }
 
