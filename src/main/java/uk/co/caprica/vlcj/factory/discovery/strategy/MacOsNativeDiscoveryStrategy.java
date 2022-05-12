@@ -37,7 +37,7 @@ public class MacOsNativeDiscoveryStrategy extends DirectoryProviderDiscoveryStra
      * Format string to prepare the plugin path environment variable value.
      */
     private static final String[] PLUGIN_PATH_FORMATS = new String[] {
-        "%s/../plugins"
+        "%s/plugins"
     };
 
     public MacOsNativeDiscoveryStrategy() {
