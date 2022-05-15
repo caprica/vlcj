@@ -7,7 +7,7 @@
         <dependency>
             <groupId>uk.co.caprica</groupId>
             <artifactId>vlcj</artifactId>
-            <version>4.7.2</version>
+            <version>4.7.3</version>
         </dependency>
     </dependencies> 
 -->
@@ -78,7 +78,7 @@
 
     <properties>
         <module.name>uk.co.caprica.vlcj</module.name>
-        <vlcjNatives.version>4.1.0</vlcjNatives.version>
+        <vlcjNatives.version>4.7.0</vlcjNatives.version>
         <vlcjOsxStubs.version>1.0.0</vlcjOsxStubs.version>
     </properties>
 

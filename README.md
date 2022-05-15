@@ -24,6 +24,7 @@ more information as well as some new simple tutorials.
 News
 ====
 
+- 15th May, 2022 - vlcj 4.7.3 released, minor maintenance release to use latest version of JNA
 - 18th March, 2022 - vlcj 4.7.2 released, minor bugfix release relating to embedded media list player component
 - 4th April, 2021 - vlcj 4.7.1 released, some trivial low-impact changes
 - 10th October, 2020 - vlcj 4.7.0 released, enable media list player components to reuse the same streaming output
@@ -216,7 +217,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.7.1</version>
+    <version>4.7.3</version>
 </dependency>
 ```
 
