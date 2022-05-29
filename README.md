@@ -41,21 +41,34 @@ Build Status
 News
 ====
 
-Project status update 16th March 2022:
+News
+====
+
+__May 2022__ Supporting the project:
+
+>If you would like to help support the continued development of vlcj and our other Open Source efforts, you might like
+>to consider sponsoring the project by becoming a GitHub sponsor or buying us a coffee - look for the "Sponsor this
+>project" links on this page.
+>
+>Alternatively, a good way to support the project is by purchasing a commercial license for vlcj - some more information
+>is included at the end of this README.
+
+__May 2022__ Project status update:
 
 >vlcj is still tracking the development process of VLC/LibVLC 4.0.0 - there are some small changes made recently to
 LibVLC, but nothing major, no new API. There is still no end in sight to the first VLC 4.x release. Aside from LibVLC
-there are still some small improvements being made to vlcj, check the project issues for details. 
+there are still some small improvements being made to vlcj, check the project issues for details.
 >
 >vlcj-5.0.0-SNAPSHOT currently has feature parity with the in-development LibVLC 4.0.0 - we're basically waiting for VLC
 4.0 final to be released, or for any new native API to be added to be added to LibVLC.
-> 
+>
 > If you have a stable pre-release build of VLC 4.0.0 you should be fine to use the current vlcj-5.0.0-SNAPSHOT version.
-> 
+>
 > But as of right now, there's nothing much more to be done on vlcj until the next major version of VLC is released -
 and that is likely yet to be quite some time away.
 
-- Future, 2022 - vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 8 LTS.
+__Future 2022__ Next major release
+> vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 8 LTS.
 
 All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
