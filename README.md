@@ -41,9 +41,6 @@ Build Status
 News
 ====
 
-News
-====
-
 __May 2022__ Supporting the project:
 
 >If you would like to help support the continued development of vlcj and our other Open Source efforts, you might like
