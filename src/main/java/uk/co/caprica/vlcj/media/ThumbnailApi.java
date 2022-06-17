@@ -49,7 +49,7 @@ public final class ThumbnailApi extends BaseApi {
      * @return thumbnail request
      */
     public ThumbnailRequest requestByTime(long time, ThumbnailerSeekSpeed speed, int width, int height, boolean crop, PictureType pictureType, long timeout) {
-        libvlc_media_thumbnail_request_t request = libvlc_media_thumbnail_request_by_time(mediaInstance, time, speed.intValue(), width, height, crop ? 1 : 0, pictureType.intValue(), timeout);
+        libvlc_media_thumbnail_request_t request = libvlc_media_thumbnail_request_by_time(libvlcInstance, mediaInstance, time, speed.intValue(), width, height, crop ? 1 : 0, pictureType.intValue(), timeout);
         if (request != null) {
             return new ThumbnailRequest(request);
         } else {
@@ -73,7 +73,7 @@ public final class ThumbnailApi extends BaseApi {
      * @return thumbnail request
      */
     public ThumbnailRequest requestByPosition(float position, ThumbnailerSeekSpeed speed, int width, int height, boolean crop, PictureType pictureType, long timeout) {
-        libvlc_media_thumbnail_request_t request = libvlc_media_thumbnail_request_by_pos(mediaInstance, position, speed.intValue(), width, height, crop ? 1 : 0, pictureType.intValue(), timeout);
+        libvlc_media_thumbnail_request_t request = libvlc_media_thumbnail_request_by_pos(libvlcInstance, mediaInstance, position, speed.intValue(), width, height, crop ? 1 : 0, pictureType.intValue(), timeout);
         if (request != null) {
             return new ThumbnailRequest(request);
         } else {
