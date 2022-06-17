@@ -27,10 +27,12 @@ import java.util.Map;
  */
 public enum MediaParsedStatus {
 
-    SKIPPED(1),
-    FAILED (2),
-    TIMEOUT(3),
-    DONE   (4);
+    NONE   (0),
+    PENDING(1),
+    SKIPPED(2),
+    FAILED (3),
+    TIMEOUT(4),
+    DONE   (5);
 
     private static final Map<Integer, MediaParsedStatus> INT_MAP = new HashMap<Integer, MediaParsedStatus>();
 
