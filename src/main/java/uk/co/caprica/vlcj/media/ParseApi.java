@@ -98,14 +98,14 @@ public final class ParseApi extends BaseApi {
      * @return <code>true</code> if the parse request was successful; <code>false</code> on error
      */
     public boolean parse(int timeout, ParseFlag... flags) {
-        return libvlc_media_parse_with_options(mediaInstance, flagsToInt(flags), timeout) == 0;
+        return libvlc_media_parse_with_options(libvlcInstance, mediaInstance, flagsToInt(flags), timeout) == 0;
     }
 
     /**
      * Stop the asynchronous parsing.
      */
     public void stop() {
-        libvlc_media_parse_stop(mediaInstance);
+        libvlc_media_parse_stop(libvlcInstance, mediaInstance);
     }
 
     /**
