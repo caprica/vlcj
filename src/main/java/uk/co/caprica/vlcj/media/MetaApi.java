@@ -64,7 +64,7 @@ public final class MetaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean save() {
-        return libvlc_media_save_meta(mediaInstance) != 0;
+        return libvlc_media_save_meta(libvlcInstance, mediaInstance) != 0;
     }
 
     /**
