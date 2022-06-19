@@ -68,7 +68,7 @@ public final class MediaFactory {
      * @return media reference
      */
     public static MediaRef newMediaRef(libvlc_instance_t libvlcInstance, String mrl, String... options) {
-        return createMediaRef(libvlcInstance, newMediaInstance(libvlcInstance, mrl), options);
+        return createMediaRef(libvlcInstance, newMediaInstance(mrl), options);
     }
 
     /**
@@ -82,7 +82,7 @@ public final class MediaFactory {
      * @return media reference
      */
     public static MediaRef newMediaRef(libvlc_instance_t libvlcInstance, CallbackMedia callbackMedia, String... options) {
-        return createMediaRef(libvlcInstance, newMediaInstance(libvlcInstance, callbackMedia), options);
+        return createMediaRef(libvlcInstance, newMediaInstance(callbackMedia), options);
     }
 
     /**
@@ -166,7 +166,7 @@ public final class MediaFactory {
      * @return media
      */
     public static Media newMedia(libvlc_instance_t libvlcInstance, String mrl, String... options) {
-        return createMedia(libvlcInstance, newMediaInstance(libvlcInstance, mrl), options);
+        return createMedia(libvlcInstance, newMediaInstance(mrl), options);
     }
 
     /**
@@ -180,7 +180,7 @@ public final class MediaFactory {
      * @return media
      */
     public static Media newMedia(libvlc_instance_t libvlcInstance, CallbackMedia callbackMedia, String... options) {
-        return createMedia(libvlcInstance, newMediaInstance(libvlcInstance, callbackMedia), options);
+        return createMedia(libvlcInstance, newMediaInstance(callbackMedia), options);
     }
 
     /**
@@ -235,15 +235,15 @@ public final class MediaFactory {
         return createMedia(libvlcInstance, libvlc_media_duplicate(media.mediaInstance()), options);
     }
 
-    private static libvlc_media_t newMediaInstance(libvlc_instance_t libvlcInstance, String mrl) {
+    private static libvlc_media_t newMediaInstance(String mrl) {
         mrl = MediaResourceLocator.encodeMrl(mrl);
         return MediaResourceLocator.isLocation(mrl) ?
-            libvlc_media_new_location(libvlcInstance, mrl) :
-            libvlc_media_new_path(libvlcInstance, mrl);
+            libvlc_media_new_location(mrl) :
+            libvlc_media_new_path(mrl);
     }
 
-    private static libvlc_media_t newMediaInstance(libvlc_instance_t libvlcInstance, CallbackMedia callbackMedia) {
-        return libvlc_media_new_callbacks(libvlcInstance,
+    private static libvlc_media_t newMediaInstance(CallbackMedia callbackMedia) {
+        return libvlc_media_new_callbacks(
             callbackMedia.getOpen(),
             callbackMedia.getRead(),
             callbackMedia.getSeek(),
