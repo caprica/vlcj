@@ -20,6 +20,8 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.VideoSurfaceApi;
 
 /**
  * Encapsulation of a video surface.
@@ -44,6 +46,14 @@ public abstract class VideoSurface {
      * Attach the video surface to a media player.
      * <p>
      * The video surface component <em>must</em> be visible at this point otherwise the native call will fail.
+     * <p>
+     * This method is not ordinarily intended to be called by applications, rather the media player will invoke this
+     * method at the appropriate time after the calling application has set the video surface via
+     * {@link EmbeddedMediaPlayer#videoSurface()} and {@link VideoSurfaceApi#set(VideoSurface)}
+     * <p>
+     * If an application does use this method, the media player will not keep a reference to this video surface, and it
+     * may become prematurely eligible for garbage collection and cause subsequent failures. In such cases, the calling
+     * application should make sure a hard reference to the video surface is kept.
      *
      * @param mediaPlayer media player instance
      */
