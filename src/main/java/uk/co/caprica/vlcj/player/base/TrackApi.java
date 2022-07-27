@@ -56,7 +56,19 @@ public final class TrackApi extends BaseApi {
      * @return track list, or <code>null</code> if no track list for the requested type is available
      */
     public VideoTrackList videoTracks() {
-        libvlc_media_tracklist_t trackList = libvlc_media_player_get_tracklist(mediaPlayerInstance, TrackType.VIDEO.intValue());
+        return videoTracks(false);
+    }
+
+    /**
+     * Get the current video track list for the given track type.
+     * <p>
+     * The returned track list must be freed by {@link TrackList#release()} when it is no longer needed.
+     *
+     * @param selected if <code>true</code>, return only the selected tracks
+     * @return track list, or <code>null</code> if no track list for the requested type is available
+     */
+    public VideoTrackList videoTracks(boolean selected) {
+        libvlc_media_tracklist_t trackList = libvlc_media_player_get_tracklist(mediaPlayerInstance, TrackType.VIDEO.intValue(), selected ? 1 : 0);
         if (trackList != null) {
             return new VideoTrackList(trackList);
         }
@@ -71,11 +83,7 @@ public final class TrackApi extends BaseApi {
      * @return track list, or <code>null</code> if no track list for the requested type is available
      */
     public AudioTrackList audioTracks() {
-        libvlc_media_tracklist_t trackList = libvlc_media_player_get_tracklist(mediaPlayerInstance, TrackType.AUDIO.intValue());
-        if (trackList != null) {
-            return new AudioTrackList(trackList);
-        }
-        return null;
+        return audioTracks(false);
     }
 
     /**
@@ -83,10 +91,38 @@ public final class TrackApi extends BaseApi {
      * <p>
      * The returned track list must be freed by {@link TrackList#release()} when it is no longer needed.
      *
+     * @param selected if <code>true</code>, return only the selected tracks
+     * @return track list, or <code>null</code> if no track list for the requested type is available
+     */
+    public AudioTrackList audioTracks(boolean selected) {
+        libvlc_media_tracklist_t trackList = libvlc_media_player_get_tracklist(mediaPlayerInstance, TrackType.AUDIO.intValue(), selected ? 1 : 0);
+        if (trackList != null) {
+            return new AudioTrackList(trackList);
+        }
+        return null;
+    }
+
+    /**
+     * Get the current text track list for the given track type.
+     * <p>
+     * The returned track list must be freed by {@link TrackList#release()} when it is no longer needed.
+     *
      * @return track list, or <code>null</code> if no track list for the requested type is available
      */
     public TextTrackList textTracks() {
-        libvlc_media_tracklist_t trackList = libvlc_media_player_get_tracklist(mediaPlayerInstance, TrackType.TEXT.intValue());
+        return textTracks(false);
+    }
+
+    /**
+     * Get the current text track list for the given track type.
+     * <p>
+     * The returned track list must be freed by {@link TrackList#release()} when it is no longer needed.
+     *
+     * @param selected if <code>true</code>, return only the selected tracks
+     * @return track list, or <code>null</code> if no track list for the requested type is available
+     */
+    public TextTrackList textTracks(boolean selected) {
+        libvlc_media_tracklist_t trackList = libvlc_media_player_get_tracklist(mediaPlayerInstance, TrackType.TEXT.intValue(), selected ? 1 : 0);
         if (trackList != null) {
             return new TextTrackList(trackList);
         }
