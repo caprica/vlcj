@@ -134,7 +134,7 @@ public interface MediaPlayerEventListener {
      * @param mediaPlayer media player that raised the event
      * @param newPosition percentage between 0.0 and 1.0
      */
-    void positionChanged(MediaPlayer mediaPlayer, float newPosition);
+    void positionChanged(MediaPlayer mediaPlayer, double newPosition);
 
     /**
      * Media seekable status changed.

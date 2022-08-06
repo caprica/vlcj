@@ -157,9 +157,9 @@ public final class ControlsApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> otherwise
      */
     public boolean skipPosition(float delta) {
-        float current = mediaPlayer.status().position();
+        double current = mediaPlayer.status().position();
         if (current != -1) {
-            return setPosition(current + delta, false);
+            return setPosition((float) (current + delta), false);
         } else {
             return false;
         }
@@ -193,9 +193,9 @@ public final class ControlsApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> otherwise
      */
     public boolean skipPosition(float delta, boolean fast) {
-        float current = mediaPlayer.status().position();
+        double current = mediaPlayer.status().position();
         if (current != -1) {
-            return setPosition(current + delta, fast);
+            return setPosition((float) (current + delta), fast);
         } else {
             return false;
         }

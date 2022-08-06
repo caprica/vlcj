@@ -53,7 +53,7 @@ final class MediaPlayerReadyEventHandler extends MediaPlayerEventAdapter {
     }
 
     @Override
-    public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
+    public void positionChanged(MediaPlayer mediaPlayer, double newPosition) {
         if (!fired && newPosition > 0) {
             fired = true;
             mediaPlayer.events().raiseEvent(MediaPlayerEventFactory.createMediaPlayerReadyEvent(mediaPlayer));

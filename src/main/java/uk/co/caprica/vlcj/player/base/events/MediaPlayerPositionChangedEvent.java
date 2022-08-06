@@ -29,7 +29,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
  */
 final class MediaPlayerPositionChangedEvent extends MediaPlayerEvent {
 
-    private final float newPosition;
+    private final double newPosition;
 
     MediaPlayerPositionChangedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
         super(mediaPlayer);

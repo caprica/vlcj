@@ -92,7 +92,7 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
+    public void positionChanged(MediaPlayer mediaPlayer, double newPosition) {
     }
 
     @Override

@@ -157,7 +157,7 @@ abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaP
     }
 
     @Override
-    public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
+    public void positionChanged(MediaPlayer mediaPlayer, double newPosition) {
     }
 
     @Override

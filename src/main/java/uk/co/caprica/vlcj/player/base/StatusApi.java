@@ -100,7 +100,7 @@ public final class StatusApi extends BaseApi {
      *
      * @return current position, expressed as a percentage (e.g. 0.15 is returned for 15% complete)
      */
-    public float position() {
+    public double position() {
         return libvlc_media_player_get_position(mediaPlayerInstance);
     }
 

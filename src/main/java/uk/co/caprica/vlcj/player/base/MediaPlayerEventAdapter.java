@@ -85,7 +85,7 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
-    public void positionChanged(MediaPlayer mediaPlayer, float newPosition) {
+    public void positionChanged(MediaPlayer mediaPlayer, double newPosition) {
     }
 
     @Override
