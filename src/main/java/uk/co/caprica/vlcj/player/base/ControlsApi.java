@@ -156,10 +156,10 @@ public final class ControlsApi extends BaseApi {
      * @param delta amount to skip
      * @return <code>true</code> if successful; <code>false</code> otherwise
      */
-    public boolean skipPosition(float delta) {
+    public boolean skipPosition(double delta) {
         double current = mediaPlayer.status().position();
         if (current != -1) {
-            return setPosition((float) (current + delta), false);
+            return setPosition(current + delta, false);
         } else {
             return false;
         }
@@ -192,10 +192,10 @@ public final class ControlsApi extends BaseApi {
      * @param fast <code>true</code> for fast seeking; <code>false</code> for precise seeking
      * @return <code>true</code> if successful; <code>false</code> otherwise
      */
-    public boolean skipPosition(float delta, boolean fast) {
+    public boolean skipPosition(double delta, boolean fast) {
         double current = mediaPlayer.status().position();
         if (current != -1) {
-            return setPosition((float) (current + delta), fast);
+            return setPosition(current + delta, fast);
         } else {
             return false;
         }
@@ -225,7 +225,7 @@ public final class ControlsApi extends BaseApi {
      * @param position position value, a percentage (e.g. 0.15 is 15%)
      * @return <code>true</code> if successful; <code>false</code> otherwise
      */
-    public boolean setPosition(float position) {
+    public boolean setPosition(double position) {
         return setPosition(position, false);
     }
 
@@ -251,7 +251,7 @@ public final class ControlsApi extends BaseApi {
      * @param fast <code>true</code> for fast seeking; <code>false</code> for precise seeking
      * @return <code>true</code> if successful; <code>false</code> otherwise
      */
-    public boolean setPosition(float position, boolean fast) {
+    public boolean setPosition(double position, boolean fast) {
         return libvlc_media_player_set_position(mediaPlayerInstance, Math.max(position, 0), fast ? 1 : 0) == 0;
     }
 
