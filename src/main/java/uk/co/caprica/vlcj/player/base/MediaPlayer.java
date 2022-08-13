@@ -65,6 +65,7 @@ public class MediaPlayer {
     private final MediaApi      mediaApi;
     private final MenuApi       menuApi;
     private final ProgramApi    programApi;
+    private final RecordApi    recordApi;
     private final RendererApi   rendererApi;
     private final RoleApi       roleApi;
     private final SnapshotApi   snapshotApi;
@@ -107,6 +108,7 @@ public class MediaPlayer {
         mediaApi      = new MediaApi     (this);
         menuApi       = new MenuApi      (this);
         programApi    = new ProgramApi   (this);
+        recordApi     = new RecordApi    (this);
         rendererApi   = new RendererApi  (this);
         roleApi       = new RoleApi      (this);
         snapshotApi   = new SnapshotApi  (this);
@@ -163,6 +165,10 @@ public class MediaPlayer {
 
     public final ProgramApi programs() {
         return programApi;
+    }
+
+    public final RecordApi record() {
+        return recordApi;
     }
 
     public final RendererApi renderer() {
@@ -259,6 +265,7 @@ public class MediaPlayer {
         mediaApi     .release();
         menuApi      .release();
         programApi   .release();
+        recordApi    .release();
         rendererApi  .release();
         roleApi      .release();
         snapshotApi  .release();

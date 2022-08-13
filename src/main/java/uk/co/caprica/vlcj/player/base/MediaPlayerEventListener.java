@@ -276,6 +276,14 @@ public interface MediaPlayerEventListener {
     void chapterChanged(MediaPlayer mediaPlayer, int newChapter);
 
     /**
+     * The recording status changed.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param recordedFilePath path to the file that contains the recording
+     */
+    void recordChanged(MediaPlayer mediaPlayer, String recordedFilePath);
+
+    /**
      * A program was added.
      *
      * @param mediaPlayer media player that raised the event

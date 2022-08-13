@@ -153,6 +153,10 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
+    public void recordChanged(MediaPlayer mediaPlayer, String recordedFilePath) {
+    }
+
+    @Override
     public void programAdded(MediaPlayer mediaPlayer, int id) {
     }
 

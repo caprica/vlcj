@@ -160,6 +160,10 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
+    public void recordChanged(MediaPlayer mediaPlayer, String recordedFilePath) {
+    }
+
+    @Override
     public void programAdded(MediaPlayer mediaPlayer, int id) {
     }
 

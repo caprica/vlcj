@@ -225,6 +225,10 @@ abstract class EmbeddedMediaPlayerComponentBase extends JPanel implements MediaP
     }
 
     @Override
+    public void recordChanged(MediaPlayer mediaPlayer, String recordedFilePath) {
+    }
+
+    @Override
     public void programAdded(MediaPlayer mediaPlayer, int id) {
     }
 

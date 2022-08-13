@@ -55,7 +55,7 @@ final class MediaPlayerNativeEventManager extends NativeEventManager<MediaPlayer
     private boolean receivedPlayingEvent;
 
     MediaPlayerNativeEventManager(libvlc_instance_t libvlcInstance, MediaPlayer eventObject) {
-        super(libvlcInstance, eventObject, libvlc_event_e.libvlc_MediaPlayerMediaChanged, libvlc_event_e.libvlc_MediaPlayerChapterChanged, "media-player-events");
+        super(libvlcInstance, eventObject, libvlc_event_e.libvlc_MediaPlayerMediaChanged, libvlc_event_e.libvlc_MediaPlayerRecordChanged, "media-player-events");
     }
 
     @Override
