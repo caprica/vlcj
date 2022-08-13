@@ -33,7 +33,7 @@ public final class RecordApi extends BaseApi {
     /**
      * Start recording.
      * <p>
-     * A {@link MediaPlayerEventListener#recordChanged(MediaPlayer, String)} event will be raised.
+     * A {@link MediaPlayerEventListener#recordChanged(MediaPlayer, boolean, String)} event will be raised.
      *
      * @param outputPath name of the directory to save the recording to
      */

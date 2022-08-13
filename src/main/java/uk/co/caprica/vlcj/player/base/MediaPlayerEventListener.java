@@ -279,9 +279,10 @@ public interface MediaPlayerEventListener {
      * The recording status changed.
      *
      * @param mediaPlayer media player that raised the event
+     * @param recording <code>true</code> if recording started; <code>false</code> if recording stopped
      * @param recordedFilePath path to the file that contains the recording
      */
-    void recordChanged(MediaPlayer mediaPlayer, String recordedFilePath);
+    void recordChanged(MediaPlayer mediaPlayer, boolean recording, String recordedFilePath);
 
     /**
      * A program was added.
