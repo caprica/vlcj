@@ -72,6 +72,7 @@ public class MediaPlayer {
     private final SubitemApi    subitemApi;
     private final SubpictureApi subpictureApi;
     private final TeletextApi   teletextApi;
+    private final TimeApi       timeApi;
     private final TitleApi      titleApi;
     private final TrackApi      trackApi;
     private final VideoApi      videoApi;
@@ -113,6 +114,7 @@ public class MediaPlayer {
         subitemApi    = new SubitemApi   (this);
         subpictureApi = new SubpictureApi(this);
         teletextApi   = new TeletextApi  (this);
+        timeApi       = new TimeApi      (this);
         titleApi      = new TitleApi     (this);
         trackApi      = new TrackApi     (this);
         videoApi      = new VideoApi     (this);
@@ -191,6 +193,10 @@ public class MediaPlayer {
         return teletextApi;
     }
 
+    public final TimeApi time() {
+        return timeApi;
+    }
+
     public final TitleApi titles() {
         return titleApi;
     }
@@ -260,6 +266,7 @@ public class MediaPlayer {
         subitemApi   .release();
         subpictureApi.release();
         teletextApi  .release();
+        timeApi      .release();
         titleApi     .release();
         trackApi     .release();
         videoApi     .release();
