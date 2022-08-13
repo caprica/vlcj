@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_record;
+
 /**
  * Behaviour pertaining to recording media.
  */
@@ -26,5 +28,23 @@ public final class RecordApi extends BaseApi {
 
     RecordApi(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
+    }
+
+    /**
+     * Start recording.
+     * <p>
+     * A {@link MediaPlayerEventListener#recordChanged(MediaPlayer, String)} event will be raised.
+     *
+     * @param outputPath name of the directory to save the recording to
+     */
+    public void startRecording(String outputPath) {
+        libvlc_media_player_record(mediaPlayerInstance, 1, outputPath);
+    }
+
+    /**
+     * Stop recording.
+     */
+    public void stopRecording() {
+        libvlc_media_player_record(mediaPlayerInstance, 0, null);
     }
 }
