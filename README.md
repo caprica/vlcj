@@ -25,6 +25,9 @@ At least JDK 11 is required.
 
 vlcj-4.7.x, which is still current, is the last version of vlcj that was built against JDK 1.6.
 
+vlcj-4.8.x, which is still current, is the first version of vlcj that was built against JDK 11, and is the first to
+use the Java Module System.
+
 *This version of vlcj requires VLC 4.0.0 as a minimum, no earlier version is supported.*
 
 This is the open source vlcj project page, see also the 'official'
