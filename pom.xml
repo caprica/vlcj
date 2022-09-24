@@ -18,7 +18,7 @@
 
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.8.0-SNAPSHOT</version>
+    <version>4.8.0</version>
 
     <name>vlcj</name>
     <description>Java Framework for the vlc Media Player.</description>
