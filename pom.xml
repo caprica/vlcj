@@ -77,6 +77,7 @@
     </distributionManagement>
 
     <properties>
+        <doclint>none</doclint>
         <gpg.skip>true</gpg.skip>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
