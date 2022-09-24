@@ -13,7 +13,7 @@ OSX, although there may be some limitations on OSX.
 Additionally, whilst not supported as one of the main platforms, this version of vlcj has been tested and shown to be
 working on contemporary Raspberry Pi builds.
 
-At least JDK 1.6 is required.
+At least JDK 11 is required.
 
 *This version of vlcj requires VLC 3.0.0 as a minimum, no earlier version is supported.*
 
@@ -21,33 +21,11 @@ This is the open source vlcj project page, see also the 'official'
 [home page](http://capricasoftware.co.uk/projects/vlcj "Official vlcj home page at Caprica Software") where you can find
 more information as well as some new simple tutorials.
 
-News
-====
-
+Recent News
+===========
+- 24th September, 2022 - vlcj 4.8.0 released, initial move to Java 11 and the Java Module System, no functional changes
 - 15th May, 2022 - vlcj 4.7.3 released, minor maintenance release to use latest version of JNA
 - 18th March, 2022 - vlcj 4.7.2 released, minor bugfix release relating to embedded media list player component
-- 4th April, 2021 - vlcj 4.7.1 released, some trivial low-impact changes
-- 10th October, 2020 - vlcj 4.7.0 released, enable media list player components to reuse the same streaming output
-- 5th September, 2020 - vlcj 4.6.0 released, minor maintenance release
-- 1st May, 2020 - vlcj 4.4.4 released, minor maintenance release
-- 30th April, 2020 - vlcj 4.4.3 released, minor maintenance release - new API for starting media paused on the first frame
-- 25th April, 2020 - vlcj 4.4.2 released, initialisation changes on Linux - removed the VLCJ_INITX system property (see #929)
-- 16th April, 2020 - vlcj 4.4.1 released, only minor changes
-- 2nd March, 2020 - vlcj 4.4.0 released, only minor changes
-- 11th January, 2020 - vlcj 4.3.0 released, add an automatic module name for Java 9 modules
-- 13th July, 2019 - vlcj 4.2.0 released, minor updates, check the release milestone for details
-- 9th June, 2019 - new project [vlcj-subs](https://github.com/caprica/vlcj-subs) to help integrate subtitles into Java applications
-- 5th April, 2019 - vlcj 4.1.0 release, this release brings JNA "direct mapping" which should give a modest performance boost
-- 1st April, 2019 - vlcj 4.0.8 released, fixes an issue with the BufferedImage in the CallbackMediaPlayerComponent
-- 24th March, 2019 - vlcj 4.0.7 released, minor change to allow to change the callback video surface image painter after creation
-- 18th March, 2019 - published a Yeoman generator for vlcj starter projects, see [generator-vlcj](https://github.com/caprica/generator-vlcj)
-- 5th March, 2019 - vlcj 4.0.6 released, fixes issues with image painters when using CallbackMediaPlayerComponent
-- 4th March, 2019 - vlcj 4.0.5 released, fixes a problem using ByteBuffer on Java8
-- 4th March, 2019 - vlcj 4.0.4 released, audio callbacks can now optionally manage audio volume, some minor API changes
-- 1st March, 2019 - vlcj 4.0.3 released, fixes a problem with native discovery directory providers and minor API changes
-- 28th February, 2019 - vlcj 4.0.2 released, resolves a potential deadlock (upgrade to this version strongly recommended)
-- 27th February, 2019 - vlcj 4.0.1 released, primarily fixes a small number of minor public API issues
-- 20th February, 2019 - vlcj 4.0.0 released
 
 All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
@@ -112,24 +90,7 @@ Headline changes:
 There have also been a lot of more general improvements to freshen up the codebase, make it more maintainable for the
 future, and to clear some legacy issues that have dogged the project for quite some time.
 
-For a full list of changes in this release, check the release milestones:
-
-- [vlcj 4.0.0 release milestone](https://github.com/caprica/vlcj/milestone/14?closed=1)
-- [vlcj 4.0.1 release milestone](https://github.com/caprica/vlcj/milestone/32?closed=1)
-- [vlcj 4.0.2 release milestone](https://github.com/caprica/vlcj/milestone/33?closed=1)
-- [vlcj 4.0.3 release milestone](https://github.com/caprica/vlcj/milestone/34?closed=1)
-- [vlcj 4.0.4 release milestone](https://github.com/caprica/vlcj/milestone/35?closed=1)
-- [vlcj 4.0.5 release milestone](https://github.com/caprica/vlcj/milestone/36?closed=1)
-- [vlcj 4.0.6 release milestone](https://github.com/caprica/vlcj/milestone/37?closed=1)
-- [vlcj 4.0.7 release milestone](https://github.com/caprica/vlcj/milestone/38?closed=1)
-- [vlcj 4.0.8 release milestone](https://github.com/caprica/vlcj/milestone/40?closed=1)
-
-vlcj 4.1.0+ uses JNA direct-mapping:
-
-- [vlcj 4.1.0 release milestone](https://github.com/caprica/vlcj/milestone/39?closed=1)
-- [vlcj 4.2.0 release milestone](https://github.com/caprica/vlcj/milestone/42?closed=1)
-
-Despite all of these changes, running on JDK 1.6 is still supported!
+For a full list of changes in this release, check the release milestones at GitHub.
 
 Known Issues
 ------------
@@ -217,7 +178,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.7.3</version>
+    <version>4.8.0</version>
 </dependency>
 ```
 
@@ -384,29 +345,7 @@ Documentation
 
 The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at github").
 
-Online Javadoc is available here:
-
-JNA direct-mapping:
-
-* [4.7.0 (current)](http://caprica.github.io/vlcj/javadoc/4.7.0/index.html "4.7.0 Javadoc")
-* [4.6.0](http://caprica.github.io/vlcj/javadoc/4.6.0/index.html "4.6.0 Javadoc")
-* [4.4.4](http://caprica.github.io/vlcj/javadoc/4.4.4/index.html "4.4.4 Javadoc")
-* [4.4.0](http://caprica.github.io/vlcj/javadoc/4.4.0/index.html "4.4.0 Javadoc")
-* [4.3.0](http://caprica.github.io/vlcj/javadoc/4.3.0/index.html "4.3.0 Javadoc")
-* [4.2.0](http://caprica.github.io/vlcj/javadoc/4.2.0/index.html "4.2.0 Javadoc")
-* [4.1.0](http://caprica.github.io/vlcj/javadoc/4.1.0/index.html "4.1.0 Javadoc")
-
-JNA traditional mapping:
-
-* [4.0.8 (current)](http://caprica.github.io/vlcj/javadoc/4.0.8/index.html "4.0.8 Javadoc")
-* [4.0.7](http://caprica.github.io/vlcj/javadoc/4.0.7/index.html "4.0.7 Javadoc")
-* [4.0.6](http://caprica.github.io/vlcj/javadoc/4.0.6/index.html "4.0.6 Javadoc")
-* [4.0.5](http://caprica.github.io/vlcj/javadoc/4.0.5/index.html "4.0.5 Javadoc")
-* [4.0.4](http://caprica.github.io/vlcj/javadoc/4.0.4/index.html "4.0.4 Javadoc")
-* [4.0.3](http://caprica.github.io/vlcj/javadoc/4.0.3/index.html "4.0.3 Javadoc")
-* [4.0.2](http://caprica.github.io/vlcj/javadoc/4.0.2/index.html "4.0.2 Javadoc")
-* [4.0.1](http://caprica.github.io/vlcj/javadoc/4.0.1/index.html "4.0.1 Javadoc")
-* [4.0.0](http://caprica.github.io/vlcj/javadoc/4.0.0/index.html "4.0.0 Javadoc")
+Online Javadoc is available at [javadoc.io](https://javadoc.io/doc/uk.co.caprica/vlcj/latest/index.html).
 
 Examples
 --------
