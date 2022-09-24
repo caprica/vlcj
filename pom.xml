@@ -77,8 +77,10 @@
     </distributionManagement>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <gpg.skip>true</gpg.skip>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vlcjNatives.version>4.8.1-SNAPSHOT</vlcjNatives.version>
     </properties>
@@ -112,7 +114,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.3.0</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -165,8 +167,7 @@
                     <show>public</show>
                     <quiet>true</quiet>
                     <failOnError>true</failOnError>
-                    <additionalOptions>-Xdoclint:none</additionalOptions>
-                    <source>11</source>
+                    <source>${java.version}</source>
                     <sourcepath>src/main/java</sourcepath>
                 </configuration>
                 <executions>
