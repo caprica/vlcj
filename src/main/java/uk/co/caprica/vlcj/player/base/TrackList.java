@@ -21,15 +21,15 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_tracklist_t;
-import uk.co.caprica.vlcj.binding.support.size_t;
+import uk.co.caprica.vlcj.binding.support.types.size_t;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.unmodifiableList;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_tracklist_at;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_tracklist_count;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_tracklist_delete;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_tracklist_at;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_tracklist_count;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_tracklist_delete;
 
 abstract public class TrackList<T extends Track> {
 

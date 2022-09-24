@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcj.factory.discovery.strategy;
 
 import com.sun.jna.NativeLibrary;
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 
 import java.io.File;
 import java.util.HashSet;

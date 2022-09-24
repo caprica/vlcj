@@ -24,19 +24,19 @@ import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_tracklist_t;
-import uk.co.caprica.vlcj.binding.support.size_t;
+import uk.co.caprica.vlcj.binding.support.types.size_t;
 import uk.co.caprica.vlcj.media.TrackType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_selected_track;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_track_from_id;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_tracklist;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_select_track;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_select_tracks;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_select_tracks_by_ids;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_unselect_track_type;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_selected_track;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_track_from_id;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_tracklist;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_select_track;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_select_tracks;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_select_tracks_by_ids;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_unselect_track_type;
 import static uk.co.caprica.vlcj.media.TrackType.trackType;
 
 /**

@@ -68,10 +68,6 @@ module uk.co.caprica.vlcj {
     exports uk.co.caprica.vlcj.support;
     exports uk.co.caprica.vlcj.support.version;
 
-    exports uk.co.caprica.vlcj.waiter;
-    exports uk.co.caprica.vlcj.waiter.media;
-    exports uk.co.caprica.vlcj.waiter.mediaplayer;
-
     // Native library discovery services
     uses uk.co.caprica.vlcj.factory.discovery.provider.DiscoveryDirectoryProvider;
     uses uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
@@ -81,7 +77,7 @@ module uk.co.caprica.vlcj {
         uk.co.caprica.vlcj.factory.discovery.provider.ConfigurationFileDiscoveryDirectoryProvider,
         uk.co.caprica.vlcj.factory.discovery.provider.JnaLibraryPathDirectoryProvider,
         uk.co.caprica.vlcj.factory.discovery.provider.LinuxWellKnownDirectoryProvider,
-        uk.co.caprica.vlcj.factory.discovery.provider.OsxWellKnownDirectoryProvider,
+        uk.co.caprica.vlcj.factory.discovery.provider.MacOsWellKnownDirectoryProvider,
         uk.co.caprica.vlcj.factory.discovery.provider.SystemPathDirectoryProvider,
         uk.co.caprica.vlcj.factory.discovery.provider.UserDirDirectoryProvider,
         uk.co.caprica.vlcj.factory.discovery.provider.WindowsInstallDirectoryProvider;
@@ -89,6 +85,6 @@ module uk.co.caprica.vlcj {
     // Standard implementations of native library discovery strategy providers
     provides uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy with
         uk.co.caprica.vlcj.factory.discovery.strategy.LinuxNativeDiscoveryStrategy,
-        uk.co.caprica.vlcj.factory.discovery.strategy.OsxNativeDiscoveryStrategy,
+        uk.co.caprica.vlcj.factory.discovery.strategy.MacOsNativeDiscoveryStrategy,
         uk.co.caprica.vlcj.factory.discovery.strategy.WindowsNativeDiscoveryStrategy;
 }

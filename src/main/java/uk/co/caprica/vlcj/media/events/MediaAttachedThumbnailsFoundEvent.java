@@ -24,8 +24,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_picture_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_picture_t;
 import uk.co.caprica.vlcj.binding.internal.media_attached_thumbnails_found;
-import uk.co.caprica.vlcj.binding.internal.media_thumbnail_generated;
-import uk.co.caprica.vlcj.binding.support.size_t;
+import uk.co.caprica.vlcj.binding.support.types.size_t;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.media.Picture;
@@ -33,9 +32,8 @@ import uk.co.caprica.vlcj.media.Picture;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_list_at;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_list_count;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_list_destroy;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_picture_list_at;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_picture_list_count;
 
 /**
  * Encapsulation of a media attached thumbnails found event.

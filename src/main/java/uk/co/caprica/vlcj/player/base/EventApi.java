@@ -29,7 +29,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_clock;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_clock;
 
 /**
  * Behaviour pertaining to media player events.

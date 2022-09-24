@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player.base;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.player.renderer.RendererItem;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_renderer;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_renderer;
 
 /**
  * Behaviour pertaining to the media player renderer (e.g. Chromecast).

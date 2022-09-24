@@ -23,16 +23,16 @@ import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.DoubleByReference;
 import com.sun.jna.ptr.LongByReference;
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_time_point_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_watch_time_on_discontinuity;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_watch_time_on_update;
+import uk.co.caprica.vlcj.binding.lib.LibVlc;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_clock;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_time_point_get_next_date;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_time_point_interpolate;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_unwatch_time;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_watch_time;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_clock;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_time_point_get_next_date;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_time_point_interpolate;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_unwatch_time;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_watch_time;
 
 /**
  * Behaviour pertaining to media player timer.

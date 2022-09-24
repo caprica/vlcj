@@ -23,7 +23,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_subtitle_track_t;
 import uk.co.caprica.vlcj.media.TrackType;
 
-import static uk.co.caprica.vlcj.binding.NativeString.copyNativeString;
+import static uk.co.caprica.vlcj.binding.support.strings.NativeString.copyNativeString;
 
 final public class TextTrack extends Track {
 

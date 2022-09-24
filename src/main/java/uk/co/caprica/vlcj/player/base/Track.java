@@ -22,10 +22,10 @@ package uk.co.caprica.vlcj.player.base;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.media.TrackType;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_codec_description;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_track_hold;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_track_release;
-import static uk.co.caprica.vlcj.binding.NativeString.copyNativeString;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_codec_description;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_track_hold;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_track_release;
+import static uk.co.caprica.vlcj.binding.support.strings.NativeString.copyNativeString;
 
 abstract public class Track {
 

@@ -25,8 +25,7 @@ import uk.co.caprica.vlcj.player.base.TextTrackList;
 import uk.co.caprica.vlcj.player.base.TrackList;
 import uk.co.caprica.vlcj.player.base.VideoTrackList;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_tracklist;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_tracklist;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_tracklist;
 
 /**
  * Behaviour pertaining to media tracks, providing things like track information.

@@ -40,7 +40,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngine;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineCallback;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_output_callbacks;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_output_callbacks;
 
 /**
  * Implementation of a video surface that bridges native video engine callbacks to a rendering API (like JOGL, LWJGL and

@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_player_program_t;
 
-import static uk.co.caprica.vlcj.binding.NativeString.copyNativeString;
+import static uk.co.caprica.vlcj.binding.support.strings.NativeString.copyNativeString;
 
 /**
  * A program (e.g. from a digital video broadcast).

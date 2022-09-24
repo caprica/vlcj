@@ -22,9 +22,8 @@ package uk.co.caprica.vlcj.player.base;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.PointerByReference;
-import uk.co.caprica.vlcj.binding.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_chapter_description_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 
 import java.util.ArrayList;
 import java.util.List;

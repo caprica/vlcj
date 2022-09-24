@@ -25,7 +25,7 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_dialog_dismiss;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_dialog_post_action;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_dialog_post_login;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_dialog_set_callbacks;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_dialog_set_error_callbacks;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_dialog_set_error_callback;
 
 /**
  * Behaviour pertaining to native dialogs.

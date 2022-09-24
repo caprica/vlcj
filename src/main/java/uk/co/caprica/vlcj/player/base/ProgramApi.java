@@ -21,20 +21,20 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_player_program_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_player_programlist_t;
-import uk.co.caprica.vlcj.binding.support.size_t;
+import uk.co.caprica.vlcj.binding.support.types.size_t;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_program_from_id;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_programlist;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_selected_program;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_select_program_id;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_player_program_delete;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_player_programlist_at;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_player_programlist_count;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_player_programlist_delete;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_program_from_id;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_programlist;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_selected_program;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_select_program_id;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_player_program_delete;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_player_programlist_at;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_player_programlist_count;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_player_programlist_delete;
 
 /**
  * Behaviour pertaining to media player programs.

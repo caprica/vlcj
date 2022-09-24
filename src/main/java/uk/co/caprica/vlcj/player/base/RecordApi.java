@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_record;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_record;
 
 /**
  * Behaviour pertaining to recording media.

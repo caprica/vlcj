@@ -22,9 +22,9 @@ package uk.co.caprica.vlcj.media;
 import com.sun.jna.ptr.LongByReference;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_filestat_e;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_filestat;
 import static uk.co.caprica.vlcj.binding.internal.libvlc_media_filestat_e.libvlc_media_filestat_mtime;
 import static uk.co.caprica.vlcj.binding.internal.libvlc_media_filestat_e.libvlc_media_filestat_size;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_filestat;
 
 /**
  * Behaviour pertaining to media stat values.
