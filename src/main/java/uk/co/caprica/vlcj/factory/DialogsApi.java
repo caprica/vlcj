@@ -21,10 +21,10 @@ package uk.co.caprica.vlcj.factory;
 
 import com.sun.jna.Pointer;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_dismiss;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_post_action;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_post_login;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_dialog_set_callbacks;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_dialog_dismiss;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_dialog_post_action;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_dialog_post_login;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_dialog_set_callbacks;
 
 /**
  * Behaviour pertaining to native dialogs.

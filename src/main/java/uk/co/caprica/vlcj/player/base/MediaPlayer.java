@@ -27,9 +27,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.player.renderer.RendererItem;
 import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_new;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_renderer;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_new;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_renderer;
 
 /**
  * Base media player implementation.

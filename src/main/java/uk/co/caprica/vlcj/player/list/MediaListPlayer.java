@@ -23,8 +23,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_new;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_new;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_release;
 
 /**
  * Implementation of a media list player.

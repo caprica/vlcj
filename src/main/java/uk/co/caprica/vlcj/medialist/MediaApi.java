@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.medialist;
 
-import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.media.Media;
 import uk.co.caprica.vlcj.media.MediaFactory;
@@ -29,16 +29,16 @@ import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_mrl;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_add_media;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_count;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_insert_media;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_is_readonly;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_item_at_index;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_lock;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_remove_index;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_unlock;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_mrl;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_add_media;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_count;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_insert_media;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_is_readonly;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_item_at_index;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_lock;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_remove_index;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_unlock;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_release;
 
 /**
  * Behaviour pertaining to the media items in the list.

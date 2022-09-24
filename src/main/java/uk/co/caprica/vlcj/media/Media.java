@@ -22,9 +22,9 @@ package uk.co.caprica.vlcj.media;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_duplicate;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_retain;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_duplicate;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_retain;
 
 /**
  * Encapsulation of a native media instance.

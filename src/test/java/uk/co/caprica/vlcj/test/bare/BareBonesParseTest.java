@@ -24,11 +24,11 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.test.VlcjTest;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_new_path;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_parse_with_options;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_new;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_new_path;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_parse_with_options;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_new;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_release;
 
 /**
  * The most minimal test that uses the raw bindings rather than any higher level

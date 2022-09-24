@@ -20,8 +20,8 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Native;
-import uk.co.caprica.vlcj.binding.LibX11;
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.lib.LibX11;
+import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 
 import java.awt.*;
 

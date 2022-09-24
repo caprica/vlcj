@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.factory;
 
-import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 import uk.co.caprica.vlcj.player.base.AudioDevice;
@@ -27,10 +27,10 @@ import uk.co.caprica.vlcj.player.base.AudioDevice;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_list_get;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_list_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_list_get;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_list_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_device_list_get;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_device_list_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_list_get;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_list_release;
 
 /**
  * Behaviour pertaining to audio.

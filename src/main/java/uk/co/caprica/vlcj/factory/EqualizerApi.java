@@ -28,14 +28,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_amp_at_index;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_band_count;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_band_frequency;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_preamp;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_preset_count;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_preset_name;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_new_from_preset;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_get_amp_at_index;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_get_band_count;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_get_band_frequency;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_get_preamp;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_get_preset_count;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_get_preset_name;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_new_from_preset;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_release;
 
 /**
  * Behaviour pertaining to the audio equalizer.

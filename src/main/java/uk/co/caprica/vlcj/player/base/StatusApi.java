@@ -19,17 +19,17 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_can_pause;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_length;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_position;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_rate;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_state;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_time;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_has_vout;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_is_playing;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_is_seekable;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_program_scrambled;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_will_play;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_can_pause;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_length;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_position;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_rate;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_state;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_time;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_has_vout;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_is_playing;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_is_seekable;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_program_scrambled;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_will_play;
 
 /**
  * Behaviour pertaining to the status of the media player.

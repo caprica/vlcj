@@ -22,11 +22,11 @@ package uk.co.caprica.vlcj.player.base;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_chapter;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_chapter_count;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_next_chapter;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_previous_chapter;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_chapter;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_chapter;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_chapter_count;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_next_chapter;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_previous_chapter;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_chapter;
 
 /**
  * Behaviour pertaining to chapters (e.g. for DVD or Bluray).

@@ -19,8 +19,8 @@
 
 package uk.co.caprica.vlcj.player.embedded;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_key_input;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_mouse_input;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_key_input;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_mouse_input;
 
 /**
  * Behaviour pertaining to keyboard/mouse input-events.

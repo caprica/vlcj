@@ -23,11 +23,11 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_duplicate;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_new_callbacks;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_new_location;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_new_path;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_retain;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_duplicate;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_new_callbacks;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_new_location;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_new_path;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_retain;
 
 /**
  * Factory to create {@link Media} and {@link MediaRef} instances.

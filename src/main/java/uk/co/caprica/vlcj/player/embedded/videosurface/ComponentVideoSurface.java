@@ -20,8 +20,8 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Native;
-import uk.co.caprica.vlcj.binding.OsxComponentId;
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.support.component.OsxComponentId;
+import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import java.awt.*;

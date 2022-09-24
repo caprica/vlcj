@@ -26,8 +26,8 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_logo_int;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_logo_string;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_logo_int;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_logo_string;
 
 /**
  * Behaviour pertaining to the logo.

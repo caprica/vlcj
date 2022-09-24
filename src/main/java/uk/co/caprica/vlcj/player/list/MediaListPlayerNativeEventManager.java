@@ -27,7 +27,7 @@ import uk.co.caprica.vlcj.player.list.events.MediaListPlayerEventFactory;
 import uk.co.caprica.vlcj.support.eventmanager.EventNotification;
 import uk.co.caprica.vlcj.support.eventmanager.NativeEventManager;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_event_manager;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_event_manager;
 
 final public class MediaListPlayerNativeEventManager extends NativeEventManager<MediaListPlayer, MediaListPlayerEventListener> {
 

@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.factory.discovery.provider;
 
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 
 /**
  * Implementation of a directory provider that returns a list of well-known directory locations to search on OSX.

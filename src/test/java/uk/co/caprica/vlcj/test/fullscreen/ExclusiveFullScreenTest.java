@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.fullscreen;
 
-import uk.co.caprica.vlcj.binding.LibDwmApi;
+import uk.co.caprica.vlcj.binding.lib.LibDwmApi;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.test.VlcjTest;

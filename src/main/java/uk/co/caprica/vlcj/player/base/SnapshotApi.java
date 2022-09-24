@@ -26,7 +26,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_take_snapshot;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_take_snapshot;
 
 /**
  * Behaviour pertaining to video snapshots.

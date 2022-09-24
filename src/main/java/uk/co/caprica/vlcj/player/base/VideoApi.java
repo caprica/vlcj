@@ -20,31 +20,31 @@
 package uk.co.caprica.vlcj.player.base;
 
 import com.sun.jna.ptr.IntByReference;
-import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 
 import java.awt.*;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_video_title_display;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_adjust_float;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_adjust_int;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_aspect_ratio;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_crop_geometry;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_scale;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_size;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_track;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_track_count;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_new_viewpoint;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_adjust_float;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_adjust_int;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_aspect_ratio;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_crop_geometry;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_deinterlace;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_scale;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_track;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_update_viewpoint;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_video_title_display;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_adjust_float;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_adjust_int;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_aspect_ratio;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_crop_geometry;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_scale;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_size;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_track;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_track_count;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_new_viewpoint;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_adjust_float;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_adjust_int;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_aspect_ratio;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_crop_geometry;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_deinterlace;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_scale;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_track;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_update_viewpoint;
 
 /**
  * Behaviour pertaining to media player video.

@@ -21,9 +21,9 @@ package uk.co.caprica.vlcj.player.base;
 
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_title;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_title_count;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_title;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_title;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_title_count;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_title;
 
 /**
  * Behaviour pertaining to media titles (e.g. DVD and Bluray titles).

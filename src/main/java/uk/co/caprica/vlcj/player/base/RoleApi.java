@@ -19,8 +19,8 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_role;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_role;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_role;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_role;
 
 /**
  * Behaviour pertaining to the role of this media player.

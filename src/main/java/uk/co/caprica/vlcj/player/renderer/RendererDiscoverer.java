@@ -21,9 +21,9 @@ package uk.co.caprica.vlcj.player.renderer;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_discoverer_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_discoverer_start;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_discoverer_stop;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_discoverer_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_discoverer_start;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_discoverer_stop;
 
 /**
  * Encapsulation of a native renderer discoverer instance.

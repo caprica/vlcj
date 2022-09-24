@@ -25,8 +25,8 @@ import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.support.version.LibVlcVersion;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_new;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_new;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_release;
 
 /**
  * A trivial test to demonstrate automatic discovery of the libvlc native shared libraries.

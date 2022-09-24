@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.binding.NativeUri;
+import uk.co.caprica.vlcj.binding.support.strings.NativeUri;
 
 import java.util.regex.Pattern;
 

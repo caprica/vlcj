@@ -23,7 +23,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_subitems;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_subitems;
 
 public final class SubitemApi extends BaseApi {
 

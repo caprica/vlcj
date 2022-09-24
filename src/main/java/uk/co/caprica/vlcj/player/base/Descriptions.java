@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player.base;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.PointerByReference;
-import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_chapter_description_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_title_description_t;
@@ -31,14 +31,14 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_track_description_t;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_track_description;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_chapter_descriptions_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_full_chapter_descriptions;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_full_title_descriptions;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_title_descriptions_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_track_description_list_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_spu_description;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_track_description;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_get_track_description;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_chapter_descriptions_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_full_chapter_descriptions;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_full_title_descriptions;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_title_descriptions_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_track_description_list_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_spu_description;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_track_description;
 
 final class Descriptions {
 

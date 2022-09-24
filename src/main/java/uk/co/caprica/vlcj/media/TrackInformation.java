@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.media;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.PointerByReference;
-import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
@@ -35,9 +35,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_codec_description;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_tracks_get;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_tracks_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_codec_description;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_tracks_get;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_tracks_release;
 
 final class TrackInformation {
 

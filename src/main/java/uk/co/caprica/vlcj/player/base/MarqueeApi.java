@@ -23,8 +23,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_marquee_option_t;
 
 import java.awt.*;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_marquee_int;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_marquee_string;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_marquee_int;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_marquee_string;
 
 /**
  * Behaviour pertaining to the marquee.

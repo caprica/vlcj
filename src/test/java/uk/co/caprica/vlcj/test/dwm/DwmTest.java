@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.test.dwm;
 
 import com.sun.jna.platform.win32.WinNT.HRESULT;
 import com.sun.jna.ptr.IntByReference;
-import uk.co.caprica.vlcj.binding.LibDwmApi;
+import uk.co.caprica.vlcj.binding.lib.LibDwmApi;
 
 import javax.swing.*;
 import java.awt.*;

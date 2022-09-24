@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.test.xlib;
 
-import uk.co.caprica.vlcj.binding.LibX11;
+import uk.co.caprica.vlcj.binding.lib.LibX11;
 
 /**
  * Simple test to get a reference to the Xlib native library and initialise threads.

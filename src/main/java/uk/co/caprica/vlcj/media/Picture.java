@@ -21,14 +21,14 @@ package uk.co.caprica.vlcj.media;
 
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.binding.internal.libvlc_picture_t;
-import uk.co.caprica.vlcj.binding.support.size_tByReference;
+import uk.co.caprica.vlcj.binding.support.types.size_tByReference;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_get_buffer;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_get_height;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_get_stride;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_get_time;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_get_width;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_picture_type;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_picture_get_buffer;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_picture_get_height;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_picture_get_stride;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_picture_get_time;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_picture_get_width;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_picture_type;
 
 /**
  * Picture.
