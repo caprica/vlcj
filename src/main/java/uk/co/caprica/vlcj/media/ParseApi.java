@@ -21,9 +21,9 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_parsed_status;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_parse_stop;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_parse_request;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_parsed_status;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_parse_stop;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_parse_request;
 
 /**
  * Behaviour pertaining to parsing of media.

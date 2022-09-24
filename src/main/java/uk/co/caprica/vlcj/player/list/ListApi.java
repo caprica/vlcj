@@ -24,7 +24,7 @@ import uk.co.caprica.vlcj.medialist.MediaApi;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_set_media_list;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_set_media_list;
 
 /**
  * Behaviour pertaining to the list of media items.

@@ -32,8 +32,8 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_callbacks;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_format_callbacks;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_callbacks;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_format_callbacks;
 
 /**
  * Implementation of a video surface that uses native callbacks to receive video frame data for rendering.

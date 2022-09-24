@@ -21,15 +21,15 @@ package uk.co.caprica.vlcj.media;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
-import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_slave_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_slaves_get;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_slaves_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_slaves_get;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_slaves_release;
 
 final class MediaSlaves {
 

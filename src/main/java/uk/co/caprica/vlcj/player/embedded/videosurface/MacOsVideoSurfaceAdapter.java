@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_nsobject;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_nsobject;
 
 /**
  * Implementation of a video surface adapter for macOS.

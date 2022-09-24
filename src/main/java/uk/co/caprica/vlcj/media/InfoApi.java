@@ -19,13 +19,13 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_duration;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_mrl;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_stats;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_type;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_duration;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_mrl;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_stats;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_type;
 
 /**
  * Behaviour pertaining to media information, providing things like the media resource locator, type, state and duration

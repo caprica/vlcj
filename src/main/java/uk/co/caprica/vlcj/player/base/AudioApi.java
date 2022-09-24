@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
@@ -27,26 +27,26 @@ import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_get_band_count;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_new;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_set_amp_at_index;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_equalizer_set_preamp;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_channel;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_delay;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_mute;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_get_volume;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_enum;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_get;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_list_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_device_set;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_set;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_channel;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_delay;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_mute;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_volume;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_toggle_mute;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_equalizer;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_get_band_count;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_new;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_set_amp_at_index;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_set_preamp;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_get_channel;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_get_delay;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_get_mute;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_get_volume;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_device_enum;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_device_get;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_device_list_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_device_set;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_set;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_channel;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_delay;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_mute;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_volume;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_toggle_mute;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_equalizer;
 
 /**
  * Behaviour pertaining to media player audio.

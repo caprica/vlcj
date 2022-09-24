@@ -19,8 +19,8 @@
 
 package uk.co.caprica.vlcj.support.version;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_changeset;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_version;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_get_changeset;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_get_version;
 
 /**
  * Holder for runtime LibVLC version information.

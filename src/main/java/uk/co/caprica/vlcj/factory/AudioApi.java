@@ -19,14 +19,15 @@
 
 package uk.co.caprica.vlcj.factory;
 
-import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
+import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_t;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_list_get;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_output_list_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_list_get;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_list_release;
 
 /**
  * Behaviour pertaining to audio.
@@ -60,4 +61,27 @@ public final class AudioApi extends BaseApi {
         }
         return result;
     }
+
+    /**
+     * Get the devices associated with an audio output.
+     *
+     * @param outputName output
+     * @return collection of audio output devices
+     */
+    private List<AudioDevice> getAudioOutputDevices(String outputName) {
+        List<AudioDevice> result = new ArrayList<AudioDevice>();
+        libvlc_audio_output_device_t audioDevices = libvlc_audio_output_device_list_get(libvlcInstance, outputName);
+        if (audioDevices != null) {
+            libvlc_audio_output_device_t audioDevice = audioDevices;
+            while(audioDevice != null) {
+                String device = NativeString.copyNativeString(audioDevice.psz_device);
+                String description = NativeString.copyNativeString(audioDevice.psz_description);
+                result.add(new AudioDevice(device, description));
+                audioDevice = audioDevice.p_next;
+            }
+            libvlc_audio_output_device_list_release(audioDevices.getPointer());
+        }
+        return result;
+    }
+
 }

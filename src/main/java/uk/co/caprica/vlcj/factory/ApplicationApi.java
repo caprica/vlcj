@@ -26,16 +26,16 @@ import uk.co.caprica.vlcj.media.TrackType;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_filter_list_get;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_clock;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_changeset;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_compiler;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_version;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_codec_description;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_module_description_list_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_set_app_id;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_set_user_agent;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_filter_list_get;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_filter_list_get;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_clock;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_get_changeset;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_get_compiler;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_get_version;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_codec_description;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_module_description_list_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_set_app_id;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_set_user_agent;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_filter_list_get;
 
 /**
  * Behaviour pertaining to the application itself.

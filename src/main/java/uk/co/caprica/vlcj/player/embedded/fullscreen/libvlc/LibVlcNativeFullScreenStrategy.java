@@ -19,12 +19,11 @@
 
 package uk.co.caprica.vlcj.player.embedded.fullscreen.libvlc;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_get_fullscreen;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_set_fullscreen;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_get_fullscreen;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_set_fullscreen;
 
 /**
  * Implementation of a {@link FullScreenStrategy} that uses the native LibVLC fullscreen API.

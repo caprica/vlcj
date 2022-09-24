@@ -40,8 +40,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_add_slave;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_media;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_add_slave;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_media;
 
 /**
  * Behaviour pertaining to the current media.

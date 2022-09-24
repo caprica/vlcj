@@ -31,8 +31,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_event_attach;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_event_detach;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_event_attach;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_event_detach;
 
 /**
  * Common implementation for a component that deals with a native LibVlc event manager.

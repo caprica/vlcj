@@ -21,7 +21,7 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_navigate_mode_e;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_navigate;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_navigate;
 
 /**
  * Behaviour pertaining to the menu (e.g. DVD and Bluray menus).

@@ -24,11 +24,11 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_is_running;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_media_list;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_start;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_discoverer_stop;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_is_running;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_media_list;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_start;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_stop;
 
 /**
  * Media discoverer component.

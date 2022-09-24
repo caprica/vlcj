@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.medialist;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_new;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_new;
 
 /**
  * Factory to create {@link MediaList} and {@link MediaListRef} components.

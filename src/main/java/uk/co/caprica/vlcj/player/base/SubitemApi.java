@@ -28,8 +28,8 @@ import uk.co.caprica.vlcj.player.list.ListApi;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.StatusApi;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_new;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_subitems;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_new;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_subitems;
 
 /**
  * Behaviour pertaining to media subitems.

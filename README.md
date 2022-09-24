@@ -21,7 +21,7 @@ OSX, although there may be some limitations on OSX.
 Additionally, whilst not supported as one of the main platforms, this version of vlcj has been tested and shown to be
 working on contemporary Raspberry Pi builds.
 
-At least JDK 8 is required.
+At least JDK 11 is required.
 
 vlcj-4.7.x, which is still current, is the last version of vlcj that was built against JDK 1.6.
 
@@ -38,8 +38,8 @@ Build Status
 
 [![Maven Central](https://img.shields.io/maven-central/v/uk.co.caprica/vlcj.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22uk.co.caprica%22%20AND%20a:%22vlcj%22)
 
-News
-====
+Recent News
+===========
 
 __May 2022__ Supporting the project:
 
@@ -337,9 +337,7 @@ Documentation
 
 The vlcj project page is at [github](http://caprica.github.com/vlcj "vlcj at github").
 
-Online Javadoc is available here:
-
-* [5.0.0 (snapshot)](http://caprica.github.io/vlcj/javadoc/5.0.0/index.html "5.0.0 Javadoc")
+Online Javadoc is available at [javadoc.io](https://javadoc.io/doc/uk.co.caprica/vlcj/latest/index.html).
 
 Examples
 --------

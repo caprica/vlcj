@@ -25,8 +25,8 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.ptr.PointerByReference;
-import uk.co.caprica.vlcj.binding.LibC;
-import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.lib.LibC;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_log_t;
@@ -35,10 +35,10 @@ import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_log_get_context;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_log_get_object;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_log_set;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_log_unset;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_log_get_context;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_log_get_object;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_log_set;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_log_unset;
 
 /**
  * Encapsulation of the vlc native log.

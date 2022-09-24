@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 
 /**
  * Utility class to create a {@link VideoSurfaceAdapter} for the current run-time operating system.

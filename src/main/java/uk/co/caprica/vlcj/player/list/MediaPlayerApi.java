@@ -23,7 +23,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.SubitemApi;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_set_media_player;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_set_media_player;
 
 /**
  * Behaviour pertaining to the associated media player.

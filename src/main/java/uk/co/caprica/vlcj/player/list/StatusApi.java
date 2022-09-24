@@ -21,8 +21,8 @@ package uk.co.caprica.vlcj.player.list;
 
 import uk.co.caprica.vlcj.player.base.State;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_get_state;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_is_playing;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_get_state;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_is_playing;
 
 /**
  * Behaviour pertaining to media list player status.

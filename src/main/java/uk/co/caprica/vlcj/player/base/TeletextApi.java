@@ -19,8 +19,8 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_teletext;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_teletext;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_teletext;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_teletext;
 
 /**
  * Behaviour pertaining to teletext.

@@ -21,8 +21,8 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_add_option;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_add_option_flag;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_add_option;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_add_option_flag;
 
 final class MediaOptions {
 

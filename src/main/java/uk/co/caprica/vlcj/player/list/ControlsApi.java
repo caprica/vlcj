@@ -19,14 +19,14 @@
 
 package uk.co.caprica.vlcj.player.list;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_next;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_pause;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_play;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_play_item_at_index;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_previous;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_set_pause;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_set_playback_mode;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_list_player_stop_async;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_next;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_pause;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_play;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_play_item_at_index;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_previous;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_set_pause;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_set_playback_mode;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_stop_async;
 
 /**
  * Behaviour pertaining to media list player controls, like play, pause, stop of the list as a whole, play a specific

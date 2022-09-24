@@ -29,11 +29,11 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_title_description_t;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_full_title_descriptions;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_title;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_title_count;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_title;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_title_descriptions_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_full_title_descriptions;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_title;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_title_count;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_title;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_title_descriptions_release;
 
 /**
  * Behaviour pertaining to media titles (e.g. DVD and Bluray titles).

@@ -19,17 +19,17 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.NativeUri;
+import uk.co.caprica.vlcj.binding.support.strings.NativeUri;
 import uk.co.caprica.vlcj.media.MediaSlavePriority;
 import uk.co.caprica.vlcj.media.MediaSlaveType;
 import uk.co.caprica.vlcj.media.SlaveApi;
 
 import java.io.File;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_spu_delay;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_get_spu_text_scale;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_spu_delay;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_video_set_spu_text_scale;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_spu_delay;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_spu_text_scale;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_spu_delay;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_spu_text_scale;
 
 /**
  * Behaviour pertaining to subpictures (sub-titles).

@@ -21,10 +21,10 @@ package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.binding.Kernel32;
-import uk.co.caprica.vlcj.binding.LibC;
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
-import uk.co.caprica.vlcj.binding.support.size_t;
+import uk.co.caprica.vlcj.binding.lib.Kernel32;
+import uk.co.caprica.vlcj.binding.lib.LibC;
+import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.support.types.size_t;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 
 import java.nio.ByteBuffer;

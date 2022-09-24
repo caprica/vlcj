@@ -23,12 +23,12 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.RendererApi;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_flags;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_hold;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_icon_uri;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_name;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_renderer_item_type;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_item_flags;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_item_hold;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_item_icon_uri;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_item_name;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_item_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_item_type;
 
 /**
  * Encapsulation of a renderer item.

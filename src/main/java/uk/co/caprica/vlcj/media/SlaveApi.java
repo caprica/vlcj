@@ -22,8 +22,8 @@ package uk.co.caprica.vlcj.media;
 import java.io.File;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_slaves_add;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_slaves_clear;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_slaves_add;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_slaves_clear;
 
 /**
  * Behaviour pertaining to media slaves, enabling subtitle and audio tracks to be added to the media.

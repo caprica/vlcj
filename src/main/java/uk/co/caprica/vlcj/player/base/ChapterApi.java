@@ -29,13 +29,13 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_chapter_descriptions_release;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_chapter;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_chapter_count;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_get_full_chapter_descriptions;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_next_chapter;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_previous_chapter;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_player_set_chapter;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_chapter_descriptions_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_chapter;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_chapter_count;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_full_chapter_descriptions;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_next_chapter;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_previous_chapter;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_chapter;
 
 /**
  * Behaviour pertaining to chapters (e.g. for DVD or Bluray).

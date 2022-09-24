@@ -2,7 +2,7 @@ package uk.co.caprica.vlcj.factory.discovery;
 
 import com.sun.jna.NativeLibrary;
 import com.sun.jna.StringArray;
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.factory.discovery.strategy.LinuxNativeDiscoveryStrategy;
@@ -11,8 +11,8 @@ import uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.factory.discovery.strategy.WindowsNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.support.version.LibVlcVersion;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_new;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_new;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_release;
 
 /**
  * Native library discovery component.

@@ -20,14 +20,14 @@
 package uk.co.caprica.vlcj.media;
 
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.binding.NativeString;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_get_meta;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_save_meta;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_media_set_meta;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_meta;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_save_meta;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_set_meta;
 
 /**
  * Behaviour pertaining to media meta data.

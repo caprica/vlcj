@@ -28,9 +28,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_resume_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_set_volume_cb;
 import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
 
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_callbacks;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_format;
-import static uk.co.caprica.vlcj.binding.LibVlc.libvlc_audio_set_volume_callback;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_callbacks;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_format;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_volume_callback;
 
 /**
  * Encapsulation of native audio callbacks.
