@@ -23,6 +23,13 @@ more information as well as some new simple tutorials.
 
 Recent News
 ===========
+
+The first new version in the 4.8.x line has been released. This version moves vlcj to a Java 11 baseline and uses the
+Java Module System. This release contains no changes to functionality as compared to vlcj 4.7.3. This release is
+provided initially to garner feedback and highlight any issues with the transition to the Java Module System. If you
+discover any problems, or deficiencies with how the module system has been implemented, please raise an issue ticket
+here.
+
 - 24th September, 2022 - vlcj 4.8.0 released, initial move to Java 11 and the Java Module System, no functional changes
 - 15th May, 2022 - vlcj 4.7.3 released, minor maintenance release to use latest version of JNA
 - 18th March, 2022 - vlcj 4.7.2 released, minor bugfix release relating to embedded media list player component
