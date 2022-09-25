@@ -36,9 +36,9 @@ import java.util.ServiceLoader;
  * provide the lists of directories to search.
  * <p>
  * By using service loader, a client application can easily add their own search directories simply by adding their own
- * implementation of a discovery directory provider to the run-time classpath, and adding registering their provider
- * class in <code>META-INF/services/uk.co.caprica.vlcj.factory.discovery.provider.DiscoveryDirectoryProvider</code> - the client
- * application need not concern itself directly with the default {@link NativeDiscovery} component.
+ * implementation of a discovery directory provider to the run-time classpath, and adding/registering their provider
+ * class in <code>META-INF/services/uk.co.caprica.vlcj.factory.discovery.provider.DiscoveryDirectoryProvider</code> - the
+ * client application need not concern itself directly with the default {@link NativeDiscovery} component.
  * <p>
  * Provider implementations have a priority. All of the standard provider implementations have a priority &lt; 0, see
  * {@link DiscoveryProviderPriority}. A client application with its own provider implementations can return a priority
