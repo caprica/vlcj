@@ -78,12 +78,11 @@
 
     <properties>
         <doclint>none</doclint>
-        <gpg.skip>true</gpg.skip>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vlcjNatives.version>4.8.1-SNAPSHOT</vlcjNatives.version>
+        <vlcjNatives.version>4.8.1</vlcjNatives.version>
     </properties>
 
     <dependencies>
