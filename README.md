@@ -68,7 +68,7 @@ there are still some small improvements being made to vlcj, check the project is
 and that is likely yet to be quite some time away.
 
 __Future 2022__ Next major release
-> vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 8 LTS.
+> vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 11 LTS.
 
 All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
