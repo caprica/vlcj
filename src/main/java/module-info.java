@@ -79,7 +79,6 @@ module uk.co.caprica.vlcj {
     // Standard implementations of native library discovery directory providers
     provides uk.co.caprica.vlcj.factory.discovery.provider.DiscoveryDirectoryProvider with
         uk.co.caprica.vlcj.factory.discovery.provider.ConfigDirConfigFileDiscoveryDirectoryProvider,
-        uk.co.caprica.vlcj.factory.discovery.provider.ConfigurationFileDiscoveryDirectoryProvider,
         uk.co.caprica.vlcj.factory.discovery.provider.JnaLibraryPathDirectoryProvider,
         uk.co.caprica.vlcj.factory.discovery.provider.LinuxWellKnownDirectoryProvider,
         uk.co.caprica.vlcj.factory.discovery.provider.MacOsWellKnownDirectoryProvider,
