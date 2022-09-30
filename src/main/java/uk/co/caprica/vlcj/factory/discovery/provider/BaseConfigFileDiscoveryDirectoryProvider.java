@@ -34,7 +34,7 @@ public abstract class BaseConfigFileDiscoveryDirectoryProvider implements Discov
 
     private static final String CONFIG_FILE_NAME = "vlcj.config";
 
-    private static final String PROPERTY_NAME = "nativeDirectory";
+    private static final String PROPERTY_NAME = "libvlc4.nativeDirectory";
 
     @Override
     public String[] directories() {
