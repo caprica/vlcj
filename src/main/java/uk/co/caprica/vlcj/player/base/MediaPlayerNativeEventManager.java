@@ -74,7 +74,7 @@ final class MediaPlayerNativeEventManager extends NativeEventManager<MediaPlayer
                 receivedPlayingEvent = true;
                 break;
             case libvlc_MediaPlayerStopped:
-                // We do not went to send a stopped event if we never received a playing event
+                // We do not want to send a stopped event if we never received a playing event
                 if (!receivedPlayingEvent) {
                     // Return null here to suppress the event
                     return null;
