@@ -28,6 +28,10 @@ vlcj-4.7.x, which is still current, is the last version of vlcj that was built a
 vlcj-4.8.x, which is still current, is the first version of vlcj that was built against JDK 11, and is the first to
 use the Java Module System.
 
+There is an alternative artefact available in the short term to maintain compatibility with Java 1.8, switch to the
+[vlcj-5.x-java8 branch](https://github.com/caprica/vlcj/tree/vlcj-5.x-java8) branch, and use the `vlcj-java8` artefact
+name instead of `vlcj`.
+
 *This version of vlcj requires VLC 4.0.0 as a minimum, no earlier version is supported.*
 
 This is the open source vlcj project page, see also the 'official'
