@@ -6,7 +6,7 @@
     <dependencies>
         <dependency>
             <groupId>uk.co.caprica</groupId>
-            <artifactId>vlcj</artifactId>
+            <artifactId>vlcj-java8</artifactId>
             <version>5.0.0</version>
         </dependency>
     </dependencies> 
@@ -17,7 +17,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>uk.co.caprica</groupId>
-    <artifactId>vlcj</artifactId>
+    <artifactId>vlcj-java8</artifactId>
     <version>5.0.0-SNAPSHOT</version>
 
     <name>vlcj</name>
@@ -119,7 +119,7 @@
     <properties>
         <doclint>none</doclint>
         <gpg.skip>true</gpg.skip>
-        <java.version>11</java.version>
+        <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -129,7 +129,7 @@
     <dependencies>
         <dependency>
             <groupId>uk.co.caprica</groupId>
-            <artifactId>vlcj-natives</artifactId>
+            <artifactId>vlcj-natives-java8</artifactId>
             <version>${vlcjNatives.version}</version>
         </dependency>
     </dependencies>

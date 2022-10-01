@@ -6,6 +6,8 @@ it is released.
 If you are looking for a stable combination of vlcj and VLC then switch to the
 [vlcj-4.x branch](https://github.com/caprica/vlcj/tree/vlcj-4.x) instead.
 
+This is a version of the master branch (5.0.0) vlcj, but retaining compatibility with Java 1.8.
+
 vlcj
 ====
 
@@ -172,7 +174,7 @@ Add the following Maven dependency to your own project pom.xml:
 ```
 <dependency>
     <groupId>uk.co.caprica</groupId>
-    <artifactId>vlcj</artifactId>
+    <artifactId>vlcj-java8</artifactId>
     <version>5.0.0</version>
 </dependency>
 ```
