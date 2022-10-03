@@ -39,6 +39,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_update_output_cb;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngine;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineCallback;
+import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineResizeCallbackHandler;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_output_callbacks;
 
@@ -67,6 +68,11 @@ public final class VideoEngineVideoSurface extends VideoSurface {
     private final libvlc_video_swap_cb swap = new SwapCallback();
     private final libvlc_video_makeCurrent_cb makeCurrent = new MakeCurrentCallback();
     private final libvlc_video_getProcAddress_cb getProcAddress = new GetProcAddressCallback();
+
+    /**
+     * Handler to bridge the native video engine resize callback.
+     */
+    private VideoEngineResizeCallbackHandler resizeCallbackHandler;
 
     /**
      * Create a video surface.
@@ -116,7 +122,8 @@ public final class VideoEngineVideoSurface extends VideoSurface {
     private final class SetResizeCallback implements libvlc_video_output_set_resize_cb {
         @Override
         public void setResizeCallback(Pointer opaque, ReportSizeChanged report_size_change, Pointer report_opaque) {
-            callback.onSetResizeCallback(opaque, report_size_change, report_opaque);
+            VideoEngineVideoSurface.this.resizeCallbackHandler = new VideoEngineResizeCallbackHandler(opaque, report_opaque, report_size_change);
+            callback.onSetResizeCallback(resizeCallbackHandler);
         }
     }
 
