@@ -34,6 +34,8 @@ final class MediaPlayerStoppingEvent extends MediaPlayerEvent {
     @Override
     public void notify(MediaPlayerEventListener listener) {
         listener.stopping(mediaPlayer);
+        // Temporarily replicate the behaviour that would have been the case with LibVLC 3
+        listener.finished(mediaPlayer);
     }
 
 }
