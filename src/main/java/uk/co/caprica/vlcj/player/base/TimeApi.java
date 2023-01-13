@@ -67,7 +67,7 @@ public final class TimeApi extends BaseApi {
      * <p>
      * Only one listener may be registered.
      *
-     * @param minimumPeriodBetweenUpdates minimum period between updates, or zero for all updates
+     * @param minimumPeriodBetweenUpdates minimum period between updates, or zero for all updates (nanoseconds)
      * @param data opaque data
      * @param listener listener to receive timer events
      * @return <code>true</code> on success; <code>false</code> o failure (e.g. already have a listener)
