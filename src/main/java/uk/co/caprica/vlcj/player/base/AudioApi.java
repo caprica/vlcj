@@ -19,9 +19,9 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
 
 import java.util.ArrayList;
@@ -32,18 +32,20 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_new;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_release;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_set_amp_at_index;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_set_preamp;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_get_channel;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_get_delay;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_get_mixmode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_get_mute;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_get_stereomode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_get_volume;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_device_enum;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_device_get;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_device_list_release;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_device_set;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_output_set;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_channel;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_delay;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_mixmode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_mute;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_stereomode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_volume;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_toggle_mute;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_equalizer;
@@ -186,26 +188,49 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
     }
 
     /**
-     * Get the current audio channel.
-     *
-     * For channel values see {@link AudioChannel}.
+     * Get the current audio stereo mode.
+     * <p>
+     * For stereo mode values see {@link AudioStereoMode}.
      *
      * @return audio channel
      */
-    public AudioChannel channel() {
-        return AudioChannel.audioChannel(libvlc_audio_get_channel(mediaPlayerInstance));
+    public AudioStereoMode stereoMode() {
+        return AudioStereoMode.audioStereoMode(libvlc_audio_get_stereomode(mediaPlayerInstance));
     }
 
     /**
-     * Set the audio channel.
+     * Set the audio stereo mode.
+     * <p>
+     * For channel values see {@link AudioStereoMode}.
      *
-     * For channel values see {@link AudioChannel}.
-     *
-     * @param channel channel
+     * @param stereoMode channel
      * @return <code>true</code> if successful; <code>false</code> on error
      */
-    public boolean setChannel(AudioChannel channel) {
-        return libvlc_audio_set_channel(mediaPlayerInstance, channel.intValue()) == 0;
+    public boolean setStereoMode(AudioStereoMode stereoMode) {
+        return libvlc_audio_set_stereomode(mediaPlayerInstance, stereoMode.intValue()) == 0;
+    }
+
+    /**
+     * Get the current audio mix mode.
+     * <p>
+     * For mix mode values see {@link AudioMixMode}.
+     *
+     * @return audio mix mode
+     */
+    public AudioMixMode getMixMode() {
+        return AudioMixMode.audioMixMode(libvlc_audio_get_mixmode(mediaPlayerInstance));
+    }
+
+    /**
+     * Set the audio mix mode.
+     * <p>
+     * For mix mode values see {@link AudioMixMode}.
+     *
+     * @param mixMode audio mix mode
+     * @return <code>true</code> if successful; <code>false</code> on error
+     */
+    public boolean setMixMode(AudioMixMode mixMode) {
+        return libvlc_audio_set_mixmode(mediaPlayerInstance, mixMode.intValue()) == 0;
     }
 
     /**
