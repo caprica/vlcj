@@ -23,39 +23,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of audio channels.
- * <p>
- * Note that {@link #UNSET}, {@link #HEADPHONES}, and {@link #MONO} do <em>not</em> appear in
- * <code>libvlc_audio_output_channel_t</code> although from reading the native source in <code>vlc_aout.h</code> they
- * may work.
+ * Enumeration of audio mix modes.
  */
-public enum AudioChannel {
+public enum AudioMixMode {
 
-    ERROR     (-1),
-    UNSET     ( 0),
-    STEREO    ( 1),
-    RSTEREO   ( 2),
-    LEFT      ( 3),
-    RIGHT     ( 4),
-    DOLBYS    ( 5),
-    HEADPHONES( 6),
-    MONO      ( 7);
+    libvlc_AudioMixMode_Unset(0),
+    libvlc_AudioMixMode_Stereo(1),
+    libvlc_AudioMixMode_Binaural(2),
+    libvlc_AudioMixMode_4_0(3),
+    libvlc_AudioMixMode_5_1(4),
+    libvlc_AudioMixMode_7_1(5);
 
-    private static final Map<Integer, AudioChannel> INT_MAP = new HashMap<Integer, AudioChannel>();
+    private static final Map<Integer, AudioMixMode> INT_MAP = new HashMap<Integer, AudioMixMode>();
 
     static {
-        for (AudioChannel value : AudioChannel.values()) {
+        for (AudioMixMode value : AudioMixMode.values()) {
             INT_MAP.put(value.intValue, value);
         }
     }
 
-    public static AudioChannel audioChannel(int intValue) {
+    public static AudioMixMode audioMixMode(int intValue) {
         return INT_MAP.get(intValue);
     }
 
     private final int intValue;
 
-    AudioChannel(int intValue) {
+    AudioMixMode(int intValue) {
         this.intValue = intValue;
     }
 
