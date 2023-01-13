@@ -52,7 +52,12 @@ public enum ParseFlag {
      * (and not its sub items). Set this flag in order to receive a callback
      * when the input is asking for credentials.
      */
-    DO_INTERACT(0x08);
+    DO_INTERACT(0x08),
+
+    /**
+     * Force parsing the media even if it would be skipped.
+     */
+    NO_SKIP(0x10);
 
     private static final Map<Integer, ParseFlag> INT_MAP = new HashMap<Integer, ParseFlag>();
 
