@@ -39,9 +39,11 @@ public final class ThumbnailRequest {
 
     /**
      * Cancel this thumbnail request.
+     * <p>
+     * This is effectively the same as calling {@link #release()}.
      */
     public void cancel() {
-        libvlc_media_thumbnail_request_cancel(request);
+        libvlc_media_thumbnail_request_destroy(request);
     }
 
     /**
