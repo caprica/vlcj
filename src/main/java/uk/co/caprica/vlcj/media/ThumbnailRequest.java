@@ -21,7 +21,6 @@ package uk.co.caprica.vlcj.media;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_thumbnail_request_t;
 
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_thumbnail_request_cancel;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_thumbnail_request_destroy;
 
 /**
