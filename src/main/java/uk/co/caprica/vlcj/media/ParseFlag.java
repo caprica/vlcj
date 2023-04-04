@@ -30,34 +30,34 @@ public enum ParseFlag {
     /**
      * Parse media if it's a local file
      */
-    PARSE_LOCAL(0x00),
+    PARSE_LOCAL(0x01),
 
     /**
      * Parse media even if it's a network file
      */
-    PARSE_NETWORK(0x01),
+    PARSE_NETWORK(0x02),
+
+    /**
+     * Force parsing of the media event if it would be skipped
+     */
+    PARSE_FORCED(0x04),
 
     /**
      * Fetch meta and covert art using local resources
      */
-    FETCH_LOCAL(0x02),
+    FETCH_LOCAL(0x08),
 
     /**
      * Fetch meta and covert art using network resources
      */
-    FETCH_NETWORK(0x04),
+    FETCH_NETWORK(0x10),
 
     /**
      * Interact with the user (via libvlc_dialog_cbs) when preparsing this item
      * (and not its sub items). Set this flag in order to receive a callback
      * when the input is asking for credentials.
      */
-    DO_INTERACT(0x08),
-
-    /**
-     * Force parsing the media even if it would be skipped.
-     */
-    NO_SKIP(0x10);
+    DO_INTERACT(0x20);
 
     private static final Map<Integer, ParseFlag> INT_MAP = new HashMap<Integer, ParseFlag>();
 
