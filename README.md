@@ -48,6 +48,12 @@ Build Status
 Recent News
 ===========
 
+__January 2024__ Project status update:
+
+>This project is still actively maintained and supported, but activity has been less recently because the main driver
+>for the next release and the blocker for releasing something new is the ongoing development of VLC 4.x which is still
+>seemingly not close to being completed.
+
 __May 2022__ Supporting the project:
 
 >If you would like to help support the continued development of vlcj and our other Open Source efforts, you might like
