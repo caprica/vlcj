@@ -29,7 +29,8 @@ public enum PictureType {
 
     ARGB(0),
     PNG (1),
-    JPG (2);
+    JPG (2),
+    WEBP(3);
 
     private static final Map<Integer, PictureType> INT_MAP = new HashMap<Integer, PictureType>();
 
