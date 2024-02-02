@@ -24,48 +24,75 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Immutable meta data value object.
+ * Immutable metadata value object.
  */
 public final class MetaData {
 
     /**
-     * Collection of meta data values.
+     * Collection of metadata values.
      */
-    private final Map<Meta,String> values;
+    private final Map<Meta, String> values;
 
     /**
-     * Create a meta data value object.
-     *
-     * @param values meta data values
+     * Collection of metadata extra values.
      */
-    public MetaData(Map<Meta,String> values) {
+    private final Map<String, String> extraValues;
+
+    /**
+     * Create a metadata value object.
+     *
+     * @param values metadata values
+     * @param extraValues metadata extra values
+     */
+    public MetaData(Map<Meta, String> values, Map<String, String> extraValues) {
         this.values = Collections.unmodifiableMap(values);
+        this.extraValues = Collections.unmodifiableMap(extraValues);
     }
 
     /**
-     * Get a particular meta data value.
+     * Get a particular metadata value.
      *
-     * @param meta meta data type
-     * @return value meta data value
+     * @param meta metadata type
+     * @return value metadata value
      */
     public String get(Meta meta) {
         return values.get(meta);
     }
 
     /**
-     * Get all of the meta data values.
+     * Get a particular metadata extra value.
      *
-     * @return copy of the meta data values collection
+     * @param name metadata extra name
+     * @return value metadata extra value
      */
-    public Map<Meta,String> values() {
-        return new HashMap<Meta,String>(values);
+    public String get(String name) {
+        return extraValues.get(name);
+    }
+
+    /**
+     * Get all the metadata values.
+     *
+     * @return copy of the metadata values collection
+     */
+    public Map<Meta, String> values() {
+        return new HashMap<>(values);
+    }
+
+    /**
+     * Get all the metadata extra values.
+     *
+     * @return copy of the metadata exta values collection
+     */
+    public Map<String, String> extraValues() {
+        return new HashMap<>(extraValues);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(300);
         sb.append(getClass().getSimpleName()).append('[');
-        sb.append("values=").append(values).append(']');
+        sb.append("values=").append(values).append(',');
+        sb.append("extraValues").append(extraValues).append(']');
         return sb.toString();
    }
 
