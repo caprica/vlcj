@@ -75,10 +75,10 @@ public final class MetaApi extends BaseApi {
         PointerByReference namesPointer = new PointerByReference();
         int namesCount = libvlc_media_get_meta_extra_names(mediaInstance, namesPointer);
         List<String> result = new ArrayList<>(namesCount);
-        Pointer[] namePointers = namesPointer.getPointer().getPointerArray(0L, namesCount);
+        Pointer[] namePointers = namesPointer.getValue().getPointerArray(0L, namesCount);
         for (Pointer namePointer : namePointers) {
             String name = NativeString.copyNativeString(namePointer);
-            result.add(getExtra(name));
+            result.add(name);
         }
         libvlc_media_meta_extra_names_release(namesPointer.getValue(), namesCount);
         return result;
