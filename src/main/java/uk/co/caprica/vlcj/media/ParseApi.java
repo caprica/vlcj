@@ -94,10 +94,13 @@ public final class ParseApi extends BaseApi {
      * Parse the media, asynchronously, with a specific timeout and specific parse flags.
      *
      * @param timeout timeout, milliseconds
-     * @param flags parse flags
+     * @param flags parse flags, if omitted {@link ParseFlag#PARSE_LOCAL} is used
      * @return <code>true</code> if the parse request was successful; <code>false</code> on error
      */
     public boolean parse(int timeout, ParseFlag... flags) {
+        if (flags == null || flags.length == 0) {
+            flags = new ParseFlag[] {ParseFlag.PARSE_LOCAL };
+        }
         return libvlc_media_parse_request(libvlcInstance, mediaInstance, flagsToInt(flags), timeout) == 0;
     }
 
