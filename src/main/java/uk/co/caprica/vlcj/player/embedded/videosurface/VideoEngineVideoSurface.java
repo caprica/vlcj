@@ -40,6 +40,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_swap_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_transfer_func_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_update_output_cb;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MouseButton;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngine;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineWindowCallbackHandler;
@@ -49,6 +50,14 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_output_call
 /**
  * Implementation of a video surface that bridges native video engine callbacks to a rendering API (like JOGL, LWJGL and
  * so on).
+ * <p>
+ * The window callback methods <strong>must not</strong> be invoked concurrently:
+ * <ul>
+ *     <li>{@link #resize(int, int)}</li>
+ *     <li>{@link #mouseMoved(int, int)}</li>
+ *     <li>{@link #mousePressed(MouseButton)}</li>
+ *     <li>{@link #mouseReleased(MouseButton)}</li>
+ * </ul>
  */
 public final class VideoEngineVideoSurface extends VideoSurface {
 
@@ -89,6 +98,44 @@ public final class VideoEngineVideoSurface extends VideoSurface {
 
         this.engine = engine;
         this.callback = callback;
+    }
+
+    /**
+     * Report a video surface size change to the native video surface.
+     *
+     * @param width new width
+     * @param height new height
+     */
+    public void resize(int width, int height) {
+        windowCallbackHandler.setSize(width, height);
+    }
+
+    /**
+     * Report a mouse moved event to the native video surface
+     *
+     * @param x new mouse x position
+     * @param y new mouse y position
+     */
+    public void mouseMoved(int x, int y) {
+        windowCallbackHandler.mouseMoved(x, y);
+    }
+
+    /**
+     * Report a mouse pressed event to the native video surface.
+     *
+     * @param mouseButton button that was pressed
+     */
+    public void mousePressed(MouseButton mouseButton) {
+        windowCallbackHandler.mousePressed(mouseButton);
+    }
+
+    /**
+     * Report a mouse released event to the native video surface.
+     *
+     * @param mouseButton button that was pressed
+     */
+    public void mouseReleased(MouseButton mouseButton) {
+        windowCallbackHandler.mouseReleased(mouseButton);
     }
 
     @Override

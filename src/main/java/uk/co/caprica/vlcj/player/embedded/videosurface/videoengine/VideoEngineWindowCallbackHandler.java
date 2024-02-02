@@ -28,6 +28,8 @@ import uk.co.caprica.vlcj.player.base.MouseButton;
 
 /**
  * Handler component that bridges a vlcj application with the native video engine window callback.
+ * <p>
+ * The various callback method invocations <strong>must not</strong> be made concurrently.
  */
 public final class VideoEngineWindowCallbackHandler implements VideoEngineWindowCallback {
 
