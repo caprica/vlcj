@@ -14,15 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
 
+import uk.co.caprica.vlcj.player.base.MouseButton;
+
 /**
- * Specification for a component that informs the video engine when the size of the hosted video window changes.
+ * Specification for a component that informs the video engine when the size of the hosted video window changes or a
+ * mouse event occurs.
  */
-public interface VideoEngineResizeCallback {
+public interface VideoEngineWindowCallback {
 
     /**
      * Set the new window size.
@@ -31,4 +34,26 @@ public interface VideoEngineResizeCallback {
      * @param height new height
      */
     void setSize(int width, int height);
+
+    /**
+     * Report the new mouse position.
+     *
+     * @param x new x position
+     * @param y new y position
+     */
+    void mouseMoved(int x, int y);
+
+    /**
+     * Report mouse pressed.
+     *
+     * @param mouseButton button that was pressed
+     */
+    void mousePressed(MouseButton mouseButton);
+
+    /**
+     * Report mouse released.
+     *
+     * @param mouseButton button that was released
+     */
+    void mouseReleased(MouseButton mouseButton);
 }

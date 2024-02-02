@@ -48,14 +48,14 @@ public interface VideoEngineCallback {
     void onCleanup(Pointer opaque);
 
     /**
-     * Set the resize callback.
+     * Set the window callback.
      * <p>
      * The resize callback must be invoked by the application when the size of the video display surface changes (e.g.
-     * due to a window resize event).
+     * due to a window resize event). It can also be used to send mouse events.
      *
-     * @param resizeCallback resize callback
+     * @param windowCallback window callback
      */
-    void onSetResizeCallback(VideoEngineResizeCallback resizeCallback);
+    void onSetWindowCallback(VideoEngineWindowCallback windowCallback);
 
     /**
      * Update the video output with new dimensions.

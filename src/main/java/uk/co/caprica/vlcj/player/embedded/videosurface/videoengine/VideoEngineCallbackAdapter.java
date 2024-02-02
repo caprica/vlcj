@@ -42,7 +42,7 @@ public abstract class VideoEngineCallbackAdapter implements VideoEngineCallback 
     }
 
     @Override
-    public void onSetResizeCallback(VideoEngineResizeCallback resizeCallback) {
+    public void onSetWindowCallback(VideoEngineWindowCallback windowCallback) {
     }
 
     @Override
