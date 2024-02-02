@@ -78,6 +78,18 @@ public class BufferFormat {
     }
 
     /**
+     * Constructs a new BufferFormat instance with the given parameters.
+     *
+     * @param chroma a VLC buffer type, must be exactly 4 characters and cannot contain non-ASCII characters
+     * @param width the width, must be &gt; 0
+     * @param height the height, must be &gt; 0
+     * @param channels number of channels
+     */
+    public BufferFormat(String chroma, int width, int height, int channels) {
+        this(chroma, width, height, new int[] {width * channels}, new int[] {height});
+    }
+
+    /**
      * Get the pixel format.
      *
      * @return pixel format

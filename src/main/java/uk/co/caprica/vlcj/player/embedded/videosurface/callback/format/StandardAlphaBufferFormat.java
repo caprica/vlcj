@@ -24,10 +24,9 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 /**
  * Implementation of a buffer format for RV32.
  * <p>
- * RV32 is a 24-bit BGR format with 8-bit of padding (no alpha) in a single plane.
+ * BGRA is used, a 32-bit BGR format with alpha in a single plane.
  */
-@Deprecated
-public class RV32BufferFormat extends BufferFormat {
+public class StandardAlphaBufferFormat extends BufferFormat {
 
     /**
      * Creates a RV32 buffer format with the given width and height.
@@ -35,7 +34,7 @@ public class RV32BufferFormat extends BufferFormat {
      * @param width width of the buffer
      * @param height height of the buffer
      */
-    public RV32BufferFormat(int width, int height) {
-        super("RV32", width, height, 4);
+    public StandardAlphaBufferFormat(int width, int height) {
+        super("BGRA", width, height, 4);
     }
 }
