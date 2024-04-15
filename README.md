@@ -130,7 +130,7 @@ Major New Features
 Headline changes:
 
  - requires LibVLC 4.0.0+
- - requires Java 8+
+ - requires Java 11+
  - full support for LibVLC native "video engine" rendering, specifically via OpenGL
    * example using LWJGL at [vlcj-lwjgl-demo](https://github.com/caprica/vlcj-lwjgl-demo)
  - fast vs precise native seeking when setting media position/time
