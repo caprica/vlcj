@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.component;
@@ -34,10 +34,16 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCall
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallbackAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallbackAdapter;
-import uk.co.caprica.vlcj.player.embedded.videosurface.callback.format.RV32BufferFormat;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.format.StandardAlphaBufferFormat;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
@@ -360,7 +366,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         @Override
         public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
             newVideoBuffer(sourceWidth, sourceHeight);
-            return new RV32BufferFormat(sourceWidth, sourceHeight);
+            return new StandardAlphaBufferFormat(sourceWidth, sourceHeight);
         }
     }
 
@@ -377,7 +383,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * @param height height of the video
      */
     private void newVideoBuffer(int width, int height) {
-        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
         defaultRenderCallback.setImageBuffer(image);
         if (videoSurfaceComponent != null) {
             videoSurfaceComponent.setPreferredSize(new Dimension(width, height));

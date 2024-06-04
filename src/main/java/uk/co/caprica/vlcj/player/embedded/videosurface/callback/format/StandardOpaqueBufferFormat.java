@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.callback.format;
@@ -22,11 +22,11 @@ package uk.co.caprica.vlcj.player.embedded.videosurface.callback.format;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 
 /**
- * Implementation of a buffer format for RV32.
+ * Implementation of a standard opaque buffer format.
  * <p>
- * RV32 is a 24-bit BGR format with 8-bit of padding (no alpha) in a single plane.
+ * RV24 is used, a 24-bit RGB format in a single plane.
  */
-public class RV32BufferFormat extends BufferFormat {
+public class StandardOpaqueBufferFormat extends BufferFormat {
 
     /**
      * Creates a RV32 buffer format with the given width and height.
@@ -34,8 +34,7 @@ public class RV32BufferFormat extends BufferFormat {
      * @param width width of the buffer
      * @param height height of the buffer
      */
-    public RV32BufferFormat(int width, int height) {
-        super("RV32", width, height, new int[] {width * 4}, new int[] {height});
+    public StandardOpaqueBufferFormat(int width, int height) {
+        super("RV24", width, height, 3);
     }
-
 }

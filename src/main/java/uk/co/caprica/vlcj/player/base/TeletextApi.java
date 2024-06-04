@@ -14,13 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.base;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_teletext;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_teletext_transparency;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_teletext;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_teletext_transparency;
 
 /**
  * Behaviour pertaining to teletext.
@@ -58,4 +60,21 @@ public final class TeletextApi extends BaseApi {
         libvlc_video_set_teletext(mediaPlayerInstance, key.intValue());
     }
 
+    /**
+     * Set whether the teletext background should be transparent.
+     *
+     * @param transparent <code>true</code> for transparent background, otherwise <code>false</code>
+     */
+    public void setTransparency(boolean transparent) {
+        libvlc_video_set_teletext_transparency(mediaPlayerInstance, transparent ? 1 : 0);
+    }
+
+    /**
+     * Get whether the teletext background is transparent.
+     *
+     * @return <code>true</code> if background transparent, otherwise <code>false</code>
+     */
+    public boolean getTransparency() {
+        return libvlc_video_get_teletext_transparency(mediaPlayerInstance) == 1;
+    }
 }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.factory;
@@ -26,6 +26,7 @@ import uk.co.caprica.vlcj.media.TrackType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_abi_version;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_filter_list_get;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_clock;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_get_changeset;
@@ -74,6 +75,15 @@ public final class ApplicationApi extends BaseApi {
      */
     public String changeset() {
         return libvlc_get_changeset();
+    }
+
+    /**
+     * Get the native ABI version for libvlc.
+     *
+     * @return ABI version number
+     */
+    public int abiVersion() {
+        return libvlc_abi_version();
     }
 
     /**
@@ -172,7 +182,7 @@ public final class ApplicationApi extends BaseApi {
         List<ModuleDescription> result = new ArrayList<ModuleDescription>();
         libvlc_module_description_t moduleDescription = moduleDescriptions;
         while(moduleDescription != null) {
-            result.add(new ModuleDescription(moduleDescription.psz_name, moduleDescription.psz_shortname, moduleDescription.psz_longname, moduleDescription.psz_help));
+            result.add(new ModuleDescription(moduleDescription.psz_name, moduleDescription.psz_shortname, moduleDescription.psz_longname, moduleDescription.psz_help, moduleDescription.psz_help_html));
             moduleDescription = moduleDescription.p_next;
         }
         return result;

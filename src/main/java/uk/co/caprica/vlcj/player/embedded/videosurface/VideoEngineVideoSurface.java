@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Pointer;
-import uk.co.caprica.vlcj.binding.internal.ReportSizeChanged;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_resize_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_color_primaries_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_color_space_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_getProcAddress_cb;
@@ -28,7 +28,10 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_makeCurrent_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_orient_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_cfg_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_cleanup_cb;
-import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_set_resize_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_mouse_move_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_mouse_press_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_mouse_release_cb;
+import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_set_window_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_setup_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_render_cfg_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_device_cfg_t;
@@ -37,15 +40,24 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_swap_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_transfer_func_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_update_output_cb;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MouseButton;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngine;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineCallback;
-import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineResizeCallbackHandler;
+import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineWindowCallbackHandler;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_output_callbacks;
 
 /**
  * Implementation of a video surface that bridges native video engine callbacks to a rendering API (like JOGL, LWJGL and
  * so on).
+ * <p>
+ * The window callback methods <strong>must not</strong> be invoked concurrently:
+ * <ul>
+ *     <li>{@link #resize(int, int)}</li>
+ *     <li>{@link #mouseMoved(int, int)}</li>
+ *     <li>{@link #mousePressed(MouseButton)}</li>
+ *     <li>{@link #mouseReleased(MouseButton)}</li>
+ * </ul>
  */
 public final class VideoEngineVideoSurface extends VideoSurface {
 
@@ -63,16 +75,16 @@ public final class VideoEngineVideoSurface extends VideoSurface {
 
     private final libvlc_video_output_setup_cb setup = new SetupCallback();
     private final libvlc_video_output_cleanup_cb cleanup = new CleanupCallback();
-    private final libvlc_video_output_set_resize_cb setResize = new SetResizeCallback();
+    private final libvlc_video_output_set_window_cb setWindowCallback = new SetWindowCallback();
     private final libvlc_video_update_output_cb updateOutput = new UpdateOutputCallback();
     private final libvlc_video_swap_cb swap = new SwapCallback();
     private final libvlc_video_makeCurrent_cb makeCurrent = new MakeCurrentCallback();
     private final libvlc_video_getProcAddress_cb getProcAddress = new GetProcAddressCallback();
 
     /**
-     * Handler to bridge the native video engine resize callback.
+     * Handler to bridge the native video engine resize and mouse event callback.
      */
-    private VideoEngineResizeCallbackHandler resizeCallbackHandler;
+    private VideoEngineWindowCallbackHandler windowCallbackHandler;
 
     /**
      * Create a video surface.
@@ -88,6 +100,44 @@ public final class VideoEngineVideoSurface extends VideoSurface {
         this.callback = callback;
     }
 
+    /**
+     * Report a video surface size change to the native video surface.
+     *
+     * @param width new width
+     * @param height new height
+     */
+    public void resize(int width, int height) {
+        windowCallbackHandler.setSize(width, height);
+    }
+
+    /**
+     * Report a mouse moved event to the native video surface
+     *
+     * @param x new mouse x position
+     * @param y new mouse y position
+     */
+    public void mouseMoved(int x, int y) {
+        windowCallbackHandler.mouseMoved(x, y);
+    }
+
+    /**
+     * Report a mouse pressed event to the native video surface.
+     *
+     * @param mouseButton button that was pressed
+     */
+    public void mousePressed(MouseButton mouseButton) {
+        windowCallbackHandler.mousePressed(mouseButton);
+    }
+
+    /**
+     * Report a mouse released event to the native video surface.
+     *
+     * @param mouseButton button that was pressed
+     */
+    public void mouseReleased(MouseButton mouseButton) {
+        windowCallbackHandler.mouseReleased(mouseButton);
+    }
+
     @Override
     public void attach(MediaPlayer mediaPlayer) {
         libvlc_video_set_output_callbacks(
@@ -95,7 +145,7 @@ public final class VideoEngineVideoSurface extends VideoSurface {
             engine.intValue(),
             setup,
             cleanup,
-            setResize,
+            setWindowCallback,
             updateOutput,
             swap,
             makeCurrent,
@@ -119,11 +169,11 @@ public final class VideoEngineVideoSurface extends VideoSurface {
         }
     }
 
-    private final class SetResizeCallback implements libvlc_video_output_set_resize_cb {
+    private final class SetWindowCallback implements libvlc_video_output_set_window_cb {
         @Override
-        public void setResizeCallback(Pointer opaque, ReportSizeChanged report_size_change, Pointer report_opaque) {
-            VideoEngineVideoSurface.this.resizeCallbackHandler = new VideoEngineResizeCallbackHandler(opaque, report_opaque, report_size_change);
-            callback.onSetResizeCallback(resizeCallbackHandler);
+        public void setWindowCallback(Pointer opaque, libvlc_video_output_resize_cb report_size_change, libvlc_video_output_mouse_move_cb report_mouse_move, libvlc_video_output_mouse_press_cb report_mouse_pressed , libvlc_video_output_mouse_release_cb report_mouse_released, Pointer report_opaque) {
+            VideoEngineVideoSurface.this.windowCallbackHandler = new VideoEngineWindowCallbackHandler(opaque, report_opaque, report_size_change, report_mouse_move, report_mouse_pressed, report_mouse_released);
+            callback.onSetWindowCallback(windowCallbackHandler);
         }
     }
 

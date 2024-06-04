@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.media;
@@ -29,7 +29,8 @@ public enum PictureType {
 
     ARGB(0),
     PNG (1),
-    JPG (2);
+    JPG (2),
+    WEBP(3);
 
     private static final Map<Integer, PictureType> INT_MAP = new HashMap<Integer, PictureType>();
 

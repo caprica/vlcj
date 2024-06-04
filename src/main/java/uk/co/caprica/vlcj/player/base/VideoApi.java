@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.base;
 
 import com.sun.jna.ptr.IntByReference;
-import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 
@@ -29,6 +28,7 @@ import java.awt.Dimension;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_video_title_display;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_adjust_float;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_adjust_int;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_display_fit;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_scale;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_size;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_new_viewpoint;
@@ -39,8 +39,10 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_crop_border
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_crop_ratio;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_crop_window;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_deinterlace;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_display_fit;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_scale;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_update_viewpoint;
+import static uk.co.caprica.vlcj.player.base.VideoFitMode.videoFitMode;
 
 /**
  * Behaviour pertaining to media player video.
@@ -201,6 +203,24 @@ public final class VideoApi extends BaseApi {
      */
     public void setAspectRatio(String aspectRatio) {
         libvlc_video_set_aspect_ratio(mediaPlayerInstance, aspectRatio);
+    }
+
+    /**
+     * Get the video fit mode.
+     *
+     * @return fit mode
+     */
+    public VideoFitMode displayFit() {
+        return videoFitMode(libvlc_video_get_display_fit(mediaPlayerInstance));
+    }
+
+    /**
+     * Set the video fit mode.
+     *
+     * @param fitMode fit mode
+     */
+    public void setDisplayFit(VideoFitMode fitMode) {
+        libvlc_video_set_display_fit(mediaPlayerInstance, fitMode.intValue());
     }
 
     /**

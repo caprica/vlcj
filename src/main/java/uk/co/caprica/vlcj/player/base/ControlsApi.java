@@ -14,11 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.base;
 
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_jump_time;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_next_frame;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_pause;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_play;
@@ -240,6 +241,20 @@ public final class ControlsApi extends BaseApi {
      */
     public boolean setTime(long time, boolean fast) {
         return libvlc_media_player_set_time(mediaPlayerInstance, Math.max(time, 0), fast ? 1 : 0) == 0;
+    }
+
+    /**
+     * Jump to a new time.
+     * <p>
+     * This will trigger a precise and relative seek from the current time.
+     * <p>
+     * If the requested time is less than zero, it is normalised to zero.
+     *
+     * @param time time, in milliseconds
+     * @return <code>true</code> if successful; <code>false</code> otherwise
+     */
+    public boolean jumpTime(long time) {
+        return libvlc_media_player_jump_time(mediaPlayerInstance, Math.max(time, 0)) == 0;
     }
 
     /**

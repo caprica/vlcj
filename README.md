@@ -30,6 +30,10 @@ vlcj-4.7.x, which is still current, is the last version of vlcj that was built a
 vlcj-4.8.x, which is still current, is the first version of vlcj that was built against JDK 11, and is the first to
 use the Java Module System.
 
+There is an alternative artefact available in the short term to maintain compatibility with Java 1.8, switch to the
+[vlcj-5.x-java8 branch](https://github.com/caprica/vlcj/tree/vlcj-5.x-java8) branch, and use the `vlcj-java8` artefact
+name instead of `vlcj`.
+
 *This version of vlcj requires VLC 4.0.0 as a minimum, no earlier version is supported.*
 
 This is the open source vlcj project page, see also the 'official'
@@ -45,6 +49,12 @@ Build Status
 
 Recent News
 ===========
+
+__January 2024__ Project status update:
+
+>This project is still actively maintained and supported, but activity has been less recently because the main driver
+>for the next release and the blocker for releasing something new is the ongoing development of VLC 4.x which is still
+>seemingly not close to being completed.
 
 __May 2022__ Supporting the project:
 
@@ -122,7 +132,7 @@ Major New Features
 Headline changes:
 
  - requires LibVLC 4.0.0+
- - requires Java 8+
+ - requires Java 11+
  - full support for LibVLC native "video engine" rendering, specifically via OpenGL
    * example using LWJGL at [vlcj-lwjgl-demo](https://github.com/caprica/vlcj-lwjgl-demo)
  - fast vs precise native seeking when setting media position/time

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.callback;
@@ -75,6 +75,18 @@ public class BufferFormat {
         this.height = height;
         this.pitches = Arrays.copyOf(pitches, pitches.length);
         this.lines = Arrays.copyOf(lines, lines.length);
+    }
+
+    /**
+     * Constructs a new BufferFormat instance with the given parameters.
+     *
+     * @param chroma a VLC buffer type, must be exactly 4 characters and cannot contain non-ASCII characters
+     * @param width the width, must be &gt; 0
+     * @param height the height, must be &gt; 0
+     * @param channels number of channels
+     */
+    public BufferFormat(String chroma, int width, int height, int channels) {
+        this(chroma, width, height, new int[] {width * channels}, new int[] {height});
     }
 
     /**

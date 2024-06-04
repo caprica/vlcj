@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.media;
@@ -94,10 +94,13 @@ public final class ParseApi extends BaseApi {
      * Parse the media, asynchronously, with a specific timeout and specific parse flags.
      *
      * @param timeout timeout, milliseconds
-     * @param flags parse flags
+     * @param flags parse flags, if omitted {@link ParseFlag#PARSE_LOCAL} is used
      * @return <code>true</code> if the parse request was successful; <code>false</code> on error
      */
     public boolean parse(int timeout, ParseFlag... flags) {
+        if (flags == null || flags.length == 0) {
+            flags = new ParseFlag[] {ParseFlag.PARSE_LOCAL };
+        }
         return libvlc_media_parse_request(libvlcInstance, mediaInstance, flagsToInt(flags), timeout) == 0;
     }
 

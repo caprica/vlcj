@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.factory;
@@ -45,18 +45,25 @@ public final class ModuleDescription {
     private final String help;
 
     /**
+     * HTML help text.
+     */
+    private final String helpHtml;
+
+    /**
      * Create a new module description
      *
      * @param name name
      * @param shortName short name
      * @param longName long name
      * @param help help text
+     * @param helpHtml HTML help text
      */
-    public ModuleDescription(String name, String shortName, String longName, String help) {
+    public ModuleDescription(String name, String shortName, String longName, String help, String helpHtml) {
         this.name = name;
         this.shortName = shortName;
         this.longName = longName;
         this.help = help;
+        this.helpHtml = helpHtml;
     }
 
     /**
@@ -95,6 +102,15 @@ public final class ModuleDescription {
         return help;
     }
 
+    /**
+     * Get the module HTML help text.
+     *
+     * @return HTML help text
+     */
+    public String helpHtml() {
+        return helpHtml;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(200);
@@ -102,7 +118,8 @@ public final class ModuleDescription {
         sb.append("name=").append(name).append(',');
         sb.append("shortName=").append(shortName).append(',');
         sb.append("longName=").append(longName).append(',');
-        sb.append("help=").append(help).append(']');
+        sb.append("help=").append(help).append(',');
+        sb.append("helpHtml=").append(help).append(']');
         return sb.toString();
     }
 }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2022 Caprica Software Limited.
+ * Copyright 2009-2024 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
@@ -48,14 +48,14 @@ public interface VideoEngineCallback {
     void onCleanup(Pointer opaque);
 
     /**
-     * Set the resize callback.
+     * Set the window callback.
      * <p>
      * The resize callback must be invoked by the application when the size of the video display surface changes (e.g.
-     * due to a window resize event).
+     * due to a window resize event). It can also be used to send mouse events.
      *
-     * @param resizeCallback resize callback
+     * @param windowCallback window callback
      */
-    void onSetResizeCallback(VideoEngineResizeCallback resizeCallback);
+    void onSetWindowCallback(VideoEngineWindowCallback windowCallback);
 
     /**
      * Update the video output with new dimensions.
