@@ -22,14 +22,14 @@ package uk.co.caprica.vlcj.player.embedded.videosurface.callback.format;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 
 /**
- * Implementation of a buffer format for RV32.
+ * Implementation of a buffer format for BGRA.
  * <p>
  * BGRA is used, a 32-bit BGR format with alpha in a single plane.
  */
 public class StandardAlphaBufferFormat extends BufferFormat {
 
     /**
-     * Creates a RV32 buffer format with the given width and height.
+     * Creates a BGRA buffer format with the given width and height.
      *
      * @param width width of the buffer
      * @param height height of the buffer
