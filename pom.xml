@@ -7,7 +7,7 @@
         <dependency>
             <groupId>uk.co.caprica</groupId>
             <artifactId>vlcj</artifactId>
-            <version>4.8.0</version>
+            <version>4.8.3</version>
         </dependency>
     </dependencies> 
 -->
@@ -66,7 +66,7 @@
         <connection>scm:git:git@github.com:caprica/vlcj.git</connection>
         <developerConnection>scm:git:git@github.com:caprica/vlcj.git</developerConnection>
         <url>git@github.com:caprica/vlcj.git</url>
-        <tag>vlcj-4.8.0</tag>
+        <tag>vlcj-4.8.3</tag>
     </scm>
 
     <distributionManagement>
@@ -82,7 +82,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vlcjNatives.version>4.8.1</vlcjNatives.version>
+        <vlcjNatives.version>4.8.3</vlcjNatives.version>
     </properties>
 
     <dependencies>
