@@ -30,9 +30,8 @@ provided initially to garner feedback and highlight any issues with the transiti
 discover any problems, or deficiencies with how the module system has been implemented, please raise an issue ticket
 here.
 
+- 4th June, 2024 - vlcj 4.8.3 released, only change is to bump JNA dependency to latest
 - 24th September, 2022 - vlcj 4.8.0 released, initial move to Java 11 and the Java Module System, no functional changes
-- 15th May, 2022 - vlcj 4.7.3 released, minor maintenance release to use latest version of JNA
-- 18th March, 2022 - vlcj 4.7.2 released, minor bugfix release relating to embedded media list player component
 
 All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
@@ -44,27 +43,6 @@ so that idea has been scrapped and that release stream has been *abandoned*. For
 latest supported release.
 
 You can follow @capricasoftware on Twitter for more vlcj news.
-
-vlcj-4
-======
-
-vlcj-4 has a new API, but there is still a lot of similarity with vlcj-3 and under the covers there is still mostly the
-same mature and stable implementation.
-
-The vlcj-4 API is now pretty much stable, although some changes may be made depending on feedback and usage after the
-first release of 4.0.0 is let loose into the wild - but no further *major* API changes are planned or expected.
-
-If you are interested in using vlcj-4, now is a good time to start.
-
-vlcj-4.1+
-=========
-
-vlcj-4.1 brings JNA "direct mapping" which should give a modest performance boost at the expense of less helpful error
-messages if things go wrong when loading the native LibVLC library.
-
-If you wish to stay with "traditional" JNA bindings, then stick with the latest vlcj-4.0.x.
-
-This direct mapping approach will be used in all future versions of vlcj, meaning vlcj-4.1.x, vlcj-5.x and later.
 
 Major New Features
 ------------------
@@ -114,31 +92,6 @@ Known Issues
    to something like Chromecast you may experience problems - even if you stop the current media first. The cause of
    this is currently unknown, but it may be a native issue.
 
-API Breakage (vlcj-3)
----------------------
-
-This is the *tenth year* of the project, the API has been pretty much static for that entire time. The codebase has
-evolved gradually and incrementally in that time and resulted sometimes in sub-optimal implementations and choices, as
-well as some generally unwieldy individual classes containing literally thousands of lines of code. Keeping the API
-fixed for those almost ten years also locked in some long-standing architectural issues that simply could not be
-resolved.
-
-The decision to break backwards compatibility with the vlcj-3 API was not taken lightly, but the results have been worth
-it. All legacy architectural issues have been resolved, the giant god-classes have been factored to more manageable
-chunks, and ongoing maintenance will be much easier.
-
-The price for these improvements is some API breakage, sorry.
-
-The short version of the situation is that vlcj-4 can *not* be considered a drop-in upgrade for any vlcj-3 applications.
-If you want to move to vlcj-4 with your existing applications, you *will* be impacted, at best you will need to use new
-names for existing methods, at worst although very unlikely you may have to make some *deep* changes in your own
-codebase. 
-
-There is no automatic migration tool.
-
-The longer version of the situation is documented more fully in
-[this ticket](https://github.com/caprica/vlcj/issues/681). 
-
 Tutorials
 ---------
 
@@ -185,7 +138,7 @@ Add the following Maven dependency to your own project pom.xml:
 <dependency>
     <groupId>uk.co.caprica</groupId>
     <artifactId>vlcj</artifactId>
-    <version>4.8.0</version>
+    <version>4.8.3</version>
 </dependency>
 ```
 
