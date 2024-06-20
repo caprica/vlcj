@@ -29,7 +29,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 public class StandardOpaqueBufferFormat extends BufferFormat {
 
     /**
-     * Creates a RV32 buffer format with the given width and height.
+     * Creates a RV24 buffer format with the given width and height.
      *
      * @param width width of the buffer
      * @param height height of the buffer
