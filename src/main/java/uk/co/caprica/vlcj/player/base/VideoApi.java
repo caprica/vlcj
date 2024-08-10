@@ -24,10 +24,12 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 
 import java.awt.Dimension;
+import java.awt.Point;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_video_title_display;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_adjust_float;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_adjust_int;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_cursor;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_display_fit;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_scale;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_size;
@@ -346,5 +348,31 @@ public final class VideoApi extends BaseApi {
      */
     public boolean updateViewpoint(Viewpoint viewpoint, boolean absolute) {
         return libvlc_video_update_viewpoint(mediaPlayerInstance, viewpoint.viewpoint(), absolute ? 1 : 0) == 0;
+    }
+
+    /**
+     * Get the pointer location, in terms of video resolution/coordinates, for the first video.
+     *
+     * @return cursor location, or <code>null</code> if not available
+     */
+    public Point getCursor() {
+        return getCursor(0);
+    }
+
+    /**
+     * Get the pointer location, in terms of video resolution/coordinates, for the specified video.
+     *
+     * @param videoNum video number, starting from zero
+     * @return cursor location, or <code>null</code> if not available
+     */
+    public Point getCursor(int videoNum) {
+        IntByReference px = new IntByReference();
+        IntByReference py = new IntByReference();
+        int result = libvlc_video_get_cursor(mediaPlayerInstance, videoNum, px.getPointer(), py.getPointer());
+        if (result == 0) {
+            return new Point(px.getValue(), py.getValue());
+        } else {
+            return null;
+        }
     }
 }
