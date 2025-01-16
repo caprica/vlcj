@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.player.base;
 import com.sun.jna.ptr.IntByReference;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -29,6 +30,7 @@ import java.awt.Point;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_video_title_display;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_adjust_float;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_adjust_int;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_aspect_ratio;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_cursor;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_display_fit;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_scale;
@@ -196,6 +198,15 @@ public final class VideoApi extends BaseApi {
      */
     public void setVideoTitleDisplay(Position position, int timeout) {
         libvlc_media_player_set_video_title_display(mediaPlayerInstance, position.intValue(), timeout);
+    }
+
+    /**
+     * Get the video aspect ratio.
+     *
+     * @return aspect ratio, e.g. "16:9", "4:3", "185:100" for 1:85.1 and so on
+     */
+    public String aspectRatio() {
+        return NativeString.copyAndFreeNativeString(libvlc_video_get_aspect_ratio(mediaPlayerInstance))
     }
 
     /**
