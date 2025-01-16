@@ -34,7 +34,7 @@ public interface NativeDiscoveryStrategy {
     boolean supported();
 
     /**
-     * Attempt to discover the location of the libvlc native shared libraries.
+     * Attempt to discover the location of the native shared libraries.
      *
      * @return path containing the shared libraries, or <code>null</code> if this strategy did not find them
      */

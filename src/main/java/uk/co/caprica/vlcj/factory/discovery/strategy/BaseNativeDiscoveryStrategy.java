@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.factory.discovery.strategy;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,8 +67,9 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
     @Override
     public final String discover() {
         for (String discoveryDirectory : discoveryDirectories()) {
-            if (find(discoveryDirectory)) {
-                return discoveryDirectory;
+            String directoryResult = discover(new File(discoveryDirectory));
+            if (directoryResult != null) {
+                return directoryResult;
             }
         }
         return null;
@@ -81,21 +83,42 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
     protected abstract List<String> discoveryDirectories();
 
     /**
+     * Search a discovery directory, recursively, for the native shared libraries.
+     *
+     * @param discoveryDirectory name of the directory to search
+     * @return name of the matching directory if successful, null if unsuccessful
+     */
+    private String discover(File discoveryDirectory) {
+        if (!discoveryDirectory.exists() || !discoveryDirectory.isDirectory()) {
+            return null;
+        }
+        if (find(discoveryDirectory)) {
+            return discoveryDirectory.getAbsolutePath();
+        }
+        File[] subDirs = discoveryDirectory.listFiles(File::isDirectory);
+        if (subDirs != null) {
+            for (File subDir : subDirs) {
+                String result = discover(subDir);
+                if (result != null) {
+                    return result;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Attempt to match all required files in a particular directory.
      * <p>
      * The directory is <em>not</em> searched <em>recursively</em>.
      *
-     * @param directoryName name of the directory to search
+     * @param dir directory to search
      * @return <code>true</code> if all required files were found; <code>false</code> otherwise
      */
-    private boolean find(String directoryName) {
-        File dir = new File(directoryName);
-        if (!dir.exists()) {
-            return false;
-        }
-        File[] files = dir.listFiles();
+    private boolean find(File dir) {
+        File[] files = dir.listFiles(File::isFile);
         if (files != null) {
-            Set<String> matches = new HashSet<String>(patternsToMatch.length);
+            Set<String> matches = new HashSet<>(patternsToMatch.length);
             for (File file : files) {
                 for (Pattern pattern : patternsToMatch) {
                     Matcher matcher = pattern.matcher(file.getName());
