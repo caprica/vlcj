@@ -19,7 +19,16 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import com.sun.jna.ptr.DoubleByReference;
+import com.sun.jna.ptr.LongByReference;
+import uk.co.caprica.vlcj.binding.internal.libvlc_abloop_t;
+
+import static uk.co.caprica.vlcj.binding.internal.libvlc_abloop_t.abloop;
+import static uk.co.caprica.vlcj.binding.internal.libvlc_abloop_t.libvlc_abloop_a;
+import static uk.co.caprica.vlcj.binding.internal.libvlc_abloop_t.libvlc_abloop_b;
+import static uk.co.caprica.vlcj.binding.internal.libvlc_abloop_t.libvlc_abloop_none;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_can_pause;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_abloop;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_length;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_position;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_rate;
@@ -102,6 +111,36 @@ public final class StatusApi extends BaseApi {
      */
     public double position() {
         return libvlc_media_player_get_position(mediaPlayerInstance);
+    }
+
+    /**
+     * Get the current AB loop position.
+     *
+     * @return AB loop status
+     */
+    public ABLoop getABLoop() {
+        LongByReference a_time = new LongByReference();
+        DoubleByReference a_pos = new DoubleByReference();
+        LongByReference b_time = new LongByReference();
+        DoubleByReference b_pos = new DoubleByReference();
+        libvlc_abloop_t result = abloop(libvlc_media_player_get_abloop(mediaPlayerInstance, a_time, a_pos, b_time, b_pos));
+        boolean validA = false;
+        Long aTime = null;
+        Double aPos = null;
+        boolean validB = false;
+        Long bTime = null;
+        Double bPos = null;
+        if (result == libvlc_abloop_a || result == libvlc_abloop_b) {
+            validA = true;
+            aTime = a_time.getValue();
+            aPos = a_pos.getValue();
+        }
+        if (result == libvlc_abloop_b) {
+            validB = true;
+            bTime = b_time.getValue();
+            bPos = b_pos.getValue();
+        }
+        return new ABLoop(validA, aTime, aPos, validB, bTime, bPos);
     }
 
     /**
