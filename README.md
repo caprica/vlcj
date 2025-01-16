@@ -60,6 +60,12 @@ Build Status
 Recent News
 ===========
 
+__January 2025__ Project status update:
+
+>We're still here!
+>Small incremental improvements continue to be made, mainly to keep track of the ongoing development of VLC 4.x which
+>even now is still in development and seemingly not close to being completed.
+
 __January 2024__ Project status update:
 
 >This project is still actively maintained and supported, but activity has been less recently because the main driver
