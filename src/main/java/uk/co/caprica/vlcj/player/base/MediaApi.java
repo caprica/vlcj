@@ -279,6 +279,13 @@ public final class MediaApi extends BaseApi {
     }
 
     /**
+     * Reset the media (i.e. unset it).
+     */
+    public void reset() {
+        changeMedia(null);
+    }
+
+    /**
      * Add an input slave to the current media.
      * <p>
      * See {@link SlaveApi#add(MediaSlaveType, MediaSlavePriority, String)}  for further
@@ -406,6 +413,7 @@ public final class MediaApi extends BaseApi {
             return true;
         } else {
             this.media = null;
+            libvlc_media_player_set_media(mediaPlayerInstance, null);
             return false;
         }
     }
