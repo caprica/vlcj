@@ -24,7 +24,8 @@ import com.sun.jna.Structure;
 import com.sun.jna.ptr.DoubleByReference;
 import com.sun.jna.ptr.LongByReference;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_time_point_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_watch_time_on_discontinuity;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_watch_time_on_paused;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_watch_time_on_seek;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_watch_time_on_update;
 import uk.co.caprica.vlcj.binding.lib.LibVlc;
 
@@ -78,7 +79,8 @@ public final class TimeApi extends BaseApi {
             mediaPlayerInstance,
             minimumPeriodBetweenUpdates,
             onUpdateCallback,
-            onDiscontinuityCallback,
+            onPausedCallback,
+            onSeekCallback,
             toPointer(data)
         );
     }
@@ -176,11 +178,22 @@ public final class TimeApi extends BaseApi {
         }
     };
 
-    private final libvlc_media_player_watch_time_on_discontinuity onDiscontinuityCallback = new libvlc_media_player_watch_time_on_discontinuity() {
+    private final libvlc_media_player_watch_time_on_paused onPausedCallback = new libvlc_media_player_watch_time_on_paused() {
 
         @Override
         public void callback(long system_date_us, Pointer data) {
-            watchTimeListener.watchTimeDiscontinuity(mediaPlayer, system_date_us, fromPointer(data));
+            watchTimeListener.watchTimePaused(mediaPlayer, system_date_us, fromPointer(data));
+        }
+    };
+
+    private final libvlc_media_player_watch_time_on_seek onSeekCallback = new libvlc_media_player_watch_time_on_seek() {
+
+        @Override
+        public void callback(libvlc_media_player_time_point_t value, Pointer data) {
+            TimePoint timePoint = new TimePoint(
+                value.rate, value.length_us, value.system_date_us, value.ts_us, value.position
+            );
+            watchTimeListener.watchTimeSeek(mediaPlayer, timePoint, fromPointer(data));
         }
     };
 

@@ -34,11 +34,20 @@ public interface WatchTimeListener {
     void watchTimeUpdate(MediaPlayer mediaPlayer, TimePoint timePoint, Long data);
 
     /**
-     * Timer discontinuity.
+     * Timer paused.
      *
      * @param mediaPlayer media player that raised the event
-     * @param systemDate
+     * @param systemDate event data
      * @param data opaque data
      */
-    void watchTimeDiscontinuity(MediaPlayer mediaPlayer, long systemDate, Long data);
+    void watchTimePaused(MediaPlayer mediaPlayer, long systemDate, Long data);
+
+    /**
+     * Timer seek.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param timePoint event data
+     * @param data opaque data
+     */
+    void watchTimeSeek(MediaPlayer mediaPlayer, TimePoint timePoint, Long data);
 }
