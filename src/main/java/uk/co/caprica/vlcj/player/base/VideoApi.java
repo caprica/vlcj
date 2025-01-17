@@ -23,6 +23,7 @@ import com.sun.jna.ptr.IntByReference;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 import uk.co.caprica.vlcj.binding.support.strings.NativeString;
+import uk.co.caprica.vlcj.media.VideoProjection;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -44,7 +45,9 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_crop_ratio;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_crop_window;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_deinterlace;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_display_fit;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_projection_mode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_scale;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_unset_projection_mode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_update_viewpoint;
 import static uk.co.caprica.vlcj.player.base.VideoFitMode.videoFitMode;
 
@@ -188,6 +191,24 @@ public final class VideoApi extends BaseApi {
      */
     public void setGamma(float gamma) {
         libvlc_video_set_adjust_float(mediaPlayerInstance, libvlc_video_adjust_option_t.libvlc_adjust_Gamma.intValue(), gamma);
+    }
+
+    /**
+     * Set the video projection mode.
+     * <p>
+     * This changes how the source is rendered for 360-degree video playback.
+     *
+     * @param projectionMode new projection mode
+     */
+    public void setProjectionMode(VideoProjection projectionMode) {
+        libvlc_video_set_projection_mode(mediaPlayerInstance, projectionMode.intValue());
+    }
+
+    /**
+     * Unset the previously set projection mode.
+     */
+    public void unsetProjectionMode() {
+        libvlc_video_unset_projection_mode(mediaPlayerInstance);
     }
 
     /**
