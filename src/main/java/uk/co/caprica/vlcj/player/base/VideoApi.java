@@ -36,6 +36,7 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_cursor;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_display_fit;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_scale;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_size;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_video_stereo_mode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_new_viewpoint;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_adjust_float;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_adjust_int;
@@ -47,9 +48,11 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_deinterlace
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_display_fit;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_projection_mode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_scale;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_video_stereo_mode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_unset_projection_mode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_update_viewpoint;
 import static uk.co.caprica.vlcj.player.base.VideoFitMode.videoFitMode;
+import static uk.co.caprica.vlcj.player.base.VideoStereoMode.videoStereoMode;
 
 /**
  * Behaviour pertaining to media player video.
@@ -380,6 +383,27 @@ public final class VideoApi extends BaseApi {
      */
     public boolean updateViewpoint(Viewpoint viewpoint, boolean absolute) {
         return libvlc_video_update_viewpoint(mediaPlayerInstance, viewpoint.viewpoint(), absolute ? 1 : 0) == 0;
+    }
+
+    /**
+     * Get the video stereo mode.
+     *
+     * @return video stereo mode
+     */
+    public VideoStereoMode getVideoStereoMode() {
+        return videoStereoMode(libvlc_video_get_video_stereo_mode(mediaPlayerInstance));
+    }
+
+    /**
+     * Set the video stereo mode.
+     * <p>
+     * A video output must have been created, {@link MediaPlayerEventListener#videoOutput(MediaPlayer, int)}, before
+     * setting the video stereo mode.
+     *
+     * @param videoStereoMode video stereo mode
+     */
+    public void setVideoStereoMode(VideoStereoMode videoStereoMode) {
+        libvlc_video_set_video_stereo_mode(mediaPlayerInstance, videoStereoMode.intValue());
     }
 
     /**
