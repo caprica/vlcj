@@ -161,6 +161,7 @@ public class CallbackVideoSurface extends VideoSurface {
         public Pointer lock(Pointer opaque, PointerByReference planes) {
             Pointer[] pointers = nativeBuffers.pointers();
             planes.getPointer().write(0, pointers, 0, pointers.length);
+            renderCallback.lock(mediaPlayer);
             return null;
         }
 
@@ -176,6 +177,7 @@ public class CallbackVideoSurface extends VideoSurface {
 
         @Override
         public void unlock(Pointer opaque, Pointer picture, Pointer plane) {
+            renderCallback.unlock(mediaPlayer);
         }
 
     }

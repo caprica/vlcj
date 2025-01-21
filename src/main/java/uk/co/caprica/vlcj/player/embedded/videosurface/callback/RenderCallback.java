@@ -36,6 +36,15 @@ import java.nio.ByteBuffer;
 public interface RenderCallback {
 
     /**
+     * Lock the video buffer prior to receiving a new frame.
+     * <p>
+     * Implementations of this method must execute as quickly as possible.
+     *
+     * @param mediaPlayer media player to which the event relates
+     */
+    void lock(MediaPlayer mediaPlayer);
+
+    /**
      * Call-back when ready to display a video frame.
      * <p>
      * Implementations of this method must execute as quickly as possible.
@@ -48,4 +57,12 @@ public interface RenderCallback {
      */
     void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat, int displayWidth, int displayHeight);
 
+    /**
+     * Unlock the video buffer after receiving a frame.
+     * <p>
+     * Implementations of this method must execute as quickly as possible.
+     *
+     * @param mediaPlayer media player to which the event relates
+     */
+    void unlock(MediaPlayer mediaPlayer);
 }
