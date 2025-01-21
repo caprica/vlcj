@@ -73,9 +73,27 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     }
 
     @Override
+    public final void lock(MediaPlayer mediaPlayer) {
+        onLock(mediaPlayer);
+    }
+
+    @Override
     public final void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
         nativeBuffers[0].asIntBuffer().get(buffer, 0, bufferFormat.getHeight() * bufferFormat.getWidth());
         onDisplay(mediaPlayer, buffer);
+    }
+
+    @Override
+    public final void unlock(MediaPlayer mediaPlayer) {
+        onUnlock(mediaPlayer);
+    }
+
+    /**
+     * Optional template method invoked immediately after receiving a frame of video data.
+     *
+     * @param mediaPlayer media player
+     */
+    protected void onLock(MediaPlayer mediaPlayer) {
     }
 
     /**
@@ -86,4 +104,11 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
      */
     protected abstract void onDisplay(MediaPlayer mediaPlayer, int[] buffer);
 
+    /**
+     * Optional template method invoked immediately prior to receiving a new frame of video data.
+     *
+     * @param mediaPlayer media player
+     */
+    protected void onUnlock(MediaPlayer mediaPlayer) {
+    }
 }
