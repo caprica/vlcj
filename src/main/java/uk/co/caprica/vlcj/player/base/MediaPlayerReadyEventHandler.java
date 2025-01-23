@@ -29,7 +29,7 @@ import uk.co.caprica.vlcj.player.base.events.MediaPlayerEventFactory;
  * Some media player operations require that the media be definitively playing before they are effective and the
  * "playing" event itself does not guarantee this.
  * <p>
- * Behaviour it this:
+ * Behaviour is this:
  * <ul>
  *     <li>each time new media is set, a "media changed" event is fired;</li>
  *     <li>if media reaches the end normally, a "finished" event is fired, followed by a "stopped" event;</li>
