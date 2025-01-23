@@ -87,10 +87,11 @@ public class CallbackVideoSurface extends VideoSurface {
     private final class SetupCallback implements libvlc_video_format_cb {
 
         @Override
-        public int format(PointerByReference opaque, PointerByReference chroma, IntByReference width, IntByReference height, PointerByReference pitches, PointerByReference lines) {
-            bufferFormat = bufferFormatCallback.getBufferFormat(width.getValue(), height.getValue());
+        public int format(PointerByReference opaque, PointerByReference chroma, int[] width, int[] height, PointerByReference pitches, PointerByReference lines) {
+            bufferFormat = bufferFormatCallback.getBufferFormat(width, height);
             applyBufferFormat(bufferFormat, chroma, width, height, pitches, lines);
             int result = nativeBuffers.allocate(bufferFormat);
+            bufferFormatCallback.newFormatSize(width[0], height[0], width[1], height[1]);
             bufferFormatCallback.allocatedBuffers(nativeBuffers.buffers());
             return result;
         }
@@ -108,17 +109,16 @@ public class CallbackVideoSurface extends VideoSurface {
          * @param pitches
          * @param lines
          */
-        private void applyBufferFormat(BufferFormat bufferFormat, PointerByReference chroma, IntByReference width, IntByReference height, PointerByReference pitches, PointerByReference lines) {
+        private void applyBufferFormat(BufferFormat bufferFormat, PointerByReference chroma, int[] width, int[] height, PointerByReference pitches, PointerByReference lines) {
             byte[] chromaBytes = bufferFormat.getChroma().getBytes();
             chroma.getPointer().write(0, chromaBytes, 0, chromaBytes.length < 4 ? chromaBytes.length : 4);
-            width.setValue(bufferFormat.getWidth());
-            height.setValue(bufferFormat.getHeight());
+            width[0] = bufferFormat.getWidth();
+            height[0] = bufferFormat.getHeight();
             int[] pitchValues = bufferFormat.getPitches();
             int[] lineValues = bufferFormat.getLines();
             pitches.getPointer().write(0, pitchValues, 0, pitchValues.length);
             lines.getPointer().write(0, lineValues, 0, lineValues.length);
         }
-
     }
 
     /**

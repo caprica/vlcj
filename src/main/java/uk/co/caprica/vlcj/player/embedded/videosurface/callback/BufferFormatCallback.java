@@ -37,11 +37,28 @@ public interface BufferFormatCallback {
      * callback implementation may need to mitigate this (e.g. by ignoring the sourceHeight changes on subsequent
      * invocations of your callback).
      *
-     * @param sourceWidth video width
-     * @param sourceHeight video height
+     * @param width video buffer width and display width
+     * @param height video buffer height and display height
      * @return buffer format, must never be <code>null</code>
      */
-    BufferFormat getBufferFormat(int sourceWidth, int sourceHeight);
+    BufferFormat getBufferFormat(int[] width, int[] height);
+
+    /**
+     * Invoked when a new buffer format is set.
+     * <p>
+     * The sizes have not necessarily changed, but they are "new".
+     * <p>
+     * The buffer size and the display size are not necessarily the same. For example with 1080P video, it is common for
+     * the video buffer height value to be 1090 with a display height value of 1080.
+     * <p>
+     * This will be invoked immediately prior to {@link #allocatedBuffers(ByteBuffer[])}.
+     *
+     * @param bufferWidth video buffer width
+     * @param bufferHeight video buffer width
+     * @param displayWidth video display width
+     * @param displayHeight video display height
+     */
+    void newFormatSize(int bufferWidth, int bufferHeight, int displayWidth, int displayHeight);
 
     /**
      * Invoked when new video buffers have been allocated.
