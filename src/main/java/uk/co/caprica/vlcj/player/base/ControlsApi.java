@@ -25,7 +25,6 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_jump_tim
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_next_frame;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_pause;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_play;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_abloop;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_pause;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_position;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_rate;
@@ -271,28 +270,6 @@ public final class ControlsApi extends BaseApi {
      */
     public boolean setPosition(double position, boolean fast) {
         return libvlc_media_player_set_position(mediaPlayerInstance, Math.max(position, 0), fast ? 1 : 0) == 0;
-    }
-
-    /**
-     * Set the A position for an AB loop, using the current playback position.
-     * <p>
-     * This position must be before the B position.
-     *
-     * @return <code>true</code> if successful; <code>false</code> otherwise
-     */
-    public boolean setLoopA() {
-        return libvlc_media_player_set_abloop(mediaPlayerInstance, libvlc_abloop_t.libvlc_abloop_a.intValue()) == 0;
-    }
-
-    /**
-     * Set the B position for an AB loop, using the current playback position.
-     * <p>
-     * This position must be after the A position.
-     *
-     * @return <code>true</code> if successful; <code>false</code> otherwise
-     */
-    public boolean setLoopB() {
-        return libvlc_media_player_set_abloop(mediaPlayerInstance, libvlc_abloop_t.libvlc_abloop_b.intValue()) == 0;
     }
 
     /**
