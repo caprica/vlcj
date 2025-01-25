@@ -87,10 +87,12 @@ public class CallbackVideoSurface extends VideoSurface {
 
         @Override
         public int format(PointerByReference opaque, PointerByReference chroma, Pointer width, Pointer height, PointerByReference pitches, PointerByReference lines) {
-            int sourceWidth = width.getInt(0);
-            int sourceHeight = height.getInt(0);
-            int displayWidth = width.getInt(1);
-            int displayHeight = height.getInt(1);
+            int[] widthArray = width.getIntArray(0, 2);
+            int[] heightArray = height.getIntArray(0, 2);
+            int sourceWidth = widthArray[0];
+            int sourceHeight = heightArray[0];
+            int displayWidth = widthArray[1];
+            int displayHeight = heightArray[1];
             bufferFormat = bufferFormatCallback.getBufferFormat(sourceWidth, sourceHeight);
             applyBufferFormat(bufferFormat, chroma, width, height, pitches, lines);
             int result = nativeBuffers.allocate(bufferFormat);
