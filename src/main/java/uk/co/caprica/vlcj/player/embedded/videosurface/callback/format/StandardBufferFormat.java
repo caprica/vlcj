@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
  * <p>
  * BGRA is used, a 32-bit BGR format with alpha in a single plane.
  */
-public class StandardAlphaBufferFormat extends BufferFormat {
+public class StandardBufferFormat extends BufferFormat {
 
     /**
      * Creates a BGRA buffer format with the given width and height.
@@ -34,7 +34,7 @@ public class StandardAlphaBufferFormat extends BufferFormat {
      * @param width width of the buffer
      * @param height height of the buffer
      */
-    public StandardAlphaBufferFormat(int width, int height) {
-        super("BGRA", width, height, 4);
+    public StandardBufferFormat(int width, int height) {
+        super("RGBA", width, height, 4);
     }
 }

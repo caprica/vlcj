@@ -34,7 +34,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCall
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallbackAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallbackAdapter;
-import uk.co.caprica.vlcj.player.embedded.videosurface.callback.format.StandardAlphaBufferFormat;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.format.StandardBufferFormat;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -364,9 +364,9 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      */
     private class DefaultBufferFormatCallback extends BufferFormatCallbackAdapter {
         @Override
-        public BufferFormat getBufferFormat(int[] width, int[] height) {
-            newVideoBuffer(width[0], height[0]);
-            return new StandardAlphaBufferFormat(width[0], height[0]);
+        public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
+            newVideoBuffer(sourceWidth, sourceHeight);
+            return new StandardBufferFormat(sourceWidth, sourceHeight);
         }
     }
 

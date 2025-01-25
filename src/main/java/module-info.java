@@ -58,6 +58,7 @@ module uk.co.caprica.vlcj {
     exports uk.co.caprica.vlcj.player.embedded.videosurface;
     exports uk.co.caprica.vlcj.player.embedded.videosurface.callback;
     exports uk.co.caprica.vlcj.player.embedded.videosurface.callback.format;
+    exports uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
 
     exports uk.co.caprica.vlcj.player.list;
     exports uk.co.caprica.vlcj.player.list.events;

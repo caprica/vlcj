@@ -36,14 +36,14 @@ public final class VideoEngineWindowCallbackHandler implements VideoEngineWindow
     /**
      * Opaque pointer associated with the callbacks.
      */
-    private final Pointer opaque;
+    private final Long opaque;
 
     /**
      * Opaque pointer for the native report size changed callback.
      * <p>
      * This pointer <strong>must</strong> be passed with the native callback method.
      */
-    private final Pointer reportOpaque;
+    private final Long reportOpaque;
 
     /**
      * Native callback.
@@ -66,7 +66,7 @@ public final class VideoEngineWindowCallbackHandler implements VideoEngineWindow
      * @param mousePress native callback for mouse presses
      * @param mouseRelease native callback for mouse releases
      */
-    public VideoEngineWindowCallbackHandler(Pointer opaque, Pointer reportOpaque, libvlc_video_output_resize_cb resize, libvlc_video_output_mouse_move_cb mouseMove, libvlc_video_output_mouse_press_cb mousePress, libvlc_video_output_mouse_release_cb mouseRelease) {
+    public VideoEngineWindowCallbackHandler(Long opaque, Long reportOpaque, libvlc_video_output_resize_cb resize, libvlc_video_output_mouse_move_cb mouseMove, libvlc_video_output_mouse_press_cb mousePress, libvlc_video_output_mouse_release_cb mouseRelease) {
         this.opaque = opaque;
         this.reportOpaque = reportOpaque;
         this.resize = resize;

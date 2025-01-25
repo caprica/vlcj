@@ -74,7 +74,6 @@ public class CallbackVideoSurface extends VideoSurface {
     @Override
     public void attach(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
-
         libvlc_video_set_format_callbacks(mediaPlayer.mediaPlayerInstance(), setup, cleanup);
         libvlc_video_set_callbacks(mediaPlayer.mediaPlayerInstance(), lock, unlock, display, null);
     }
@@ -87,11 +86,17 @@ public class CallbackVideoSurface extends VideoSurface {
     private final class SetupCallback implements libvlc_video_format_cb {
 
         @Override
-        public int format(PointerByReference opaque, PointerByReference chroma, int[] width, int[] height, PointerByReference pitches, PointerByReference lines) {
-            bufferFormat = bufferFormatCallback.getBufferFormat(width, height);
+        public int format(PointerByReference opaque, PointerByReference chroma, Pointer width, Pointer height, PointerByReference pitches, PointerByReference lines) {
+            int sourceWidth = width.getInt(0);
+            int sourceHeight = height.getInt(0);
+            int displayWidth = width.getInt(1);
+            int displayHeight = height.getInt(1);
+            bufferFormat = bufferFormatCallback.getBufferFormat(sourceWidth, sourceHeight);
             applyBufferFormat(bufferFormat, chroma, width, height, pitches, lines);
             int result = nativeBuffers.allocate(bufferFormat);
-            bufferFormatCallback.newFormatSize(width[0], height[0], width[1], height[1]);
+            sourceWidth = width.getInt(0);
+            sourceHeight = height.getInt(0);
+            bufferFormatCallback.newFormatSize(sourceWidth, sourceHeight, displayWidth, displayHeight);
             bufferFormatCallback.allocatedBuffers(nativeBuffers.buffers());
             return result;
         }
@@ -109,11 +114,11 @@ public class CallbackVideoSurface extends VideoSurface {
          * @param pitches
          * @param lines
          */
-        private void applyBufferFormat(BufferFormat bufferFormat, PointerByReference chroma, int[] width, int[] height, PointerByReference pitches, PointerByReference lines) {
+        private void applyBufferFormat(BufferFormat bufferFormat, PointerByReference chroma, Pointer width, Pointer height, PointerByReference pitches, PointerByReference lines) {
             byte[] chromaBytes = bufferFormat.getChroma().getBytes();
             chroma.getPointer().write(0, chromaBytes, 0, chromaBytes.length < 4 ? chromaBytes.length : 4);
-            width[0] = bufferFormat.getWidth();
-            height[0] = bufferFormat.getHeight();
+            width.setInt(0, bufferFormat.getWidth());
+            height.setInt(0, bufferFormat.getHeight());
             int[] pitchValues = bufferFormat.getPitches();
             int[] lineValues = bufferFormat.getLines();
             pitches.getPointer().write(0, pitchValues, 0, pitchValues.length);
@@ -129,7 +134,7 @@ public class CallbackVideoSurface extends VideoSurface {
     private final class CleanupCallback implements libvlc_video_output_cleanup_cb {
 
         @Override
-        public void cleanup(Pointer opaque) {
+        public void cleanup(Long opaque) {
             nativeBuffers.free();
         }
 
@@ -144,7 +149,7 @@ public class CallbackVideoSurface extends VideoSurface {
     private final class LockCallback implements libvlc_lock_callback_t {
 
         @Override
-        public Pointer lock(Pointer opaque, PointerByReference planes) {
+        public Pointer lock(Long opaque, PointerByReference planes) {
             Pointer[] pointers = nativeBuffers.pointers();
             planes.getPointer().write(0, pointers, 0, pointers.length);
             renderCallback.lock(mediaPlayer);
@@ -162,7 +167,7 @@ public class CallbackVideoSurface extends VideoSurface {
     private final class UnlockCallback implements libvlc_unlock_callback_t {
 
         @Override
-        public void unlock(Pointer opaque, Pointer picture, Pointer plane) {
+        public void unlock(Long opaque, Pointer picture, Pointer plane) {
             renderCallback.unlock(mediaPlayer);
         }
 
@@ -177,7 +182,7 @@ public class CallbackVideoSurface extends VideoSurface {
     private final class DisplayCallback implements libvlc_display_callback_t {
 
         @Override
-        public void display(Pointer opaque, Pointer picture) {
+        public void display(Long opaque, Pointer picture) {
             CallbackVideoSurface.this.renderCallback.display(mediaPlayer, nativeBuffers.buffers(), bufferFormat);
         }
 

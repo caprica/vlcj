@@ -157,14 +157,14 @@ public final class VideoEngineVideoSurface extends VideoSurface {
 
     private final class SetupCallback implements libvlc_video_output_setup_cb {
         @Override
-        public int setup(Pointer opaque, libvlc_video_setup_device_cfg_t cfg, libvlc_video_setup_device_info_t out) {
+        public int setup(Long opaque, libvlc_video_setup_device_cfg_t cfg, libvlc_video_setup_device_info_t out) {
             return callback.onSetup(opaque, cfg, out) ? 1 : 0;
         }
     }
 
     private final class CleanupCallback implements libvlc_video_output_cleanup_cb {
         @Override
-        public void cleanup(Pointer opaque) {
+        public void cleanup(Long opaque) {
             callback.onCleanup(opaque);
         }
     }
@@ -172,14 +172,14 @@ public final class VideoEngineVideoSurface extends VideoSurface {
     private final class SetWindowCallback implements libvlc_video_output_set_window_cb {
         @Override
         public void setWindowCallback(Pointer opaque, libvlc_video_output_resize_cb report_size_change, libvlc_video_output_mouse_move_cb report_mouse_move, libvlc_video_output_mouse_press_cb report_mouse_pressed , libvlc_video_output_mouse_release_cb report_mouse_released, Pointer report_opaque) {
-            VideoEngineVideoSurface.this.windowCallbackHandler = new VideoEngineWindowCallbackHandler(opaque, report_opaque, report_size_change, report_mouse_move, report_mouse_pressed, report_mouse_released);
+            VideoEngineVideoSurface.this.windowCallbackHandler = new VideoEngineWindowCallbackHandler(Pointer.nativeValue(opaque), Pointer.nativeValue(report_opaque), report_size_change, report_mouse_move, report_mouse_pressed, report_mouse_released);
             callback.onSetWindowCallback(windowCallbackHandler);
         }
     }
 
     private class UpdateOutputCallback implements libvlc_video_update_output_cb {
         @Override
-        public int updateOutput(Pointer opaque, libvlc_video_render_cfg_t cfg, libvlc_video_output_cfg_t output) {
+        public int updateOutput(Long opaque, libvlc_video_render_cfg_t cfg, libvlc_video_output_cfg_t output) {
             output.u.writeField("opengl_format", GL_RGBA);
             output.full_range = 1;
             output.colorspace = libvlc_video_color_space_e.libvlc_video_colorspace_BT709.intValue();
@@ -193,21 +193,21 @@ public final class VideoEngineVideoSurface extends VideoSurface {
 
     private class SwapCallback implements libvlc_video_swap_cb {
         @Override
-        public void swap(Pointer opaque) {
+        public void swap(Long opaque) {
             callback.onSwap(opaque);
         }
     }
 
     private class MakeCurrentCallback implements libvlc_video_makeCurrent_cb {
         @Override
-        public int makeCurrent(Pointer opaque, int enter) {
+        public int makeCurrent(Long opaque, int enter) {
             return callback.onMakeCurrent(opaque, enter != 0) ? 1 : 0;
         }
     }
 
     private class GetProcAddressCallback implements libvlc_video_getProcAddress_cb {
         @Override
-        public Pointer getProcAddress(Pointer opaque, String fct_name) {
+        public Pointer getProcAddress(Long opaque, String fct_name) {
             return Pointer.createConstant(callback.onGetProcAddress(opaque, fct_name));
         }
     }
