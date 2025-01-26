@@ -30,13 +30,15 @@ public abstract class VideoSurface {
 
     /**
      * Operating System specific video surface adapter implementation.
+     * <p>
+     * May be <pre>null</pre>, e.g. for "callback" media players.
      */
     protected final VideoSurfaceAdapter videoSurfaceAdapter;
 
     /**
      * Create a new video surface wrapper.
      *
-     * @param videoSurfaceAdapter video surface adapter implementation
+     * @param videoSurfaceAdapter video surface adapter implementation, may be <pre>null</pre>
      */
     protected VideoSurface(VideoSurfaceAdapter videoSurfaceAdapter) {
         this.videoSurfaceAdapter = videoSurfaceAdapter;

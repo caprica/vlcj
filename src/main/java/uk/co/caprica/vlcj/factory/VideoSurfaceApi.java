@@ -73,7 +73,7 @@ public final class VideoSurfaceApi extends BaseApi {
      * @return video surface
      */
     public CallbackVideoSurface newVideoSurface(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers) {
-        return new CallbackVideoSurface(bufferFormatCallback, renderCallback, lockBuffers, VideoSurfaceAdapters.getVideoSurfaceAdapter());
+        return new CallbackVideoSurface(bufferFormatCallback, renderCallback, lockBuffers);
     }
 
     /**

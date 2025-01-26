@@ -61,10 +61,9 @@ public class CallbackVideoSurface extends VideoSurface {
      * @param bufferFormatCallback callback providing the video buffer format
      * @param renderCallback callback used to render the video frame buffer
      * @param lockBuffers <code>true</code> if the video buffer should be locked; <code>false</code> if not
-     * @param videoSurfaceAdapter adapter to attach a video surface to a native media player
      */
-    public CallbackVideoSurface(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers, VideoSurfaceAdapter videoSurfaceAdapter) {
-        super(videoSurfaceAdapter);
+    public CallbackVideoSurface(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers) {
+        super(null);
 
         this.bufferFormatCallback = bufferFormatCallback;
         this.renderCallback = renderCallback;
