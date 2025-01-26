@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
 
-import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_resize_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_mouse_move_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_mouse_press_cb;
@@ -31,7 +30,7 @@ import uk.co.caprica.vlcj.player.base.MouseButton;
  * <p>
  * The various callback method invocations <strong>must not</strong> be made concurrently.
  */
-public final class VideoEngineWindowCallbackHandler implements VideoEngineWindowCallback {
+final class VideoEngineWindowCallbackHandler implements VideoEngineWindowCallback {
 
     /**
      * Opaque pointer associated with the callbacks.

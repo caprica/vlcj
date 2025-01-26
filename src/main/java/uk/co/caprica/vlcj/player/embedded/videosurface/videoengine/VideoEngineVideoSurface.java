@@ -17,7 +17,7 @@
  * Copyright 2009-2025 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded.videosurface;
+package uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
 
 import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_resize_cb;
@@ -41,9 +41,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_video_transfer_func_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_update_output_cb;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MouseButton;
-import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngine;
-import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineCallback;
-import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineWindowCallbackHandler;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
+import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_output_callbacks;
 

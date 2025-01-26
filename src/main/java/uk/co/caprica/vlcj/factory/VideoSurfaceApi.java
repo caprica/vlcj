@@ -27,7 +27,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapters;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineCallback;
-import uk.co.caprica.vlcj.player.embedded.videosurface.*;
+import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineVideoSurface;
 
 import java.awt.*;
 
