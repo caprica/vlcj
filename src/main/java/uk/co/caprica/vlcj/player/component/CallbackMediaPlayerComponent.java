@@ -383,7 +383,10 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * @param height height of the video
      */
     private void newVideoBuffer(int width, int height) {
-        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
+        // The StandardBufferFormat provides correctly RGBA, but that native buffer byte ordering is not correct for an
+        // ARGB buffered image (the byte ordering is reversed), so cheat by picking the BGR format for the buffered
+        // image
+        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
         defaultRenderCallback.setImageBuffer(image);
         if (videoSurfaceComponent != null) {
             videoSurfaceComponent.setPreferredSize(new Dimension(width, height));
