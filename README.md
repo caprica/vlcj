@@ -65,6 +65,8 @@ __January 2025__ Project status update:
 >We're still here!
 >Small incremental improvements continue to be made, mainly to keep track of the ongoing development of VLC 4.x which
 >even now is still in development and seemingly not close to being completed.
+>We also refreshed the vlcj-examples project, everything (well, almost?) should work with vlcj-5.x now. The JavaFX demo
+>was updated for vlcj-5.x, as was the LWJGL demo along with a new OpenGL video cube demo.
 
 __January 2024__ Project status update:
 
