@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.binding.support.strings.NativeUri;
-
 import java.util.regex.Pattern;
 
 /**
@@ -49,18 +47,6 @@ final class MediaResourceLocator {
      */
     static boolean isLocation(String mrl) {
         return MRL_LOCATION_PATTERN.matcher(mrl).matches();
-    }
-
-    /**
-     * Encode, if necessary, an MRL that can be passed via the native library API.
-     * <p>
-     * @see NativeUri#encodeUri(String)
-     *
-     * @param mrl MRL
-     * @return the original MRL if no encoding is required, or a percent-encoded file URL
-     */
-    static String encodeMrl(String mrl) {
-        return NativeUri.encodeUri(mrl);
     }
 
 }

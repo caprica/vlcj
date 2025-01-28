@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.support.strings.NativeUri;
 import uk.co.caprica.vlcj.media.MediaSlavePriority;
 import uk.co.caprica.vlcj.media.MediaSlaveType;
 import uk.co.caprica.vlcj.media.SlaveApi;
@@ -90,7 +89,7 @@ public final class SubpictureApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean setSubTitleFile(String subTitleFileName) {
-        return setSubTitleUri(NativeUri.encodeFileUri(subTitleFileName));
+        return setSubTitleUri(subTitleFileName);
     }
 
     /**
@@ -104,7 +103,7 @@ public final class SubpictureApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean setSubTitleFile(File subTitleFile) {
-        return setSubTitleUri(NativeUri.encodeFileUri(subTitleFile.getAbsolutePath()));
+        return setSubTitleUri(subTitleFile.getAbsolutePath());
     }
 
     /**

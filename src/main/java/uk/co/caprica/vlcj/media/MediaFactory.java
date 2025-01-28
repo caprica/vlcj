@@ -236,7 +236,6 @@ public final class MediaFactory {
     }
 
     private static libvlc_media_t newMediaInstance(String mrl) {
-        mrl = MediaResourceLocator.encodeMrl(mrl);
         return MediaResourceLocator.isLocation(mrl) ?
             libvlc_media_new_location(mrl) :
             libvlc_media_new_path(mrl);
