@@ -1,5 +1,6 @@
 package uk.co.caprica.vlcj.factory.discovery;
 
+import com.sun.jna.Library;
 import com.sun.jna.NativeLibrary;
 import com.sun.jna.StringArray;
 import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
@@ -11,6 +12,7 @@ import uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.factory.discovery.strategy.WindowsNativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.support.version.LibVlcVersion;
 
+import static java.util.Collections.singletonMap;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_new;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_release;
 
@@ -113,6 +115,7 @@ public class NativeDiscovery {
                     if (path != null) {
                         if (discoveryStrategy.onFound(path)) {
                             NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), path);
+                            NativeLibrary.getInstance(RuntimeUtil.getLibVlcLibraryName(), singletonMap(Library.OPTION_STRING_ENCODING, "UTF-8"));
                         }
                         tryPluginPath(path, discoveryStrategy);
                         if (tryLoadingLibrary()) {
