@@ -23,7 +23,6 @@ import com.sun.jna.NativeLibrary;
 import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -141,6 +140,7 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
 
     @Override
     public final boolean onFound(String path) {
+        // This library is never invoked directly, but it must be loaded first
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcCoreLibraryName(), path);
         NativeLibrary.getInstance(RuntimeUtil.getLibVlcCoreLibraryName());
         return true;
