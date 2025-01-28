@@ -60,6 +60,10 @@ Build Status
 Recent News
 ===========
 
+__January 2025__ 5.0.0-M2 milestone release:
+
+>A development milestone release has been created. You will need an up-to-date nightly build of VLC 4.x to use this.
+
 __January 2025__ Project status update:
 
 >We're still here!
