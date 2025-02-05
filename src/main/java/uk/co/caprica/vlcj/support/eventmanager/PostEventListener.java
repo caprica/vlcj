@@ -17,23 +17,19 @@
  * Copyright 2009-2025 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.base.events;
+package uk.co.caprica.vlcj.support.eventmanager;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Encapsulation of a media player stopping event.
+ * Annotation for event listeners that must run after all application event listeners have finished.
+ * <p>
+ * Applications should <strong>not</strong> be using listeners annotated with this.
  */
-final class MediaPlayerStoppingEvent extends MediaPlayerEvent {
-
-    MediaPlayerStoppingEvent(MediaPlayer mediaPlayer) {
-        super(mediaPlayer);
-    }
-
-    @Override
-    public void notify(MediaPlayerEventListener listener) {
-        listener.stopping(mediaPlayer);
-    }
-
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface PostEventListener {
 }

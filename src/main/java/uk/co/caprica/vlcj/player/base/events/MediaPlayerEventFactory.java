@@ -96,6 +96,18 @@ public final class MediaPlayerEventFactory {
         return new MediaPlayerReadyEvent(mediaPlayer);
     }
 
+    /**
+     * Create a media player finished event.
+     * <p>
+     * This event is a "semantic" event, it has no direct native event counterpart.
+     *
+     * @param mediaPlayer component the event relates to
+     * @return event
+     */
+    public static MediaPlayerEvent createMediaPlayerFinishedEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerFinishedEvent(mediaPlayer);
+    }
+
     private MediaPlayerEventFactory() {
     }
 

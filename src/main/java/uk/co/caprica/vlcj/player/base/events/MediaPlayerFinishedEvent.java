@@ -33,7 +33,7 @@ final class MediaPlayerFinishedEvent extends MediaPlayerEvent {
 
     @Override
     public void notify(MediaPlayerEventListener listener) {
-        listener.stopping(mediaPlayer);
+        listener.finished(mediaPlayer);
     }
 
 }

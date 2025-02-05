@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_jump_time;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_next_frame;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_pause;
@@ -36,6 +38,15 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_stop_asy
  * Behaviour pertaining to media player controls.
  */
 public final class ControlsApi extends BaseApi {
+
+    /**
+     * Flag whether or not stop was invoked.
+     * <p>
+     * Flag is cleared after the stopped event has been processed.
+     *
+     * @see MediaPlayerFinishedEventHandler
+     */
+    private final AtomicBoolean stopRequested = new AtomicBoolean(false);
 
     /**
      * Flag whether or not to automatically replay media after the media has finished playing.
@@ -76,15 +87,17 @@ public final class ControlsApi extends BaseApi {
      * <p>
      * A subsequent play will play-back from the start.
      * <p>
-     * <strong>Stopping is now an asynchronous operation.</strong>
+     * <strong>Stopping is now an asynchronous operation natively.</strong>
      * <p>
-     * This method waits for notification from the event manager that the media player finished stopping, i.e. it
-     * operates synchronously, blocking until stopped.
+     * This method waits for notification from the event manager that the media player stopped, i.e. it operates
+     * synchronously, blocking until stopped.
      *
      * @return <code>true</code> if the media player was stopped; false if not
      * @see #stopAsync()
+     * @see #isStopRequested()
      */
     public boolean stop() {
+        stopRequested.set(true);
         return new MediaPlayerStopLatch(mediaPlayer).stop();
     }
 
@@ -97,9 +110,32 @@ public final class ControlsApi extends BaseApi {
      *
      * @return <code>true</code> if the media player is being stopped; false if not
      * @see #stop()
+     * @see #isStopRequested()
      */
     public boolean stopAsync() {
+        stopRequested.set(true);
         return libvlc_media_player_stop_async(mediaPlayerInstance) == 0;
+    }
+
+    /**
+     * Get whether or not a stop has previously been requested, and not yet processed, i.e. the media player is pending
+     * stop.
+     *
+     * @return <code>true</code> if a stop was requested; false if not
+     * @see #stop()
+     * @see #stopAsync()
+     */
+    public boolean isStopRequested() {
+        return stopRequested.get();
+    }
+
+    /**
+     * Clear the stop requested flag.
+     * <p>
+     * Applications ordinarily have no business calling this.
+     */
+    public void clearStopRequested() {
+        stopRequested.set(false);
     }
 
     /**
