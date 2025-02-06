@@ -154,6 +154,10 @@ public class DirectTestPlayer extends VlcjTest {
         // Buffered image
 
         @Override
+        public void lock(MediaPlayer mediaPlayer) {
+        }
+
+        @Override
         public void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat, int displayWidth, int displayHeight) {
             ByteBuffer bb = nativeBuffers[0];
             IntBuffer ib = bb.asIntBuffer();
@@ -173,6 +177,10 @@ public class DirectTestPlayer extends VlcjTest {
 
             image.setRGB(0, 0, width, height, rgbBuffer, 0, width);
             imagePane.repaint();
+        }
+
+        @Override
+        public void unlock(MediaPlayer mediaPlayer) {
         }
     }
 
