@@ -30,6 +30,10 @@ import java.nio.ByteBuffer;
 public abstract class BufferFormatCallbackAdapter implements BufferFormatCallback {
 
     @Override
+    public void newFormatSize(int bufferWidth, int bufferHeight, int displayWidth, int displayHeight) {
+    }
+
+    @Override
     public void allocatedBuffers(ByteBuffer[] buffers) {
     }
 }

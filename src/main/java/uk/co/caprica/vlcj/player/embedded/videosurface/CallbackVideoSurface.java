@@ -32,6 +32,8 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
 
+import java.awt.Dimension;
+
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_callbacks;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_format_callbacks;
 
@@ -91,6 +93,15 @@ public class CallbackVideoSurface extends VideoSurface {
             bufferFormat = bufferFormatCallback.getBufferFormat(width.getValue(), height.getValue());
             applyBufferFormat(bufferFormat, chroma, width, height, pitches, lines);
             int result = nativeBuffers.allocate(bufferFormat);
+            // The display size is not provided directly with LibVLC 3.x, but it can be obtained by using the video
+            // dimension API and this is then used to invoke the newFormatSize callback (to keep compatibility with the
+            // next major version of vlcj)
+            int sourceWidth = bufferFormat.getWidth();
+            int sourceHeight = bufferFormat.getHeight();
+            Dimension dimension = mediaPlayer.video().videoDimension();
+            int displayWidth = dimension != null ? dimension.width : -1;
+            int displayHeight = dimension != null ? dimension.height : -1;
+            bufferFormatCallback.newFormatSize(sourceWidth, sourceHeight, displayWidth, displayHeight);
             bufferFormatCallback.allocatedBuffers(nativeBuffers.buffers());
             return result;
         }
