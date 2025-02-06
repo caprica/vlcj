@@ -365,8 +365,12 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     private class DefaultBufferFormatCallback extends BufferFormatCallbackAdapter {
         @Override
         public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
-            newVideoBuffer(sourceWidth, sourceHeight);
             return new StandardBufferFormat(sourceWidth, sourceHeight);
+        }
+
+        @Override
+        public void newFormatSize(int bufferWidth, int bufferHeight, int displayWidth, int displayHeight) {
+            newVideoBuffer(displayWidth, displayHeight);
         }
     }
 
