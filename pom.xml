@@ -7,7 +7,7 @@
         <dependency>
             <groupId>uk.co.caprica</groupId>
             <artifactId>vlcj</artifactId>
-            <version>4.9.0</version>
+            <version>4.10.1</version>
         </dependency>
     </dependencies> 
 -->
@@ -163,7 +163,7 @@
                     <doctitle>${project.name} ${project.version} API Documentation</doctitle>
                     <docfilessubdirs>true</docfilessubdirs>
                     <encoding>UTF-8</encoding>
-                    <bottom>(C)2022 Caprica Software Limited</bottom>
+                    <bottom>(C)2025 Caprica Software Limited</bottom>
                     <show>public</show>
                     <quiet>true</quiet>
                     <failOnError>true</failOnError>
