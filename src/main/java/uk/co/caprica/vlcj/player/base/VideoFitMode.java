@@ -27,11 +27,11 @@ import java.util.Map;
  */
 public enum VideoFitMode {
 
-    libvlc_video_fit_none(0),    /** Explicit zoom set by \ref libvlc_video_set_scale */
-    libvlc_video_fit_smaller(1), /** Fit inside / to smallest display dimension */
-    libvlc_video_fit_larger(2),  /** Fit outside / to largest display dimension */
-    libvlc_video_fit_width(3),   /** Fit to display width */
-    libvlc_video_fit_height(4);
+    NONE(0),    /** Explicit zoom set by \ref libvlc_video_set_scale */
+    SMALLER(1), /** Fit inside / to smallest display dimension */
+    LARGER(2),  /** Fit outside / to largest display dimension */
+    WIDTH(3),   /** Fit to display width */
+    HEIGHT(4);
 
     private static final Map<Integer, VideoFitMode> INT_MAP = new HashMap<Integer, VideoFitMode>();
 
