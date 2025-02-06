@@ -27,12 +27,12 @@ import java.util.Map;
  */
 public enum AudioMixMode {
 
-    libvlc_AudioMixMode_Unset(0),
-    libvlc_AudioMixMode_Stereo(1),
-    libvlc_AudioMixMode_Binaural(2),
-    libvlc_AudioMixMode_4_0(3),
-    libvlc_AudioMixMode_5_1(4),
-    libvlc_AudioMixMode_7_1(5);
+    UNSET(0),
+    STEREO(1),
+    BINAURAL(2),
+    FOUR_ZERO(3),
+    FIVE_ONE(4),
+    SEVEN_ONE(5);
 
     private static final Map<Integer, AudioMixMode> INT_MAP = new HashMap<Integer, AudioMixMode>();
 
