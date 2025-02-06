@@ -57,6 +57,9 @@ public class CallbackVideoSurface extends VideoSurface {
 
     private BufferFormat bufferFormat;
 
+    private int displayWidth;
+    private int displayHeight;
+
     /**
      * Create a video surface.
      *
@@ -99,8 +102,8 @@ public class CallbackVideoSurface extends VideoSurface {
             int sourceWidth = bufferFormat.getWidth();
             int sourceHeight = bufferFormat.getHeight();
             Dimension dimension = mediaPlayer.video().videoDimension();
-            int displayWidth = dimension != null ? dimension.width : -1;
-            int displayHeight = dimension != null ? dimension.height : -1;
+            displayWidth = dimension != null ? dimension.width : -1;
+            displayHeight = dimension != null ? dimension.height : -1;
             bufferFormatCallback.newFormatSize(sourceWidth, sourceHeight, displayWidth, displayHeight);
             bufferFormatCallback.allocatedBuffers(nativeBuffers.buffers());
             return result;
@@ -187,7 +190,7 @@ public class CallbackVideoSurface extends VideoSurface {
 
         @Override
         public void display(Pointer opaque, Pointer picture) {
-            CallbackVideoSurface.this.renderCallback.display(mediaPlayer, nativeBuffers.buffers(), bufferFormat);
+            CallbackVideoSurface.this.renderCallback.display(mediaPlayer, nativeBuffers.buffers(), bufferFormat, displayWidth, displayHeight);
         }
 
     }

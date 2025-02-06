@@ -350,10 +350,13 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
         @Override
         public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
-            newVideoBuffer(sourceWidth, sourceHeight);
             return new RV32BufferFormat(sourceWidth, sourceHeight);
         }
 
+        @Override
+        public void newFormatSize(int bufferWidth, int bufferHeight, int displayWidth, int displayHeight) {
+            newVideoBuffer(displayWidth, displayHeight);
+        }
     }
 
     /**

@@ -43,7 +43,9 @@ public interface RenderCallback {
      * @param mediaPlayer media player to which the event relates
      * @param nativeBuffers video data for one frame
      * @param bufferFormat information about the format of the buffer used
+     * @param displayWidth pixel width of the video, may be different from buffer width
+     * @param displayHeight pixel height of the video, may be different from buffer height
      */
-    void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat);
+    void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat, int displayWidth, int displayHeight);
 
 }

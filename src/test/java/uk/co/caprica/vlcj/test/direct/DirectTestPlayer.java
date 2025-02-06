@@ -154,7 +154,7 @@ public class DirectTestPlayer extends VlcjTest {
         // Buffered image
 
         @Override
-        public void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
+        public void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat, int displayWidth, int displayHeight) {
             ByteBuffer bb = nativeBuffers[0];
             IntBuffer ib = bb.asIntBuffer();
             ib.get(rgbBuffer);

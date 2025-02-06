@@ -73,8 +73,8 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     }
 
     @Override
-    public final void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
-        nativeBuffers[0].asIntBuffer().get(buffer, 0, bufferFormat.getHeight() * bufferFormat.getWidth());
+    public final void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat, int displayWidth, int displayHeight) {
+        nativeBuffers[0].asIntBuffer().get(buffer, 0, displayWidth * displayHeight);
         onDisplay(mediaPlayer, buffer);
     }
 
