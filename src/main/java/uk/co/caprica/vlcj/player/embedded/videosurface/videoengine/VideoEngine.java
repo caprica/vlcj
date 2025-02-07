@@ -24,11 +24,11 @@ package uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
  */
 public enum VideoEngine {
 
-    libvlc_video_engine_disable(0),
-    libvlc_video_engine_opengl (1),
-    libvlc_video_engine_gles2  (2),
-    libvlc_video_engine_d3d11  (3),
-    libvlc_video_engine_d3d9   (4);
+    DISABLE(0),
+    OPENGL(1),
+    GLES2(2),
+    D3D11(3),
+    D3D9(4);
 
     private final int intValue;
 
