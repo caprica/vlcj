@@ -395,6 +395,7 @@ Related Projects
  * [vlcj-javafx](https://github.com/caprica/vlcj-javafx)
  * [vlcj-javafx-demo](https://github.com/caprica/vlcj-javafx-demo)
  * [vlcj-lwjgl-demo](https://github.com/caprica/vlcj-lwjgl-demo)
+ * [vlcj-lwjglx-awt-demo](https://github.com/caprica/vlcj-lwjglx-awt-demo)
  * [vlcj-mrls](https://github.com/caprica/vlcj-mrls)
  * [vlcj-file-filters](https://github.com/caprica/vlcj-file-filters)
  * [vlcj-swt](https://github.com/caprica/vlcj-swt)
