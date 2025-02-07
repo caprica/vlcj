@@ -20,7 +20,6 @@
 module uk.co.caprica.vlcj {
     requires uk.co.caprica.vlcj.natives;
 
-    requires com.sun.jna;
     requires java.desktop;
     requires jdk.unsupported;
 
