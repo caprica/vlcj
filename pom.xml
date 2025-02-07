@@ -142,6 +142,7 @@
                 <version>3.3.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
+                    <propertiesEncoding>ISO-8859-1</propertiesEncoding>
                 </configuration>
             </plugin>
             <plugin>
