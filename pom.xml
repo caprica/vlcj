@@ -122,7 +122,7 @@
         <java.version>11</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vlcjNatives.version>5.0.0-SNAPSHOT</vlcjNatives.version>
+        <vlcjNatives.version>5.0.0-M4</vlcjNatives.version>
     </properties>
 
     <dependencies>
