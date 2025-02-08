@@ -32,9 +32,6 @@ package uk.co.caprica.vlcj.player.component;
  * --quiet
  *     Turn off all messages on the console.
  *
- * --quiet-synchro
- *     This avoids flooding the message log with debug output from the video output synchronization mechanism.
- *
  * --video-title
  *     Custom title for the video window
  * </pre>
