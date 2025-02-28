@@ -1,14 +1,5 @@
 ![vlcj](https://github.com/caprica/vlcj/raw/master/etc/vlcj-logo.png "vlcj")
 
-Usage Survey
-============
-
-If you're using vlcj, we have a short survey that we would appreciate if you could fill in. We will not collect
-any personal details, not even your email address, and all responses will only be used to determine future
-development planning for vlcj. It should only take a few minutes to complete.
-
-[vlcj usage questionnaire at Google Forms](https://forms.gle/MTexEqPtVqiRHYKs9)
-
 Development Version
 ====
 
