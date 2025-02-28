@@ -32,8 +32,6 @@ import java.awt.event.WindowEvent;
 public class MinimalTestPlayer extends VlcjTest {
 
     public static void main(String[] args) throws Exception {
-        args = new String[] {"/home/mark/returnal.mp4"};
-
         if(args.length != 1) {
             System.out.println("Specify an MRL to play");
             System.exit(1);
