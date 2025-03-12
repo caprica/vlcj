@@ -14,27 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcj.player.embedded.videosurface.callback.format;
+package uk.co.caprica.vlcj.support.eventmanager;
 
-import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Implementation of a buffer format for BGRA.
+ * Annotation for event listeners that must run after all application event listeners have finished.
  * <p>
- * BGRA is used, a 32-bit BGR format with alpha in a single plane.
+ * Applications should <strong>not</strong> be using listeners annotated with this.
  */
-public class StandardAlphaBufferFormat extends BufferFormat {
-
-    /**
-     * Creates a BGRA buffer format with the given width and height.
-     *
-     * @param width width of the buffer
-     * @param height height of the buffer
-     */
-    public StandardAlphaBufferFormat(int width, int height) {
-        super("BGRA", width, height, 4);
-    }
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface PostEventListener {
 }

@@ -1,5 +1,8 @@
 ![vlcj](https://github.com/caprica/vlcj/raw/master/etc/vlcj-logo.png "vlcj")
 
+Development Version
+====
+
 vlcj-5 requires VLC 4.0 as a minimum baseline - VLC 4.0 is currently in development and it may be some time before
 it is released.
 
@@ -50,6 +53,22 @@ Build Status
 Recent News
 ===========
 
+__February 2025__ 5.0.0-M4 milestone release:
+
+>A new development milestone release has been created. You will need an up-to-date nightly build of VLC 4.x to use this.
+
+__January 2025__ 5.0.0-M2 milestone release:
+
+>A development milestone release has been created. You will need an up-to-date nightly build of VLC 4.x to use this.
+
+__January 2025__ Project status update:
+
+>We're still here!
+>Small incremental improvements continue to be made, mainly to keep track of the ongoing development of VLC 4.x which
+>even now is still in development and seemingly not close to being completed.
+>We also refreshed the vlcj-examples project, everything (well, almost?) should work with vlcj-5.x now. The JavaFX demo
+>was updated for vlcj-5.x, as was the LWJGL demo along with a new OpenGL video cube demo.
+
 __January 2024__ Project status update:
 
 >This project is still actively maintained and supported, but activity has been less recently because the main driver
@@ -89,12 +108,8 @@ You can follow @capricasoftware on Twitter for more vlcj news.
 Backwards-Incompatible API changes
 ==================================
 
-Changes that break backwards compatiblity with prior vlcj versions were avoided if at all possible. However, some such
+Changes that break backwards compatibility with prior vlcj versions were avoided if at all possible. However, some such
 changes are needed in the case where the underlying native LibVLC API changed.
-
- - [media player "finished" event changed to "stopping"](https://github.com/caprica/vlcj/issues/1123). A result of
-media stopping changing to being asynchronous in nature - most applications probably should use the "stopped" event
-instead of "stopping". 
 
 Swing/AWT, JavaFX, OpenGL
 =========================
@@ -373,6 +388,7 @@ Related Projects
  * [vlcj-javafx](https://github.com/caprica/vlcj-javafx)
  * [vlcj-javafx-demo](https://github.com/caprica/vlcj-javafx-demo)
  * [vlcj-lwjgl-demo](https://github.com/caprica/vlcj-lwjgl-demo)
+ * [vlcj-lwjglx-awt-demo](https://github.com/caprica/vlcj-lwjglx-awt-demo)
  * [vlcj-mrls](https://github.com/caprica/vlcj-mrls)
  * [vlcj-file-filters](https://github.com/caprica/vlcj-file-filters)
  * [vlcj-swt](https://github.com/caprica/vlcj-swt)

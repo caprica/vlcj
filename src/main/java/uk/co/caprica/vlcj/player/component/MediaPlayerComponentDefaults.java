@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.component;
@@ -31,9 +31,6 @@ package uk.co.caprica.vlcj.player.component;
  *
  * --quiet
  *     Turn off all messages on the console.
- *
- * --quiet-synchro
- *     This avoids flooding the message log with debug output from the video output synchronization mechanism.
  *
  * --video-title
  *     Custom title for the video window

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.base;
@@ -22,6 +22,8 @@ package uk.co.caprica.vlcj.player.base;
 import com.sun.jna.ptr.IntByReference;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
+import uk.co.caprica.vlcj.media.VideoProjection;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -29,10 +31,12 @@ import java.awt.Point;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_video_title_display;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_adjust_float;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_adjust_int;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_aspect_ratio;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_cursor;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_display_fit;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_scale;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_size;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_video_stereo_mode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_new_viewpoint;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_adjust_float;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_adjust_int;
@@ -42,9 +46,13 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_crop_ratio;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_crop_window;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_deinterlace;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_display_fit;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_projection_mode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_scale;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_video_stereo_mode;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_unset_projection_mode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_update_viewpoint;
 import static uk.co.caprica.vlcj.player.base.VideoFitMode.videoFitMode;
+import static uk.co.caprica.vlcj.player.base.VideoStereoMode.videoStereoMode;
 
 /**
  * Behaviour pertaining to media player video.
@@ -189,6 +197,24 @@ public final class VideoApi extends BaseApi {
     }
 
     /**
+     * Set the video projection mode.
+     * <p>
+     * This changes how the source is rendered for 360-degree video playback.
+     *
+     * @param projectionMode new projection mode
+     */
+    public void setProjectionMode(VideoProjection projectionMode) {
+        libvlc_video_set_projection_mode(mediaPlayerInstance, projectionMode.intValue());
+    }
+
+    /**
+     * Unset the previously set projection mode.
+     */
+    public void unsetProjectionMode() {
+        libvlc_video_unset_projection_mode(mediaPlayerInstance);
+    }
+
+    /**
      * Set if, and how, the video title will be shown when playing media.
      *
      * @param position position, {@link Position#DISABLE} to prevent the title from appearing
@@ -196,6 +222,15 @@ public final class VideoApi extends BaseApi {
      */
     public void setVideoTitleDisplay(Position position, int timeout) {
         libvlc_media_player_set_video_title_display(mediaPlayerInstance, position.intValue(), timeout);
+    }
+
+    /**
+     * Get the video aspect ratio.
+     *
+     * @return aspect ratio, e.g. "16:9", "4:3", "185:100" for 1:85.1 and so on
+     */
+    public String aspectRatio() {
+        return NativeString.copyAndFreeNativeString(libvlc_video_get_aspect_ratio(mediaPlayerInstance));
     }
 
     /**
@@ -348,6 +383,27 @@ public final class VideoApi extends BaseApi {
      */
     public boolean updateViewpoint(Viewpoint viewpoint, boolean absolute) {
         return libvlc_video_update_viewpoint(mediaPlayerInstance, viewpoint.viewpoint(), absolute ? 1 : 0) == 0;
+    }
+
+    /**
+     * Get the video stereo mode.
+     *
+     * @return video stereo mode
+     */
+    public VideoStereoMode getVideoStereoMode() {
+        return videoStereoMode(libvlc_video_get_video_stereo_mode(mediaPlayerInstance));
+    }
+
+    /**
+     * Set the video stereo mode.
+     * <p>
+     * A video output must have been created, {@link MediaPlayerEventListener#videoOutput(MediaPlayer, int)}, before
+     * setting the video stereo mode.
+     *
+     * @param videoStereoMode video stereo mode
+     */
+    public void setVideoStereoMode(VideoStereoMode videoStereoMode) {
+        libvlc_video_set_video_stereo_mode(mediaPlayerInstance, videoStereoMode.intValue());
     }
 
     /**

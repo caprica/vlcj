@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.callback;
@@ -73,9 +73,27 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     }
 
     @Override
-    public final void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat) {
-        nativeBuffers[0].asIntBuffer().get(buffer, 0, bufferFormat.getHeight() * bufferFormat.getWidth());
+    public final void lock(MediaPlayer mediaPlayer) {
+        onLock(mediaPlayer);
+    }
+
+    @Override
+    public final void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat, int displayWidth, int displayHeight) {
+        nativeBuffers[0].asIntBuffer().get(buffer, 0, displayWidth * displayHeight);
         onDisplay(mediaPlayer, buffer);
+    }
+
+    @Override
+    public final void unlock(MediaPlayer mediaPlayer) {
+        onUnlock(mediaPlayer);
+    }
+
+    /**
+     * Optional template method invoked immediately after receiving a frame of video data.
+     *
+     * @param mediaPlayer media player
+     */
+    protected void onLock(MediaPlayer mediaPlayer) {
     }
 
     /**
@@ -86,4 +104,11 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
      */
     protected abstract void onDisplay(MediaPlayer mediaPlayer, int[] buffer);
 
+    /**
+     * Optional template method invoked immediately prior to receiving a new frame of video data.
+     *
+     * @param mediaPlayer media player
+     */
+    protected void onUnlock(MediaPlayer mediaPlayer) {
+    }
 }

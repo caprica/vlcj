@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.factory.discovery.strategy;
@@ -34,7 +34,7 @@ public interface NativeDiscoveryStrategy {
     boolean supported();
 
     /**
-     * Attempt to discover the location of the libvlc native shared libraries.
+     * Attempt to discover the location of the native shared libraries.
      *
      * @return path containing the shared libraries, or <code>null</code> if this strategy did not find them
      */

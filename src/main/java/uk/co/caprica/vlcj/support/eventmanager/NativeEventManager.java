@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.support.eventmanager;
@@ -78,6 +78,13 @@ abstract public class NativeEventManager<E,L> {
     private final List<L> eventListenerList = new CopyOnWriteArrayList<L>();
 
     /**
+     * Collection of registered "post" event listeners.
+     * <p>
+     * These are special listeners that must run after all application listeners have finished.
+     */
+    private final List<L> postEventListenerList = new CopyOnWriteArrayList<L>();
+
+    /**
      * Native event callback.
      */
     private EventCallback callback;
@@ -114,7 +121,11 @@ abstract public class NativeEventManager<E,L> {
      */
     public final void addEventListener(L listener) {
         if (listener != null) {
-            eventListenerList.add(listener);
+            if (!listener.getClass().isAnnotationPresent(PostEventListener.class)) {
+                eventListenerList.add(listener);
+            } else {
+                postEventListenerList.add(listener);
+            }
             addNativeEventListener();
         } else {
             throw new IllegalArgumentException("Listener must not be null");
@@ -127,7 +138,11 @@ abstract public class NativeEventManager<E,L> {
      * @param listener component to stop notifying
      */
     public final void removeEventListener(L listener) {
-        eventListenerList.remove(listener);
+        if (!listener.getClass().isAnnotationPresent(PostEventListener.class)) {
+            eventListenerList.remove(listener);
+        } else {
+            postEventListenerList.remove(listener);
+        }
         removeNativeEventListener();
     }
 
@@ -135,14 +150,18 @@ abstract public class NativeEventManager<E,L> {
      * Register a call-back to receive native events.
      */
     private void addNativeEventListener() {
-        if (!callbackRegistered && !eventListenerList.isEmpty()) {
-            callbackRegistered = true;
-            callback = new EventCallback();
-            libvlc_event_manager_t mediaEventManager = onGetEventManager(eventObject);
-            for (libvlc_event_e event : libvlc_event_e.values()) {
-                if (event.intValue() >= firstEvent.intValue() && event.intValue() <= lastEvent.intValue()) {
-                    libvlc_event_attach(mediaEventManager, event.intValue(), callback, null);
-                }
+        if (callbackRegistered) {
+            return;
+        }
+        if (eventListenerList.isEmpty() && postEventListenerList.isEmpty()) {
+            return;
+        }
+        callbackRegistered = true;
+        callback = new EventCallback();
+        libvlc_event_manager_t mediaEventManager = onGetEventManager(eventObject);
+        for (libvlc_event_e event : libvlc_event_e.values()) {
+            if (event.intValue() >= firstEvent.intValue() && event.intValue() <= lastEvent.intValue()) {
+                libvlc_event_attach(mediaEventManager, event.intValue(), callback, null);
             }
         }
     }
@@ -151,16 +170,20 @@ abstract public class NativeEventManager<E,L> {
      * De-register the call-back used to receive native events.
      */
     private void removeNativeEventListener() {
-        if (callbackRegistered && eventListenerList.isEmpty()) {
-            callbackRegistered = false;
-            libvlc_event_manager_t eventManager = onGetEventManager(eventObject);
-            for (libvlc_event_e event : libvlc_event_e.values()) {
-                if (event.intValue() >= firstEvent.intValue() && event.intValue() <= lastEvent.intValue()) {
-                    libvlc_event_detach(eventManager, event.intValue(), callback, null);
-                }
-            }
-            callback = null;
+        if (!callbackRegistered) {
+            return;
         }
+        if (!eventListenerList.isEmpty() || !postEventListenerList.isEmpty()) {
+            return;
+        }
+        callbackRegistered = false;
+        libvlc_event_manager_t eventManager = onGetEventManager(eventObject);
+        for (libvlc_event_e event : libvlc_event_e.values()) {
+            if (event.intValue() >= firstEvent.intValue() && event.intValue() <= lastEvent.intValue()) {
+                libvlc_event_detach(eventManager, event.intValue(), callback, null);
+            }
+        }
+        callback = null;
     }
 
     /**
@@ -174,9 +197,12 @@ abstract public class NativeEventManager<E,L> {
      * @param event event to raise, may be <code>null</code> and if so will be ignored
      */
     public final void raiseEvent(EventNotification<L> event) {
-        if (event != null && !eventListenerList.isEmpty()) {
+        if (event != null) {
             for (L listener : eventListenerList) {
-                 event.notify(listener);
+                event.notify(listener);
+            }
+            for (L listener : postEventListenerList) {
+                event.notify(listener);
             }
         }
     }
@@ -186,6 +212,7 @@ abstract public class NativeEventManager<E,L> {
      */
     public final void release() {
         eventListenerList.clear();
+        postEventListenerList.clear();
         removeNativeEventListener();
     }
 

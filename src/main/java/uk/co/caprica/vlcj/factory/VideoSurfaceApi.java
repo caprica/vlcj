@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.factory;
@@ -27,7 +27,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapters;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineCallback;
-import uk.co.caprica.vlcj.player.embedded.videosurface.*;
+import uk.co.caprica.vlcj.player.embedded.videosurface.videoengine.VideoEngineVideoSurface;
 
 import java.awt.*;
 
@@ -73,7 +73,7 @@ public final class VideoSurfaceApi extends BaseApi {
      * @return video surface
      */
     public CallbackVideoSurface newVideoSurface(BufferFormatCallback bufferFormatCallback, RenderCallback renderCallback, boolean lockBuffers) {
-        return new CallbackVideoSurface(bufferFormatCallback, renderCallback, lockBuffers, VideoSurfaceAdapters.getVideoSurfaceAdapter());
+        return new CallbackVideoSurface(bufferFormatCallback, renderCallback, lockBuffers);
     }
 
     /**

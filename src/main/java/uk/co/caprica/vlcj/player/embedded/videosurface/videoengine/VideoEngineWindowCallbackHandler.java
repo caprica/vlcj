@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
 
-import com.sun.jna.Pointer;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_resize_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_mouse_move_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_mouse_press_cb;
@@ -31,19 +30,19 @@ import uk.co.caprica.vlcj.player.base.MouseButton;
  * <p>
  * The various callback method invocations <strong>must not</strong> be made concurrently.
  */
-public final class VideoEngineWindowCallbackHandler implements VideoEngineWindowCallback {
+final class VideoEngineWindowCallbackHandler implements VideoEngineWindowCallback {
 
     /**
      * Opaque pointer associated with the callbacks.
      */
-    private final Pointer opaque;
+    private final Long opaque;
 
     /**
      * Opaque pointer for the native report size changed callback.
      * <p>
      * This pointer <strong>must</strong> be passed with the native callback method.
      */
-    private final Pointer reportOpaque;
+    private final Long reportOpaque;
 
     /**
      * Native callback.
@@ -66,7 +65,7 @@ public final class VideoEngineWindowCallbackHandler implements VideoEngineWindow
      * @param mousePress native callback for mouse presses
      * @param mouseRelease native callback for mouse releases
      */
-    public VideoEngineWindowCallbackHandler(Pointer opaque, Pointer reportOpaque, libvlc_video_output_resize_cb resize, libvlc_video_output_mouse_move_cb mouseMove, libvlc_video_output_mouse_press_cb mousePress, libvlc_video_output_mouse_release_cb mouseRelease) {
+    public VideoEngineWindowCallbackHandler(Long opaque, Long reportOpaque, libvlc_video_output_resize_cb resize, libvlc_video_output_mouse_move_cb mouseMove, libvlc_video_output_mouse_press_cb mousePress, libvlc_video_output_mouse_release_cb mouseRelease) {
         this.opaque = opaque;
         this.reportOpaque = reportOpaque;
         this.resize = resize;

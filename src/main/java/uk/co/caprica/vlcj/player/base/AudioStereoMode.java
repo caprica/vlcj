@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.base;
@@ -25,8 +25,7 @@ import java.util.Map;
 /**
  * Enumeration of audio stereo modes.
  * <p>
- * Note that {@link #HEADPHONES} do <em>not</em> appear in <code>libvlc_audio_output_channel_t</code>
- * although from reading the native source in <code>vlc_aout.h</code> they may work.
+ * <code>HEADPHONES</code> is no longer valid, use {@link AudioMixMode#BINAURAL} instead.
  */
 public enum AudioStereoMode {
 
@@ -36,7 +35,6 @@ public enum AudioStereoMode {
     LEFT      ( 3),
     RIGHT     ( 4),
     DOLBYS    ( 5),
-    HEADPHONES( 6),
     MONO      ( 7);
 
     private static final Map<Integer, AudioStereoMode> INT_MAP = new HashMap<Integer, AudioStereoMode>();

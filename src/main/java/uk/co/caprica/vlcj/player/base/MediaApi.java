@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.base;
@@ -319,6 +319,13 @@ public final class MediaApi extends BaseApi {
     }
 
     /**
+     * Reset the media (i.e. unset it).
+     */
+    public void reset() {
+        changeMedia(null);
+    }
+
+    /**
      * Add an input slave to the current media.
      * <p>
      * See {@link SlaveApi#add(MediaSlaveType, MediaSlavePriority, String)}  for further
@@ -455,6 +462,7 @@ public final class MediaApi extends BaseApi {
             return true;
         } else {
             this.media = null;
+            libvlc_media_player_set_media(mediaPlayerInstance, null);
             return false;
         }
     }

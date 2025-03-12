@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.base;
@@ -34,11 +34,20 @@ public interface WatchTimeListener {
     void watchTimeUpdate(MediaPlayer mediaPlayer, TimePoint timePoint, Long data);
 
     /**
-     * Timer discontinuity.
+     * Timer paused.
      *
      * @param mediaPlayer media player that raised the event
-     * @param systemDate
+     * @param systemDate event data
      * @param data opaque data
      */
-    void watchTimeDiscontinuity(MediaPlayer mediaPlayer, long systemDate, Long data);
+    void watchTimePaused(MediaPlayer mediaPlayer, long systemDate, Long data);
+
+    /**
+     * Timer seek.
+     *
+     * @param mediaPlayer media player that raised the event
+     * @param timePoint event data
+     * @param data opaque data
+     */
+    void watchTimeSeek(MediaPlayer mediaPlayer, TimePoint timePoint, Long data);
 }

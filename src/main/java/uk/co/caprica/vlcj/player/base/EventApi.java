@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.base;
@@ -66,8 +66,11 @@ public final class EventApi extends BaseApi {
         eventManager = new MediaPlayerNativeEventManager(libvlcInstance, mediaPlayer);
 
         // Add event handlers used for internal implementation (ordering here is important)
-        addMediaPlayerEventListener(new RepeatPlayEventHandler      ());
+        addMediaPlayerEventListener(new RepeatPlayEventHandler());
         addMediaPlayerEventListener(new MediaPlayerReadyEventHandler());
+
+        // This is a special handler that is annotated to run after all others
+        addMediaPlayerEventListener(new MediaPlayerFinishedEventHandler());
 
         // Handler for custom timer events
         addMediaPlayerEventListener(playbackTimeHandler);

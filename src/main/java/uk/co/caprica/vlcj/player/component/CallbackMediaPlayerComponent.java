@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.component;
@@ -34,7 +34,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCall
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallbackAdapter;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallbackAdapter;
-import uk.co.caprica.vlcj.player.embedded.videosurface.callback.format.StandardAlphaBufferFormat;
+import uk.co.caprica.vlcj.player.embedded.videosurface.callback.format.StandardBufferFormat;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -365,8 +365,12 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     private class DefaultBufferFormatCallback extends BufferFormatCallbackAdapter {
         @Override
         public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
-            newVideoBuffer(sourceWidth, sourceHeight);
-            return new StandardAlphaBufferFormat(sourceWidth, sourceHeight);
+            return new StandardBufferFormat(sourceWidth, sourceHeight);
+        }
+
+        @Override
+        public void newFormatSize(int bufferWidth, int bufferHeight, int displayWidth, int displayHeight) {
+            newVideoBuffer(displayWidth, displayHeight);
         }
     }
 
@@ -383,7 +387,10 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * @param height height of the video
      */
     private void newVideoBuffer(int width, int height) {
-        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
+        // The StandardBufferFormat provides correctly RGBA, but that native buffer byte ordering is not correct for an
+        // ARGB buffered image (the byte ordering is reversed), so cheat by picking the BGR format for the buffered
+        // image
+        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
         defaultRenderCallback.setImageBuffer(image);
         if (videoSurfaceComponent != null) {
             videoSurfaceComponent.setPreferredSize(new Dimension(width, height));

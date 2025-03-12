@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.callback;
@@ -28,6 +28,10 @@ import java.nio.ByteBuffer;
  * required in all cases.
  */
 public abstract class BufferFormatCallbackAdapter implements BufferFormatCallback {
+
+    @Override
+    public void newFormatSize(int bufferWidth, int bufferHeight, int displayWidth, int displayHeight) {
+    }
 
     @Override
     public void allocatedBuffers(ByteBuffer[] buffers) {

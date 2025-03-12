@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.base.events;
@@ -94,6 +94,18 @@ public final class MediaPlayerEventFactory {
      */
     public static MediaPlayerEvent createMediaPlayerReadyEvent(MediaPlayer mediaPlayer) {
         return new MediaPlayerReadyEvent(mediaPlayer);
+    }
+
+    /**
+     * Create a media player finished event.
+     * <p>
+     * This event is a "semantic" event, it has no direct native event counterpart.
+     *
+     * @param mediaPlayer component the event relates to
+     * @return event
+     */
+    public static MediaPlayerEvent createMediaPlayerFinishedEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerFinishedEvent(mediaPlayer);
     }
 
     private MediaPlayerEventFactory() {

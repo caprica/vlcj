@@ -14,15 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.base;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_jump_time;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_next_frame;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_pause;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_play;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_reset_abloop;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_abloop_position;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_abloop_time;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_pause;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_position;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_rate;
@@ -33,6 +38,15 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_stop_asy
  * Behaviour pertaining to media player controls.
  */
 public final class ControlsApi extends BaseApi {
+
+    /**
+     * Flag whether or not stop was invoked.
+     * <p>
+     * Flag is cleared after the stopped event has been processed.
+     *
+     * @see MediaPlayerFinishedEventHandler
+     */
+    private final AtomicBoolean stopRequested = new AtomicBoolean(false);
 
     /**
      * Flag whether or not to automatically replay media after the media has finished playing.
@@ -73,15 +87,17 @@ public final class ControlsApi extends BaseApi {
      * <p>
      * A subsequent play will play-back from the start.
      * <p>
-     * <strong>Stopping is now an asynchronous operation.</strong>
+     * <strong>Stopping is now an asynchronous operation natively.</strong>
      * <p>
-     * This method waits for notification from the event manager that the media player finished stopping, i.e. it
-     * operates synchronously, blocking until stopped.
+     * This method waits for notification from the event manager that the media player stopped, i.e. it operates
+     * synchronously, blocking until stopped.
      *
      * @return <code>true</code> if the media player was stopped; false if not
      * @see #stopAsync()
+     * @see #isStopRequested()
      */
     public boolean stop() {
+        stopRequested.set(true);
         return new MediaPlayerStopLatch(mediaPlayer).stop();
     }
 
@@ -94,9 +110,32 @@ public final class ControlsApi extends BaseApi {
      *
      * @return <code>true</code> if the media player is being stopped; false if not
      * @see #stop()
+     * @see #isStopRequested()
      */
     public boolean stopAsync() {
+        stopRequested.set(true);
         return libvlc_media_player_stop_async(mediaPlayerInstance) == 0;
+    }
+
+    /**
+     * Get whether or not a stop has previously been requested, and not yet processed, i.e. the media player is pending
+     * stop.
+     *
+     * @return <code>true</code> if a stop was requested; false if not
+     * @see #stop()
+     * @see #stopAsync()
+     */
+    public boolean isStopRequested() {
+        return stopRequested.get();
+    }
+
+    /**
+     * Clear the stop requested flag.
+     * <p>
+     * Applications ordinarily have no business calling this.
+     */
+    public void clearStopRequested() {
+        stopRequested.set(false);
     }
 
     /**
@@ -271,6 +310,57 @@ public final class ControlsApi extends BaseApi {
     }
 
     /**
+     * Set an AB loop by time.
+     * <p>
+     * Media will loop from the A time to the B time indefinitely, until the media stops/finishes, or the loop is
+     * explicitly reset via {@link #resetABLoop()}.
+     * <p>
+     * There must be an active input before setting the AB loop, i.e. essentially the media must be playing.
+     * <p>
+     * If the given times are very near the end of the media, the media may actually stop without looping.
+     * <p>
+     * If the loop is set successfully, the current playback time will jump to the start of the loop.
+     *
+     * @param aTime start time for the loop
+     * @param bTime end time for the loop
+     * @return <code>true</code> if successful; <code>false</code> otherwise
+     */
+    public boolean setABLoopTime(long aTime, long bTime) {
+        return libvlc_media_player_set_abloop_time(mediaPlayerInstance, aTime, bTime) == 0;
+    }
+
+    /**
+     * Set an AB loop by position.
+     * <p>
+     * Media will loop from the A time to the B time indefinitely, until the media stops/finishes, or the loop is
+     * explicitly reset via {@link #resetABLoop()}.
+     * <p>
+     * There must be an active input before setting the AB loop, i.e. essentially the media must be playing.
+     * <p>
+     * If the given positions are very near the end of the media, the media may actually stop without looping.
+     * <p>
+     * If the loop is set successfully, the current playback position will jump to the start of the loop.
+     *
+     * @param aPosition start position for the loop
+     * @param bPosition end position for the loop
+     * @return <code>true</code> if successful; <code>false</code> otherwise
+     */
+    public boolean setABLoopPosition(double aPosition, double bPosition) {
+        return libvlc_media_player_set_abloop_position(mediaPlayerInstance, aPosition, bPosition) == 0;
+    }
+
+    /**
+     * Reset/remove a previously set AB loop.
+     * <p>
+     * This will not stop media playback.
+     *
+     * @return <code>true</code> if successful; <code>false</code> otherwise
+     */
+    public boolean resetABLoop() {
+        return libvlc_media_player_reset_abloop(mediaPlayerInstance) == 0;
+    }
+
+    /**
      * Set the video play rate.
      * <p>
      * Some media protocols are not able to change the rate.
@@ -306,5 +396,4 @@ public final class ControlsApi extends BaseApi {
     public boolean getRepeat() {
         return repeat;
     }
-
 }

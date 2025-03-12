@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.callback;
@@ -36,6 +36,15 @@ import java.nio.ByteBuffer;
 public interface RenderCallback {
 
     /**
+     * Lock the video buffer prior to receiving a new frame.
+     * <p>
+     * Implementations of this method must execute as quickly as possible.
+     *
+     * @param mediaPlayer media player to which the event relates
+     */
+    void lock(MediaPlayer mediaPlayer);
+
+    /**
      * Call-back when ready to display a video frame.
      * <p>
      * Implementations of this method must execute as quickly as possible.
@@ -43,7 +52,17 @@ public interface RenderCallback {
      * @param mediaPlayer media player to which the event relates
      * @param nativeBuffers video data for one frame
      * @param bufferFormat information about the format of the buffer used
+     * @param displayWidth pixel width of the video, may be different from buffer width
+     * @param displayHeight pixel height of the video, may be different from buffer height
      */
-    void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat);
+    void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat, int displayWidth, int displayHeight);
 
+    /**
+     * Unlock the video buffer after receiving a frame.
+     * <p>
+     * Implementations of this method must execute as quickly as possible.
+     *
+     * @param mediaPlayer media player to which the event relates
+     */
+    void unlock(MediaPlayer mediaPlayer);
 }

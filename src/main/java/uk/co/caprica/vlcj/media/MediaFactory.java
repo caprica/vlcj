@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.media;
@@ -236,7 +236,6 @@ public final class MediaFactory {
     }
 
     private static libvlc_media_t newMediaInstance(String mrl) {
-        mrl = MediaResourceLocator.encodeMrl(mrl);
         return MediaResourceLocator.isLocation(mrl) ?
             libvlc_media_new_location(mrl) :
             libvlc_media_new_path(mrl);

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.player.base.events;
@@ -34,8 +34,6 @@ final class MediaPlayerStoppingEvent extends MediaPlayerEvent {
     @Override
     public void notify(MediaPlayerEventListener listener) {
         listener.stopping(mediaPlayer);
-        // Temporarily replicate the behaviour that would have been the case with LibVLC 3
-        listener.finished(mediaPlayer);
     }
 
 }

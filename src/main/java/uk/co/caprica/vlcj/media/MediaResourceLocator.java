@@ -14,12 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2009-2024 Caprica Software Limited.
+ * Copyright 2009-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcj.media;
-
-import uk.co.caprica.vlcj.binding.support.strings.NativeUri;
 
 import java.util.regex.Pattern;
 
@@ -49,18 +47,6 @@ final class MediaResourceLocator {
      */
     static boolean isLocation(String mrl) {
         return MRL_LOCATION_PATTERN.matcher(mrl).matches();
-    }
-
-    /**
-     * Encode, if necessary, an MRL that can be passed via the native library API.
-     * <p>
-     * @see NativeUri#encodeUri(String)
-     *
-     * @param mrl MRL
-     * @return the original MRL if no encoding is required, or a percent-encoded file URL
-     */
-    static String encodeMrl(String mrl) {
-        return NativeUri.encodeUri(mrl);
     }
 
 }
