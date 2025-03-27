@@ -28,7 +28,8 @@ public enum VideoEngine {
     OPENGL(1),
     GLES2(2),
     D3D11(3),
-    D3D9(4);
+    D3D9(4),
+    ANW(5);
 
     private final int intValue;
 
