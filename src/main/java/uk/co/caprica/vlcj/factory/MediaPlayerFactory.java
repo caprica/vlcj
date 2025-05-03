@@ -63,8 +63,15 @@ public class MediaPlayerFactory {
 
     /**
      * Native library instance.
+     * <p>
+     * User applications should instead get an opaque instance handle via {@link #getLibVlcInstance()}.
      */
     protected final libvlc_instance_t libvlcInstance;
+
+    /**
+     * Native library instance handle for user applications.
+     */
+    private final LibVlcInstance libvlcInstanceHandle;
 
     /**
      * Single-threaded service to execute tasks that need to be off-loaded from a native callback thread.
@@ -108,6 +115,7 @@ public class MediaPlayerFactory {
         discoverNativeLibrary(discovery);
 
         this.libvlcInstance = newLibVlcInstance(libvlcArgs != null ? libvlcArgs : new String[0]);
+        this.libvlcInstanceHandle = new LibVlcInstance(this.libvlcInstance);
 
         this.applicationApi     = new ApplicationApi    (this);
         this.audioApi           = new AudioApi          (this);
@@ -311,6 +319,15 @@ public class MediaPlayerFactory {
      */
     public final String nativeLibraryPath() {
         return nativeLibraryPath;
+    }
+
+    /**
+     * Get an opaque handle to the LibVLC native library instance.
+     *
+     * @return native library instance handle
+     */
+    public final LibVlcInstance getLibVlcInstance() {
+        return this.libvlcInstanceHandle;
     }
 
     /**
