@@ -21,6 +21,8 @@ package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
+import uk.co.caprica.vlcj.factory.LibVlcInstance;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_new;
@@ -120,6 +122,19 @@ public class MediaPlayer {
         titleApi      = new TitleApi     (this);
         trackApi      = new TrackApi     (this);
         videoApi      = new VideoApi     (this);
+    }
+
+    /**
+     * Create a new media player.
+     * <p>
+     * This constructor is intended for use by user applications that use media player sub-classing.
+     * <p>
+     * See {@link MediaPlayerFactory#getLibVlcInstance()}.
+     *
+     * @param instance opaque libvlc native library instance handle
+     */
+    public MediaPlayer(LibVlcInstance instance) {
+        this(instance.get());
     }
 
     private static libvlc_media_player_t newNativeMediaPlayer(libvlc_instance_t instance) {
