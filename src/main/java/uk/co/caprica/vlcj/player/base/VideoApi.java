@@ -236,7 +236,7 @@ public final class VideoApi extends BaseApi {
     /**
      * Set the video aspect ratio
      *
-     * @param aspectRatio aspect ratio, e.g. "16:9", "4:3", "185:100" for 1:85.1 and so on
+     * @param aspectRatio aspect ratio, e.g. "16:9", "4:3", "185:100" for 1:85.1 and so on, or the special value "fill"
      */
     public void setAspectRatio(String aspectRatio) {
         libvlc_video_set_aspect_ratio(mediaPlayerInstance, aspectRatio);
