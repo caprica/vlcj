@@ -30,7 +30,7 @@ provided initially to garner feedback and highlight any issues with the transiti
 discover any problems, or deficiencies with how the module system has been implemented, please raise an issue ticket
 here.
 
-- 6th February, 2026 - vlcj 4.10.1 released, some changes around callback media players, minor API incompatibilities
+- 6th February, 2025 - vlcj 4.10.1 released, some changes around callback media players, minor API incompatibilities
 - 16th January, 2025 - vlcj 4.9.0 released, change native discovery to recursively search discovery strategies
 - 16th January, 2025 - vlcj 4.8.4 released, add new method to reset (i.e. unset) media
 - 4th June, 2024 - vlcj 4.8.3 released, only change is to bump JNA dependency to latest
