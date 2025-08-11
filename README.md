@@ -1,5 +1,17 @@
 ![vlcj](https://github.com/caprica/vlcj/raw/master/etc/vlcj-logo.png "vlcj")
 
+Late Summer License Offer!
+====
+
+We're offering 25% discounts off our normal commercial license fees for vlcj and vlcj-pro for deals completed in
+August and September of 2025. If you or your company were considering a commercial license purchase, get in touch,
+details at https://capricasoftware.co.uk/licensing.
+
+We also routinely offer huge discounts up to 90% for freelancers making a product (one-person companies that are not
+sub-contracted), contact us to see if you would qualify.
+
+Email address at the bottom of this README.
+
 Development Version
 ====
 
