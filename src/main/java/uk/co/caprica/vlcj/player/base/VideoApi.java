@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 import uk.co.caprica.vlcj.binding.support.strings.NativeString;
@@ -33,6 +34,7 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_adjust_floa
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_adjust_int;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_aspect_ratio;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_cursor;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_deinterlace;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_display_fit;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_scale;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_get_size;
@@ -51,6 +53,8 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_scale;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_video_stereo_mode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_unset_projection_mode;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_update_viewpoint;
+import static uk.co.caprica.vlcj.player.base.DeinterlaceMode.deinterlaceMode;
+import static uk.co.caprica.vlcj.player.base.DeinterlaceStatus.deinterlaceStatus;
 import static uk.co.caprica.vlcj.player.base.VideoFitMode.videoFitMode;
 import static uk.co.caprica.vlcj.player.base.VideoStereoMode.videoStereoMode;
 
@@ -61,6 +65,20 @@ public final class VideoApi extends BaseApi {
 
     VideoApi(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
+    }
+
+    /**
+     * Get the de-interlace mode status.
+     *
+     * @return de-interlace status and mode
+     */
+    public DeinterlaceResult getDeinterlace() {
+        PointerByReference modePointer = new PointerByReference();
+        int statusValue = libvlc_video_get_deinterlace(mediaPlayerInstance, modePointer);
+        String modeValue = NativeString.copyAndFreeNativeString(modePointer.getValue());
+        DeinterlaceStatus status = deinterlaceStatus(statusValue);
+        DeinterlaceMode mode = deinterlaceMode(modeValue);
+        return new DeinterlaceResult(status, mode);
     }
 
     /**
