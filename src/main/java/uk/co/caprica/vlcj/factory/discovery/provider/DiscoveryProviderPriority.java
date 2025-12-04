@@ -28,7 +28,7 @@ public interface DiscoveryProviderPriority {
 
     int JNA_LIBRARY_PATH = -1;
 
-    int USER_DIR = -2;
+    int APP_DIR = -2;
 
     int INSTALL_DIR = -3;
 
