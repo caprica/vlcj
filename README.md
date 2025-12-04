@@ -30,6 +30,10 @@ provided initially to garner feedback and highlight any issues with the transiti
 discover any problems, or deficiencies with how the module system has been implemented, please raise an issue ticket
 here.
 
+- 3rd December, 2025 - vlcj 4.12.0 released, some potentially application-breaking changes around native discovery -
+  remove the `UserDirDirectoryProvider` in favour of a new `AppDirDirectoryProvider`, the intent for this provider was
+  to use the same directory the application is located in as the directory to use for discovery, not just the "current"
+  directory, which may or may not be the same as that directory
 - 6th February, 2025 - vlcj 4.10.1 released, some changes around callback media players, minor API incompatibilities
 - 16th January, 2025 - vlcj 4.9.0 released, change native discovery to recursively search discovery strategies
 - 16th January, 2025 - vlcj 4.8.4 released, add new method to reset (i.e. unset) media
