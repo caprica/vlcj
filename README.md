@@ -30,6 +30,8 @@ provided initially to garner feedback and highlight any issues with the transiti
 discover any problems, or deficiencies with how the module system has been implemented, please raise an issue ticket
 here.
 
+- 4th December, 2025 - vlcj 4.12.1 released, fix to old-style service provider configuration for recent native discovery
+  changes
 - 3rd December, 2025 - vlcj 4.12.0 released, some potentially application-breaking changes around native discovery -
   remove the `UserDirDirectoryProvider` in favour of a new `AppDirDirectoryProvider`, the intent for this provider was
   to use the same directory the application is located in as the directory to use for discovery, not just the "current"
