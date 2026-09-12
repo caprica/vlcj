@@ -55,7 +55,7 @@ __Septemeber 2026__ Project status update:
 
 Another year goes by, we're still here, still waiting for VLC 4.x to be released, or waiting for further changes to
 LibVLC 4.x. Recently significant changes to LibVLC 4.x have been made, and these changes are backwardly incompatible.
-Work is underway currently to integrate these new native library changes, but their is significant upheaval.
+Work is underway currently to integrate these new native library changes, but there is significant upheaval.
 
 __February 2025__ 5.0.0-M4 milestone release:
 
