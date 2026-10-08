@@ -52,7 +52,8 @@ public enum Meta {
     ACTORS      (22),
     ALBUM_ARTIST(23),
     DISC_NUMBER (24),
-    DISC_TOTAL  (25);
+    DISC_TOTAL  (25),
+    COMPILATION (26);
 
     private static final Map<Integer, Meta> INT_MAP = new HashMap<Integer, Meta>();
 

@@ -19,9 +19,11 @@
 
 package uk.co.caprica.vlcj.player.renderer;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
 
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_discoverer_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_discoverer_destroy;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_discoverer_new;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_discoverer_start;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_discoverer_stop;
 
@@ -31,15 +33,21 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_discoverer_s
 public final class RendererDiscoverer {
 
     /**
+     * Callback handler for native events.
+     */
+    final RendererDiscovererCallbackHandler callbackHandler;
+
+    /**
      * Native renderer discoverer instance.
      */
-    protected final libvlc_renderer_discoverer_t discovererInstance;
+    private final libvlc_renderer_discoverer_t discovererInstance;
 
     private final EventApi eventApi;
     private final ListApi  listApi;
 
-    public RendererDiscoverer(libvlc_renderer_discoverer_t discoverer) {
-        this.discovererInstance = discoverer;
+    public RendererDiscoverer(libvlc_instance_t instance, String name) {
+        this.callbackHandler = new RendererDiscovererCallbackHandler(this);
+        this.discovererInstance = libvlc_renderer_discoverer_new(instance, name, callbackHandler.callbacks(), null);
 
         this.eventApi = new EventApi(this);
         this.listApi  = new ListApi(this);
@@ -88,16 +96,6 @@ public final class RendererDiscoverer {
         eventApi.release();
         listApi .release();
 
-        libvlc_renderer_discoverer_release(discovererInstance);
+        libvlc_renderer_discoverer_destroy(discovererInstance);
     }
-
-    /**
-     * Get the associated native renderer discoverer instance.
-     *
-     * @return renderer discoverer instance
-     */
-    public libvlc_renderer_discoverer_t rendererDiscovererInstance() {
-        return discovererInstance;
-    }
-
 }

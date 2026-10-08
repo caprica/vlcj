@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.player.base.events;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.media_player_audio_device;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
@@ -31,9 +29,9 @@ final class MediaPlayerAudioDeviceEvent extends MediaPlayerEvent {
 
     private final String device;
 
-    MediaPlayerAudioDeviceEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
+    MediaPlayerAudioDeviceEvent(MediaPlayer mediaPlayer, String device) {
         super(mediaPlayer);
-        this.device = ((media_player_audio_device) event.u.getTypedValue(media_player_audio_device.class)).device;
+        this.device = device;
     }
 
     @Override

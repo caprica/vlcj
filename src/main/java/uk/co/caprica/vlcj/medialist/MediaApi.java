@@ -59,7 +59,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean add(String mrl, String... options) {
-        return add(MediaFactory.newMediaRef(libvlcInstance, mrl, options));
+        return add(MediaFactory.newMediaRef(mrl, options));
     }
 
     /**
@@ -72,7 +72,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean add(CallbackMedia callbackMedia, String... options) {
-        return add(MediaFactory.newMediaRef(libvlcInstance, callbackMedia, options));
+        return add(MediaFactory.newMediaRef(callbackMedia, options));
     }
 
     /**
@@ -85,21 +85,25 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean add(MediaRef mediaRef, String... options) {
-        return add(MediaFactory.newMediaRef(libvlcInstance, mediaRef, options));
+        return add(MediaFactory.newMediaRef(mediaRef, options));
     }
 
     private boolean add(MediaRef mediaRef) {
-        if (mediaRef != null && !isReadOnly()) {
-            lock();
-            try {
-                return libvlc_media_list_add_media(mediaListInstance, mediaRef.mediaInstance()) == 0;
+        try {
+            if (!isReadOnly()) {
+                lock();
+                try {
+                    return libvlc_media_list_add_media(mediaListInstance, mediaRef.mediaInstance()) == 0;
+                } finally {
+                    unlock();
+                }
             }
-            finally {
-                unlock();
-                mediaRef.release();
-            }
-        } else {
             return false;
+        }
+        finally {
+            // The media reference passed in was created by this class, adding it to the list retains it, so release it
+            // here otherwise it would have an extra native reference count and leak
+            mediaRef.release();
         }
     }
 
@@ -114,7 +118,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean insert(int index, String mrl, String... options) {
-        return insert(index, MediaFactory.newMediaRef(libvlcInstance, mrl, options));
+        return insert(index, MediaFactory.newMediaRef(mrl, options));
     }
 
     /**
@@ -128,7 +132,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean insert(int index, CallbackMedia callbackMedia, String... options) {
-        return insert(index, MediaFactory.newMediaRef(libvlcInstance, callbackMedia, options));
+        return insert(index, MediaFactory.newMediaRef(callbackMedia, options));
     }
 
     /**
@@ -142,21 +146,25 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean insert(int index, MediaRef mediaRef, String... options) {
-        return insert(index, MediaFactory.newMediaRef(libvlcInstance, mediaRef, options));
+        return insert(index, MediaFactory.newMediaRef(mediaRef, options));
     }
 
     private boolean insert(int index, MediaRef mediaRef) {
-        if (mediaRef != null && !isReadOnly()) {
-            lock();
-            try {
-                return libvlc_media_list_insert_media(mediaListInstance, mediaRef.mediaInstance(), index) == 0;
+        try {
+            if (!isReadOnly()) {
+                lock();
+                try {
+                    return libvlc_media_list_insert_media(mediaListInstance, mediaRef.mediaInstance(), index) == 0;
+                } finally {
+                    unlock();
+                }
             }
-            finally {
-                unlock();
-                mediaRef.release();
-            }
-        } else {
             return false;
+        }
+        finally {
+            // The media reference passed in was created by this class, adding it to the list retains it, so release it
+            // here otherwise it would have an extra native reference count and leak
+            mediaRef.release();
         }
     }
 
@@ -175,9 +183,8 @@ public final class MediaApi extends BaseApi {
             finally {
                 unlock();
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -198,9 +205,8 @@ public final class MediaApi extends BaseApi {
             finally {
                 unlock();
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -245,6 +251,7 @@ public final class MediaApi extends BaseApi {
      *
      * @param index item index
      * @return media resource locator
+     * @throws IndexOutOfBoundsException if there is no item at the requested index
      */
     public String mrl(int index) {
         lock();
@@ -257,10 +264,8 @@ public final class MediaApi extends BaseApi {
                 finally {
                     libvlc_media_release(media);
                 }
-            } else {
-                return null;
             }
-
+            throw new IndexOutOfBoundsException();
         }
         finally {
             unlock();
@@ -270,20 +275,20 @@ public final class MediaApi extends BaseApi {
     /**
      * Get a new {@link MediaRef} for an item in the list.
      * <p>
-     * The caller must release the returned {@link MediaRef} when it no longer has any use for it.
+     * The caller must release the new {@link MediaRef} when it no longer has any use for it.
      *
      * @param index item index
      * @return media reference
+     * @throws IndexOutOfBoundsException if there is no item at the requested index
      */
     public MediaRef newMediaRef(int index) {
         lock();
         try {
             libvlc_media_t media = libvlc_media_list_item_at_index(mediaListInstance, index);
             if (media != null) {
-                return new MediaRef(libvlcInstance, media);
-            } else {
-                return null;
+                return new MediaRef(media);
             }
+            throw new IndexOutOfBoundsException();
         }
         finally {
             unlock();
@@ -293,7 +298,7 @@ public final class MediaApi extends BaseApi {
     /**
      * Get a new {@link Media} for an item in the list.
      * <p>
-     * The caller must release the returned {@link Media} when it no longer has any use for it.
+     * The caller must release the new {@link Media} when it no longer has any use for it.
      *
      * @param index item index
      * @return media
@@ -303,10 +308,9 @@ public final class MediaApi extends BaseApi {
         try {
             libvlc_media_t media = libvlc_media_list_item_at_index(mediaListInstance, index);
             if (media != null) {
-                return new Media(libvlcInstance, media);
-            } else {
-                return null;
+                return new Media(media);
             }
+            throw new IndexOutOfBoundsException();
         }
         finally {
             unlock();
@@ -325,23 +329,23 @@ public final class MediaApi extends BaseApi {
     /**
      * Create a new {@link MediaList} from this list.
      * <p>
-     * The caller must release the returned {@link MediaList} when it no longer has any use for it.
+     * The caller must release the new {@link MediaList} when it no longer has any use for it.
      *
      * @return media list
      */
     public MediaList newMediaList() {
-        return new MediaList(libvlcInstance, mediaListInstance);
+        return new MediaList(mediaListInstance);
     }
 
     /**
      * Create a new {@link MediaListRef} from this list.
      * <p>
-     * The caller must release the returned {@link MediaListRef} when it no longer has any use for it.
+     * The caller must release the new {@link MediaListRef} when it no longer has any use for it.
      *
      * @return media list reference
      */
     public MediaListRef newMediaListRef() {
-        return new MediaListRef(libvlcInstance, mediaListInstance);
+        return new MediaListRef(mediaListInstance);
     }
 
     private void lock() {
@@ -351,5 +355,4 @@ public final class MediaApi extends BaseApi {
     private void unlock() {
         libvlc_media_list_unlock(mediaListInstance);
     }
-
 }

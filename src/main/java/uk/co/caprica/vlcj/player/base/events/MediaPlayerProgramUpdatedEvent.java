@@ -19,27 +19,23 @@
 
 package uk.co.caprica.vlcj.player.base.events;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.media_player_program_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
- * Encapsulation of a media player elementary stream updated event.
+ * Encapsulation of a media player program updated event.
  */
 final class MediaPlayerProgramUpdatedEvent extends MediaPlayerEvent {
 
     private final int id;
 
-    MediaPlayerProgramUpdatedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
+    MediaPlayerProgramUpdatedEvent(MediaPlayer mediaPlayer, int id) {
         super(mediaPlayer);
-
-        this.id = ((media_player_program_changed) event.u.getTypedValue(media_player_program_changed.class)).i_id;
+        this.id = id;
     }
 
     @Override
     public void notify(MediaPlayerEventListener listener) {
         listener.programUpdated(mediaPlayer, id);
     }
-
 }

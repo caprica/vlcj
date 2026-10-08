@@ -29,5 +29,4 @@ abstract class BaseApi {
 
     protected void release() {
     }
-
 }

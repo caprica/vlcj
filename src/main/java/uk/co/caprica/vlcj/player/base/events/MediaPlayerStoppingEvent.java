@@ -24,6 +24,8 @@ import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
  * Encapsulation of a media player stopping event.
+ * <p>
+ * This is the state change stopping event, it does not have the stopping reason.
  */
 final class MediaPlayerStoppingEvent extends MediaPlayerEvent {
 

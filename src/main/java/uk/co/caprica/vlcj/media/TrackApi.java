@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.media;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_tracklist_t;
 import uk.co.caprica.vlcj.player.base.AudioTrackList;
 import uk.co.caprica.vlcj.player.base.TextTrackList;
@@ -43,7 +44,7 @@ public final class TrackApi extends BaseApi {
      *
      * @return track list, or <code>null</code> if no track list for the requested type is available
      */
-    public VideoTrackList videoTracks() {
+    public @Nullable VideoTrackList videoTracks() {
         libvlc_media_tracklist_t trackList = libvlc_media_get_tracklist(mediaInstance, TrackType.VIDEO.intValue());
         if (trackList != null) {
             return new VideoTrackList(trackList);
@@ -58,7 +59,7 @@ public final class TrackApi extends BaseApi {
      *
      * @return track list, or <code>null</code> if no track list for the requested type is available
      */
-    public AudioTrackList audioTracks() {
+    public @Nullable AudioTrackList audioTracks() {
         libvlc_media_tracklist_t trackList = libvlc_media_get_tracklist(mediaInstance, TrackType.AUDIO.intValue());
         if (trackList != null) {
             return new AudioTrackList(trackList);
@@ -73,7 +74,7 @@ public final class TrackApi extends BaseApi {
      *
      * @return track list, or <code>null</code> if no track list for the requested type is available
      */
-    public TextTrackList textTracks() {
+    public @Nullable TextTrackList textTracks() {
         libvlc_media_tracklist_t trackList = libvlc_media_get_tracklist(mediaInstance, TrackType.TEXT.intValue());
         if (trackList != null) {
             return new TextTrackList(trackList);

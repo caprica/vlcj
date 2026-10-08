@@ -33,7 +33,7 @@ import uk.co.caprica.vlcj.player.base.MouseButton;
 final class VideoEngineWindowCallbackHandler implements VideoEngineWindowCallback {
 
     /**
-     * Opaque pointer associated with the callbacks.
+     * Opaque pointer associated with the callback.
      */
     private final Long opaque;
 
@@ -58,8 +58,8 @@ final class VideoEngineWindowCallbackHandler implements VideoEngineWindowCallbac
     /**
      * Create a window callback handler.
      *
-     * @param opaque opaque pointer associated with the callbacks
-     * @param reportOpaque opaque pointer for the native report callbacks
+     * @param opaque opaque pointer associated with the callback
+     * @param reportOpaque opaque pointer for the native report callback
      * @param resize native callback for window resizes
      * @param mouseMove native callback for mouse moves
      * @param mousePress native callback for mouse presses

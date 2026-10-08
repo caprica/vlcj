@@ -29,12 +29,11 @@ public enum State {
 
     NOTHING_SPECIAL(0),
     OPENING        (1),
-    BUFFERING      (2), // Deprecated, use  libvlc_MediaPlayerBuffering events instead
-    PLAYING        (3),
-    PAUSED         (4),
-    STOPPED        (5),
-    STOPPING       (6),
-    ERROR          (7);
+    PLAYING        (2),
+    PAUSED         (3),
+    STOPPED        (4),
+    STOPPING       (5),
+    ERROR          (6);
 
     private static final Map<Integer, State> INT_MAP = new HashMap<Integer, State>();
 

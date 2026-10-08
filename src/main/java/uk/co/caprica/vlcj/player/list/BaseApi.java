@@ -19,9 +19,6 @@
 
 package uk.co.caprica.vlcj.player.list;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
-
 /**
  * Internal base implementation.
  */
@@ -29,17 +26,10 @@ abstract class BaseApi {
 
     protected final MediaListPlayer mediaListPlayer;
 
-    protected final libvlc_instance_t libvlcInstance;
-
-    protected final libvlc_media_list_player_t mediaListPlayerInstance;
-
     protected BaseApi(MediaListPlayer mediaListPlayer) {
-        this.mediaListPlayer         = mediaListPlayer;
-        this.libvlcInstance          = mediaListPlayer.libvlcInstance;
-        this.mediaListPlayerInstance = mediaListPlayer.mediaListPlayerInstance();
+        this.mediaListPlayer = mediaListPlayer;
     }
 
     protected void release() {
     }
-
 }

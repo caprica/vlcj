@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.player.base.events;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.media_player_position_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
@@ -29,16 +27,18 @@ import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
  */
 final class MediaPlayerPositionChangedEvent extends MediaPlayerEvent {
 
+    private final long newTime;
     private final double newPosition;
 
-    MediaPlayerPositionChangedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
+    MediaPlayerPositionChangedEvent(MediaPlayer mediaPlayer, long newTime, double newPosition) {
         super(mediaPlayer);
-        this.newPosition = ((media_player_position_changed) event.u.getTypedValue(media_player_position_changed.class)).new_position;
+        this.newTime = newTime;
+        this.newPosition = newPosition;
     }
 
     @Override
     public void notify(MediaPlayerEventListener listener) {
-        listener.positionChanged(mediaPlayer, newPosition);
+        listener.positionChanged(mediaPlayer, newTime, newPosition);
     }
 
 }

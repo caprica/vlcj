@@ -23,7 +23,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.media.TrackType;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_codec_description;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_track_hold;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_track_retain;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_track_release;
 import static uk.co.caprica.vlcj.binding.support.strings.NativeString.copyNativeString;
 
@@ -106,7 +106,7 @@ abstract public class Track {
         this.codecName = codecName(codec);
         this.originalCodec = instance.i_original_fourcc;
         this.originalCodecName = codecName(originalCodec);
-        this.id = instance.i_id;
+        this.id = instance.i_id; // Deprecated but still present in Libvlc 4.0.0 native struct (for now at least)
         this.profile = instance.i_profile;
         this.level = instance.i_level;
         this.bitRate = instance.i_bitrate;
@@ -267,7 +267,7 @@ abstract public class Track {
      * Holding and releasing tracks is advanced usage and most applications will not use this.
      */
     public final void hold() {
-        libvlc_media_track_hold(instance);
+        libvlc_media_track_retain(instance);
     }
 
     @Override

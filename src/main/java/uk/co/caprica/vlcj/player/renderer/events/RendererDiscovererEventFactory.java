@@ -19,36 +19,22 @@
 
 package uk.co.caprica.vlcj.player.renderer.events;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscoverer;
+import uk.co.caprica.vlcj.player.renderer.RendererItem;
 
 /**
  * A factory that creates a media player event instance for a native discoverer event.
  */
 public final class RendererDiscovererEventFactory {
 
-    /**
-     * Create a new discoverer event for a given native event.
-     * <p>
-     * Events generally are expected to copy values from the native structure as needed (specifically this applies to
-     * non-primitive values like Strings) because once the event handler returns the native memory will be gone. Without
-     * copying such structure values pointers will become invalid.
-     *
-     * @param rendererDiscoverer component the event relates to
-     * @param event native event
-     * @return media player event, or <code>null</code> if the native event type is not enabled or otherwise could not be handled
-     */
-    public static RendererDiscovererEvent createEvent(RendererDiscoverer rendererDiscoverer, libvlc_event_t event) {
-        switch(libvlc_event_e.event(event.type)) {
-            case libvlc_RendererDiscovererItemAdded  : return new RendererDiscovererItemAddedEvent  (rendererDiscoverer, event);
-            case libvlc_RendererDiscovererItemDeleted: return new RendererDiscovererItemDeletedEvent(rendererDiscoverer, event);
-
-            default                                  : return null;
-        }
-    }
-
     private RendererDiscovererEventFactory() {
     }
 
+    public static RendererDiscovererEvent createItemAddedEvent(RendererDiscoverer rendererDiscoverer, RendererItem rendererItem) {
+        return new RendererDiscovererItemAddedEvent(rendererDiscoverer, rendererItem);
+    }
+
+    public static RendererDiscovererEvent createItemRemovedEvent(RendererDiscoverer rendererDiscoverer, RendererItem rendererItem) {
+        return new RendererDiscovererItemRemovedEvent(rendererDiscoverer, rendererItem);
+    }
 }

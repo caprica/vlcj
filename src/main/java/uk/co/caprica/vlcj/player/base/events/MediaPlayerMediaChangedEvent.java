@@ -19,10 +19,6 @@
 
 package uk.co.caprica.vlcj.player.base.events;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.binding.internal.media_player_media_changed;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
@@ -32,21 +28,16 @@ import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
  */
 final class MediaPlayerMediaChangedEvent extends MediaPlayerEvent {
 
-    private final libvlc_instance_t libvlcInstance;
+    private final MediaRef newMedia;
 
-    private final libvlc_media_t newMedia;
-
-    MediaPlayerMediaChangedEvent(libvlc_instance_t libvlcInstance, MediaPlayer mediaPlayer, libvlc_event_t event) {
+    MediaPlayerMediaChangedEvent(MediaPlayer mediaPlayer, MediaRef newMedia) {
         super(mediaPlayer);
-
-        this.libvlcInstance = libvlcInstance;
-
-        this.newMedia = ((media_player_media_changed)event.u.getTypedValue(media_player_media_changed.class)).md;
+        this.newMedia = newMedia;
     }
 
     @Override
     public void notify(MediaPlayerEventListener listener) {
-        listener.mediaChanged(mediaPlayer, new MediaRef(libvlcInstance, newMedia));
+        listener.mediaChanged(mediaPlayer, newMedia);
     }
 
 }

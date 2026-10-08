@@ -47,7 +47,7 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_output_callbacks;
 
 /**
- * Implementation of a video surface that bridges native video engine callbacks to a rendering API (like JOGL, LWJGL and
+ * Implementation of a video surface that bridges native video engine callback to a rendering API (like JOGL, LWJGL and
  * so on).
  * <p>
  * The window callback methods <strong>must not</strong> be invoked concurrently:

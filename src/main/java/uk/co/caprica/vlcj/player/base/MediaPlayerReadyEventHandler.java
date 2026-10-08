@@ -53,16 +53,8 @@ final class MediaPlayerReadyEventHandler extends MediaPlayerEventAdapter {
     }
 
     @Override
-    public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-        if (!fired && newTime > 0) {
-            fired = true;
-            mediaPlayer.events().raiseEvent(MediaPlayerEventFactory.createMediaPlayerReadyEvent(mediaPlayer));
-        }
-    }
-
-    @Override
-    public void positionChanged(MediaPlayer mediaPlayer, double newPosition) {
-        if (!fired && newPosition > 0) {
+    public void positionChanged(MediaPlayer mediaPlayer, long newTime, double newPosition) {
+        if (!fired && (newTime > 0 || newPosition > 0)) {
             fired = true;
             mediaPlayer.events().raiseEvent(MediaPlayerEventFactory.createMediaPlayerReadyEvent(mediaPlayer));
         }

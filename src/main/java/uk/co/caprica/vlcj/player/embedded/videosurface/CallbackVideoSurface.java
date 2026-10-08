@@ -36,7 +36,7 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_callbacks;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_format_callbacks;
 
 /**
- * Implementation of a video surface that uses native callbacks to receive video frame data for rendering.
+ * Implementation of a video surface that uses native callback to receive video frame data for rendering.
  */
 public class CallbackVideoSurface extends VideoSurface {
 

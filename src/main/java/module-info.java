@@ -22,6 +22,7 @@ module uk.co.caprica.vlcj {
 
     requires java.desktop;
     requires jdk.unsupported;
+    requires org.jspecify;
 
     exports uk.co.caprica.vlcj.factory;
     exports uk.co.caprica.vlcj.factory.discovery;
@@ -35,10 +36,10 @@ module uk.co.caprica.vlcj {
     exports uk.co.caprica.vlcj.media.callback.nonseekable;
     exports uk.co.caprica.vlcj.media.callback.seekable;
     exports uk.co.caprica.vlcj.media.discoverer;
-    exports uk.co.caprica.vlcj.media.events;
 
     exports uk.co.caprica.vlcj.medialist;
-    exports uk.co.caprica.vlcj.medialist.events;
+
+    exports uk.co.caprica.vlcj.parser;
 
     exports uk.co.caprica.vlcj.player.base;
     exports uk.co.caprica.vlcj.player.base.callback;
@@ -60,13 +61,16 @@ module uk.co.caprica.vlcj {
     exports uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
 
     exports uk.co.caprica.vlcj.player.list;
-    exports uk.co.caprica.vlcj.player.list.events;
 
     exports uk.co.caprica.vlcj.player.renderer;
     exports uk.co.caprica.vlcj.player.renderer.events;
 
     exports uk.co.caprica.vlcj.support;
+    exports uk.co.caprica.vlcj.support.events;
     exports uk.co.caprica.vlcj.support.version;
+    exports uk.co.caprica.vlcj.parser.events;
+    exports uk.co.caprica.vlcj.support.callback;
+    exports uk.co.caprica.vlcj.player.base.time;
 
     // Native library discovery services
     uses uk.co.caprica.vlcj.factory.discovery.provider.DiscoveryDirectoryProvider;

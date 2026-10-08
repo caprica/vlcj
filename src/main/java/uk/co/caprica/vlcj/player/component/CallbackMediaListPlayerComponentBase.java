@@ -20,15 +20,11 @@
 package uk.co.caprica.vlcj.player.component;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.media.MediaRef;
-import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.medialist.MediaListEventListener;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.component.callback.CallbackImagePainter;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
-import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
 
 import javax.swing.*;
 
@@ -39,7 +35,7 @@ import javax.swing.*;
  * un-cluttered.
  */
 @SuppressWarnings("serial")
-public class CallbackMediaListPlayerComponentBase extends CallbackMediaPlayerComponent implements MediaListPlayerEventListener, MediaListEventListener {
+public abstract class CallbackMediaListPlayerComponentBase extends CallbackMediaPlayerComponent {
 
     /**
      * Create a media player component.
@@ -58,41 +54,4 @@ public class CallbackMediaListPlayerComponentBase extends CallbackMediaPlayerCom
     public CallbackMediaListPlayerComponentBase(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, BufferFormatCallback bufferFormatCallback, boolean lockBuffers, CallbackImagePainter imagePainter, JComponent videoSurfaceComponent, RenderCallback renderCallback) {
         super(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, imagePainter, renderCallback, bufferFormatCallback, videoSurfaceComponent);
     }
-
-    // === MediaListPlayerEventListener =========================================
-
-    @Override
-    public void mediaListEndReached(MediaList mediaList) {
-    }
-
-    @Override
-    public void mediaListPlayerFinished(MediaListPlayer mediaListPlayer) {
-    }
-
-    @Override
-    public void nextItem(MediaListPlayer mediaListPlayer, MediaRef item) {
-    }
-
-    @Override
-    public void stopped(MediaListPlayer mediaListPlayer) {
-    }
-
-    // === MediaListEventListener ===============================================
-
-    @Override
-    public void mediaListWillAddItem(MediaList mediaList, MediaRef item, int index) {
-    }
-
-    @Override
-    public void mediaListItemAdded(MediaList mediaList, MediaRef item, int index) {
-    }
-
-    @Override
-    public void mediaListWillDeleteItem(MediaList mediaList, MediaRef item, int index) {
-    }
-
-    @Override
-    public void mediaListItemDeleted(MediaList mediaList, MediaRef item, int index) {
-    }
-
 }

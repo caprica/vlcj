@@ -21,12 +21,12 @@ package uk.co.caprica.vlcj.player.renderer.events;
 
 import uk.co.caprica.vlcj.player.renderer.RendererDiscoverer;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscovererEventListener;
-import uk.co.caprica.vlcj.support.eventmanager.EventNotification;
+import uk.co.caprica.vlcj.support.events.EventNotification;
 
 /**
  * Specification for a renderer discoverer event.
  */
-abstract class RendererDiscovererEvent implements EventNotification<RendererDiscovererEventListener> {
+public abstract class RendererDiscovererEvent implements EventNotification<RendererDiscovererEventListener> {
 
     /**
      * The renderer discoverer the event relates to.

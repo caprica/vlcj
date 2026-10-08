@@ -65,7 +65,7 @@ public final class VideoSurfaceApi extends BaseApi {
     }
 
     /**
-     * Create a new video surface for "direct" rendering via callbacks.
+     * Create a new video surface for "direct" rendering via callback.
      *
      * @param bufferFormatCallback buffer format callback
      * @param renderCallback render callback
@@ -77,7 +77,7 @@ public final class VideoSurfaceApi extends BaseApi {
     }
 
     /**
-     * Create a new video surface for rendering via video engine callbacks.
+     * Create a new video surface for rendering via video engine callback.
      *
      * @param videoEngine video engine
      * @param callback rendering callback

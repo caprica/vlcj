@@ -25,6 +25,7 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_jump_tim
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_next_frame;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_pause;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_play;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_previous_frame;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_reset_abloop;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_abloop_position;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_abloop_time;
@@ -162,9 +163,20 @@ public final class ControlsApi extends BaseApi {
 
     /**
      * Advance one frame.
+     * <p>
+     * Listen to {@link MediaPlayerEventListener#nextFrameStatus(MediaPlayer, FrameStatus)} for the result.
      */
     public void nextFrame() {
         libvlc_media_player_next_frame(mediaPlayerInstance);
+    }
+
+    /**
+     * Go back one frame.
+     * <p>
+     * Listen to {@link MediaPlayerEventListener#previousFrameStatus(MediaPlayer, FrameStatus)} for the result.
+     */
+    public void previousFrame() {
+        libvlc_media_player_previous_frame(mediaPlayerInstance);
     }
 
     /**

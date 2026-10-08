@@ -51,5 +51,4 @@ public enum ThumbnailerSeekSpeed {
     public int intValue() {
         return intValue;
     }
-
 }

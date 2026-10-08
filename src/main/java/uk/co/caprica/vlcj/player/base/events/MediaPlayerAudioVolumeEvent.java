@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.player.base.events;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.media_player_audio_volume;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
@@ -31,9 +29,9 @@ final class MediaPlayerAudioVolumeEvent extends MediaPlayerEvent {
 
     private final float volume;
 
-    MediaPlayerAudioVolumeEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
+    MediaPlayerAudioVolumeEvent(MediaPlayer mediaPlayer, float volume) {
         super(mediaPlayer);
-        this.volume = ((media_player_audio_volume) event.u.getTypedValue(media_player_audio_volume.class)).volume;
+        this.volume = volume;
     }
 
     @Override

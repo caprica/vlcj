@@ -23,7 +23,6 @@ import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.PointerByReference;
 import uk.co.caprica.vlcj.binding.internal.libvlc_rd_description_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_discoverer_t;
 import uk.co.caprica.vlcj.binding.support.types.size_t;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscoverer;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscovererDescription;
@@ -33,7 +32,6 @@ import java.util.List;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_discoverer_list_get;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_discoverer_list_release;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_discoverer_new;
 
 /**
  * Behaviour pertaining to renderer discovery.
@@ -79,12 +77,6 @@ public final class RendererApi extends BaseApi {
      * @return discoverer, may be <code>null</code>
      */
     public RendererDiscoverer discoverer(String name) {
-        libvlc_renderer_discoverer_t discoverer = libvlc_renderer_discoverer_new(libvlcInstance, name);
-        if (discoverer != null) {
-            return new RendererDiscoverer(discoverer);
-        } else {
-            return null;
-        }
+        return new RendererDiscoverer(libvlcInstance, name);
     }
-
 }

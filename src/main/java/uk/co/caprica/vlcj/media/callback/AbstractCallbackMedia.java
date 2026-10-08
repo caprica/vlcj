@@ -31,9 +31,9 @@ import uk.co.caprica.vlcj.binding.support.types.size_t;
 import java.io.IOException;
 
 /**
- * Base implementation of media that uses the native media callbacks.
+ * Base implementation of media that uses the native media callback.
  * <p>
- * This implementation mostly encapsulates the native callbacks using template methods, with the exception of the
+ * This implementation mostly encapsulates the native callback using template methods, with the exception of the
  * {@link #onRead(Pointer, int)} method. This particular method is used to read data and populate the native buffer. The
  * reason this method exposes a native {@link Pointer} is so sub-classes can access the native buffer as efficiently as
  * possible.

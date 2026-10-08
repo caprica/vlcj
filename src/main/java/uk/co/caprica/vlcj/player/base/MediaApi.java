@@ -20,17 +20,14 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
-import uk.co.caprica.vlcj.media.EventApi;
 import uk.co.caprica.vlcj.media.InfoApi;
 import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.media.MediaFactory;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MediaSlavePriority;
 import uk.co.caprica.vlcj.media.MediaSlaveType;
 import uk.co.caprica.vlcj.media.MetaApi;
 import uk.co.caprica.vlcj.media.OptionsApi;
-import uk.co.caprica.vlcj.media.ParseApi;
 import uk.co.caprica.vlcj.media.SlaveApi;
 import uk.co.caprica.vlcj.media.StatsApi;
 import uk.co.caprica.vlcj.media.SubitemApi;
@@ -49,8 +46,6 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_medi
 public final class MediaApi extends BaseApi {
 
     private static final String START_PAUSED_OPTION = "start-paused";
-
-    private final List<MediaEventListener> persistentMediaEventListeners = new ArrayList<MediaEventListener>();
 
     /**
      * Current media.
@@ -92,7 +87,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean prepare(String mrl, String... options) {
-        return changeMedia(MediaFactory.newMedia(libvlcInstance, mrl, options));
+        return changeMedia(MediaFactory.newMedia(mrl, options));
     }
 
     /**
@@ -155,7 +150,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean prepare(CallbackMedia callbackMedia, String... options) {
-        return changeMedia(MediaFactory.newMedia(libvlcInstance, callbackMedia, options));
+        return changeMedia(MediaFactory.newMedia(callbackMedia, options));
     }
 
     /**
@@ -207,7 +202,7 @@ public final class MediaApi extends BaseApi {
      * @return <code>true</code> if successful; <code>false</code> on error
      */
     public boolean prepare(MediaRef mediaRef, String... options) {
-        return changeMedia(MediaFactory.newMedia(libvlcInstance, mediaRef, options));
+        return changeMedia(MediaFactory.newMedia(mediaRef, options));
     }
 
     /**
@@ -374,15 +369,6 @@ public final class MediaApi extends BaseApi {
     }
 
     /**
-     * Delegated behaviour pertaining to the associated media events.
-     *
-     * @return media event behaviour
-     */
-    public EventApi events() {
-        return media != null ? media.events() : null;
-    }
-
-    /**
      * Delegated behaviour pertaining to the associated media information.
      *
      * @return media information behaviour
@@ -407,15 +393,6 @@ public final class MediaApi extends BaseApi {
      */
     public OptionsApi options() {
         return media != null ? media.options() : null;
-    }
-
-    /**
-     * Delegated behaviour pertaining to parsing of the associated media.
-     *
-     * @return parsing behaviour
-     */
-    public ParseApi parsing() {
-        return media != null ? media.parsing() : null;
     }
 
     /**
@@ -457,7 +434,6 @@ public final class MediaApi extends BaseApi {
         }
         if (newMedia != null) {
             this.media = newMedia;
-            setPersistentEventListeners();
             applyMedia();
             return true;
         } else {
@@ -479,7 +455,6 @@ public final class MediaApi extends BaseApi {
         libvlc_media_t mediaInstance = media.mediaInstance();
         // Setting media is asynchronous
         libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
-        mediaPlayer.subitems().changeMedia(mediaInstance);
     }
 
     private String[] startPausedOptions(String... options) {
@@ -491,39 +466,10 @@ public final class MediaApi extends BaseApi {
         return list.toArray(new String[0]);
     }
 
-    void addPersistentMediaEventListener(MediaEventListener listener) {
-        persistentMediaEventListeners.add(listener);
-        if (this.media != null) {
-            media.events().addMediaEventListener(listener);
-        }
-    }
-
-    void removePersistentMediaEventListener(MediaEventListener listener) {
-        persistentMediaEventListeners.remove(listener);
-        if (this.media != null) {
-            media.events().removeMediaEventListener(listener);
-        }
-    }
-
-    /**
-     * Invoked each time the media is changed to add all registered persistent media event listeners.
-     * <p>
-     * Changing the media already wipes out any previously registered listeners on that media so there is no need to
-     * explicitly unregister them.
-     */
-    private void setPersistentEventListeners() {
-        if (this.media != null) {
-            for (MediaEventListener listener : persistentMediaEventListeners) {
-                media.events().addMediaEventListener(listener);
-            }
-        }
-    }
-
     @Override
     protected void release() {
         if (media != null) {
             media.release();
         }
     }
-
 }

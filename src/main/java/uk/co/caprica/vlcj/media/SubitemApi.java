@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.media;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
@@ -36,12 +37,12 @@ public final class SubitemApi extends BaseApi {
      * <p>
      * The caller <em>must</em> release the returned {@link MediaList} when it no longer has a use for it
      *
-     * @return subitems list
+     * @return subitems list, or null
      */
-    public MediaList newMediaList() {
+    public @Nullable MediaList newMediaList() {
         libvlc_media_list_t list = libvlc_media_subitems(mediaInstance);
         if (list != null) {
-            return new MediaList(libvlcInstance, list);
+            return new MediaList(list);
         } else {
             return null;
         }
@@ -52,12 +53,12 @@ public final class SubitemApi extends BaseApi {
      * <p>
      * The caller <em>must</em> release the returned {@link MediaListRef} when it no longer has a use for it
      *
-     * @return subitems list reference
+     * @return subitems list reference, or null
      */
-    public MediaListRef newMediaListRef() {
+    public @Nullable MediaListRef newMediaListRef() {
         libvlc_media_list_t list = libvlc_media_subitems(mediaInstance);
         if (list != null) {
-            return new MediaListRef(libvlcInstance, list);
+            return new MediaListRef(list);
         } else {
             return null;
         }

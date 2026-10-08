@@ -38,12 +38,12 @@ final class ByteBufferFactory {
     private static final long addressOffset = getAddressOffset();
 
     /**
-     * Alignment suitable for use by LibVLC video callbacks.
+     * Alignment suitable for use by LibVLC video callback.
      */
     private static final int LIBVLC_ALIGNMENT = 32;
 
     /**
-     * Allocate a properly aligned native byte buffer, suitable for use by the LibVLC video callbacks.
+     * Allocate a properly aligned native byte buffer, suitable for use by the LibVLC video callback.
      *
      * @param capacity required size for the buffer
      * @return aligned byte buffer

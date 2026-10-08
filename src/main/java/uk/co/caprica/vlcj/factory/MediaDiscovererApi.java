@@ -23,19 +23,16 @@ import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.PointerByReference;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_description_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 import uk.co.caprica.vlcj.binding.support.types.size_t;
 import uk.co.caprica.vlcj.media.discoverer.MediaDiscoverer;
 import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererCategory;
 import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererDescription;
-import uk.co.caprica.vlcj.media.discoverer.MediaDiscovererFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_list_get;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_list_release;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_new;
 
 /**
  * Behaviour pertaining to media discovery.
@@ -82,12 +79,6 @@ public final class MediaDiscovererApi extends BaseApi {
      * @return media discoverer, may be <code>null</code>
      */
     public MediaDiscoverer discoverer(String name) {
-        libvlc_media_discoverer_t discoverer = libvlc_media_discoverer_new(libvlcInstance, name);
-        if (discoverer != null) {
-            return MediaDiscovererFactory.newMediaDiscoverer(libvlcInstance, discoverer);
-        } else {
-            return null;
-        }
+        return new MediaDiscoverer(libvlcInstance, name);
     }
-
 }
