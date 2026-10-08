@@ -62,7 +62,6 @@ public class AudioPlayerComponent extends AudioPlayerComponentBase implements Me
 
         this.mediaPlayer = onCreateMediaPlayer();
         this.mediaPlayer.events().addMediaPlayerEventListener(this);
-        this.mediaPlayer.events().addMediaEventListener(this);
 
         onAfterConstruct();
     }

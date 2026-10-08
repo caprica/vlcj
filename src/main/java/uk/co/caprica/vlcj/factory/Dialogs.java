@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.factory;
 
 import com.sun.jna.Pointer;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_cancel_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_cbs;
 import uk.co.caprica.vlcj.binding.internal.libvlc_dialog_display_error_cb;
@@ -36,12 +37,13 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Encapsulation of native dialog callbacks.
+ * Encapsulation of native dialog callback.
  * <p>
- * Essentially this component bridges native dialog callbacks to methods on a {@link DialogHandler} implementation
+ * Essentially this component bridges native dialog callback to methods on a {@link DialogHandler} implementation
  */
 public final class Dialogs {
 
+    @Nullable
     private final libvlc_dialog_display_error_cb errorCallback;
 
     private final libvlc_dialog_cbs callbacks;
@@ -50,13 +52,13 @@ public final class Dialogs {
 
     Dialogs(DialogType... dialogTypes) {
         Set<DialogType> enableTypes = new HashSet<DialogType>();
-        Collections.addAll(enableTypes, dialogTypes != null && dialogTypes.length > 0 ? dialogTypes : DialogType.values());
+        Collections.addAll(enableTypes, dialogTypes.length > 0 ? dialogTypes : DialogType.values());
         this.errorCallback = createErrorCallback(enableTypes);
         this.callbacks = createCallbacks(enableTypes);
     }
 
     /**
-     * Add a handler to process the dialog callbacks.
+     * Add a handler to process the dialog callback.
      *
      * @param handler handler
      */
@@ -65,7 +67,7 @@ public final class Dialogs {
     }
 
     /**
-     * Remove a handler that was processing dialog callbacks.
+     * Remove a handler that was processing dialog callback.
      *
      * @param handler handler
      */
@@ -73,7 +75,7 @@ public final class Dialogs {
         handlerList.remove(handler);
     }
 
-    libvlc_dialog_display_error_cb errorCallback() {
+    @Nullable libvlc_dialog_display_error_cb errorCallback() {
         return errorCallback;
     }
 
@@ -93,7 +95,7 @@ public final class Dialogs {
         return callbacks;
     }
 
-    private libvlc_dialog_display_error_cb createErrorCallback(Set<DialogType> enableTypes) {
+    private @Nullable libvlc_dialog_display_error_cb createErrorCallback(Set<DialogType> enableTypes) {
         return enableTypes.contains(DialogType.ERROR) ? new DisplayError() : null;
     }
 

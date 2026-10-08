@@ -20,7 +20,10 @@
 package uk.co.caprica.vlcj.player.base;
 
 import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.MetaData;
 import uk.co.caprica.vlcj.media.TrackType;
+import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.parser.Pictures;
 
 import javax.swing.*;
 
@@ -49,7 +52,7 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
-    public void buffering(MediaPlayer mediaPlayer, float newCache) {
+    public void bufferingChanged(MediaPlayer mediaPlayer, float newCache) {
     }
 
     @Override
@@ -81,19 +84,7 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
-    public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-    }
-
-    @Override
-    public void positionChanged(MediaPlayer mediaPlayer, double newPosition) {
-    }
-
-    @Override
-    public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-    }
-
-    @Override
-    public void pausableChanged(MediaPlayer mediaPlayer, int newPausable) {
+    public void positionChanged(MediaPlayer mediaPlayer, long newTime, double newPosition) {
     }
 
     @Override
@@ -101,11 +92,27 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
-    public void titleSelectionChanged(MediaPlayer mediaPlayer, TitleDescription title, int index) {
+    public void titleSelectionChanged(MediaPlayer mediaPlayer, TitleDescription titleDescription, int index) {
     }
 
     @Override
-    public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
+    public void screenshotTaken(MediaPlayer mediaPlayer, String filename) {
+    }
+
+    @Override
+    public void mediaParsed(MediaPlayer mediaPlayer, MediaRef mediaRef) {
+    }
+
+    @Override
+    public void mediaMetaChanged(MediaPlayer mediaPlayer, MetaData metaData) {
+    }
+
+    @Override
+    public void mediaSubitemsChanged(MediaPlayer mediaPlayer, MediaList mediaList) {
+    }
+
+    @Override
+    public void mediaAttachmentsAdded(MediaPlayer mediaPlayer, Pictures pictures) {
     }
 
     @Override
@@ -113,23 +120,31 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
+    public void trackAdded(MediaPlayer mediaPlayer, TrackType trackType, String trackId) {
+    }
+
+    @Override
+    public void trackRemoved(MediaPlayer mediaPlayer, TrackType trackType, String trackId) {
+    }
+
+    @Override
+    public void trackUpdated(MediaPlayer mediaPlayer, TrackType trackType, String trackId) {
+    }
+
+    @Override
+    public void trackSelectionChanged(MediaPlayer mediaPlayer, TrackType trackType, String unselectedTrackId, String selectedTrackId) {
+    }
+
+    @Override
+    public void nextFrameStatus(MediaPlayer mediaPlayer, FrameStatus newStatus) {
+    }
+
+    @Override
+    public void previousFrameStatus(MediaPlayer mediaPlayer, FrameStatus newStatus) {
+    }
+
+    @Override
     public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-    }
-
-    @Override
-    public void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
-    }
-
-    @Override
-    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
-    }
-
-    @Override
-    public void elementaryStreamUpdated(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
-    }
-
-    @Override
-    public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, String unselectedStreamId, String selectedStreamId) {
     }
 
     @Override
@@ -149,7 +164,7 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
-    public void chapterChanged(MediaPlayer mediaPlayer, int newChapter) {
+    public void chapterSelectionChanged(MediaPlayer mediaPlayer, TitleDescription titleDescription, int titleIndex, ChapterDescription chapterDescription, int chapterIndex) {
     }
 
     @Override
@@ -161,7 +176,7 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
-    public void programDeleted(MediaPlayer mediaPlayer, int id) {
+    public void programRemoved(MediaPlayer mediaPlayer, int id) {
     }
 
     @Override
@@ -173,8 +188,18 @@ public class MediaPlayerEventAdapter implements MediaPlayerEventListener {
     }
 
     @Override
+    public void capabilitiesChanged(MediaPlayer mediaPlayer, Capabilties oldCapabilties, Capabilties newCapabilties) {
+    }
+
+    @Override
+    public void rateChanged(MediaPlayer mediaPlayer, float newRate) {
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
     }
+
+    // === Synthetic/semantic events ============================================
 
     @Override
     public void mediaPlayerReady(MediaPlayer mediaPlayer) {

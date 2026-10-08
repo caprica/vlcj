@@ -20,7 +20,6 @@
 package uk.co.caprica.vlcj.player.embedded;
 
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 /**
@@ -84,27 +83,6 @@ public class EmbeddedMediaPlayer extends MediaPlayer {
         this.videoSurfaceApi = new VideoSurfaceApi(this);
     }
 
-    /**
-     * Create a new media player.
-     * <p>
-     * Full-screen will not be supported.
-     * <p>
-     * This constructor for internal use only.
-     *
-     * @param instance libvlc instance
-     * @param mediaPlayerInstance native media player instance
-     */
-    public EmbeddedMediaPlayer(libvlc_instance_t instance, libvlc_media_player_t mediaPlayerInstance) {
-        super(instance, mediaPlayerInstance);
-
-        this.libvlcInstance = instance;
-
-        this.fullScreenApi   = new FullScreenApi  (this);
-        this.inputApi        = new InputApi       (this);
-        this.overlayApi      = new OverlayApi     (this);
-        this.videoSurfaceApi = new VideoSurfaceApi(this);
-    }
-
     public final FullScreenApi fullScreen() {
         return fullScreenApi;
     }
@@ -132,5 +110,4 @@ public class EmbeddedMediaPlayer extends MediaPlayer {
         overlayApi     .release();
         videoSurfaceApi.release();
     }
-
 }

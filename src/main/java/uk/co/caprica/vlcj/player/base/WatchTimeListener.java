@@ -25,29 +25,11 @@ package uk.co.caprica.vlcj.player.base;
 public interface WatchTimeListener {
 
     /**
-     * Timer update.
+     * Playback timer update.
      *
      * @param mediaPlayer media player that raised the event
-     * @param timePoint event data
-     * @param data opaque data
+     * @param time media time, in <strong>microseconds</strong>
+     * @param position media position
      */
-    void watchTimeUpdate(MediaPlayer mediaPlayer, TimePoint timePoint, Long data);
-
-    /**
-     * Timer paused.
-     *
-     * @param mediaPlayer media player that raised the event
-     * @param systemDate event data
-     * @param data opaque data
-     */
-    void watchTimePaused(MediaPlayer mediaPlayer, long systemDate, Long data);
-
-    /**
-     * Timer seek.
-     *
-     * @param mediaPlayer media player that raised the event
-     * @param timePoint event data
-     * @param data opaque data
-     */
-    void watchTimeSeek(MediaPlayer mediaPlayer, TimePoint timePoint, Long data);
+    void watchTimeUpdate(MediaPlayer mediaPlayer, long time, double position);
 }

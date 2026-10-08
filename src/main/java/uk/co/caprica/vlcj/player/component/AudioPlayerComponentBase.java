@@ -19,25 +19,24 @@
 
 package uk.co.caprica.vlcj.player.component;
 
-import uk.co.caprica.vlcj.media.Media;
-import uk.co.caprica.vlcj.media.MediaEventListener;
-import uk.co.caprica.vlcj.media.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.MediaRef;
-import uk.co.caprica.vlcj.media.Meta;
-import uk.co.caprica.vlcj.media.Picture;
+import uk.co.caprica.vlcj.media.MetaData;
 import uk.co.caprica.vlcj.media.TrackType;
+import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.parser.Pictures;
+import uk.co.caprica.vlcj.player.base.Capabilties;
+import uk.co.caprica.vlcj.player.base.ChapterDescription;
+import uk.co.caprica.vlcj.player.base.FrameStatus;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.base.TitleDescription;
-
-import java.util.List;
 
 /**
  * Base implementation of an audio player.
  * <p>
  * This class serves to keep the {@link AudioPlayerComponent} concrete implementation clean and un-cluttered.
  */
-abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, MediaEventListener {
+abstract class AudioPlayerComponentBase implements MediaPlayerEventListener {
 
     /**
      * Create a media player component.
@@ -56,7 +55,7 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void buffering(MediaPlayer mediaPlayer, float newCache) {
+    public void bufferingChanged(MediaPlayer mediaPlayer, float newCache) {
     }
 
     @Override
@@ -88,19 +87,7 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void timeChanged(MediaPlayer mediaPlayer, long newTime) {
-    }
-
-    @Override
-    public void positionChanged(MediaPlayer mediaPlayer, double newPosition) {
-    }
-
-    @Override
-    public void seekableChanged(MediaPlayer mediaPlayer, int newSeekable) {
-    }
-
-    @Override
-    public void pausableChanged(MediaPlayer mediaPlayer, int newSeekable) {
+    public void positionChanged(MediaPlayer mediaPlayer, long newTime, double newPosition) {
     }
 
     @Override
@@ -108,11 +95,27 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void titleSelectionChanged(MediaPlayer mediaPlayer, TitleDescription title, int index) {
+    public void titleSelectionChanged(MediaPlayer mediaPlayer, TitleDescription titleDescription, int index) {
     }
 
     @Override
-    public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
+    public void screenshotTaken(MediaPlayer mediaPlayer, String filename) {
+    }
+
+    @Override
+    public void mediaParsed(MediaPlayer mediaPlayer, MediaRef mediaRef) {
+    }
+
+    @Override
+    public void mediaMetaChanged(MediaPlayer mediaPlayer, MetaData metaData) {
+    }
+
+    @Override
+    public void mediaSubitemsChanged(MediaPlayer mediaPlayer, MediaList mediaList) {
+    }
+
+    @Override
+    public void mediaAttachmentsAdded(MediaPlayer mediaPlayer, Pictures pictures) {
     }
 
     @Override
@@ -120,23 +123,31 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
+    public void trackAdded(MediaPlayer mediaPlayer, TrackType trackType, String trackId) {
+    }
+
+    @Override
+    public void trackRemoved(MediaPlayer mediaPlayer, TrackType trackType, String trackId) {
+    }
+
+    @Override
+    public void trackUpdated(MediaPlayer mediaPlayer, TrackType trackType, String trackId) {
+    }
+
+    @Override
+    public void trackSelectionChanged(MediaPlayer mediaPlayer, TrackType trackType, String unselectedTrackId, String selectedTrackId) {
+    }
+
+    @Override
+    public void nextFrameStatus(MediaPlayer mediaPlayer, FrameStatus newStatus) {
+    }
+
+    @Override
+    public void previousFrameStatus(MediaPlayer mediaPlayer, FrameStatus newStatus) {
+    }
+
+    @Override
     public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-    }
-
-    @Override
-    public void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
-    }
-
-    @Override
-    public void elementaryStreamDeleted(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
-    }
-
-    @Override
-    public void elementaryStreamUpdated(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
-    }
-
-    @Override
-    public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, String unselectedStreamId, String selectedStreamId) {
     }
 
     @Override
@@ -156,7 +167,7 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void chapterChanged(MediaPlayer mediaPlayer, int newChapter) {
+    public void chapterSelectionChanged(MediaPlayer mediaPlayer, TitleDescription titleDescription, int titleIndex, ChapterDescription chapterDescription, int chapterIndex) {
     }
 
     @Override
@@ -168,7 +179,7 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
-    public void programDeleted(MediaPlayer mediaPlayer, int id) {
+    public void programRemoved(MediaPlayer mediaPlayer, int id) {
     }
 
     @Override
@@ -180,40 +191,20 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener, Med
     }
 
     @Override
+    public void capabilitiesChanged(MediaPlayer mediaPlayer, Capabilties oldCapabilties, Capabilties newCapabilties) {
+    }
+
+    @Override
+    public void rateChanged(MediaPlayer mediaPlayer, float newRate) {
+    }
+
+    @Override
     public void error(MediaPlayer mediaPlayer) {
     }
 
+    // === Synthetic/semantic events ============================================
+
     @Override
     public void mediaPlayerReady(MediaPlayer mediaPlayer) {
-    }
-
-    // === MediaEventListener ===================================================
-
-    @Override
-    public void mediaMetaChanged(Media media, Meta metaType) {
-    }
-
-    @Override
-    public void mediaSubItemAdded(Media media, MediaRef newChild) {
-    }
-
-    @Override
-    public void mediaDurationChanged(Media media, long newDuration) {
-    }
-
-    @Override
-    public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
-    }
-
-    @Override
-    public void mediaSubItemTreeAdded(Media media, MediaRef item) {
-    }
-
-    @Override
-    public void mediaThumbnailGenerated(Media media, Picture picture) {
-    }
-
-    @Override
-    public void mediaAttachedThumbnailsFound(Media media, List<Picture> pictures) {
     }
 }

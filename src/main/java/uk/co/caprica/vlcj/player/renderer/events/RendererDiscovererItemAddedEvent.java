@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.player.renderer.events;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.renderer_discoverer_item_added;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscoverer;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscovererEventListener;
 import uk.co.caprica.vlcj.player.renderer.RendererItem;
@@ -32,9 +30,9 @@ final class RendererDiscovererItemAddedEvent extends RendererDiscovererEvent {
 
     private final RendererItem item;
 
-    RendererDiscovererItemAddedEvent(RendererDiscoverer rendererDiscoverer, libvlc_event_t event) {
+    RendererDiscovererItemAddedEvent(RendererDiscoverer rendererDiscoverer, RendererItem item) {
         super(rendererDiscoverer);
-        this.item = new RendererItem(((renderer_discoverer_item_added) event.u.getTypedValue(renderer_discoverer_item_added.class)).item);
+        this.item = item;
     }
 
     @Override

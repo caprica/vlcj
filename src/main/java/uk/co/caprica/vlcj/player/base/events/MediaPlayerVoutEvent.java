@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.player.base.events;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.media_player_vout;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
@@ -31,9 +29,9 @@ final class MediaPlayerVoutEvent extends MediaPlayerEvent {
 
     private final int newCount;
 
-    MediaPlayerVoutEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
+    MediaPlayerVoutEvent(MediaPlayer mediaPlayer, int newCount) {
         super(mediaPlayer);
-        this.newCount = ((media_player_vout) event.u.getTypedValue(media_player_vout.class)).new_count;
+        this.newCount = newCount;
     }
 
     @Override

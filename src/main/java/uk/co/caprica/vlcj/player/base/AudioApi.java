@@ -56,7 +56,7 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_equa
 public final class AudioApi extends BaseApi implements EqualizerListener {
 
     /**
-     * Audio callbacks component.
+     * Audio callback component.
      */
     private final AudioCallbacks audioCallbacks;
 
@@ -304,7 +304,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
     }
 
     /**
-     * Enable audio callbacks and set the component used to process the audio samples.
+     * Enable audio callback and set the component used to process the audio samples.
      * <p>
      * The callback will not manage audio volume.
      * <p>
@@ -320,7 +320,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
     }
 
     /**
-     * Enable audio callbacks and set the component used to process the audio samples.
+     * Enable audio callback and set the component used to process the audio samples.
      * <p>
      * Supported audio buffer formats (as stated in VLC include-file libvlc_media_player.h) are:
      * <ul>

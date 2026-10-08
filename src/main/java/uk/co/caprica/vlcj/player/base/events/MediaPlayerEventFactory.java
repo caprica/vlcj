@@ -19,70 +19,21 @@
 
 package uk.co.caprica.vlcj.player.base.events;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_e;
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
+import uk.co.caprica.vlcj.media.MediaRef;
+import uk.co.caprica.vlcj.media.MetaData;
+import uk.co.caprica.vlcj.media.TrackType;
+import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.parser.Pictures;
+import uk.co.caprica.vlcj.player.base.Capabilties;
+import uk.co.caprica.vlcj.player.base.ChapterDescription;
+import uk.co.caprica.vlcj.player.base.FrameStatus;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.TitleDescription;
 
 /**
- * A factory that creates a media player event instance for a native media player event.
+ * A factory that creates semantic media player events (events with no direct native counterpart).
  */
 public final class MediaPlayerEventFactory {
-
-    /**
-     * Create a new media player event for a given native event.
-     * <p>
-     * Events generally are expected to copy values from the native structure as needed (specifically this applies to
-     * non-primitive values like Strings) because once the event handler returns the native memory will be gone. Without
-     * copying such structure values pointers will become invalid.
-     *
-     * @param libvlcInstance native library instance
-     * @param mediaPlayer component the event relates to
-     * @param event native event
-     * @return media player event, or <code>null</code> if the native event type is not enabled or otherwise could not be handled
-     */
-    public static MediaPlayerEvent createEvent(libvlc_instance_t libvlcInstance, MediaPlayer mediaPlayer, libvlc_event_t event) {
-        switch(libvlc_event_e.event(event.type)) {
-            case libvlc_MediaPlayerMediaChanged         : return new MediaPlayerMediaChangedEvent         (libvlcInstance, mediaPlayer, event);
-            case libvlc_MediaPlayerNothingSpecial       : return new MediaPlayerNothingSpecialEvent       (                mediaPlayer       );
-            case libvlc_MediaPlayerOpening              : return new MediaPlayerOpeningEvent              (                mediaPlayer       );
-            case libvlc_MediaPlayerBuffering            : return new MediaPlayerBufferingEvent            (                mediaPlayer, event);
-            case libvlc_MediaPlayerPlaying              : return new MediaPlayerPlayingEvent              (                mediaPlayer       );
-            case libvlc_MediaPlayerPaused               : return new MediaPlayerPausedEvent               (                mediaPlayer       );
-            case libvlc_MediaPlayerStopped              : return new MediaPlayerStoppedEvent              (                mediaPlayer       );
-            case libvlc_MediaPlayerForward              : return new MediaPlayerForwardEvent              (                mediaPlayer       );
-            case libvlc_MediaPlayerBackward             : return new MediaPlayerBackwardEvent             (                mediaPlayer       );
-            case libvlc_MediaPlayerStopping             : return new MediaPlayerStoppingEvent             (                mediaPlayer       );
-            case libvlc_MediaPlayerEncounteredError     : return new MediaPlayerEncounteredErrorEvent     (                mediaPlayer       );
-            case libvlc_MediaPlayerTimeChanged          : return new MediaPlayerTimeChangedEvent          (                mediaPlayer, event);
-            case libvlc_MediaPlayerPositionChanged      : return new MediaPlayerPositionChangedEvent      (                mediaPlayer, event);
-            case libvlc_MediaPlayerSeekableChanged      : return new MediaPlayerSeekableChangedEvent      (                mediaPlayer, event);
-            case libvlc_MediaPlayerPausableChanged      : return new MediaPlayerPausableChangedEvent      (                mediaPlayer, event);
-            case libvlc_MediaPlayerSnapshotTaken        : return new MediaPlayerSnapshotTakenEvent        (                mediaPlayer, event);
-            case libvlc_MediaPlayerLengthChanged        : return new MediaPlayerLengthChangedEvent        (                mediaPlayer, event);
-            case libvlc_MediaPlayerVout                 : return new MediaPlayerVoutEvent                 (                mediaPlayer, event);
-            case libvlc_MediaPlayerESAdded              : return new MediaPlayerESAddedEvent              (                mediaPlayer, event);
-            case libvlc_MediaPlayerESDeleted            : return new MediaPlayerESDeletedEvent            (                mediaPlayer, event);
-            case libvlc_MediaPlayerESUpdated            : return new MediaPlayerESUpdatedEvent            (                mediaPlayer, event);
-            case libvlc_MediaPlayerCorked               : return new MediaPlayerCorkedEvent               (                mediaPlayer       );
-            case libvlc_MediaPlayerUncorked             : return new MediaPlayerUncorkedEvent             (                mediaPlayer       );
-            case libvlc_MediaPlayerMuted                : return new MediaPlayerMutedEvent                (                mediaPlayer       );
-            case libvlc_MediaPlayerUnmuted              : return new MediaPlayerUnmutedEvent              (                mediaPlayer       );
-            case libvlc_MediaPlayerAudioVolume          : return new MediaPlayerAudioVolumeEvent          (                mediaPlayer, event);
-            case libvlc_MediaPlayerAudioDevice          : return new MediaPlayerAudioDeviceEvent          (                mediaPlayer, event);
-            case libvlc_MediaPlayerESSelected           : return new MediaPlayerESSelectionChangedEvent   (                mediaPlayer, event);
-            case libvlc_MediaPlayerProgramAdded         : return new MediaPlayerProgramAddedEvent         (                mediaPlayer, event);
-            case libvlc_MediaPlayerProgramDeleted       : return new MediaPlayerProgramDeletedEvent       (                mediaPlayer, event);
-            case libvlc_MediaPlayerProgramSelected      : return new MediaPlayerProgramSelectedEvent      (                mediaPlayer, event);
-            case libvlc_MediaPlayerProgramUpdated       : return new MediaPlayerProgramUpdatedEvent       (                mediaPlayer, event);
-            case libvlc_MediaPlayerTitleListChanged     : return new MediaPlayerTitleListChangedEvent     (                mediaPlayer       );
-            case libvlc_MediaPlayerTitleSelectionChanged: return new MediaPlayerTitleSelectionChangedEvent(                mediaPlayer, event);
-            case libvlc_MediaPlayerChapterChanged       : return new MediaPlayerChapterChangedEvent       (                mediaPlayer, event);
-            case libvlc_MediaPlayerRecordChanged        : return new MediaPlayerRecordChangedEvent        (                mediaPlayer, event);
-
-            default                                     : return null;
-        }
-    }
 
     /**
      * Create a media player ready event.
@@ -108,7 +59,162 @@ public final class MediaPlayerEventFactory {
         return new MediaPlayerFinishedEvent(mediaPlayer);
     }
 
-    private MediaPlayerEventFactory() {
+    public static MediaPlayerEvent createNothingSpecialEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerNothingSpecialEvent(mediaPlayer);
     }
 
+    public static MediaPlayerEvent createOpeningEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerOpeningEvent(mediaPlayer);
+    }
+
+    public static MediaPlayerEvent createPlayingEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerPlayingEvent(mediaPlayer);
+    }
+
+    public static MediaPlayerEvent createPausedEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerPausedEvent(mediaPlayer);
+    }
+
+    public static MediaPlayerEvent createStoppedEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerStoppedEvent(mediaPlayer);
+    }
+
+    public static MediaPlayerEvent createStoppingEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerStoppingEvent(mediaPlayer);
+    }
+
+    public static MediaPlayerEvent createEncounteredErrorEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerEncounteredErrorEvent(mediaPlayer);
+    }
+
+    public static MediaPlayerEvent createCorkedEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerCorkedEvent(mediaPlayer);
+    }
+
+    public static MediaPlayerEvent createUncorkedEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerUncorkedEvent(mediaPlayer);
+    }
+
+    public static MediaPlayerEvent createMutedEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerMutedEvent(mediaPlayer);
+    }
+
+    public static MediaPlayerEvent createUnmutedEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerUnmutedEvent(mediaPlayer);
+    }
+
+    public static MediaPlayerEvent createTitleListChangedEvent(MediaPlayer mediaPlayer) {
+        return new MediaPlayerTitleListChangedEvent(mediaPlayer);
+    }
+
+    public static MediaPlayerEvent createMediaChangedEvent(MediaPlayer mediaPlayer, MediaRef newMedia) {
+        return new MediaPlayerMediaChangedEvent(mediaPlayer, newMedia);
+    }
+
+    public static MediaPlayerEvent createBufferingChangedEvent(MediaPlayer mediaPlayer, float newCache) {
+        return new MediaPlayerBufferingChangedEvent(mediaPlayer, newCache);
+    }
+
+    public static MediaPlayerEvent createRateChangedEvent(MediaPlayer mediaPlayer, float newRate) {
+        return new MediaPlayerRateChangedEvent(mediaPlayer, newRate);
+    }
+
+    public static MediaPlayerEvent createCapabilitiesChangedEvent(MediaPlayer mediaPlayer, Capabilties oldCapabilties, Capabilties newCapabilties) {
+        return new MediaPlayerCapabilitiesChangedEvent(mediaPlayer, oldCapabilties, newCapabilties);
+    }
+
+    public static MediaPlayerEvent createPositionChangedEvent(MediaPlayer mediaPlayer, long newTime, double newPosition) {
+        return new MediaPlayerPositionChangedEvent(mediaPlayer, newTime, newPosition);
+    }
+
+    public static MediaPlayerEvent createScreenshotTakenEvent(MediaPlayer mediaPlayer, String filename) {
+        return new MediaPlayerScreenshotTakenEvent(mediaPlayer, filename);
+    }
+
+    public static MediaPlayerEvent createMediaParsedEvent(MediaPlayer mediaPlayer, MediaRef mediaRef) {
+        return new MediaPlayerMediaParsedEvent(mediaPlayer, mediaRef);
+    }
+
+    public static MediaPlayerEvent createMediaMetaChangedEvent(MediaPlayer mediaPlayer, MetaData metaData) {
+        return new MediaPlayerMediaMetaChangedEvent(mediaPlayer, metaData);
+    }
+
+    public static MediaPlayerEvent createMediaSubitemsChangedEvent(MediaPlayer mediaPlayer, MediaList mediaList) {
+        return new MediaPlayerMediaSubitemsChangedEvent(mediaPlayer, mediaList);
+    }
+
+    public static MediaPlayerEvent createMediaAttachmentsAddedEvent(MediaPlayer mediaPlayer, Pictures pictures) {
+        return new MediaPlayerMediaAttachmentsAddedEvent(mediaPlayer, pictures);
+    }
+
+    public static MediaPlayerEvent createLengthChangedEvent(MediaPlayer mediaPlayer, long newLength) {
+        return new MediaPlayerLengthChangedEvent(mediaPlayer, newLength);
+    }
+
+    public static MediaPlayerEvent createTrackAddedEvent(MediaPlayer mediaPlayer, TrackType trackType, String trackId) {
+        return new MediaPlayerTrackAddedEvent(mediaPlayer, trackType, trackId);
+    }
+
+    public static MediaPlayerEvent createTrackRemovedEvent(MediaPlayer mediaPlayer, TrackType trackType, String trackId) {
+        return new MediaPlayerTrackRemovedEvent(mediaPlayer, trackType, trackId);
+    }
+
+    public static MediaPlayerEvent createTrackUpdatedEvent(MediaPlayer mediaPlayer, TrackType trackType, String trackId) {
+        return new MediaPlayerTrackUpdatedEvent(mediaPlayer, trackType, trackId);
+    }
+
+    public static MediaPlayerEvent createTrackSelectionChangedEvent(MediaPlayer mediaPlayer, TrackType trackType, String unselectedTrackId, String selectedTrackId) {
+        return new MediaPlayerTrackSelectionChangedEvent(mediaPlayer, trackType, unselectedTrackId, selectedTrackId);
+    }
+
+    public static MediaPlayerEvent createNextFrameStatusEvent(MediaPlayer mediaPlayer, FrameStatus frameStatus) {
+        return new MediaPlayerNextFrameStatusEvent(mediaPlayer, frameStatus);
+    }
+
+    public static MediaPlayerEvent createPreviousFrameStatusEvent(MediaPlayer mediaPlayer, FrameStatus frameStatus) {
+        return new MediaPlayerPreviousFrameStatusEvent(mediaPlayer, frameStatus);
+    }
+
+    public static MediaPlayerEvent createVoutEvent(MediaPlayer mediaPlayer, int newCount) {
+        return new MediaPlayerVoutEvent(mediaPlayer, newCount);
+    }
+
+    public static MediaPlayerEvent createProgramAddedEvent(MediaPlayer mediaPlayer, int id) {
+        return new MediaPlayerProgramAddedEvent(mediaPlayer, id);
+    }
+
+    public static MediaPlayerEvent createProgramRemovedEvent(MediaPlayer mediaPlayer, int id) {
+        return new MediaPlayerProgramRemovedEvent(mediaPlayer, id);
+    }
+
+    public static MediaPlayerEvent createProgramUpdatedEvent(MediaPlayer mediaPlayer, int id) {
+        return new MediaPlayerProgramUpdatedEvent(mediaPlayer, id);
+    }
+
+    public static MediaPlayerEvent createProgramSelectedEvent(MediaPlayer mediaPlayer, int unselectedId, int selectedId) {
+        return new MediaPlayerProgramSelectedEvent(mediaPlayer, unselectedId, selectedId);
+    }
+
+    public static MediaPlayerEvent createTitleSelectionChangedEvent(MediaPlayer mediaPlayer, TitleDescription titleDescription, int index) {
+        return new MediaPlayerTitleSelectionChangedEvent(mediaPlayer, titleDescription, index);
+    }
+
+    public static MediaPlayerEvent createChapterSelectionChangedEvent(MediaPlayer mediaPlayer, TitleDescription titleDescription, int titleIndex, ChapterDescription chapterDescription, int chapterIndex) {
+        return new MediaPlayerChapterSelectionChangedEvent(mediaPlayer, titleDescription, titleIndex, chapterDescription, chapterIndex);
+    }
+
+    public static MediaPlayerEvent createAudioVolumeEvent(MediaPlayer mediaPlayer, float volume) {
+        return new MediaPlayerAudioVolumeEvent(mediaPlayer, volume);
+    }
+
+    public static MediaPlayerEvent createAudioDeviceEvent(MediaPlayer mediaPlayer, String device) {
+        return new MediaPlayerAudioDeviceEvent(mediaPlayer, device);
+    }
+
+    public static MediaPlayerEvent createRecordChangedEvent(MediaPlayer mediaPlayer, boolean recording, String recordedFilePath) {
+        return new MediaPlayerRecordChangedEvent(mediaPlayer, recording, recordedFilePath);
+    }
+
+    private MediaPlayerEventFactory() {
+    }
 }

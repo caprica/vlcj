@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.media;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_duplicate;
@@ -32,60 +31,41 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_retain;
 public final class Media {
 
     /**
-     * Native library instance.
-     */
-    protected final libvlc_instance_t libvlcInstance;
-
-    /**
      * Native media instance.
      */
-    protected final libvlc_media_t mediaInstance;
+    private final libvlc_media_t mediaInstance;
 
-    private final EventApi     eventApi;
-    private final InfoApi      infoApi;
-    private final MetaApi      metaApi;
-    private final OptionsApi   optionsApi;
-    private final ParseApi     parseApi;
-    private final SlaveApi     slaveApi;
-    private final StatsApi     statsApi;
-    private final SubitemApi   subitemApi;
-    private final ThumbnailApi thumbnailApi;
-    private final TrackApi     trackApi;
+    private final InfoApi    infoApi;
+    private final MetaApi    metaApi;
+    private final OptionsApi optionsApi;
+    private final ParseApi   parseApi;
+    private final SlaveApi   slaveApi;
+    private final StatsApi   statsApi;
+    private final SubitemApi subitemApi;
+    private final TrackApi   trackApi;
 
     /**
      * Create a new media item.
      * <p>
-     * This component will "own" the supplied native media instance and will take care of releasing it during
-     * {@link #release()}.
+     * The native media instance will be retained, increasing its internal reference count.
      * <p>
-     * The caller should <em>not</em> release the native media instance.
+     * The caller <em>must</em> release this new media when it is of no further use.
      *
-     * @param libvlcInstance native library instance
      * @param media native media instance
      */
-    public Media(libvlc_instance_t libvlcInstance, libvlc_media_t media) {
-        this.libvlcInstance = libvlcInstance;
+    public Media(libvlc_media_t media) {
+        libvlc_media_retain(media);
+
         this.mediaInstance  = media;
 
-        this.eventApi     = new EventApi    (this);
-        this.infoApi      = new InfoApi     (this);
-        this.metaApi      = new MetaApi     (this);
-        this.optionsApi   = new OptionsApi  (this);
-        this.parseApi     = new ParseApi    (this);
-        this.slaveApi     = new SlaveApi    (this);
-        this.statsApi     = new StatsApi    (this);
-        this.subitemApi   = new SubitemApi  (this);
-        this.thumbnailApi = new ThumbnailApi(this);
-        this.trackApi     = new TrackApi    (this);
-    }
-
-    /**
-     * Behaviour pertaining to events.
-     *
-     * @return event behaviour
-     */
-    public EventApi events() {
-        return eventApi;
+        this.infoApi    = new InfoApi   (this);
+        this.metaApi    = new MetaApi   (this);
+        this.optionsApi = new OptionsApi(this);
+        this.parseApi   = new ParseApi  (this);
+        this.slaveApi   = new SlaveApi  (this);
+        this.statsApi   = new StatsApi  (this);
+        this.subitemApi = new SubitemApi(this);
+        this.trackApi   = new TrackApi  (this);
     }
 
     /**
@@ -109,18 +89,18 @@ public final class Media {
     /**
      * Behaviour pertaining to media options.
      *
-     * @return meida options behaviour
+     * @return media options behaviour
      */
     public OptionsApi options() {
         return optionsApi;
     }
 
     /**
-     * Behaviour pertaining to parsing of the media.
+     * Behaviour pertaining to media parsed status.
      *
-     * @return parsing behaviour
+     * @return media parsed behaviour
      */
-    public ParseApi parsing() {
+    public ParseApi parse() {
         return parseApi;
     }
 
@@ -155,15 +135,6 @@ public final class Media {
     }
 
     /**
-     * Behaviour pertaining to thumbnails.
-     *
-     * @return thumbnail behaviour
-     */
-    public ThumbnailApi thumbnails() {
-        return thumbnailApi;
-    }
-
-    /**
      * Behaviour pertaining to tracks.
      *
      * @return track behaviour
@@ -173,42 +144,16 @@ public final class Media {
     }
 
     /**
-     * Create a new {@link MediaRef} from this media.
-     * <p>
-     * The caller <em>must</em> release the returned {@link MediaRef} when it has no further use for it.
-     *
-     * @return media reference
-     */
-    public MediaRef newMediaRef() {
-        libvlc_media_retain(mediaInstance);
-        return new MediaRef(libvlcInstance, mediaInstance);
-    }
-
-    /**
      * Create a new {@link Media} from this media.
      * <p>
-     * The caller <em>must</em> release the returned {@link Media} when it has no further use for it.
+     * The native media instance will be retained, increasing its internal reference count.
+     * <p>
+     * The caller <em>must</em> release the new {@link Media} when it has no further use for it.
      *
      * @return media
      */
     public Media newMedia() {
-        libvlc_media_retain(mediaInstance);
-        return new Media(libvlcInstance, mediaInstance);
-    }
-
-    /**
-     * Return a duplicate {@link MediaRef} for this {@link MediaRef}.
-     * <p>
-     * Unlike {@link #newMediaRef()}, this function will duplicate the native media instance, meaning it is separate
-     * from the native media instance in this component and any changes made to it (such as adding new media options)
-     * will <em>not</em> be reflected on the original media.
-     * <p>
-     * The caller <em>must</em> release the returned {@link MediaRef} when it has no further use for it.
-     *
-     * @return duplicated media reference
-     */
-    public MediaRef duplicateMediaRef() {
-        return new MediaRef(libvlcInstance, libvlc_media_duplicate(mediaInstance));
+        return new Media(mediaInstance);
     }
 
     /**
@@ -218,12 +163,25 @@ public final class Media {
      * the native media instance in this component and any changes made to it (such as adding new media options) will
      * <em>not</em> be reflected on the original media.
      * <p>
-     * The caller <em>must</em> release the returned {@link Media} when it has no further use for it.
+     * The caller <em>must</em> release the duplicated media {@link Media} when it has no further use for it.
      *
      * @return duplicated media
      */
     public Media duplicateMedia() {
-        return new Media(libvlcInstance, libvlc_media_duplicate(mediaInstance));
+        return new Media(libvlc_media_duplicate(mediaInstance));
+    }
+
+    /**
+     * Create a new {@link MediaRef} from this media.
+     * <p>
+     * The native media instance will be retained, increasing its internal reference count.
+     * <p>
+     * The caller <em>must</em> release the new {@link MediaRef} when it has no further use for it.
+     *
+     * @return media reference
+     */
+    public MediaRef newMediaRef() {
+        return new MediaRef(mediaInstance);
     }
 
     /**
@@ -232,16 +190,14 @@ public final class Media {
      * The component must no longer be used.
      */
     public void release() {
-        eventApi    .release();
-        infoApi     .release();
-        optionsApi  .release();
-        parseApi    .release();
-        metaApi     .release();
-        slaveApi    .release();
-        statsApi    .release();
-        subitemApi  .release();
-        thumbnailApi.release();
-        trackApi    .release();
+        infoApi   .release();
+        optionsApi.release();
+        parseApi  .release();
+        metaApi   .release();
+        slaveApi  .release();
+        statsApi  .release();
+        subitemApi.release();
+        trackApi  .release();
 
         libvlc_media_release(mediaInstance);
     }
@@ -254,5 +210,4 @@ public final class Media {
     public libvlc_media_t mediaInstance() {
         return mediaInstance;
     }
-
 }

@@ -33,12 +33,12 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_format;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_volume_callback;
 
 /**
- * Encapsulation of native audio callbacks.
+ * Encapsulation of native audio callback.
  * <p>
- * This component acts as a bridge between the native callbacks and an implementation of an {@link AudioCallback}
+ * This component acts as a bridge between the native callback and an implementation of an {@link AudioCallback}
  * component used to process the audio samples in some way (like playing them).
  * <p>
- * Once callbacks are enabled for a media player, they can <em>not</em> be disabled.
+ * Once callback are enabled for a media player, they can <em>not</em> be disabled.
  */
 final class AudioCallbacks {
 

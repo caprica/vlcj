@@ -67,7 +67,7 @@ public final class SnapshotApi extends BaseApi {
      * The size of the image will be that produced by the libvlc native snapshot function.
      * <p>
      * Taking a snapshot is an asynchronous function, the snapshot is not available until
-     * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
+     * after the {@link MediaPlayerEventListener#screenshotTaken(MediaPlayer, String)} event
      * is received.
      *
      * @return <code>true</code> if the snapshot was saved, otherwise <code>false</code>
@@ -91,7 +91,7 @@ public final class SnapshotApi extends BaseApi {
      * {@link #save()}.
      * <p>
      * Taking a snapshot is an asynchronous function, the snapshot is not available until
-     * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
+     * after the {@link MediaPlayerEventListener#screenshotTaken(MediaPlayer, String)} event
      * is received.
      *
      * @param width desired image width
@@ -113,7 +113,7 @@ public final class SnapshotApi extends BaseApi {
      * Any missing directory path will be created if it does not exist.
      * <p>
      * Taking a snapshot is an asynchronous function, the snapshot is not available until
-     * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
+     * after the {@link MediaPlayerEventListener#screenshotTaken(MediaPlayer, String)} event
      * is received.
      *
      * @param file file to contain the snapshot
@@ -134,7 +134,7 @@ public final class SnapshotApi extends BaseApi {
      * {@link #save(File)}.
      * <p>
      * Taking a snapshot is an asynchronous function, the snapshot is not available until
-     * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
+     * after the {@link MediaPlayerEventListener#screenshotTaken(MediaPlayer, String)} event
      * is received.
      *
      * @param file file to contain the snapshot
@@ -168,7 +168,7 @@ public final class SnapshotApi extends BaseApi {
      * the file.
      * <p>
      * Taking a snapshot is an asynchronous function, the snapshot is not available until
-     * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
+     * after the {@link MediaPlayerEventListener#screenshotTaken(MediaPlayer, String)} event
      * is received.
      * <p>
      * This function will block until the snapshot taken event is received.
@@ -192,7 +192,7 @@ public final class SnapshotApi extends BaseApi {
      * {@link #get()}
      * <p>
      * Taking a snapshot is an asynchronous function, the snapshot is not available until
-     * after the {@link MediaPlayerEventListener#snapshotTaken(MediaPlayer, String)} event
+     * after the {@link MediaPlayerEventListener#screenshotTaken(MediaPlayer, String)} event
      * is received.
      * <p>
      * This function will block until the snapshot taken event is received.

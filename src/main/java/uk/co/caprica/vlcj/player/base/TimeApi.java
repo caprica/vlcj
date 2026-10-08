@@ -19,201 +19,134 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import com.sun.jna.Pointer;
-import com.sun.jna.Structure;
-import com.sun.jna.ptr.DoubleByReference;
-import com.sun.jna.ptr.LongByReference;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_time_point_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_watch_time_on_paused;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_watch_time_on_seek;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_watch_time_on_update;
-import uk.co.caprica.vlcj.binding.lib.LibVlc;
+import uk.co.caprica.vlcj.player.base.time.InterpolatedWatchTimeHandler;
 
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_clock;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_time_point_get_next_date;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_time_point_interpolate;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_unwatch_time;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_watch_time;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Behaviour pertaining to media player timer.
+ * Behaviour pertaining to the media player timer.
  * <p>
- * Note that all time units are expressed as micro-seconds (us).
+ * Note that all time units are expressed as <strong>microseconds</strong> (us).
  */
 public final class TimeApi extends BaseApi {
 
     /**
-     * Native clock frequency constant, from the ./vlc/include/vlc_tick.h header file in the VLC sources.
+     * 60 notification updates per second.
      */
-    private static final long VLC_CLOCK_FREQ = 1000000L;
+    public static final long FAST_UPDATE_INTERVAL = InterpolatedWatchTimeHandler.interval(60);
 
     /**
-     * Constant value used to indicate an invalid timestamp (e.g. if playback is paused).
+     * 30 notification updates per second.
      */
-    private static final long VLC_TICK_INVALID = 0L;
+    public static final long MEDIUM_UPDATE_INTERVAL = InterpolatedWatchTimeHandler.interval(30);
 
     /**
-     * Current listener.
-     * <p>
-     * The native API supports only a single current listener.
+     * One notification update per second.
      */
-    private WatchTimeListener watchTimeListener;
+    public static final long SLOW_UPDATE_INTERVAL = InterpolatedWatchTimeHandler.interval(1);
+
+    public static final long FINE_MINIMUM_UPDATE_PERIOD = 250_000L;
+    public static final long NORMAL_MINIMUM_UPDATE_PERIOD = 500_000L;
+    public static final long COARSE_MINIMUM_UPDATE_PERIOD = 1_000_000L;
+
+    private final List<WatchTimeListener> eventListenerList = new CopyOnWriteArrayList<WatchTimeListener>();
+
+    private InterpolatedWatchTimeHandler watchTimeHandler;
 
     TimeApi(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
     }
 
     /**
-     * Watch the media player timer.
+     * Start watching for media player time/position updates.
      * <p>
-     * Only one listener may be registered.
+     * The targetReportingInterval parameter is used to set how frequently new time updates will be emitted, and is used
+     * typically by a user interface clock (or slider if using position) component. A lower interval will result in
+     * smoother updates/animations.
+     * <p>
+     * See:
+     *   <li>{@link #FAST_UPDATE_INTERVAL}
+     *   <li>{@link #MEDIUM_UPDATE_INTERVAL}
+     *   <li>{@link #SLOW_UPDATE_INTERVAL}
+     * <p>
+     * The miniumUpdateInterval is used to set the minimum time that the native media player will wait before sending a
+     * timer event, providing a new anchor time for next interpolated time calculation. If this value is too low, the
+     * media player will flood timer callbacks continuously. Since the time/position is being smoothly interpolated, it
+     * only needs infrequent native events to correct any small amount of drift from the calculated value.
+     * <p>
+     * See:
+     *   <li>{@link #FINE_MINIMUM_UPDATE_PERIOD}
+     *   <li>{@link #NORMAL_MINIMUM_UPDATE_PERIOD}
+     *   <li>{@link #COARSE_MINIMUM_UPDATE_PERIOD}
+     * <p>
      *
-     * @param minimumPeriodBetweenUpdates minimum period between updates, or zero for all updates (nanoseconds)
-     * @param data opaque data
-     * @param listener listener to receive timer events
-     * @return <code>true</code> on success; <code>false</code> o failure (e.g. already have a listener)
+     * @param targetReportingInterval target interval for reporting time updates, in <strong>microseconds</strong>
+     * @param miniumUpdatePeriod minimum time between native media player timer updates, <strong>microseconds</strong>
+     * @return <code>true</code> if the watch started successfully; otherwise <code>false</code>
      */
-    public boolean watchTime(long minimumPeriodBetweenUpdates, Long data, WatchTimeListener listener) {
-        this.watchTimeListener = listener;
-        return 0 == libvlc_media_player_watch_time(
-            mediaPlayerInstance,
-            minimumPeriodBetweenUpdates,
-            onUpdateCallback,
-            onPausedCallback,
-            onSeekCallback,
-            toPointer(data)
-        );
-    }
-
-    /**
-     * Stop watching the media player timer.
-     */
-    public void unwatchTime() {
-        libvlc_media_player_unwatch_time(mediaPlayerInstance);
-        watchTimeListener = null;
-    }
-
-    /**
-     * Interpolate time/position values for a given time-point.
-     *
-     * @param timePoint time-point to update, if successful
-     * @return <code>true</code> if interpolation was successful; <code>false</code> if not
-     */
-    public boolean interpolate(TimePoint timePoint) {
-        LongByReference out_ts = new LongByReference();
-        DoubleByReference out_pos = new DoubleByReference();
-        boolean result = libvlc_media_player_time_point_interpolate(toInstance(timePoint), libvlc_clock(), out_ts, out_pos) == 0;
-        if (result) {
-            timePoint.update(out_ts.getValue(), out_pos.getValue());
+    public boolean startWatching(long targetReportingInterval, long miniumUpdatePeriod) {
+        if (watchTimeHandler != null) {
+            throw new IllegalStateException("Already watching");
         }
-        return result;
+
+        watchTimeHandler = new InterpolatedWatchTimeHandler(mediaPlayerInstance, targetReportingInterval) {
+            @Override
+            protected void notifyUpdate(long timestampUs, double position) {
+                for (WatchTimeListener listener : eventListenerList) {
+                    listener.watchTimeUpdate(mediaPlayer, timestampUs, position);
+                }
+            }
+        };
+
+        boolean started = watchTimeHandler.startWatching(miniumUpdatePeriod);
+        if (!started) {
+            stopWatching();
+        }
+
+        return started;
     }
 
     /**
-     * Return the next interval to receive an update event at the given number of seconds.
+     * Start watching for media player time/position updates with sensible default values.
      * <p>
-     * For example, if the number of seconds is 1, the interval will be the time until the timer reaches the next
-     * second - it is not an absolute number of seconds from now.
+     * For a full explanation of the interval parameter, see {@link #startWatching(long, long)}.
      *
-     * @param seconds desired number of segments for the next update
-     * @return interval
+     * @param targetReportingInterval target interval for reporting time updates, in <strong>microseconds</strong>
+     * @return <code>true</code> if the watch started successfully; otherwise <code>false</code>
      */
-    public long nextInterval(int seconds) {
-        // Equivalent to VLC_TICK_FROM_SEC(sec)
-        return VLC_CLOCK_FREQ * seconds;
+    public boolean startWatching(long targetReportingInterval) {
+        return startWatching(targetReportingInterval, NORMAL_MINIMUM_UPDATE_PERIOD);
     }
 
     /**
-     * Return whether the given tick/time/tiemstamp value is valid or not.
+     * Start watching for media player time/position updates with sensible default values.
      *
-     * @param value value to validate
-     * @return <code>true</code> if the given value is valid; <code>false</code> if not
+     * @return <code>true</code> if the watch started successfully; otherwise <code>false</code>
      */
-    public boolean isValidTime(long value) {
-        return value != VLC_TICK_INVALID;
+    public boolean startWatching() {
+        return startWatching(MEDIUM_UPDATE_INTERVAL, NORMAL_MINIMUM_UPDATE_PERIOD);
     }
 
     /**
-     * Return the absolute timestamp of the next interval.
-     *
-     * @param timePoint time point from {@link WatchTimeListener#watchTimeUpdate(MediaPlayer, TimePoint, Long)}
-     * @param interpolatedTimestamp timestamp returned by {@link #interpolate(TimePoint)}
-     * @param nextInterval next interval
-     * @return absolute timestamp of the next interval
+     * Stop watching media player time/position updates.
      */
-    public long nextAbsoluteTimestamp(TimePoint timePoint, long interpolatedTimestamp, long nextInterval) {
-        return libvlc_media_player_time_point_get_next_date(toInstance(timePoint), libvlc_clock(), interpolatedTimestamp, nextInterval);
+    public void stopWatching() {
+        watchTimeHandler.stopWatching();
     }
 
-    /**
-     * Return the relative timestamp of the next interval.
-     * <p>
-     * The return value is relative {@link LibVlc#libvlc_clock()}.
-     *
-     * @param timePoint time point from {@link WatchTimeListener#watchTimeUpdate(MediaPlayer, TimePoint, Long)}
-     * @param interpolatedTimestamp timestamp returned by {@link #interpolate(TimePoint)}
-     * @param nextInterval next interval
-     * @return relative timestamp of the next interval
-     */
-    public long nextRelativeTimestamp(TimePoint timePoint, long interpolatedTimestamp, long nextInterval) {
-        // Equivalent to libvlc_delay(), which is not a native API method
-        return nextAbsoluteTimestamp(timePoint, interpolatedTimestamp, nextInterval) - libvlc_clock();
+    public void addWatchTimeListener(WatchTimeListener listener) {
+        eventListenerList.add(listener);
+    }
+
+    public void removeWatchTimeListener(WatchTimeListener listener) {
+        eventListenerList.remove(listener);
     }
 
     @Override
     protected void release() {
-        if (watchTimeListener != null) {
-            unwatchTime();
-        }
-    }
+        eventListenerList.clear();
 
-    private final libvlc_media_player_watch_time_on_update onUpdateCallback = new libvlc_media_player_watch_time_on_update() {
-
-        @Override
-        public void callback(libvlc_media_player_time_point_t value, Pointer data) {
-            TimePoint timePoint = new TimePoint(
-                value.rate, value.length_us, value.system_date_us, value.ts_us, value.position
-            );
-            watchTimeListener.watchTimeUpdate(mediaPlayer, timePoint, fromPointer(data));
-        }
-    };
-
-    private final libvlc_media_player_watch_time_on_paused onPausedCallback = new libvlc_media_player_watch_time_on_paused() {
-
-        @Override
-        public void callback(long system_date_us, Pointer data) {
-            watchTimeListener.watchTimePaused(mediaPlayer, system_date_us, fromPointer(data));
-        }
-    };
-
-    private final libvlc_media_player_watch_time_on_seek onSeekCallback = new libvlc_media_player_watch_time_on_seek() {
-
-        @Override
-        public void callback(libvlc_media_player_time_point_t value, Pointer data) {
-            TimePoint timePoint = new TimePoint(
-                value.rate, value.length_us, value.system_date_us, value.ts_us, value.position
-            );
-            watchTimeListener.watchTimeSeek(mediaPlayer, timePoint, fromPointer(data));
-        }
-    };
-
-    private static Pointer toPointer(Long value) {
-        return value != null ? Pointer.createConstant(value) : null;
-    }
-
-    private static Long fromPointer(Pointer pointer) {
-        return Pointer.nativeValue(pointer);
-    }
-
-    private static libvlc_media_player_time_point_t toInstance(TimePoint timePoint) {
-        libvlc_media_player_time_point_t result = Structure.newInstance(libvlc_media_player_time_point_t.class);
-        result.setAutoWrite(false);
-        result.position = timePoint.position();
-        result.rate = timePoint.rate();
-        result.ts_us = timePoint.timestamp();
-        result.length_us = timePoint.length();
-        result.system_date_us = timePoint.systemDate();
-        result.write();
-        return result;
+        stopWatching();
     }
 }

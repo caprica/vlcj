@@ -108,6 +108,7 @@
         <doclint>none</doclint>
         <gpg.skip>true</gpg.skip>
         <java.version>11</java.version>
+        <jspecify.version>1.0.1</jspecify.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vlcjNatives.version>5.0.0-SNAPSHOT</vlcjNatives.version>
@@ -118,6 +119,12 @@
             <groupId>uk.co.caprica</groupId>
             <artifactId>vlcj-natives</artifactId>
             <version>${vlcjNatives.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jspecify</groupId>
+            <artifactId>jspecify</artifactId>
+            <version>${jspecify.version}</version>
         </dependency>
     </dependencies>
 

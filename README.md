@@ -47,9 +47,24 @@ Build Status
 Recent News
 ===========
 
+__October 2026__ 5.0.0-M5 milestone release:
+
+>A new development milestone release has been created. You will need an up-to-date nightly build of VLC 4.x to use this.
+With this release, there are unavoidable breaking API changes. This is because LibVLC has had its own major breaking
+changes, a complete replacement of the event model, a refactoring of media list players, new media parsing, new media
+discoverer, new renderer discoverer, the list goes on.
+
+>This is likely NOT going to be a drop-in update, you will probably need to make some changes to your own code to use
+this update, and if you relied previously on (Embedded)MediaPlayer subitems you will instead need to work with an
+(Embedded)MediaListPlayer.
+
+>Some listener events have changed or been removed.
+
+>All vlcj API is still subject to change.
+
 __Septemeber 2026__ Project status update:
 
-Another year goes by, we're still here, still waiting for VLC 4.x to be released, or waiting for further changes to
+>Another year goes by, we're still here, still waiting for VLC 4.x to be released, or waiting for further changes to
 LibVLC 4.x. Recently significant changes to LibVLC 4.x have been made, and these changes are backwardly incompatible.
 Work is underway currently to integrate these new native library changes, but there is significant upheaval.
 
@@ -103,13 +118,13 @@ __Future 2022__ Next major release
 
 All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
-You can follow @capricasoftware on Twitter for more vlcj news.
+You can follow @capricasoftware on X for more vlcj news.
 
 Backwards-Incompatible API changes
 ==================================
 
-Changes that break backwards compatibility with prior vlcj versions were avoided if at all possible. However, some such
-changes are needed in the case where the underlying native LibVLC API changed.
+No promises are made on backwards compatibility with earlier versions of vlcj. The vast majority of the API is unchanged
+but there are unavoidable breakages needed to adapt to changes in the native LibVLC library.
 
 Swing/AWT, JavaFX, OpenGL
 =========================
@@ -139,7 +154,7 @@ single video surface abstraction is the difference.
 vlcj-5
 ======
 
-vlcj-5 is primarily an incremental feature-release, preserving the vlcj-4 API as much as possible.
+vlcj-5 is major development update, incorporating new features and native library changes. 
 
 Major New Features
 ------------------
@@ -155,6 +170,10 @@ Headline changes:
  - new native track selection API - this makes it possible to reliably make use of video Sample Aspect Ratio (SAR) when
    rendering video using the "callback" video players and means e.g. DVD video now can render properly with callback
    players
+ - new smooth time/position update events using interpolation and jitter correction, see TimeApi on MediaPlayer and
+   WatchTimeListener
+ - new media parser
+ - changes to media discoverers and renderer discoverers
 
 For a full list of changes in this release, check the release milestones:
 
@@ -175,9 +194,9 @@ Known Issues
 Tutorials
 ---------
 
-New tutorials for vlcj-4 are available [here](http://capricasoftware.co.uk/projects/vlcj-4/tutorials).
+Tutorials for vlcj-4 are available [here](http://capricasoftware.co.uk/projects/vlcj-4/tutorials).
 
-These tutorials are still valid for vlcj-5.
+These tutorials are mostly still valid for vlcj-5, but some things now may be obsolete.
 
 There are simple tests or demo applications available for pretty much every aspect of vlcj functionality, these are
 provided in the
@@ -205,8 +224,8 @@ Add the following Maven dependency to your own project pom.xml:
 ```
 
 The core vlcj project now no longer contains the required JNA bindings to LibVLC, these are provided instead by the
-separate [vlcj-natives](https://github.com/caprica/vlcj-natives) project. The vlcj core project therefore has a new
-required dependency on the vlcj-natives project.
+separate [vlcj-natives](https://github.com/caprica/vlcj-natives) project. The vlcj core project therefore has a new required dependency on the vlcj-natives
+project.
 
 If you are using Maven (or similar) to manage your dependencies, the vlcj-natives dependency will be handled
 automatically for you (you only need to explicitly add vlcj to your project, not vlcj-natives).
@@ -353,8 +372,8 @@ and album/cover art. This may unintentionally expose sensitive data regarding th
 To affirmatively prevent all network access for meta data, consider using the `--no-metadata-network-access` argument
 when creating a `MediaPlayerFactory`.
 
-It should also be possible to prevent such network accesses by using appropriate `ParseFlag` values when requesting to
-parse media.
+It should also be possible to prevent such network accesses by using appropriate `MediaParseFlags` values when
+requesting to parse media.
 
 Even with network access disabled, some media cover art may still appear locally (e.g. ~/.cache/vlc) - this does not
 necessarily mean that a remote network request was made for the cover art, rather the art that was already embedded in

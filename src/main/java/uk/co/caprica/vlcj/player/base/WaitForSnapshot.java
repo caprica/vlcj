@@ -114,7 +114,7 @@ final class WaitForSnapshot extends MediaPlayerEventAdapter {
     }
 
     @Override
-    public void snapshotTaken(MediaPlayer mediaPlayer, String filename) {
+    public void screenshotTaken(MediaPlayer mediaPlayer, String filename) {
         snapshotResult = filename;
         snapshotTakenLatch.countDown();
     }

@@ -20,18 +20,14 @@
 package uk.co.caprica.vlcj.player.component;
 
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.media.MediaRef;
-import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.medialist.MediaListEventListener;
-import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerEventListener;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
 /**
  * Base implementation for an audio list player.
  * <p>
  * This class serves to keep the {@link AudioListPlayerComponent} concrete implementation clean and un-cluttered.
  */
-abstract class AudioListPlayerComponentBase extends AudioPlayerComponent implements MediaListPlayerEventListener, MediaListEventListener {
+abstract class AudioListPlayerComponentBase extends AudioPlayerComponent {
 
     /**
      * Create a media player component.
@@ -41,41 +37,4 @@ abstract class AudioListPlayerComponentBase extends AudioPlayerComponent impleme
     protected AudioListPlayerComponentBase(MediaPlayerFactory mediaPlayerFactory) {
         super(mediaPlayerFactory);
     }
-
-    // === MediaListPlayerEventListener =========================================
-
-    @Override
-    public void mediaListPlayerFinished(MediaListPlayer mediaListPlayer) {
-    }
-
-    @Override
-    public void nextItem(MediaListPlayer mediaListPlayer, MediaRef item) {
-    }
-
-    @Override
-    public void stopped(MediaListPlayer mediaListPlayer) {
-    }
-
-    // === MediaListEventListener ===============================================
-
-    @Override
-    public void mediaListWillAddItem(MediaList mediaList, MediaRef item, int index) {
-    }
-
-    @Override
-    public void mediaListItemAdded(MediaList mediaList, MediaRef item, int index) {
-    }
-
-    @Override
-    public void mediaListWillDeleteItem(MediaList mediaList, MediaRef item, int index) {
-    }
-
-    @Override
-    public void mediaListItemDeleted(MediaList mediaList, MediaRef item, int index) {
-    }
-
-    @Override
-    public void mediaListEndReached(MediaList mediaList) {
-    }
-
 }

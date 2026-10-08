@@ -45,15 +45,15 @@ public final class ControlsApi extends BaseApi {
      * event will be raised.
      */
     public void play() {
-        attachVideoSurface();
-        libvlc_media_list_player_play(mediaListPlayerInstance);
+        mediaListPlayer.onBeforePlay();
+        libvlc_media_list_player_play(mediaListPlayer.mediaListPlayerInstance());
     }
 
     /**
      * Toggle-pause the media list.
      */
     public void pause() {
-        libvlc_media_list_player_pause(mediaListPlayerInstance);
+        libvlc_media_list_player_pause(mediaListPlayer.mediaListPlayerInstance());
     }
 
     /**
@@ -62,7 +62,7 @@ public final class ControlsApi extends BaseApi {
      * @param pause <code>true</code> to pause; <code>false</code> to un-pause
      */
     public void setPause(boolean pause) {
-        libvlc_media_list_player_set_pause(mediaListPlayerInstance, pause ? 1 : 0);
+        libvlc_media_list_player_set_pause(mediaListPlayer.mediaListPlayerInstance(), pause ? 1 : 0);
     }
 
     /**
@@ -71,7 +71,7 @@ public final class ControlsApi extends BaseApi {
      * Stopping is now an asynchronous operation.
      */
     public void stop() {
-        libvlc_media_list_player_stop_async(mediaListPlayerInstance);
+        libvlc_media_list_player_stop_async(mediaListPlayer.mediaListPlayerInstance());
     }
 
     /**
@@ -84,8 +84,8 @@ public final class ControlsApi extends BaseApi {
      * @return <code>true</code> if the item could be played, otherwise <code>false</code>
      */
     public boolean play(int itemIndex) {
-        attachVideoSurface();
-        return libvlc_media_list_player_play_item_at_index(mediaListPlayerInstance, itemIndex) == 0;
+        mediaListPlayer.onBeforePlay();
+        return libvlc_media_list_player_play_item_at_index(mediaListPlayer.mediaListPlayerInstance(), itemIndex) == 0;
     }
 
     /**
@@ -97,8 +97,8 @@ public final class ControlsApi extends BaseApi {
      * @return <code>true</code> if the next item could be played, otherwise <code>false</code>
      */
     public boolean playNext() {
-        attachVideoSurface();
-        return libvlc_media_list_player_next(mediaListPlayerInstance) == 0;
+        mediaListPlayer.onBeforePlay();
+        return libvlc_media_list_player_next(mediaListPlayer.mediaListPlayerInstance()) == 0;
     }
 
     /**
@@ -110,8 +110,8 @@ public final class ControlsApi extends BaseApi {
      * @return <code>true</code> if the previous item could be played, otherwise <code>false</code>
      */
     public boolean playPrevious() {
-        attachVideoSurface();
-        return libvlc_media_list_player_previous(mediaListPlayerInstance) == 0;
+        mediaListPlayer.onBeforePlay();
+        return libvlc_media_list_player_previous(mediaListPlayer.mediaListPlayerInstance()) == 0;
     }
 
     /**
@@ -125,15 +125,10 @@ public final class ControlsApi extends BaseApi {
      */
     public boolean setMode(PlaybackMode mode) {
         if (mode != null) {
-            libvlc_media_list_player_set_playback_mode(mediaListPlayerInstance, mode.intValue());
+            libvlc_media_list_player_set_playback_mode(mediaListPlayer.mediaListPlayerInstance(), mode.intValue());
             return true;
         } else {
             return false;
         }
     }
-
-    private void attachVideoSurface() {
-        mediaListPlayer.mediaPlayer().attachVideoSurface();
-    }
-
 }

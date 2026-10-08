@@ -19,9 +19,23 @@
 
 package uk.co.caprica.vlcj.media;
 
-import java.util.Collections;
+import com.sun.jna.Pointer;
+import com.sun.jna.ptr.PointerByReference;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.support.strings.NativeString;
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_meta;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_meta_extra;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_get_meta_extra_names;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_meta_extra_names_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_set_meta;
 
 /**
  * Immutable metadata value object.
@@ -31,22 +45,30 @@ public final class MetaData {
     /**
      * Collection of metadata values.
      */
-    private final Map<Meta, String> values;
+    private final Map<Meta, String> values = new HashMap<>(Meta.values().length);
 
     /**
      * Collection of metadata extra values.
      */
-    private final Map<String, String> extraValues;
+    private final Map<String, String> extraValues = new TreeMap<>();
 
     /**
-     * Create a metadata value object.
+     * Create metadata values for the given media.
      *
-     * @param values metadata values
-     * @param extraValues metadata extra values
+     * @param media native media instance
      */
-    public MetaData(Map<Meta, String> values, Map<String, String> extraValues) {
-        this.values = Collections.unmodifiableMap(values);
-        this.extraValues = Collections.unmodifiableMap(extraValues);
+    public MetaData(libvlc_media_t media) {
+        for (Meta meta : Meta.values()) {
+            String value = getMetaValue(libvlc_media_get_meta(media, meta.intValue()));
+            if (value != null) {
+                values.put(meta, value);
+            }
+        }
+        List<String> extraNames = getExtraNames(media);
+        for (String extraName : extraNames) {
+            String extraValue = getMetaValue(libvlc_media_get_meta_extra(media, extraName));
+            extraValues.put(extraName, extraValue);
+        }
     }
 
     /**
@@ -85,6 +107,47 @@ public final class MetaData {
      */
     public Map<String, String> extraValues() {
         return new HashMap<>(extraValues);
+    }
+
+    /**
+     * Set the value for a particular type of metadata.
+     * <p>
+     * This does <strong>not</strong> save the media with the new meta, see {@link MediaPlayerFactory#meta()}.
+     *
+     * @param meta type of metadata
+     * @param value meta data value
+     */
+    public void set(Meta meta, String value) {
+        values.put(meta, value);
+    }
+
+    /**
+     * Set the value for a particular type of metadata extra.
+     * <p>
+     * This does <strong>not</strong> save the media with the new meta, see {@link MediaPlayerFactory#meta()}.
+     *
+     * @param name type of extra metadata
+     * @param value meta data value
+     */
+    public void set(String name, String value) {
+        extraValues.put(name, value);
+    }
+
+    private static String getMetaValue(Pointer pointer) {
+        return NativeString.copyAndFreeNativeString(pointer);
+    }
+
+    private static List<String> getExtraNames(libvlc_media_t mediaInstance) {
+        PointerByReference namesPointer = new PointerByReference();
+        int namesCount = libvlc_media_get_meta_extra_names(mediaInstance, namesPointer);
+        List<String> result = new ArrayList<>(namesCount);
+        Pointer[] namePointers = namesPointer.getValue().getPointerArray(0L, namesCount);
+        for (Pointer namePointer : namePointers) {
+            String name = NativeString.copyNativeString(namePointer);
+            result.add(name);
+        }
+        libvlc_media_meta_extra_names_release(namesPointer.getValue(), namesCount);
+        return result;
     }
 
     @Override

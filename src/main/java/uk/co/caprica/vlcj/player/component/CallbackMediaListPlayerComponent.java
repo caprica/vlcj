@@ -33,7 +33,7 @@ import javax.swing.*;
 /**
  * Implementation of a callback "direct-rendering" media list player.
  * <p>
- * This component renders video frames received via native callbacks.
+ * This component renders video frames received via native callback.
  * <p>
  * The component may be added directly to a user interface layout.
  * <p>
@@ -77,11 +77,9 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
         super(mediaPlayerFactory, fullScreenStrategy, inputEvents, bufferFormatCallback, lockBuffers, imagePainter, videoSurfaceComponent, renderCallback);
 
         this.mediaListPlayer = mediaPlayerFactory().mediaPlayers().newMediaListPlayer();
-        this.mediaListPlayer.mediaPlayer().setMediaPlayer(mediaPlayer());
-        this.mediaListPlayer.events().addMediaListPlayerEventListener(this);
+        this.mediaListPlayer.mediaPlayer().events().addMediaPlayerEventListener(this);
 
         this.mediaList = mediaPlayerFactory().media().newMediaList();
-        this.mediaList.events().addMediaListEventListener(this);
 
         applyMediaList();
 

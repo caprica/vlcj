@@ -50,14 +50,13 @@ import java.awt.image.DataBufferInt;
 /**
  * Implementation of a callback "direct-rendering" media player.
  * <p>
- * This component renders video frames received via native callbacks.
+ * This component renders video frames received via native callback.
  * <p>
  * The component may be added directly to a user interface layout - this is optional, you can use this component without
  * adding it directly to a user interface, in which case you would simply render the video however you like.
  * <p>
  * When the component is no longer needed, it should be released by invoking the {@link #release()} method.
  */
-@SuppressWarnings("serial")
 public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBase implements MediaPlayerComponent {
 
     /**
@@ -151,7 +150,6 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         this.mediaPlayer = this.mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
         this.mediaPlayer.fullScreen().strategy(fullScreenStrategy);
         this.mediaPlayer.events().addMediaPlayerEventListener(this);
-        this.mediaPlayer.events().addMediaEventListener(this);
 
         this.mediaPlayer.events().addMediaPlayerEventListener(new VideoTrackListener());
 
@@ -425,22 +423,22 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      */
     private class VideoTrackListener extends MediaPlayerEventAdapter {
         @Override
-        public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, String unselectedStreamId, String selectedStreamId) {
-            if (imagePainter == null || TrackType.VIDEO != type) {
+        public void trackSelectionChanged(MediaPlayer mediaPlayer, TrackType trackType, String unselectedTrackId, String selectedTrackId) {
+            if (imagePainter == null || TrackType.VIDEO != trackType) {
                 return;
             }
-            if (unselectedStreamId != null && unselectedStreamId.equals(selectedVideoTrackId)) {
+            if (unselectedTrackId != null && unselectedTrackId.equals(selectedVideoTrackId)) {
                 imagePainter.videoTrackChanged(null);
             }
-            selectedVideoTrackId = selectedStreamId;
+            selectedVideoTrackId = selectedTrackId;
         }
 
         @Override
-        public void elementaryStreamUpdated(MediaPlayer mediaPlayer, TrackType type, int id, String streamId) {
-            if (imagePainter == null || !streamId.equals(CallbackMediaPlayerComponent.this.selectedVideoTrackId)) {
+        public void trackUpdated(MediaPlayer mediaPlayer, TrackType trackType, String trackId) {
+            if (imagePainter == null || !trackId.equals(CallbackMediaPlayerComponent.this.selectedVideoTrackId)) {
                 return;
             }
-            VideoTrack track = (VideoTrack) mediaPlayer.tracks().track(streamId);
+            VideoTrack track = (VideoTrack) mediaPlayer.tracks().track(trackId);
             try {
                 imagePainter.videoTrackChanged(track);
             } finally {

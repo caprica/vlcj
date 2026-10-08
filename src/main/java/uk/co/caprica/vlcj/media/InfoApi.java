@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.media;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 
@@ -86,7 +87,7 @@ public final class InfoApi extends BaseApi {
      *
      * @return media statistics, or <code>null</code> on error
      */
-    public MediaStatistics statistics() {
+    public @Nullable MediaStatistics statistics() {
         if (libvlc_media_get_stats(mediaInstance, statsInstance) != 0) {
             MediaStatistics mediaStatistics = new MediaStatistics();
             mediaStatistics.apply(statsInstance);

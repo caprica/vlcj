@@ -53,7 +53,7 @@ public final class Info {
     /**
      * vlcj version.
      */
-    private Version vlcjVersion;
+    private final Version vlcjVersion;
 
     private final String os;
 

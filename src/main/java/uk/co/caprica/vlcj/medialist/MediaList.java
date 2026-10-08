@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.medialist;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_release;
@@ -31,39 +30,23 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_retain;
 public final class MediaList {
 
     /**
-     * Native library instance.
-     */
-    protected final libvlc_instance_t libvlcInstance;
-
-    /**
      * Native media list instance.
      */
-    protected final libvlc_media_list_t mediaListInstance;
+    private final libvlc_media_list_t mediaListInstance;
 
     private final MediaApi itemApi;
-    private final EventApi eventApi;
 
     /**
      * Create a new media list.
      *
-     * @param libvlcInstance native library instance
      * @param mediaListInstance native media list, the caller must not release this opaque handle, it will be released by this component when it is no longer needed
      */
-    public MediaList(libvlc_instance_t libvlcInstance, libvlc_media_list_t mediaListInstance) {
-        this.libvlcInstance    = libvlcInstance;
+    public MediaList(libvlc_media_list_t mediaListInstance) {
+        libvlc_media_list_retain(mediaListInstance);
+
         this.mediaListInstance = mediaListInstance;
 
-        this.eventApi = new EventApi(this);
-        this.itemApi  = new MediaApi(this);
-    }
-
-    /**
-     * Behaviour pertaining to media list events.
-     *
-     * @return events behaviour
-     */
-    public EventApi events() {
-        return eventApi;
+        this.itemApi = new MediaApi(this);
     }
 
     /**
@@ -85,27 +68,25 @@ public final class MediaList {
     }
 
     /**
-     * Create a new {@link MediaListRef} for this media list.
-     * <p>
-     * The caller <em>must</em> release the returned {@link MediaListRef} when it has no further use for it.
-     *
-     * @return media list reference
-     */
-    public MediaListRef newMediaListRef() {
-        libvlc_media_list_retain(mediaListInstance);
-        return new MediaListRef(libvlcInstance, mediaListInstance);
-    }
-
-    /**
      * Create a new {@link MediaList} for this media list.
      * <p>
-     * The caller <em>must</em> release the returned {@link MediaList} when it has no further use for it.
+     * The caller <em>must</em> release the new {@link MediaList} when it has no further use for it.
      *
      * @return media list
      */
     public MediaList newMediaList() {
-        libvlc_media_list_retain(mediaListInstance);
-        return new MediaList(libvlcInstance, mediaListInstance);
+        return new MediaList(mediaListInstance);
+    }
+
+    /**
+     * Create a new {@link MediaListRef} for this media list.
+     * <p>
+     * The caller <em>must</em> release the new {@link MediaListRef} when it has no further use for it.
+     *
+     * @return media list reference
+     */
+    public MediaListRef newMediaListRef() {
+        return new MediaListRef(mediaListInstance);
     }
 
     /**
@@ -114,7 +95,6 @@ public final class MediaList {
      * The component must no longer be used.
      */
     public void release() {
-        eventApi.release();
         itemApi .release();
 
         libvlc_media_list_release(mediaListInstance);

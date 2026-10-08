@@ -24,7 +24,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.RendererApi;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_item_flags;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_item_hold;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_item_retain;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_item_icon_uri;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_item_name;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_renderer_item_release;
@@ -148,7 +148,7 @@ public final class RendererItem {
      * @return <code>true</code> if the renderer item was successfully held; <code>false</code> on error
      */
     public boolean hold() {
-        return libvlc_renderer_item_hold(item) != null;
+        return libvlc_renderer_item_retain(item) != null;
     }
 
     /**

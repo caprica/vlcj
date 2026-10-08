@@ -24,12 +24,8 @@ package uk.co.caprica.vlcj.player.renderer;
  */
 public final class EventApi extends BaseApi {
 
-    private final RendererDiscovererNativeEventManager eventManager;
-
     EventApi(RendererDiscoverer rendererDiscoverer) {
         super(rendererDiscoverer);
-
-        this.eventManager = new RendererDiscovererNativeEventManager(rendererDiscoverer);
 
         // Add event handlers used for internal implementation
         addRendererDiscovererEventListener(new RendererItemListEventHandler());
@@ -41,7 +37,7 @@ public final class EventApi extends BaseApi {
      * @param listener component to notify
      */
     public void addRendererDiscovererEventListener(RendererDiscovererEventListener listener) {
-        eventManager.addEventListener(listener);
+        rendererDiscoverer.callbackHandler.addEventListener(listener);
     }
 
     /**
@@ -50,12 +46,6 @@ public final class EventApi extends BaseApi {
      * @param listener component to stop notifying
      */
     public void removeRendererDiscovererEventListener(RendererDiscovererEventListener listener) {
-        eventManager.removeEventListener(listener);
+        rendererDiscoverer.callbackHandler.removeEventListener(listener);
     }
-
-    @Override
-    protected void release() {
-        eventManager.release();
-    }
-
 }

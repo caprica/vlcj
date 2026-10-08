@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.medialist;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_release;
@@ -33,24 +32,49 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_retain;
 public final class MediaListRef {
 
     /**
-     * Native library instance.
-     */
-    private final libvlc_instance_t libvlcInstance;
-
-    /**
      * Native media list instance.
      */
     private final libvlc_media_list_t mediaListInstance;
 
     /**
      * Create a media list reference.
-     *
-     * @param libvlcInstance native library instance
-     * @param mediaListInstance native media lis tinstance
+     * <p>
+     * The caller <em>must</em> release this new {@link MediaListRef} when it has no further use for it.
      */
-    public MediaListRef(libvlc_instance_t libvlcInstance, libvlc_media_list_t mediaListInstance) {
-        this.libvlcInstance = libvlcInstance;
+    public MediaListRef(libvlc_media_list_t mediaListInstance) {
+        libvlc_media_list_retain(mediaListInstance);
         this.mediaListInstance = mediaListInstance;
+    }
+
+    /**
+     * Create a new {@link MediaListRef} for this {@link MediaListRef}.
+     * <p>
+     * The caller <em>must</em> release the new {@link MediaListRef} when it has no further use for it.
+     *
+     * @return media list reference
+     */
+    public MediaListRef newMediaListRef() {
+        return new MediaListRef(mediaListInstance);
+    }
+
+    /**
+     * Create a new {@link MediaList} for this {@link MediaListRef}.
+     * <p>
+     * The caller <em>must</em> release the new {@link MediaList} when it has no further use for it.
+     *
+     * @return media list
+     */
+    public MediaList newMediaList() {
+        return new MediaList(mediaListInstance);
+    }
+
+    /**
+     * Release associated native media list instance.
+     * <p>
+     * This component must no longer be used.
+     */
+    public void release() {
+        libvlc_media_list_release(mediaListInstance);
     }
 
     /**
@@ -61,38 +85,4 @@ public final class MediaListRef {
     public libvlc_media_list_t mediaListInstance() {
         return mediaListInstance;
     }
-
-    /**
-     * Create a new {@link MediaList} for this {@link MediaListRef}.
-     * <p>
-     * The caller <em>must</em> release the returned {@link MediaList} when it has no further use for it.
-     *
-     * @return media list
-     */
-    public MediaList newMediaList() {
-        libvlc_media_list_retain(mediaListInstance);
-        return new MediaList(libvlcInstance, mediaListInstance);
-    }
-
-    /**
-     * Create a new {@link MediaListRef} for this {@link MediaListRef}.
-     * <p>
-     * The caller <em>must</em> release the returned {@link MediaListRef} when it has no further use for it.
-     *
-     * @return media list reference
-     */
-    public MediaListRef newMediaListRef() {
-        libvlc_media_list_retain(mediaListInstance);
-        return new MediaListRef(libvlcInstance, mediaListInstance);
-    }
-
-    /**
-     * Release associated native media list instance.
-     * <p>
-     * This component must not longer be used.
-     */
-    public void release() {
-        libvlc_media_list_release(mediaListInstance);
-    }
-
 }

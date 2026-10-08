@@ -33,6 +33,7 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_titl
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_title_count;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_title;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_title_descriptions_release;
+import static uk.co.caprica.vlcj.player.base.TitleFlags.titleFlags;
 
 /**
  * Behaviour pertaining to media titles (e.g. DVD and Bluray titles).
@@ -87,7 +88,11 @@ public final class TitleApi extends BaseApi {
             for (Pointer pointer : pointers) {
                 libvlc_title_description_t titleDescription = Structure.newInstance(libvlc_title_description_t.class, pointer);
                 titleDescription.read();
-                result.add(new TitleDescription(titleDescription.i_duration, NativeString.copyNativeString(titleDescription.psz_name), titleDescription.i_flags));
+                result.add(new TitleDescription(
+                    titleDescription.i_duration,
+                    NativeString.copyNativeString(titleDescription.psz_name),
+                    titleFlags(titleDescription.i_flags)
+                ));
             }
             libvlc_title_descriptions_release(titles.getValue(), titleCount);
         } else {

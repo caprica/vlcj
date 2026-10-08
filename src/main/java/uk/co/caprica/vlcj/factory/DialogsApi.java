@@ -47,7 +47,7 @@ public final class DialogsApi extends BaseApi {
     }
 
     /**
-     * Enable native dialog callbacks.
+     * Enable native dialog callback.
      *
      * @param dialogs dialogs callback component
      */
@@ -56,14 +56,14 @@ public final class DialogsApi extends BaseApi {
     }
 
     /**
-     * Disable native dialog callbacks.
+     * Disable native dialog callback.
      */
     public void disable() {
         disable(null);
     }
 
     /**
-     * Enable native dialog callbacks, with user data.
+     * Enable native dialog callback, with user data.
      *
      * @param dialogs dialogs callback component
      * @param userData user data associated with the dialog
@@ -74,7 +74,7 @@ public final class DialogsApi extends BaseApi {
     }
 
     /**
-     * Disable native dialog callbacks, with user data.
+     * Disable native dialog callback, with user data.
      *
      * @param userData user data associated with the dialog
      */

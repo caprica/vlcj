@@ -74,7 +74,7 @@ public final class NativeLog {
     /**
      * Native log callback.
      */
-    private NativeLogCallback callback = new NativeLogCallback();
+    private final NativeLogCallback callback = new NativeLogCallback();
 
     /**
      * Log level.
@@ -99,7 +99,7 @@ public final class NativeLog {
      *
      * @param listener component to add
      */
-    public final void addLogListener(LogEventListener listener) {
+    public void addLogListener(LogEventListener listener) {
        eventListenerList.add(listener);
     }
 
@@ -108,7 +108,7 @@ public final class NativeLog {
      *
      * @param listener component to remove
      */
-    public final void removeLogListener(LogEventListener listener) {
+    public void removeLogListener(LogEventListener listener) {
         eventListenerList.remove(listener);
     }
 
@@ -120,7 +120,7 @@ public final class NativeLog {
      *
      * @param logLevel log threshold level
      */
-    public final void setLevel(LogLevel logLevel) {
+    public void setLevel(LogLevel logLevel) {
         this.logLevel = logLevel;
     }
 
@@ -129,7 +129,7 @@ public final class NativeLog {
      *
      * @return level
      */
-    public final LogLevel getLevel() {
+    public LogLevel getLevel() {
         return logLevel;
     }
 
@@ -169,7 +169,7 @@ public final class NativeLog {
                     byte[] bytes = new byte[size];
                     byteBuffer.get(bytes);
                     String message = new String(bytes);
-                    if (message.length() > 0) {
+                    if (!message.isEmpty()) {
                         // Get the information about the object that emitted the log statement
                         PointerByReference modulePointer = new PointerByReference();
                         PointerByReference filePointer = new PointerByReference();

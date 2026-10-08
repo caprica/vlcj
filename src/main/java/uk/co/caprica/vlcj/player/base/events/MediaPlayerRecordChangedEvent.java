@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.player.base.events;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.media_player_record_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
@@ -33,10 +31,10 @@ final class MediaPlayerRecordChangedEvent extends MediaPlayerEvent {
 
     private final String recordedFilePath;
 
-    MediaPlayerRecordChangedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
+    MediaPlayerRecordChangedEvent(MediaPlayer mediaPlayer, boolean recording, String recordedFilePath) {
         super(mediaPlayer);
-        this.recording = ((media_player_record_changed) event.u.getTypedValue(media_player_record_changed.class)).recording != 0;
-        this.recordedFilePath = ((media_player_record_changed) event.u.getTypedValue(media_player_record_changed.class)).recorded_file_path;
+        this.recording = recording;
+        this.recordedFilePath = recordedFilePath;
     }
 
     @Override

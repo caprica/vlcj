@@ -19,8 +19,6 @@
 
 package uk.co.caprica.vlcj.player.base.events;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_event_t;
-import uk.co.caprica.vlcj.binding.internal.media_player_length_changed;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
@@ -31,9 +29,9 @@ final class MediaPlayerLengthChangedEvent extends MediaPlayerEvent {
 
     private final long newLength;
 
-    MediaPlayerLengthChangedEvent(MediaPlayer mediaPlayer, libvlc_event_t event) {
+    MediaPlayerLengthChangedEvent(MediaPlayer mediaPlayer, long newLength) {
         super(mediaPlayer);
-        this.newLength = ((media_player_length_changed) event.u.getTypedValue(media_player_length_changed.class)).new_length;
+        this.newLength = newLength;
     }
 
     @Override

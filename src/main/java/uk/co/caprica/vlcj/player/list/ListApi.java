@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.list;
 
-import uk.co.caprica.vlcj.medialist.EventApi;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.medialist.MediaApi;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
@@ -65,7 +65,7 @@ public final class ListApi extends BaseApi {
             this.mediaList.release();
         }
         this.mediaList = mediaListRef.newMediaList();
-        libvlc_media_list_player_set_media_list(mediaListPlayerInstance, mediaListRef.mediaListInstance());
+        libvlc_media_list_player_set_media_list(mediaListPlayer.mediaListPlayerInstance(), mediaListRef.mediaListInstance());
     }
 
     /**
@@ -77,15 +77,6 @@ public final class ListApi extends BaseApi {
      */
     public boolean isValid() {
         return mediaList != null;
-    }
-
-    /**
-     * Delegated behaviour pertaining to the associated media list events.
-     *
-     * @return events behaviour, may be <code>null</code> if there is currently no media list
-     */
-    public EventApi events() {
-        return mediaList != null ? mediaList.events() : null;
     }
 
     /**

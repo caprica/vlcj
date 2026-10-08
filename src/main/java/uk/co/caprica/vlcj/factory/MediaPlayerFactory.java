@@ -24,7 +24,7 @@ import uk.co.caprica.vlcj.binding.lib.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
-import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
+import uk.co.caprica.vlcj.support.task.TaskExecutor;
 import uk.co.caprica.vlcj.support.version.LibVlcVersion;
 
 import java.util.Collection;
@@ -85,8 +85,10 @@ public class MediaPlayerFactory {
     private final EqualizerApi       equalizerApi;
     private final MediaPlayerApi     mediaPlayerApi;
     private final MediaApi           mediaApi;
+    private final MetaApi            metaApi;
     private final RendererApi        rendererApi;
     private final VideoSurfaceApi    videoSurfaceApi;
+    private final ParserApi          parserApi;
 
     /**
      * The discovery strategy instance that discovered the native library.
@@ -122,8 +124,10 @@ public class MediaPlayerFactory {
         this.equalizerApi       = new EqualizerApi      (this);
         this.mediaPlayerApi     = new MediaPlayerApi    (this);
         this.mediaApi           = new MediaApi          (this);
+        this.metaApi            = new MetaApi           (this);
         this.rendererApi        = new RendererApi       (this);
         this.videoSurfaceApi    = new VideoSurfaceApi   (this);
+        this.parserApi          = new ParserApi         (this);
     }
 
     /**
@@ -249,12 +253,20 @@ public class MediaPlayerFactory {
         return mediaApi;
     }
 
+    public final MetaApi meta() {
+        return metaApi;
+    }
+
     public final RendererApi renderers() {
         return rendererApi;
     }
 
     public final VideoSurfaceApi videoSurfaces() {
         return videoSurfaceApi;
+    }
+
+    public final ParserApi parsers() {
+        return parserApi;
     }
 
     /**
@@ -289,6 +301,7 @@ public class MediaPlayerFactory {
         equalizerApi      .release();
         mediaPlayerApi    .release();
         mediaApi          .release();
+        metaApi           .release();
         rendererApi       .release();
         videoSurfaceApi   .release();
 

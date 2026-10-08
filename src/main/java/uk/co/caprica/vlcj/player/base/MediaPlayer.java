@@ -23,7 +23,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.factory.LibVlcInstance;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.support.eventmanager.TaskExecutor;
+import uk.co.caprica.vlcj.support.task.TaskExecutor;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_new;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_release;
@@ -40,6 +40,13 @@ public class MediaPlayer {
      * Libvlc instance.
      */
     protected final libvlc_instance_t libvlcInstance;
+
+    /**
+     * Callback handler for native events.
+     * <p>
+     * Must pin a reference to this to keep the native callbacks alive.
+     */
+    protected final MediaPlayerCallbackHandler callbackHandler;
 
     /**
      * Native media player instance.
@@ -67,12 +74,11 @@ public class MediaPlayer {
     private final MediaApi      mediaApi;
     private final MenuApi       menuApi;
     private final ProgramApi    programApi;
-    private final RecordApi    recordApi;
+    private final RecordApi     recordApi;
     private final RendererApi   rendererApi;
     private final RoleApi       roleApi;
     private final SnapshotApi   snapshotApi;
     private final StatusApi     statusApi;
-    private final SubitemApi    subitemApi;
     private final SubpictureApi subpictureApi;
     private final TeletextApi   teletextApi;
     private final TimeApi       timeApi;
@@ -86,20 +92,14 @@ public class MediaPlayer {
      * @param instance libvlc instance
      */
     public MediaPlayer(libvlc_instance_t instance) {
-        this(instance, newNativeMediaPlayer(instance));
-    }
-
-    /**
-     * Create a new media player.
-     * <p>
-     * This constructor for internal use only.
-     *
-     * @param instance libvlc instance
-     * @param mediaPlayerInstance native media player instance
-     */
-    public MediaPlayer(libvlc_instance_t instance, libvlc_media_player_t mediaPlayerInstance) {
         this.libvlcInstance = instance;
-        this.mediaPlayerInstance = mediaPlayerInstance;
+
+        this.callbackHandler = initCallbackHandler();
+        this.mediaPlayerInstance = initMediaPlayer(this.callbackHandler);
+
+        if (this.mediaPlayerInstance == null) {
+            throw new RuntimeException("Failed to get a new native media player instance");
+        }
 
         audioApi      = new AudioApi     (this);
         chapterApi    = new ChapterApi   (this);
@@ -115,7 +115,6 @@ public class MediaPlayer {
         roleApi       = new RoleApi      (this);
         snapshotApi   = new SnapshotApi  (this);
         statusApi     = new StatusApi    (this);
-        subitemApi    = new SubitemApi   (this);
         subpictureApi = new SubpictureApi(this);
         teletextApi   = new TeletextApi  (this);
         timeApi       = new TimeApi      (this);
@@ -137,13 +136,12 @@ public class MediaPlayer {
         this(instance.get());
     }
 
-    private static libvlc_media_player_t newNativeMediaPlayer(libvlc_instance_t instance) {
-        libvlc_media_player_t result = libvlc_media_player_new(instance);
-        if (result != null) {
-            return result;
-        } else {
-            throw new RuntimeException("Failed to get a new native media player instance");
-        }
+    protected MediaPlayerCallbackHandler initCallbackHandler() {
+        return new MediaPlayerCallbackHandler(this);
+    }
+
+    protected libvlc_media_player_t initMediaPlayer(MediaPlayerCallbackHandler callbackHandler) {
+        return libvlc_media_player_new(this.libvlcInstance, callbackHandler.callbacks(), null);
     }
 
     public final AudioApi audio() {
@@ -200,10 +198,6 @@ public class MediaPlayer {
 
     public final StatusApi status() {
         return statusApi;
-    }
-
-    public final SubitemApi subitems() {
-        return subitemApi;
     }
 
     public final SubpictureApi subpictures() {
@@ -285,7 +279,6 @@ public class MediaPlayer {
         roleApi      .release();
         snapshotApi  .release();
         statusApi    .release();
-        subitemApi   .release();
         subpictureApi.release();
         teletextApi  .release();
         timeApi      .release();
@@ -332,5 +325,4 @@ public class MediaPlayer {
     public final libvlc_media_player_t mediaPlayerInstance() {
         return mediaPlayerInstance;
     }
-
 }

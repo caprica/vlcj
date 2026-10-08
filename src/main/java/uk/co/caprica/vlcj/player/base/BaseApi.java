@@ -29,13 +29,10 @@ abstract class BaseApi {
 
     protected final MediaPlayer mediaPlayer;
 
-    protected final libvlc_instance_t libvlcInstance;
-
     protected final libvlc_media_player_t mediaPlayerInstance;
 
     protected BaseApi(MediaPlayer mediaPlayer) {
         this.mediaPlayer         = mediaPlayer;
-        this.libvlcInstance      = mediaPlayer.libvlcInstance;
         this.mediaPlayerInstance = mediaPlayer.mediaPlayerInstance();
     }
 

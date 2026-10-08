@@ -46,7 +46,7 @@ public final class MediaApi extends BaseApi {
      * @return media reference, or <code>null</code> on error
      */
     public MediaRef newMediaRef(String mrl, String... options) {
-        return MediaFactory.newMediaRef(libvlcInstance, mrl, options);
+        return MediaFactory.newMediaRef(mrl, options);
     }
 
     /**
@@ -62,7 +62,7 @@ public final class MediaApi extends BaseApi {
      * @return media reference, or <code>null</code> on error
      */
     public MediaRef newMediaRef(CallbackMedia callbackMedia, String... options) {
-        return MediaFactory.newMediaRef(libvlcInstance, callbackMedia, options);
+        return MediaFactory.newMediaRef(callbackMedia, options);
     }
 
     /**
@@ -77,7 +77,7 @@ public final class MediaApi extends BaseApi {
      * @return media reference, or <code>null</code> on error
      */
     public MediaRef newMediaRef(Media media, String... options) {
-        return MediaFactory.newMediaRef(libvlcInstance, media, options);
+        return MediaFactory.newMediaRef(media, options);
     }
 
     /**
@@ -92,7 +92,7 @@ public final class MediaApi extends BaseApi {
      * @return media reference, or <code>null</code> on error
      */
     public MediaRef newMediaRef(MediaRef mediaRef, String... options) {
-        return MediaFactory.newMediaRef(libvlcInstance, mediaRef, options);
+        return MediaFactory.newMediaRef( mediaRef, options);
     }
 
     /**
@@ -105,7 +105,7 @@ public final class MediaApi extends BaseApi {
      * @return media, or <code>null</code> on error
      */
     public Media newMedia(String mrl, String... options) {
-        return MediaFactory.newMedia(libvlcInstance, mrl, options);
+        return MediaFactory.newMedia(mrl, options);
     }
 
     /**
@@ -121,7 +121,7 @@ public final class MediaApi extends BaseApi {
      * @return media, or <code>null</code> on error
      */
     public Media newMedia(CallbackMedia callbackMedia, String... options) {
-        return MediaFactory.newMedia(libvlcInstance, callbackMedia, options);
+        return MediaFactory.newMedia(callbackMedia, options);
     }
 
     /**
@@ -136,7 +136,7 @@ public final class MediaApi extends BaseApi {
      * @return media, or <code>null</code> on error
      */
     public Media newMedia(MediaRef mediaRef, String... options) {
-        return MediaFactory.newMedia(libvlcInstance, mediaRef, options);
+        return MediaFactory.newMedia(mediaRef, options);
     }
 
     /**
@@ -151,7 +151,7 @@ public final class MediaApi extends BaseApi {
      * @return media, or <code>null</code> on error
      */
     public Media newMedia(Media media, String... options) {
-        return MediaFactory.newMedia(libvlcInstance, media, options);
+        return MediaFactory.newMedia(media, options);
     }
 
     /**
@@ -160,7 +160,7 @@ public final class MediaApi extends BaseApi {
      * @return media list reference, or <code>null</code> on error
      */
     public MediaListRef newMediaListRef() {
-        return MediaListFactory.newMediaListRef(libvlcInstance);
+        return MediaListFactory.newMediaListRef();
     }
 
     /**
@@ -169,7 +169,7 @@ public final class MediaApi extends BaseApi {
      * @return media list, or <code>null</code> on error
      */
     public MediaList newMediaList() {
-        return MediaListFactory.newMediaList(libvlcInstance);
+        return MediaListFactory.newMediaList();
     }
 
 }

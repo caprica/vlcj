@@ -24,9 +24,9 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_discoverer_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_destroy;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_is_running;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_media_list;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_release;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_new;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_start;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_stop;
 
@@ -36,25 +36,32 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_discoverer_stop
 public final class MediaDiscoverer {
 
     /**
-     * Native discoverer instance.
+     * Callback handler for native events.
      */
-    private final libvlc_media_discoverer_t discoverer;
+    final MediaDiscovererCallbackHandler callbackHandler;
 
     /**
-     * List of discovered media.
+     * Native media discoverer instance.
      */
-    private final MediaList mediaList;
+    private final libvlc_media_discoverer_t discovererInstance;
+
+
+    /**
+     * Event API.
+     */
+    private final EventApi eventApi;
 
     /**
      * Create a media discoverer
      *
      * @param libvlcInstance native library instance
-     * @param discovererInstance native media discoverer instance
-     * @return media discoverer
+     * @param name native media discoverer name
      */
-    MediaDiscoverer(libvlc_instance_t libvlcInstance, libvlc_media_discoverer_t discovererInstance) {
-        this.discoverer = discovererInstance;
-        this.mediaList = new MediaList(libvlcInstance, libvlc_media_discoverer_media_list(discovererInstance));
+    public MediaDiscoverer(libvlc_instance_t libvlcInstance, String name) {
+        this.callbackHandler = new MediaDiscovererCallbackHandler(this);
+        this.discovererInstance = libvlc_media_discoverer_new(libvlcInstance, name, callbackHandler.callbacks(), null);
+
+        this.eventApi = new EventApi(this);
     }
 
     /**
@@ -63,14 +70,14 @@ public final class MediaDiscoverer {
      * @return <code>true</code> if successful; <code>false</code> if error
      */
     public boolean start() {
-        return libvlc_media_discoverer_start(discoverer) == 0;
+        return libvlc_media_discoverer_start(discovererInstance) == 0;
     }
 
     /**
      * Stop media discovery.
      */
     public void stop() {
-        libvlc_media_discoverer_stop(discoverer);
+        libvlc_media_discoverer_stop(discovererInstance);
     }
 
     /**
@@ -79,37 +86,23 @@ public final class MediaDiscoverer {
      * @return <code>true</code> if discovery is running; <code>false</code> if it is not
      */
     public boolean isRunning() {
-        return libvlc_media_discoverer_is_running(discoverer) != 0;
+        return libvlc_media_discoverer_is_running(discovererInstance) != 0;
     }
 
     /**
-     * Get the discovered media list.
-     * <p>
-     * The caller <em>must</em> release the returned {@link MediaList} when it has no further use for it.
+     * Get the events API.
      *
-     * @return media list
+     * @return events API
      */
-    public MediaList newMediaList() {
-        return mediaList.newMediaList();
-    }
-
-    /**
-     * Get the discovered media list as a {@link MediaListRef}.
-     * <p>
-     * The caller <em>must</em> release the returned {@link MediaList} when it has no further use for it.
-     *
-     * @return media list
-     */
-    public MediaListRef newNediaListRef() {
-        return mediaList.newMediaListRef();
+    public EventApi events() {
+        return eventApi;
     }
 
     /**
      * Release the media discoverer and any associated native resources.
      */
     public void release() {
-        mediaList.release();
-        libvlc_media_discoverer_release(discoverer);
+        eventApi.release();
+        libvlc_media_discoverer_destroy(discovererInstance);
     }
-
 }

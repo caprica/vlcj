@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_title_flags_e;
+import java.util.EnumSet;
 
 /**
  * Title description.
@@ -39,7 +39,7 @@ public class TitleDescription {
     /**
      * Does the title represent a menu, interactive or plain content.
      */
-    private final int flags;
+    private final EnumSet<TitleFlags> flags;
 
     /**
      * Create a new title description.
@@ -48,7 +48,7 @@ public class TitleDescription {
      * @param name title name
      * @param flags title flags
      */
-    public TitleDescription(long duration, String name, int flags) {
+    public TitleDescription(long duration, String name, EnumSet<TitleFlags> flags) {
         this.duration = duration;
         this.name = name;
         this.flags = flags;
@@ -77,7 +77,7 @@ public class TitleDescription {
      *
      * @return title flags
      */
-    public int flags() {
+    public EnumSet<TitleFlags> flags() {
         return flags;
     }
 
@@ -87,7 +87,7 @@ public class TitleDescription {
      * @return <code>true</code> if this title is a menu; <code>false</code> if it is not
      */
     public boolean menu() {
-        return (flags & libvlc_title_flags_e.libvlc_title_menu) != 0;
+        return flags.contains(TitleFlags.MENU);
     }
 
     /**
@@ -96,7 +96,16 @@ public class TitleDescription {
      * @return <code>true</code> if this title is interactive; <code>false</code> if it is not
      */
     public boolean interactive() {
-        return (flags & libvlc_title_flags_e.libvlc_title_interactive) != 0;
+        return flags.contains(TitleFlags.INTERACTIVE);
+    }
+
+    /**
+     * Is this title plain content?
+     *
+     * @return <code>true</code> if this title is plain content; <code>false</code> if it is not
+     */
+    public boolean plain() {
+        return !menu() && !interactive();
     }
 
     @Override
@@ -107,7 +116,8 @@ public class TitleDescription {
         sb.append("name=").append(name).append(',');
         sb.append("flags=").append(flags).append(',');
         sb.append("menu=").append(menu()).append(',');
-        sb.append("interactive=").append(interactive()).append(']');
+        sb.append("interactive=").append(interactive()).append(',');
+        sb.append("plain=").append(plain()).append(']');
         return sb.toString();
     }
 }
