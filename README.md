@@ -47,7 +47,7 @@ Build Status
 Recent News
 ===========
 
-__October 2026__ 5.0.0-M5 milestone release:
+__October 2026__ 5.0.0-M6 milestone release:
 
 >A new development milestone release has been created. You will need an up-to-date nightly build of VLC 4.x to use this.
 With this release, there are unavoidable breaking API changes. This is because LibVLC has had its own major breaking
