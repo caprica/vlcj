@@ -124,7 +124,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * @return list of audio devices, may be empty but not <code>null</code>
      */
     public List<AudioDevice> outputDevices() {
-        List<AudioDevice> result = new ArrayList<AudioDevice>();
+        List<AudioDevice> result = new ArrayList<>();
         libvlc_audio_output_device_t audioDevices = libvlc_audio_output_device_enum(mediaPlayerInstance);
         if (audioDevices != null) {
             libvlc_audio_output_device_t audioDevice = audioDevices;

@@ -36,7 +36,7 @@ public enum VideoOrientation {
     RIGHT_TOP   (6),   /* Rotated 90 degrees anti-clockwise */
     RIGHT_BOTTOM(7);   /* Anti-transposed */
 
-    private static final Map<Integer, VideoOrientation> INT_MAP = new HashMap<Integer, VideoOrientation>();
+    private static final Map<Integer, VideoOrientation> INT_MAP = new HashMap<>();
 
     static {
         for (VideoOrientation orientation : VideoOrientation.values()) {

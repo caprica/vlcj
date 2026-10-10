@@ -58,7 +58,7 @@ public final class ProgramApi extends BaseApi {
         libvlc_player_programlist_t programList = libvlc_media_player_get_programlist(mediaPlayerInstance);
         if (programList != null) {
             int count = libvlc_player_programlist_count(programList).intValue();
-            List<Program> result = new ArrayList<Program>(count);
+            List<Program> result = new ArrayList<>(count);
             for (int i = 0; i < count; i++) {
                 libvlc_player_program_t programInstance = libvlc_player_programlist_at(programList, new size_t(i));
                 // This native instance must NOT be freed here

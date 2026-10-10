@@ -59,7 +59,7 @@ public final class EqualizerApi extends BaseApi {
      * @return list of frequencies (Hz)
      */
     public List<Float> bands() {
-        return new ArrayList<Float>(bands);
+        return new ArrayList<>(bands);
     }
 
     /**
@@ -68,7 +68,7 @@ public final class EqualizerApi extends BaseApi {
      * @return list of preset names
      */
     public List<String> presets() {
-        return new ArrayList<String>(presets);
+        return new ArrayList<>(presets);
     }
 
     /**
@@ -118,7 +118,7 @@ public final class EqualizerApi extends BaseApi {
      * @return map of preset name to equalizer instance, sorted by name
      */
     public final Map<String, Equalizer> allPresetEqualizers() {
-        Map<String, Equalizer> result = new TreeMap<String, Equalizer>();
+        Map<String, Equalizer> result = new TreeMap<>();
         for (String preset : presets) {
             Equalizer equalizer = newEqualizer(preset);
             if (equalizer != null) {
@@ -130,7 +130,7 @@ public final class EqualizerApi extends BaseApi {
 
     private List<Float> cacheBands() {
         int numBands = libvlc_audio_equalizer_get_band_count();
-        List<Float> result = new ArrayList<Float>(numBands);
+        List<Float> result = new ArrayList<>(numBands);
         for (int i = 0; i < numBands; i++) {
             result.add(libvlc_audio_equalizer_get_band_frequency(i));
         }
@@ -139,7 +139,7 @@ public final class EqualizerApi extends BaseApi {
 
     private List<String> cachePresets() {
         int numPresets = libvlc_audio_equalizer_get_preset_count();
-        List<String> result = new ArrayList<String>(numPresets);
+        List<String> result = new ArrayList<>(numPresets);
         for (int i = 0; i < numPresets; i++) {
             result.add(libvlc_audio_equalizer_get_preset_name(i));
         }

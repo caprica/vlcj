@@ -83,7 +83,7 @@ public final class TitleApi extends BaseApi {
         PointerByReference titles = new PointerByReference();
         int titleCount = libvlc_media_player_get_full_title_descriptions(mediaPlayerInstance, titles);
         if (titleCount != -1) {
-            result = new ArrayList<TitleDescription>(titleCount);
+            result = new ArrayList<>(titleCount);
             Pointer[] pointers = titles.getValue().getPointerArray(0, titleCount);
             for (Pointer pointer : pointers) {
                 libvlc_title_description_t titleDescription = Structure.newInstance(libvlc_title_description_t.class, pointer);
@@ -96,7 +96,7 @@ public final class TitleApi extends BaseApi {
             }
             libvlc_title_descriptions_release(titles.getValue(), titleCount);
         } else {
-            result = new ArrayList<TitleDescription>(0);
+            result = new ArrayList<>(0);
         }
         return result;
     }

@@ -63,7 +63,7 @@ abstract public class DirectoryProviderDiscoveryStrategy extends BaseNativeDisco
 
     @Override
     public final List<String> discoveryDirectories() {
-        List<String> directories = new ArrayList<String>();
+        List<String> directories = new ArrayList<>();
         for (DiscoveryDirectoryProvider provider : getSupportedProviders()) {
             directories.addAll(Arrays.asList(provider.directories()));
         }
@@ -71,7 +71,7 @@ abstract public class DirectoryProviderDiscoveryStrategy extends BaseNativeDisco
     }
 
     private List<DiscoveryDirectoryProvider> getSupportedProviders() {
-        List<DiscoveryDirectoryProvider> result = new ArrayList<DiscoveryDirectoryProvider>();
+        List<DiscoveryDirectoryProvider> result = new ArrayList<>();
         for (DiscoveryDirectoryProvider service : directoryProviders) {
             if (service.supported()) {
                 result.add(service);

@@ -307,7 +307,7 @@ public final class TrackApi extends BaseApi {
      * @param tracks tracks to select
      */
     private void select(TrackType type, Track[] tracks) {
-        List<libvlc_media_track_t> list = new ArrayList<libvlc_media_track_t>(tracks.length);
+        List<libvlc_media_track_t> list = new ArrayList<>(tracks.length);
         // Filter tracks of the requested type
         for (int i = 0; i < tracks.length; i++) {
             Track track = tracks[i];

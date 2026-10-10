@@ -39,7 +39,7 @@ final class MediaSlaves {
     static List<MediaSlave> getMediaSlaves(libvlc_media_t media) {
         PointerByReference slavesPointer = new PointerByReference();
         int numberOfSlaves = libvlc_media_slaves_get(media, slavesPointer);
-        List<MediaSlave> result = new ArrayList<MediaSlave>(numberOfSlaves);
+        List<MediaSlave> result = new ArrayList<>(numberOfSlaves);
         if (numberOfSlaves > 0) {
             Pointer[] pointers = slavesPointer.getValue().getPointerArray(0, numberOfSlaves);
             for (Pointer pointer : pointers) {

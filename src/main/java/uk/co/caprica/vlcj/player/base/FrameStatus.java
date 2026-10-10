@@ -10,7 +10,7 @@ public enum FrameStatus {
     NOT_SUPPORTED(-95),
     INVALID(-22);
 
-    private static final Map<Integer, FrameStatus> INT_MAP = new HashMap<Integer, FrameStatus>();
+    private static final Map<Integer, FrameStatus> INT_MAP = new HashMap<>();
 
     static {
         for (FrameStatus status : FrameStatus.values()) {

@@ -42,7 +42,7 @@ public enum DeinterlaceStatus {
      */
     ENABLED(1);
 
-    private static final Map<Integer, DeinterlaceStatus> INT_MAP = new HashMap<Integer, DeinterlaceStatus>();
+    private static final Map<Integer, DeinterlaceStatus> INT_MAP = new HashMap<>();
 
     static {
         for (DeinterlaceStatus value : DeinterlaceStatus.values()) {

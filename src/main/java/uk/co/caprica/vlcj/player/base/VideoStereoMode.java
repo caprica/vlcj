@@ -33,7 +33,7 @@ public enum VideoStereoMode {
     RIGHT_EYE   ( 3),
     SIDE_BY_SIDE( 4);
 
-    private static final Map<Integer, VideoStereoMode> INT_MAP = new HashMap<Integer, VideoStereoMode>();
+    private static final Map<Integer, VideoStereoMode> INT_MAP = new HashMap<>();
 
     static {
         for (VideoStereoMode value : VideoStereoMode.values()) {

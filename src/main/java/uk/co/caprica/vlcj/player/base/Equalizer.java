@@ -43,7 +43,7 @@ public final class Equalizer {
     /**
      * Collection of components listening for equalizer state changes.
      */
-    private final List<EqualizerListener> listeners = new ArrayList<EqualizerListener>();
+    private final List<EqualizerListener> listeners = new ArrayList<>();
 
     /**
      * Preamplification value.

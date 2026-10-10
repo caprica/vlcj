@@ -103,7 +103,7 @@ public final class ChapterApi extends BaseApi {
         PointerByReference chapters = new PointerByReference();
         int chapterCount = libvlc_media_player_get_full_chapter_descriptions(mediaPlayerInstance, title, chapters);
         if (chapterCount != -1) {
-            result = new ArrayList<ChapterDescription>(chapterCount);
+            result = new ArrayList<>(chapterCount);
             Pointer[] pointers = chapters.getValue().getPointerArray(0, chapterCount);
             for (Pointer pointer : pointers) {
                 libvlc_chapter_description_t chapterDescription = Structure.newInstance(libvlc_chapter_description_t.class, pointer);
@@ -112,7 +112,7 @@ public final class ChapterApi extends BaseApi {
             }
             libvlc_chapter_descriptions_release(chapters.getValue(), chapterCount);
         } else {
-            result = new ArrayList<ChapterDescription>(0);
+            result = new ArrayList<>(0);
         }
         return result;
     }
@@ -137,7 +137,7 @@ public final class ChapterApi extends BaseApi {
      */
     public List<List<ChapterDescription>> allDescriptions() {
         int titleCount = mediaPlayer.titles().titleCount();
-        List<List<ChapterDescription>> result = new ArrayList<List<ChapterDescription>>(Math.max(titleCount, 0));
+        List<List<ChapterDescription>> result = new ArrayList<>(Math.max(titleCount, 0));
         for (int i = 0; i < titleCount; i ++ ) {
             result.add(descriptions(i));
         }

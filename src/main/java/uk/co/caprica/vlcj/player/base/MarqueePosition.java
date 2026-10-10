@@ -39,7 +39,7 @@ public enum MarqueePosition {
     BOTTOM_LEFT ( 9),
     BOTTOM_RIGHT(10);
 
-    private static final Map<Integer, MarqueePosition> INT_MAP = new HashMap<Integer, MarqueePosition>();
+    private static final Map<Integer, MarqueePosition> INT_MAP = new HashMap<>();
 
     static {
         for (MarqueePosition value : MarqueePosition.values()) {

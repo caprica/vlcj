@@ -523,7 +523,7 @@ public final class MediaApi extends BaseApi {
     }
 
     private String[] startPausedOptions(String... options) {
-        List<String> list = new ArrayList<String>(options.length + 1);
+        List<String> list = new ArrayList<>(options.length + 1);
         list.add(START_PAUSED_OPTION);
         list.addAll(Arrays.asList(options));
         return list.toArray(new String[0]);

@@ -31,7 +31,7 @@ public enum DialogQuestionType {
     WARNING (1),
     CRITICAL(2);
 
-    private static final Map<Integer, DialogQuestionType> INT_MAP = new HashMap<Integer, DialogQuestionType>();
+    private static final Map<Integer, DialogQuestionType> INT_MAP = new HashMap<>();
 
     static {
         for (DialogQuestionType questionType : DialogQuestionType.values()) {

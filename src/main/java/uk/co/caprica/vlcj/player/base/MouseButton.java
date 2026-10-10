@@ -31,7 +31,7 @@ public enum MouseButton {
     MIDDLE( 1),
     RIGHT ( 2);
 
-    private static final Map<Integer, MouseButton> INT_MAP = new HashMap<Integer, MouseButton>();
+    private static final Map<Integer, MouseButton> INT_MAP = new HashMap<>();
 
     static {
         for (MouseButton value : MouseButton.values()) {

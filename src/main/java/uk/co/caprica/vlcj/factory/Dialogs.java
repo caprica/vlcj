@@ -48,10 +48,10 @@ public final class Dialogs {
 
     private final libvlc_dialog_cbs callbacks;
 
-    private final List<DialogHandler> handlerList = new CopyOnWriteArrayList<DialogHandler>();
+    private final List<DialogHandler> handlerList = new CopyOnWriteArrayList<>();
 
     Dialogs(DialogType... dialogTypes) {
-        Set<DialogType> enableTypes = new HashSet<DialogType>();
+        Set<DialogType> enableTypes = new HashSet<>();
         Collections.addAll(enableTypes, dialogTypes.length > 0 ? dialogTypes : DialogType.values());
         this.errorCallback = createErrorCallback(enableTypes);
         this.callbacks = createCallbacks(enableTypes);

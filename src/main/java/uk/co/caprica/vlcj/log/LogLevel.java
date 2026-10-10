@@ -32,7 +32,7 @@ public enum LogLevel {
     WARNING(3), // Warning (potential error) message
     ERROR  (4); // Error message
 
-    private static final Map<Integer, LogLevel> INT_MAP = new HashMap<Integer, LogLevel>();
+    private static final Map<Integer, LogLevel> INT_MAP = new HashMap<>();
 
     static {
         for (LogLevel event : LogLevel.values()) {

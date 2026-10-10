@@ -32,7 +32,7 @@ public enum MediaDiscovererCategory {
     PODCASTS  (2), // podcasts
     LOCAL_DIRS(3); // local directories, like video, music or pictures directories
 
-    private static final Map<Integer, MediaDiscovererCategory> INT_MAP = new HashMap<Integer, MediaDiscovererCategory>();
+    private static final Map<Integer, MediaDiscovererCategory> INT_MAP = new HashMap<>();
 
     static {
         for (MediaDiscovererCategory value : MediaDiscovererCategory.values()) {

@@ -180,7 +180,7 @@ public final class ApplicationApi extends BaseApi {
      * @return collection of module descriptions
      */
     private List<ModuleDescription> getModuleDescriptions(libvlc_module_description_t moduleDescriptions) {
-        List<ModuleDescription> result = new ArrayList<ModuleDescription>();
+        List<ModuleDescription> result = new ArrayList<>();
         libvlc_module_description_t moduleDescription = moduleDescriptions;
         while(moduleDescription != null) {
             result.add(new ModuleDescription(moduleDescription.psz_name, moduleDescription.psz_shortname, moduleDescription.psz_longname, moduleDescription.psz_help, moduleDescription.psz_help_html));

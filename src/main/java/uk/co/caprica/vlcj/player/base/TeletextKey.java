@@ -33,7 +33,7 @@ public enum TeletextKey {
     BLUE  ('b' << 16),
     INDEX ('i' << 16);
 
-    private static final Map<Integer, TeletextKey> INT_MAP = new HashMap<Integer, TeletextKey>();
+    private static final Map<Integer, TeletextKey> INT_MAP = new HashMap<>();
 
     static {
         for (TeletextKey key : TeletextKey.values()) {

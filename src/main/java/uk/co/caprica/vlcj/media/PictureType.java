@@ -33,7 +33,7 @@ public enum PictureType {
     WEBP(3),
     RGBA(4);
 
-    private static final Map<Integer, PictureType> INT_MAP = new HashMap<Integer, PictureType>();
+    private static final Map<Integer, PictureType> INT_MAP = new HashMap<>();
 
     static {
         for (PictureType event : PictureType.values()) {

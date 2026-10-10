@@ -84,7 +84,7 @@ public enum DeinterlaceMode {
      */
     AUTO("auto");
 
-    private static final Map<String, DeinterlaceMode> STRING_MAP = new HashMap<String, DeinterlaceMode>();
+    private static final Map<String, DeinterlaceMode> STRING_MAP = new HashMap<>();
 
     static {
         for (DeinterlaceMode value : DeinterlaceMode.values()) {

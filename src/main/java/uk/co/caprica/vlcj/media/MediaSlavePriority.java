@@ -33,7 +33,7 @@ public enum MediaSlavePriority {
     HIGH   (3),
     HIGHEST(4);
 
-    private static final Map<Integer, MediaSlavePriority> INT_MAP = new HashMap<Integer, MediaSlavePriority>();
+    private static final Map<Integer, MediaSlavePriority> INT_MAP = new HashMap<>();
 
     static {
         for (MediaSlavePriority value : MediaSlavePriority.values()) {

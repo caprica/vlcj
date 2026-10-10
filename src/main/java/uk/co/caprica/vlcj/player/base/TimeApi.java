@@ -52,7 +52,7 @@ public final class TimeApi extends BaseApi {
     public static final long NORMAL_MINIMUM_UPDATE_PERIOD = 500_000L;
     public static final long COARSE_MINIMUM_UPDATE_PERIOD = 1_000_000L;
 
-    private final List<WatchTimeListener> eventListenerList = new CopyOnWriteArrayList<WatchTimeListener>();
+    private final List<WatchTimeListener> eventListenerList = new CopyOnWriteArrayList<>();
 
     @Nullable
     private InterpolatedWatchTimeHandler watchTimeHandler;

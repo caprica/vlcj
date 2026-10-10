@@ -30,7 +30,7 @@ public enum OptionFlag {
     TRUSTED(0X2),
     UNIQUE (0X100);
 
-    private static final Map<Integer, OptionFlag> INT_MAP = new HashMap<Integer, OptionFlag>();
+    private static final Map<Integer, OptionFlag> INT_MAP = new HashMap<>();
 
     static {
         for (OptionFlag value : OptionFlag.values()) {

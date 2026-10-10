@@ -30,7 +30,7 @@ public enum MediaSlaveType {
     SUBTITLE(0),
     GENERIC (1);
 
-    private static final Map<Integer, MediaSlaveType> INT_MAP = new HashMap<Integer, MediaSlaveType>();
+    private static final Map<Integer, MediaSlaveType> INT_MAP = new HashMap<>();
 
     static {
         for (MediaSlaveType value : MediaSlaveType.values()) {

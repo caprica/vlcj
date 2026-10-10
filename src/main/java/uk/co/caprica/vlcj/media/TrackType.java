@@ -32,7 +32,7 @@ public enum TrackType {
     VIDEO  ( 1),
     TEXT   ( 2);
 
-    private static final Map<Integer, TrackType> INT_MAP = new HashMap<Integer, TrackType>();
+    private static final Map<Integer, TrackType> INT_MAP = new HashMap<>();
 
     static {
         for (TrackType value : TrackType.values()) {

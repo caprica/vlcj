@@ -38,7 +38,7 @@ public enum MediaPlayerRole {
     ACCESSIBILITY(8), /* Accessibility */
     TEST         (9); /* Testing */
 
-    private static final Map<Integer, MediaPlayerRole> INT_MAP = new HashMap<Integer, MediaPlayerRole>();
+    private static final Map<Integer, MediaPlayerRole> INT_MAP = new HashMap<>();
 
     static {
         for (MediaPlayerRole role : MediaPlayerRole.values()) {

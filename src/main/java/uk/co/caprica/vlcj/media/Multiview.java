@@ -35,7 +35,7 @@ public enum Multiview {
     STEREO_FRAME(5), /** Frame sequential */
     CHECKERBOARD(6); /** Checkerboard pattern */
 
-    private static final Map<Integer, Multiview> INT_MAP = new HashMap<Integer, Multiview>();
+    private static final Map<Integer, Multiview> INT_MAP = new HashMap<>();
 
     static {
         for (Multiview multiview : Multiview.values()) {

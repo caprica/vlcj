@@ -31,7 +31,7 @@ public enum PlaybackMode {
     LOOP   (1),
     REPEAT (2);
 
-    private static final Map<Integer, PlaybackMode> INT_MAP = new HashMap<Integer, PlaybackMode>();
+    private static final Map<Integer, PlaybackMode> INT_MAP = new HashMap<>();
 
     static {
         for (PlaybackMode event : PlaybackMode.values()) {

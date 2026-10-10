@@ -33,7 +33,7 @@ public enum TitleFlags {
     MENU(1),
     INTERACTIVE(2);
 
-    private static final Map<Integer, TitleFlags> INT_MAP = new HashMap<Integer, TitleFlags>();
+    private static final Map<Integer, TitleFlags> INT_MAP = new HashMap<>();
 
     static {
         for (TitleFlags event : TitleFlags.values()) {

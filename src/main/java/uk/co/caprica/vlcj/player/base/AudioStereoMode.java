@@ -37,7 +37,7 @@ public enum AudioStereoMode {
     DOLBYS    ( 5),
     MONO      ( 7);
 
-    private static final Map<Integer, AudioStereoMode> INT_MAP = new HashMap<Integer, AudioStereoMode>();
+    private static final Map<Integer, AudioStereoMode> INT_MAP = new HashMap<>();
 
     static {
         for (AudioStereoMode value : AudioStereoMode.values()) {

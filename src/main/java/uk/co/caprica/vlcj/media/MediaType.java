@@ -34,7 +34,7 @@ public enum MediaType {
     STREAM   (4),
     PLAYLIST (5);
 
-    private static final Map<Integer, MediaType> INT_MAP = new HashMap<Integer, MediaType>();
+    private static final Map<Integer, MediaType> INT_MAP = new HashMap<>();
 
     static {
         for (MediaType value : MediaType.values()) {

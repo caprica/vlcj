@@ -47,14 +47,14 @@ public abstract class NativeCallbackHandler<T, C extends Structure, L> {
      * A copy-on-write collection is used to defend against listeners being added/removed whilst the native thread is
      * dispatching an event to already registered listeners.
      */
-    private final List<L> eventListenerList = new CopyOnWriteArrayList<L>();
+    private final List<L> eventListenerList = new CopyOnWriteArrayList<>();
 
     /**
      * Collection of registered "post" event listeners.
      * <p>
      * These are special listeners that must run after all application listeners have finished.
      */
-    private final List<L> postEventListenerList = new CopyOnWriteArrayList<L>();
+    private final List<L> postEventListenerList = new CopyOnWriteArrayList<>();
 
     protected NativeCallbackHandler(Supplier<T> sourceSupplier) {
         this.sourceSupplier = sourceSupplier;

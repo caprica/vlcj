@@ -46,7 +46,7 @@ public final class AudioApi extends BaseApi {
      * @return collection of audio outputs
      */
     public List<AudioOutput> audioOutputs() {
-        List<AudioOutput> result = new ArrayList<AudioOutput>();
+        List<AudioOutput> result = new ArrayList<>();
         libvlc_audio_output_t audioOutputs = libvlc_audio_output_list_get(libvlcInstance);
         if (audioOutputs != null) {
             libvlc_audio_output_t audioOutput = audioOutputs;

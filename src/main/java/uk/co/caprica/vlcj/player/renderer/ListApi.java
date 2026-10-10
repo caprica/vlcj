@@ -28,7 +28,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public final class ListApi extends BaseApi {
 
-    private final List<RendererItem> rendererItems = new CopyOnWriteArrayList<RendererItem>();
+    private final List<RendererItem> rendererItems = new CopyOnWriteArrayList<>();
 
     ListApi(RendererDiscoverer rendererDiscoverer) {
         super(rendererDiscoverer);
@@ -40,7 +40,7 @@ public final class ListApi extends BaseApi {
      * @return list of renderer items
      */
     public List<RendererItem> rendererItems() {
-        return new ArrayList<RendererItem>(rendererItems);
+        return new ArrayList<>(rendererItems);
     }
 
     /**

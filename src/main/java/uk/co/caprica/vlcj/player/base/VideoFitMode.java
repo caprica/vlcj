@@ -33,7 +33,7 @@ public enum VideoFitMode {
     WIDTH(3),   /** Fit to display width */
     HEIGHT(4);
 
-    private static final Map<Integer, VideoFitMode> INT_MAP = new HashMap<Integer, VideoFitMode>();
+    private static final Map<Integer, VideoFitMode> INT_MAP = new HashMap<>();
 
     static {
         for (VideoFitMode value : VideoFitMode.values()) {

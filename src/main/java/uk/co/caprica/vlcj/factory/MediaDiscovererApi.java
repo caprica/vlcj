@@ -54,7 +54,7 @@ public final class MediaDiscovererApi extends BaseApi {
         size_t size = libvlc_media_discoverer_list_get(libvlcInstance, category.intValue(), ref);
         try {
             int count = size.intValue();
-            List<MediaDiscovererDescription> result = new ArrayList<MediaDiscovererDescription>(count);
+            List<MediaDiscovererDescription> result = new ArrayList<>(count);
             if (count > 0) {
                 Pointer[] pointers = ref.getValue().getPointerArray(0, count);
                 for (Pointer pointer : pointers) {

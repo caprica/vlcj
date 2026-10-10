@@ -62,7 +62,7 @@ abstract public class TrackList<T extends Track> {
 
     private List<T> initTracks() {
         int trackCount = libvlc_media_tracklist_count(instance).intValue();
-        List<T> tracks = new ArrayList<T>(trackCount);
+        List<T> tracks = new ArrayList<>(trackCount);
         for (int i = 0; i < trackCount; i++) {
             // This instance must NOT be released via libvlc_media_track_release
             libvlc_media_track_t track = libvlc_media_tracklist_at(instance, new size_t(i));

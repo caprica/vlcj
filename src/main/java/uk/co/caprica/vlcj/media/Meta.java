@@ -55,7 +55,7 @@ public enum Meta {
     DISC_TOTAL  (25),
     COMPILATION (26);
 
-    private static final Map<Integer, Meta> INT_MAP = new HashMap<Integer, Meta>();
+    private static final Map<Integer, Meta> INT_MAP = new HashMap<>();
 
     static {
         for (Meta value : Meta.values()) {

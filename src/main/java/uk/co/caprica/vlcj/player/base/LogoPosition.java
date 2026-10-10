@@ -39,7 +39,7 @@ public enum LogoPosition {
     BOTTOM_LEFT ( 9),
     BOTTOM_RIGHT(10);
 
-    private static final Map<Integer, LogoPosition> INT_MAP = new HashMap<Integer, LogoPosition>();
+    private static final Map<Integer, LogoPosition> INT_MAP = new HashMap<>();
 
     static {
         for (LogoPosition value : LogoPosition.values()) {

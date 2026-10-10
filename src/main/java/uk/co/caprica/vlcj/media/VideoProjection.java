@@ -31,7 +31,7 @@ public enum VideoProjection {
     EQUIRECTANGULAR        (1),     /* 360 spherical */
     CUBEMAP_LAYOUT_STANDARD(0x100);
 
-    private static final Map<Integer, VideoProjection> INT_MAP = new HashMap<Integer, VideoProjection>();
+    private static final Map<Integer, VideoProjection> INT_MAP = new HashMap<>();
 
     static {
         for (VideoProjection projection : VideoProjection.values()) {

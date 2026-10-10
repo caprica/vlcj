@@ -90,7 +90,7 @@ public final class Logo {
      * <p>
      * May include extended syntax, see {@link #file(String)}.
      */
-    private final List<String> files = new ArrayList<String>();
+    private final List<String> files = new ArrayList<>();
 
     /**
      * Logo image.

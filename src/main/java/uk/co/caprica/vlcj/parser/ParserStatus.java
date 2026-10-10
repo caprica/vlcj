@@ -32,7 +32,7 @@ public enum ParserStatus {
     CANCELLED(2),
     DONE     (3);
 
-    private static final Map<Integer, ParserStatus> INT_MAP = new HashMap<Integer, ParserStatus>();
+    private static final Map<Integer, ParserStatus> INT_MAP = new HashMap<>();
 
     static {
         for (ParserStatus event : ParserStatus.values()) {

@@ -34,7 +34,7 @@ public enum AudioMixMode {
     FIVE_ONE(4),
     SEVEN_ONE(5);
 
-    private static final Map<Integer, AudioMixMode> INT_MAP = new HashMap<Integer, AudioMixMode>();
+    private static final Map<Integer, AudioMixMode> INT_MAP = new HashMap<>();
 
     static {
         for (AudioMixMode value : AudioMixMode.values()) {
