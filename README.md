@@ -24,9 +24,7 @@ OSX, although there may be some limitations on OSX.
 Additionally, whilst not supported as one of the main platforms, this version of vlcj has been tested and shown to be
 working on contemporary Raspberry Pi builds.
 
-At least JDK 11 is required.
-
-vlcj-4.7.x, which is still current, is the last version of vlcj that was built against JDK 1.6.
+At least JDK 21 is required.
 
 vlcj-4.8.x, which is still current, is the first version of vlcj that was built against JDK 11, and is the first to
 use the Java Module System.
