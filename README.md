@@ -58,6 +58,8 @@ this update, and if you relied previously on (Embedded)MediaPlayer subitems you 
 
 >Some listener events have changed or been removed.
 
+>Times, offsets, durations etc, are all microseconds now, a change from milliseconds before.
+
 >All vlcj API is still subject to change.
 
 __Septemeber 2026__ Project status update:
