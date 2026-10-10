@@ -341,7 +341,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * Default implementation of a video surface component that uses a {@link CallbackImagePainter} to render the video
      * image.
      */
-    private class DefaultVideoSurfaceComponent extends JPanel {
+    private final class DefaultVideoSurfaceComponent extends JPanel {
 
         private DefaultVideoSurfaceComponent() {
             setBackground(Color.black);

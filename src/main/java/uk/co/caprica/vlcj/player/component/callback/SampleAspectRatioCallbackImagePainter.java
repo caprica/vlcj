@@ -116,7 +116,7 @@ public class SampleAspectRatioCallbackImagePainter extends BaseCallbackImagePain
     /**
      * Immutable value object class for an aspect ratio.
      */
-    private static class AspectRatio {
+    private static final class AspectRatio {
         private final int numerator;
         private final int denominator;
 

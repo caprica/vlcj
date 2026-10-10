@@ -32,7 +32,7 @@ final class RepeatPlayEventHandler extends MediaPlayerEventAdapter {
         }
     }
 
-    private static class ReplayMediaTask implements Runnable {
+    private static final class ReplayMediaTask implements Runnable {
 
         private final MediaPlayer mediaPlayer;
 

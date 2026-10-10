@@ -30,7 +30,7 @@ import java.util.EnumSet;
  * <p>
  * See {@link Parser#newParseRequest(Media, MediaParseFlags)}.
  */
-public class MediaParseFlags {
+public final class MediaParseFlags {
 
     private final EnumSet<libvlc_media_parse_flag_t> parseFlags;
 

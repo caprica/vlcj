@@ -23,7 +23,7 @@ package uk.co.caprica.vlcj.player;
  * This class exists only to prevent a Javadoc failure - Javadoc does not like an empty package with only a
  * <code>package-info.java</code> file.
  */
-class Placeholder {
+final class Placeholder {
 
     private Placeholder() {
     }
