@@ -46,10 +46,9 @@ public final class ParserTask {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof ParserTask)) {
+        if (!(obj instanceof ParserTask other)) {
             return false;
         }
-        ParserTask other = (ParserTask) obj;
         return taskInstance.equals(other.taskInstance);
     }
 
