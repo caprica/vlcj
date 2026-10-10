@@ -111,7 +111,7 @@ public final class Info {
      */
     public String os() {
         return os;
-    };
+    }
 
     /**
      * Get the Java version.
@@ -200,9 +200,9 @@ public final class Info {
             properties.load(getClass().getResourceAsStream("/uk/co/caprica/vlcj/build.properties"));
             return new Version(properties.getProperty("build.version"));
         }
-        catch(Exception e) {
+        catch (Exception e) {
             // This can only happen if something went wrong with the build
-            return null;
+            throw new RuntimeException("Unable to get vlcj version");
         }
     }
 
