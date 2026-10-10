@@ -31,7 +31,7 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_tracklist_at;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_tracklist_count;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_tracklist_delete;
 
-abstract public class TrackList<T extends Track> {
+public abstract class TrackList<T extends Track> {
 
     private final libvlc_media_tracklist_t instance;
 

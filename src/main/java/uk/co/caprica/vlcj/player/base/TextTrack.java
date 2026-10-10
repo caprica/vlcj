@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.media.TrackType;
 
 import static uk.co.caprica.vlcj.binding.support.strings.NativeString.copyNativeString;
 
-final public class TextTrack extends Track {
+public final class TextTrack extends Track {
 
     private final String encoding;
 

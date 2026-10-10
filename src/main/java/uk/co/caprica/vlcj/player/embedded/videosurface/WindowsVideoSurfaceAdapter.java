@@ -27,7 +27,7 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_hwnd
 /**
  * Implementation of a video surface adapter for Windows.
  */
-final public class WindowsVideoSurfaceAdapter implements VideoSurfaceAdapter {
+public final class WindowsVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
     @Override
     public void attach(MediaPlayer mediaPlayer, long componentId) {

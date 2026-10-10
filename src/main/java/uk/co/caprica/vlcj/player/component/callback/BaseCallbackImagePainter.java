@@ -25,7 +25,7 @@ import uk.co.caprica.vlcj.player.base.VideoTrack;
 /**
  * Base for a {@link CallbackImagePainter} providing default empty implementations for the optional template methods.
  */
-abstract public class BaseCallbackImagePainter implements CallbackImagePainter {
+public abstract class BaseCallbackImagePainter implements CallbackImagePainter {
 
     @Override
     public void newVideoBuffer(int width, int height) {

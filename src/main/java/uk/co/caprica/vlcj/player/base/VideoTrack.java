@@ -26,7 +26,7 @@ import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.media.VideoOrientation;
 import uk.co.caprica.vlcj.media.VideoProjection;
 
-final public class VideoTrack extends Track {
+public final class VideoTrack extends Track {
 
     /**
      * Video width.

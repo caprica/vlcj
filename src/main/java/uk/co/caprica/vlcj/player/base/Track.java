@@ -28,7 +28,7 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_track_retain;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_track_release;
 import static uk.co.caprica.vlcj.binding.support.strings.NativeString.copyNativeString;
 
-abstract public class Track {
+public abstract class Track {
 
     private final TrackType trackType;
 

@@ -44,7 +44,7 @@ import java.util.ServiceLoader;
  * {@link DiscoveryProviderPriority}. A client application with its own provider implementations can return a priority
  * value as appropriate to ensure their own provider is used before or after the other implementations.
  */
-abstract public class DirectoryProviderDiscoveryStrategy extends BaseNativeDiscoveryStrategy {
+public abstract class DirectoryProviderDiscoveryStrategy extends BaseNativeDiscoveryStrategy {
 
     /**
      * Service loader for the directory provider implementations.

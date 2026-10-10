@@ -22,7 +22,7 @@ package uk.co.caprica.vlcj.player.base;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_tracklist_t;
 
-final public class AudioTrackList extends TrackList<AudioTrack> {
+public final class AudioTrackList extends TrackList<AudioTrack> {
 
     public AudioTrackList(libvlc_media_tracklist_t instance) {
         super(instance);

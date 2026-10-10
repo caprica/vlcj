@@ -75,7 +75,7 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
     }
 
     @Override
-    final protected MediaPlayer onCreateMediaPlayer() {
+    protected final MediaPlayer onCreateMediaPlayer() {
         this.mediaListPlayer = mediaPlayerFactory().mediaPlayers().newMediaListPlayer();
         this.mediaListPlayer.mediaPlayer().events().addMediaPlayerEventListener(this);
 

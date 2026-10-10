@@ -27,7 +27,7 @@ import org.jspecify.annotations.Nullable;
  * These empty implementations are useless by themselves, sub-classes provide the necessary functionality for the
  * dialogs of interest.
  */
-abstract public class DialogHandlerAdapter implements DialogHandler {
+public abstract class DialogHandlerAdapter implements DialogHandler {
 
     @Override
     public void displayError(@Nullable Long userData, String title, String text) {

@@ -24,7 +24,7 @@ package uk.co.caprica.vlcj.factory.discovery.provider;
  * <p>
  * This base class is used simply to set the appropriate priority value.
  */
-abstract public class WellKnownDirectoryProvider implements DiscoveryDirectoryProvider {
+public abstract class WellKnownDirectoryProvider implements DiscoveryDirectoryProvider {
 
     @Override
     public int priority() {

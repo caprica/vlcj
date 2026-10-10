@@ -93,7 +93,7 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerCom
     }
 
     @Override
-    final protected EmbeddedMediaPlayer onCreateMediaPlayer() {
+    protected final EmbeddedMediaPlayer onCreateMediaPlayer() {
         this.mediaListPlayer = mediaPlayerFactory().mediaPlayers().newEmbeddedMediaListPlayer();
         this.mediaListPlayer.mediaPlayer().events().addMediaPlayerEventListener(this);
 

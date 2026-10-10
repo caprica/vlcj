@@ -23,7 +23,7 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.media.TrackType;
 
-final public class AudioTrack extends Track {
+public final class AudioTrack extends Track {
 
     private final int channels;
 
