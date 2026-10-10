@@ -114,7 +114,7 @@ there are still some small improvements being made to vlcj, check the project is
 and that is likely yet to be quite some time away.
 
 __Future 2022__ Next major release
-> vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 11 LTS.
+> vlcj 5.0.0 release, significant changes for LibVLC 4.0.0, minimum Java version now Java 21 LTS.
 
 All releases are at available at [Maven Central](https://search.maven.org/search?q=a:vlcj).
 
@@ -162,7 +162,7 @@ Major New Features
 Headline changes:
 
  - requires LibVLC 4.0.0+
- - requires Java 11+
+ - requires Java 21+
  - full support for LibVLC native "video engine" rendering, specifically via OpenGL
    * example using LWJGL at [vlcj-lwjgl-demo](https://github.com/caprica/vlcj-lwjgl-demo)
  - fast vs precise native seeking when setting media position/time
