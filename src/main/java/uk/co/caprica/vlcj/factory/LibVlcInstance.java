@@ -28,7 +28,7 @@ public final class LibVlcInstance {
 
     private final libvlc_instance_t instance;
 
-    public LibVlcInstance(libvlc_instance_t instance) {
+    LibVlcInstance(libvlc_instance_t instance) {
         this.instance = instance;
     }
 

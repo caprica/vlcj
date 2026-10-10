@@ -41,7 +41,7 @@ final public class TextTrack extends Track {
      *
      * @return encoding
      */
-    public final String encoding() {
+    public String encoding() {
         return encoding;
     }
 

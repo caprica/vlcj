@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * AB loop status.
  */
@@ -36,7 +38,7 @@ public final class ABLoop {
 
     private final double bPos;
 
-    public ABLoop(boolean validA, Long aTime, Double aPos, boolean validB, Long bTime, Double bPos) {
+    public ABLoop(boolean validA, @Nullable Long aTime, @Nullable Double aPos, boolean validB, @Nullable Long bTime, @Nullable Double bPos) {
         this.validA = validA;
         this.aTime = aTime != null ? (long) aTime : 0;
         this.aPos = aPos != null ? (double) aPos : 0;

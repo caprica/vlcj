@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 
@@ -34,7 +35,7 @@ abstract class AudioListPlayerComponentBase extends AudioPlayerComponent {
      *
      * @param mediaPlayerFactory factory used to create the component
      */
-    protected AudioListPlayerComponentBase(MediaPlayerFactory mediaPlayerFactory) {
+    protected AudioListPlayerComponentBase(@Nullable MediaPlayerFactory mediaPlayerFactory) {
         super(mediaPlayerFactory);
     }
 }

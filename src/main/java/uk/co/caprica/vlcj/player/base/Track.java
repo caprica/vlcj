@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.media.TrackType;
 
@@ -41,6 +42,7 @@ abstract public class Track {
     /**
      * Codec name.
      */
+    @Nullable
     private final String codecName;
 
     /**
@@ -51,6 +53,7 @@ abstract public class Track {
     /**
      * Original codec name.
      */
+    @Nullable
     private final String originalCodecName;
 
     /**
@@ -141,7 +144,7 @@ abstract public class Track {
      *
      * @return codec name
      */
-    public final String codecName() {
+    public final @Nullable String codecName() {
         return codecName;
     }
 
@@ -159,7 +162,7 @@ abstract public class Track {
      *
      * @return original codec name
      */
-    public final String originalCodecName() {
+    public final @Nullable String originalCodecName() {
         return originalCodecName;
     }
 
@@ -299,7 +302,7 @@ abstract public class Track {
      * @param codec codec identifier
      * @return string representation of the codec identifier
      */
-    private static String codecName(int codec) {
+    private static @Nullable String codecName(int codec) {
         return codec != 0 ? new String(new byte[] {(byte)codec, (byte)(codec >>> 8), (byte)(codec >>> 16), (byte)(codec >>> 24)}).trim() : null;
     }
 

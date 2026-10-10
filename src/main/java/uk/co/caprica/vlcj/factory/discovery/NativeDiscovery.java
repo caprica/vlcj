@@ -2,6 +2,7 @@ package uk.co.caprica.vlcj.factory.discovery;
 
 import com.sun.jna.NativeLibrary;
 import com.sun.jna.StringArray;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
@@ -63,11 +64,13 @@ public class NativeDiscovery {
     /**
      * The native discovery strategy instance that discovered the native library path.
      */
+    @Nullable
     private NativeDiscoveryStrategy successfulStrategy;
 
     /**
      * The native library path that was discovered.
      */
+    @Nullable
     private String discoveredPath;
 
     private static final NativeDiscoveryStrategy[] DEFAULT_STRATEGIES = new NativeDiscoveryStrategy[] {
@@ -143,7 +146,7 @@ public class NativeDiscovery {
      *
      * @return strategy instance
      */
-    public final NativeDiscoveryStrategy successfulStrategy() {
+    public final @Nullable NativeDiscoveryStrategy successfulStrategy() {
         return successfulStrategy;
     }
 
@@ -154,7 +157,7 @@ public class NativeDiscovery {
      *
      * @return native library path
      */
-    public final String discoveredPath() {
+    public final @Nullable String discoveredPath() {
         return discoveredPath;
     }
 
@@ -170,7 +173,7 @@ public class NativeDiscovery {
      */
     private void tryPluginPath(String path, NativeDiscoveryStrategy discoveryStrategy) {
         String env = System.getenv(PLUGIN_ENV_NAME);
-        if (env == null || env.length() == 0) {
+        if (env == null || env.isEmpty()) {
             // The return value from onSetPluginPath is currently not used (it would imply that the API call to set the
             // process environment variable failed, which is somewhat of a stretch that it would ever occur)
             discoveryStrategy.onSetPluginPath(path);

@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.player.base;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Encapsulation of audio equalizer settings.
@@ -184,13 +185,11 @@ public final class Equalizer {
      * @param equalizer equalizer to obtain values from
      */
     public void setEqualizer(Equalizer equalizer) {
-        if (equalizer != null) {
-            preamp = equalizer.preamp;
-            copy(equalizer.bandAmps, bandAmps);
-            fireEqualizerChanged();
-        } else {
-            throw new IllegalArgumentException();
-        }
+        Objects.requireNonNull(equalizer);
+
+        preamp = equalizer.preamp;
+        copy(equalizer.bandAmps, bandAmps);
+        fireEqualizerChanged();
     }
 
     /**
@@ -210,8 +209,10 @@ public final class Equalizer {
     }
 
     private void applyAmps(float[] newAmps) {
-        if (newAmps != null && newAmps.length == bandCount) {
-            for(float newAmp : newAmps) {
+        Objects.requireNonNull(newAmps);
+
+        if (newAmps.length == bandCount) {
+            for (float newAmp : newAmps) {
                 checkAmp(newAmp);
             }
             copy(newAmps, bandAmps);

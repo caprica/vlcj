@@ -19,7 +19,6 @@
 
 package uk.co.caprica.vlcj.player.list;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.player.base.State;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_get_state;

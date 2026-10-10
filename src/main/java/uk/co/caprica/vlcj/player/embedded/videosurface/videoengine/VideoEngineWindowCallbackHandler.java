@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_resize_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_mouse_move_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_mouse_press_cb;
@@ -35,6 +36,7 @@ final class VideoEngineWindowCallbackHandler implements VideoEngineWindowCallbac
     /**
      * Opaque pointer associated with the callback.
      */
+    @Nullable
     private final Long opaque;
 
     /**
@@ -42,17 +44,22 @@ final class VideoEngineWindowCallbackHandler implements VideoEngineWindowCallbac
      * <p>
      * This pointer <strong>must</strong> be passed with the native callback method.
      */
+    @Nullable
     private final Long reportOpaque;
 
     /**
      * Native callback.
      */
+    @Nullable
     private final libvlc_video_output_resize_cb resize;
 
+    @Nullable
     private final libvlc_video_output_mouse_move_cb mouseMove;
 
+    @Nullable
     private final libvlc_video_output_mouse_press_cb mousePress;
 
+    @Nullable
     private final libvlc_video_output_mouse_release_cb mouseRelease;
 
     /**
@@ -65,7 +72,7 @@ final class VideoEngineWindowCallbackHandler implements VideoEngineWindowCallbac
      * @param mousePress native callback for mouse presses
      * @param mouseRelease native callback for mouse releases
      */
-    public VideoEngineWindowCallbackHandler(Long opaque, Long reportOpaque, libvlc_video_output_resize_cb resize, libvlc_video_output_mouse_move_cb mouseMove, libvlc_video_output_mouse_press_cb mousePress, libvlc_video_output_mouse_release_cb mouseRelease) {
+    public VideoEngineWindowCallbackHandler(@Nullable Long opaque, @Nullable Long reportOpaque, @Nullable libvlc_video_output_resize_cb resize, @Nullable libvlc_video_output_mouse_move_cb mouseMove, @Nullable libvlc_video_output_mouse_press_cb mousePress, @Nullable libvlc_video_output_mouse_release_cb mouseRelease) {
         this.opaque = opaque;
         this.reportOpaque = reportOpaque;
         this.resize = resize;

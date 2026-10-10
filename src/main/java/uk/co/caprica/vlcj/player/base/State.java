@@ -50,7 +50,11 @@ public enum State {
      * @return enumerated value
      */
     public static State state(int intValue) {
-        return INT_MAP.get(intValue);
+        State state = INT_MAP.get(intValue);
+        if (state != null) {
+            return state;
+        }
+        throw new RuntimeException("No such state for " + intValue);
     }
 
     /**

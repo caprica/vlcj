@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.factory;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_module_description_t;
 import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.media.TrackType;
@@ -91,7 +92,7 @@ public final class ApplicationApi extends BaseApi {
      *
      * @param userAgent application name
      */
-    public void setUserAgent(String userAgent) {
+    public void setUserAgent(@Nullable String userAgent) {
         setUserAgent(userAgent, null);
     }
 
@@ -101,7 +102,7 @@ public final class ApplicationApi extends BaseApi {
      * @param userAgent application name
      * @param httpUserAgent application name for HTTP
      */
-    public void setUserAgent(String userAgent, String httpUserAgent) {
+    public void setUserAgent(@Nullable String userAgent, @Nullable String httpUserAgent) {
         libvlc_set_user_agent(libvlcInstance, userAgent, httpUserAgent);
     }
 

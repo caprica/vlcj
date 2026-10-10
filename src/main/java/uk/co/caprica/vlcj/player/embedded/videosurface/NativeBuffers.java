@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.lib.Kernel32;
 import uk.co.caprica.vlcj.binding.lib.LibC;
 import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
@@ -28,6 +29,7 @@ import uk.co.caprica.vlcj.binding.support.types.size_t;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 
 import java.nio.ByteBuffer;
+import java.util.Objects;
 
 /**
  *
@@ -42,12 +44,12 @@ final class NativeBuffers {
     /**
      * Native memory buffers, one for each plane.
      */
-    private ByteBuffer[] nativeBuffers;
+    private ByteBuffer @Nullable [] nativeBuffers;
 
     /**
      * Native memory pointers to each byte buffer.
      */
-    private Pointer[] pointers;
+    private Pointer @Nullable [] pointers;
 
     /**
      *
@@ -87,6 +89,7 @@ final class NativeBuffers {
 
     void free() {
         if (nativeBuffers != null) {
+            Objects.requireNonNull(pointers);
             if (lockBuffers) {
                 for (int i = 0; i < nativeBuffers.length; i++) {
                     if (!RuntimeUtil.isWindows()) {
@@ -101,12 +104,11 @@ final class NativeBuffers {
         }
     }
 
-    ByteBuffer[] buffers() {
+    ByteBuffer @Nullable [] buffers() {
         return nativeBuffers;
     }
 
-    Pointer[] pointers() {
+    Pointer @Nullable [] pointers() {
         return pointers;
     }
-
 }

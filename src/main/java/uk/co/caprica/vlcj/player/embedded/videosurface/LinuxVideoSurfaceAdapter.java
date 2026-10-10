@@ -26,12 +26,10 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_xwin
 /**
  * Implementation of a video surface adapter for Linux.
  */
-@SuppressWarnings("serial")
 final public class LinuxVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
     @Override
     public void attach(MediaPlayer mediaPlayer, long componentId) {
         libvlc_media_player_set_xwindow(mediaPlayer.mediaPlayerInstance(), (int)componentId);
     }
-
 }

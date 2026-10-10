@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
 
-import com.sun.jna.Pointer;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_cfg_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_render_cfg_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_setup_device_cfg_t;
@@ -38,14 +38,14 @@ public interface VideoEngineCallback {
      * @param deviceInformation output device information
      * @return <code>true</code> on success; <code>false</code> on error
      */
-    boolean onSetup(Long opaque, libvlc_video_setup_device_cfg_t deviceConfiguration, libvlc_video_setup_device_info_t deviceInformation);
+    boolean onSetup(@Nullable Long opaque, libvlc_video_setup_device_cfg_t deviceConfiguration, libvlc_video_setup_device_info_t deviceInformation);
 
     /**
      * Client clean-up.
      *
      * @param opaque opaque data pointer
      */
-    void onCleanup(Long opaque);
+    void onCleanup(@Nullable Long opaque);
 
     /**
      * Set the window callback.
@@ -68,14 +68,14 @@ public interface VideoEngineCallback {
      * @param outputConfig output configuration
      * @return <code>true</code> on success; <code>false</code> on error
      */
-    boolean onUpdateOutput(Long opaque, libvlc_video_render_cfg_t renderConfig, libvlc_video_output_cfg_t outputConfig);
+    boolean onUpdateOutput(@Nullable Long opaque, libvlc_video_render_cfg_t renderConfig, libvlc_video_output_cfg_t outputConfig);
 
     /**
      * A batch of native rendering calls finished.
      *
      * @param opaque opaque data pointer
      */
-    void onSwap(Long opaque);
+    void onSwap(@Nullable Long opaque);
 
     /**
      * Set or unset the current rendering context.
@@ -84,7 +84,7 @@ public interface VideoEngineCallback {
      * @param enter <code>true</code> if the context should be set; <code>false</code> if it should be un-set
      * @return <code>true</code> on success; <code>false</code> on error
      */
-    boolean onMakeCurrent(Long opaque, boolean enter);
+    boolean onMakeCurrent(@Nullable Long opaque, boolean enter);
 
     /**
      * Get a pointer to a native procedure.
@@ -93,5 +93,5 @@ public interface VideoEngineCallback {
      * @param functionName native procedure name
      * @return native procedure address
      */
-    long onGetProcAddress(Long opaque, String functionName);
+    long onGetProcAddress(@Nullable Long opaque, String functionName);
 }

@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
+
 import java.awt.*;
 
 /**
@@ -44,59 +46,59 @@ public final class Marquee {
     /**
      * Text.
      */
-    private String text;
+    private @Nullable String text;
 
     /**
      * Text colour.
      */
-    private Color colour;
+    private @Nullable Color colour;
 
     /**
      * Text colour expressed as RGB components.
      */
-    private Integer rgb;
+    private @Nullable Integer rgb;
 
     /**
      * Opacity expressed as an integer, 0 to 255, where 255 is fully opaque.
      */
-    private Integer intOpacity;
+    private @Nullable Integer intOpacity;
 
     /**
      * Opacity expressed as a fraction, 0.0 to 1.0, where 1.0 is fully opaque.
      */
-    private Float floatOpacity;
+    private @Nullable Float floatOpacity;
 
     /**
      * Text size.
      */
-    private Integer size;
+    private @Nullable Integer size;
 
     /**
      * Timeout, in milliseconds.
      * <p>
      * The marquee will be removed after this timeout has expired.
      */
-    private Integer timeout;
+    private @Nullable Integer timeout;
 
     /**
      * Text X position, in video co-ordinates.
      */
-    private Integer x;
+    private @Nullable Integer x;
 
     /**
      * Text Y position, in video co-ordinates.
      */
-    private Integer y;
+    private @Nullable Integer y;
 
     /**
      * Predefined text position.
      */
-    private MarqueePosition position;
+    private @Nullable MarqueePosition position;
 
     /**
      * Amount of time before the marquee text is refreshed.
      */
-    private Integer refresh;
+    private @Nullable Integer refresh;
 
     /**
      * Enabled/disabled state.
@@ -282,7 +284,7 @@ public final class Marquee {
      *
      * @return text
      */
-    public String getText() {
+    public @Nullable String getText() {
         return text;
     }
 
@@ -291,7 +293,7 @@ public final class Marquee {
      *
      * @return colour
      */
-    public Color getColour() {
+    public @Nullable Color getColour() {
         return colour;
     }
 
@@ -300,7 +302,7 @@ public final class Marquee {
      *
      * @return RGB
      */
-    public Integer getRgb() {
+    public @Nullable Integer getRgb() {
         return rgb;
     }
 
@@ -309,7 +311,7 @@ public final class Marquee {
      *
      * @return opacity
      */
-    public Integer getIntegerOpacity() {
+    public @Nullable Integer getIntegerOpacity() {
         return intOpacity;
     }
 
@@ -318,7 +320,7 @@ public final class Marquee {
      *
      * @return opacity
      */
-    public Float getFloatOpacity() {
+    public @Nullable Float getFloatOpacity() {
         return floatOpacity;
     }
 
@@ -327,7 +329,7 @@ public final class Marquee {
      *
      * @return text size
      */
-    public Integer getSize() {
+    public @Nullable Integer getSize() {
         return size;
     }
 
@@ -336,7 +338,7 @@ public final class Marquee {
      *
      * @return timeout
      */
-    public Integer getTimeout() {
+    public @Nullable Integer getTimeout() {
         return timeout;
     }
 
@@ -345,7 +347,7 @@ public final class Marquee {
      *
      * @return location x
      */
-    public Integer getX() {
+    public @Nullable Integer getX() {
         return x;
     }
 
@@ -354,7 +356,7 @@ public final class Marquee {
      *
      * @return location y
      */
-    public Integer getY() {
+    public @Nullable Integer getY() {
         return y;
     }
 
@@ -363,7 +365,7 @@ public final class Marquee {
      *
      * @return position
      */
-    public MarqueePosition getPosition() {
+    public @Nullable MarqueePosition getPosition() {
         return position;
     }
 
@@ -372,7 +374,7 @@ public final class Marquee {
      *
      * @return refresh time, milliseconds
      */
-    public Integer getRefresh() {
+    public @Nullable Integer getRefresh() {
         return refresh;
     }
 

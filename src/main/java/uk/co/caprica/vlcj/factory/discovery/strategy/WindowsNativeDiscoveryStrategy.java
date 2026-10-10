@@ -51,5 +51,4 @@ public class WindowsNativeDiscoveryStrategy extends DirectoryProviderDiscoverySt
     protected boolean setPluginPath(String pluginPath) {
         return LibC.INSTANCE._putenv(String.format("%s=%s", PLUGIN_ENV_NAME, pluginPath)) == 0;
     }
-
 }

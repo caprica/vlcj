@@ -4,4 +4,8 @@
  * Generally, all media player components will accept <code>null</code> values for any of their constructor parameters
  * and provide reasonable defaults.
  */
+
+@NullMarked
 package uk.co.caprica.vlcj.player.component;
+
+import org.jspecify.annotations.NullMarked;

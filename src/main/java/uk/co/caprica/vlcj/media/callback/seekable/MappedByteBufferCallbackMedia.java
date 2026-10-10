@@ -19,8 +19,11 @@
 
 package uk.co.caprica.vlcj.media.callback.seekable;
 
+import org.jspecify.annotations.Nullable;
+
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
+import java.util.Objects;
 
 /**
  * Implementation of seekable callback media that uses a {@link MappedByteBuffer}.
@@ -41,6 +44,7 @@ public class MappedByteBufferCallbackMedia extends SeekableCallbackMedia {
     /**
      * Underlying mapped byte buffer.
      */
+    @Nullable
     private MappedByteBuffer mappedByteBuffer;
 
     /**
@@ -62,6 +66,7 @@ public class MappedByteBufferCallbackMedia extends SeekableCallbackMedia {
 
     @Override
     protected final long onGetSize() {
+        Objects.requireNonNull(mappedByteBuffer);
         return mappedByteBuffer.capacity();
     }
 
@@ -74,6 +79,7 @@ public class MappedByteBufferCallbackMedia extends SeekableCallbackMedia {
 
     @Override
     protected final int onRead(byte[] buffer, int bufferSize) throws IOException {
+        Objects.requireNonNull(mappedByteBuffer);
         int read = Math.min(bufferSize, mappedByteBuffer.remaining());
         mappedByteBuffer.get(buffer, 0, read);
         return read;
@@ -81,6 +87,7 @@ public class MappedByteBufferCallbackMedia extends SeekableCallbackMedia {
 
     @Override
     protected final boolean onSeek(long offset) {
+        Objects.requireNonNull(mappedByteBuffer);
         return mappedByteBuffer.position(((Long) offset).intValue()).position() == offset;
     }
 
@@ -93,7 +100,7 @@ public class MappedByteBufferCallbackMedia extends SeekableCallbackMedia {
      *
      * @return mapped byte buffer
      */
-    protected MappedByteBuffer getBuffer() {
+    protected @Nullable MappedByteBuffer getBuffer() {
         return mappedByteBuffer;
     }
 }

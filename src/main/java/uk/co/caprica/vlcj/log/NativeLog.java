@@ -25,6 +25,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.ptr.PointerByReference;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.lib.LibC;
 import uk.co.caprica.vlcj.binding.support.strings.NativeString;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
@@ -81,6 +82,7 @@ public final class NativeLog {
      * <p>
      * Set to <code>null</code> to suppress all log messages.
      */
+    @Nullable
     private LogLevel logLevel = LogLevel.NOTICE;
 
     /**
@@ -118,25 +120,25 @@ public final class NativeLog {
      * Only log messages that are equal to or exceed this threshold are notified to
      * listeners.
      *
-     * @param logLevel log threshold level
+     * @param logLevel log threshold level, or <code>null</code> to suppress all log messages
      */
-    public void setLevel(LogLevel logLevel) {
+    public void setLevel(@Nullable LogLevel logLevel) {
         this.logLevel = logLevel;
     }
 
     /**
      * Get the log threshold level.
      *
-     * @return level
+     * @return level, or <code>null</code> if no level set
      */
-    public LogLevel getLevel() {
+    public @Nullable LogLevel getLevel() {
         return logLevel;
     }
 
     /**
      * Release the native log component.
      */
-    public final void release() {
+    public void release() {
         eventListenerList.clear();
         libvlc_log_unset(instance);
     }
@@ -203,7 +205,7 @@ public final class NativeLog {
      * @param pointer pointer
      * @return string, or <code>null</code> if the pointer is <code>null</code>
      */
-    private String getString(PointerByReference pointer) {
+    private @Nullable String getString(PointerByReference pointer) {
         // The string is copied but not freed, the native string will be reclaimed when the native callback returns
         Pointer value = pointer.getValue();
         return value != null ? NativeString.copyNativeString(value) : null;
@@ -221,7 +223,7 @@ public final class NativeLog {
      * @param id object identifier
      * @param message log message
      */
-    private void raiseLogEvent(LogLevel level, String module, String file, Integer line, String name, String header, Long id, String message) {
+    private void raiseLogEvent(LogLevel level, @Nullable String module, @Nullable String file, @Nullable Integer line, @Nullable String name, @Nullable String header, @Nullable Long id, String message) {
         for (LogEventListener listener : eventListenerList) {
             try {
                 listener.log(level, module, file, line, name, header, id, message);
@@ -231,5 +233,4 @@ public final class NativeLog {
             }
         }
     }
-
 }

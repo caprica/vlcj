@@ -26,12 +26,10 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_nsob
 /**
  * Implementation of a video surface adapter for macOS.
  */
-@SuppressWarnings("serial")
 final public class MacOsVideoSurfaceAdapter implements VideoSurfaceAdapter {
 
     @Override
     public void attach(MediaPlayer mediaPlayer, long componentId) {
         libvlc_media_player_set_nsobject(mediaPlayer.mediaPlayerInstance(), componentId);
     }
-
 }

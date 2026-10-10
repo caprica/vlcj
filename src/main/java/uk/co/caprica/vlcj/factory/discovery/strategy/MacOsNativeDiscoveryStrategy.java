@@ -53,5 +53,4 @@ public class MacOsNativeDiscoveryStrategy extends DirectoryProviderDiscoveryStra
     protected boolean setPluginPath(String pluginPath) {
         return LibC.INSTANCE.setenv(PLUGIN_ENV_NAME, pluginPath, 1) == 0;
     }
-
 }

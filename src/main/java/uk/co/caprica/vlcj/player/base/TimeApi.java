@@ -19,9 +19,11 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.player.base.time.InterpolatedWatchTimeHandler;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -52,6 +54,7 @@ public final class TimeApi extends BaseApi {
 
     private final List<WatchTimeListener> eventListenerList = new CopyOnWriteArrayList<WatchTimeListener>();
 
+    @Nullable
     private InterpolatedWatchTimeHandler watchTimeHandler;
 
     TimeApi(MediaPlayer mediaPlayer) {
@@ -132,6 +135,7 @@ public final class TimeApi extends BaseApi {
      * Stop watching media player time/position updates.
      */
     public void stopWatching() {
+        Objects.requireNonNull(watchTimeHandler, "Watch time handler must not be null");
         watchTimeHandler.stopWatching();
     }
 

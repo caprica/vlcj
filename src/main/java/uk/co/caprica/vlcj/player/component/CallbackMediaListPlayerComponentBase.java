@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.component.callback.CallbackImagePainter;
@@ -34,7 +35,6 @@ import javax.swing.*;
  * This class serves to keep the {@link CallbackMediaListPlayerComponent} concrete implementation clean and
  * un-cluttered.
  */
-@SuppressWarnings("serial")
 public abstract class CallbackMediaListPlayerComponentBase extends CallbackMediaPlayerComponent {
 
     /**
@@ -51,7 +51,7 @@ public abstract class CallbackMediaListPlayerComponentBase extends CallbackMedia
      * @param videoSurfaceComponent lightweight video surface component
      * @param renderCallback render callback
      */
-    public CallbackMediaListPlayerComponentBase(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, BufferFormatCallback bufferFormatCallback, boolean lockBuffers, CallbackImagePainter imagePainter, JComponent videoSurfaceComponent, RenderCallback renderCallback) {
+    public CallbackMediaListPlayerComponentBase(@Nullable MediaPlayerFactory mediaPlayerFactory, @Nullable FullScreenStrategy fullScreenStrategy, @Nullable InputEvents inputEvents, @Nullable BufferFormatCallback bufferFormatCallback, boolean lockBuffers, @Nullable CallbackImagePainter imagePainter, @Nullable JComponent videoSurfaceComponent, @Nullable RenderCallback renderCallback) {
         super(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, imagePainter, renderCallback, bufferFormatCallback, videoSurfaceComponent);
     }
 }

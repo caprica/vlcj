@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component.callback;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.player.base.VideoTrack;
 
 import javax.swing.JComponent;
@@ -50,10 +51,11 @@ public class SampleAspectRatioCallbackImagePainter extends BaseCallbackImagePain
      * <p>
      * May be <code>null</code>.
      */
+    @Nullable
     private volatile AspectRatio sar;
 
     @Override
-    public void videoTrackChanged(VideoTrack videoTrack) {
+    public void videoTrackChanged(@Nullable VideoTrack videoTrack) {
         if (videoTrack != null) {
             // Use 1:1 if a valid SAR is not available for some reason
             sar = new AspectRatio(Math.max(1, videoTrack.sampleAspectRatio()), Math.max(videoTrack.sampleAspectRatioBase(), 1));
@@ -68,12 +70,14 @@ public class SampleAspectRatioCallbackImagePainter extends BaseCallbackImagePain
     }
 
     @Override
-    public void paint(Graphics2D g2, JComponent component, BufferedImage image) {
+    public void paint(Graphics2D g2, JComponent component, @Nullable BufferedImage image) {
         int width = component.getWidth();
         int height = component.getHeight();
 
         g2.setColor(component.getBackground());
         g2.fillRect(0, 0, width, height);
+
+        AspectRatio sar = this.sar;
 
         if (image != null && sar != null) {
             int imageWidth = image.getWidth();

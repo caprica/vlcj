@@ -24,7 +24,7 @@ import com.sun.jna.platform.WindowUtils;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * Base implementation for a video overlay component.
@@ -40,7 +40,6 @@ import java.lang.reflect.Method;
  * <p>
  * Best results will be obtained by <em>disabling</em> any compositing desktop window manager.
  */
-@SuppressWarnings("serial")
 public abstract class AbstractJWindowOverlayComponent extends JWindow {
 
     /**
@@ -75,9 +74,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
      */
     public AbstractJWindowOverlayComponent(Window owner, GraphicsConfiguration graphicsConfiguration) {
         super(owner, graphicsConfiguration);
-        if (owner == null) {
-            throw new IllegalArgumentException("The overlay window owner must not be null");
-        }
+        Objects.requireNonNull(owner, "The overlay window owner must not be null");
         onSetWindowTransparency();
         onCreateOverlay();
         if (onHideCursor()) {
@@ -169,5 +166,4 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
         Image blankImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         return Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(0, 0), "");
     }
-
 }

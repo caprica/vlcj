@@ -26,7 +26,6 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_abloop_t;
 import static uk.co.caprica.vlcj.binding.internal.libvlc_abloop_t.abloop;
 import static uk.co.caprica.vlcj.binding.internal.libvlc_abloop_t.libvlc_abloop_a;
 import static uk.co.caprica.vlcj.binding.internal.libvlc_abloop_t.libvlc_abloop_b;
-import static uk.co.caprica.vlcj.binding.internal.libvlc_abloop_t.libvlc_abloop_none;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_can_pause;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_abloop;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_length;

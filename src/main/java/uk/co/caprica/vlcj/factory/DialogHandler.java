@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.factory;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Specification for a component that handles native dialogs.
  * <p>
@@ -36,7 +38,7 @@ public interface DialogHandler {
      * @param title dialog title
      * @param text error text
      */
-    void displayError(Long userData, String title, String text);
+    void displayError(@Nullable Long userData, String title, String text);
 
     /**
      * Present a login dialog.
@@ -48,7 +50,7 @@ public interface DialogHandler {
      * @param defaultUsername default username to display in the dialog
      * @param askStore if <code>true</code>, ask if the credentials should be stored
      */
-    void displayLogin(Long userData, DialogId id, String title, String text, String defaultUsername, boolean askStore);
+    void displayLogin(@Nullable Long userData, DialogId id, String title, String text, String defaultUsername, boolean askStore);
 
     /**
      * Present a question dialog.
@@ -62,7 +64,7 @@ public interface DialogHandler {
      * @param action1 first action text
      * @param action2 second action text
      */
-    void displayQuestion(Long userData, DialogId id, String title, String text, DialogQuestionType type, String cancel, String action1, String action2);
+    void displayQuestion(@Nullable Long userData, DialogId id, String title, String text, DialogQuestionType type, String cancel, String action1, String action2);
 
     /**
      * Present a progress dialog.
@@ -75,7 +77,7 @@ public interface DialogHandler {
      * @param position percent completion
      * @param cancel cancel action text
      */
-    void displayProgress(Long userData, DialogId id, String title, String text, int indeterminate, float position, String cancel);
+    void displayProgress(@Nullable Long userData, DialogId id, String title, String text, int indeterminate, float position, String cancel);
 
     /**
      * Present a cancel dialog.
@@ -83,7 +85,7 @@ public interface DialogHandler {
      * @param userData user data
      * @param id dialog id, used to interact with this dialog
      */
-    void cancel(Long userData, DialogId id);
+    void cancel(@Nullable Long userData, DialogId id);
 
     /**
      * Update a progress dialog.
@@ -93,6 +95,6 @@ public interface DialogHandler {
      * @param position percent completion
      * @param text progress text
      */
-    void updateProgress(Long userData, DialogId id, float position, String text);
+    void updateProgress(@Nullable Long userData, DialogId id, float position, String text);
 
 }

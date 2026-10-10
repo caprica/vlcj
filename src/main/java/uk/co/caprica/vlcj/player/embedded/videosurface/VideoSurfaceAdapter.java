@@ -38,5 +38,4 @@ public interface VideoSurfaceAdapter extends Serializable {
      * @param componentId native id of the video surface component
      */
     void attach(MediaPlayer mediaPlayer, long componentId);
-
 }

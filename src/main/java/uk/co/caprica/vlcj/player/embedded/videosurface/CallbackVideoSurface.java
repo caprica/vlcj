@@ -20,8 +20,8 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Pointer;
-import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_display_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_lock_callback_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_unlock_callback_t;
@@ -31,6 +31,8 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormat;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.embedded.videosurface.callback.RenderCallback;
+
+import java.util.Objects;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_callbacks;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_format_callbacks;
@@ -51,8 +53,10 @@ public class CallbackVideoSurface extends VideoSurface {
 
     private final NativeBuffers nativeBuffers;
 
+    @Nullable
     private MediaPlayer mediaPlayer;
 
+    @Nullable
     private BufferFormat bufferFormat;
 
     private int displayWidth;
@@ -82,13 +86,15 @@ public class CallbackVideoSurface extends VideoSurface {
 
     /**
      * Implementation of a callback invoked by the native library to set up the required video buffer characteristics.
-     *
+     * <p>
      * This callback is invoked when the video format changes.
      */
     private final class SetupCallback implements libvlc_video_format_cb {
-
         @Override
         public int format(PointerByReference opaque, PointerByReference chroma, Pointer width, Pointer height, PointerByReference pitches, PointerByReference lines) {
+            var buffers = nativeBuffers.buffers();
+            Objects.requireNonNull(buffers, "Buffers must not be null");
+
             int[] widthArray = width.getIntArray(0, 2);
             int[] heightArray = height.getIntArray(0, 2);
             int sourceWidth = widthArray[0];
@@ -101,7 +107,7 @@ public class CallbackVideoSurface extends VideoSurface {
             sourceWidth = width.getInt(0);
             sourceHeight = height.getInt(0);
             bufferFormatCallback.newFormatSize(sourceWidth, sourceHeight, displayWidth, displayHeight);
-            bufferFormatCallback.allocatedBuffers(nativeBuffers.buffers());
+            bufferFormatCallback.allocatedBuffers(buffers);
             return result;
         }
 
@@ -120,7 +126,7 @@ public class CallbackVideoSurface extends VideoSurface {
          */
         private void applyBufferFormat(BufferFormat bufferFormat, PointerByReference chroma, Pointer width, Pointer height, PointerByReference pitches, PointerByReference lines) {
             byte[] chromaBytes = bufferFormat.getChroma().getBytes();
-            chroma.getPointer().write(0, chromaBytes, 0, chromaBytes.length < 4 ? chromaBytes.length : 4);
+            chroma.getPointer().write(0, chromaBytes, 0, Math.min(chromaBytes.length, 4));
             width.setInt(0, bufferFormat.getWidth());
             height.setInt(0, bufferFormat.getHeight());
             int[] pitchValues = bufferFormat.getPitches();
@@ -136,60 +142,61 @@ public class CallbackVideoSurface extends VideoSurface {
      * This callback is invoked when the video buffer is no longer needed.
      */
     private final class CleanupCallback implements libvlc_video_output_cleanup_cb {
-
         @Override
         public void cleanup(Long opaque) {
             nativeBuffers.free();
         }
-
     }
 
     /**
      * Implementation of a callback invoked by the native library to prepare the video buffer(s) for rendering a video
      * frame.
-     *
+     * <p>
      * This callback is invoked every frame.
      */
     private final class LockCallback implements libvlc_lock_callback_t {
-
         @Override
-        public Pointer lock(Long opaque, PointerByReference planes) {
+        public @Nullable Pointer lock(Long opaque, PointerByReference planes) {
+            Objects.requireNonNull(mediaPlayer, "Media player must not be null");
+
             Pointer[] pointers = nativeBuffers.pointers();
+            Objects.requireNonNull(pointers, "Pointers must not be null");
+
             planes.getPointer().write(0, pointers, 0, pointers.length);
             renderCallback.lock(mediaPlayer);
             return null;
         }
-
     }
 
     /**
-     * Implementation of a callback invoked by the native library after each
-     * video frame.
-     *
+     * Implementation of a callback invoked by the native library after each video frame.
+     * <p>
      * This callback is invoked every frame.
      */
     private final class UnlockCallback implements libvlc_unlock_callback_t {
-
         @Override
         public void unlock(Long opaque, Pointer picture, Pointer plane) {
+            Objects.requireNonNull(mediaPlayer, "Media player must not be null");
+
             renderCallback.unlock(mediaPlayer);
         }
-
     }
 
     /**
-     * Implementation of a callback invoked by the native library to render a
-     * single frame of video.
-     *
+     * Implementation of a callback invoked by the native library to render a single frame of video.
+     * <p>
      * This callback is invoked every frame.
      */
     private final class DisplayCallback implements libvlc_display_callback_t {
-
         @Override
         public void display(Long opaque, Pointer picture) {
-            CallbackVideoSurface.this.renderCallback.display(mediaPlayer, nativeBuffers.buffers(), bufferFormat, displayWidth, displayHeight);
+            Objects.requireNonNull(mediaPlayer, "Media player must not be null");
+            Objects.requireNonNull(bufferFormat, "Buffer format must not be null");
+
+            var buffers = nativeBuffers.buffers();
+            Objects.requireNonNull(buffers, "Buffers must not be null");
+
+            CallbackVideoSurface.this.renderCallback.display(mediaPlayer, buffers, bufferFormat, displayWidth, displayHeight);
         }
-
     }
-
 }

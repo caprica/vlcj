@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
@@ -39,7 +40,6 @@ import javax.swing.*;
  * <p>
  * When the component is no longer needed, it should be released by invoking the {@link #release()} method.
  */
-@SuppressWarnings("serial")
 public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerComponentBase {
 
     /**
@@ -73,7 +73,7 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
      * @param bufferFormatCallback buffer format callback
      * @param videoSurfaceComponent lightweight video surface component
      */
-    public CallbackMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, CallbackImagePainter imagePainter, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
+    public CallbackMediaListPlayerComponent(@Nullable MediaPlayerFactory mediaPlayerFactory, @Nullable FullScreenStrategy fullScreenStrategy, @Nullable InputEvents inputEvents, boolean lockBuffers, @Nullable CallbackImagePainter imagePainter, @Nullable RenderCallback renderCallback, @Nullable BufferFormatCallback bufferFormatCallback, @Nullable JComponent videoSurfaceComponent) {
         super(mediaPlayerFactory, fullScreenStrategy, inputEvents, bufferFormatCallback, lockBuffers, imagePainter, videoSurfaceComponent, renderCallback);
 
         this.mediaListPlayer = mediaPlayerFactory().mediaPlayers().newMediaListPlayer();
@@ -95,7 +95,7 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
      * @param lockBuffers <code>true</code> if the native video buffer should be locked; <code>false</code> if not
      * @param imagePainter image painter (video renderer)
      */
-    public CallbackMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, CallbackImagePainter imagePainter) {
+    public CallbackMediaListPlayerComponent(@Nullable MediaPlayerFactory mediaPlayerFactory, @Nullable FullScreenStrategy fullScreenStrategy, @Nullable InputEvents inputEvents, boolean lockBuffers, @Nullable CallbackImagePainter imagePainter) {
         this(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, imagePainter, null, null, null);
     }
 
@@ -110,7 +110,7 @@ public class CallbackMediaListPlayerComponent extends CallbackMediaListPlayerCom
      * @param bufferFormatCallback buffer format callback
      * @param videoSurfaceComponent lightweight video surface component
      */
-    public CallbackMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
+    public CallbackMediaListPlayerComponent(@Nullable MediaPlayerFactory mediaPlayerFactory, @Nullable FullScreenStrategy fullScreenStrategy, @Nullable InputEvents inputEvents, boolean lockBuffers, @Nullable RenderCallback renderCallback, @Nullable BufferFormatCallback bufferFormatCallback, @Nullable JComponent videoSurfaceComponent) {
         this(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, null, renderCallback, bufferFormatCallback, videoSurfaceComponent);
     }
 

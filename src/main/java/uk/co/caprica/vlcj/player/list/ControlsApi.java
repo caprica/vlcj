@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.list;
 
+import java.util.Objects;
+
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_next;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_pause;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_play;
@@ -121,14 +123,9 @@ public final class ControlsApi extends BaseApi {
      * you must instead play a particular item (by its index).
      *
      * @param mode mode
-     * @return <code>true</code> on success; <code>false</code> on error
      */
-    public boolean setMode(PlaybackMode mode) {
-        if (mode != null) {
-            libvlc_media_list_player_set_playback_mode(mediaListPlayer.mediaListPlayerInstance(), mode.intValue());
-            return true;
-        } else {
-            return false;
-        }
+    public void setMode(PlaybackMode mode) {
+        Objects.requireNonNull(mode, "Mode must not be null");
+        libvlc_media_list_player_set_playback_mode(mediaListPlayer.mediaListPlayerInstance(), mode.intValue());
     }
 }

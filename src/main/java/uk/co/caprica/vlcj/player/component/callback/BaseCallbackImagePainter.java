@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component.callback;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.player.base.VideoTrack;
 
 /**
@@ -31,6 +32,6 @@ abstract public class BaseCallbackImagePainter implements CallbackImagePainter {
     }
 
     @Override
-    public void videoTrackChanged(VideoTrack videoTrack) {
+    public void videoTrackChanged(@Nullable VideoTrack videoTrack) {
     }
 }

@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.VideoSurfaceApi;
@@ -33,14 +34,14 @@ public abstract class VideoSurface {
      * <p>
      * May be <pre>null</pre>, e.g. for "callback" media players.
      */
-    protected final VideoSurfaceAdapter videoSurfaceAdapter;
+    protected final @Nullable VideoSurfaceAdapter videoSurfaceAdapter;
 
     /**
      * Create a new video surface wrapper.
      *
      * @param videoSurfaceAdapter video surface adapter implementation, may be <pre>null</pre>
      */
-    protected VideoSurface(VideoSurfaceAdapter videoSurfaceAdapter) {
+    protected VideoSurface(@Nullable VideoSurfaceAdapter videoSurfaceAdapter) {
         this.videoSurfaceAdapter = videoSurfaceAdapter;
     }
 
@@ -60,5 +61,4 @@ public abstract class VideoSurface {
      * @param mediaPlayer media player instance
      */
     public abstract void attach(MediaPlayer mediaPlayer);
-
 }

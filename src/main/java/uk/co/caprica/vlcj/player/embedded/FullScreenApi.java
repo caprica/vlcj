@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.embedded;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
 /**
@@ -29,6 +30,7 @@ public final class FullScreenApi extends BaseApi {
     /**
      * Full-screen strategy implementation, may be <code>null</code>.
      */
+    @Nullable
     private FullScreenStrategy fullScreenStrategy;
 
     FullScreenApi(EmbeddedMediaPlayer mediaPlayer) {

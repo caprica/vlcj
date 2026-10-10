@@ -19,13 +19,15 @@
 
 package uk.co.caprica.vlcj.player.list;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_cbs;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerCallbackHandler;
 import uk.co.caprica.vlcj.support.callback.Holder;
+
+import java.util.Objects;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_get_media_player;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_player_new;
@@ -48,6 +50,7 @@ public class MediaListPlayer {
     private final StatusApi statusApi;
 
     // This is unfortunate to be both protected and not final, but is required for subclassing
+    @Nullable
     protected libvlc_media_list_player_t mediaListPlayerInstance;
 
     /**
@@ -131,6 +134,7 @@ public class MediaListPlayer {
     }
 
     public final libvlc_media_list_player_t mediaListPlayerInstance() {
+        Objects.requireNonNull(mediaListPlayerInstance, "Media list player instance must not be null");
         return mediaListPlayerInstance;
     }
 }

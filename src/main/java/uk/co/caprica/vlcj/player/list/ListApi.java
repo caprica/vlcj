@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.list;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_player_t;
 import uk.co.caprica.vlcj.medialist.MediaApi;
 import uk.co.caprica.vlcj.medialist.MediaList;
@@ -46,7 +47,7 @@ public final class ListApi extends BaseApi {
      * <code>null</code> - either by testing the return value from those methods, or by checking the result of
      * {@link #isValid()} beforehand.
      */
-    private MediaList mediaList;
+    private @Nullable MediaList mediaList;
 
     ListApi(MediaListPlayer mediaListPlayer) {
         super(mediaListPlayer);
@@ -55,7 +56,7 @@ public final class ListApi extends BaseApi {
     /**
      * Set a new media list.
      * <p>
-     * The supplied {@link MediaListRef} is not kept by this component and <em>must</em> be released by the caller when
+     * The supplied {@link MediaListRef} is retained by this component and <em>must</em> be released by the caller when
      * the caller no longer has any use for it.
      *
      * @param mediaListRef media list
@@ -84,18 +85,18 @@ public final class ListApi extends BaseApi {
      *
      * @return item behaviour, may be <code>null</code> if there is currently no media list
      */
-    public MediaApi media() {
+    public @Nullable MediaApi media() {
         return mediaList != null ? mediaList.media() : null;
     }
 
     /**
      * Create a new {@link MediaList} for the associated media list.
      * <p>
-     * The caller <em>must</em> release the returned {@link MediaList} when it has no further use for it.
+     * The caller <em>must</em> release the new {@link MediaList} when it has no further use for it.
      *
      * @return media list reference
      */
-    public MediaList newMediaList() {
+    public @Nullable MediaList newMediaList() {
         if (mediaList != null) {
             return mediaList.newMediaList();
         } else {
@@ -106,11 +107,11 @@ public final class ListApi extends BaseApi {
     /**
      * Create a new {@link MediaListRef} for the associated media list.
      * <p>
-     * The caller <em>must</em> release the returned {@link MediaListRef} when it has no further use for it.
+     * The caller <em>must</em> release the new {@link MediaListRef} when it has no further use for it.
      *
      * @return media list reference
      */
-    public MediaListRef newMediaListRef() {
+    public @Nullable MediaListRef newMediaListRef() {
         if (mediaList != null) {
             return mediaList.newMediaListRef();
         } else {

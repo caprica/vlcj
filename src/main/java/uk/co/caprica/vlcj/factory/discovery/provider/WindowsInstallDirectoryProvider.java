@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.factory.discovery.provider;
 
 import com.sun.jna.platform.win32.Advapi32Util;
 import com.sun.jna.platform.win32.WinReg;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 
 /**
@@ -55,7 +56,7 @@ public class WindowsInstallDirectoryProvider implements DiscoveryDirectoryProvid
         return RuntimeUtil.isWindows();
     }
 
-    private String getVlcInstallDir() {
+    private @Nullable String getVlcInstallDir() {
         try {
             return Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, VLC_REGISTRY_KEY, VLC_INSTALL_DIR_KEY);
         }

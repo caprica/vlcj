@@ -19,11 +19,14 @@
 
 package uk.co.caprica.vlcj.player.component;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
+
+import java.util.Objects;
 
 /**
  * Implementation of an audio list player.
@@ -35,12 +38,12 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
     /**
      * Media list player.
      */
-    private MediaListPlayer mediaListPlayer;
+    private @Nullable MediaListPlayer mediaListPlayer;
 
     /**
      * Media list.
      */
-    private MediaList mediaList;
+    private @Nullable MediaList mediaList;
 
     /**
      * Construct an audio list player component.
@@ -49,7 +52,7 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
      *
      * @param mediaPlayerFactory media player factory
      */
-    public AudioListPlayerComponent(MediaPlayerFactory mediaPlayerFactory) {
+    public AudioListPlayerComponent(@Nullable MediaPlayerFactory mediaPlayerFactory) {
         super(mediaPlayerFactory);
         applyMediaList();
         onAfterConstruct();
@@ -82,6 +85,9 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
     }
 
     private void applyMediaList() {
+        Objects.requireNonNull(mediaList);
+        Objects.requireNonNull(mediaListPlayer);
+
         MediaListRef mediaListRef = mediaList.newMediaListRef();
         try {
             this.mediaListPlayer.list().setMediaList(mediaListRef);
@@ -97,11 +103,15 @@ public class AudioListPlayerComponent extends AudioListPlayerComponentBase {
      * @return media list player
      */
     public final MediaListPlayer mediaListPlayer() {
+        Objects.requireNonNull(mediaListPlayer);
         return mediaListPlayer;
     }
 
     @Override
     protected final void onBeforeRelease() {
+        Objects.requireNonNull(mediaListPlayer);
+        Objects.requireNonNull(mediaList);
+
         mediaListPlayer.release();
         mediaList.release();
     }

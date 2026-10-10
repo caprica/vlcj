@@ -19,8 +19,11 @@
 
 package uk.co.caprica.vlcj.media.callback.nonseekable;
 
+import org.jspecify.annotations.Nullable;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 /**
  * Base implementation for non-seekable media using an {@link InputStream}.
@@ -30,6 +33,7 @@ public abstract class NonSeekableInputStreamMedia extends NonSeekableCallbackMed
     /**
      * Input stream.
      */
+    @Nullable
     private InputStream inputStream;
 
     /**
@@ -61,15 +65,19 @@ public abstract class NonSeekableInputStreamMedia extends NonSeekableCallbackMed
 
     @Override
     protected final int onRead(byte[] buffer, int bufferSize) throws IOException {
+        Objects.requireNonNull(inputStream);
         return inputStream.read(buffer, 0, bufferSize);
     }
 
     @Override
     protected final void onClose() {
         try {
-            onCloseStream(inputStream);
+            if (inputStream != null) {
+                onCloseStream(inputStream);
+            }
         }
         catch (IOException e) {
+            // Nothing to do
         }
     }
 
@@ -88,5 +96,4 @@ public abstract class NonSeekableInputStreamMedia extends NonSeekableCallbackMed
      * @throws IOException if an error occurs
      */
     protected abstract void onCloseStream(InputStream inputStream) throws IOException;
-
 }

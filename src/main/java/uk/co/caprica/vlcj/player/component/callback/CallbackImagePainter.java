@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component.callback;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.player.base.VideoTrack;
 import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 
@@ -48,7 +49,7 @@ public interface CallbackImagePainter {
      *
      * @param videoTrack track information for the new video track, may be <code>null</code>
      */
-    void videoTrackChanged(VideoTrack videoTrack);
+    void videoTrackChanged(@Nullable VideoTrack videoTrack);
 
     /**
      * Prepare the drawing context.

@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.factory.discovery.strategy;
 
 import com.sun.jna.NativeLibrary;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 
 import java.io.File;
@@ -67,7 +68,7 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
     }
 
     @Override
-    public final String discover() {
+    public final @Nullable String discover() {
         for (String discoveryDirectory : discoveryDirectories()) {
             String directoryResult = discover(new File(discoveryDirectory));
             if (directoryResult != null) {
@@ -90,7 +91,7 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
      * @param discoveryDirectory name of the directory to search
      * @return name of the matching directory if successful, null if unsuccessful
      */
-    private String discover(File discoveryDirectory) {
+    private @Nullable String discover(File discoveryDirectory) {
         if (!discoveryDirectory.exists() || !discoveryDirectory.isDirectory()) {
             return null;
         }
@@ -164,5 +165,4 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
      * @return <code>true</code> if the environment variable was successfully set; <code>false</code> on error
      */
     protected abstract boolean setPluginPath(String pluginPath);
-
 }

@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -35,6 +37,7 @@ public final class SnapshotApi extends BaseApi {
      * <p>
      * If this is not set then snapshots will be saved to the user home directory.
      */
+    @Nullable
     private String snapshotDirectoryName;
 
     SnapshotApi(MediaPlayer mediaPlayer) {
@@ -48,7 +51,7 @@ public final class SnapshotApi extends BaseApi {
      *
      * @param snapshotDirectoryName name of the directory to save snapshots to
      */
-    public void setSnapshotDirectory(String snapshotDirectoryName) {
+    public void setSnapshotDirectory(@Nullable String snapshotDirectoryName) {
         this.snapshotDirectoryName = snapshotDirectoryName;
     }
 
@@ -148,7 +151,9 @@ public final class SnapshotApi extends BaseApi {
             snapshotDirectory = new File(".");
         }
         if (!snapshotDirectory.exists()) {
-            snapshotDirectory.mkdirs();
+            if (!snapshotDirectory.mkdirs()) {
+                throw new RuntimeException("Failed to create snapshot directory '" + snapshotDirectory.getAbsolutePath() + "'");
+            }
         }
         if (snapshotDirectory.exists()) {
             return libvlc_video_take_snapshot(mediaPlayerInstance, 0, file.getAbsolutePath(), width, height) == 0;
@@ -233,12 +238,12 @@ public final class SnapshotApi extends BaseApi {
         File file = null;
         try {
             file = File.createTempFile("vlcj-snapshot-", ".png");
-            WaitForSnapshot waiter = new WaitForSnapshot(mediaPlayer, file, width, height);
+            WaitForScreenshot waiter = new WaitForScreenshot(mediaPlayer, file, width, height);
             String snapshot;
             if (timeout == 0) {
-                snapshot = waiter.getSnapshot();
+                snapshot = waiter.getScreenshot();
             } else {
-                snapshot = waiter.getSnapshot(timeout);
+                snapshot = waiter.getScreenshot(timeout);
             }
             return ImageIO.read(new File(snapshot));
         }

@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface.callback;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Specifies the formats used by the {@link uk.co.caprica.vlcj.player.embedded.videosurface.CallbackVideoSurface}.
@@ -169,29 +170,33 @@ public class BufferFormat {
      * @throws IllegalArgumentException if any parameter is invalid
      */
     private void validate(String chroma, int width, int height, int[] pitches, int[] lines) {
-        if(chroma == null || chroma.length() != 4) {
+        Objects.requireNonNull(chroma, "chroma must not be null");
+        Objects.requireNonNull(pitches, "pitches must not be null");
+        Objects.requireNonNull(lines, "lines must not be null");
+
+        if (chroma.length() != 4) {
             throw new IllegalArgumentException("chroma must be exactly 4 characters");
         }
-        if(width <= 0) {
+        if (width <= 0) {
             throw new IllegalArgumentException("width must be greater than zero");
         }
-        if(height <= 0) {
+        if (height <= 0) {
             throw new IllegalArgumentException("height must be greater than zero");
         }
-        if(pitches == null || pitches.length == 0) {
+        if (pitches.length == 0) {
             throw new IllegalArgumentException("pitches length must be greater than zero");
         }
-        if(lines == null || lines.length == 0) {
+        if (lines.length == 0) {
             throw new IllegalArgumentException("lines length must be greater than zero");
         }
-        if(pitches.length != lines.length) {
+        if (pitches.length != lines.length) {
             throw new IllegalArgumentException("pitches and lines must have equal length");
         }
-        for(int i = 0; i < pitches.length; i++) {
-            if(pitches[i] <= 0) {
+        for (int i = 0; i < pitches.length; i++) {
+            if (pitches[i] <= 0) {
                 throw new IllegalArgumentException("pitch must be greater than zero");
             }
-            if(lines[i] <= 0) {
+            if (lines[i] <= 0) {
                 throw new IllegalArgumentException("line must be greater than zero");
             }
         }

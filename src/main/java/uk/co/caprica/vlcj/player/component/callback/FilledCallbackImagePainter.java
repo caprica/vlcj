@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.component.callback;
 
+import org.jspecify.annotations.Nullable;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -38,7 +40,7 @@ public class FilledCallbackImagePainter extends BaseCallbackImagePainter {
     }
 
     @Override
-    public void paint(Graphics2D g2, JComponent component, BufferedImage image) {
+    public void paint(Graphics2D g2, JComponent component, @Nullable BufferedImage image) {
         int width = component.getWidth();
         int height = component.getHeight();
 

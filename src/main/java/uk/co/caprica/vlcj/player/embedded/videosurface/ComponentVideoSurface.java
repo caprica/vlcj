@@ -20,7 +20,6 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface;
 
 import com.sun.jna.Native;
-import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import java.awt.*;
@@ -71,5 +70,4 @@ public class ComponentVideoSurface extends AWTVideoSurface {
     private long getComponentId(Component component) {
         return Native.getComponentID(component);
     }
-
 }

@@ -53,5 +53,4 @@ public enum LogLevel {
     public int intValue() {
         return intValue;
     }
-
 }

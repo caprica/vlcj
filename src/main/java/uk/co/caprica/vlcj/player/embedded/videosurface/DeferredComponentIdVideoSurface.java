@@ -53,5 +53,4 @@ public abstract class DeferredComponentIdVideoSurface extends VideoSurface {
      * @return component id
      */
     protected abstract long getComponentId();
-
 }

@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MetaData;
 import uk.co.caprica.vlcj.media.TrackType;
@@ -135,7 +136,7 @@ abstract class AudioPlayerComponentBase implements MediaPlayerEventListener {
     }
 
     @Override
-    public void trackSelectionChanged(MediaPlayer mediaPlayer, TrackType trackType, String unselectedTrackId, String selectedTrackId) {
+    public void trackSelectionChanged(MediaPlayer mediaPlayer, TrackType trackType, @Nullable String unselectedTrackId, @Nullable String selectedTrackId) {
     }
 
     @Override

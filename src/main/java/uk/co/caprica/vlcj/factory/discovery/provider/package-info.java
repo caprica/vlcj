@@ -9,4 +9,8 @@
  * located at <code>META-INF/services/uk.co.caprica.vlcj.factory.discovery.provider.DiscoveryDirectoryProvider</code> (in their
  * own application classpath).
  */
+
+@NullMarked
 package uk.co.caprica.vlcj.factory.discovery.provider;
+
+import org.jspecify.annotations.NullMarked;

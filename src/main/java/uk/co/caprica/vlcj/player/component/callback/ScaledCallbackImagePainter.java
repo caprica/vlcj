@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component.callback;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.player.base.VideoTrack;
 
 import javax.swing.*;
@@ -41,12 +42,13 @@ public class ScaledCallbackImagePainter extends BaseCallbackImagePainter {
      * actual video (typically it will have extra lines to be aligned on a specific memory boundary). Without this
      * correction, the scaling could be slightly off resulting in unnecessary black bars.
      */
-    private volatile Dimension renderSize;
+    @Nullable
+    private volatile RenderSize renderSize;
 
     @Override
-    public void videoTrackChanged(VideoTrack videoTrack) {
+    public void videoTrackChanged(@Nullable VideoTrack videoTrack) {
         if (videoTrack != null) {
-            renderSize = new Dimension(videoTrack.width(), videoTrack.height());
+            renderSize = new RenderSize(videoTrack.width(), videoTrack.height());
         } else {
             renderSize = null;
         }
@@ -58,7 +60,7 @@ public class ScaledCallbackImagePainter extends BaseCallbackImagePainter {
     }
 
     @Override
-    public void paint(Graphics2D g2, JComponent component, BufferedImage image) {
+    public void paint(Graphics2D g2, JComponent component, @Nullable BufferedImage image) {
         int width = component.getWidth();
         int height = component.getHeight();
 
@@ -66,6 +68,8 @@ public class ScaledCallbackImagePainter extends BaseCallbackImagePainter {
         g2.fillRect(0, 0, width, height);
 
         if (image != null) {
+            RenderSize renderSize = this.renderSize;
+
             int imageWidth = renderSize != null ? renderSize.width : image.getWidth();
             int imageHeight = renderSize != null ? renderSize.height : image.getHeight();
 
@@ -90,4 +94,13 @@ public class ScaledCallbackImagePainter extends BaseCallbackImagePainter {
         }
     }
 
+    private static class RenderSize {
+        private final int width;
+        private final int height;
+
+        private RenderSize(int width, int height) {
+            this.width = width;
+            this.height = height;
+        }
+    }
 }

@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.component.callback.CallbackImagePainter;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
@@ -75,10 +76,19 @@ public final class MediaPlayerSpecs {
      */
     public static final class EmbeddedMediaPlayerSpec {
 
+        @Nullable
         MediaPlayerFactory factory;
+
+        @Nullable
         Component videoSurfaceComponent;
+
+        @Nullable
         FullScreenStrategy fullScreenStrategy;
+
+        @Nullable
         InputEvents inputEvents;
+
+        @Nullable
         Window overlay;
 
         /**
@@ -87,7 +97,7 @@ public final class MediaPlayerSpecs {
          * @param factory media player factory
          * @return this builder
          */
-        public EmbeddedMediaPlayerSpec withFactory(MediaPlayerFactory factory) {
+        public EmbeddedMediaPlayerSpec withFactory(@Nullable MediaPlayerFactory factory) {
             this.factory = factory;
             return this;
         }
@@ -103,7 +113,7 @@ public final class MediaPlayerSpecs {
          * @param videoSurfaceComponent video surface component
          * @return this builder
          */
-        public EmbeddedMediaPlayerSpec withVideoSurfaceComponent(Component videoSurfaceComponent) {
+        public EmbeddedMediaPlayerSpec withVideoSurfaceComponent(@Nullable Component videoSurfaceComponent) {
             this.videoSurfaceComponent = videoSurfaceComponent;
             return this;
         }
@@ -116,7 +126,7 @@ public final class MediaPlayerSpecs {
          * @param fullScreenStrategy full-screen strategy
          * @return this builder
          */
-        public EmbeddedMediaPlayerSpec withFullScreenStrategy(FullScreenStrategy fullScreenStrategy) {
+        public EmbeddedMediaPlayerSpec withFullScreenStrategy(@Nullable FullScreenStrategy fullScreenStrategy) {
             this.fullScreenStrategy = fullScreenStrategy;
             return this;
         }
@@ -200,13 +210,27 @@ public final class MediaPlayerSpecs {
      */
     public static final class CallbackMediaPlayerSpec {
 
+        @Nullable
         MediaPlayerFactory factory;
+
+        @Nullable
         FullScreenStrategy fullScreenStrategy;
+
+        @Nullable
         InputEvents inputEvents;
+
         boolean lockedBuffers = true;
+
+        @Nullable
         CallbackImagePainter imagePainter;
+
+        @Nullable
         RenderCallback renderCallback;
+
+        @Nullable
         BufferFormatCallback bufferFormatCallback;
+
+        @Nullable
         JComponent videoSurfaceComponent;
 
         /**
@@ -376,6 +400,7 @@ public final class MediaPlayerSpecs {
      */
     public static final class AudioPlayerSpec {
 
+        @Nullable
         MediaPlayerFactory factory;
 
         /**
@@ -384,7 +409,7 @@ public final class MediaPlayerSpecs {
          * @param factory media player factory
          * @return this builder
          */
-        public AudioPlayerSpec withFactory(MediaPlayerFactory factory) {
+        public AudioPlayerSpec withFactory(@Nullable MediaPlayerFactory factory) {
             this.factory = factory;
             return this;
         }

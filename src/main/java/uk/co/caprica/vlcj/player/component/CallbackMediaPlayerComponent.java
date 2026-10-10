@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.TrackType;
@@ -46,6 +47,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.Objects;
 
 /**
  * Implementation of a callback "direct-rendering" media player.
@@ -78,6 +80,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * Default render callback implementation, will be <code>null</code> if the client application provides its own
      * render callback.
      */
+    @Nullable
     private final DefaultRenderCallback defaultRenderCallback;
 
     /**
@@ -86,11 +89,13 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * <p>
      * Ordinarily set via constructor, but may be changed via {@link #setImagePainter(CallbackImagePainter)}.
      */
+    @Nullable
     private CallbackImagePainter imagePainter;
 
     /**
      * Component used as the video surface.
      */
+    @Nullable
     private final JComponent videoSurfaceComponent;
 
     /**
@@ -101,12 +106,12 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
     /**
      * Image used to render the video.
      */
-    private BufferedImage image;
+    private @Nullable BufferedImage image;
 
     /**
      * Stable native identifier of the currently selected video track.
      */
-    private String selectedVideoTrackId;
+    private @Nullable String selectedVideoTrackId;
 
     /**
      * Construct a callback media player component.
@@ -129,7 +134,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * @param bufferFormatCallback buffer format callback
      * @param videoSurfaceComponent lightweight video surface component
      */
-    public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, CallbackImagePainter imagePainter, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
+    public CallbackMediaPlayerComponent(@Nullable MediaPlayerFactory mediaPlayerFactory, @Nullable FullScreenStrategy fullScreenStrategy, @Nullable InputEvents inputEvents, boolean lockBuffers, @Nullable CallbackImagePainter imagePainter, @Nullable RenderCallback renderCallback, @Nullable BufferFormatCallback bufferFormatCallback, @Nullable JComponent videoSurfaceComponent) {
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
 
@@ -175,7 +180,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * @param lockBuffers <code>true</code> if the native video buffer should be locked; <code>false</code> if not
      * @param imagePainter image painter (video renderer)
      */
-    public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, CallbackImagePainter imagePainter) {
+    public CallbackMediaPlayerComponent(@Nullable MediaPlayerFactory mediaPlayerFactory, @Nullable FullScreenStrategy fullScreenStrategy, @Nullable InputEvents inputEvents, boolean lockBuffers, @Nullable CallbackImagePainter imagePainter) {
         this(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, imagePainter, null, null, null);
     }
 
@@ -190,7 +195,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * @param bufferFormatCallback buffer format callback
      * @param videoSurfaceComponent lightweight video surface component
      */
-    public CallbackMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, boolean lockBuffers, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
+    public CallbackMediaPlayerComponent(@Nullable MediaPlayerFactory mediaPlayerFactory, @Nullable FullScreenStrategy fullScreenStrategy, @Nullable InputEvents inputEvents, boolean lockBuffers, @Nullable RenderCallback renderCallback, @Nullable BufferFormatCallback bufferFormatCallback, @Nullable JComponent videoSurfaceComponent) {
         this(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, null, renderCallback, bufferFormatCallback, videoSurfaceComponent);
     }
 
@@ -227,7 +232,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * @param bufferFormatCallback buffer format callback
      * @param videoSurfaceComponent video surface component
      */
-    private void validateArguments(CallbackImagePainter imagePainter, RenderCallback renderCallback, BufferFormatCallback bufferFormatCallback, JComponent videoSurfaceComponent) {
+    private void validateArguments(@Nullable CallbackImagePainter imagePainter, @Nullable RenderCallback renderCallback, @Nullable BufferFormatCallback bufferFormatCallback, @Nullable JComponent videoSurfaceComponent) {
         if (renderCallback == null) {
             if (bufferFormatCallback  != null) throw new IllegalArgumentException("Do not specify bufferFormatCallback without a renderCallback");
             if (videoSurfaceComponent != null) throw new IllegalArgumentException("Do not specify videoSurfaceComponent without a renderCallback");
@@ -237,14 +242,14 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         }
     }
 
-    private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {
+    private MediaPlayerFactory initMediaPlayerFactory(@Nullable MediaPlayerFactory mediaPlayerFactory) {
         if (mediaPlayerFactory == null) {
             mediaPlayerFactory = new MediaPlayerFactory(DEFAULT_FACTORY_ARGUMENTS);
         }
         return mediaPlayerFactory;
     }
 
-    private void initInputEvents(InputEvents inputEvents) {
+    private void initInputEvents(@Nullable InputEvents inputEvents) {
         if (inputEvents == null) {
             inputEvents = RuntimeUtil.isNix() || RuntimeUtil.isMac() ? InputEvents.DEFAULT : InputEvents.DISABLE_NATIVE;
         }
@@ -299,6 +304,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * @return video surface component
      */
     public final JComponent videoSurfaceComponent() {
+        Objects.requireNonNull(videoSurfaceComponent);
         return videoSurfaceComponent;
     }
 
@@ -347,6 +353,8 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
         @Override
         public void paint(Graphics g) {
+            Objects.requireNonNull(imagePainter);
+
             Graphics2D g2 = (Graphics2D)g;
 
             imagePainter.prepare(g2, this);
@@ -385,6 +393,8 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * @param height height of the video
      */
     private void newVideoBuffer(int width, int height) {
+        Objects.requireNonNull(defaultRenderCallback);
+
         // The StandardBufferFormat provides correctly RGBA, but that native buffer byte ordering is not correct for an
         // ARGB buffered image (the byte ordering is reversed), so cheat by picking the BGR format for the buffered
         // image
@@ -410,6 +420,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
 
         @Override
         protected void onDisplay(MediaPlayer mediaPlayer, int[] buffer) {
+            Objects.requireNonNull(videoSurfaceComponent);
             videoSurfaceComponent.repaint();
         }
     }
@@ -423,7 +434,7 @@ public class CallbackMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      */
     private class VideoTrackListener extends MediaPlayerEventAdapter {
         @Override
-        public void trackSelectionChanged(MediaPlayer mediaPlayer, TrackType trackType, String unselectedTrackId, String selectedTrackId) {
+        public void trackSelectionChanged(MediaPlayer mediaPlayer, TrackType trackType, @Nullable String unselectedTrackId, @Nullable String selectedTrackId) {
             if (imagePainter == null || TrackType.VIDEO != trackType) {
                 return;
             }

@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import com.sun.jna.Pointer;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_list_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_cbs;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -37,10 +38,11 @@ import uk.co.caprica.vlcj.player.base.events.MediaPlayerEventFactory;
 import uk.co.caprica.vlcj.support.callback.Holder;
 import uk.co.caprica.vlcj.support.callback.NativeCallbackHandler;
 
+import java.util.Objects;
+
 import static uk.co.caprica.vlcj.binding.internal.libvlc_list_action_t.listAction;
 import static uk.co.caprica.vlcj.binding.internal.libvlc_stopping_reason_t.stoppingReason;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_list_release;
-import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_retain;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_subitems;
 import static uk.co.caprica.vlcj.binding.support.strings.NativeString.copyNativeString;
 import static uk.co.caprica.vlcj.media.TrackType.trackType;
@@ -56,6 +58,7 @@ import static uk.co.caprica.vlcj.player.base.TitleFlags.titleFlags;
  */
 public final class MediaPlayerCallbackHandler extends NativeCallbackHandler<MediaPlayer, libvlc_media_player_cbs, MediaPlayerEventListener> {
 
+    @Nullable
     private libvlc_stopping_reason_t stoppingReason;
 
     private boolean receivedPlayingEvent;
@@ -91,49 +94,45 @@ public final class MediaPlayerCallbackHandler extends NativeCallbackHandler<Medi
 
         cbs.on_state_changed = (Pointer opaque, int state) -> {
             State stateValue = State.state(state);
-            if (stateValue != null) {
-                switch (stateValue) {
-                    case NOTHING_SPECIAL:
-                        raiseEvent(MediaPlayerEventFactory.createNothingSpecialEvent(source()));
-                        break;
-                    case OPENING:
-                        raiseEvent(MediaPlayerEventFactory.createOpeningEvent(source()));
-                        break;
-                    case PLAYING:
-                        onPlaying();
-                        raiseEvent(MediaPlayerEventFactory.createPlayingEvent(source()));
-                        break;
-                    case PAUSED:
-                        raiseEvent(MediaPlayerEventFactory.createPausedEvent(source()));
-                        break;
-                    // For STOPPED, the intention is to preserve the stopped/finished/error event semantics of previous
-                    // versions of vlcj
-                    case STOPPED:
-                        if (shouldSuppressStopped()) {
+            switch (stateValue) {
+                case NOTHING_SPECIAL:
+                    raiseEvent(MediaPlayerEventFactory.createNothingSpecialEvent(source()));
+                    break;
+                case OPENING:
+                    raiseEvent(MediaPlayerEventFactory.createOpeningEvent(source()));
+                    break;
+                case PLAYING:
+                    onPlaying();
+                    raiseEvent(MediaPlayerEventFactory.createPlayingEvent(source()));
+                    break;
+                case PAUSED:
+                    raiseEvent(MediaPlayerEventFactory.createPausedEvent(source()));
+                    break;
+                // For STOPPED, the intention is to preserve the stopped/finished/error event semantics of previous
+                // versions of vlcj even though there have been native library changes related to this
+                case STOPPED:
+                    Objects.requireNonNull(stoppingReason);
+                    switch (stoppingReason) {
+                        case libvlc_stopping_reason_error:
+                            // An error event is not dispatched here as one will be raised by the state-changed handler
                             break;
-                        }
-                        switch (stoppingReason) {
-                            case libvlc_stopping_reason_error:
-                                // An error event is not dispatched here as one will be raised by the state-changed handler
-                                break;
-                            case libvlc_stopping_reason_eos:
-                                raiseEvent(MediaPlayerEventFactory.createMediaPlayerFinishedEvent(source()));
-                                break;
-                            case libvlc_stopping_reason_user:
-                                raiseEvent(MediaPlayerEventFactory.createStoppedEvent(source()));
-                                break;
-                        }
+                        case libvlc_stopping_reason_eos:
+                            raiseEvent(MediaPlayerEventFactory.createMediaPlayerFinishedEvent(source()));
+                            break;
+                        case libvlc_stopping_reason_user:
+                            raiseEvent(MediaPlayerEventFactory.createStoppedEvent(source()));
+                            break;
+                    }
 
-                        // Reset the stashed stopping reason since it's no longer needed
-                        this.stoppingReason = null;
-                        break;
-                    case STOPPING:
-                        raiseEvent(MediaPlayerEventFactory.createStoppingEvent(source()));
-                        break;
-                    case ERROR:
-                        raiseEvent(MediaPlayerEventFactory.createEncounteredErrorEvent(source()));
-                        break;
-                }
+                    // Reset the stashed stopping reason since it's no longer needed
+                    this.stoppingReason = null;
+                    break;
+                case STOPPING:
+                    raiseEvent(MediaPlayerEventFactory.createStoppingEvent(source()));
+                    break;
+                case ERROR:
+                    raiseEvent(MediaPlayerEventFactory.createEncounteredErrorEvent(source()));
+                    break;
             }
         };
 
@@ -341,12 +340,5 @@ public final class MediaPlayerCallbackHandler extends NativeCallbackHandler<Medi
 
     private void onPlaying() {
         receivedPlayingEvent = true;
-    }
-
-    boolean shouldSuppressStopped() {
-        if (!receivedPlayingEvent) {
-            return true;
-        }
-        return false;
     }
 }

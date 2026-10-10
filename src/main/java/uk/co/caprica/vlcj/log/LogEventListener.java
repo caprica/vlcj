@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.log;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Specification for a component that will receive native log messages.
  */
@@ -36,6 +38,14 @@ public interface LogEventListener {
      * @param id object identifier
      * @param message log message
      */
-    void log(LogLevel level, String module, String file, Integer line, String name, String header, Long id, String message);
-
+    void log(
+        LogLevel level,
+        @Nullable String module,
+        @Nullable String file,
+        @Nullable Integer line,
+        @Nullable String name,
+        @Nullable String header,
+        @Nullable Long id,
+        String message
+    );
 }

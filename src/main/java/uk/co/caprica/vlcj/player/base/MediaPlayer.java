@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_player_t;
 import uk.co.caprica.vlcj.factory.LibVlcInstance;
@@ -63,6 +64,7 @@ public class MediaPlayer {
     /**
      * Arbitrary object associated with this media list player.
      */
+    @Nullable
     private Object userData;
 
     private final AudioApi      audioApi;
@@ -96,10 +98,6 @@ public class MediaPlayer {
 
         this.callbackHandler = initCallbackHandler();
         this.mediaPlayerInstance = initMediaPlayer(this.callbackHandler);
-
-        if (this.mediaPlayerInstance == null) {
-            throw new RuntimeException("Failed to get a new native media player instance");
-        }
 
         audioApi      = new AudioApi     (this);
         chapterApi    = new ChapterApi   (this);
@@ -141,7 +139,11 @@ public class MediaPlayer {
     }
 
     protected libvlc_media_player_t initMediaPlayer(MediaPlayerCallbackHandler callbackHandler) {
-        return libvlc_media_player_new(this.libvlcInstance, callbackHandler.callbacks(), null);
+        libvlc_media_player_t mediaPlayer = libvlc_media_player_new(this.libvlcInstance, callbackHandler.callbacks(), null);
+        if (mediaPlayer != null) {
+            return mediaPlayer;
+        }
+        throw new RuntimeException("Failed to get a new native media player instance");
     }
 
     public final AudioApi audio() {
@@ -229,7 +231,7 @@ public class MediaPlayer {
      *
      * @return user data
      */
-    public final Object userData() {
+    public final @Nullable Object userData() {
         return userData;
     }
 
@@ -238,7 +240,7 @@ public class MediaPlayer {
      *
      * @param userData user data
      */
-    public final void userData(Object userData) {
+    public final void userData(@Nullable Object userData) {
         this.userData = userData;
     }
 

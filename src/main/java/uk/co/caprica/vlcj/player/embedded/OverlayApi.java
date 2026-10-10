@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.embedded;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.player.embedded.videosurface.ComponentVideoSurface;
 
 import javax.swing.*;
@@ -27,6 +28,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Objects;
 
 /**
  * Behaviour pertaining to the heavyweight overlay.
@@ -55,6 +57,7 @@ public final class OverlayApi extends BaseApi {
     /**
      * Optional overlay component.
      */
+    @Nullable
     private Window overlay;
 
     /**
@@ -76,7 +79,7 @@ public final class OverlayApi extends BaseApi {
      *
      * @return overlay component, may be <code>null</code>
      */
-    public Window get() {
+    public @Nullable Window get() {
         return overlay;
     }
 
@@ -129,6 +132,7 @@ public final class OverlayApi extends BaseApi {
                     bounds.setLocation(component.getLocationOnScreen());
                     overlay.setBounds(bounds);
                     Window window = getAncestorWindow(component);
+                    Objects.requireNonNull(window, "Ancestor window must not be null");
                     window.addComponentListener(overlayComponentAdapter);
                     overlay.setVisible(true);
                 }
@@ -137,6 +141,7 @@ public final class OverlayApi extends BaseApi {
                 if (overlay.isVisible()) {
                     overlay.setVisible(false);
                     Window window = getAncestorWindow(getComponent());
+                    Objects.requireNonNull(window, "Ancestor window must not be null");
                     window.removeComponentListener(overlayComponentAdapter);
                 }
             }
@@ -158,15 +163,12 @@ public final class OverlayApi extends BaseApi {
      * @param overlay overlay window
      */
     private void addOverlay(Window overlay) {
-        if (overlay != null) {
-            this.overlay = overlay;
-            Window window = getAncestorWindow(getComponent());
-            if (window != null) {
-                window.addWindowListener(overlayWindowAdapter);
-            }
-            else {
-                // This should not be possible
-            }
+        this.overlay = overlay;
+        Window window = getAncestorWindow(getComponent());
+        if (window != null) {
+            window.addWindowListener(overlayWindowAdapter);
+        } else {
+            // This should not be possible
         }
     }
 
@@ -176,6 +178,7 @@ public final class OverlayApi extends BaseApi {
     private void removeOverlay() {
         if (overlay != null) {
             Window window = getAncestorWindow(getComponent());
+            Objects.requireNonNull(window, "Ancestor window must not be null");
             window.removeWindowListener(overlayWindowAdapter);
             overlay = null;
         }
@@ -190,11 +193,13 @@ public final class OverlayApi extends BaseApi {
 
         @Override
         public void componentResized(ComponentEvent e) {
+            Objects.requireNonNull(overlay, "Overlay must not be null");
             overlay.setSize(getComponent().getSize());
         }
 
         @Override
         public void componentMoved(ComponentEvent e) {
+            Objects.requireNonNull(overlay, "Overlay must not be null");
             overlay.setLocation(getComponent().getLocationOnScreen());
         }
 
@@ -278,8 +283,7 @@ public final class OverlayApi extends BaseApi {
      * @param component component to find the ancestor for
      * @return ancestor window if found, or <code>null</code>
      */
-    private Window getAncestorWindow(Component component) {
-        return (Window)SwingUtilities.getAncestorOfClass(Window.class, component);
+    private @Nullable Window getAncestorWindow(Component component) {
+        return (Window) SwingUtilities.getAncestorOfClass(Window.class, component);
     }
-
 }

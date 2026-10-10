@@ -19,9 +19,11 @@
 
 package uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * Default implementation of a full-screen strategy that attempts to use the JDK full-screen exclusive mode support.
@@ -55,12 +57,8 @@ public class ExclusiveModeFullScreenStrategy implements FullScreenStrategy {
      * @param window component that will be made full-screen
      */
     public ExclusiveModeFullScreenStrategy(Window window) {
-        if (window != null) {
-            this.window = window;
-        }
-        else {
-            throw new IllegalArgumentException("Window must not be null");
-        }
+        Objects.requireNonNull(window, "Window must not be null");
+        this.window = window;
     }
 
     @Override
@@ -106,7 +104,7 @@ public class ExclusiveModeFullScreenStrategy implements FullScreenStrategy {
      * @param displayModes available display modes
      * @return display mode, may be <code>null</code>
      */
-    protected DisplayMode getDisplayMode(DisplayMode[] displayModes) {
+    protected @Nullable DisplayMode getDisplayMode(DisplayMode[] displayModes) {
         return null;
     }
 

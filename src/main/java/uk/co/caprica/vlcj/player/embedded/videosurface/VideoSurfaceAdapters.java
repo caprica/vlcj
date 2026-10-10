@@ -45,5 +45,4 @@ public final class VideoSurfaceAdapters {
             throw new RuntimeException("Unable to create a video surface - failed to detect a supported operating system");
         }
     }
-
 }

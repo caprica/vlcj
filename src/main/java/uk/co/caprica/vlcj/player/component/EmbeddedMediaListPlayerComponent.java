@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListRef;
@@ -28,6 +29,7 @@ import uk.co.caprica.vlcj.player.list.EmbeddedMediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * Implementation of an embedded media list player.
@@ -36,18 +38,17 @@ import java.awt.*;
  * <p>
  * When the component is no longer needed, it should be released by invoking the {@link #release()} method.
  */
-@SuppressWarnings("serial")
 public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerComponentBase {
 
     /**
      * Media list player.
      */
-    private EmbeddedMediaListPlayer mediaListPlayer;
+    private @Nullable EmbeddedMediaListPlayer mediaListPlayer;
 
     /**
      * Media list.
      */
-    private MediaList mediaList;
+    private @Nullable MediaList mediaList;
 
     /**
      * Construct an embedded media list player component.
@@ -60,7 +61,7 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerCom
      * @param inputEvents keyboard/mouse input event configuration
      * @param overlay heavyweight overlay
      */
-    public EmbeddedMediaListPlayerComponent(MediaPlayerFactory mediaPlayerFactory, Component videoSurfaceComponent, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, Window overlay) {
+    public EmbeddedMediaListPlayerComponent(@Nullable MediaPlayerFactory mediaPlayerFactory, @Nullable Component videoSurfaceComponent, @Nullable FullScreenStrategy fullScreenStrategy, @Nullable InputEvents inputEvents, @Nullable Window overlay) {
         super(mediaPlayerFactory, videoSurfaceComponent, fullScreenStrategy, inputEvents, overlay);
         applyMediaList();
         onAfterConstruct();
@@ -102,6 +103,9 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerCom
     }
 
     private void applyMediaList() {
+        Objects.requireNonNull(mediaList);
+        Objects.requireNonNull(mediaListPlayer);
+
         MediaListRef mediaListRef = mediaList.newMediaListRef();
         try {
             this.mediaListPlayer.list().setMediaList(mediaListRef);
@@ -119,6 +123,7 @@ public class EmbeddedMediaListPlayerComponent extends EmbeddedMediaListPlayerCom
      * @return media list player
      */
     public final MediaListPlayer mediaListPlayer() {
+        Objects.requireNonNull(mediaListPlayer);
         return mediaListPlayer;
     }
 

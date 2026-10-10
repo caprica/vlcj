@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.base;
 
 import com.sun.jna.Pointer;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_drain_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_flush_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_pause_cb;
@@ -27,6 +28,8 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_audio_play_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_resume_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_set_volume_cb;
 import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
+
+import java.util.Objects;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_callbacks;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_set_format;
@@ -51,6 +54,7 @@ final class AudioCallbacks {
 
     private final MediaPlayer mediaPlayer;
 
+    @Nullable
     private AudioCallback audioCallback;
 
     AudioCallbacks(MediaPlayer mediaPlayer) {
@@ -77,6 +81,7 @@ final class AudioCallbacks {
 
         @Override
         public void play(Pointer data, Pointer samples, int count, long pts) {
+            Objects.requireNonNull(audioCallback);
             audioCallback.play(mediaPlayer, samples, count, pts);
         }
     }
@@ -88,6 +93,7 @@ final class AudioCallbacks {
 
         @Override
         public void pause(Pointer data, long pts) {
+            Objects.requireNonNull(audioCallback);
             audioCallback.pause(mediaPlayer, pts);
         }
     }
@@ -99,6 +105,7 @@ final class AudioCallbacks {
 
         @Override
         public void resume(Pointer data, long pts) {
+            Objects.requireNonNull(audioCallback);
             audioCallback.resume(mediaPlayer, pts);
         }
     }
@@ -110,6 +117,7 @@ final class AudioCallbacks {
 
         @Override
         public void flush(Pointer data, long pts) {
+            Objects.requireNonNull(audioCallback);
             audioCallback.flush(mediaPlayer, pts);
         }
     }
@@ -121,6 +129,7 @@ final class AudioCallbacks {
 
         @Override
         public void drain(Pointer data) {
+            Objects.requireNonNull(audioCallback);
             audioCallback.drain(mediaPlayer);
         }
     }
@@ -132,6 +141,7 @@ final class AudioCallbacks {
 
         @Override
         public void setVolume(Pointer data, float volume, int mute) {
+            Objects.requireNonNull(audioCallback);
             audioCallback.setVolume(volume, mute == 0);
         }
 

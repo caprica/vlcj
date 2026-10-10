@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
@@ -30,7 +31,6 @@ import java.awt.*;
  * This class serves to keep the {@link EmbeddedMediaListPlayerComponent} concrete implementation clean and
  * un-cluttered.
  */
-@SuppressWarnings("serial")
 abstract class EmbeddedMediaListPlayerComponentBase extends EmbeddedMediaPlayerComponent {
 
     /**
@@ -42,7 +42,7 @@ abstract class EmbeddedMediaListPlayerComponentBase extends EmbeddedMediaPlayerC
      * @param inputEvents
      * @param overlay
      */
-    protected EmbeddedMediaListPlayerComponentBase(MediaPlayerFactory mediaPlayerFactory, Component videoSurfaceComponent, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, Window overlay) {
+    protected EmbeddedMediaListPlayerComponentBase(@Nullable MediaPlayerFactory mediaPlayerFactory, @Nullable Component videoSurfaceComponent, @Nullable FullScreenStrategy fullScreenStrategy, @Nullable InputEvents inputEvents, @Nullable Window overlay) {
         super(mediaPlayerFactory, videoSurfaceComponent, fullScreenStrategy, inputEvents, overlay);
     }
 }

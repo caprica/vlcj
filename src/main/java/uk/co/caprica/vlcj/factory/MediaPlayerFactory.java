@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.factory;
 
 import com.sun.jna.StringArray;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.lib.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_instance_t;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
@@ -95,6 +96,7 @@ public class MediaPlayerFactory {
      * <p>
      * May be <code>null</code>.
      */
+    @Nullable
     private NativeDiscoveryStrategy nativeDiscoveryStrategy;
 
     /**
@@ -102,6 +104,7 @@ public class MediaPlayerFactory {
      * <p>
      * May be <code>null</code>.
      */
+    @Nullable
     private String nativeLibraryPath;
 
     /**
@@ -114,7 +117,7 @@ public class MediaPlayerFactory {
     public MediaPlayerFactory(NativeDiscovery discovery, String... libvlcArgs) {
         discoverNativeLibrary(discovery);
 
-        this.libvlcInstance = newLibVlcInstance(libvlcArgs != null ? libvlcArgs : new String[0]);
+        this.libvlcInstance = newLibVlcInstance(libvlcArgs);
         this.libvlcInstanceHandle = new LibVlcInstance(this.libvlcInstance);
 
         this.applicationApi     = new ApplicationApi    (this);
@@ -179,7 +182,7 @@ public class MediaPlayerFactory {
      * @param discovery native discovery used to find the native library, may be <code>null</code>
      * @throws NativeLibraryMappingException if one or more of the declared method bindings in {@link LibVlc} could not be found in the native library that was loaded
      */
-    private void discoverNativeLibrary(NativeDiscovery discovery) {
+    private void discoverNativeLibrary(@Nullable NativeDiscovery discovery) {
         if (discovery != null) {
             // The discover method return value is not currently used, since we try and load the native library whether
             // discovery worked or not
@@ -317,7 +320,7 @@ public class MediaPlayerFactory {
      *
      * @return strategy instance
      */
-    public final NativeDiscoveryStrategy nativeDiscoveryStrategy() {
+    public final @Nullable NativeDiscoveryStrategy nativeDiscoveryStrategy() {
         return nativeDiscoveryStrategy;
     }
 
@@ -328,7 +331,7 @@ public class MediaPlayerFactory {
      *
      * @return native library path
      */
-    public final String nativeLibraryPath() {
+    public final @Nullable String nativeLibraryPath() {
         return nativeLibraryPath;
     }
 

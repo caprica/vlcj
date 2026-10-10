@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.factory;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Empty implementation of a {@link DialogHandler}.
  * <p>
@@ -28,26 +30,26 @@ package uk.co.caprica.vlcj.factory;
 abstract public class DialogHandlerAdapter implements DialogHandler {
 
     @Override
-    public void displayError(Long userData, String title, String text) {
+    public void displayError(@Nullable Long userData, String title, String text) {
     }
 
     @Override
-    public void displayLogin(Long userData, DialogId id, String title, String text, String defaultUsername, boolean askStore) {
+    public void displayLogin(@Nullable Long userData, DialogId id, String title, String text, String defaultUsername, boolean askStore) {
     }
 
     @Override
-    public void displayQuestion(Long userData, DialogId id, String title, String text, DialogQuestionType type, String cancel, String action1, String action2) {
+    public void displayQuestion(@Nullable Long userData, DialogId id, String title, String text, DialogQuestionType type, String cancel, String action1, String action2) {
     }
 
     @Override
-    public void displayProgress(Long userData, DialogId id, String title, String text, int indeterminate, float position, String cancel) {
+    public void displayProgress(@Nullable Long userData, DialogId id, String title, String text, int indeterminate, float position, String cancel) {
     }
 
     @Override
-    public void cancel(Long userData, DialogId id) {
+    public void cancel(@Nullable Long userData, DialogId id) {
     }
 
     @Override
-    public void updateProgress(Long userData, DialogId id, float position, String text) {
+    public void updateProgress(@Nullable Long userData, DialogId id, float position, String text) {
     }
 }

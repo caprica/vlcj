@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_renderer_item_t;
 import uk.co.caprica.vlcj.player.renderer.RendererItem;
 
@@ -32,6 +33,7 @@ public final class RendererApi extends BaseApi {
     /**
      * Optional alternate renderer.
      */
+    @Nullable
     private RendererItem rendererItem;
 
     RendererApi(MediaPlayer mediaPlayer) {
@@ -53,7 +55,7 @@ public final class RendererApi extends BaseApi {
      * @param rendererItem media renderer, or <code>null</code> to render as normal
      * @return <code>true</code> if successful; <code>false</code> on error
      */
-    public final boolean setRenderer(RendererItem rendererItem) {
+    public boolean setRenderer(@Nullable RendererItem rendererItem) {
         if (rendererItem != null) {
             if (!rendererItem.hold()) {
                 return false;

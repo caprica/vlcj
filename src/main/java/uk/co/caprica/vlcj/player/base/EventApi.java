@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.player.base.events.MediaPlayerEvent;
 
 import java.util.List;
@@ -35,6 +36,7 @@ import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_clock;
  */
 public final class EventApi extends BaseApi {
 
+    @Nullable
     private ScheduledFuture<?> timerTask;
 
     EventApi(MediaPlayer mediaPlayer) {

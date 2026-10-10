@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.player.embedded.videosurface.videoengine;
 
 import com.sun.jna.Pointer;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_output_resize_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_color_primaries_e;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_color_space_e;
@@ -43,6 +44,8 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MouseButton;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurfaceAdapter;
+
+import java.util.Objects;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_video_set_output_callbacks;
 
@@ -83,6 +86,7 @@ public final class VideoEngineVideoSurface extends VideoSurface {
     /**
      * Handler to bridge the native video engine resize and mouse event callback.
      */
+    @Nullable
     private VideoEngineWindowCallbackHandler windowCallbackHandler;
 
     /**
@@ -106,6 +110,7 @@ public final class VideoEngineVideoSurface extends VideoSurface {
      * @param height new height
      */
     public void resize(int width, int height) {
+        Objects.requireNonNull(windowCallbackHandler);
         windowCallbackHandler.setSize(width, height);
     }
 
@@ -116,6 +121,7 @@ public final class VideoEngineVideoSurface extends VideoSurface {
      * @param y new mouse y position
      */
     public void mouseMoved(int x, int y) {
+        Objects.requireNonNull(windowCallbackHandler);
         windowCallbackHandler.mouseMoved(x, y);
     }
 
@@ -125,6 +131,7 @@ public final class VideoEngineVideoSurface extends VideoSurface {
      * @param mouseButton button that was pressed
      */
     public void mousePressed(MouseButton mouseButton) {
+        Objects.requireNonNull(windowCallbackHandler);
         windowCallbackHandler.mousePressed(mouseButton);
     }
 
@@ -134,6 +141,7 @@ public final class VideoEngineVideoSurface extends VideoSurface {
      * @param mouseButton button that was pressed
      */
     public void mouseReleased(MouseButton mouseButton) {
+        Objects.requireNonNull(windowCallbackHandler);
         windowCallbackHandler.mouseReleased(mouseButton);
     }
 

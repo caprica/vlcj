@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.player.embedded.fullscreen.windows;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.FullScreenStrategy;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * Implementation of a full screen strategy that uses the native Win32 API.
@@ -44,12 +45,8 @@ public class Win32FullScreenStrategy implements FullScreenStrategy {
      * @param window component that will be made full-screen
      */
     public Win32FullScreenStrategy(Window window) {
-        if (window != null) {
-            this.handler = new Win32FullScreenHandler(window);
-        }
-        else {
-            throw new IllegalArgumentException("Window must not be null");
-        }
+        Objects.requireNonNull(window, "Window must not be null");
+        this.handler = new Win32FullScreenHandler(window);
     }
 
     @Override

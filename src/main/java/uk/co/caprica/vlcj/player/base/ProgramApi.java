@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_player_program_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_player_programlist_t;
 import uk.co.caprica.vlcj.binding.support.types.size_t;
@@ -74,17 +75,17 @@ public final class ProgramApi extends BaseApi {
         libvlc_media_player_select_program_id(mediaPlayerInstance, programId);
     }
 
-    public Program selected() {
+    public @Nullable Program selected() {
         libvlc_player_program_t programInstance = libvlc_media_player_get_selected_program(mediaPlayerInstance);
         return convertAndFree(programInstance);
     }
 
-    public Program get(int programId) {
+    public @Nullable Program get(int programId) {
         libvlc_player_program_t programInstance = libvlc_media_player_get_program_from_id(mediaPlayerInstance, programId);
         return convertAndFree(programInstance);
     }
 
-    private static Program convertAndFree(libvlc_player_program_t programInstance) {
+    private static @Nullable Program convertAndFree(@Nullable libvlc_player_program_t programInstance) {
         if (programInstance != null) {
             Program program = new Program(programInstance);
             libvlc_player_program_delete(programInstance);

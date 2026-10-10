@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.factory;
 
 import com.sun.jna.Pointer;
+import org.jspecify.annotations.Nullable;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_dialog_dismiss;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_dialog_post_action;
@@ -68,7 +69,7 @@ public final class DialogsApi extends BaseApi {
      * @param dialogs dialogs callback component
      * @param userData user data associated with the dialog
      */
-    public void enable(Dialogs dialogs, Long userData) {
+    public void enable(Dialogs dialogs, @Nullable Long userData) {
         libvlc_dialog_set_error_callback(libvlcInstance, dialogs.errorCallback(), pointer(userData));
         libvlc_dialog_set_callbacks(libvlcInstance, dialogs.callbacks(), pointer(userData));
     }
@@ -78,7 +79,7 @@ public final class DialogsApi extends BaseApi {
      *
      * @param userData user data associated with the dialog
      */
-    public void disable(Long userData) {
+    public void disable(@Nullable Long userData) {
         libvlc_dialog_set_error_callback(libvlcInstance, null, pointer(userData));
         libvlc_dialog_set_callbacks(libvlcInstance, null, pointer(userData));
     }
@@ -117,7 +118,7 @@ public final class DialogsApi extends BaseApi {
         return libvlc_dialog_dismiss(id.id()) == 0;
     }
 
-    private static Pointer pointer(Long userData) {
+    private static @Nullable Pointer pointer(@Nullable Long userData) {
         return userData != null ? Pointer.createConstant(userData) : null;
     }
 }

@@ -141,7 +141,7 @@ public final class Dialogs {
         }
     }
 
-    private Long userData(Pointer pointer) {
+    private @Nullable Long userData(@Nullable Pointer pointer) {
         return pointer != null ? Pointer.nativeValue(pointer) : null;
     }
 
@@ -149,37 +149,37 @@ public final class Dialogs {
         return new DialogId(id);
     }
 
-    private void onDisplayError(Long userData, String title, String text) {
+    private void onDisplayError(@Nullable Long userData, String title, String text) {
         for (DialogHandler handler : handlerList) {
             handler.displayError(userData, title, text);
         }
     }
 
-    private void onDisplayLogin(Long userData, DialogId id, String title, String text, String defaultUsername, boolean askStore) {
+    private void onDisplayLogin(@Nullable Long userData, DialogId id, String title, String text, String defaultUsername, boolean askStore) {
         for (DialogHandler handler : handlerList) {
             handler.displayLogin(userData, id, title, text, defaultUsername, askStore);
         }
     }
 
-    private void onDisplayQuestion(Long userData, DialogId id, String title, String text, int type, String cancel, String action1, String action2) {
+    private void onDisplayQuestion(@Nullable Long userData, DialogId id, String title, String text, int type, String cancel, String action1, String action2) {
         for (DialogHandler handler : handlerList) {
             handler.displayQuestion(userData, id, title, text, DialogQuestionType.questionType(type), cancel, action1, action2);
         }
     }
 
-    private void onDisplayProgress(Long userData, DialogId id, String title, String text, int indeterminate, float position, String cancel) {
+    private void onDisplayProgress(@Nullable Long userData, DialogId id, String title, String text, int indeterminate, float position, String cancel) {
         for (DialogHandler handler : handlerList) {
             handler.displayProgress(userData, id, title, text, indeterminate, position, cancel);
         }
     }
 
-    private void onCancel(Long userData, DialogId id) {
+    private void onCancel(@Nullable Long userData, DialogId id) {
         for (DialogHandler handler : handlerList) {
             handler.cancel(userData, id);
         }
     }
 
-    private void onUpdateProgress(Long userData, DialogId id, float position, String text) {
+    private void onUpdateProgress(@Nullable Long userData, DialogId id, float position, String text) {
         for (DialogHandler handler : handlerList) {
             handler.updateProgress(userData, id, position, text);
         }

@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.media.callback;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.ptr.PointerByReference;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_close_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_open_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_read_cb;
@@ -76,6 +77,7 @@ public abstract class AbstractCallbackMedia implements CallbackMedia {
     /**
      * Native media seek callback.
      */
+    @Nullable
     private final Seek seek;
 
     /**
@@ -88,6 +90,7 @@ public abstract class AbstractCallbackMedia implements CallbackMedia {
      * <p>
      * Currently unused.
      */
+    @Nullable
     private final Pointer opaque;
 
     /**
@@ -230,8 +233,7 @@ public abstract class AbstractCallbackMedia implements CallbackMedia {
     }
 
     @Override
-    public final Pointer getOpaque() {
+    public final @Nullable Pointer getOpaque() {
         return opaque;
     }
-
 }

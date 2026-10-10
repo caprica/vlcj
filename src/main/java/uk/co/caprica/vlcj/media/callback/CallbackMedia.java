@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcj.media.callback;
 
 import com.sun.jna.Pointer;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_close_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_open_cb;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_read_cb;
@@ -71,6 +72,5 @@ public interface CallbackMedia {
      *
      * @return opaque handle
      */
-    Pointer getOpaque();
-
+    @Nullable Pointer getOpaque();
 }

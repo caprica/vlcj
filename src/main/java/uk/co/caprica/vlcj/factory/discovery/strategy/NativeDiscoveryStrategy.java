@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.factory.discovery.strategy;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Specification for a component that can locate the LibVLC native libraries at run-time.
  */
@@ -38,7 +40,7 @@ public interface NativeDiscoveryStrategy {
      *
      * @return path containing the shared libraries, or <code>null</code> if this strategy did not find them
      */
-    String discover();
+    @Nullable String discover();
 
     /**
      * Invoked when native shared libraries found.
@@ -61,5 +63,4 @@ public interface NativeDiscoveryStrategy {
      * @return <code>true</code> if the plugin path was set successfully; <code>false</code> on error
      */
     boolean onSetPluginPath(String path);
-
 }

@@ -22,6 +22,7 @@ package uk.co.caprica.vlcj.player.base;
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_track_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_tracklist_t;
 import uk.co.caprica.vlcj.binding.support.types.size_t;
@@ -55,7 +56,7 @@ public final class TrackApi extends BaseApi {
      *
      * @return track list, or <code>null</code> if no track list for the requested type is available
      */
-    public VideoTrackList videoTracks() {
+    public @Nullable VideoTrackList videoTracks() {
         return videoTracks(false);
     }
 
@@ -67,7 +68,7 @@ public final class TrackApi extends BaseApi {
      * @param selected if <code>true</code>, return only the selected tracks
      * @return track list, or <code>null</code> if no track list for the requested type is available
      */
-    public VideoTrackList videoTracks(boolean selected) {
+    public @Nullable VideoTrackList videoTracks(boolean selected) {
         libvlc_media_tracklist_t trackList = libvlc_media_player_get_tracklist(mediaPlayerInstance, TrackType.VIDEO.intValue(), selected ? 1 : 0);
         if (trackList != null) {
             return new VideoTrackList(trackList);
@@ -82,7 +83,7 @@ public final class TrackApi extends BaseApi {
      *
      * @return track list, or <code>null</code> if no track list for the requested type is available
      */
-    public AudioTrackList audioTracks() {
+    public @Nullable AudioTrackList audioTracks() {
         return audioTracks(false);
     }
 
@@ -94,7 +95,7 @@ public final class TrackApi extends BaseApi {
      * @param selected if <code>true</code>, return only the selected tracks
      * @return track list, or <code>null</code> if no track list for the requested type is available
      */
-    public AudioTrackList audioTracks(boolean selected) {
+    public @Nullable AudioTrackList audioTracks(boolean selected) {
         libvlc_media_tracklist_t trackList = libvlc_media_player_get_tracklist(mediaPlayerInstance, TrackType.AUDIO.intValue(), selected ? 1 : 0);
         if (trackList != null) {
             return new AudioTrackList(trackList);
@@ -109,7 +110,7 @@ public final class TrackApi extends BaseApi {
      *
      * @return track list, or <code>null</code> if no track list for the requested type is available
      */
-    public TextTrackList textTracks() {
+    public @Nullable TextTrackList textTracks() {
         return textTracks(false);
     }
 
@@ -121,7 +122,7 @@ public final class TrackApi extends BaseApi {
      * @param selected if <code>true</code>, return only the selected tracks
      * @return track list, or <code>null</code> if no track list for the requested type is available
      */
-    public TextTrackList textTracks(boolean selected) {
+    public @Nullable TextTrackList textTracks(boolean selected) {
         libvlc_media_tracklist_t trackList = libvlc_media_player_get_tracklist(mediaPlayerInstance, TrackType.TEXT.intValue(), selected ? 1 : 0);
         if (trackList != null) {
             return new TextTrackList(trackList);
@@ -139,7 +140,7 @@ public final class TrackApi extends BaseApi {
      *
      * @return track, or <code>null</code> if no such track is selected
      */
-    public VideoTrack selectedVideoTrack() {
+    public @Nullable VideoTrack selectedVideoTrack() {
         libvlc_media_track_t track = libvlc_media_player_get_selected_track(mediaPlayerInstance, TrackType.VIDEO.intValue());
         if (track != null) {
             return new VideoTrack(track);
@@ -157,7 +158,7 @@ public final class TrackApi extends BaseApi {
      *
      * @return track, or <code>null</code> if no such track is selected
      */
-    public AudioTrack selectedAudioTrack() {
+    public @Nullable AudioTrack selectedAudioTrack() {
         libvlc_media_track_t track = libvlc_media_player_get_selected_track(mediaPlayerInstance, TrackType.AUDIO.intValue());
         if (track != null) {
             return new AudioTrack(track);
@@ -175,7 +176,7 @@ public final class TrackApi extends BaseApi {
      *
      * @return track, or <code>null</code> if no such track is selected
      */
-    public TextTrack selectedTextTrack() {
+    public @Nullable TextTrack selectedTextTrack() {
         libvlc_media_track_t track = libvlc_media_player_get_selected_track(mediaPlayerInstance, TrackType.TEXT.intValue());
         if (track != null) {
             return new TextTrack(track);
@@ -191,7 +192,7 @@ public final class TrackApi extends BaseApi {
      * @param trackId track identifier
      * @return track, or <code>null</code> if no track of the requested identifier is selected
      */
-    public Track track(String trackId) {
+    public @Nullable Track track(String trackId) {
         libvlc_media_track_t track = libvlc_media_player_get_track_from_id(mediaPlayerInstance, trackId);
         if (track != null) {
             switch (trackType(track.i_type)) {
@@ -223,7 +224,7 @@ public final class TrackApi extends BaseApi {
      * @param tracks tracks, of any type, to select
      */
     public <T extends Track> void select(T... tracks) {
-        if (tracks != null && tracks.length > 0) {
+        if (tracks.length > 0) {
             select(TrackType.AUDIO, tracks);
             select(TrackType.VIDEO, tracks);
             select(TrackType.TEXT, tracks);
@@ -255,7 +256,7 @@ public final class TrackApi extends BaseApi {
      * @param trackIds ids of tracks to select
      */
     public void select(TrackType type, String... trackIds) {
-        if (trackIds != null && trackIds.length > 0) {
+        if (trackIds.length > 0) {
             libvlc_media_player_select_tracks_by_ids(mediaPlayerInstance, type.intValue(), String.join(",", trackIds));
         }
     }
@@ -280,10 +281,8 @@ public final class TrackApi extends BaseApi {
      * @param types types of tracks to deselect
      */
     public void deselect(TrackType... types) {
-        if (types != null && types.length > 0) {
-            for (TrackType type : types) {
-                libvlc_media_player_unselect_track_type(mediaPlayerInstance, type.intValue());
-            }
+        for (TrackType type : types) {
+            libvlc_media_player_unselect_track_type(mediaPlayerInstance, type.intValue());
         }
     }
 

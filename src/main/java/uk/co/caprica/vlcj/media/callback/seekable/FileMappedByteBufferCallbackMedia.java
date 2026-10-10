@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.media.callback.seekable;
 
+import org.jspecify.annotations.Nullable;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -54,6 +56,7 @@ public class FileMappedByteBufferCallbackMedia extends MappedByteBufferCallbackM
     /**
      * File channel.
      */
+    @Nullable
     private FileChannel fileChannel;
 
     /**
@@ -84,7 +87,7 @@ public class FileMappedByteBufferCallbackMedia extends MappedByteBufferCallbackM
     }
 
     @Override
-    protected MappedByteBuffer getBuffer() {
+    protected @Nullable MappedByteBuffer getBuffer() {
         try {
             fileChannel = (FileChannel) Files.newByteChannel(path, StandardOpenOption.READ);
             return fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, fileChannel.size());
@@ -96,8 +99,11 @@ public class FileMappedByteBufferCallbackMedia extends MappedByteBufferCallbackM
     @Override
     protected void onClose() {
         try {
-            fileChannel.close();
+            if (fileChannel != null) {
+                fileChannel.close();
+            }
         } catch (IOException e) {
+            // Nothing to do
         }
     }
 }

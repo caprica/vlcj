@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
@@ -56,7 +57,7 @@ public class AudioPlayerComponent extends AudioPlayerComponentBase implements Me
      *
      * @param mediaPlayerFactory media player factory
      */
-    public AudioPlayerComponent(MediaPlayerFactory mediaPlayerFactory) {
+    public AudioPlayerComponent(@Nullable MediaPlayerFactory mediaPlayerFactory) {
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
 
@@ -82,7 +83,7 @@ public class AudioPlayerComponent extends AudioPlayerComponentBase implements Me
         this((MediaPlayerFactory) null);
     }
 
-    private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {
+    private MediaPlayerFactory initMediaPlayerFactory(@Nullable MediaPlayerFactory mediaPlayerFactory) {
         if (mediaPlayerFactory == null) {
             mediaPlayerFactory = new MediaPlayerFactory(DEFAULT_FACTORY_ARGUMENTS);
         }

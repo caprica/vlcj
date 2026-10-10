@@ -84,5 +84,4 @@ public abstract class DefaultCallbackMedia extends AbstractCallbackMedia {
      * @throws IOException if an error occurs
      */
     protected abstract int onRead(byte[] buffer, int bufferSize) throws IOException;
-
 }

@@ -28,8 +28,10 @@ import com.sun.jna.platform.win32.WinDef.RECT;
 import com.sun.jna.platform.win32.WinDef.WPARAM;
 import com.sun.jna.platform.win32.WinUser;
 import com.sun.jna.platform.win32.WinUser.MONITORINFO;
+import org.jspecify.annotations.Nullable;
 
 import java.awt.*;
+import java.util.Objects;
 
 import static com.sun.jna.platform.win32.WinUser.GWL_EXSTYLE;
 import static com.sun.jna.platform.win32.WinUser.GWL_STYLE;
@@ -58,6 +60,7 @@ final class Win32FullScreenHandler {
     /**
      * Current state of the window.
      */
+    @Nullable
     private WindowState windowState;
 
     /**
@@ -85,6 +88,7 @@ final class Win32FullScreenHandler {
             ExtendedUser32.INSTANCE.SetWindowPos(hWnd, null, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
         }
         else {
+            Objects.requireNonNull(windowState, "Window state must not be null");
             ExtendedUser32.INSTANCE.SetWindowLong(hWnd, GWL_STYLE, windowState.getStyle());
             ExtendedUser32.INSTANCE.SetWindowLong(hWnd, GWL_EXSTYLE, windowState.getExStyle());
             ExtendedUser32.INSTANCE.SetWindowPos(hWnd, null, windowState.getLeft(), windowState.getTop(), windowState.getRight() - windowState.getLeft(), windowState.getBottom() - windowState.getTop(), SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);

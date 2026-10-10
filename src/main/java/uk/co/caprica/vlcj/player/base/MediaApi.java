@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.media.InfoApi;
 import uk.co.caprica.vlcj.media.Media;
@@ -36,6 +37,7 @@ import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_add_slave;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_media;
@@ -64,6 +66,7 @@ public final class MediaApi extends BaseApi {
      * <code>null</code> - either by testing the return value from those methods, or by checking the result of
      * {@link #isValid()} beforehand.
      */
+    @Nullable
     private Media media;
 
     MediaApi(MediaPlayer mediaPlayer) {
@@ -342,7 +345,7 @@ public final class MediaApi extends BaseApi {
      *
      * @return media
      */
-    public Media newMedia() {
+    public @Nullable Media newMedia() {
         return media != null ? media.newMedia() : null;
     }
 
@@ -353,7 +356,7 @@ public final class MediaApi extends BaseApi {
      *
      * @return media reference
      */
-    public MediaRef newMediaRef() {
+    public @Nullable MediaRef newMediaRef() {
         return media != null ? media.newMediaRef() : null;
     }
 
@@ -373,7 +376,7 @@ public final class MediaApi extends BaseApi {
      *
      * @return media information behaviour
      */
-    public InfoApi info() {
+    public @Nullable InfoApi info() {
         return media != null ? media.info() : null;
     }
 
@@ -382,7 +385,7 @@ public final class MediaApi extends BaseApi {
      *
      * @return media meta data behaviour
      */
-    public MetaApi meta() {
+    public @Nullable MetaApi meta() {
         return media != null ? media.meta() : null;
     }
 
@@ -391,7 +394,7 @@ public final class MediaApi extends BaseApi {
      *
      * @return media option behaviour
      */
-    public OptionsApi options() {
+    public @Nullable OptionsApi options() {
         return media != null ? media.options() : null;
     }
 
@@ -400,7 +403,7 @@ public final class MediaApi extends BaseApi {
      *
      * @return media slave behaviour
      */
-    public SlaveApi slaves() {
+    public @Nullable SlaveApi slaves() {
         return media != null ? media.slaves() : null;
     }
 
@@ -409,7 +412,7 @@ public final class MediaApi extends BaseApi {
      *
      * @return media stat behaviour
      */
-    public StatsApi stats() {
+    public @Nullable StatsApi stats() {
         return media != null ? media.stats() : null;
     }
 
@@ -418,7 +421,7 @@ public final class MediaApi extends BaseApi {
      *
      * @return subitem behaviour
      */
-    public SubitemApi subitems() {
+    public @Nullable SubitemApi subitems() {
         return media != null ? media.subitems() : null;
     }
 
@@ -428,7 +431,7 @@ public final class MediaApi extends BaseApi {
      * @param newMedia new media - this may be <code>null</code>, in which case the current media is cleaned up only
      * @return <code>true</code> if the media was successfully changed; <code>false</code> on error, or if newMedia was <code>null</code>
      */
-    private boolean changeMedia(Media newMedia) {
+    private boolean changeMedia(@Nullable Media newMedia) {
         if (this.media != null) {
             this.media.release();
         }
@@ -452,17 +455,16 @@ public final class MediaApi extends BaseApi {
     }
 
     private void applyMedia() {
+        Objects.requireNonNull(media);
         libvlc_media_t mediaInstance = media.mediaInstance();
         // Setting media is asynchronous
         libvlc_media_player_set_media(mediaPlayerInstance, mediaInstance);
     }
 
     private String[] startPausedOptions(String... options) {
-        List<String> list = new ArrayList<String>(options != null ? options.length + 1 : 1);
+        List<String> list = new ArrayList<String>(options.length + 1);
         list.add(START_PAUSED_OPTION);
-        if (options != null) {
-            list.addAll(Arrays.asList(options));
-        }
+        list.addAll(Arrays.asList(options));
         return list.toArray(new String[0]);
     }
 

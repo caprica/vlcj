@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.MetaData;
 import uk.co.caprica.vlcj.media.TrackType;
@@ -252,7 +253,7 @@ public interface MediaPlayerEventListener {
      * @param unselectedTrackId identifier of the unselected track, see {@link TrackApi#track(String)}
      * @param selectedTrackId identifier of the newly selected track, see {@link TrackApi#track(String)}
      */
-    void trackSelectionChanged(MediaPlayer mediaPlayer, TrackType trackType, String unselectedTrackId, String selectedTrackId);
+    void trackSelectionChanged(MediaPlayer mediaPlayer, TrackType trackType, @Nullable String unselectedTrackId, @Nullable String selectedTrackId);
 
     /**
      * Next frame returned a new status.

@@ -19,9 +19,11 @@
 
 package uk.co.caprica.vlcj.player.embedded.videosurface.callback;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import java.nio.ByteBuffer;
+import java.util.Objects;
 
 /**
  * A render callback adapter implementation that fills an array of integer data for an entire video frame.
@@ -40,7 +42,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
     /**
      * Video data buffer.
      */
-    private int[] buffer;
+    private int @Nullable [] buffer;
 
     /**
      * Create a new render callback.
@@ -79,6 +81,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
 
     @Override
     public final void display(MediaPlayer mediaPlayer, ByteBuffer[] nativeBuffers, BufferFormat bufferFormat, int displayWidth, int displayHeight) {
+        Objects.requireNonNull(buffer);
         nativeBuffers[0].asIntBuffer().get(buffer, 0, displayWidth * displayHeight);
         onDisplay(mediaPlayer, buffer);
     }

@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
+
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -44,36 +46,43 @@ public final class Logo {
     /**
      * Opacity expressed as an integer, 0 to 255, where 255 is fully opaque.
      */
+    @Nullable
     private Integer intOpacity;
 
     /**
      * Opacity expressed as a fraction, 0.0 to 1.0, where 1.0 is fully opaque.
      */
+    @Nullable
     private Float floatOpacity;
 
     /**
      * Duration for the logo, milliseconds.
      */
+    @Nullable
     private Integer duration;
 
     /**
      * X position, in video co-ordinates.
      */
+    @Nullable
     private Integer x;
 
     /**
      * Y position, in video co-ordinates.
      */
+    @Nullable
     private Integer y;
 
     /**
      * Predefined logo position.
      */
+    @Nullable
     private LogoPosition position;
 
     /**
      * Number of times to repeat the sequence of logos, or -1 for indefinite, or 0 for no looping.
      */
+    @Nullable
     private Integer repeat;
 
     /**
@@ -81,11 +90,12 @@ public final class Logo {
      * <p>
      * May include extended syntax, see {@link #file(String)}.
      */
-    private List<String> files = new ArrayList<String>();
+    private final List<String> files = new ArrayList<String>();
 
     /**
      * Logo image.
      */
+    @Nullable
     private RenderedImage image;
 
     /**
@@ -192,7 +202,7 @@ public final class Logo {
         return addFileSpec(file);
     }
 
-    public Logo file(String file, Integer duration, Integer opacity) {
+    public Logo file(String file, @Nullable Integer duration, @Nullable Integer opacity) {
         return addFileSpec(String.format("%s,%s,%s", file, duration == null ? "" : duration, opacity == null ? "" : opacity));
     }
 
@@ -259,7 +269,7 @@ public final class Logo {
      *
      * @return duration
      */
-    public Integer getDuration() {
+    public @Nullable Integer getDuration() {
         return duration;
     }
 
@@ -268,7 +278,7 @@ public final class Logo {
      *
      * @return opacity
      */
-    public Integer getIntegerOpacity() {
+    public @Nullable Integer getIntegerOpacity() {
         return intOpacity;
     }
 
@@ -277,7 +287,7 @@ public final class Logo {
      *
      * @return opacity
      */
-    public Float getFloatOpacity() {
+    public @Nullable Float getFloatOpacity() {
         return floatOpacity;
     }
 
@@ -286,7 +296,7 @@ public final class Logo {
      *
      * @return location x
      */
-    public Integer getX() {
+    public @Nullable Integer getX() {
         return x;
     }
 
@@ -295,7 +305,7 @@ public final class Logo {
      *
      * @return location y
      */
-    public Integer getY() {
+    public @Nullable Integer getY() {
         return y;
     }
 
@@ -304,7 +314,7 @@ public final class Logo {
      *
      * @return position
      */
-    public LogoPosition getPosition() {
+    public @Nullable LogoPosition getPosition() {
         return position;
     }
 
@@ -322,7 +332,7 @@ public final class Logo {
      *
      * @return image
      */
-    public RenderedImage getImage() {
+    public @Nullable RenderedImage getImage() {
         return image;
     }
 

@@ -21,6 +21,7 @@ package uk.co.caprica.vlcj.player.base;
 
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_adjust_option_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_video_viewpoint_t;
 import uk.co.caprica.vlcj.binding.support.strings.NativeString;
@@ -365,7 +366,7 @@ public final class VideoApi extends BaseApi {
      *
      * @return video size if available, or <code>null</code>
      */
-    public Dimension videoDimension() {
+    public @Nullable Dimension videoDimension() {
         IntByReference px = new IntByReference();
         IntByReference py = new IntByReference();
         int result = libvlc_video_get_size(mediaPlayerInstance, 0, px, py);
@@ -384,7 +385,7 @@ public final class VideoApi extends BaseApi {
      *
      * @return viewpoint, or <code>null</code> on error
      */
-    public Viewpoint newViewpoint() {
+    public @Nullable Viewpoint newViewpoint() {
         libvlc_video_viewpoint_t viewpoint = libvlc_video_new_viewpoint();
         if (viewpoint != null) {
             return new Viewpoint(viewpoint);
@@ -440,7 +441,7 @@ public final class VideoApi extends BaseApi {
      * @param videoNum video number, starting from zero
      * @return cursor location, or <code>null</code> if not available
      */
-    public Point getCursor(int videoNum) {
+    public @Nullable Point getCursor(int videoNum) {
         IntByReference px = new IntByReference();
         IntByReference py = new IntByReference();
         int result = libvlc_video_get_cursor(mediaPlayerInstance, videoNum, px.getPointer(), py.getPointer());

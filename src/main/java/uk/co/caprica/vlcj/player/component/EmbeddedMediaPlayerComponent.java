@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.component;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -33,7 +34,6 @@ import java.awt.*;
  * <p>
  * When the component is no longer needed, it should be released by invoking the {@link #release()} method.
  */
-@SuppressWarnings("serial")
 public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBase implements MediaPlayerComponent {
 
     /**
@@ -72,7 +72,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
      * @param inputEvents keyboard/mouse input event configuration
      * @param overlay heavyweight overlay
      */
-    public EmbeddedMediaPlayerComponent(MediaPlayerFactory mediaPlayerFactory, Component videoSurfaceComponent, FullScreenStrategy fullScreenStrategy, InputEvents inputEvents, Window overlay) {
+    public EmbeddedMediaPlayerComponent(@Nullable MediaPlayerFactory mediaPlayerFactory, @Nullable Component videoSurfaceComponent, @Nullable FullScreenStrategy fullScreenStrategy, @Nullable InputEvents inputEvents, @Nullable Window overlay) {
         this.ownFactory = mediaPlayerFactory == null;
         this.mediaPlayerFactory = initMediaPlayerFactory(mediaPlayerFactory);
 
@@ -119,14 +119,14 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         this(null, null, null, null, null);
     }
 
-    private MediaPlayerFactory initMediaPlayerFactory(MediaPlayerFactory mediaPlayerFactory) {
+    private MediaPlayerFactory initMediaPlayerFactory(@Nullable MediaPlayerFactory mediaPlayerFactory) {
         if (mediaPlayerFactory == null) {
             mediaPlayerFactory = new MediaPlayerFactory(DEFAULT_FACTORY_ARGUMENTS);
         }
         return mediaPlayerFactory;
     }
 
-    private Component initVideoSurfaceComponent(Component videoSurfaceComponent) {
+    private Component initVideoSurfaceComponent(@Nullable Component videoSurfaceComponent) {
         if (videoSurfaceComponent == null) {
             videoSurfaceComponent = new Canvas();
             videoSurfaceComponent.setBackground(Color.black);
@@ -134,7 +134,7 @@ public class EmbeddedMediaPlayerComponent extends EmbeddedMediaPlayerComponentBa
         return videoSurfaceComponent;
     }
 
-    private void initInputEvents(InputEvents inputEvents) {
+    private void initInputEvents(@Nullable InputEvents inputEvents) {
         if (inputEvents == null) {
             inputEvents = RuntimeUtil.isNix() || RuntimeUtil.isMac() ? InputEvents.DEFAULT : InputEvents.DISABLE_NATIVE;
         }

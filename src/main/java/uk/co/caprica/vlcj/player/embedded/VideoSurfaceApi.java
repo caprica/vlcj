@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.embedded;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.player.embedded.videosurface.VideoSurface;
 
 /**
@@ -29,6 +30,7 @@ public final class VideoSurfaceApi extends BaseApi {
     /**
      * Component to render the video to.
      */
+    @Nullable
     private VideoSurface videoSurface;
 
     VideoSurfaceApi(EmbeddedMediaPlayer mediaPlayer) {
@@ -83,7 +85,7 @@ public final class VideoSurfaceApi extends BaseApi {
         }
     }
 
-    VideoSurface getVideoSurface() {
+    @Nullable VideoSurface getVideoSurface() {
         return videoSurface;
     }
 

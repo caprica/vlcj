@@ -46,5 +46,4 @@ public abstract class NonSeekableCallbackMedia extends DefaultCallbackMedia  {
     protected final boolean onSeek(long offset) {
         return false;
     }
-
 }

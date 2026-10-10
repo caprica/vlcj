@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.factory;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.player.base.Equalizer;
 
@@ -57,7 +58,7 @@ public final class EqualizerApi extends BaseApi {
      *
      * @return list of frequencies (Hz)
      */
-    public final List<Float> bands() {
+    public List<Float> bands() {
         return new ArrayList<Float>(bands);
     }
 
@@ -66,7 +67,7 @@ public final class EqualizerApi extends BaseApi {
      *
      * @return list of preset names
      */
-    public final List<String> presets() {
+    public List<String> presets() {
         return new ArrayList<String>(presets);
     }
 
@@ -75,7 +76,7 @@ public final class EqualizerApi extends BaseApi {
      *
      * @return equalizer
      */
-    public final Equalizer newEqualizer() {
+    public Equalizer newEqualizer() {
         return new Equalizer(libvlc_audio_equalizer_get_band_count());
     }
 
@@ -83,9 +84,10 @@ public final class EqualizerApi extends BaseApi {
      * Create a new audio equalizer from a named preset.
      *
      * @param presetName name of the preset
-     * @return equalizer
+     * @return equalizer or <code>null</code> on error
+     * @throws IllegalArgumentException if no such preset
      */
-    public final Equalizer newEqualizer(String presetName) {
+    public @Nullable Equalizer newEqualizer(String presetName) {
         int index = presets.indexOf(presetName);
         if (index != -1) {
             libvlc_equalizer_t presetEqualizer = libvlc_audio_equalizer_new_from_preset(index);
@@ -118,7 +120,10 @@ public final class EqualizerApi extends BaseApi {
     public final Map<String, Equalizer> allPresetEqualizers() {
         Map<String, Equalizer> result = new TreeMap<String, Equalizer>();
         for (String preset : presets) {
-            result.put(preset, newEqualizer(preset));
+            Equalizer equalizer = newEqualizer(preset);
+            if (equalizer != null) {
+                result.put(preset, equalizer);
+            }
         }
         return result;
     }

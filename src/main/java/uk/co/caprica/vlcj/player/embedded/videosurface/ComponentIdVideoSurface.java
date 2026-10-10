@@ -54,5 +54,4 @@ public class ComponentIdVideoSurface extends AWTVideoSurface {
     public void attach(MediaPlayer mediaPlayer) {
         videoSurfaceAdapter.attach(mediaPlayer, componentId);
     }
-
 }

@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcj.player.base;
 
+import org.jspecify.annotations.Nullable;
 import uk.co.caprica.vlcj.binding.internal.libvlc_audio_output_device_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_equalizer_t;
 import uk.co.caprica.vlcj.binding.support.strings.NativeString;
@@ -26,6 +27,7 @@ import uk.co.caprica.vlcj.player.base.callback.AudioCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_get_band_count;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_audio_equalizer_new;
@@ -62,14 +64,14 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
 
     /**
      * Audio equalizer.
-     *
-     * May be <code>null</code>.
      */
+    @Nullable
     private Equalizer equalizer;
 
     /**
      * Native audio equalizer instance.
      */
+    @Nullable
     private libvlc_equalizer_t equalizerInstance;
 
     AudioApi(MediaPlayer mediaPlayer) {
@@ -268,7 +270,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      *
      * @param equalizer equalizer, or <code>null</code> to disable the audio equalizer
      */
-    public void setEqualizer(Equalizer equalizer) {
+    public void setEqualizer(@Nullable Equalizer equalizer) {
         if (this.equalizer != null) {
             this.equalizer.removeEqualizerListener(this);
             libvlc_audio_equalizer_release(equalizerInstance);
@@ -283,7 +285,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
     }
 
     @Override
-    public final void equalizerChanged(Equalizer equalizer) {
+    public void equalizerChanged(Equalizer equalizer) {
         applyEqualizer();
     }
 
@@ -292,6 +294,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      */
     private void applyEqualizer() {
         if (equalizerInstance != null) {
+            Objects.requireNonNull(equalizer);
             libvlc_audio_equalizer_set_preamp(equalizerInstance, equalizer.preamp());
             for(int i = 0; i < libvlc_audio_equalizer_get_band_count(); i ++ ) {
                 libvlc_audio_equalizer_set_amp_at_index(equalizerInstance, equalizer.amp(i), i);
