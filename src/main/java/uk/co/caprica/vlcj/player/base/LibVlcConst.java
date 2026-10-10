@@ -27,22 +27,22 @@ public interface LibVlcConst {
     int MIN_VOLUME = 0;
     int MAX_VOLUME = 200;
 
-    float MIN_CONTRAST = 0.0f;
-    float MAX_CONTRAST = 2.0f;
+    float MIN_CONTRAST = 0.0F;
+    float MAX_CONTRAST = 2.0F;
 
-    float MIN_BRIGHTNESS = 0.0f;
-    float MAX_BRIGHTNESS = 2.0f;
+    float MIN_BRIGHTNESS = 0.0F;
+    float MAX_BRIGHTNESS = 2.0F;
 
     float MIN_HUE = -180;
     float MAX_HUE = 180;
 
-    float MIN_SATURATION = 0.0f;
-    float MAX_SATURATION = 3.0f;
+    float MIN_SATURATION = 0.0F;
+    float MAX_SATURATION = 3.0F;
 
-    float MIN_GAMMA = 0.01f;
-    float MAX_GAMMA = 10.0f;
+    float MIN_GAMMA = 0.01F;
+    float MAX_GAMMA = 10.0F;
 
     float MIN_GAIN = -20.0f;
-    float MAX_GAIN = 20.0f;
+    float MAX_GAIN = 20.0F;
 
 }
