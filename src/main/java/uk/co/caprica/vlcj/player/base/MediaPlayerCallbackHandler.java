@@ -163,20 +163,15 @@ public final class MediaPlayerCallbackHandler extends NativeCallbackHandler<Medi
         cbs.on_track_list_changed = (Pointer opaque, int action, int type, Pointer id) -> {
             TrackType trackType = trackType(type);
             String trackId = copyNativeString(id);
-            MediaPlayerEvent event;
-            switch (listAction(action)) {
-                case libvlc_list_action_added:
-                    event = MediaPlayerEventFactory.createTrackAddedEvent(source(), trackType, trackId);
-                    break;
-                case libvlc_list_action_removed:
-                    event = MediaPlayerEventFactory.createTrackRemovedEvent(source(), trackType, trackId);
-                    break;
-                case libvlc_list_action_updated:
-                    event = MediaPlayerEventFactory.createTrackUpdatedEvent(source(), trackType, trackId);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown action: " + action);
-            }
+            MediaPlayerEvent event = switch (listAction(action)) {
+                case libvlc_list_action_added ->
+                    MediaPlayerEventFactory.createTrackAddedEvent(source(), trackType, trackId);
+                case libvlc_list_action_removed ->
+                    MediaPlayerEventFactory.createTrackRemovedEvent(source(), trackType, trackId);
+                case libvlc_list_action_updated ->
+                    MediaPlayerEventFactory.createTrackUpdatedEvent(source(), trackType, trackId);
+                default -> throw new IllegalArgumentException("Unknown action: " + action);
+            };
             raiseEvent(event);
         };
 
@@ -190,20 +185,12 @@ public final class MediaPlayerCallbackHandler extends NativeCallbackHandler<Medi
         };
 
         cbs.on_program_list_changed = (Pointer opaque, int action, int groupId) -> {
-            MediaPlayerEvent event;
-            switch (listAction(action)) {
-                case libvlc_list_action_added:
-                    event = MediaPlayerEventFactory.createProgramAddedEvent(source(), groupId);
-                    break;
-                case libvlc_list_action_removed:
-                    event = MediaPlayerEventFactory.createProgramRemovedEvent(source(), groupId);
-                    break;
-                case libvlc_list_action_updated:
-                    event = MediaPlayerEventFactory.createProgramUpdatedEvent(source(), groupId);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown action: " + action);
-            }
+            MediaPlayerEvent event = switch (listAction(action)) {
+                case libvlc_list_action_added -> MediaPlayerEventFactory.createProgramAddedEvent(source(), groupId);
+                case libvlc_list_action_removed -> MediaPlayerEventFactory.createProgramRemovedEvent(source(), groupId);
+                case libvlc_list_action_updated -> MediaPlayerEventFactory.createProgramUpdatedEvent(source(), groupId);
+                default -> throw new IllegalArgumentException("Unknown action: " + action);
+            };
             raiseEvent(event);
         };
 
