@@ -59,7 +59,7 @@ public abstract class BaseNativeDiscoveryStrategy implements NativeDiscoveryStra
      * @param filenamePatterns filename patterns to search for, as regular expressions
      * @param pluginPathFormats directory name templates used to find the VLC plugin directory, printf style.
      */
-    public BaseNativeDiscoveryStrategy(String[] filenamePatterns, String[] pluginPathFormats) {
+    protected BaseNativeDiscoveryStrategy(String[] filenamePatterns, String[] pluginPathFormats) {
         this.patternsToMatch = new Pattern[filenamePatterns.length];
         for (int i = 0; i < filenamePatterns.length; i++) {
             this.patternsToMatch[i] = Pattern.compile(filenamePatterns[i]);

@@ -51,7 +51,7 @@ public abstract class CallbackMediaListPlayerComponentBase extends CallbackMedia
      * @param videoSurfaceComponent lightweight video surface component
      * @param renderCallback render callback
      */
-    public CallbackMediaListPlayerComponentBase(@Nullable MediaPlayerFactory mediaPlayerFactory, @Nullable FullScreenStrategy fullScreenStrategy, @Nullable InputEvents inputEvents, @Nullable BufferFormatCallback bufferFormatCallback, boolean lockBuffers, @Nullable CallbackImagePainter imagePainter, @Nullable JComponent videoSurfaceComponent, @Nullable RenderCallback renderCallback) {
+    protected CallbackMediaListPlayerComponentBase(@Nullable MediaPlayerFactory mediaPlayerFactory, @Nullable FullScreenStrategy fullScreenStrategy, @Nullable InputEvents inputEvents, @Nullable BufferFormatCallback bufferFormatCallback, boolean lockBuffers, @Nullable CallbackImagePainter imagePainter, @Nullable JComponent videoSurfaceComponent, @Nullable RenderCallback renderCallback) {
         super(mediaPlayerFactory, fullScreenStrategy, inputEvents, lockBuffers, imagePainter, renderCallback, bufferFormatCallback, videoSurfaceComponent);
     }
 }

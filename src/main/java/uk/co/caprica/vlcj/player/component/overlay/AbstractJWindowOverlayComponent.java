@@ -61,7 +61,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
      * @param owner owning window, must not be <code>null</code>
      * @throws IllegalArgumentException if the <code>owner</code> parameter is <code>null</code>
      */
-    public AbstractJWindowOverlayComponent(Window owner) {
+    protected AbstractJWindowOverlayComponent(Window owner) {
         this(owner, WindowUtils.getAlphaCompatibleGraphicsConfiguration());
     }
 
@@ -72,7 +72,7 @@ public abstract class AbstractJWindowOverlayComponent extends JWindow {
      * @param graphicsConfiguration graphics configuration to use when creating the <code>Window</code>
      * @throws IllegalArgumentException if the <code>owner</code> parameter is <code>null</code>
      */
-    public AbstractJWindowOverlayComponent(Window owner, GraphicsConfiguration graphicsConfiguration) {
+    protected AbstractJWindowOverlayComponent(Window owner, GraphicsConfiguration graphicsConfiguration) {
         super(owner, graphicsConfiguration);
         Objects.requireNonNull(owner, "The overlay window owner must not be null");
         onSetWindowTransparency();

@@ -39,7 +39,7 @@ public abstract class NonSeekableInputStreamMedia extends NonSeekableCallbackMed
     /**
      * Create a media instance using a default IO buffer size.
      */
-    public NonSeekableInputStreamMedia() {
+    protected NonSeekableInputStreamMedia() {
         super();
     }
 
@@ -48,7 +48,7 @@ public abstract class NonSeekableInputStreamMedia extends NonSeekableCallbackMed
      *
      * @param ioBufferSize IO buffer size
      */
-    public NonSeekableInputStreamMedia(int ioBufferSize) {
+    protected NonSeekableInputStreamMedia(int ioBufferSize) {
         super(ioBufferSize);
     }
 

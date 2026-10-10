@@ -38,7 +38,7 @@ public abstract class DeferredComponentIdVideoSurface extends VideoSurface {
      *
      * @param videoSurfaceAdapter adapter to attach a video surface to a native media player
      */
-    public DeferredComponentIdVideoSurface(VideoSurfaceAdapter videoSurfaceAdapter) {
+    protected DeferredComponentIdVideoSurface(VideoSurfaceAdapter videoSurfaceAdapter) {
         super(videoSurfaceAdapter);
     }
 

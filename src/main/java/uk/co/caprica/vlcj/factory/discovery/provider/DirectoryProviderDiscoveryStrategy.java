@@ -57,7 +57,7 @@ abstract public class DirectoryProviderDiscoveryStrategy extends BaseNativeDisco
      * @param filenamePatterns filename patterns to search for, as regular expressions
      * @param pluginPathFormats directory name templates used to find the VLC plugin directory, printf style.
      */
-    public DirectoryProviderDiscoveryStrategy(String[] filenamePatterns, String[] pluginPathFormats) {
+    protected DirectoryProviderDiscoveryStrategy(String[] filenamePatterns, String[] pluginPathFormats) {
         super(filenamePatterns, pluginPathFormats);
     }
 

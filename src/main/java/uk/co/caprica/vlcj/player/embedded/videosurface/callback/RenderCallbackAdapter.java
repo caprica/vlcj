@@ -51,7 +51,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
      *
      * @param buffer video data buffer
      */
-    public RenderCallbackAdapter(int[] buffer) {
+    protected RenderCallbackAdapter(int[] buffer) {
         this.buffer = buffer;
     }
 
@@ -60,7 +60,7 @@ public abstract class RenderCallbackAdapter implements RenderCallback {
      * <p>
      * The video frame buffer <em>must</em> subsequently by set via {@link #setBuffer(int[])}.
      */
-    public RenderCallbackAdapter() {
+    protected RenderCallbackAdapter() {
     }
 
     /**

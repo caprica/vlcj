@@ -39,7 +39,7 @@ public abstract class DefaultAudioCallbackAdapter extends AudioCallbackAdapter {
      *
      * @param blockSize block size for each sample
      */
-    public DefaultAudioCallbackAdapter(int blockSize) {
+    protected DefaultAudioCallbackAdapter(int blockSize) {
         this.blockSize = blockSize;
     }
 

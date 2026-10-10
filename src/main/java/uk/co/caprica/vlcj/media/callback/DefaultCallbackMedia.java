@@ -48,7 +48,7 @@ public abstract class DefaultCallbackMedia extends AbstractCallbackMedia {
      *
      * @param seekable <code>true</code> if the media is seekable; <code>false</code> if it is not
      */
-    public DefaultCallbackMedia(boolean seekable) {
+    protected DefaultCallbackMedia(boolean seekable) {
         this(seekable, DEFAULT_BUFFER_SIZE);
     }
 
@@ -58,7 +58,7 @@ public abstract class DefaultCallbackMedia extends AbstractCallbackMedia {
      * @param seekable <code>true</code> if the media is seekable; <code>false</code> if it is not
      * @param ioBufferSize IO buffer size
      */
-    public DefaultCallbackMedia(boolean seekable, int ioBufferSize) {
+    protected DefaultCallbackMedia(boolean seekable, int ioBufferSize) {
         super(seekable);
         this.ioBuffer = new byte[ioBufferSize];
     }

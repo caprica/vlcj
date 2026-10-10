@@ -98,7 +98,7 @@ public abstract class AbstractCallbackMedia implements CallbackMedia {
      *
      * @param seekable <code>true</code> if the media is seekable; <code>false</code> if it is not
      */
-    public AbstractCallbackMedia(boolean seekable) {
+    protected AbstractCallbackMedia(boolean seekable) {
         this.seekable = seekable;
         this.open = new Open();
         this.read = new Read();
