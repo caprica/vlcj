@@ -40,7 +40,9 @@ import java.util.List;
 import java.util.Objects;
 
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_add_slave;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_get_next_media;
 import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_media;
+import static uk.co.caprica.vlcj.binding.lib.LibVlc.libvlc_media_player_set_next_media;
 
 /**
  * Behaviour pertaining to the current media.
@@ -336,6 +338,65 @@ public final class MediaApi extends BaseApi {
      */
     public boolean addSlave(MediaSlaveType type, String uri, boolean select) {
         return libvlc_media_player_add_slave(mediaPlayerInstance, type.intValue(), uri, select ? 1 : 0) == 0;
+    }
+
+    /**
+     * Set the next media to be played, by reference.
+     * <p>
+     * If there is no current media, the next media will be opened via {@link ControlsApi#play()}.
+     * <p>
+     * if there is a current media, the next media will be opened and played automatically.
+     *
+     * @param mediaRef media to play next, must not be <code>null</code>
+     */
+    public void setNextMedia(MediaRef mediaRef) {
+        libvlc_media_player_set_next_media(mediaPlayerInstance, mediaRef.mediaInstance());
+    }
+
+    /**
+     * Set the next media to be played, by media.
+     * <p>
+     * If there is no current media, the next media will be opened via {@link ControlsApi#play()}.
+     * <p>
+     * if there is a current media, the next media will be opened and played automatically.
+     *
+     * @param media media to play next, must not be <code>null</code>
+     */
+    public void setNextMedia(Media media) {
+        libvlc_media_player_set_next_media(mediaPlayerInstance, media.mediaInstance());
+    }
+
+    /**
+     * Unset the next media to be played.
+     */
+    public void unsetNextMedia() {
+        libvlc_media_player_set_next_media(mediaPlayerInstance, null);
+    }
+
+    /**
+     * Get tne next media to be played, as a reference.
+     *
+     * @return reference to the media to be played next, or <code>null</code>
+     */
+    public @Nullable MediaRef getNextMediaRef() {
+        libvlc_media_t nextMediaInstance = libvlc_media_player_get_next_media(mediaPlayerInstance);
+        if (nextMediaInstance != null) {
+            return new MediaRef(nextMediaInstance);
+        }
+        return null;
+    }
+
+    /**
+     * Get the next media to be played.
+     *
+     * @return media to be played next, or <code>null</code>
+     */
+    public @Nullable Media getNextMedia() {
+        libvlc_media_t nextMediaInstance = libvlc_media_player_get_next_media(mediaPlayerInstance);
+        if (nextMediaInstance != null) {
+            return new Media(nextMediaInstance);
+        }
+        return null;
     }
 
     /**
