@@ -21,72 +21,10 @@ package uk.co.caprica.vlcj.player.base;
 
 /**
  * Chapter description.
+ *
+ * @param offset chapter offset (microseconds)
+ * @param duration chapter duration (microseconds)
+ * @param name chapter name
  */
-public final class ChapterDescription {
-
-    /**
-     * Chapter offset (milliseconds).
-     */
-    private final long offset;
-
-    /**
-     * Chapter duration (milliseconds).
-     */
-    private final long duration;
-
-    /**
-     * Chapter name.
-     */
-    private final String name;
-
-    /**
-     * Create a new chapter description.
-     *
-     * @param offset chapter offset (milliseconds)
-     * @param duration chapter duration (milliseconds)
-     * @param name chapter name
-     */
-    public ChapterDescription(long offset, long duration, String name) {
-        this.offset = offset;
-        this.duration = duration;
-        this.name = name;
-    }
-
-    /**
-     * Get the chapter offset.
-     *
-     * @return offset (milliseconds)
-     */
-    public long offset() {
-        return offset;
-    }
-
-    /**
-     * Get the duration.
-     *
-     * @return duration (milliseconds)
-     */
-    public long duration() {
-        return duration;
-    }
-
-    /**
-     * Get the name.
-     *
-     * @return name
-     */
-    public String name() {
-        return name;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(60);
-        sb.append(getClass().getSimpleName()).append('[');
-        sb.append("offset=").append(offset).append(',');
-        sb.append("duration=").append(duration).append(',');
-        sb.append("name=").append(name).append(']');
-        return sb.toString();
-    }
-
+public record ChapterDescription(long offset, long duration, String name) {
 }

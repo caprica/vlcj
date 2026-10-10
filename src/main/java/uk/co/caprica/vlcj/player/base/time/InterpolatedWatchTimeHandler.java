@@ -84,7 +84,7 @@ public abstract class InterpolatedWatchTimeHandler extends WatchTimeCallbackHand
             if (timePoint != null) {
                 InterpolateResult pausedAt = interpolate(timePoint, systemDate);
                 if (pausedAt != null) {
-                    notifyUpdate(pausedAt.timestamp, pausedAt.position);
+                    notifyUpdate(pausedAt.timestamp(), pausedAt.position());
                 }
             }
         }
@@ -96,7 +96,7 @@ public abstract class InterpolatedWatchTimeHandler extends WatchTimeCallbackHand
         InterpolateResult res = interpolate(timePoint, systemNowUs());
         if (res != null) {
             // Notify immediately on seek
-            notifyUpdate(res.timestamp, res.position);
+            notifyUpdate(res.timestamp(), res.position());
         }
     }
 
@@ -138,9 +138,9 @@ public abstract class InterpolatedWatchTimeHandler extends WatchTimeCallbackHand
             long nowUs = systemNowUs();
             InterpolateResult interpolated = interpolate(timePoint, nowUs);
             if (interpolated != null) {
-                notifyUpdate(interpolated.timestamp, interpolated.position);
+                notifyUpdate(interpolated.timestamp(), interpolated.position());
 
-                long nextDateUs = getNextDate(timePoint, nowUs, interpolated.timestamp, targetUpdateIntervalUs);
+                long nextDateUs = getNextDate(timePoint, nowUs, interpolated.timestamp(), targetUpdateIntervalUs);
                 long sleepNs = (nextDateUs - systemNowUs()) * MICROS_TO_NANOS;
 
                 if (sleepNs > 0) {

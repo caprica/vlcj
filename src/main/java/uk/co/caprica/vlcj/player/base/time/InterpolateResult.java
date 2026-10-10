@@ -19,12 +19,4 @@
 
 package uk.co.caprica.vlcj.player.base.time;
 
-final class InterpolateResult {
-    public final long timestamp;
-    public final double position;
-
-    InterpolateResult(long timestamp, double position) {
-        this.timestamp = timestamp;
-        this.position = position;
-    }
-}
+record InterpolateResult(long timestamp, double position) {}

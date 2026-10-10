@@ -32,18 +32,11 @@ final class RepeatPlayEventHandler extends MediaPlayerEventAdapter {
         }
     }
 
-    private static final class ReplayMediaTask implements Runnable {
-
-        private final MediaPlayer mediaPlayer;
-
-        private ReplayMediaTask(MediaPlayer mediaPlayer) {
-            this.mediaPlayer = mediaPlayer;
-        }
+    private record ReplayMediaTask(MediaPlayer mediaPlayer) implements Runnable {
 
         @Override
         public void run() {
             mediaPlayer.controls().play();
         }
     }
-
 }

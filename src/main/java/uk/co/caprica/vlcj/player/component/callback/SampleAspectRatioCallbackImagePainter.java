@@ -116,13 +116,5 @@ public class SampleAspectRatioCallbackImagePainter extends BaseCallbackImagePain
     /**
      * Immutable value object class for an aspect ratio.
      */
-    private static final class AspectRatio {
-        private final int numerator;
-        private final int denominator;
-
-        private AspectRatio(int numerator, int denominator) {
-            this.numerator = numerator;
-            this.denominator = denominator;
-        }
-    }
+    private record AspectRatio(int numerator, int denominator) {}
 }

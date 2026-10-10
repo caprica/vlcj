@@ -94,13 +94,5 @@ public class ScaledCallbackImagePainter extends BaseCallbackImagePainter {
         }
     }
 
-    private static final class RenderSize {
-        private final int width;
-        private final int height;
-
-        private RenderSize(int width, int height) {
-            this.width = width;
-            this.height = height;
-        }
-    }
+    private record RenderSize(int width, int height) {}
 }

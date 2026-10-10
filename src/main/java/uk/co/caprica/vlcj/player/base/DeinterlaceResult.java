@@ -19,13 +19,4 @@
 
 package uk.co.caprica.vlcj.player.base;
 
-public final class DeinterlaceResult {
-
-    public final DeinterlaceStatus status;
-    public final DeinterlaceMode mode;
-
-    public DeinterlaceResult(DeinterlaceStatus status, DeinterlaceMode mode) {
-        this.status = status;
-        this.mode = mode;
-    }
-}
+public record DeinterlaceResult(DeinterlaceStatus status, DeinterlaceMode mode) {}

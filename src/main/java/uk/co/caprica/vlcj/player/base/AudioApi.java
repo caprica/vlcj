@@ -109,7 +109,7 @@ public final class AudioApi extends BaseApi implements EqualizerListener {
      * <p>
      * The change will not be applied until the media player has been stopped and then played again.
      * <p>
-     * The device id comes from the {@link AudioDevice#getDeviceId()} returned by
+     * The device id comes from the {@link AudioDevice#deviceId()} returned by
      * {@link uk.co.caprica.vlcj.factory.AudioApi#audioOutputs()}.
      *
      * @param outputDeviceId id of the desired audio output device
