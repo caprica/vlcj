@@ -88,7 +88,7 @@ public final class StatusApi extends BaseApi {
     /**
      * Get the length of the current media item.
      *
-     * @return length, in milliseconds
+     * @return length, in microseconds
      */
     public long length() {
         return libvlc_media_player_get_length(mediaPlayerInstance);
@@ -97,7 +97,7 @@ public final class StatusApi extends BaseApi {
     /**
      * Get the current play-back time.
      *
-     * @return current time, expressed as a number of milliseconds
+     * @return current time, expressed as a number of microseconds
      */
     public long time() {
         return libvlc_media_player_get_time(mediaPlayerInstance);

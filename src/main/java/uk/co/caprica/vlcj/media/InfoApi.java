@@ -61,7 +61,7 @@ public final class InfoApi extends BaseApi {
     /**
      * Get the duration
      *
-     * @return duration, milliseconds
+     * @return duration, microseconds
      */
     public long duration() {
         return libvlc_media_get_duration(mediaInstance);

@@ -150,7 +150,7 @@ public final class ControlsApi extends BaseApi {
      * <p>
      * Precise seeking is used.
      *
-     * @param delta time period, in milliseconds
+     * @param delta time period, in microseconds
      * @return <code>true</code> if successful; <code>false</code> otherwise
      */
     public boolean skipTime(long delta) {
@@ -186,7 +186,7 @@ public final class ControlsApi extends BaseApi {
      * <p>
      * To skip backwards specify a negative delta.
      *
-     * @param delta time period, in milliseconds
+     * @param delta time period, in microseconds
      * @param fast <code>true</code> for fast seeking; <code>false</code> for precise seeking
      * @return <code>true</code> if successful; <code>false</code> otherwise
      */
@@ -224,7 +224,7 @@ public final class ControlsApi extends BaseApi {
      * <p>
      * Precise seeking is used.
      *
-     * @param time time since the beginning, in milliseconds
+     * @param time time since the beginning, in microseconds
      * @return <code>true</code> if successful; <code>false</code> otherwise
      */
     public boolean setTime(long time) {
@@ -250,7 +250,7 @@ public final class ControlsApi extends BaseApi {
      * <p>
      * If the requested time is less than zero, it is normalised to zero.
      *
-     * @param time time since the beginning, in milliseconds
+     * @param time time since the beginning, in microseconds
      * @param fast <code>true</code> for fast seeking; <code>false</code> for precise seeking
      * @return <code>true</code> if successful; <code>false</code> otherwise
      */
@@ -265,7 +265,7 @@ public final class ControlsApi extends BaseApi {
      * <p>
      * If the requested time is less than zero, it is normalised to zero.
      *
-     * @param time time, in milliseconds
+     * @param time time, in microseconds
      * @return <code>true</code> if successful; <code>false</code> otherwise
      */
     public boolean jumpTime(long time) {
