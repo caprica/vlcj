@@ -152,11 +152,10 @@ public final class MetaData {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(300);
-        sb.append(getClass().getSimpleName()).append('[');
-        sb.append("values=").append(values).append(',');
-        sb.append("extraValues").append(extraValues).append(']');
-        return sb.toString();
+        String sb = getClass().getSimpleName() + '[' +
+            "values=" + values + ',' +
+            "extraValues" + extraValues + ']';
+        return sb;
    }
 
 }

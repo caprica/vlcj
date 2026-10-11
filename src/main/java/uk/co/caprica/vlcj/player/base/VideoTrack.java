@@ -231,21 +231,19 @@ public final class VideoTrack extends Track {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(200);
-        sb.append(super.toString()).append('[');
-        sb.append("width=").append(width).append(',');
-        sb.append("height=").append(height).append(',');
-        sb.append("sampleAspectRatio=").append(sampleAspectRatio).append(',');
-        sb.append("sampleAspectRatioBase=").append(sampleAspectRatioBase).append(',');
-        sb.append("frameRate=").append(frameRate).append(',');
-        sb.append("frameRateBase=").append(frameRateBase).append(',');
-        sb.append("orientation=").append(orientation).append(',');
-        sb.append("projection=").append(projection).append(',');
-        sb.append("yaw=").append(yaw).append(',');
-        sb.append("pitch=").append(pitch).append(',');
-        sb.append("roll=").append(roll).append(',');
-        sb.append("fieldOfView=").append(fieldOfView).append(',');
-        sb.append("multiview=").append(multiview).append(']');
-        return sb.toString();
+        return super.toString() + '[' +
+            "width=" + width + ',' +
+            "height=" + height + ',' +
+            "sampleAspectRatio=" + sampleAspectRatio + ',' +
+            "sampleAspectRatioBase=" + sampleAspectRatioBase + ',' +
+            "frameRate=" + frameRate + ',' +
+            "frameRateBase=" + frameRateBase + ',' +
+            "orientation=" + orientation + ',' +
+            "projection=" + projection + ',' +
+            "yaw=" + yaw + ',' +
+            "pitch=" + pitch + ',' +
+            "roll=" + roll + ',' +
+            "fieldOfView=" + fieldOfView + ',' +
+            "multiview=" + multiview + ']';
     }
 }

@@ -400,17 +400,15 @@ public final class Logo {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-            .append(getClass().getSimpleName()).append('[')
-            .append("intOpacity=").append(intOpacity).append(',')
-            .append("floatOpacity=").append(floatOpacity).append(',')
-            .append("x=").append(x).append(',')
-            .append("y=").append(y).append(',')
-            .append("position=").append(position).append(',')
-            .append("files=").append(files).append(',')
-            .append("image=").append(image).append(',')
-            .append("enable=").append(enable).append(']')
-            .toString();
+        return getClass().getSimpleName() + '[' +
+            "intOpacity=" + intOpacity + ',' +
+            "floatOpacity=" + floatOpacity + ',' +
+            "x=" + x + ',' +
+            "y=" + y + ',' +
+            "position=" + position + ',' +
+            "files=" + files + ',' +
+            "image=" + image + ',' +
+            "enable=" + enable + ']';
     }
 
 }

@@ -83,12 +83,11 @@ public class Program {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(100);
-        sb.append(getClass().getSimpleName()).append('[');
-        sb.append("groupId=").append(groupId).append(',');
-        sb.append("name=").append(name).append(',');
-        sb.append("selected=").append(selected).append(',');
-        sb.append("scrambled=").append(scrambled).append(']');
-        return sb.toString();
+        String sb = getClass().getSimpleName() + '[' +
+            "groupId=" + groupId + ',' +
+            "name=" + name + ',' +
+            "selected=" + selected + ',' +
+            "scrambled=" + scrambled + ']';
+        return sb;
     }
 }

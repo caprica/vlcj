@@ -171,14 +171,13 @@ public final class RendererItem {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(60);
-        sb.append(getClass().getSimpleName()).append('[');
-        sb.append("name=").append(name).append(',');
-        sb.append("type=").append(type).append(',');
-        sb.append("iconUri=").append(iconUri).append(',');
-        sb.append("canAudio=").append(canAudio).append(',');
-        sb.append("canVideo=").append(canVideo).append(']');
-        return sb.toString();
+        String sb = getClass().getSimpleName() + '[' +
+            "name=" + name + ',' +
+            "type=" + type + ',' +
+            "iconUri=" + iconUri + ',' +
+            "canAudio=" + canAudio + ',' +
+            "canVideo=" + canVideo + ']';
+        return sb;
     }
 
 }

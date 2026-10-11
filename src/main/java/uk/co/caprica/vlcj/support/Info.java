@@ -208,20 +208,18 @@ public final class Info {
 
     @Override
     public String toString() {
-        return new StringBuilder(200)
-            .append(getClass().getSimpleName()).append('[')
-            .append("vlcjVersion=").append(vlcjVersion).append(',')
-            .append("os=").append(os).append(',')
-            .append("javaVersion=").append(javaVersion).append(',')
-            .append("javaHome=").append(javaHome).append(',')
-            .append("jnaLibraryPath=").append(jnaLibraryPath).append(',')
-            .append("javaLibraryPath=").append(javaLibraryPath).append(',')
-            .append("path=").append(path).append(',')
-            .append("pluginPath=").append(pluginPath).append(',')
-            .append("ldLibraryPath=").append(ldLibraryPath).append(',')
-            .append("dyldLibraryPath=").append(dyldLibraryPath).append(',')
-            .append("dyldFallbackLibraryPath=").append(dyldFallbackLibraryPath).append(']')
-            .toString();
+        return getClass().getSimpleName() + '[' +
+            "vlcjVersion=" + vlcjVersion + ',' +
+            "os=" + os + ',' +
+            "javaVersion=" + javaVersion + ',' +
+            "javaHome=" + javaHome + ',' +
+            "jnaLibraryPath=" + jnaLibraryPath + ',' +
+            "javaLibraryPath=" + javaLibraryPath + ',' +
+            "path=" + path + ',' +
+            "pluginPath=" + pluginPath + ',' +
+            "ldLibraryPath=" + ldLibraryPath + ',' +
+            "dyldLibraryPath=" + dyldLibraryPath + ',' +
+            "dyldFallbackLibraryPath=" + dyldFallbackLibraryPath + ']';
     }
 
 }

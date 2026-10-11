@@ -148,15 +148,14 @@ public final class Picture {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(100);
-        sb.append(getClass().getSimpleName()).append('[');
-        sb.append("width=").append(width).append(',');
-        sb.append("height=").append(height).append(',');
-        sb.append("type=").append(type).append(',');
-        sb.append("stride=").append(stride).append(',');
-        sb.append("time=").append(time).append(',');
-        sb.append("size=").append(size).append(']');
-        return sb.toString();
+        String sb = getClass().getSimpleName() + '[' +
+            "width=" + width + ',' +
+            "height=" + height + ',' +
+            "type=" + type + ',' +
+            "stride=" + stride + ',' +
+            "time=" + time + ',' +
+            "size=" + size + ']';
+        return sb;
     }
 
 }

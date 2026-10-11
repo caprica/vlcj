@@ -47,9 +47,8 @@ public final class TextTrack extends Track {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(200);
-        sb.append(super.toString()).append('[');
-        sb.append("encoding=").append(encoding).append(']');
-        return sb.toString();
+        String sb = super.toString() + '[' +
+            "encoding=" + encoding + ']';
+        return sb;
     }
 }

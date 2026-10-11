@@ -430,20 +430,18 @@ public final class Marquee {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-            .append(getClass().getSimpleName()).append('[')
-            .append("text=").append(text).append(',')
-            .append("colour=").append(colour).append(',')
-            .append("rgb=").append(rgb).append(',')
-            .append("intOpacity=").append(intOpacity).append(',')
-            .append("floatOpacity=").append(floatOpacity).append(',')
-            .append("size=").append(size).append(',')
-            .append("timeout=").append(timeout).append(',')
-            .append("x=").append(x).append(',')
-            .append("y=").append(y).append(',')
-            .append("position=").append(position).append(',')
-            .append("refresh=").append(refresh).append(',')
-            .append("enable=").append(enable).append(']')
-            .toString();
+        return getClass().getSimpleName() + '[' +
+            "text=" + text + ',' +
+            "colour=" + colour + ',' +
+            "rgb=" + rgb + ',' +
+            "intOpacity=" + intOpacity + ',' +
+            "floatOpacity=" + floatOpacity + ',' +
+            "size=" + size + ',' +
+            "timeout=" + timeout + ',' +
+            "x=" + x + ',' +
+            "y=" + y + ',' +
+            "position=" + position + ',' +
+            "refresh=" + refresh + ',' +
+            "enable=" + enable + ']';
     }
 }

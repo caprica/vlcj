@@ -146,14 +146,13 @@ public class BufferFormat {
 
     @Override
     public final String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName()).append('[');
-        sb.append("chroma=").append(chroma).append(',');
-        sb.append("width=").append(width).append(',');
-        sb.append("height=").append(height).append(',');
-        sb.append("pitches=").append(Arrays.toString(pitches)).append(',');
-        sb.append("lines=").append(Arrays.toString(lines)).append(']');
-        return sb.toString();
+        String sb = getClass().getSimpleName() + '[' +
+            "chroma=" + chroma + ',' +
+            "width=" + width + ',' +
+            "height=" + height + ',' +
+            "pitches=" + Arrays.toString(pitches) + ',' +
+            "lines=" + Arrays.toString(lines) + ']';
+        return sb;
     }
 
     /**

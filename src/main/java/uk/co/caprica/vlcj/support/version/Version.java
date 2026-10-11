@@ -154,9 +154,7 @@ public final class Version implements Comparable<Version> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(20);
-        sb.append(version);
-        return sb.toString();
+        return version;
     }
 
 }

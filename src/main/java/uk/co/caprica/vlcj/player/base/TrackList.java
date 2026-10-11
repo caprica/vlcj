@@ -75,9 +75,8 @@ public abstract class TrackList<T extends Track> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(200);
-        sb.append(super.toString()).append('[');
-        sb.append("tracks=").append(tracks).append(']');
-        return sb.toString();
+        String sb = super.toString() + '[' +
+            "tracks=" + tracks + ']';
+        return sb;
     }
 }

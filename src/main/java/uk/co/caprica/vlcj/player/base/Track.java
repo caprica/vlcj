@@ -275,25 +275,24 @@ public abstract class Track {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(100);
-        sb.append(getClass().getSimpleName()).append('[');
-        sb.append("trackType=").append(trackType).append(',');
-        sb.append("codec=0x").append(Integer.toHexString(codec)).append(',');
-        sb.append("codecName=").append(codecName).append(',');
-        sb.append("originalCodec=0x").append(Integer.toHexString(originalCodec)).append(',');
-        sb.append("originalCodecName=").append(originalCodecName).append(',');
-        sb.append("id=").append(id).append(',');
-        sb.append("profile=").append(profile).append(',');
-        sb.append("level=").append(level).append(',');
-        sb.append("bitRate=").append(bitRate).append(',');
-        sb.append("language=").append(language).append(',');
-        sb.append("description=").append(description).append(',');
-        sb.append("trackId=").append(trackId).append(',');
-        sb.append("stable=").append(stable).append(',');
-        sb.append("name=").append(name).append(',');
-        sb.append("selected=").append(selected).append(',');
-        sb.append("codecDescription=").append(codecDescription).append(']');
-        return sb.toString();
+        String sb = getClass().getSimpleName() + '[' +
+            "trackType=" + trackType + ',' +
+            "codec=0x" + Integer.toHexString(codec) + ',' +
+            "codecName=" + codecName + ',' +
+            "originalCodec=0x" + Integer.toHexString(originalCodec) + ',' +
+            "originalCodecName=" + originalCodecName + ',' +
+            "id=" + id + ',' +
+            "profile=" + profile + ',' +
+            "level=" + level + ',' +
+            "bitRate=" + bitRate + ',' +
+            "language=" + language + ',' +
+            "description=" + description + ',' +
+            "trackId=" + trackId + ',' +
+            "stable=" + stable + ',' +
+            "name=" + name + ',' +
+            "selected=" + selected + ',' +
+            "codecDescription=" + codecDescription + ']';
+        return sb;
     }
 
     /**

@@ -99,15 +99,13 @@ final class WindowState {
 
     @Override
     public String toString() {
-        return new StringBuilder(100)
-            .append(getClass().getName()).append('[')
-            .append("maximized=").append(maximized).append(',')
-            .append("style=").append(style).append(',')
-            .append("exStyle=").append(exStyle).append(',')
-            .append("left=").append(left).append(',')
-            .append("top=").append(top).append(',')
-            .append("right=").append(right).append(',')
-            .append("bottom=").append(bottom).append(']')
-            .toString();
+        return getClass().getName() + '[' +
+            "maximized=" + maximized + ',' +
+            "style=" + style + ',' +
+            "exStyle=" + exStyle + ',' +
+            "left=" + left + ',' +
+            "top=" + top + ',' +
+            "right=" + right + ',' +
+            "bottom=" + bottom + ']';
     }
 }

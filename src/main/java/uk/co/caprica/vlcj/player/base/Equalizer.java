@@ -254,11 +254,10 @@ public final class Equalizer {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(40);
-        sb.append(getClass().getSimpleName()).append('[');
-        sb.append("preamp=").append(preamp).append(',');
-        sb.append("bandAmps=").append(Arrays.toString(bandAmps)).append(']');
-        return sb.toString();
+        String sb = getClass().getSimpleName() + '[' +
+            "preamp=" + preamp + ',' +
+            "bandAmps=" + Arrays.toString(bandAmps) + ']';
+        return sb;
     }
 
 }

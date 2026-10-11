@@ -68,12 +68,11 @@ public final class Capabilties {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(200);
-        sb.append(super.toString()).append('[');
-        sb.append("canSeek=").append(canSeek).append(',');
-        sb.append("canPause=").append(canPause).append(',');
-        sb.append("canChangeRate=").append(canChangeRate).append(',');
-        sb.append("canRewind=").append(canRewind).append(']');
-        return sb.toString();
+        String sb = super.toString() + '[' +
+            "canSeek=" + canSeek + ',' +
+            "canPause=" + canPause + ',' +
+            "canChangeRate=" + canChangeRate + ',' +
+            "canRewind=" + canRewind + ']';
+        return sb;
     }
 }
