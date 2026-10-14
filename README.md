@@ -45,6 +45,16 @@ Build Status
 Recent News
 ===========
 
+__October 2026__ new commercial licensing:
+
+>We have simplified and streamlined our commercial license purchase process, it is now entirely self-service and hosted
+by Stripe. Purchasing a commercial license is the best way to support the ongoing development and maintenance of the
+project.
+
+>We have a very favourable offer with huge discounts and without subsription for freelancers and small businesses.
+
+>See [Commercial Licenses](https://capricasoftware.co.uk/buy)
+
 __October 2026__ 5.0.0-M6 milestone release:
 
 >A new development milestone release has been created. You will need an up-to-date nightly build of VLC 4.x to use this.
@@ -441,10 +451,14 @@ License
 
 The vlcj framework is provided under the GPL, version 3 or later.
 
-If you want to consider a commercial license for vlcj that allows you to use and redistribute vlcj without complying
-with the GPL then send an email to the address below:
+New for October 2026, we have simplified and streamlined our commercial licensing approach.
 
-> mark [dot] lee [at] capricasoftware [dot] co [dot] uk
+The best way to support the project is to purchase a commercial license subscription.
+
+We now accept commercial license purchases via Stripe, it is completely self-service and accepts any method of payment
+that Stripe accepts.
+
+See [Commercial Licenses](https://capricasoftware.co.uk/buy)
 
 Contributors
 ------------
